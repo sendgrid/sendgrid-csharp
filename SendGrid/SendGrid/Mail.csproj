@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Header.cs" />
     <Compile Include="IHeader.cs" />
     <Compile Include="ISendGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SendGrid.cs" />
     <Compile Include="Transport\ITransport.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
