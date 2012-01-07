@@ -14,7 +14,7 @@ namespace SendGrid
         String Cc { get; set; }
         String Bcc { get; set; }
         String Subject { get; set; }
-        String Headers { get; set; }
+        IHeader Header { get; set; }
         String Html { get; set; }
         String Text { get; set; }
         String Transport { get; set; }
@@ -59,8 +59,6 @@ namespace SendGrid
         #endregion
 
         #region SMTP API Functions
-        IHeader Header();
-
         void DisableGravatar();
         void DisableOpenTracking();
         void DisableClickTracking();
