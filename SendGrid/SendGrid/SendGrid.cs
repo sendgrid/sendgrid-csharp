@@ -8,9 +8,26 @@ namespace SendGrid
 {
     public class SendGrid : ISendGrid
     {
+        private IHeader header;
+
+        private enum Filters {
+                                    Gravatar,
+                                    OpenTracking,
+                                    ClickTracking,
+                                    SpamCheck,
+                                    Unsubscribe,
+                                    Footer,
+                                    GoogleAnalytics,
+                                    DomainKeys,
+                                    Template,
+                                    Twitter,
+                                    Bcc,
+                                    BypassListManagement
+                               };
+
         public SendGrid(IHeader header)
         {
-            throw new NotImplementedException();
+            this.header = header;
         }
 
         public string From
@@ -195,62 +212,62 @@ namespace SendGrid
 
         public void DisableGravatar()
         {
-            throw new NotImplementedException();
+            this.header.Disable(Filters.Gravatar.ToString());
         }
 
         public void DisableOpenTracking()
         {
-            throw new NotImplementedException();
+            this.header.Disable(Filters.OpenTracking.ToString());
         }
 
         public void DisableClickTracking()
         {
-            throw new NotImplementedException();
+            this.header.Disable(Filters.ClickTracking.ToString());
         }
 
         public void DisableSpamCheck()
         {
-            throw new NotImplementedException();
+            this.header.Disable(Filters.SpamCheck.ToString());
         }
 
         public void DisableUnsubscribe()
         {
-            throw new NotImplementedException();
+            this.header.Disable(Filters.Unsubscribe.ToString());
         }
 
         public void DisableFooter()
         {
-            throw new NotImplementedException();
+            this.header.Disable(Filters.Footer.ToString());
         }
 
         public void DisableGoogleAnalytics()
         {
-            throw new NotImplementedException();
+            this.header.Disable(Filters.GoogleAnalytics.ToString());
         }
 
         public void DisableTemplate()
         {
-            throw new NotImplementedException();
+            this.header.Disable(Filters.Template.ToString());
         }
 
         public void DisableBcc()
         {
-            throw new NotImplementedException();
+            this.header.Disable(Filters.Bcc.ToString());
         }
 
-        public void DisableBipassListManaement()
+        public void DisableBypassListManagement()
         {
-            throw new NotImplementedException();
+            this.header.Disable(Filters.BypassListManagement.ToString());
         }
 
         public void EnableGravatar()
         {
-            throw new NotImplementedException();
+            this.header.Enable(Filters.Gravatar.ToString());
         }
 
         public void EnableOpenTracking()
         {
-            throw new NotImplementedException();
+            this.header.Enable(Filters.Gravatar.ToString());
         }
 
         public void EnableClickTracking(string text = null)
