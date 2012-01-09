@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -272,42 +273,72 @@ namespace SendGrid
 
         public void EnableClickTracking(string text = null)
         {
-            throw new NotImplementedException();
+            var filter = Filters.ClickTracking.ToString();
+
+            this.header.Enable(filter);
+            this.header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
         }
 
         public void EnableSpamCheck(int score = 5, string url = null)
         {
-            throw new NotImplementedException();
+            var filter = Filters.SpamCheck.ToString();
+
+            this.header.Enable(filter);
+            this.header.AddFilterSetting(filter, new List<string>(){ "score" }, score.ToString(CultureInfo.InvariantCulture));
+            this.header.AddFilterSetting(filter, new List<string>(){ "url" }, url);
         }
 
         public void EnableUnsubscribe(string text, string html, string replace, string url, string landing)
         {
-            throw new NotImplementedException();
+            var filter = Filters.Unsubscribe.ToString();
+
+            this.header.Enable(filter);
+            this.header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
+            this.header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
+            this.header.AddFilterSetting(filter, new List<string>(){ "replace"}, replace);
+            this.header.AddFilterSetting(filter, new List<string>(){ "landing" }, landing);
         }
 
         public void EnableFooter(string text = null, string html = null)
         {
-            throw new NotImplementedException();
+            var filter = Filters.Footer.ToString();
+
+            this.header.Enable(filter);
+            this.header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
+            this.header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
         }
 
         public void EnableGoogleAnalytics(string source, string medium, string term, string content = null, string campaign = null)
         {
-            throw new NotImplementedException();
+            var filter = Filters.GoogleAnalytics.ToString();
+
+            this.header.Enable(filter);
+            this.header.AddFilterSetting(filter, new List<string>(){ "source " }, source);
+            this.header.AddFilterSetting(filter, new List<string>(){ "medium" }, medium);
+            this.header.AddFilterSetting(filter, new List<string>(){ "term" }, term);
+            this.header.AddFilterSetting(filter, new List<string>(){ "content" }, content);
+            this.header.AddFilterSetting(filter, new List<string>(){ "compaign" }, campaign);
         }
 
         public void EnableTemplate(string html = null)
         {
-            throw new NotImplementedException();
+            var filter = Filters.GoogleAnalytics.ToString();
+
+            this.header.Enable(filter);
+            this.header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
         }
 
         public void EnableBcc(string email = null)
         {
-            throw new NotImplementedException();
+            var filter = Filters.Bcc.ToString();
+
+            this.header.Enable(filter);
+            this.header.AddFilterSetting(filter, new List<string>(){ "email" }, email);
         }
 
-        public void EnableBipassListManaement()
+        public void EnableBypassListManagement()
         {
-            throw new NotImplementedException();
+            this.header.Enable(Filters.BypassListManagement.ToString());
         }
 
         public void Mail()

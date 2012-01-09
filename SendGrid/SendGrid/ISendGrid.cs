@@ -68,7 +68,7 @@ namespace SendGrid
         void DisableGoogleAnalytics();
         void DisableTemplate();
         void DisableBcc();
-        void DisableBipassListManaement();
+        void DisableBypassListManagement();
 
         void EnableGravatar();
         void EnableOpenTracking();
@@ -79,7 +79,7 @@ namespace SendGrid
         void EnableGoogleAnalytics(String source, String medium, String term, String content = null, String campaign = null);
         void EnableTemplate(String html = null);
         void EnableBcc(String email = null);
-        void EnableBipassListManaement();
+        void EnableBypassListManagement();
         #endregion
 
         void Mail();
