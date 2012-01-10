@@ -13,7 +13,7 @@ namespace Tests
         [Test]
         public void TestAddTo()
         {
-            var foo = new SendGrid();
+
         }
     }
 }
