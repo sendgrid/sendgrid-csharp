@@ -59,7 +59,7 @@ namespace SendGrid
         #endregion
 
         #region SMTP API Functions
-        IHeader Header();
+        IHeader Header { get; set; }
 
         void DisableGravatar();
         void DisableOpenTracking();
