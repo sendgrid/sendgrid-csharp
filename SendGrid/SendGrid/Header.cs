@@ -48,7 +48,7 @@ namespace SendGrid
             throw new NotImplementedException();
         }
 
-        public void AsJson()
+        public String AsJson()
         {
             throw new NotImplementedException();
         }

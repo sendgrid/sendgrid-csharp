@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Net.Mime;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
 namespace SendGrid
@@ -30,34 +33,116 @@ namespace SendGrid
             this.header = header;
         }
 
-        public string From
+        private MailMessage message;
+
+        // TODO find appropriate types for these
+        const string encoding = "quoted-printable";
+        const string charset = "utf-8";
+
+    /*
+            if (Html != null )
+            {
+                AlternateView htmlView = AlternateView.CreateAlternateViewFromString(html, null, "text/html");
+                message.AlternateViews.Add(htmlView);
+            }
+
+            if (Text != null )
+            {
+                AlternateView plainView = AlternateView.CreateAlternateViewFromString(Text, null, "text/plain");
+                message.AlternateViews.Add(plainView);
+            }
+
+            message.BodyEncoding = Encoding.GetEncoding(charset);                
+     */
+
+        public SendGrid(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc, 
+            String subject, String html, String text, TransportType transport, IHeader header = null )
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            message = new MailMessage();
+            Header = header;
+
+            From = from;
+            To = to;
+
+            _subs = new Dictionary<string, string>();
+
+            message.Subject = subject;
+            message.SubjectEncoding = Encoding.GetEncoding(charset);
+
+            Text = text;
+            Html = html;
         }
 
-        public string To
+        public MailAddress From
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                return message.From;
+            }
+            set
+            {
+                if (value != null) message.From = value;
+            }
         }
 
-        public string Cc
+        public MailAddress[] To
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                return message.To.ToArray();
+            }
+            set
+            {
+                message.To.Clear();
+                foreach (var mailAddress in value)
+                {
+                    message.To.Add(mailAddress);
+                }
+            }
         }
 
-        public string Bcc
+        public MailAddress[] Cc
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                return message.CC.ToArray();
+            }
+            set
+            {
+                message.CC.Clear();
+                foreach (var mailAddress in value)
+                {
+                    message.CC.Add(mailAddress);
+                }
+            }
         }
 
-        public string Subject
+        public MailAddress[] Bcc
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                return message.Bcc.ToArray();
+            }
+            set
+            {
+                message.Bcc.Clear();
+                foreach (var mailAddress in value)
+                {
+                    message.Bcc.Add(mailAddress);
+                }
+            }
+        }
+
+        public String Subject
+        {
+            get
+            {
+                return message.Subject;
+            }
+            set
+            {
+                if (value != null) message.Subject = value;
+            }
         }
 
         public IHeader Header
@@ -66,146 +151,135 @@ namespace SendGrid
             set { throw new NotImplementedException(); }
         }
 
-        public string Html
+        public String Html { get; set; }
+        public String Text { get; set; }
+
+        public TransportType Transport { get; set; }
+
+        public void AddTo(String address)
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            var mailAddress = new MailAddress(address);
+            message.To.Add(mailAddress);
         }
 
-        public string Text
+        public void AddTo(IEnumerable<String> addresses)
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            if (addresses != null)
+            {
+                foreach (var address in addresses)
+                {
+                    if (address != null) AddTo(address);
+                }
+            }
         }
 
-        public string Transport
+        public void AddTo(IDictionary<String, IDictionary<String, String>> addresssInfo)
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            foreach (var address in addresssInfo.Keys)
+            {
+                var table = addresssInfo[address];
+                //DisplayName is the only option that this implementation of MailAddress implements.
+                var mailAddress = new MailAddress(address, table.ContainsKey("DisplayName") ? table["DisplayName"] : null);
+                message.To.Add(mailAddress);
+            }
         }
 
-        public string Date
+        public void AddCc(String address)
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            var mailAddress = new MailAddress(address);
+            message.CC.Add(mailAddress);
         }
 
-        public MailMessage CreateMimeMessage()
+        public void AddCc(IEnumerable<String> addresses)
         {
-            throw new NotImplementedException();
+            if (addresses != null)
+            {
+                foreach (var address in addresses)
+                {
+                    if (address != null) AddCc(address);
+                }
+            }
         }
 
-        public void AddTo(string address)
+        public void AddCc(IDictionary<String, IDictionary<String, String>> addresssInfo)
         {
-            throw new NotImplementedException();
+            foreach (var address in addresssInfo.Keys)
+            {
+                var table = addresssInfo[address];
+                //DisplayName is the only option that this implementation of MailAddress implements.
+                var mailAddress = new MailAddress(address, table.ContainsKey("DisplayName") ? table["DisplayName"] : null);
+                message.CC.Add(mailAddress);
+            }
         }
 
-        public void AddTo(IEnumerable<string> addresses)
+        public void AddBcc(String address)
         {
-            throw new NotImplementedException();
+            var mailAddress = new MailAddress(address);
+            message.Bcc.Add(mailAddress);
         }
 
-        public void AddTo(IDictionary<string, string> addresssInfo)
+        public void AddBcc(IEnumerable<String> addresses)
         {
-            throw new NotImplementedException();
+            if (addresses != null)
+            {
+                foreach (var address in addresses)
+                {
+                    if (address != null) AddBcc(address);
+                }
+            }
         }
 
-        public void AddTo(IEnumerable<IDictionary<string, string>> addressesInfo)
+        public void AddBcc(IDictionary<String, IDictionary<String, String>> addresssInfo)
         {
-            throw new NotImplementedException();
+            foreach (var address in addresssInfo.Keys)
+            {
+                var table = addresssInfo[address];
+                //DisplayName is the only option that this implementation of MailAddress implements.
+                var mailAddress = new MailAddress(address, table.ContainsKey("DisplayName") ? table["DisplayName"] : null);
+                message.Bcc.Add(mailAddress);
+            }
         }
 
-        public void AddCc(string address)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddCc(IEnumerable<string> addresses)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddCc(IDictionary<string, string> addresssInfo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddCc(IEnumerable<IDictionary<string, string>> addressesInfo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddBcc(string address)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddBcc(IEnumerable<string> addresses)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddBcc(IDictionary<string, string> addresssInfo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddBcc(IEnumerable<IDictionary<string, string>> addressesInfo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddRcpts(string address)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddRcpts(IEnumerable<string> addresses)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddRcpts(IDictionary<string, string> addresssInfo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddRcpts(IEnumerable<IDictionary<string, string>> addressesInfo)
-        {
-            throw new NotImplementedException();
-        }
+        private Dictionary<string, string> _subs;
 
         public void AddSubVal(string tag, string value)
         {
-            throw new NotImplementedException();
+            //let the system complain if they do something bad, since the function returns null
+            _subs[tag] = value;
         }
 
         public void AddAttachment(string filePath)
         {
-            throw new NotImplementedException();
+            var data = new Attachment(filePath, MediaTypeNames.Application.Octet);
+            message.Attachments.Add(data);
         }
 
         public void AddAttachment(Attachment attachment)
         {
-            throw new NotImplementedException();
+            message.Attachments.Add(attachment);
         }
 
-        public string GetMailFrom()
+        public void AddAttachment(Stream attachment, ContentType type)
         {
-            throw new NotImplementedException();
+            var data = new Attachment(attachment, type);
         }
 
         public IEnumerable<string> GetRecipients()
         {
-            throw new NotImplementedException();
+            List<MailAddress> tos = message.To.ToList();
+            List<MailAddress> ccs = message.CC.ToList();
+            List<MailAddress> bccs = message.Bcc.ToList();
+
+            var rcpts = tos.Union(ccs.Union(bccs)).Select(address => address.Address);
+            return rcpts;
         }
 
-        public string Get(string field)
+        private string Get(string field)
         {
             throw new NotImplementedException();
         }
 
-        public void Set(string field, string value)
+        private void Set(string field, string value)
         {
             throw new NotImplementedException();
         }
@@ -305,9 +379,19 @@ namespace SendGrid
             throw new NotImplementedException();
         }
 
-        public void EnableBipassListManaement()
+        public void EnableBypassListManagement()
         {
             throw new NotImplementedException();
+        }
+
+        public MailMessage CreateMimeMessage()
+        {
+            String smtpapi = Header.AsJson();
+
+            if (!String.IsNullOrEmpty(smtpapi))
+                this.message.Headers.Add("X-SmtpApi", "{" + smtpapi + "}");
+
+            return this.message;
         }
 
         public void Mail()
