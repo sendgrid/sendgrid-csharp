@@ -13,24 +13,36 @@ namespace SendGrid
     {
         private IHeader header;
 
-        private enum Filters {
-                                    Gravatar,
-                                    OpenTracking,
-                                    ClickTracking,
-                                    SpamCheck,
-                                    Unsubscribe,
-                                    Footer,
-                                    GoogleAnalytics,
-                                    DomainKeys,
-                                    Template,
-                                    Twitter,
-                                    Bcc,
-                                    BypassListManagement
-                               };
+        private Dictionary<String, String> _filters;
+
+        //apps list and settings
+        private const String ReText = @"<\%\s*\%>";
+        private const String ReHtml = @"<\%\s*[^\s]+\s*\%>";
 
         public SendGrid(IHeader header)
         {
             this.header = header;
+            
+            //initialize the filters, for use within the library
+            this.InitializeFilters();
+        }
+
+        public void InitializeFilters()
+        {
+            this._filters = 
+            new Dictionary<string, string>
+            {
+                {"Gravatar", "gravatar"},
+                {"OpenTracking", "opentrack"},
+                {"ClickTracking", "clicktrack"},
+                {"SpamCheck", "spamcheck"},
+                {"Unsubscribe", "subscriptiontrack"},
+                {"Footer", "footer"},
+                {"GoogleAnalytics", "ganalytics"},
+                {"Template", "template"},
+                {"Bcc", "bcc"},
+                {"BypassListManagement", "bypass_list_management"}
+            };
         }
 
         private MailMessage message;
@@ -286,102 +298,147 @@ namespace SendGrid
 
         public void DisableGravatar()
         {
-            this.header.Disable(Filters.Gravatar.ToString());
+            this.header.Disable(this._filters["Gravatar"]);
         }
 
         public void DisableOpenTracking()
         {
-            this.header.Disable(Filters.OpenTracking.ToString());
+            this.header.Disable(this._filters["OpenTracking"]);
         }
 
         public void DisableClickTracking()
         {
-            this.header.Disable(Filters.ClickTracking.ToString());
+            this.header.Disable(this._filters["ClickTracking"]);
         }
 
         public void DisableSpamCheck()
         {
-            this.header.Disable(Filters.SpamCheck.ToString());
+            this.header.Disable(this._filters["SpamCheck"]);
         }
 
         public void DisableUnsubscribe()
         {
-            this.header.Disable(Filters.Unsubscribe.ToString());
+            this.header.Disable(this._filters["Unsubscribe"]);
         }
 
         public void DisableFooter()
         {
-            this.header.Disable(Filters.Footer.ToString());
+            this.header.Disable(this._filters["Footer"]);
         }
 
         public void DisableGoogleAnalytics()
         {
-            this.header.Disable(Filters.GoogleAnalytics.ToString());
+            this.header.Disable(this._filters["GoogleAnalytics"]);
         }
 
         public void DisableTemplate()
         {
-            this.header.Disable(Filters.Template.ToString());
+            this.header.Disable(this._filters["Template"]);
         }
 
         public void DisableBcc()
         {
-            this.header.Disable(Filters.Bcc.ToString());
+            this.header.Disable(this._filters["Bcc"]);
         }
 
         public void DisableBypassListManagement()
         {
-            this.header.Disable(Filters.BypassListManagement.ToString());
+            this.header.Disable(this._filters["BypassListManagement"]);
         }
 
         public void EnableGravatar()
         {
-            this.header.Enable(Filters.Gravatar.ToString());
+            this.header.Enable(this._filters["Gravatar"]);
         }
 
         public void EnableOpenTracking()
         {
-            this.header.Enable(Filters.Gravatar.ToString());
+            this.header.Enable(this._filters["OpenTracking"]);
         }
 
         public void EnableClickTracking(string text = null)
         {
-            throw new NotImplementedException();
+            var filter = this._filters["ClickTracking"];
+                
+            this.header.Enable(filter);
+            this.header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
         }
 
         public void EnableSpamCheck(int score = 5, string url = null)
         {
-            throw new NotImplementedException();
+            var filter = this._filters["SpamCheck"];
+
+            this.header.Enable(filter);
+            this.header.AddFilterSetting(filter, new List<string>(){ "score" }, score.ToString(CultureInfo.InvariantCulture));
+            this.header.AddFilterSetting(filter, new List<string>(){ "url" }, url);
         }
 
         public void EnableUnsubscribe(string text, string html, string replace, string url, string landing)
         {
-            throw new NotImplementedException();
+            var filter = this._filters["Unsubscribe"];
+
+            if(!System.Text.RegularExpressions.Regex.IsMatch(text, SendGrid.ReText))
+            {
+                throw new Exception("Missing substitution tag in text");
+            }
+
+            if(!System.Text.RegularExpressions.Regex.IsMatch(html, SendGrid.ReHtml))
+            {
+                throw new Exception("Missing substitution tag in html");
+            }
+
+            this.header.Enable(filter);
+            this.header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
+            this.header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
+            this.header.AddFilterSetting(filter, new List<string>(){ "replace"}, replace);
+            this.header.AddFilterSetting(filter, new List<string>(){ "landing" }, landing);
         }
 
         public void EnableFooter(string text = null, string html = null)
         {
-            throw new NotImplementedException();
+            var filter = this._filters["Footer"];
+
+            this.header.Enable(filter);
+            this.header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
+            this.header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
         }
 
         public void EnableGoogleAnalytics(string source, string medium, string term, string content = null, string campaign = null)
         {
-            throw new NotImplementedException();
+            var filter = this._filters["GoogleAnalytics"];
+
+            this.header.Enable(filter);
+            this.header.AddFilterSetting(filter, new List<string>(){ "source " }, source);
+            this.header.AddFilterSetting(filter, new List<string>(){ "medium" }, medium);
+            this.header.AddFilterSetting(filter, new List<string>(){ "term" }, term);
+            this.header.AddFilterSetting(filter, new List<string>(){ "content" }, content);
+            this.header.AddFilterSetting(filter, new List<string>(){ "compaign" }, campaign);
         }
 
-        public void EnableTemplate(string html = null)
+        public void EnableTemplate(string html)
         {
-            throw new NotImplementedException();
+            var filter = this._filters["Template"];
+
+            if (!System.Text.RegularExpressions.Regex.IsMatch(html, SendGrid.ReHtml))
+            {
+                throw new Exception("Missing substitution tag in html");
+            }
+
+            this.header.Enable(filter);
+            this.header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
         }
 
-        public void EnableBcc(string email = null)
+        public void EnableBcc(string email)
         {
-            throw new NotImplementedException();
+            var filter = this._filters["Bcc"];
+
+            this.header.Enable(filter);
+            this.header.AddFilterSetting(filter, new List<string>(){ "email" }, email);
         }
 
         public void EnableBypassListManagement()
         {
-            throw new NotImplementedException();
+            this.header.Enable(this._filters["BypassListManagement"]);
         }
 
         public MailMessage CreateMimeMessage()
