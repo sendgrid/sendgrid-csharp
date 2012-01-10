@@ -52,12 +52,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestHeader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transport\TestREST.cs" />
     <Compile Include="Transport\TestSMTP.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SendGrid\Mail.csproj">
+      <Project>{3C687BEF-FF50-44AD-8315-2D4237281AF8}</Project>
+      <Name>Mail</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
