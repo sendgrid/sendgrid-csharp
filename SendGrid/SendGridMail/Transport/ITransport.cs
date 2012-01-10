@@ -1,4 +1,4 @@
-﻿namespace SendGrid.Transport
+﻿namespace SendGridMail.Transport
 {
     /// <summary>
     /// 
@@ -6,9 +6,9 @@
     public interface ITransport
     {
         /// <summary>
-        /// 
+        /// Delivers a message using the protocol of the derived class
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="message">the message to be delivered</param>
         void Deliver(ISendGrid message);
     }
 }
