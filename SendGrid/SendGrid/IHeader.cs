@@ -16,6 +16,6 @@ namespace SendGrid
         void Disable(String filter);
         void AddFilterSetting(String filter, IEnumerable<String> settings, String value);
         void AddHeader(MailMessage mime);
-        void AsJson();
+        String AsJson();
     }
 }
