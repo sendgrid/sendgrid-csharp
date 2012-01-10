@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SendGrid")]
+[assembly: AssemblyTitle("SendGridMail")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SendGrid")]
+[assembly: AssemblyProduct("SendGridMail")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -21,6 +21,8 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("193fa200-8430-4206-aacd-2d2bb2dfa6cf")]
+
+[assembly: InternalsVisibleTo("Tests")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -6,3 +6,8 @@ SendGrid/SendGrid/obj/
 SendGrid/Tests/bin/
 SendGrid/Tests/obj/
 SendGrid/_ReSharper.SendGrid/
+SendGrid/Example/bin/
+SendGrid/Example/obj/
+SendGrid/*/bin/
+SendGrid/*/obj/
+SendGrid/*.suo
