@@ -32,18 +32,18 @@ namespace SendGrid.Transport
         /// <summary>
         /// Client used to deliver SMTP message
         /// </summary>
-        private readonly SmtpClient _client;
+        private readonly ISmtpClient _client;
 
         /// <summary>
         /// Transport created to deliver messages to SendGrid using SMTP
         /// </summary>
+        /// <param name="client">SMTP client we are wrapping</param>
         /// <param name="credentials">Sendgrid user credentials</param>
         /// <param name="host">MTA recieving this message.  By default, sent through SendGrid.</param>
         /// <param name="port">SMTP port 25 is the default.  Port 465 can be used for Secure SMTP.</param>
-        public SMTP(NetworkCredential credentials, String host = SmtpServer, Int32 port = Port)
+        private SMTP(ISmtpClient client, NetworkCredential credentials, string host = SmtpServer, int port = Port)
         {
-            _client = new SmtpClient(host, port) {Credentials = credentials, DeliveryMethod = SmtpDeliveryMethod.Network};
-
+            _client = client;
             switch (port)
             {
                 case Port:
@@ -64,6 +64,56 @@ namespace SendGrid.Transport
         {
             var mime = message.CreateMimeMessage();
             _client.Send(mime);
+        }
+
+        /// <summary>
+        /// Transport created to deliver messages to SendGrid using SMTP
+        /// </summary>
+        /// <param name="credentials">Sendgrid user credentials</param>
+        /// <param name="host">MTA recieving this message.  By default, sent through SendGrid.</param>
+        /// <param name="port">SMTP port 25 is the default.  Port 465 can be used for Secure SMTP.</param>
+        public static SMTP SmtpFactory(NetworkCredential credentials, String host = SmtpServer, Int32 port = Port)
+        {
+            var client = new SmtpWrapper(host, port, credentials, SmtpDeliveryMethod.Network);
+            return new SMTP(client, credentials, host, port);
+        }
+
+        /// <summary>
+        /// Interface to allow testing
+        /// </summary>
+        private interface ISmtpClient
+        {
+            bool EnableSsl { get; set; }
+            void Send(MailMessage mime);
+        }
+
+        /// <summary>
+        /// Implementation of SmtpClient wrapper, separated to allow dependency injection
+        /// </summary>
+        private class SmtpWrapper : ISmtpClient
+        {
+            private readonly SmtpClient _client;
+            public bool EnableSsl
+            {
+                get
+                {
+                    return _client.EnableSsl;
+                }
+                set
+                {
+                    _client.EnableSsl = value;
+                }
+            }
+
+            public SmtpWrapper(String host, Int32 port, NetworkCredential credentials, SmtpDeliveryMethod deliveryMethod)
+            {
+                _client = new SmtpClient(host, port) { Credentials = credentials, DeliveryMethod = deliveryMethod };
+            }
+
+            public void Send(MailMessage mime)
+            {
+                _client.Send(mime);
+            }
         }
     }
 }
