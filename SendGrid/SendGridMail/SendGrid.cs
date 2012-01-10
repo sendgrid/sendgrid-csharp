@@ -8,7 +8,7 @@ using System.Net.Mime;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
-namespace SendGrid
+namespace SendGridMail
 {
     public class SendGrid : ISendGrid
     {
@@ -86,6 +86,7 @@ namespace SendGrid
             Html = html;
         }
 
+        #region Properties
         public MailAddress From
         {
             get
@@ -168,7 +169,9 @@ namespace SendGrid
         public String Text { get; set; }
 
         public TransportType Transport { get; set; }
+        #endregion
 
+        #region Methods for setting data
         public void AddTo(String address)
         {
             var mailAddress = new MailAddress(address);
@@ -296,7 +299,9 @@ namespace SendGrid
         {
             throw new NotImplementedException();
         }
+        #endregion
 
+        #region SMTP API Functions
         public void DisableGravatar()
         {
             this.header.Disable(this._filters["Gravatar"]);
@@ -441,15 +446,16 @@ namespace SendGrid
         {
             this.header.Enable(this._filters["BypassListManagement"]);
         }
+        #endregion
 
         public MailMessage CreateMimeMessage()
         {
             String smtpapi = Header.AsJson();
 
             if (!String.IsNullOrEmpty(smtpapi))
-                this.message.Headers.Add("X-SmtpApi", "{" + smtpapi + "}");
+                message.Headers.Add("X-SmtpApi", "{" + smtpapi + "}");
 
-            return this.message;
+            return message;
         }
 
         public void Mail()

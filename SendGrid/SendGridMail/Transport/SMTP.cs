@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Mail;
 
-namespace SendGrid.Transport
+namespace SendGridMail.Transport
 {
     /// <summary>
     /// Transport class for delivering messages via SMTP
@@ -72,16 +72,29 @@ namespace SendGrid.Transport
         /// <param name="credentials">Sendgrid user credentials</param>
         /// <param name="host">MTA recieving this message.  By default, sent through SendGrid.</param>
         /// <param name="port">SMTP port 25 is the default.  Port 465 can be used for Secure SMTP.</param>
-        public static SMTP SmtpFactory(NetworkCredential credentials, String host = SmtpServer, Int32 port = Port)
+        public static SMTP GenerateInstance(NetworkCredential credentials, String host = SmtpServer, Int32 port = Port)
         {
             var client = new SmtpWrapper(host, port, credentials, SmtpDeliveryMethod.Network);
             return new SMTP(client, credentials, host, port);
         }
 
         /// <summary>
+        /// For Unit Testing Only!
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="credentials"></param>
+        /// <param name="host"></param>
+        /// <param name="port"></param>
+        /// <returns></returns>
+        internal static SMTP GenerateInstance(ISmtpClient client, NetworkCredential credentials, String host = SmtpServer, Int32 port = Port)
+        {
+            return new SMTP(client, credentials, host, port);
+        }
+
+        /// <summary>
         /// Interface to allow testing
         /// </summary>
-        private interface ISmtpClient
+        internal interface ISmtpClient
         {
             bool EnableSsl { get; set; }
             void Send(MailMessage mime);
@@ -90,7 +103,7 @@ namespace SendGrid.Transport
         /// <summary>
         /// Implementation of SmtpClient wrapper, separated to allow dependency injection
         /// </summary>
-        private class SmtpWrapper : ISmtpClient
+        internal class SmtpWrapper : ISmtpClient
         {
             private readonly SmtpClient _client;
             public bool EnableSsl

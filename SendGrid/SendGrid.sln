@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mail", "SendGrid\Mail.csproj", "{3C687BEF-FF50-44AD-8315-2D4237281AF8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mail", "SendGridMail\Mail.csproj", "{3C687BEF-FF50-44AD-8315-2D4237281AF8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{0319E73A-7039-4858-B047-1EDF88BB6BD1}"
 EndProject
