@@ -8,7 +8,7 @@ using System.Text;
 using System.Web;
 using System.Xml;
 
-namespace SendGrid.Transport
+namespace SendGridMail.Transport
 {
     public class REST : ITransport
     {
@@ -28,7 +28,7 @@ namespace SendGrid.Transport
             _queryParameters["api_key"] = credentials.Password;
 
             _format = XmlFormat;
-            _restEndpoint = url + "." + this._format;
+            _restEndpoint = url + "." + _format;
         }
 
         public void Deliver(ISendGrid message)
