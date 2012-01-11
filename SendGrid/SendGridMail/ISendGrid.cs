@@ -45,7 +45,7 @@ namespace SendGridMail
         void AddBcc(IEnumerable<String> addresses);
         void AddBcc(IDictionary<String, IDictionary<String, String>> addresssInfo);
 
-        void AddSubVal(String tag, String value);
+        void AddSubVal(String tag, params String[] value);
 
         void AddAttachment(String filePath);
         void AddAttachment(Attachment attachment);

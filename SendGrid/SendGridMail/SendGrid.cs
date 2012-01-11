@@ -12,12 +12,19 @@ namespace SendGridMail
 {
     public class SendGrid : ISendGrid
     {
+        #region constants/vars
+        //private/constant vars:
         private Dictionary<String, String> _filters;
+        private MailMessage message;
+
+        // TODO find appropriate types for these
+        const string encoding = "quoted-printable";
+        const string charset = "utf-8";
 
         //apps list and settings
         private const String ReText = @"<\%\s*\%>";
         private const String ReHtml = @"<\%\s*[^\s]+\s*\%>";
-
+        #endregion
 
         public void InitializeFilters()
         {
@@ -37,28 +44,6 @@ namespace SendGridMail
             };
         }
 
-        private MailMessage message;
-
-        // TODO find appropriate types for these
-        const string encoding = "quoted-printable";
-        const string charset = "utf-8";
-
-    /*
-            if (Html != null )
-            {
-                AlternateView htmlView = AlternateView.CreateAlternateViewFromString(html, null, "text/html");
-                message.AlternateViews.Add(htmlView);
-            }
-
-            if (Text != null )
-            {
-                AlternateView plainView = AlternateView.CreateAlternateViewFromString(Text, null, "text/plain");
-                message.AlternateViews.Add(plainView);
-            }
-
-            message.BodyEncoding = Encoding.GetEncoding(charset);                
-     */
-
         public SendGrid(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc, 
             String subject, String html, String text, TransportType transport, IHeader header = null )
         {
@@ -69,8 +54,6 @@ namespace SendGridMail
             To = to;
             Cc = cc;
             Bcc = bcc;
-
-            _subs = new Dictionary<string, string>();
 
             message.Subject = subject;
             message.SubjectEncoding = Encoding.GetEncoding(charset);
@@ -162,10 +145,8 @@ namespace SendGridMail
         }
 
         public IHeader Header { get; set; }
-
         public String Html { get; set; }
         public String Text { get; set; }
-
         public TransportType Transport { get; set; }
         #endregion
 
@@ -254,15 +235,13 @@ namespace SendGridMail
             }
         }
 
-        private Dictionary<string, string> _subs;
-
-        public void AddSubVal(string tag, string value)
+        public void AddSubVal(String tag, params String[] value)
         {
             //let the system complain if they do something bad, since the function returns null
-            _subs[tag] = value;
+            Header.AddSubVal(tag, value);
         }
 
-        public void AddAttachment(string filePath)
+        public void AddAttachment(String filePath)
         {
             var data = new Attachment(filePath, MediaTypeNames.Application.Octet);
             message.Attachments.Add(data);
@@ -276,9 +255,10 @@ namespace SendGridMail
         public void AddAttachment(Stream attachment, ContentType type)
         {
             var data = new Attachment(attachment, type);
+            message.Attachments.Add(data);
         }
 
-        public IEnumerable<string> GetRecipients()
+        public IEnumerable<String> GetRecipients()
         {
             List<MailAddress> tos = message.To.ToList();
             List<MailAddress> ccs = message.CC.ToList();
@@ -288,12 +268,12 @@ namespace SendGridMail
             return rcpts;
         }
 
-        private string Get(string field)
+        private string Get(String field)
         {
             throw new NotImplementedException();
         }
 
-        private void Set(string field, string value)
+        private void Set(String field, String value)
         {
             throw new NotImplementedException();
         }
@@ -452,6 +432,20 @@ namespace SendGridMail
 
             if (!String.IsNullOrEmpty(smtpapi))
                 message.Headers.Add("X-SmtpApi", "{" + smtpapi + "}");
+
+            if (Html != null)
+            {
+                AlternateView htmlView = AlternateView.CreateAlternateViewFromString(Html, null, "text/html");
+                message.AlternateViews.Add(htmlView);
+            }
+
+            if (Text != null)
+            {
+                AlternateView plainView = AlternateView.CreateAlternateViewFromString(Text, null, "text/plain");
+                message.AlternateViews.Add(plainView);
+            }
+
+            message.BodyEncoding = Encoding.GetEncoding(charset);
 
             return message;
         }

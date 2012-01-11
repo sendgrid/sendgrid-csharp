@@ -17,9 +17,10 @@ namespace Example
             var transport = SMTP.GenerateInstance(credentials);
             var header = new Header();
             var message = new SendGrid(header);
-            message.AddTo("tyler.bischel@sendgrid.com");
+            message.AddTo("eric.becking@sendgrid.com");
             message.From = new MailAddress("eric@sendgrid.com");
             message.Text = "This is a test message.";
+            message.Html = "<html><p>This is a <b>test</b> message.</p></html>";
             message.Subject = "hazaah!";
             transport.Deliver(message);
         }
