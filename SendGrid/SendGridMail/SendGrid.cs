@@ -12,21 +12,12 @@ namespace SendGridMail
 {
     public class SendGrid : ISendGrid
     {
-        private IHeader header;
-
         private Dictionary<String, String> _filters;
 
         //apps list and settings
         private const String ReText = @"<\%\s*\%>";
         private const String ReHtml = @"<\%\s*[^\s]+\s*\%>";
 
-        public SendGrid(IHeader header)
-        {
-            this.header = header;
-            
-            //initialize the filters, for use within the library
-            this.InitializeFilters();
-        }
 
         public void InitializeFilters()
         {
@@ -76,6 +67,8 @@ namespace SendGridMail
 
             From = from;
             To = to;
+            Cc = cc;
+            Bcc = bcc;
 
             _subs = new Dictionary<string, string>();
 
@@ -84,6 +77,15 @@ namespace SendGridMail
 
             Text = text;
             Html = html;
+        }
+
+        public SendGrid(IHeader header)
+        {
+            message = new MailMessage();
+            Header = header;
+
+            //initialize the filters, for use within the library
+            this.InitializeFilters();
         }
 
         #region Properties
@@ -159,11 +161,7 @@ namespace SendGridMail
             }
         }
 
-        public IHeader Header
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
+        public IHeader Header { get; set; }
 
         public String Html { get; set; }
         public String Text { get; set; }
@@ -304,79 +302,79 @@ namespace SendGridMail
         #region SMTP API Functions
         public void DisableGravatar()
         {
-            this.header.Disable(this._filters["Gravatar"]);
+            Header.Disable(this._filters["Gravatar"]);
         }
 
         public void DisableOpenTracking()
         {
-            this.header.Disable(this._filters["OpenTracking"]);
+            Header.Disable(this._filters["OpenTracking"]);
         }
 
         public void DisableClickTracking()
         {
-            this.header.Disable(this._filters["ClickTracking"]);
+            Header.Disable(this._filters["ClickTracking"]);
         }
 
         public void DisableSpamCheck()
         {
-            this.header.Disable(this._filters["SpamCheck"]);
+            Header.Disable(this._filters["SpamCheck"]);
         }
 
         public void DisableUnsubscribe()
         {
-            this.header.Disable(this._filters["Unsubscribe"]);
+            Header.Disable(this._filters["Unsubscribe"]);
         }
 
         public void DisableFooter()
         {
-            this.header.Disable(this._filters["Footer"]);
+            Header.Disable(this._filters["Footer"]);
         }
 
         public void DisableGoogleAnalytics()
         {
-            this.header.Disable(this._filters["GoogleAnalytics"]);
+            Header.Disable(this._filters["GoogleAnalytics"]);
         }
 
         public void DisableTemplate()
         {
-            this.header.Disable(this._filters["Template"]);
+            Header.Disable(this._filters["Template"]);
         }
 
         public void DisableBcc()
         {
-            this.header.Disable(this._filters["Bcc"]);
+            Header.Disable(this._filters["Bcc"]);
         }
 
         public void DisableBypassListManagement()
         {
-            this.header.Disable(this._filters["BypassListManagement"]);
+            Header.Disable(this._filters["BypassListManagement"]);
         }
 
         public void EnableGravatar()
         {
-            this.header.Enable(this._filters["Gravatar"]);
+            Header.Enable(this._filters["Gravatar"]);
         }
 
         public void EnableOpenTracking()
         {
-            this.header.Enable(this._filters["OpenTracking"]);
+            Header.Enable(this._filters["OpenTracking"]);
         }
 
         public void EnableClickTracking(string text = null)
         {
             var filter = this._filters["ClickTracking"];
                 
-            this.header.Enable(filter);
-            this.header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
+            Header.Enable(filter);
+            Header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
         }
 
         public void EnableSpamCheck(int score = 5, string url = null)
         {
             var filter = this._filters["SpamCheck"];
 
-            this.header.Enable(filter);
-            this.header.AddFilterSetting(filter, new List<string>(){ "score" }, score.ToString(CultureInfo.InvariantCulture));
-            this.header.AddFilterSetting(filter, new List<string>(){ "url" }, url);
+            Header.Enable(filter);
+            Header.AddFilterSetting(filter, new List<string>(){ "score" }, score.ToString(CultureInfo.InvariantCulture));
+            Header.AddFilterSetting(filter, new List<string>(){ "url" }, url);
         }
 
         public void EnableUnsubscribe(string text, string html, string replace, string url, string landing)
@@ -393,32 +391,32 @@ namespace SendGridMail
                 throw new Exception("Missing substitution tag in html");
             }
 
-            this.header.Enable(filter);
-            this.header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
-            this.header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
-            this.header.AddFilterSetting(filter, new List<string>(){ "replace"}, replace);
-            this.header.AddFilterSetting(filter, new List<string>(){ "landing" }, landing);
+            Header.Enable(filter);
+            Header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
+            Header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
+            Header.AddFilterSetting(filter, new List<string>(){ "replace"}, replace);
+            Header.AddFilterSetting(filter, new List<string>(){ "landing" }, landing);
         }
 
         public void EnableFooter(string text = null, string html = null)
         {
             var filter = this._filters["Footer"];
 
-            this.header.Enable(filter);
-            this.header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
-            this.header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
+            Header.Enable(filter);
+            Header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
+            Header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
         }
 
         public void EnableGoogleAnalytics(string source, string medium, string term, string content = null, string campaign = null)
         {
             var filter = this._filters["GoogleAnalytics"];
 
-            this.header.Enable(filter);
-            this.header.AddFilterSetting(filter, new List<string>(){ "source " }, source);
-            this.header.AddFilterSetting(filter, new List<string>(){ "medium" }, medium);
-            this.header.AddFilterSetting(filter, new List<string>(){ "term" }, term);
-            this.header.AddFilterSetting(filter, new List<string>(){ "content" }, content);
-            this.header.AddFilterSetting(filter, new List<string>(){ "compaign" }, campaign);
+            Header.Enable(filter);
+            Header.AddFilterSetting(filter, new List<string>(){ "source " }, source);
+            Header.AddFilterSetting(filter, new List<string>(){ "medium" }, medium);
+            Header.AddFilterSetting(filter, new List<string>(){ "term" }, term);
+            Header.AddFilterSetting(filter, new List<string>(){ "content" }, content);
+            Header.AddFilterSetting(filter, new List<string>(){ "compaign" }, campaign);
         }
 
         public void EnableTemplate(string html)
@@ -430,21 +428,21 @@ namespace SendGridMail
                 throw new Exception("Missing substitution tag in html");
             }
 
-            this.header.Enable(filter);
-            this.header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
+            Header.Enable(filter);
+            Header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
         }
 
         public void EnableBcc(string email)
         {
             var filter = this._filters["Bcc"];
 
-            this.header.Enable(filter);
-            this.header.AddFilterSetting(filter, new List<string>(){ "email" }, email);
+            Header.Enable(filter);
+            Header.AddFilterSetting(filter, new List<string>(){ "email" }, email);
         }
 
         public void EnableBypassListManagement()
         {
-            this.header.Enable(this._filters["BypassListManagement"]);
+            Header.Enable(this._filters["BypassListManagement"]);
         }
         #endregion
 
