@@ -7,11 +7,11 @@ namespace SendGridMail
 {
     public class Header : IHeader
     {
-        private readonly FilterNode _settings;
+        private readonly HeaderSettingsNode _settings;
 
         public Header()
         {
-            _settings = new FilterNode();
+            _settings = new HeaderSettingsNode();
         }
 
         public void AddSubVal(string tag, IEnumerable<string> substitutions)
@@ -48,7 +48,7 @@ namespace SendGridMail
 
         public void AddFilterSetting(string filter, IEnumerable<string> settings, string value)
         {
-            var keys = new List<string>() {"filters", "data", filter, "settings"}.Concat(settings).ToList();
+            var keys = new List<string>() { "data", "filters", filter, "settings" }.Concat(settings).ToList();
             _settings.AddSetting(keys, value);
         }
 
@@ -63,15 +63,15 @@ namespace SendGridMail
             return _settings.ToJson();
         }
 
-        internal class FilterNode
+        internal class HeaderSettingsNode
         {
-            private readonly Dictionary<String, FilterNode> _branches;
+            private readonly Dictionary<String, HeaderSettingsNode> _branches;
             private IEnumerable<String> _array; 
             private String _leaf;
 
-            public FilterNode()
+            public HeaderSettingsNode()
             {
-                _branches = new Dictionary<string, FilterNode>();
+                _branches = new Dictionary<string, HeaderSettingsNode>();
             }
 
             public void AddArray(List<String> keys, IEnumerable<String> value)
@@ -87,7 +87,7 @@ namespace SendGridMail
 
                     var key = keys.First();
                     if (!_branches.ContainsKey(key))
-                        _branches[key] = new FilterNode();
+                        _branches[key] = new HeaderSettingsNode();
 
                     var remainingKeys = keys.Skip(1).ToList();
                     _branches[key].AddArray(remainingKeys, value);
@@ -107,7 +107,7 @@ namespace SendGridMail
                     
                     var key = keys.First();
                     if (!_branches.ContainsKey(key))
-                        _branches[key] = new FilterNode();
+                        _branches[key] = new HeaderSettingsNode();
                     
                     var remainingKeys = keys.Skip(1).ToList();
                     _branches[key].AddSetting(remainingKeys, value);
@@ -130,6 +130,22 @@ namespace SendGridMail
                 return _branches[key].GetSetting(remainingKeys);
             }
 
+            public IEnumerable<String> GetArray(params String[] keys)
+            {
+                return GetArray(keys.ToList());
+            }
+
+            public IEnumerable<String> GetArray(List<String> keys)
+            {
+                if (keys.Count == 0)
+                    return _array;
+                var key = keys.First();
+                if (!_branches.ContainsKey(key))
+                    throw new ArgumentException("Bad key path!");
+                var remainingKeys = keys.Skip(1).ToList();
+                return _branches[key].GetArray(remainingKeys);
+            }
+
             public String GetLeaf()
             {
                 return _leaf;
@@ -142,7 +158,7 @@ namespace SendGridMail
                 if (_leaf != null)
                     return JsonUtils.Serialize(_leaf);
                 if (_array != null)
-                    return "[" + String.Join(",", _array.Select(i => JsonUtils.Serialize(i))) + "]";
+                    return "[" + String.Join(", ", _array.Select(i => JsonUtils.Serialize(i))) + "]";
                 return "{}";
             }
 
