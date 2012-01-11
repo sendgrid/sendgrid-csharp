@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
-using System.Text;
 
 namespace SendGridMail
 {
@@ -30,12 +29,12 @@ namespace SendGridMail
 
         public void Enable(string filter)
         {
-            throw new NotImplementedException();
+            AddFilterSetting(filter, new List<string>(){ "enable" }, "1");
         }
 
         public void Disable(string filter)
         {
-            throw new NotImplementedException();
+            AddFilterSetting(filter, new List<string>(){"enable"}, "0");
         }
 
         public void AddFilterSetting(string filter, IEnumerable<string> settings, string value)
@@ -50,7 +49,64 @@ namespace SendGridMail
 
         public String AsJson()
         {
-            throw new NotImplementedException();
+            return "";
+        }
+
+
+        internal class FilterNode
+        {
+            private Dictionary<String, FilterNode> _branches;
+            private String _leaf;
+
+            public FilterNode()
+            {
+                _branches = new Dictionary<string, FilterNode>();
+            }
+
+            public void AddSetting(List<String> keys, String value)
+            {
+                if (keys.Count == 0)
+                {
+                    _leaf = value;
+                }
+                else
+                {
+                    var key = keys[0];
+                    if (!_branches.ContainsKey(key))
+                        _branches[key] = new FilterNode();
+                    var remainingKeys = keys.Skip(1).ToList();
+                    _branches[key].AddSetting(remainingKeys, value);
+                }
+            }
+
+
+            public String GetSetting(params String[] keys)
+            {
+                return GetSetting(keys.ToList());
+            }
+
+            public String GetSetting(List<String> keys)
+            {
+                if (keys.Count == 0)
+                    return _leaf;
+                var key = keys.First();
+                if(!_branches.ContainsKey(key))
+                    throw new ArgumentException("Bad key path!");
+                var remainingKeys = keys.Skip(1).ToList();
+                return _branches[key].GetSetting(remainingKeys);
+            }
+
+            public String GetLeaf()
+            {
+                return _leaf;
+            }
+
+            public String ToJson()
+            {
+                if (_branches.Count > 0)
+                    return "{" + String.Join(",", _branches.Keys.Select(k => '"' + k + '"' + ":" + _branches[k].ToJson())) + "}";
+                return JsonUtils.Serialize(_leaf);
+            }
         }
     }
 }
