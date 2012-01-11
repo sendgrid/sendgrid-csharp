@@ -14,12 +14,7 @@ namespace Tests
         [Test]
         public void TestAddTo()
         {
-            var foo = new Mock<IHeader>();
-            foo.Setup(m => m.Enable("foo"));
-
-            var bar = new SendGrid(foo.Object);
-            Assert.AreEqual(1, 2, "I suck");
-
+            
         }
     }
 }
