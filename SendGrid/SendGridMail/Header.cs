@@ -7,24 +7,33 @@ namespace SendGridMail
 {
     public class Header : IHeader
     {
-        public void AddTo(IEnumerable<string> recipients)
+        private readonly FilterNode _settings;
+
+        public Header()
         {
-            throw new NotImplementedException();
+            _settings = new FilterNode();
         }
 
         public void AddSubVal(string tag, IEnumerable<string> substitutions)
         {
-            throw new NotImplementedException();
+            var keys = new List<String> {"data", "sub", tag};
+            _settings.AddArray(keys, substitutions);
         }
 
         public void AddUniqueIdentifier(IDictionary<string, string> identifiers)
         {
-            throw new NotImplementedException();
+            foreach (var key in identifiers.Keys)
+            {
+                var keys = new List<String> {"data", "unique_args", key};
+                var value = identifiers[key];
+                _settings.AddSetting(keys, value);
+            }
         }
 
         public void SetCategory(string category)
         {
-            throw new NotImplementedException();
+            var keys = new List<String> {"data", "category"};
+            _settings.AddSetting(keys, category);
         }
 
         public void Enable(string filter)
@@ -39,28 +48,50 @@ namespace SendGridMail
 
         public void AddFilterSetting(string filter, IEnumerable<string> settings, string value)
         {
-            throw new NotImplementedException();
+            var keys = new List<string>() {"filters", "data", filter, "settings"}.Concat(settings).ToList();
+            _settings.AddSetting(keys, value);
         }
 
         public void AddHeader(MailMessage mime)
         {
-            throw new NotImplementedException();
+            mime.Headers.Add("x-smtpapi", AsJson());
         }
 
         public String AsJson()
         {
-            return "";
+            if(_settings.IsEmpty()) return "";
+            return _settings.ToJson();
         }
-
 
         internal class FilterNode
         {
-            private Dictionary<String, FilterNode> _branches;
+            private readonly Dictionary<String, FilterNode> _branches;
+            private IEnumerable<String> _array; 
             private String _leaf;
 
             public FilterNode()
             {
                 _branches = new Dictionary<string, FilterNode>();
+            }
+
+            public void AddArray(List<String> keys, IEnumerable<String> value)
+            {
+                if (keys.Count == 0)
+                {
+                    _array = value;
+                }
+                else
+                {
+                    if (_leaf != null || _array != null)
+                        throw new ArgumentException("Attempt to overwrite setting");
+
+                    var key = keys.First();
+                    if (!_branches.ContainsKey(key))
+                        _branches[key] = new FilterNode();
+
+                    var remainingKeys = keys.Skip(1).ToList();
+                    _branches[key].AddArray(remainingKeys, value);
+                }
             }
 
             public void AddSetting(List<String> keys, String value)
@@ -71,14 +102,17 @@ namespace SendGridMail
                 }
                 else
                 {
-                    var key = keys[0];
+                    if(_leaf != null || _array != null) 
+                        throw new ArgumentException("Attempt to overwrite setting");
+                    
+                    var key = keys.First();
                     if (!_branches.ContainsKey(key))
                         _branches[key] = new FilterNode();
+                    
                     var remainingKeys = keys.Skip(1).ToList();
                     _branches[key].AddSetting(remainingKeys, value);
                 }
             }
-
 
             public String GetSetting(params String[] keys)
             {
@@ -104,8 +138,18 @@ namespace SendGridMail
             public String ToJson()
             {
                 if (_branches.Count > 0)
-                    return "{" + String.Join(",", _branches.Keys.Select(k => '"' + k + '"' + ":" + _branches[k].ToJson())) + "}";
-                return JsonUtils.Serialize(_leaf);
+                    return "{" + String.Join(",", _branches.Keys.Select(k => JsonUtils.Serialize(k)  + " : " + _branches[k].ToJson())) + "}";
+                if (_leaf != null)
+                    return JsonUtils.Serialize(_leaf);
+                if (_array != null)
+                    return "[" + String.Join(",", _array.Select(i => JsonUtils.Serialize(i))) + "]";
+                return "{}";
+            }
+
+            public bool IsEmpty()
+            {
+                if (_leaf != null) return false;
+                return _branches == null || _branches.Keys.Count == 0;
             }
         }
     }
