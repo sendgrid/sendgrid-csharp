@@ -14,19 +14,15 @@ namespace Example
         static void Main(string[] args)
         {
             var header = new Header();
-            var sendgrid = new SendGrid(header);
+            var transport = SMTP.GenerateInstance(new NetworkCredential("sgrid_username", "sgrid_password"));
 
-            Console.WriteLine("testing");
-
-            var text = "My Text <%%>";
-            var html = "<body><p>hello,</p></body>";
-            var replace = "John";
-            var url = "http://www.example.com";
-            var landing = "this_landing";
-            sendgrid.EnableUnsubscribe(text, html, replace, url, landing);
-
-            Console.WriteLine(header.AsJson());
-
+            var message = new SendGrid(header);
+            message.AddTo("eric.becking@sendgrid.com");
+            message.From = new MailAddress("eric@sendgrid.com");
+            message.Text = "This is a test message.";
+            message.Html = "<html><p>This is a <b>test</b> message.</p></html>";
+            message.Subject = "hazaah!";
+            transport.Deliver(message);
         }
     }
 }
