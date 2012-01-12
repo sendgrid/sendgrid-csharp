@@ -429,7 +429,7 @@ namespace SendGridMail
             String smtpapi = Header.AsJson();
 
             if (!String.IsNullOrEmpty(smtpapi))
-                message.Headers.Add("X-SmtpApi", smtpapi);
+                message.Headers.Add("X-Smtpapi", smtpapi);
 
             if(Attachments != null)
             {
