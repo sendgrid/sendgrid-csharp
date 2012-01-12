@@ -13,16 +13,25 @@ namespace Example
     {
         static void Main(string[] args)
         {
-            var credentials = new NetworkCredential("cjbuchmann", "Gadget_15");
-            var transport = SMTP.GenerateInstance(credentials);
-            var header = new Header();
-            var message = new SendGrid(header);
-            message.AddTo("eric.becking@sendgrid.com");
-            message.From = new MailAddress("eric@sendgrid.com");
-            message.Text = "This is a test message.";
-            message.Html = "<html><p>This is a <b>test</b> message.</p></html>";
-            message.Subject = "hazaah!";
-            transport.Deliver(message);
+            var username = "cjbuchmann";
+            var password = "Gadget_15";
+            var from = "cj.buchmann@sendgrid.com";
+            var to = new List<String>
+                         {
+                             "cj.buchmann@gmail.com"
+                         };
+
+            //initialize the SMTPAPI example class
+            var smtpapi = new SMTPAPI(username, password, from, to);
+
+            //send a simple HTML encoded email.
+            //smtpapi.SimpleHTMLEmail();
+
+            //send a simple Plaintext email.
+            //smtpapi.SimplePlaintextEmail();
+
+            //send a gravatar enabled email.
+            smtpapi.EnableGravatarEmail();
         }
     }
 }
