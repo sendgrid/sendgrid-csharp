@@ -236,6 +236,12 @@ namespace SendGridMail
         }
 
         public Attachment[] Attachments { get; set; }
+        private List<Attachment> _attachments = new List<Attachment>(); 
+        public Attachment[] Attachments
+        {
+            get { return _attachments.ToArray(); }
+            set { _attachments = value.ToList(); }
+        }
 
         public void AddSubVal(String tag, params String[] value)
         {
@@ -246,55 +252,18 @@ namespace SendGridMail
         public void AddAttachment(String filePath)
         {
             var data = new Attachment(filePath, MediaTypeNames.Application.Octet);
-
-            if (Attachments == null)
-            {
-                Attachments = new Attachment[1];
-                Attachments[0] = data;
-            }
-            else
-            {
-                var i = Attachments.Count();
-                var tmp = new Attachment[i + 1];
-                Attachments.CopyTo(tmp, 0);
-                Attachments = tmp;
-                Attachments[i] = data;
-            }            
+            _attachments.Add(data);
         }
 
         public void AddAttachment(Attachment attachment)
         {
-            if (Attachments == null)
-            {
-                Attachments = new Attachment[1];
-                Attachments[0] = attachment;
-            }
-            else
-            {
-                var i = Attachments.Count();
-                var tmp = new Attachment[i + 1];
-                Attachments.CopyTo(tmp, 0);
-                Attachments = tmp;
-                Attachments[i] = attachment;
-            }
+            _attachments.Add(attachment);
         }
 
         public void AddAttachment(Stream attachment, ContentType type)
         {
-            var data = new Attachment(attachment, type);
-            if (Attachments == null)
-            {
-                Attachments = new Attachment[1];
-                Attachments[0] = data;
-            }
-            else
-            {
-                var i = Attachments.Count();
-                var tmp = new Attachment[i + 1];
-                Attachments.CopyTo(tmp, 0);
-                Attachments = tmp;
-                Attachments[i] = data;
-            }
+            var data = new Attachment(attachment, type); 
+            _attachments.Add(data);
         }
 
         public IEnumerable<String> GetRecipients()
@@ -404,6 +373,7 @@ namespace SendGridMail
             Header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
             Header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
             Header.AddFilterSetting(filter, new List<string>(){ "replace"}, replace);
+            Header.AddFilterSetting(filter, new List<string>(){ "url"}, url);
             Header.AddFilterSetting(filter, new List<string>(){ "landing" }, landing);
         }
 
@@ -421,11 +391,11 @@ namespace SendGridMail
             var filter = this._filters["GoogleAnalytics"];
 
             Header.Enable(filter);
-            Header.AddFilterSetting(filter, new List<string>(){ "source " }, source);
+            Header.AddFilterSetting(filter, new List<string>(){ "source" }, source);
             Header.AddFilterSetting(filter, new List<string>(){ "medium" }, medium);
             Header.AddFilterSetting(filter, new List<string>(){ "term" }, term);
             Header.AddFilterSetting(filter, new List<string>(){ "content" }, content);
-            Header.AddFilterSetting(filter, new List<string>(){ "compaign" }, campaign);
+            Header.AddFilterSetting(filter, new List<string>(){ "campaign" }, campaign);
         }
 
         public void EnableTemplate(string html)
@@ -460,7 +430,15 @@ namespace SendGridMail
             String smtpapi = Header.AsJson();
 
             if (!String.IsNullOrEmpty(smtpapi))
-                message.Headers.Add("X-SmtpApi", "{" + smtpapi + "}");
+                message.Headers.Add("X-Smtpapi", smtpapi);
+
+            if(Attachments != null)
+            {
+                foreach (Attachment attachment in Attachments)
+                {
+                    message.Attachments.Add(attachment);
+                }                
+            }
 
             if(Attachments != null)
             {
@@ -489,7 +467,10 @@ namespace SendGridMail
 
         public void Mail()
         {
-            throw new NotImplementedException();
+            SmtpClient client = new SmtpClient("localhost");
+            client.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
+            client.PickupDirectoryLocation = @"C:\temp";
+            client.Send(message);
         }
     }
 }
