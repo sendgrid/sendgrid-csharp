@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Text;
 using Moq;
 using NUnit.Framework;
@@ -120,7 +121,6 @@ namespace Tests
         [Test]
         public void TestGetRcpts()
         {
-            //public IEnumerable<String> GetRecipients()
             var foo = new Mock<IHeader>();
             var sg = new SendGrid(foo.Object);
 
@@ -134,6 +134,29 @@ namespace Tests
             Assert.AreEqual("tyler@sendgrid.com", rcpts.Skip(1).First(), "getRecipients check Cc");
             Assert.AreEqual("cj@sendgrid.com", rcpts.Skip(2).First(), "getRecipients check Bcc");
             Assert.AreEqual("foo@sendgrid.com", rcpts.Skip(3).First(), "getRecipients check Bcc x2");
+        }
+
+        [Test]
+        public void TestAddAttachment()
+        {
+            var foo = new Mock<IHeader>();
+            var sg = new SendGrid(foo.Object);
+
+            var data = new Attachment("pnunit.framework.dll", MediaTypeNames.Application.Octet);
+            sg.AddAttachment("pnunit.framework.dll");
+            sg.AddAttachment("pnunit.framework.dll");
+            Assert.AreEqual(data.ContentStream, sg.Attachments.First().ContentStream, "Attach via path");
+            Assert.AreEqual(data.ContentStream, sg.Attachments.Skip(1).First().ContentStream, "Attach via path x2");
+
+            sg = new SendGrid(foo.Object);
+            sg.AddAttachment(data);
+            sg.AddAttachment(data);
+            Assert.AreEqual(data.ContentStream, sg.Attachments.First().ContentStream, "Attach via attachment");
+            Assert.AreEqual(data.ContentStream, sg.Attachments.Skip(1).First().ContentStream, "Attach via attachment x2");
+
+            //sg = new SendGrid(foo.Object);
+            //sg.AddAttachment(data.ContentStream, ContentType);
+            //Assert.AreEqual(data.ContentStream, sg.Attachments.Skip(1).First().ContentStream, "Attach via attachment");
         }
     }
 }

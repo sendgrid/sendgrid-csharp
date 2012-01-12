@@ -235,6 +235,8 @@ namespace SendGridMail
             }
         }
 
+        public Attachment[] Attachments { get; set; }
+
         public void AddSubVal(String tag, params String[] value)
         {
             //let the system complain if they do something bad, since the function returns null
@@ -244,18 +246,55 @@ namespace SendGridMail
         public void AddAttachment(String filePath)
         {
             var data = new Attachment(filePath, MediaTypeNames.Application.Octet);
-            message.Attachments.Add(data);
+
+            if (Attachments == null)
+            {
+                Attachments = new Attachment[1];
+                Attachments[0] = data;
+            }
+            else
+            {
+                var i = Attachments.Count();
+                var tmp = new Attachment[i + 1];
+                Attachments.CopyTo(tmp, 0);
+                Attachments = tmp;
+                Attachments[i] = data;
+            }            
         }
 
         public void AddAttachment(Attachment attachment)
         {
-            message.Attachments.Add(attachment);
+            if (Attachments == null)
+            {
+                Attachments = new Attachment[1];
+                Attachments[0] = attachment;
+            }
+            else
+            {
+                var i = Attachments.Count();
+                var tmp = new Attachment[i + 1];
+                Attachments.CopyTo(tmp, 0);
+                Attachments = tmp;
+                Attachments[i] = attachment;
+            }
         }
 
         public void AddAttachment(Stream attachment, ContentType type)
         {
             var data = new Attachment(attachment, type);
-            message.Attachments.Add(data);
+            if (Attachments == null)
+            {
+                Attachments = new Attachment[1];
+                Attachments[0] = data;
+            }
+            else
+            {
+                var i = Attachments.Count();
+                var tmp = new Attachment[i + 1];
+                Attachments.CopyTo(tmp, 0);
+                Attachments = tmp;
+                Attachments[i] = data;
+            }
         }
 
         public IEnumerable<String> GetRecipients()
@@ -432,6 +471,14 @@ namespace SendGridMail
 
             if (!String.IsNullOrEmpty(smtpapi))
                 message.Headers.Add("X-SmtpApi", "{" + smtpapi + "}");
+
+            if(Attachments != null)
+            {
+                foreach (Attachment attachment in Attachments)
+                {
+                    message.Attachments.Add(attachment);
+                }                
+            }
 
             if (Html != null)
             {
