@@ -274,16 +274,6 @@ namespace SendGridMail
             var rcpts = tos.Union(ccs.Union(bccs)).Select(address => address.Address);
             return rcpts;
         }
-
-        private string Get(String field)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Set(String field, String value)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
 
         #region SMTP API Functions
