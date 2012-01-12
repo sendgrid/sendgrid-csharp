@@ -7,6 +7,7 @@ namespace SendGridMail
 {
     public class Header : IHeader
     {
+        private const string SendgridHeader = "X-Smtpapi";
         private readonly HeaderSettingsNode _settings;
 
         public Header()
@@ -16,7 +17,7 @@ namespace SendGridMail
 
         public void AddSubVal(string tag, IEnumerable<string> substitutions)
         {
-            var keys = new List<String> {"data", "sub", tag};
+            var keys = new List<String> {"sub", tag};
             _settings.AddArray(keys, substitutions);
         }
 
@@ -24,7 +25,7 @@ namespace SendGridMail
         {
             foreach (var key in identifiers.Keys)
             {
-                var keys = new List<String> {"data", "unique_args", key};
+                var keys = new List<String> {"unique_args", key};
                 var value = identifiers[key];
                 _settings.AddSetting(keys, value);
             }
@@ -32,7 +33,7 @@ namespace SendGridMail
 
         public void SetCategory(string category)
         {
-            var keys = new List<String> {"data", "category"};
+            var keys = new List<String> {"category"};
             _settings.AddSetting(keys, category);
         }
 
@@ -48,13 +49,13 @@ namespace SendGridMail
 
         public void AddFilterSetting(string filter, IEnumerable<string> settings, string value)
         {
-            var keys = new List<string>() { "data", "filters", filter, "settings" }.Concat(settings).ToList();
+            var keys = new List<string>() {"filters", filter, "settings" }.Concat(settings).ToList();
             _settings.AddSetting(keys, value);
         }
 
         public void AddHeader(MailMessage mime)
         {
-            mime.Headers.Add("x-smtpapi", AsJson());
+            mime.Headers.Add(SendgridHeader, AsJson());
         }
 
         public String AsJson()
