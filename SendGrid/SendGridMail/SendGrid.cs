@@ -414,6 +414,7 @@ namespace SendGridMail
             Header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
             Header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
             Header.AddFilterSetting(filter, new List<string>(){ "replace"}, replace);
+            Header.AddFilterSetting(filter, new List<string>(){ "url"}, url);
             Header.AddFilterSetting(filter, new List<string>(){ "landing" }, landing);
         }
 
@@ -431,11 +432,11 @@ namespace SendGridMail
             var filter = this._filters["GoogleAnalytics"];
 
             Header.Enable(filter);
-            Header.AddFilterSetting(filter, new List<string>(){ "source " }, source);
+            Header.AddFilterSetting(filter, new List<string>(){ "source" }, source);
             Header.AddFilterSetting(filter, new List<string>(){ "medium" }, medium);
             Header.AddFilterSetting(filter, new List<string>(){ "term" }, term);
             Header.AddFilterSetting(filter, new List<string>(){ "content" }, content);
-            Header.AddFilterSetting(filter, new List<string>(){ "compaign" }, campaign);
+            Header.AddFilterSetting(filter, new List<string>(){ "campaign" }, campaign);
         }
 
         public void EnableTemplate(string html)
