@@ -13,15 +13,20 @@ namespace Example
     {
         static void Main(string[] args)
         {
-            var credentials = new NetworkCredential("cjbuchmann", "Gadget_15");
-            var transport = SMTP.GenerateInstance(credentials);
             var header = new Header();
-            var message = new SendGrid(header);
-            message.AddTo("tyler.bischel@sendgrid.com");
-            message.From = new MailAddress("eric@sendgrid.com");
-            message.Text = "This is a test message.";
-            message.Subject = "hazaah!";
-            transport.Deliver(message);
+            var sendgrid = new SendGrid(header);
+
+            Console.WriteLine("testing");
+
+            var text = "My Text <%%>";
+            var html = "<body><p>hello,</p></body>";
+            var replace = "John";
+            var url = "http://www.example.com";
+            var landing = "this_landing";
+            sendgrid.EnableUnsubscribe(text, html, replace, url, landing);
+
+            Console.WriteLine(header.AsJson());
+
         }
     }
 }
