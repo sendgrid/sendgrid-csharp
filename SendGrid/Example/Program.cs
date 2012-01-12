@@ -13,9 +13,9 @@ namespace Example
     {
         static void Main(string[] args)
         {
-            var credentials = new NetworkCredential("cjbuchmann", "Gadget_15");
-            var transport = SMTP.GenerateInstance(credentials);
             var header = new Header();
+            var transport = SMTP.GenerateInstance(new NetworkCredential("sgrid_username", "sgrid_password"));
+
             var message = new SendGrid(header);
             message.AddTo("eric.becking@sendgrid.com");
             message.From = new MailAddress("eric@sendgrid.com");

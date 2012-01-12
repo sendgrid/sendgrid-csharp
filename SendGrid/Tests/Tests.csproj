@@ -55,6 +55,7 @@
     <Compile Include="TestHeader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestJsonUtils.cs" />
+    <Compile Include="TestSendgrid.cs" />
     <Compile Include="TestSendgridMessageSetup.cs" />
     <Compile Include="TestTreeNode.cs" />
     <Compile Include="Transport\TestREST.cs" />

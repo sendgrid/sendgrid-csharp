@@ -10,7 +10,13 @@ namespace Tests.Transport
     class TestREST
     {
         [Test]
-        public void Deliver()
+        public void TestDeliver()
+        {
+            
+        }
+
+        [Test]
+        public void TestConstructor()
         {
             
         }
