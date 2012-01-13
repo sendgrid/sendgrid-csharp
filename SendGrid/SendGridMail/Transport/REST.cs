@@ -46,8 +46,17 @@ namespace SendGridMail.Transport
             message.To.ToList().ForEach(a => addQueryParam("to[]", a.Address));
             message.Bcc.ToList().ForEach(a => addQueryParam("bcc[]", a.Address));
             message.Cc.ToList().ForEach(a => addQueryParam("cc[]", a.Address));
-            //_queryParameters["toname[]"] = String.Join(",", message.To.Select(a => a.DisplayName)); // message.To.First().ToString();
+
+            message.To.ToList().ForEach(a => addQueryParam("toname[]", a.DisplayName));
+
+            addQueryParam("headers", Utils.SerializeDictionary(message.Headers));
+
+            message.ReplyTo.ToList().ForEach(a => addQueryParam("replyto", a.Address));
+            //addQueryParam("", message.From.Address);
+
             addQueryParam("from", message.From.Address);
+            addQueryParam("fromname", message.From.DisplayName);
+
             addQueryParam("subject", message.Subject);
             addQueryParam("text", message.Text);
             addQueryParam("html", message.Html);
@@ -98,7 +107,7 @@ namespace SendGridMail.Transport
 
         private string FetchQueryString()
         {
-            return String.Join("&", _query.Select(kvp => kvp.Key + "=" + kvp.Value));
+            return String.Join("&", _query.Where(kvp => !String.IsNullOrEmpty(kvp.Value)).Select(kvp => kvp.Key + "=" + kvp.Value));
         }
     }
 }

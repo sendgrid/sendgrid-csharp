@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
@@ -57,7 +58,19 @@ namespace Example
                     message.AddCc(cc);
                 }
             }
-            
+
+            var headers = new Dictionary<String, String>
+                {
+                    {"key1", "value1"}, 
+                    {"key2", "value2"}, 
+                    {"icanhazcheeze", "kthnxbye"}
+                };
+
+            message.AddHeaders(headers);
+
+            //var replyTo = new List<MailAddress> { new MailAddress("tyler.bischel@sendgrid.com") };
+
+            //message.ReplyTo = replyTo.ToArray();
 
             //set the sender
             message.From = new MailAddress(_from);
@@ -67,6 +80,8 @@ namespace Example
 
             //set the message subject
             message.Subject = "Hello World Simple Test";
+
+            //Utils.PrepareAttachments();
 
             //create an instance of the SMTP transport mechanism
             var restInstance = new REST(new NetworkCredential(_username, _password));

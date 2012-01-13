@@ -155,11 +155,11 @@ namespace SendGridMail
             public String ToJson()
             {
                 if (_branches.Count > 0)
-                    return "{" + String.Join(",", _branches.Keys.Select(k => JsonUtils.Serialize(k)  + " : " + _branches[k].ToJson())) + "}";
+                    return "{" + String.Join(",", _branches.Keys.Select(k => Utils.Serialize(k)  + " : " + _branches[k].ToJson())) + "}";
                 if (_leaf != null)
-                    return JsonUtils.Serialize(_leaf);
+                    return Utils.Serialize(_leaf);
                 if (_array != null)
-                    return "[" + String.Join(", ", _array.Select(i => JsonUtils.Serialize(i))) + "]";
+                    return "[" + String.Join(", ", _array.Select(i => Utils.Serialize(i))) + "]";
                 return "{}";
             }
 

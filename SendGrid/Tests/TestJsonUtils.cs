@@ -10,8 +10,8 @@ namespace Tests
         [Test]
         public void TestSerialize()
         {
-            Assert.AreEqual("1", JsonUtils.Serialize(1));
-            Assert.AreEqual("\"\\\"foo\\\"\"", JsonUtils.Serialize("\"foo\""));
+            Assert.AreEqual("1", Utils.Serialize(1));
+            Assert.AreEqual("\"\\\"foo\\\"\"", Utils.Serialize("\"foo\""));
         }
     }
 }
