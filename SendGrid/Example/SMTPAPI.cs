@@ -25,7 +25,7 @@ namespace Example
         public void SimpleHTMLEmail()
         {
             //create a new message object
-            var message = new SendGrid(new Header());
+            var message = SendGrid.GenerateInstance();
 
             //set the message recipients
             foreach(string recipient in _to)
@@ -52,7 +52,7 @@ namespace Example
         public void SimplePlaintextEmail()
         {
             //create a new message object
-            var message = new SendGrid(new Header());
+            var message = SendGrid.GenerateInstance();
 
             //set the message recipients
             foreach(string recipient in _to)
@@ -80,7 +80,7 @@ namespace Example
         {
             var header = new Header();
             //create a new message object
-            var message = new SendGrid(header);
+            var message = SendGrid.GenerateInstance();
 
             //set the message recipients
             foreach (string recipient in _to)
@@ -114,7 +114,7 @@ namespace Example
         {
             var header = new Header();
             //create a new message object
-            var message = new SendGrid(header);
+            var message = SendGrid.GenerateInstance();
 
             //set the message recipients
             foreach (string recipient in _to)

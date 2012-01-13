@@ -18,7 +18,7 @@ namespace Tests
             var test = new Header();
             test.AddSubVal("foo", new List<string>{"bar", "raz"});
             var result = test.AsJson();
-            Assert.AreEqual("{\"data\" : {\"sub\" : {\"foo\" : [\"bar\", \"raz\"]}}}", result);            
+            Assert.AreEqual("{\"sub\" : {\"foo\" : [\"bar\", \"raz\"]}}", result);            
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace Tests
             var test = new Header();
             test.AddUniqueIdentifier(new Dictionary<string, string>(){{"foo", "bar"}});
             var result = test.AsJson();
-            Assert.AreEqual("{\"data\" : {\"unique_args\" : {\"foo\" : \"bar\"}}}", result);
+            Assert.AreEqual("{\"unique_args\" : {\"foo\" : \"bar\"}}", result);
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace Tests
             var test = new Header();
             test.SetCategory("foo");
             var result = test.AsJson();
-            Assert.AreEqual("{\"data\" : {\"category\" : \"foo\"}}", result);
+            Assert.AreEqual("{\"category\" : \"foo\"}", result);
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Tests
             var test = new Header();
             test.Enable("foo");
             var result = test.AsJson();
-            Assert.AreEqual("{\"data\" : {\"filters\" : {\"foo\" : {\"settings\" : {\"enable\" : \"1\"}}}}}", result); 
+            Assert.AreEqual("{\"filters\" : {\"foo\" : {\"settings\" : {\"enable\" : \"1\"}}}}", result); 
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Tests
             var test = new Header();
             test.Disable("foo");
             var result = test.AsJson();
-            Assert.AreEqual("{\"data\" : {\"filters\" : {\"foo\" : {\"settings\" : {\"enable\" : \"0\"}}}}}", result);
+            Assert.AreEqual("{\"filters\" : {\"foo\" : {\"settings\" : {\"enable\" : \"0\"}}}}", result);
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Tests
             var test = new Header();
             test.AddFilterSetting("foo", new List<string> { "a", "b" }, "bar");
             var result = test.AsJson();
-            Assert.AreEqual("{\"data\" : {\"filters\" : {\"foo\" : {\"settings\" : {\"a\" : {\"b\" : \"bar\"}}}}}}", result);
+            Assert.AreEqual("{\"filters\" : {\"foo\" : {\"settings\" : {\"a\" : {\"b\" : \"bar\"}}}}", result);
             
         }
 
@@ -75,7 +75,7 @@ namespace Tests
             var mime = new MailMessage();
             test.AddHeader(mime);
             var result = mime.Headers.Get("x-smtpapi");
-            Assert.AreEqual("{\"data\" : {\"sub\" : {\"foo\" : [\"a\", \"b\"]}}}", result);
+            Assert.AreEqual("{\"sub\" : {\"foo\" : [\"a\", \"b\"]}}", result);
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace Tests
             test = new Header();
             test.AddSubVal("foo", new List<string>{"a", "b"});
             result = test.AsJson();
-            Assert.AreEqual("{\"data\" : {\"sub\" : {\"foo\" : [\"a\", \"b\"]}}}", result);
+            Assert.AreEqual("{\"sub\" : {\"foo\" : [\"a\", \"b\"]}}", result);
         }
     }
 }
