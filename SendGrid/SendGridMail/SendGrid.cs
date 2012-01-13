@@ -56,7 +56,6 @@ namespace SendGridMail
             Bcc = bcc;
 
             message.Subject = subject;
-            message.SubjectEncoding = Encoding.GetEncoding(charset);
 
             Text = text;
             Html = html;
@@ -235,7 +234,6 @@ namespace SendGridMail
             }
         }
 
-        public Attachment[] Attachments { get; set; }
         private List<Attachment> _attachments = new List<Attachment>(); 
         public Attachment[] Attachments
         {
@@ -440,12 +438,10 @@ namespace SendGridMail
                 }                
             }
 
-            if(Attachments != null)
-            {
-                foreach (Attachment attachment in Attachments)
-                {
-                    message.Attachments.Add(attachment);
-                }                
+            if (Text != null)
+            { // Encoding.GetEncoding(charset)
+                AlternateView plainView = AlternateView.CreateAlternateViewFromString(Text, null, "text/plain");
+                message.AlternateViews.Add(plainView);
             }
 
             if (Html != null)
@@ -453,14 +449,9 @@ namespace SendGridMail
                 AlternateView htmlView = AlternateView.CreateAlternateViewFromString(Html, null, "text/html");
                 message.AlternateViews.Add(htmlView);
             }
-
-            if (Text != null)
-            {
-                AlternateView plainView = AlternateView.CreateAlternateViewFromString(Text, null, "text/plain");
-                message.AlternateViews.Add(plainView);
-            }
-
-            message.BodyEncoding = Encoding.GetEncoding(charset);
+            
+            //message.SubjectEncoding = Encoding.GetEncoding(charset);
+            //message.BodyEncoding = Encoding.GetEncoding(charset);
 
             return message;
         }
