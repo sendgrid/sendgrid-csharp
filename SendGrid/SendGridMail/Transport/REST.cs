@@ -77,26 +77,11 @@ namespace SendGridMail.Transport
             Console.WriteLine(restCommand.AbsoluteUri);
 
             //if we have message attachments, we'll send them via the WebFileUpload
-            if(message.Attachments.Length > 0)
+            /*if(message.Attachments.Length > 0)
             {
                 Console.WriteLine("Initializing the File Upload Library");
-
-                //Console.WriteLine("file is "+message.Attachments.First());
-                //Console.WriteLine("DONE");
-
-                /*var collection = new NameValueCollection();
-                collection.Add("api_user", "cjbuchmann");
-                collection.Add("api_key", "Gadget_15");
-                collection.Add("from", "cj.buchmann@sendgrid.com");
-                collection.Add("to", "cj.buchmann@sendgrid.com");
-                collection.Add("subject", "hello world test");
-                collection.Add("text", "hello world plain text");*/
                 new WebFileUpload(request).testNoAttach(message.Attachments.First());
-                //string outdata = WebFileUpload.UploadFileEx(@"D:\att_proj\21.jpg", "https://sendgrid.com/api/mail.send.xml", "files[file1.jpg]", "", collection);
-            }
-
-            Console.WriteLine(restCommand.AbsoluteUri);
-            Console.WriteLine("DONE!");
+            }*/
 
             var response = (HttpWebResponse)request.GetResponse();
 

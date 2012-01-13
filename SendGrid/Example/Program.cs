@@ -21,10 +21,13 @@ namespace Example
             message.AddTo("cj.buchmann@sendgrid.com");
             message.From = new MailAddress("cj.buchmann@sendgrid.com");
             message.Html = "<div>hello world</div>";
-            message.Subject = "THIS STUPID SUBJECT";
+            message.Subject = "Hello World SUbject";
             message.AddAttachment(@"D:\att_proj\21.jpg");
 
             restInstance.Deliver(message);
+
+            Console.WriteLine("Message Sent");
+            Console.WriteLine("DONE!");
         }
 
         /*static void Main(string[] args)
