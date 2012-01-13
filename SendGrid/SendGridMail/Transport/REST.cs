@@ -23,7 +23,12 @@ namespace SendGridMail.Transport
         private readonly String _restEndpoint;
         private readonly String _format;
 
-        public REST(NetworkCredential credentials, String url = Endpoint)
+        public static REST GetInstance(NetworkCredential credentials, String url = Endpoint)
+        {
+            return new REST(credentials, url);
+        }
+
+        internal REST(NetworkCredential credentials, String url = Endpoint)
         {
             _query = new List<KeyValuePair<string, string>>();
             _queryParameters = HttpUtility.ParseQueryString(String.Empty);
@@ -74,6 +79,7 @@ namespace SendGridMail.Transport
             Console.WriteLine("DONE!");
 
             var request = (HttpWebRequest)WebRequest.Create(restCommand.AbsoluteUri);
+            request.Method = "POST";
             var response = (HttpWebResponse)request.GetResponse();
 
             // Basically, read the entire message out before we parse the XML.

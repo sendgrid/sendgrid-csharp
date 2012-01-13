@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using SendGridMail.Transport;
 
 namespace SendGridMail
 {
@@ -26,9 +28,63 @@ namespace SendGridMail
         private const String ReHtml = @"<\%\s*[^\s]+\s*\%>";
         #endregion
 
+        #region Initialization and Constructors
+        /// <summary>
+        /// Creates an instance of SendGrid's custom message object
+        /// </summary>
+        /// <returns></returns>
+        public static SendGrid GenerateInstance()
+        {
+            var header = new Header();
+            return new SendGrid(header);
+        }
+
+        /// <summary>
+        /// Creates an instance of SendGrid's custom message object with mail parameters
+        /// </summary>
+        /// <param name="from">The email address of the sender</param>
+        /// <param name="to">An array of the recipients</param>
+        /// <param name="cc">Supported over SMTP, with future plans for support in the REST transport</param>
+        /// <param name="bcc">Blind recipients</param>
+        /// <param name="subject">The subject of the message</param>
+        /// <param name="html">the html content for the message</param>
+        /// <param name="text">the plain text part of the message</param>
+        /// <param name="transport">Transport class to use for sending the message</param>
+        /// <returns></returns>
+        public static SendGrid GenerateInstance(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc,
+                                                String subject, String html, String text, TransportType transport)
+        {
+            var header = new Header();
+            return new SendGrid(from, to, cc, bcc, subject, html, text, transport, header);
+        }
+
+        internal SendGrid(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc, 
+            String subject, String html, String text, TransportType transport, IHeader header = null ) : this(header)
+        {
+            From = from;
+            To = to;
+            Cc = cc;
+            Bcc = bcc;
+
+            message.Subject = subject;
+
+            Text = text;
+            Html = html;
+        }
+
+        internal SendGrid(IHeader header)
+        {
+            message = new MailMessage();
+            Header = header;
+            Headers = new Dictionary<string, string>();
+
+            //initialize the filters, for use within the library
+            this.InitializeFilters();
+        }
+
         public void InitializeFilters()
         {
-            this._filters = 
+            this._filters =
             new Dictionary<string, string>
             {
                 {"Gravatar", "gravatar"},
@@ -43,34 +99,7 @@ namespace SendGridMail
                 {"BypassListManagement", "bypass_list_management"}
             };
         }
-
-        public SendGrid(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc, 
-            String subject, String html, String text, TransportType transport, IHeader header = null )
-        {
-            message = new MailMessage();
-            Header = header;
-            Headers = new Dictionary<string, string>();
-
-            From = from;
-            To = to;
-            Cc = cc;
-            Bcc = bcc;
-
-            message.Subject = subject;
-
-            Text = text;
-            Html = html;
-        }
-
-        public SendGrid(IHeader header)
-        {
-            message = new MailMessage();
-            Header = header;
-            Headers = new Dictionary<string, string>();
-
-            //initialize the filters, for use within the library
-            this.InitializeFilters();
-        }
+        #endregion
 
         #region Properties
         public MailAddress From
@@ -456,6 +485,9 @@ namespace SendGridMail
 
             Headers.Keys.ToList().ForEach(k => message.Headers.Add(k, Headers[k]));
 
+            message.Attachments.Clear();
+            message.AlternateViews.Clear();
+
             if(Attachments != null)
             {
                 foreach (Attachment attachment in Attachments)
@@ -465,7 +497,7 @@ namespace SendGridMail
             }
 
             if (Text != null)
-            { // Encoding.GetEncoding(charset)
+            {
                 AlternateView plainView = AlternateView.CreateAlternateViewFromString(Text, null, "text/plain");
                 message.AlternateViews.Add(plainView);
             }
@@ -482,12 +514,36 @@ namespace SendGridMail
             return message;
         }
 
-        public void Mail()
+        /// <summary>
+        /// Helper function lets us look at the mime before it is sent
+        /// </summary>
+        /// <param name="directory">directory in which we store this mime message</param>
+        internal void SaveMessage(String directory)
         {
-            SmtpClient client = new SmtpClient("localhost");
-            client.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-            client.PickupDirectoryLocation = @"C:\temp";
-            client.Send(message);
+            var client = new SmtpClient("localhost")
+                             {
+                                 DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
+                                 PickupDirectoryLocation = @"C:\temp"
+                             };
+            var msg = CreateMimeMessage();
+            client.Send(msg);
+        }
+
+        public void Mail(NetworkCredential credentials)
+        {
+            ITransport transport;
+            switch (Transport)
+            {
+                case TransportType.SMTP:
+                    transport = SMTP.GenerateInstance(credentials);
+                    break;
+                case TransportType.REST:
+                    transport = REST.GetInstance(credentials);
+                    break;
+                default:
+                    throw new ArgumentException("Transport method not specified");
+            }
+            transport.Deliver(this);
         }
     }
 }
