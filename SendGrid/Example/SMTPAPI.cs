@@ -28,10 +28,13 @@ namespace Example
             var message = new SendGrid(new Header());
 
             //set the message recipients
-            message.AddTo("cj.buchmann@sendgrid.com");
+            foreach(string recipient in _to)
+            {
+                message.AddTo(recipient);
+            }
 
             //set the sender
-            message.From = new MailAddress("eric@sendgrid.com");
+            message.From = new MailAddress(_from);
 
             //set the message body
             message.Html = "<html><p>Hello</p><p>World</p></html>";
@@ -52,10 +55,13 @@ namespace Example
             var message = new SendGrid(new Header());
 
             //set the message recipients
-            message.AddTo("cj.buchmann@sendgrid.com");
+            foreach(string recipient in _to)
+            {
+                message.AddTo(recipient);
+            }
 
             //set the sender
-            message.From = new MailAddress("eric@sendgrid.com");
+            message.From = new MailAddress(_from);
 
             //set the message body
             message.Text = "Hello World Plain Text";
@@ -77,10 +83,47 @@ namespace Example
             var message = new SendGrid(header);
 
             //set the message recipients
-            message.AddTo("cj.buchmann@sendgrid.com");
+            foreach (string recipient in _to)
+            {
+                message.AddTo(recipient);
+            }
 
             //set the sender
-            message.From = new MailAddress("cj.buchmann@sendgrid.com");
+            message.From = new MailAddress(_from);
+
+            //set the message body
+            message.Html = "<p style='color:red';>Hello World Gravatar Email</p>";
+
+            //set the message subject
+            message.Subject = "Hello World Simple Test";
+
+            //create an instance of the SMTP transport mechanism
+            var smtpInstance = SMTP.GenerateInstance(new NetworkCredential(_username, _password));
+            
+            //enable gravatar
+            message.EnableGravatar();
+
+            Console.WriteLine(header.AsJson());
+
+            Console.WriteLine("done");
+            //send the mail
+            smtpInstance.Deliver(message);
+        }
+
+        public void EnableOpenTrackingEmail()
+        {
+            var header = new Header();
+            //create a new message object
+            var message = new SendGrid(header);
+
+            //set the message recipients
+            foreach (string recipient in _to)
+            {
+                message.AddTo(recipient);
+            }
+
+            //set the sender
+            message.From = new MailAddress(_from);
 
             //set the message body
             message.Html = "<p style='color:red';>Hello World Plain Text</p>";
@@ -90,9 +133,9 @@ namespace Example
 
             //create an instance of the SMTP transport mechanism
             //var smtpInstance = SMTP.GenerateInstance(new NetworkCredential(_username, _password));
-            
+
             //enable gravatar
-            message.EnableGravatar();
+            message.EnableOpenTracking();
 
             Console.WriteLine(header.AsJson());
 

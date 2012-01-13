@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Web;
 using System.Xml;
@@ -17,35 +18,51 @@ namespace SendGridMail.Transport
         public const String JsonFormat = "json";
         public const String XmlFormat = "xml";
 
+        private readonly List<KeyValuePair<String, String>> _query;
         private readonly NameValueCollection _queryParameters;
         private readonly String _restEndpoint;
         private readonly String _format;
 
         public REST(NetworkCredential credentials, String url = Endpoint)
         {
+            _query = new List<KeyValuePair<string, string>>();
             _queryParameters = HttpUtility.ParseQueryString(String.Empty);
-            _queryParameters["api_user"] = credentials.UserName;
-            _queryParameters["api_key"] = credentials.Password;
+
+            addQueryParam("api_user", credentials.UserName);
+            addQueryParam("api_key", credentials.Password);
 
             _format = XmlFormat;
             _restEndpoint = url + "." + _format;
         }
 
+        private void addQueryParam(String key, String value)
+        {
+            _query.Add(new KeyValuePair<string, string>(key, value));
+        }
+
         public void Deliver(ISendGrid message)
         {
             // TODO Fix this to include all recipients
-            _queryParameters["to"] = message.To.First().ToString();
-            _queryParameters["from"] = message.From.ToString();
-            _queryParameters["subject"] = message.Subject;
-            _queryParameters["text"] = message.Text;
-            _queryParameters["html"] = message.Html;
+            message.To.ToList().ForEach(a => addQueryParam("to[]", a.Address));
+            message.Bcc.ToList().ForEach(a => addQueryParam("bcc[]", a.Address));
+            message.Cc.ToList().ForEach(a => addQueryParam("cc[]", a.Address));
+            //_queryParameters["toname[]"] = String.Join(",", message.To.Select(a => a.DisplayName)); // message.To.First().ToString();
+            addQueryParam("from", message.From.Address);
+            addQueryParam("subject", message.Subject);
+            addQueryParam("text", message.Text);
+            addQueryParam("html", message.Html);
 
             String smtpapi = message.Header.AsJson();
 
             if (!String.IsNullOrEmpty(smtpapi))
-                _queryParameters["x-smtpapi"] = smtpapi;
+                addQueryParam("x-smtpapi", smtpapi);
 
-            var restCommand = new Uri(_restEndpoint + "?" + _queryParameters);
+            var queryString = FetchQueryString();
+
+            var restCommand = new Uri(_restEndpoint + "?" + queryString);
+
+            Console.WriteLine(restCommand.AbsoluteUri);
+            Console.WriteLine("DONE!");
 
             var request = (HttpWebRequest)WebRequest.Create(restCommand.AbsoluteUri);
             var response = (HttpWebResponse)request.GetResponse();
@@ -77,6 +94,11 @@ namespace SendGridMail.Transport
                     }
                 }
             }
+        }
+
+        private string FetchQueryString()
+        {
+            return String.Join("&", _query.Select(kvp => kvp.Key + "=" + kvp.Value));
         }
     }
 }

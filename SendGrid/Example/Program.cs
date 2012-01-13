@@ -18,11 +18,23 @@ namespace Example
             var from = "cj.buchmann@sendgrid.com";
             var to = new List<String>
                          {
-                             "cj.buchmann@gmail.com"
+                             "cj.buchmann@sendgrid.com",
+                             "tyler.bischel@sendgrid.com"
                          };
+
+            var bcc = new List<string>
+                          {
+                              "eric@sendgrid.com"
+                          };            
+            
+            var cc = new List<string>
+                          {
+                              "eric@sendgrid.com"
+                          };
 
             //initialize the SMTPAPI example class
             var smtpapi = new SMTPAPI(username, password, from, to);
+            var restpapi = new RESTAPI(username, password, from, to, null, cc);
 
             //send a simple HTML encoded email.
             //smtpapi.SimpleHTMLEmail();
@@ -31,7 +43,12 @@ namespace Example
             //smtpapi.SimplePlaintextEmail();
 
             //send a gravatar enabled email.
-            smtpapi.EnableGravatarEmail();
+            //smtpapi.EnableGravatarEmail();
+
+            //send an open tracking enabled email.
+            //smtpapi.EnableOpenTrackingEmail();
+
+            restpapi.SimpleHTMLEmail();
         }
     }
 }
