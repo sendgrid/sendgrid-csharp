@@ -18,8 +18,7 @@ namespace Example
             var from = "cj.buchmann@sendgrid.com";
             var to = new List<String>
                          {
-                             "cj.buchmann@sendgrid.com",
-                             "tyler.bischel@sendgrid.com"
+                             "cj.buchmann@sendgrid.com"
                          };
 
             var bcc = new List<string>
@@ -34,7 +33,7 @@ namespace Example
 
             //initialize the SMTPAPI example class
             var smtpapi = new SMTPAPI(username, password, from, to);
-            var restpapi = new RESTAPI(username, password, from, to, null, cc);
+            var restpapi = new RESTAPI(username, password, from, to, null, null);
 
             //send a simple HTML encoded email.
             //smtpapi.SimpleHTMLEmail();

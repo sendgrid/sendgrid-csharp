@@ -49,6 +49,7 @@ namespace SendGridMail
         {
             message = new MailMessage();
             Header = header;
+            Headers = new Dictionary<string, string>();
 
             From = from;
             To = to;
@@ -65,6 +66,7 @@ namespace SendGridMail
         {
             message = new MailMessage();
             Header = header;
+            Headers = new Dictionary<string, string>();
 
             //initialize the filters, for use within the library
             this.InitializeFilters();
@@ -80,6 +82,22 @@ namespace SendGridMail
             set
             {
                 if (value != null) message.From = value;
+            }
+        }
+
+        public MailAddress[] ReplyTo
+        {
+            get
+            {
+                return message.ReplyToList.ToArray();
+            }
+            set
+            {
+                message.ReplyToList.Clear();
+                foreach (var replyTo in value)
+                {
+                    message.ReplyToList.Add(replyTo);
+                }
             }
         }
 
@@ -143,6 +161,7 @@ namespace SendGridMail
             }
         }
 
+        public Dictionary<String, String> Headers { get; set; }
         public IHeader Header { get; set; }
         public String Html { get; set; }
         public String Text { get; set; }
@@ -272,6 +291,11 @@ namespace SendGridMail
 
             var rcpts = tos.Union(ccs.Union(bccs)).Select(address => address.Address);
             return rcpts;
+        }
+
+        public void AddHeaders(IDictionary<string, string> headers)
+        {
+            headers.Keys.ToList().ForEach(key => Headers[key] = headers[key]);
         }
         #endregion
 
@@ -429,6 +453,8 @@ namespace SendGridMail
 
             if (!String.IsNullOrEmpty(smtpapi))
                 message.Headers.Add("X-Smtpapi", smtpapi);
+
+            Headers.Keys.ToList().ForEach(k => message.Headers.Add(k, Headers[k]));
 
             if(Attachments != null)
             {

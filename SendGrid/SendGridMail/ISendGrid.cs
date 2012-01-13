@@ -29,8 +29,10 @@ namespace SendGridMail
         MailAddress[] To { get; set; }
         MailAddress[] Cc { get; }
         MailAddress[] Bcc { get; }
+        MailAddress[] ReplyTo { get; set; }
         Attachment[] Attachments { get; set; }
         String Subject { get; set; }
+        Dictionary<String, String> Headers { get; set; }
         IHeader Header { get; set; }
         String Html { get; set; }
         String Text { get; set; }
@@ -137,6 +139,12 @@ namespace SendGridMail
         /// </summary>
         /// <returns></returns>
         IEnumerable<String> GetRecipients();
+
+        /// <summary>
+        /// Add custom headers to the message
+        /// </summary>
+        /// <param name="headers">key value pairs</param>
+        void AddHeaders(IDictionary<String, String> headers);
         #endregion
 
         #region SMTP API Functions
