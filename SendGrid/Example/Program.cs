@@ -13,10 +13,10 @@ namespace Example
     {
         static void Main(String[] args)
         {
-            var restInstance = new REST(new NetworkCredential("cjbuchmann", "Gadget_15"));
+            var restInstance = REST.GetInstance(new NetworkCredential("sgrid_username", "sgrid_email"));
 
             //create a new message object
-            var message = new SendGrid(new Header());
+            var message = SendGrid.GenerateInstance();
 
             message.AddTo("cj.buchmann@sendgrid.com");
             message.From = new MailAddress("cj.buchmann@sendgrid.com");
@@ -30,10 +30,11 @@ namespace Example
             Console.WriteLine("DONE!");
         }
 
+        // this code is used for the SMTPAPI examples
         /*static void Main(string[] args)
         {
-            var username = "cjbuchmann";
-            var password = "Gadget_15";
+            var username = "sgrid_username";
+            var password = "sgrid_email";
             var from = "cj.buchmann@sendgrid.com";
             var to = new List<String>
                          {

@@ -25,7 +25,13 @@ namespace SendGridMail.Transport
 
         private WebFileUpload _fileUpload;
 
-        public REST(NetworkCredential credentials, String url = Endpoint)
+
+        public static REST GetInstance(NetworkCredential credentials, String url = Endpoint)
+        {
+            return new REST(credentials, url);
+        }
+
+        internal REST(NetworkCredential credentials, String url = Endpoint)
         {
             _query = new List<KeyValuePair<string, string>>();
             _queryParameters = HttpUtility.ParseQueryString(String.Empty);
@@ -82,7 +88,6 @@ namespace SendGridMail.Transport
                 Console.WriteLine("Initializing the File Upload Library");
                 new WebFileUpload(request).testNoAttach(message.Attachments.First());
             }*/
-
             var response = (HttpWebResponse)request.GetResponse();
 
             // Basically, read the entire message out before we parse the XML.
