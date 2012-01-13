@@ -30,7 +30,7 @@ namespace Example
         public void SimpleHTMLEmail()
         {
             //create a new message object
-            var message = new SendGrid(new Header());
+            var message = SendGrid.GenerateInstance();
 
             //set the message recipients
 
@@ -86,7 +86,7 @@ namespace Example
             //Utils.PrepareAttachments();
 
             //create an instance of the SMTP transport mechanism
-            var restInstance = new REST(new NetworkCredential(_username, _password));
+            var restInstance = REST.GetInstance(new NetworkCredential(_username, _password));
 
             //send the mail
             restInstance.Deliver(message);
