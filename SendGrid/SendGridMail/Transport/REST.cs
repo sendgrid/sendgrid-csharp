@@ -48,6 +48,11 @@ namespace SendGridMail.Transport
             _query.Add(new KeyValuePair<string, string>(key, value));
         }
 
+        public void TestDeliver(ISendGrid Message)
+        {
+            new WebFileUpload(null).SendAttachments();
+        }
+
         public void Deliver(ISendGrid message)
         {
             // TODO Fix this to include all recipients

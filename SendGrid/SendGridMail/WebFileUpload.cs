@@ -7,10 +7,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using CodeScales.Http;
+using CodeScales.Http.Common;
+using CodeScales.Http.Entity;
+using CodeScales.Http.Entity.Mime;
+using CodeScales.Http.Methods;
 
 namespace SendGridMail
 {
-    class WebFileUpload
+    internal class WebFileUpload
     {
         private HttpWebRequest _request;
         private List<Attachment> _attachments;
@@ -23,10 +28,50 @@ namespace SendGridMail
 
         public WebFileUpload(HttpWebRequest request)
         {
-            
+
         }
 
-        public void TestAddAttachment(Attachment attachment)
+        public void SendAttachments()
+        {
+            HttpClient client = new HttpClient();
+                       //https://sendgrid.com/api/mail.send
+            var url = "http://sendgrid.com/api/mail.send.xml";
+            var notUrl = "http://www.postbin.org/1hv8rbe";
+            HttpPost postMethod = new HttpPost(new Uri(url));
+
+
+
+            //UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(nameValuePairList, Encoding.UTF8);
+            //postMethod.Entity = formEntity;
+
+
+
+            MultipartEntity multipartEntity = new MultipartEntity();
+            postMethod.Entity = multipartEntity;
+
+            multipartEntity.AddBody(new StringBody(Encoding.UTF8, "api_user", "cjbuchmann"));
+            multipartEntity.AddBody(new StringBody(Encoding.UTF8, "api_key", "gadget15"));
+            multipartEntity.AddBody(new StringBody(Encoding.UTF8, "to", "cj.buchmann@sendgrid.com"));
+            multipartEntity.AddBody(new StringBody(Encoding.UTF8, "from", "cj.buchmann@sendgrid.com"));
+            multipartEntity.AddBody(new StringBody(Encoding.UTF8, "subject", "Hello World HttpClient Test"));
+            multipartEntity.AddBody(new StringBody(Encoding.UTF8, "text", "here is some awesome text"));
+
+
+
+            FileInfo fileInfo = new FileInfo(@"D:\att_proj\2.JPG");
+            FileBody fileBody = new FileBody("files[file1.jpg]", "myfile.jpg", fileInfo);
+
+            multipartEntity.AddBody(fileBody);
+
+            HttpResponse response = client.Execute(postMethod);
+
+            Console.WriteLine("Response Code: " + response.ResponseCode);
+            Console.WriteLine("Response Content: " + EntityUtils.ToString(response.Entity));
+
+            Console.WriteLine("done");
+        }
+
+    /*public void TestAddAttachment(Attachment attachment)
         {
             WebClient myWebClient = new WebClient();
             NameValueCollection collection = new NameValueCollection();
@@ -37,7 +82,7 @@ namespace SendGridMail
 
             byte[] responseArray = myWebClient.UploadValues("https://sendgrid.com/api/mail.send.xml", collection);
             Console.WriteLine("\nResponse received was :\n{0}", Encoding.ASCII.GetString(responseArray));
-        }
+        }*/
 
         public void AddAttachment(String filename)
         {
@@ -54,7 +99,7 @@ namespace SendGridMail
             return _attachments;
         }
 
-        public void SendAttachments()
+        /*public void SendAttachments()
         {
             WebResponse _response = null;
 
@@ -71,6 +116,6 @@ namespace SendGridMail
             }
 
             _response.Close();
-        }
+        }*/
     }
 }
