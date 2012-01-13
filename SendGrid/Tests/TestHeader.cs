@@ -63,7 +63,7 @@ namespace Tests
             var test = new Header();
             test.AddFilterSetting("foo", new List<string> { "a", "b" }, "bar");
             var result = test.AsJson();
-            Assert.AreEqual("{\"filters\" : {\"foo\" : {\"settings\" : {\"a\" : {\"b\" : \"bar\"}}}}", result);
+            Assert.AreEqual("{\"filters\" : {\"foo\" : {\"settings\" : {\"a\" : {\"b\" : \"bar\"}}}}}", result);
             
         }
 
