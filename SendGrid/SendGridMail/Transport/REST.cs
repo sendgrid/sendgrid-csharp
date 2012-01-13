@@ -23,6 +23,8 @@ namespace SendGridMail.Transport
         private readonly String _restEndpoint;
         private readonly String _format;
 
+        private WebFileUpload _fileUpload;
+
         public REST(NetworkCredential credentials, String url = Endpoint)
         {
             _query = new List<KeyValuePair<string, string>>();
@@ -70,10 +72,32 @@ namespace SendGridMail.Transport
 
             var restCommand = new Uri(_restEndpoint + "?" + queryString);
 
+            var request = (HttpWebRequest)WebRequest.Create(restCommand.AbsoluteUri);
+
+            Console.WriteLine(restCommand.AbsoluteUri);
+
+            //if we have message attachments, we'll send them via the WebFileUpload
+            if(message.Attachments.Length > 0)
+            {
+                Console.WriteLine("Initializing the File Upload Library");
+
+                //Console.WriteLine("file is "+message.Attachments.First());
+                //Console.WriteLine("DONE");
+
+                /*var collection = new NameValueCollection();
+                collection.Add("api_user", "cjbuchmann");
+                collection.Add("api_key", "Gadget_15");
+                collection.Add("from", "cj.buchmann@sendgrid.com");
+                collection.Add("to", "cj.buchmann@sendgrid.com");
+                collection.Add("subject", "hello world test");
+                collection.Add("text", "hello world plain text");*/
+                new WebFileUpload(request).testNoAttach(message.Attachments.First());
+                //string outdata = WebFileUpload.UploadFileEx(@"D:\att_proj\21.jpg", "https://sendgrid.com/api/mail.send.xml", "files[file1.jpg]", "", collection);
+            }
+
             Console.WriteLine(restCommand.AbsoluteUri);
             Console.WriteLine("DONE!");
 
-            var request = (HttpWebRequest)WebRequest.Create(restCommand.AbsoluteUri);
             var response = (HttpWebResponse)request.GetResponse();
 
             // Basically, read the entire message out before we parse the XML.

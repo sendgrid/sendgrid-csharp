@@ -11,7 +11,23 @@ namespace Example
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(String[] args)
+        {
+            var restInstance = new REST(new NetworkCredential("cjbuchmann", "Gadget_15"));
+
+            //create a new message object
+            var message = new SendGrid(new Header());
+
+            message.AddTo("cj.buchmann@sendgrid.com");
+            message.From = new MailAddress("cj.buchmann@sendgrid.com");
+            message.Html = "<div>hello world</div>";
+            message.Subject = "THIS STUPID SUBJECT";
+            message.AddAttachment(@"D:\att_proj\21.jpg");
+
+            restInstance.Deliver(message);
+        }
+
+        /*static void Main(string[] args)
         {
             var username = "cjbuchmann";
             var password = "Gadget_15";
@@ -48,6 +64,6 @@ namespace Example
             //smtpapi.EnableOpenTrackingEmail();
 
             restpapi.SimpleHTMLEmail();
-        }
+        }*/
     }
 }

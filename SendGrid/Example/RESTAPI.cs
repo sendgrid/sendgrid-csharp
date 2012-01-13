@@ -81,6 +81,8 @@ namespace Example
             //set the message subject
             message.Subject = "Hello World Simple Test";
 
+            message.AddAttachment(@"D:\att_proj\21.jpg");
+
             //Utils.PrepareAttachments();
 
             //create an instance of the SMTP transport mechanism
