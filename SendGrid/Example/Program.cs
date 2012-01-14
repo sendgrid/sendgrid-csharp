@@ -11,28 +11,31 @@ namespace Example
 {
     class Program
     {
-        /*static void Main(String[] args)
+        static void Main(String[] args)
         {
-            var restInstance = REST.GetInstance(new NetworkCredential("cjbuchmann", "gadget15"));
+            var restInstance = REST.GetInstance(new NetworkCredential("sgrid_username", "sgrid_password"));
 
             //create a new message object
             var message = SendGrid.GenerateInstance();
 
             message.AddTo("cj.buchmann@sendgrid.com");
+            message.AddTo("tyler.bischel@sendgrid.com");
+            message.AddTo("kyle.partridge@sendgrid.com");
             message.From = new MailAddress("cj.buchmann@sendgrid.com");
             message.Html = "<div>hello world</div>";
             message.Subject = "Hello World SUbject";
             message.AddAttachment(@"C:\Users\Public\Pictures\Sample Pictures\Koala.jpg");
-            message.AddAttachment(@"C:\Users\Public\Pictures\Sample Pictures\Penguins.jpg");
+            message.AddAttachment(@"C:\Users\Public\Pictures\Sample Pictures\Jellyfish.jpg");
 
             restInstance.Deliver(message);
 
             Console.WriteLine("Message Sent");
             Console.WriteLine("DONE!");
-        }*/
+            Console.ReadLine();
+        }
 
         // this code is used for the SMTPAPI examples
-        static void Main(string[] args)
+        /*static void Main(string[] args)
         {
             var username = "cjbuchmann";
             var password = "gadget15";
@@ -71,6 +74,6 @@ namespace Example
             smtpapi.EnableClickTrackingEmail();
 
             Console.ReadLine();
-        }
+        }*/
     }
 }
