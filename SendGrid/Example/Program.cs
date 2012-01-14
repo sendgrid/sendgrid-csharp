@@ -13,7 +13,7 @@ namespace Example
     {
         static void Main(String[] args)
         {
-            var restInstance = REST.GetInstance(new NetworkCredential("cjbuchmann", "Gadget_15"));
+            var restInstance = REST.GetInstance(new NetworkCredential("cjbuchmann", "gadget15"));
 
             //create a new message object
             var message = SendGrid.GenerateInstance();
@@ -22,10 +22,10 @@ namespace Example
             message.From = new MailAddress("cj.buchmann@sendgrid.com");
             message.Html = "<div>hello world</div>";
             message.Subject = "Hello World SUbject";
-            message.AddAttachment(@"D:\att_proj\21.jpg");
+            message.AddAttachment(@"C:\Users\Public\Pictures\Sample Pictures\Koala.jpg");
+            message.AddAttachment(@"C:\Users\Public\Pictures\Sample Pictures\Penguins.jpg");
 
-            //restInstance.Deliver(message);
-            restInstance.TestDeliver(message);
+            restInstance.Deliver(message);
 
             Console.WriteLine("Message Sent");
             Console.WriteLine("DONE!");
