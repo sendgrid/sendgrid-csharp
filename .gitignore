@@ -1,0 +1,14 @@
+SendGrid/Example/bin/
+SendGrid/Example/obj/
+SendGrid/SendGrid.sln.DotSettings.user
+SendGrid/SendGrid/bin/
+SendGrid/SendGrid/obj/
+SendGrid/Tests/bin/
+SendGrid/Tests/obj/
+SendGrid/_ReSharper.SendGrid/
+*.suo
+SendGrid/Example/bin/
+SendGrid/Example/obj/
+SendGrid/*/bin/
+SendGrid/*/obj/
+

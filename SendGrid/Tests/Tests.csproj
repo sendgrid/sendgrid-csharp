@@ -54,16 +54,25 @@
   <ItemGroup>
     <Compile Include="TestHeader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestJsonUtils.cs" />
+    <Compile Include="TestSendgrid.cs" />
+    <Compile Include="TestSendgridMessageSetup.cs" />
+    <Compile Include="TestTreeNode.cs" />
+    <Compile Include="Transport\TestREST.cs" />
+    <Compile Include="Transport\TestSMTP.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SendGrid\Mail.csproj">
+    <ProjectReference Include="..\SendGridMail\Mail.csproj">
       <Project>{3C687BEF-FF50-44AD-8315-2D4237281AF8}</Project>
       <Name>Mail</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
