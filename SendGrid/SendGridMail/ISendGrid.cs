@@ -31,7 +31,7 @@ namespace SendGridMail
         MailAddress[] Cc { get; }
         MailAddress[] Bcc { get; }
         MailAddress[] ReplyTo { get; set; }
-        Attachment[] Attachments { get; set; }
+        String[] Attachments { get; set; }
         String Subject { get; set; }
         Dictionary<String, String> Headers { get; set; }
         IHeader Header { get; set; }
@@ -120,20 +120,6 @@ namespace SendGridMail
         /// </summary>
         /// <param name="filePath"></param>
         void AddAttachment(String filePath);
-        /// <summary>
-        /// Add an attachment to the message
-        /// The 'attachment' paramater expects an argument of the Attachment type.
-        /// </summary>
-        /// <param name="attachment"></param>
-        void AddAttachment(Attachment attachment);
-        /// <summary>
-        /// Add an attachment to the message
-        /// The 'attachment' paramater expects an argument of the Attachment type.
-        /// The 'type' parameter expects an argument of the ContentType type.
-        /// </summary>
-        /// <param name="attachment"></param>
-        /// <param name="type"></param>
-        void AddAttachment(Stream attachment, ContentType type);
 
         /// <summary>
         /// GetRecipients returns a list of all the recepients by retrieving the to, cc, and bcc lists.

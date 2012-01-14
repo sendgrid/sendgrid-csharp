@@ -8,23 +8,28 @@ using System.Net.Mail;
 using System.Text;
 using System.Web;
 using System.Xml;
+using CodeScales.Http;
+using CodeScales.Http.Entity;
+using CodeScales.Http.Entity.Mime;
+using CodeScales.Http.Methods;
+using HttpResponse = System.Web.HttpResponse;
 
 namespace SendGridMail.Transport
 {
     public class REST : ITransport
     {
         // REST delivery settings
-        public const String Endpoint = "https://sendgrid.com/api/mail.send";
+        public const String Endpoint = "http://sendgrid.com/api/mail.send";
         public const String JsonFormat = "json";
         public const String XmlFormat = "xml";
 
         private readonly List<KeyValuePair<String, String>> _query;
+        private readonly NetworkCredential _credentials;
         private readonly NameValueCollection _queryParameters;
         private readonly String _restEndpoint;
         private readonly String _format;
 
         private WebFileUpload _fileUpload;
-
 
         public static REST GetInstance(NetworkCredential credentials, String url = Endpoint)
         {
@@ -33,74 +38,78 @@ namespace SendGridMail.Transport
 
         internal REST(NetworkCredential credentials, String url = Endpoint)
         {
-            _query = new List<KeyValuePair<string, string>>();
-            _queryParameters = HttpUtility.ParseQueryString(String.Empty);
-
-            addQueryParam("api_user", credentials.UserName);
-            addQueryParam("api_key", credentials.Password);
+            _credentials = credentials;
 
             _format = XmlFormat;
             _restEndpoint = url + "." + _format;
         }
 
-        private void addQueryParam(String key, String value)
+        private List<KeyValuePair<String, String>> FetchFormParams(ISendGrid message)
         {
-            _query.Add(new KeyValuePair<string, string>(key, value));
+            var result = new List<KeyValuePair<string, string>>()
+            {
+                new KeyValuePair<String, String>("api_user", _credentials.UserName),
+                new KeyValuePair<String, String>("api_key", _credentials.Password),
+                new KeyValuePair<String, String>("headers", message.Headers.Count == 0 ? null :  Utils.SerializeDictionary(message.Headers)),
+                new KeyValuePair<String, String>("replyto", message.ReplyTo.Length == 0 ? null : message.ReplyTo.ToList().First().Address),
+                new KeyValuePair<String, String>("from", message.From.Address),
+                new KeyValuePair<String, String>("fromname", message.From.DisplayName),
+                new KeyValuePair<String, String>("subject", message.Subject),
+                new KeyValuePair<String, String>("text", message.Text),
+                new KeyValuePair<String, String>("html", message.Html),
+                new KeyValuePair<String, String>("x-smtpapi", message.Header.AsJson())
+            };
+            if(message.To != null)
+            {
+                result = result.Concat(message.To.ToList().Select(a => new KeyValuePair<String, String>("to[]", a.Address)))
+                    .Concat(message.To.ToList().Select(a => new KeyValuePair<String, String>("toname[]", a.DisplayName)))
+                    .ToList();
+            }
+            if(message.Bcc != null)
+            {
+                result = result.Concat(message.Bcc.ToList().Select(a => new KeyValuePair<String, String>("bcc[]", a.Address)))
+                        .ToList();
+            }
+            if(message.Cc != null)
+            {
+                result = result.Concat(message.Cc.ToList().Select(a => new KeyValuePair<String, String>("cc[]", a.Address)))
+                    .ToList();
+            }
+            return result.Where(r => !String.IsNullOrEmpty(r.Value)).ToList();
         }
 
-        public void TestDeliver(ISendGrid Message)
+        private List<KeyValuePair<String, FileInfo>> FetchFileBodies(ISendGrid message)
         {
-            new WebFileUpload(null).SendAttachments();
+            if(message.Attachments == null)
+                return new List<KeyValuePair<string, FileInfo>>();
+            return message.Attachments.Select(name => new KeyValuePair<String, FileInfo>(name, new FileInfo(name))).ToList();
         }
 
         public void Deliver(ISendGrid message)
         {
-            // TODO Fix this to include all recipients
-            message.To.ToList().ForEach(a => addQueryParam("to[]", a.Address));
-            message.Bcc.ToList().ForEach(a => addQueryParam("bcc[]", a.Address));
-            message.Cc.ToList().ForEach(a => addQueryParam("cc[]", a.Address));
+            var client = new HttpClient();
+            var postMethod = new HttpPost(new Uri(_restEndpoint));
 
-            message.To.ToList().ForEach(a => addQueryParam("toname[]", a.DisplayName));
+            var multipartEntity = new MultipartEntity();
+            postMethod.Entity = multipartEntity;
+            
+            var formParams = FetchFormParams(message);
+        
+            formParams.ForEach(kvp => multipartEntity.AddBody(new StringBody(Encoding.UTF8, kvp.Key, kvp.Value)));
 
-            addQueryParam("headers", Utils.SerializeDictionary(message.Headers));
+            var files = FetchFileBodies(message);
+            files.ForEach(kvp => multipartEntity.AddBody(new FileBody("files["+kvp.Key+"]", kvp.Key, kvp.Value)));
 
-            message.ReplyTo.ToList().ForEach(a => addQueryParam("replyto", a.Address));
-            //addQueryParam("", message.From.Address);
+            CodeScales.Http.Methods.HttpResponse response = client.Execute(postMethod);
 
-            addQueryParam("from", message.From.Address);
-            addQueryParam("fromname", message.From.DisplayName);
+            Console.WriteLine("Response Code: " + response.ResponseCode);
+            Console.WriteLine("Response Content: " + EntityUtils.ToString(response.Entity));
 
-            addQueryParam("subject", message.Subject);
-            addQueryParam("text", message.Text);
-            addQueryParam("html", message.Html);
+            Console.WriteLine("Res");
 
-            String smtpapi = message.Header.AsJson();
+            var status = EntityUtils.ToString(response.Entity);
+            var stream = new MemoryStream(Encoding.UTF8.GetBytes(status));
 
-            if (!String.IsNullOrEmpty(smtpapi))
-                addQueryParam("x-smtpapi", smtpapi);
-
-            var queryString = FetchQueryString();
-
-            var restCommand = new Uri(_restEndpoint + "?" + queryString);
-
-            var request = (HttpWebRequest)WebRequest.Create(restCommand.AbsoluteUri);
-
-            Console.WriteLine(restCommand.AbsoluteUri);
-
-            //if we have message attachments, we'll send them via the WebFileUpload
-            /*if(message.Attachments.Length > 0)
-            {
-                Console.WriteLine("Initializing the File Upload Library");
-                new WebFileUpload(request).testNoAttach(message.Attachments.First());
-            }*/
-            var response = (HttpWebResponse)request.GetResponse();
-
-            // Basically, read the entire message out before we parse the XML.
-            // That way, if we detect an error, we can give the whole response to the client.
-            var r = new StreamReader(response.GetResponseStream());
-            var status = r.ReadToEnd();
-            var bytes = Encoding.ASCII.GetBytes(status);
-            var stream = new MemoryStream(bytes);
 
             using (var reader = XmlReader.Create(stream))
             {
@@ -122,11 +131,6 @@ namespace SendGridMail.Transport
                     }
                 }
             }
-        }
-
-        private string FetchQueryString()
-        {
-            return String.Join("&", _query.Where(kvp => !String.IsNullOrEmpty(kvp.Value)).Select(kvp => kvp.Key + "=" + kvp.Value));
         }
     }
 }
