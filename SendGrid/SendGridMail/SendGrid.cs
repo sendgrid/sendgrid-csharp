@@ -282,8 +282,8 @@ namespace SendGridMail
             }
         }
 
-        private List<Attachment> _attachments = new List<Attachment>(); 
-        public Attachment[] Attachments
+        private List<String> _attachments = new List<String>(); 
+        public String[] Attachments
         {
             get { return _attachments.ToArray(); }
             set { _attachments = value.ToList(); }
@@ -297,19 +297,7 @@ namespace SendGridMail
 
         public void AddAttachment(String filePath)
         {
-            var data = new Attachment(filePath, MediaTypeNames.Application.Octet);
-            _attachments.Add(data);
-        }
-
-        public void AddAttachment(Attachment attachment)
-        {
-            _attachments.Add(attachment);
-        }
-
-        public void AddAttachment(Stream attachment, ContentType type)
-        {
-            var data = new Attachment(attachment, type); 
-            _attachments.Add(data);
+            _attachments.Add(filePath);
         }
 
         public IEnumerable<String> GetRecipients()
@@ -493,9 +481,9 @@ namespace SendGridMail
 
             if(Attachments != null)
             {
-                foreach (Attachment attachment in Attachments)
+                foreach (var attachment in Attachments)
                 {
-                    message.Attachments.Add(attachment);
+                    message.Attachments.Add(new Attachment(attachment, MediaTypeNames.Application.Octet));
                 }                
             }
 
