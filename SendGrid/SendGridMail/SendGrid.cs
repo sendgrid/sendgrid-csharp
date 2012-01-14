@@ -389,12 +389,15 @@ namespace SendGridMail
             Header.Enable(this._filters["OpenTracking"]);
         }
 
-        public void EnableClickTracking(string text = null)
+        public void EnableClickTracking(String enableText = null)
         {
             var filter = this._filters["ClickTracking"];
                 
             Header.Enable(filter);
-            Header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
+            if (enableText != null)
+            {
+                Header.AddFilterSetting(filter, new List<string>() { "enable" }, enableText);
+            }
         }
 
         public void EnableSpamCheck(int score = 5, string url = null)

@@ -11,7 +11,7 @@ namespace Example
 {
     class Program
     {
-        static void Main(String[] args)
+        /*static void Main(String[] args)
         {
             var restInstance = REST.GetInstance(new NetworkCredential("cjbuchmann", "Gadget_15"));
 
@@ -29,13 +29,13 @@ namespace Example
 
             Console.WriteLine("Message Sent");
             Console.WriteLine("DONE!");
-        }
+        }*/
 
         // this code is used for the SMTPAPI examples
-        /*static void Main(string[] args)
+        static void Main(string[] args)
         {
-            var username = "sgrid_username";
-            var password = "sgrid_email";
+            var username = "cjbuchmann";
+            var password = "gadget15";
             var from = "cj.buchmann@sendgrid.com";
             var to = new List<String>
                          {
@@ -54,7 +54,6 @@ namespace Example
 
             //initialize the SMTPAPI example class
             var smtpapi = new SMTPAPI(username, password, from, to);
-            var restpapi = new RESTAPI(username, password, from, to, null, null);
 
             //send a simple HTML encoded email.
             //smtpapi.SimpleHTMLEmail();
@@ -68,7 +67,10 @@ namespace Example
             //send an open tracking enabled email.
             //smtpapi.EnableOpenTrackingEmail();
 
-            restpapi.SimpleHTMLEmail();
-        }*/
+            //send an open tracking enabled email.
+            smtpapi.EnableClickTrackingEmail();
+
+            Console.ReadLine();
+        }
     }
 }
