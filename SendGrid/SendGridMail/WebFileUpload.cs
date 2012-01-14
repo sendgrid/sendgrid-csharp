@@ -49,13 +49,6 @@ namespace SendGridMail
             MultipartEntity multipartEntity = new MultipartEntity();
             postMethod.Entity = multipartEntity;
 
-            multipartEntity.AddBody(new StringBody(Encoding.UTF8, "api_user", "cjbuchmann"));
-            multipartEntity.AddBody(new StringBody(Encoding.UTF8, "api_key", "gadget15"));
-            multipartEntity.AddBody(new StringBody(Encoding.UTF8, "to", "cj.buchmann@sendgrid.com"));
-            multipartEntity.AddBody(new StringBody(Encoding.UTF8, "from", "cj.buchmann@sendgrid.com"));
-            multipartEntity.AddBody(new StringBody(Encoding.UTF8, "subject", "Hello World HttpClient Test"));
-            multipartEntity.AddBody(new StringBody(Encoding.UTF8, "text", "here is some awesome text"));
-
 
 
             FileInfo fileInfo = new FileInfo(@"D:\att_proj\2.JPG");
