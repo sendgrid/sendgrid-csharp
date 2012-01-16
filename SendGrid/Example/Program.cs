@@ -26,7 +26,6 @@ namespace Example
             message.Subject = "Hello World SUbject";
             message.AddAttachment(@"C:\Users\Public\Pictures\Sample Pictures\Koala.jpg");
             message.AddAttachment(@"C:\Users\Public\Pictures\Sample Pictures\Jellyfish.jpg");
-
             restInstance.Deliver(message);
 
             Console.WriteLine("Message Sent");
