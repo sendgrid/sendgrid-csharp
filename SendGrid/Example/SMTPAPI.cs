@@ -187,7 +187,7 @@ namespace Example
             var smtpInstance = SMTP.GenerateInstance(new NetworkCredential(_username, _password));
 
             //enable clicktracking
-            message.EnableClickTracking("1");
+            message.EnableClickTracking(true);
 
             Console.WriteLine(header.AsJson());
 
