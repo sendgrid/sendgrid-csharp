@@ -29,8 +29,6 @@ namespace SendGridMail.Transport
         private readonly String _restEndpoint;
         private readonly String _format;
 
-        private WebFileUpload _fileUpload;
-
         public static REST GetInstance(NetworkCredential credentials, String url = Endpoint)
         {
             return new REST(credentials, url);
