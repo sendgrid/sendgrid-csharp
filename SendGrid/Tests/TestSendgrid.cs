@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using NUnit.Framework;
 using SendGridMail;
@@ -284,6 +286,43 @@ namespace Tests
 
             String json = header.AsJson();
             Assert.AreEqual("{\"filters\" : {\"bypass_list_management\" : {\"settings\" : {\"enable\" : \"1\"}}}}", json);
+        }
+
+        [Test]
+        public void CreateMimeMessage()
+        {
+            var message = SendGrid.GenerateInstance();
+            var attachment = System.IO.Path.GetTempFileName();
+            var text = "this is a test";
+            var html = "<b>This<\b> is a better test";
+            var headers = new KeyValuePair<String, String>("custom", "header");
+            message.AddAttachment(attachment);
+            message.Text = text;
+            message.Html = html;
+            message.AddTo("foo@bar.com");
+            message.From = new MailAddress("foo@bar.com");
+            message.AddHeaders(new Dictionary<string, string>{{headers.Key, headers.Value}});
+            message.EnableGravatar();
+
+            var mime = message.CreateMimeMessage();
+
+            var sr = new StreamReader(mime.AlternateViews[0].ContentStream);
+            var result = sr.ReadToEnd();
+            Assert.AreEqual(text, result);
+
+            sr = new StreamReader(mime.AlternateViews[1].ContentStream);
+            result = sr.ReadToEnd();
+            Assert.AreEqual(html, result);
+
+            result = mime.Headers.Get(headers.Key);
+            Assert.AreEqual(headers.Value, result);
+
+            result = mime.Headers.Get("X-Smtpapi");
+            var expected = "{\"filters\" : {\"gravatar\" : {\"settings\" : {\"enable\" : \"1\"}}}}";
+            Assert.AreEqual(expected, result);
+
+            result = mime.Attachments[0].Name;
+            Assert.AreEqual(Path.GetFileName(attachment), result);
         }
     }
 }
