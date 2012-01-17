@@ -30,7 +30,7 @@ namespace SendGridMail
         /// Creates an instance of SendGrid's custom message object
         /// </summary>
         /// <returns></returns>
-        public static SendGrid GenerateInstance()
+        public static SendGrid GetInstance()
         {
             var header = new Header();
             return new SendGrid(header);
@@ -48,7 +48,7 @@ namespace SendGridMail
         /// <param name="text">the plain text part of the message</param>
         /// <param name="transport">Transport class to use for sending the message</param>
         /// <returns></returns>
-        public static SendGrid GenerateInstance(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc,
+        public static SendGrid GetInstance(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc,
                                                 String subject, String html, String text, TransportType transport)
         {
             var header = new Header();
@@ -394,7 +394,7 @@ namespace SendGridMail
             Header.AddFilterSetting(filter, new List<string> { "url" }, url);
         }
 
-        public void EnableUnsubscribe(string text, string html, string replace, string url, string landing)
+        public void EnableUnsubscribe(string text, string html)
         {
             var filter = _filters["Unsubscribe"];
 
@@ -410,10 +410,15 @@ namespace SendGridMail
 
             Header.Enable(filter);
             Header.AddFilterSetting(filter, new List<string> { "text/plain" }, text);
-            Header.AddFilterSetting(filter, new List<string> { "text/html" }, html);
-            Header.AddFilterSetting(filter, new List<string> { "replace"}, replace);
-            Header.AddFilterSetting(filter, new List<string> { "url"}, url);
-            Header.AddFilterSetting(filter, new List<string> { "landing" }, landing);
+            Header.AddFilterSetting(filter, new List<string> {"text/html"}, html);
+        }
+
+        public void EnableUnsubscribe(string replace)
+        {
+            var filter = _filters["Unsubscribe"];
+
+            Header.Enable(filter);
+            Header.AddFilterSetting(filter, new List<string> { "replace" }, replace);
         }
 
         public void EnableFooter(string text = null, string html = null)
@@ -506,7 +511,7 @@ namespace SendGridMail
         /// Helper function lets us look at the mime before it is sent
         /// </summary>
         /// <param name="directory">directory in which we store this mime message</param>
-        internal void SaveMessage(String directory)
+        public void SaveMessage(String directory)
         {
             var client = new SmtpClient("localhost")
                              {
@@ -523,7 +528,7 @@ namespace SendGridMail
             switch (Transport)
             {
                 case TransportType.SMTP:
-                    transport = SMTP.GenerateInstance(credentials);
+                    transport = SMTP.GetInstance(credentials);
                     break;
                 case TransportType.REST:
                     transport = REST.GetInstance(credentials);
