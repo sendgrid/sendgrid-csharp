@@ -46,6 +46,13 @@ namespace SendGridMail
         /// </summary>
         /// <returns>MIME to be sent</returns>
         MailMessage CreateMimeMessage();
+
+        /// <summary>
+        /// Creates a new transport object, and sends this message out.
+        /// </summary>
+        /// <param name="credentials">Sendgrid user credentials</param>
+        void Mail(NetworkCredential credentials);
+
         #endregion
 
         #region Methods for setting data
@@ -253,11 +260,5 @@ namespace SendGridMail
         /// </summary>
         void EnableBypassListManagement();
         #endregion
-
-        /// <summary>
-        /// Creates a new transport object, and sends this message out.
-        /// </summary>
-        /// <param name="credentials">Sendgrid user credentials</param>
-        void Mail(NetworkCredential credentials);
     }
 }
