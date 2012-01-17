@@ -2,13 +2,13 @@
 <package >
   <metadata>
     <id>Sendgrid</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>Sendgrid</title>
     <authors>CJ Buchmann, Tyler Bischel, Eric Becking</authors>
     <owners>Sendgrid</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Basic C# client library and examples for using Sendgrid API's to send mail</releaseNotes>
+    <releaseNotes>Basic C# client library and examples for using Sendgrid API's to send mail. Github repo located at : https://github.com/sendgrid/sendgrid-csharp</releaseNotes>
     <copyright>Copyright 2012</copyright>
     <tags>Sendgrid Email Mail Microsoft Azure</tags>
   </metadata>
