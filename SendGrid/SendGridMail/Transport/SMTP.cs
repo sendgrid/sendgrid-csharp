@@ -72,7 +72,7 @@ namespace SendGridMail.Transport
         /// <param name="credentials">Sendgrid user credentials</param>
         /// <param name="host">MTA recieving this message.  By default, sent through SendGrid.</param>
         /// <param name="port">SMTP port 25 is the default.  Port 465 can be used for Secure SMTP.</param>
-        public static SMTP GenerateInstance(NetworkCredential credentials, String host = SmtpServer, Int32 port = Port)
+        public static SMTP GetInstance(NetworkCredential credentials, String host = SmtpServer, Int32 port = Port)
         {
             var client = new SmtpWrapper(host, port, credentials, SmtpDeliveryMethod.Network);
             return new SMTP(client, credentials, host, port);
@@ -86,7 +86,7 @@ namespace SendGridMail.Transport
         /// <param name="host"></param>
         /// <param name="port"></param>
         /// <returns></returns>
-        internal static SMTP GenerateInstance(ISmtpClient client, NetworkCredential credentials, String host = SmtpServer, Int32 port = Port)
+        internal static SMTP GetInstance(ISmtpClient client, NetworkCredential credentials, String host = SmtpServer, Int32 port = Port)
         {
             return new SMTP(client, credentials, host, port);
         }

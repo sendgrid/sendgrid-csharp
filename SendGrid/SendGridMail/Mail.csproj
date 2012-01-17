@@ -31,8 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CodeScales.Http">
-      <HintPath>..\packages\CodeScales.Http.dll</HintPath>
+    <Reference Include="CodeScales.Http, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\CodeScales.Http.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -56,7 +57,9 @@
     <Compile Include="Transport\REST.cs" />
     <Compile Include="Transport\SMTP.cs" />
     <Compile Include="Utils.cs" />
-    <Compile Include="WebFileUpload.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\CodeScales.Http.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,41 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Mail;
 using System.Text;
-using System.Web;
 using System.Xml;
 using CodeScales.Http;
 using CodeScales.Http.Entity;
 using CodeScales.Http.Entity.Mime;
 using CodeScales.Http.Methods;
-using HttpResponse = System.Web.HttpResponse;
 
 namespace SendGridMail.Transport
 {
     public class REST : ITransport
     {
-        // REST delivery settings
+        #region Properties
         public const String Endpoint = "http://sendgrid.com/api/mail.send";
         public const String JsonFormat = "json";
         public const String XmlFormat = "xml";
 
-        private readonly List<KeyValuePair<String, String>> _query;
         private readonly NetworkCredential _credentials;
-        private readonly NameValueCollection _queryParameters;
         private readonly String _restEndpoint;
         private readonly String _format;
+        #endregion
 
-        private WebFileUpload _fileUpload;
-
+        /// <summary>
+        /// Factory method for REST transport of sendgrid messages
+        /// </summary>
+        /// <param name="credentials">SendGrid credentials for sending mail messages</param>
+        /// <param name="url">The uri of the REST endpoint</param>
+        /// <returns>New instance of the transport mechanism</returns>
         public static REST GetInstance(NetworkCredential credentials, String url = Endpoint)
         {
             return new REST(credentials, url);
         }
 
+        /// <summary>
+        /// Creates a new REST interface for sending mail.  Preference is using the Factory method.
+        /// </summary>
+        /// <param name="credentials">SendGrid user parameters</param>
+        /// <param name="url">The uri of the REST endpoint</param>
         internal REST(NetworkCredential credentials, String url = Endpoint)
         {
             _credentials = credentials;
@@ -44,7 +48,74 @@ namespace SendGridMail.Transport
             _restEndpoint = url + "." + _format;
         }
 
-        private List<KeyValuePair<String, String>> FetchFormParams(ISendGrid message)
+        /// <summary>
+        /// Delivers a message over SendGrid's REST interface
+        /// </summary>
+        /// <param name="message"></param>
+        public void Deliver(ISendGrid message)
+        {
+            MultipartEntity multipartEntity;
+            HttpPost postMethod;
+
+            var client = InitializeTransport(out multipartEntity, out postMethod);
+            AttachFormParams(message, multipartEntity);
+            AttachFiles(message, multipartEntity);
+            var response = client.Execute(postMethod);
+            CheckForErrors(response);
+        }
+
+        #region Support Methods
+
+        internal HttpClient InitializeTransport(out MultipartEntity multipartEntity, out HttpPost postMethod)
+        {
+            var client = new HttpClient();
+            postMethod = new HttpPost(new Uri(_restEndpoint));
+
+            multipartEntity = new MultipartEntity();
+            postMethod.Entity = multipartEntity;
+            return client;
+        }
+
+        private void AttachFormParams(ISendGrid message, MultipartEntity multipartEntity)
+        {
+            var formParams = FetchFormParams(message);
+            formParams.ForEach(kvp => multipartEntity.AddBody(new StringBody(Encoding.UTF8, kvp.Key, kvp.Value)));
+        }
+
+        private void AttachFiles(ISendGrid message, MultipartEntity multipartEntity)
+        {
+            var files = FetchFileBodies(message);
+            files.ForEach(kvp => multipartEntity.AddBody(new FileBody("files[" + kvp.Key + "]", kvp.Key, kvp.Value)));
+        }
+
+        private void CheckForErrors(CodeScales.Http.Methods.HttpResponse response)
+        {
+            var status = EntityUtils.ToString(response.Entity);
+            var stream = new MemoryStream(Encoding.UTF8.GetBytes(status));
+
+            using (var reader = XmlReader.Create(stream))
+            {
+                while (reader.Read())
+                {
+                    if (reader.IsStartElement())
+                    {
+                        switch (reader.Name)
+                        {
+                            case "result":
+                                break;
+                            case "message": // success
+                                return;
+                            case "error": // failure
+                                throw new ProtocolViolationException(status);
+                            default:
+                                throw new ArgumentException("Unknown element: " + reader.Name);
+                        }
+                    }
+                }
+            }
+        }
+
+        internal List<KeyValuePair<String, String>> FetchFormParams(ISendGrid message)
         {
             var result = new List<KeyValuePair<string, string>>()
             {
@@ -78,59 +149,13 @@ namespace SendGridMail.Transport
             return result.Where(r => !String.IsNullOrEmpty(r.Value)).ToList();
         }
 
-        private List<KeyValuePair<String, FileInfo>> FetchFileBodies(ISendGrid message)
+        internal List<KeyValuePair<String, FileInfo>> FetchFileBodies(ISendGrid message)
         {
             if(message.Attachments == null)
                 return new List<KeyValuePair<string, FileInfo>>();
             return message.Attachments.Select(name => new KeyValuePair<String, FileInfo>(name, new FileInfo(name))).ToList();
         }
 
-        public void Deliver(ISendGrid message)
-        {
-            var client = new HttpClient();
-            var postMethod = new HttpPost(new Uri(_restEndpoint));
-
-            var multipartEntity = new MultipartEntity();
-            postMethod.Entity = multipartEntity;
-            
-            var formParams = FetchFormParams(message);
-        
-            formParams.ForEach(kvp => multipartEntity.AddBody(new StringBody(Encoding.UTF8, kvp.Key, kvp.Value)));
-
-            var files = FetchFileBodies(message);
-            files.ForEach(kvp => multipartEntity.AddBody(new FileBody("files["+kvp.Key+"]", kvp.Key, kvp.Value)));
-
-            CodeScales.Http.Methods.HttpResponse response = client.Execute(postMethod);
-
-            Console.WriteLine("Response Code: " + response.ResponseCode);
-            Console.WriteLine("Response Content: " + EntityUtils.ToString(response.Entity));
-
-            Console.WriteLine("Res");
-
-            var status = EntityUtils.ToString(response.Entity);
-            var stream = new MemoryStream(Encoding.UTF8.GetBytes(status));
-
-
-            using (var reader = XmlReader.Create(stream))
-            {
-                while (reader.Read())
-                {
-                    if (reader.IsStartElement())
-                    {
-                        switch (reader.Name)
-                        {
-                            case "result":
-                                break;
-                            case "message": // success
-                                return;
-                            case "error":   // failure
-                                throw new ProtocolViolationException(status);
-                            default:
-                                throw new ArgumentException("Unknown element: " + reader.Name);
-                        }
-                    }
-                }
-            }
-        }
+        #endregion
     }
 }

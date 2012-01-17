@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using NUnit.Framework;
 using SendGridMail;
@@ -160,11 +162,11 @@ namespace Tests
         {
             var header = new Header();
             var sendgrid = new SendGrid(header);
-            var text = "hello world";
-            sendgrid.EnableClickTracking(text);
+            bool includePlainText = true;
+            sendgrid.EnableClickTracking(includePlainText);
 
             String json = header.AsJson();
-            Assert.AreEqual("{\"filters\" : {\"clicktrack\" : {\"settings\" : {\"enable\" : \"1\",\"text\" : \"hello world\"}}}}", json);
+            Assert.AreEqual("{\"filters\" : {\"clicktrack\" : {\"settings\" : {\"enable\" : \"1\",\"enable_text\" : \"1\"}}}}", json);
         }
 
         [Test]
@@ -178,7 +180,7 @@ namespace Tests
             sendgrid.EnableSpamCheck(score, url);
 
             String json = header.AsJson();
-            Assert.AreEqual("{\"filters\" : {\"spamcheck\" : {\"settings\" : {\"enable\" : \"1\",\"score\" : \"5\",\"url\" : \"http:\\/\\/www.example.com\"}}}}", json);
+            Assert.AreEqual("{\"filters\" : {\"spamcheck\" : {\"settings\" : {\"enable\" : \"1\",\"maxscore\" : \"5\",\"url\" : \"http:\\/\\/www.example.com\"}}}}", json);
         }
 
         [Test]
@@ -189,20 +191,34 @@ namespace Tests
 
             var text = "<% %>";
             var html = "<% name %>";
-            var replace = "John";
-            var url = "http://www.example.com";
-            var landing = "this_landing";
-            sendgrid.EnableUnsubscribe(text, html, replace, url, landing);
 
-            var jsonText = "\"text\" : \""+text+"\"";
-            var jsonHtml = "\"html\" : \""+html+"\"";
-            var jsonReplace = "\"replace\" : \""+replace+"\"";
-            var jsonUrl = "\"url\" : \"http:\\/\\/www.example.com\"";
-            var jsonLanding = "\"landing\" : \""+landing+"\"";
+            var jsonText = "\"text\\/plain\" : \"" + text + "\"";
+            var jsonHtml = "\"text\\/html\" : \"" + html + "\"";
+
+            sendgrid.EnableUnsubscribe(text, html);
 
             String json = header.AsJson();
             Assert.AreEqual("{\"filters\" : {\"subscriptiontrack\" : {\"settings\" : {\"enable\" : \"1\","+
-                jsonText+","+jsonHtml+","+jsonReplace+","+jsonUrl+","+jsonLanding+"}}}}", json);
+                jsonText+","+jsonHtml+"}}}}", json);
+
+            header = new Header();
+            sendgrid = new SendGrid(header);
+
+            var replace = "John";
+            var jsonReplace = "\"replace\" : \"" + replace + "\"";
+
+            sendgrid.EnableUnsubscribe(replace);
+
+            json = header.AsJson();
+            Assert.AreEqual("{\"filters\" : {\"subscriptiontrack\" : {\"settings\" : {\"enable\" : \"1\"," + jsonReplace + "}}}}", json);
+
+            text = "bad";
+            html = "<% name %>";
+            Assert.Throws<Exception>(delegate { sendgrid.EnableUnsubscribe(text, html); });
+
+            text = "<% %>";
+            html = "bad";
+            Assert.Throws<Exception>(delegate { sendgrid.EnableUnsubscribe(text, html); });
 
         }
 
@@ -219,7 +235,7 @@ namespace Tests
             sendgrid.EnableFooter(text, html);
 
             String json = header.AsJson();
-            Assert.AreEqual("{\"filters\" : {\"footer\" : {\"settings\" : {\"enable\" : \"1\",\"text\" : \""+text+"\",\"html\" : \""+escHtml+"\"}}}}", json);
+            Assert.AreEqual("{\"filters\" : {\"footer\" : {\"settings\" : {\"enable\" : \"1\",\"text\\/plain\" : \""+text+"\",\"text\\/html\" : \""+escHtml+"\"}}}}", json);
         }
 
         [Test]
@@ -236,11 +252,11 @@ namespace Tests
 
             sendgrid.EnableGoogleAnalytics(source, medium, term, content, campaign);
 
-            var jsonSource = "\"source\" : \"SomeDomain.com\"";
-            var jsonMedium = "\"medium\" : \""+medium+"\"";
-            var jsonTerm = "\"term\" : \""+term+"\"";
-            var jsonContent = "\"content\" : \""+content+"\"";
-            var jsonCampaign = "\"campaign\" : \""+campaign+"\"";
+            var jsonSource = "\"utm_source\" : \"SomeDomain.com\"";
+            var jsonMedium = "\"utm_medium\" : \"" + medium + "\"";
+            var jsonTerm = "\"utm_term\" : \"" + term + "\"";
+            var jsonContent = "\"utm_content\" : \"" + content + "\"";
+            var jsonCampaign = "\"utm_campaign\" : \"" + campaign + "\"";
 
             String json = header.AsJson();
             Assert.AreEqual("{\"filters\" : {\"ganalytics\" : {\"settings\" : {\"enable\" : \"1\","+
@@ -258,7 +274,10 @@ namespace Tests
             sendgrid.EnableTemplate(html);
 
             String json = header.AsJson();
-            Assert.AreEqual("{\"filters\" : {\"template\" : {\"settings\" : {\"enable\" : \"1\",\"html\" : \""+escHtml+"\"}}}}", json);
+            Assert.AreEqual("{\"filters\" : {\"template\" : {\"settings\" : {\"enable\" : \"1\",\"text\\/html\" : \""+escHtml+"\"}}}}", json);
+
+            escHtml = "bad";
+            Assert.Throws<Exception>(delegate { sendgrid.EnableTemplate(escHtml); });
         }
 
         [Test]
@@ -284,6 +303,43 @@ namespace Tests
 
             String json = header.AsJson();
             Assert.AreEqual("{\"filters\" : {\"bypass_list_management\" : {\"settings\" : {\"enable\" : \"1\"}}}}", json);
+        }
+
+        [Test]
+        public void CreateMimeMessage()
+        {
+            var message = SendGrid.GetInstance();
+            var attachment = System.IO.Path.GetTempFileName();
+            var text = "this is a test";
+            var html = "<b>This<\b> is a better test";
+            var headers = new KeyValuePair<String, String>("custom", "header");
+            message.AddAttachment(attachment);
+            message.Text = text;
+            message.Html = html;
+            message.AddTo("foo@bar.com");
+            message.From = new MailAddress("foo@bar.com");
+            message.AddHeaders(new Dictionary<string, string>{{headers.Key, headers.Value}});
+            message.EnableGravatar();
+
+            var mime = message.CreateMimeMessage();
+
+            var sr = new StreamReader(mime.AlternateViews[0].ContentStream);
+            var result = sr.ReadToEnd();
+            Assert.AreEqual(text, result);
+
+            sr = new StreamReader(mime.AlternateViews[1].ContentStream);
+            result = sr.ReadToEnd();
+            Assert.AreEqual(html, result);
+
+            result = mime.Headers.Get(headers.Key);
+            Assert.AreEqual(headers.Value, result);
+
+            result = mime.Headers.Get("X-Smtpapi");
+            var expected = "{\"filters\" : {\"gravatar\" : {\"settings\" : {\"enable\" : \"1\"}}}}";
+            Assert.AreEqual(expected, result);
+
+            result = mime.Attachments[0].Name;
+            Assert.AreEqual(Path.GetFileName(attachment), result);
         }
     }
 }

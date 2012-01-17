@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
 using SendGridMail.Transport;
 
 namespace SendGridMail
@@ -33,7 +30,7 @@ namespace SendGridMail
         /// Creates an instance of SendGrid's custom message object
         /// </summary>
         /// <returns></returns>
-        public static SendGrid GenerateInstance()
+        public static SendGrid GetInstance()
         {
             var header = new Header();
             return new SendGrid(header);
@@ -51,7 +48,7 @@ namespace SendGridMail
         /// <param name="text">the plain text part of the message</param>
         /// <param name="transport">Transport class to use for sending the message</param>
         /// <returns></returns>
-        public static SendGrid GenerateInstance(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc,
+        public static SendGrid GetInstance(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc,
                                                 String subject, String html, String text, TransportType transport)
         {
             var header = new Header();
@@ -319,151 +316,156 @@ namespace SendGridMail
         #region SMTP API Functions
         public void DisableGravatar()
         {
-            Header.Disable(this._filters["Gravatar"]);
+            Header.Disable(_filters["Gravatar"]);
         }
 
         public void DisableOpenTracking()
         {
-            Header.Disable(this._filters["OpenTracking"]);
+            Header.Disable(_filters["OpenTracking"]);
         }
 
         public void DisableClickTracking()
         {
-            Header.Disable(this._filters["ClickTracking"]);
+            Header.Disable(_filters["ClickTracking"]);
         }
 
         public void DisableSpamCheck()
         {
-            Header.Disable(this._filters["SpamCheck"]);
+            Header.Disable(_filters["SpamCheck"]);
         }
 
         public void DisableUnsubscribe()
         {
-            Header.Disable(this._filters["Unsubscribe"]);
+            Header.Disable(_filters["Unsubscribe"]);
         }
 
         public void DisableFooter()
         {
-            Header.Disable(this._filters["Footer"]);
+            Header.Disable(_filters["Footer"]);
         }
 
         public void DisableGoogleAnalytics()
         {
-            Header.Disable(this._filters["GoogleAnalytics"]);
+            Header.Disable(_filters["GoogleAnalytics"]);
         }
 
         public void DisableTemplate()
         {
-            Header.Disable(this._filters["Template"]);
+            Header.Disable(_filters["Template"]);
         }
 
         public void DisableBcc()
         {
-            Header.Disable(this._filters["Bcc"]);
+            Header.Disable(_filters["Bcc"]);
         }
 
         public void DisableBypassListManagement()
         {
-            Header.Disable(this._filters["BypassListManagement"]);
+            Header.Disable(_filters["BypassListManagement"]);
         }
 
         public void EnableGravatar()
         {
-            Header.Enable(this._filters["Gravatar"]);
+            Header.Enable(_filters["Gravatar"]);
         }
 
         public void EnableOpenTracking()
         {
-            Header.Enable(this._filters["OpenTracking"]);
+            Header.Enable(_filters["OpenTracking"]);
         }
 
-        public void EnableClickTracking(String enableText = null)
+        public void EnableClickTracking(bool includePlainText = false)
         {
-            var filter = this._filters["ClickTracking"];
+            var filter = _filters["ClickTracking"];
                 
             Header.Enable(filter);
-            if (enableText != null)
+            if (includePlainText)
             {
-                Header.AddFilterSetting(filter, new List<string>() { "enable" }, enableText);
+                Header.AddFilterSetting(filter, new List<string> { "enable_text" }, "1");
             }
         }
 
         public void EnableSpamCheck(int score = 5, string url = null)
         {
-            var filter = this._filters["SpamCheck"];
+            var filter = _filters["SpamCheck"];
 
             Header.Enable(filter);
-            Header.AddFilterSetting(filter, new List<string>(){ "score" }, score.ToString(CultureInfo.InvariantCulture));
-            Header.AddFilterSetting(filter, new List<string>(){ "url" }, url);
+            Header.AddFilterSetting(filter, new List<string> { "maxscore" }, score.ToString(CultureInfo.InvariantCulture));
+            Header.AddFilterSetting(filter, new List<string> { "url" }, url);
         }
 
-        public void EnableUnsubscribe(string text, string html, string replace, string url, string landing)
+        public void EnableUnsubscribe(string text, string html)
         {
-            var filter = this._filters["Unsubscribe"];
+            var filter = _filters["Unsubscribe"];
 
-            if(!System.Text.RegularExpressions.Regex.IsMatch(text, SendGrid.ReText))
+            if(!System.Text.RegularExpressions.Regex.IsMatch(text, ReText))
             {
                 throw new Exception("Missing substitution tag in text");
             }
 
-            if(!System.Text.RegularExpressions.Regex.IsMatch(html, SendGrid.ReHtml))
+            if(!System.Text.RegularExpressions.Regex.IsMatch(html, ReHtml))
             {
                 throw new Exception("Missing substitution tag in html");
             }
 
             Header.Enable(filter);
-            Header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
-            Header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
-            Header.AddFilterSetting(filter, new List<string>(){ "replace"}, replace);
-            Header.AddFilterSetting(filter, new List<string>(){ "url"}, url);
-            Header.AddFilterSetting(filter, new List<string>(){ "landing" }, landing);
+            Header.AddFilterSetting(filter, new List<string> { "text/plain" }, text);
+            Header.AddFilterSetting(filter, new List<string> {"text/html"}, html);
+        }
+
+        public void EnableUnsubscribe(string replace)
+        {
+            var filter = _filters["Unsubscribe"];
+
+            Header.Enable(filter);
+            Header.AddFilterSetting(filter, new List<string> { "replace" }, replace);
         }
 
         public void EnableFooter(string text = null, string html = null)
         {
-            var filter = this._filters["Footer"];
+            var filter = _filters["Footer"];
 
             Header.Enable(filter);
-            Header.AddFilterSetting(filter, new List<string>(){ "text" }, text);
-            Header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
+            Header.AddFilterSetting(filter, new List<string> { "text/plain" }, text);
+            Header.AddFilterSetting(filter, new List<string> { "text/html" }, html);
         }
 
         public void EnableGoogleAnalytics(string source, string medium, string term, string content = null, string campaign = null)
         {
-            var filter = this._filters["GoogleAnalytics"];
+            var filter = _filters["GoogleAnalytics"];
 
             Header.Enable(filter);
-            Header.AddFilterSetting(filter, new List<string>(){ "source" }, source);
-            Header.AddFilterSetting(filter, new List<string>(){ "medium" }, medium);
-            Header.AddFilterSetting(filter, new List<string>(){ "term" }, term);
-            Header.AddFilterSetting(filter, new List<string>(){ "content" }, content);
-            Header.AddFilterSetting(filter, new List<string>(){ "campaign" }, campaign);
+            Header.AddFilterSetting(filter, new List<string> { "utm_source" }, source);
+            Header.AddFilterSetting(filter, new List<string> { "utm_medium" }, medium);
+            Header.AddFilterSetting(filter, new List<string> { "utm_term" }, term);
+            Header.AddFilterSetting(filter, new List<string> { "utm_content" }, content);
+            Header.AddFilterSetting(filter, new List<string> { "utm_campaign" }, campaign);
         }
 
         public void EnableTemplate(string html)
         {
-            var filter = this._filters["Template"];
+            var filter = _filters["Template"];
 
-            if (!System.Text.RegularExpressions.Regex.IsMatch(html, SendGrid.ReHtml))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(html, ReHtml))
             {
                 throw new Exception("Missing substitution tag in html");
             }
 
             Header.Enable(filter);
-            Header.AddFilterSetting(filter, new List<string>(){ "html" }, html);
+            Header.AddFilterSetting(filter, new List<string> { "text/html" }, html);
         }
 
         public void EnableBcc(string email)
         {
-            var filter = this._filters["Bcc"];
+            var filter = _filters["Bcc"];
 
             Header.Enable(filter);
-            Header.AddFilterSetting(filter, new List<string>(){ "email" }, email);
+            Header.AddFilterSetting(filter, new List<string> { "email" }, email);
         }
 
         public void EnableBypassListManagement()
         {
-            Header.Enable(this._filters["BypassListManagement"]);
+            Header.Enable(_filters["BypassListManagement"]);
         }
         #endregion
 
@@ -509,7 +511,7 @@ namespace SendGridMail
         /// Helper function lets us look at the mime before it is sent
         /// </summary>
         /// <param name="directory">directory in which we store this mime message</param>
-        internal void SaveMessage(String directory)
+        public void SaveMessage(String directory)
         {
             var client = new SmtpClient("localhost")
                              {
@@ -526,7 +528,7 @@ namespace SendGridMail
             switch (Transport)
             {
                 case TransportType.SMTP:
-                    transport = SMTP.GenerateInstance(credentials);
+                    transport = SMTP.GetInstance(credentials);
                     break;
                 case TransportType.REST:
                     transport = REST.GetInstance(credentials);
