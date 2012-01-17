@@ -23,7 +23,7 @@ namespace Tests.Transport
             mockClient.Setup(foo => foo.Send(mime));
             var client = mockClient.Object;
             var credentials = new NetworkCredential("username", "password");
-            var test = SMTP.GenerateInstance(client, credentials);
+            var test = SMTP.GetInstance(client, credentials);
             test.Deliver(message);
 
             mockClient.Verify(foo => foo.Send(mime), Times.Once());
@@ -38,14 +38,14 @@ namespace Tests.Transport
             mock.SetupProperty(foo => foo.EnableSsl);
             var client = mock.Object;
             var credentials = new NetworkCredential("username", "password");
-            var test = SMTP.GenerateInstance(client, credentials);
+            var test = SMTP.GetInstance(client, credentials);
             mock.Verify(foo => foo.EnableSsl, Times.Never());
 
             mock = new Mock<SMTP.ISmtpClient>();
             mock.SetupProperty(foo => foo.EnableSsl);
             client = mock.Object;
             credentials = new NetworkCredential("username", "password");
-            test = SMTP.GenerateInstance(client, credentials, port:SMTP.SslPort);
+            test = SMTP.GetInstance(client, credentials, port:SMTP.SslPort);
             mock.VerifySet(foo => foo.EnableSsl = true);
 
             mock = new Mock<SMTP.ISmtpClient>();
@@ -54,7 +54,7 @@ namespace Tests.Transport
             credentials = new NetworkCredential("username", "password");
             try
             {
-                test = SMTP.GenerateInstance(client, credentials, port: SMTP.TlsPort);
+                test = SMTP.GetInstance(client, credentials, port: SMTP.TlsPort);
                 Assert.Fail("should have thrown an unsupported port exception");
             }
             catch (NotSupportedException ex)

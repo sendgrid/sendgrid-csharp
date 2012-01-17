@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -20,9 +19,7 @@ namespace SendGridMail.Transport
         public const String JsonFormat = "json";
         public const String XmlFormat = "xml";
 
-        private readonly List<KeyValuePair<String, String>> _query;
         private readonly NetworkCredential _credentials;
-        private readonly NameValueCollection _queryParameters;
         private readonly String _restEndpoint;
         private readonly String _format;
         #endregion
@@ -69,7 +66,7 @@ namespace SendGridMail.Transport
 
         #region Support Methods
 
-        private HttpClient InitializeTransport(out MultipartEntity multipartEntity, out HttpPost postMethod)
+        internal HttpClient InitializeTransport(out MultipartEntity multipartEntity, out HttpPost postMethod)
         {
             var client = new HttpClient();
             postMethod = new HttpPost(new Uri(_restEndpoint));
@@ -118,7 +115,7 @@ namespace SendGridMail.Transport
             }
         }
 
-        private List<KeyValuePair<String, String>> FetchFormParams(ISendGrid message)
+        internal List<KeyValuePair<String, String>> FetchFormParams(ISendGrid message)
         {
             var result = new List<KeyValuePair<string, string>>()
             {
@@ -152,7 +149,7 @@ namespace SendGridMail.Transport
             return result.Where(r => !String.IsNullOrEmpty(r.Value)).ToList();
         }
 
-        private List<KeyValuePair<String, FileInfo>> FetchFileBodies(ISendGrid message)
+        internal List<KeyValuePair<String, FileInfo>> FetchFileBodies(ISendGrid message)
         {
             if(message.Attachments == null)
                 return new List<KeyValuePair<string, FileInfo>>();

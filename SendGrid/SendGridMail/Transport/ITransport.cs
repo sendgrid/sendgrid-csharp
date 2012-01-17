@@ -1,7 +1,8 @@
 ﻿namespace SendGridMail.Transport
 {
     /// <summary>
-    /// 
+    /// Encapsulates the transport mechanism so that it can be used in a generic way, 
+    /// regardless of the transport type
     /// </summary>
     public interface ITransport
     {

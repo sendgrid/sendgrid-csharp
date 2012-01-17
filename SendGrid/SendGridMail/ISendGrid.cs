@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Net.Mime;
-using System.Text;
 
 namespace SendGridMail
 {
@@ -219,10 +215,13 @@ namespace SendGridMail
         /// </summary>
         /// <param name="text">String for the plain text email body showing what you want the message to look like.</param>
         /// <param name="html">String for the HTML email body showing what you want the message to look like.</param>
+        void EnableUnsubscribe(String text, String html);
+
+        /// <summary>
+        /// Allow's SendGrid to manage unsubscribes and ensure these users don't get future emails from the sender
+        /// </summary>
         /// <param name="replace">Tag in the message body to be replaced with the unsubscribe link and message</param>
-        /// <param name="url">URL for a landing page, if you have your own prepared</param>
-        /// <param name="landing">HTML body of a landing page created by SendGrid for you</param>
-        void EnableUnsubscribe(String text, String html, String replace, String url, String landing);
+        void EnableUnsubscribe(String replace);
 
         /// <summary>
         /// Attaches a message at the footer of the email
