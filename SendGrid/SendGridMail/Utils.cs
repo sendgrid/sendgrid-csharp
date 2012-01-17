@@ -28,25 +28,5 @@ namespace SendGridMail
             return "{"+String.Join(",",dic.Select(kvp => Serialize(kvp.Key) + ":" + Serialize(kvp.Value)))+"}";
         }
 
-        public static Dictionary<String, Stream> PrepareAttachments()
-        {
-            var attach = new Attachment("D:/att_proj/21.jpg");
-            Console.WriteLine("preparing message attachment");
-            var sr = new StreamReader(attach.ContentStream);
-
-            Console.WriteLine(sr.ReadToEnd());
-
-            Console.WriteLine(":D");
-            var request = (HttpWebRequest)WebRequest.Create("");
-            
-
-            //attach.ContentStream.CopyTo(request.GetRequestStream());
-
-            Console.WriteLine("attachment: ");
-
-            Console.WriteLine("DONE");
-
-            return new Dictionary<string, Stream>();
-        }
     }
 }

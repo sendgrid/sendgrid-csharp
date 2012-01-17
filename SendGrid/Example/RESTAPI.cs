@@ -83,8 +83,6 @@ namespace Example
 
             message.AddAttachment(@"D:\att_proj\21.jpg");
 
-            //Utils.PrepareAttachments();
-
             //create an instance of the SMTP transport mechanism
             var restInstance = REST.GetInstance(new NetworkCredential(_username, _password));
 
