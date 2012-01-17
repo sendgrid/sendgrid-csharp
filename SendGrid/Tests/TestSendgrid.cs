@@ -192,19 +192,15 @@ namespace Tests
             var text = "<% %>";
             var html = "<% name %>";
             var replace = "John";
-            var url = "http://www.example.com";
-            var landing = "this_landing";
-            sendgrid.EnableUnsubscribe(text, html, replace, url, landing);
+            sendgrid.EnableUnsubscribe(text, html);
 
             var jsonText = "\"text\\/plain\" : \""+text+"\"";
             var jsonHtml = "\"text\\/html\" : \""+html+"\"";
             var jsonReplace = "\"replace\" : \""+replace+"\"";
-            var jsonUrl = "\"url\" : \"http:\\/\\/www.example.com\"";
-            var jsonLanding = "\"landing\" : \""+landing+"\"";
 
             String json = header.AsJson();
             Assert.AreEqual("{\"filters\" : {\"subscriptiontrack\" : {\"settings\" : {\"enable\" : \"1\","+
-                jsonText+","+jsonHtml+","+jsonReplace+","+jsonUrl+","+jsonLanding+"}}}}", json);
+                jsonText+","+jsonHtml+","+jsonReplace+","+"}}}}", json);
 
         }
 
@@ -291,7 +287,7 @@ namespace Tests
         [Test]
         public void CreateMimeMessage()
         {
-            var message = SendGrid.GenerateInstance();
+            var message = SendGrid.GetInstance();
             var attachment = System.IO.Path.GetTempFileName();
             var text = "this is a test";
             var html = "<b>This<\b> is a better test";
