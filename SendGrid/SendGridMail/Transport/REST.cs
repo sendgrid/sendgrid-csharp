@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -20,9 +19,7 @@ namespace SendGridMail.Transport
         public const String JsonFormat = "json";
         public const String XmlFormat = "xml";
 
-        private readonly List<KeyValuePair<String, String>> _query;
         private readonly NetworkCredential _credentials;
-        private readonly NameValueCollection _queryParameters;
         private readonly String _restEndpoint;
         private readonly String _format;
         #endregion
