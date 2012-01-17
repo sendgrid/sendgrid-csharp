@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Net.Mime;
-using System.Text;
 
 namespace SendGridMail
 {
@@ -41,84 +37,90 @@ namespace SendGridMail
         #endregion
 
         #region Interface for ITransport
+        /// <summary>
+        /// Used by the Transport object to create a MIME for SMTP
+        /// </summary>
+        /// <returns>MIME to be sent</returns>
         MailMessage CreateMimeMessage();
+
+        /// <summary>
+        /// Creates a new transport object, and sends this message out.
+        /// </summary>
+        /// <param name="credentials">Sendgrid user credentials</param>
+        void Mail(NetworkCredential credentials);
+
         #endregion
 
         #region Methods for setting data
         /// <summary>
-        /// Set the To address.  In this case the input is a single string eg. 'you@company.com'
+        /// Add to the 'To' address.
         /// </summary>
-        /// <param name="address"></param>
+        /// <param name="address">single string eg. 'you@company.com'</param>
         void AddTo(String address);
+
         /// <summary>
-        /// Set the To address.  In this case the expected input is a list of addresses as strings
+        /// Add to the 'To' address.
         /// </summary>
-        /// <param name="addresses"></param>
+        /// <param name="addresses">list of email addresses as strings</param>
         void AddTo(IEnumerable<String> addresses);
+
         /// <summary>
-        /// Set the To address.  In this case the expected input is a list of addresses with paramaters.
-        /// The first parameter is a string for the email address. 
-        /// The second paramater is a dictionary containing the key, value pairs for a property's name and its value.
-        /// Currently the only value that you can set with the MailAddress data object is the 'DisplayName' field. 
+        /// Add to the 'To' address.
         /// </summary>
-        /// <param name="addresssInfo"></param>
+        /// <param name="addresssInfo"> the dictionary keys are the email addresses, which points to a dictionary of 
+        /// key value pairs mapping to other address codes, such as { foo@bar.com => { 'DisplayName' => 'Mr Foo' } } </param>
         void AddTo(IDictionary<String, IDictionary<String, String>> addresssInfo);
 
         /// <summary>
-        /// Add the CC address.  In this case the expected input is a single email address eg "you@company.com"
+        /// Add to the 'CC' address.
         /// </summary>
-        /// <param name="address"></param>
+        /// <param name="address">a single email address eg "you@company.com"</param>
         void AddCc(String address);
+
         /// <summary>
-        /// Set the CC address.  In this case the expected input is a list of addresses as strings
+        /// Add to the 'CC' address.
         /// </summary>
-        /// <param name="addresses"></param>
+        /// <param name="addresses">a list of email addresses as strings</param>
         void AddCc(IEnumerable<String> addresses);
+
         /// <summary>
-        /// Set the CC address.  In this case the expected input is a list of addresses with paramaters.
-        /// The first parameter is a string for the email address.
-        /// The second paramater is a dictionary containing the key, value pairs for a property's name and its value.
-        /// Currently the only value that you can set with the MailAddress data object is the 'DisplayName' field.
+        /// Add to the 'CC' address.
         /// </summary>
-        /// <param name="addresssInfo"></param>
+        /// <param name="addresssInfo">the dictionary keys are the email addresses, which points to a dictionary of 
+        /// key value pairs mapping to other address codes, such as { foo@bar.com => { 'DisplayName' => 'Mr Foo' } } </param>
         void AddCc(IDictionary<String, IDictionary<String, String>> addresssInfo);
 
         /// <summary>
-        /// Set the Bcc address.  Expects a single email as the input eg "you@company.com"
+        /// Add to the 'Bcc' address.
         /// </summary>
-        /// <param name="address"></param>
+        /// <param name="address">a single email as the input eg "you@company.com"</param>
         void AddBcc(String address);
+
         /// <summary>
-        /// Set the Bcc address.  Expects a list of emails as an array of strings.
+        /// Add to the 'Bcc' address.
         /// </summary>
-        /// <param name="addresses"></param>
+        /// <param name="addresses">a list of emails as an array of strings.</param>
         void AddBcc(IEnumerable<String> addresses);
+
         /// <summary>
-        /// Set the Bcc address.  In this case the expected input is a list of addresses with paramaters.
-        /// The first parameter is a string for the email address.
-        /// The second paramater is a dictionary containing the key, value pairs for a property's name and its value.
-        /// Currently the only value that you can set with the MailAddress data object is the 'DisplayName' field.
+        /// Add to the 'Bcc' address.
         /// </summary>
-        /// <param name="addresssInfo"></param>
+        /// <param name="addresssInfo">the dictionary keys are the email addresses, which points to a dictionary of 
+        /// key value pairs mapping to other address codes, such as { foo@bar.com => { 'DisplayName' => 'Mr Foo' } }</param>
         void AddBcc(IDictionary<String, IDictionary<String, String>> addresssInfo);
 
         /// <summary>
-        /// Sets a list of substitution values for the email.
-        /// the 'tag' parameter is the value in the email that you'll replace eg. '-name-'
-        /// the 'value' parameter is a list of values that will be substituted in for the tag.
-        /// In our example above the list would be something like ['eric', 'tyler', 'cj'].
-        /// The 'value' parameter expects a 1:1 mapping from email addresses to values.  
-        /// If you are left with more email addresses then values to substitute then the substitution tag will be left blank.
+        /// Adds a substitution value to be used during the mail merge.  Substitutions will happen in the order
+        /// added, so calls to this should match calls to addTo.
         /// </summary>
-        /// <param name="tag"></param>
-        /// <param name="value"></param>
+        /// <param name="tag">the string in the email that you'll replace eg. '-name-'</param>
+        /// <param name="value">a list of values that will be substituted in for the tag, one for each recipient</param>
         void AddSubVal(String tag, params String[] value);
 
         /// <summary>
-        /// Add an attachment to the message.  
-        /// The 'filePath' paramater expects a fully qualified file path as a string
+        /// Add an attachment to the message.
         /// </summary>
-        /// <param name="filePath"></param>
+        /// <param name="filePath">a fully qualified file path as a string</param>
         void AddAttachment(String filePath);
 
         /// <summary>
@@ -135,29 +137,127 @@ namespace SendGridMail
         #endregion
 
         #region SMTP API Functions
+        /// <summary>
+        /// Disable the gravatar app
+        /// </summary>
         void DisableGravatar();
+
+        /// <summary>
+        /// Disable the open tracking app
+        /// </summary>
         void DisableOpenTracking();
+
+        /// <summary>
+        /// Disable the click tracking app
+        /// </summary>
         void DisableClickTracking();
+
+        /// <summary>
+        /// Disable the spam check
+        /// </summary>
         void DisableSpamCheck();
+
+        /// <summary>
+        /// Disable the unsubscribe app
+        /// </summary>
         void DisableUnsubscribe();
+
+        /// <summary>
+        /// Disable the footer app
+        /// </summary>
         void DisableFooter();
+
+        /// <summary>
+        /// Disable the Google Analytics app
+        /// </summary>
         void DisableGoogleAnalytics();
+
+        /// <summary>
+        /// Disable the templates app
+        /// </summary>
         void DisableTemplate();
+
+        /// <summary>
+        /// Disable Bcc app
+        /// </summary>
         void DisableBcc();
+
+        /// <summary>
+        /// Disable the Bypass List Management app
+        /// </summary>
         void DisableBypassListManagement();
 
+        /// <summary>
+        /// Inserts the gravatar image of the sender to the bottom of the message
+        /// </summary>
         void EnableGravatar();
+
+        /// <summary>
+        /// Adds an invisible image to the end of the email which can track e-mail opens.
+        /// </summary>
         void EnableOpenTracking();
-        void EnableClickTracking(String text = null);
+
+        /// <summary>
+        /// Causes all links to be overwritten, shortened, and pointed to SendGrid's servers so clicks will be tracked.
+        /// </summary>
+        /// <param name="includePlainText">true if links found in plain text portions of the message are to be overwritten</param>
+        void EnableClickTracking(bool includePlainText = false);
+
+        /// <summary>
+        /// Provides notification when emails are deteched that exceed a predefined spam threshold.
+        /// </summary>
+        /// <param name="score">Emails with a SpamAssassin score over this value will be considered spam and not be delivered.</param>
+        /// <param name="url">SendGrid will send an HTTP POST request to this url when a message is detected as spam</param>
         void EnableSpamCheck(int score = 5, String url = null);
-        void EnableUnsubscribe(String text, String html, String replace, String url, String landing);
+
+        /// <summary>
+        /// Allow's SendGrid to manage unsubscribes and ensure these users don't get future emails from the sender
+        /// </summary>
+        /// <param name="text">String for the plain text email body showing what you want the message to look like.</param>
+        /// <param name="html">String for the HTML email body showing what you want the message to look like.</param>
+        void EnableUnsubscribe(String text, String html);
+
+        /// <summary>
+        /// Allow's SendGrid to manage unsubscribes and ensure these users don't get future emails from the sender
+        /// </summary>
+        /// <param name="replace">Tag in the message body to be replaced with the unsubscribe link and message</param>
+        void EnableUnsubscribe(String replace);
+
+        /// <summary>
+        /// Attaches a message at the footer of the email
+        /// </summary>
+        /// <param name="text">Message for the plain text body of the email</param>
+        /// <param name="html">Message for the HTML body of the email</param>
         void EnableFooter(String text = null, String html = null);
+
+        /// <summary>
+        /// Re-writes links to integrate with Google Analytics
+        /// </summary>
+        /// <param name="source">Name of the referrer source (e.g. Google, SomeDomain.com, NewsletterA)</param>
+        /// <param name="medium">Name of the marketing medium (e.g. Email)</param>
+        /// <param name="term">Identify paid keywords</param>
+        /// <param name="content">Use to differentiate ads</param>
+        /// <param name="campaign">Name of the campaign</param>
         void EnableGoogleAnalytics(String source, String medium, String term, String content = null, String campaign = null);
+
+        /// <summary>
+        /// Wraps an HTML template around your email content.
+        /// </summary>
+        /// <param name="html">HTML that your emails will be wrapped in, containing a body tag.</param>
         void EnableTemplate(String html = null);
+
+        /// <summary>
+        /// Automatically sends a blind carbon copy to an address for every e-mail sent, without 
+        /// adding that address to the header.
+        /// </summary>
+        /// <param name="email">A single email recipient</param>
         void EnableBcc(String email = null);
+
+        /// <summary>
+        /// Enabing this app will bypass the normal unsubscribe / bounce / spam report checks 
+        /// and queue the e-mail for delivery.
+        /// </summary>
         void EnableBypassListManagement();
         #endregion
-
-        void Mail(NetworkCredential credentials);
     }
 }
