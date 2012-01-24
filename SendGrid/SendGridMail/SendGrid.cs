@@ -41,7 +41,7 @@ namespace SendGridMail
         /// </summary>
         /// <param name="from">The email address of the sender</param>
         /// <param name="to">An array of the recipients</param>
-        /// <param name="cc">Supported over SMTP, with future plans for support in the REST transport</param>
+        /// <param name="cc">Supported over SMTP, with future plans for support in the Web transport</param>
         /// <param name="bcc">Blind recipients</param>
         /// <param name="subject">The subject of the message</param>
         /// <param name="html">the html content for the message</param>
@@ -531,7 +531,7 @@ namespace SendGridMail
                     transport = SMTP.GetInstance(credentials);
                     break;
                 case TransportType.REST:
-                    transport = REST.GetInstance(credentials);
+                    transport = Web.GetInstance(credentials);
                     break;
                 default:
                     throw new ArgumentException("Transport method not specified");

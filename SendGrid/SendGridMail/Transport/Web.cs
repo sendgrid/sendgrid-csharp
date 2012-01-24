@@ -12,7 +12,7 @@ using CodeScales.Http.Methods;
 
 namespace SendGridMail.Transport
 {
-    public class REST : ITransport
+    public class Web : ITransport
     {
         #region Properties
         public const String Endpoint = "http://sendgrid.com/api/mail.send";
@@ -25,22 +25,22 @@ namespace SendGridMail.Transport
         #endregion
 
         /// <summary>
-        /// Factory method for REST transport of sendgrid messages
+        /// Factory method for Web transport of sendgrid messages
         /// </summary>
         /// <param name="credentials">SendGrid credentials for sending mail messages</param>
-        /// <param name="url">The uri of the REST endpoint</param>
+        /// <param name="url">The uri of the Web endpoint</param>
         /// <returns>New instance of the transport mechanism</returns>
-        public static REST GetInstance(NetworkCredential credentials, String url = Endpoint)
+        public static Web GetInstance(NetworkCredential credentials, String url = Endpoint)
         {
-            return new REST(credentials, url);
+            return new Web(credentials, url);
         }
 
         /// <summary>
-        /// Creates a new REST interface for sending mail.  Preference is using the Factory method.
+        /// Creates a new Web interface for sending mail.  Preference is using the Factory method.
         /// </summary>
         /// <param name="credentials">SendGrid user parameters</param>
-        /// <param name="url">The uri of the REST endpoint</param>
-        internal REST(NetworkCredential credentials, String url = Endpoint)
+        /// <param name="url">The uri of the Web endpoint</param>
+        internal Web(NetworkCredential credentials, String url = Endpoint)
         {
             _credentials = credentials;
 
@@ -49,7 +49,7 @@ namespace SendGridMail.Transport
         }
 
         /// <summary>
-        /// Delivers a message over SendGrid's REST interface
+        /// Delivers a message over SendGrid's Web interface
         /// </summary>
         /// <param name="message"></param>
         public void Deliver(ISendGrid message)

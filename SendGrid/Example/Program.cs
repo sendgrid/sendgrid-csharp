@@ -19,14 +19,14 @@ namespace Example
             var from = "cj.buchmann@sendgrid.com";
             var to = new List<String>
                          {
-                             "cj.buchmann@sendgrid.com"
+                             "foo@bar.com"
                          };
 
             //initialize the SMTPAPI example class
             var smtpapi = new SMTPAPI(username, password, from, to);
-            var restapi = new RESTAPI(username, password, from, to);
+            var restapi = new WEBAPI(username, password, from, to);
 
-            //use this section to test out our REST and SMTP examples!
+            //use this section to test out our Web and SMTP examples!
             restapi.EnableTemplateEmail();
 
             Console.WriteLine("Done!");

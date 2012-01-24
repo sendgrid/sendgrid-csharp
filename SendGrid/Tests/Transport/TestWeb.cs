@@ -12,12 +12,12 @@ using SendGridMail.Transport;
 namespace Tests.Transport
 {
     [TestFixture]
-    class TestREST
+    class TestWeb
     {
         [Test]
         public void TestFetchFileBodies()
         {
-            var test = REST.GetInstance(new NetworkCredential("foo", "bar"));
+            var test = Web.GetInstance(new NetworkCredential("foo", "bar"));
             var message = new Mock<ISendGrid>();
             message.SetupProperty(foo => foo.Attachments, null);
             var result = test.FetchFileBodies(message.Object);
@@ -37,7 +37,7 @@ namespace Tests.Transport
         [Test]
         public void TestFetchFormParams()
         {
-            var bar = REST.GetInstance(new NetworkCredential("usr", "psswd"));
+            var bar = Web.GetInstance(new NetworkCredential("usr", "psswd"));
             var message = SendGrid.GetInstance();
             message.AddTo("foo@bar.com");
             message.AddCc("cc@bar.com");

@@ -8,14 +8,14 @@ using SendGridMail.Transport;
 
 namespace Example
 {
-    class RESTAPI
+    class WEBAPI
     {
         private String _username;
         private String _password;
         private String _from;
         private IEnumerable<String> _to;
 
-        public RESTAPI(String username, String password, String from, IEnumerable<String> recipients)
+        public WEBAPI(String username, String password, String from, IEnumerable<String> recipients)
         {
             _username = username;
             _password = password;
@@ -46,8 +46,8 @@ namespace Example
             //set the message subject
             message.Subject = "Hello World HTML Test";
 
-            //create an instance of the REST transport mechanism
-            var transportInstance = REST.GetInstance(new NetworkCredential(_username, _password));
+            //create an instance of the Web transport mechanism
+            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
 
             //send the mail
             transportInstance.Deliver(message);
@@ -76,8 +76,8 @@ namespace Example
             //set the message subject
             message.Subject = "Hello World Plain Text Test";
 
-            //create an instance of the REST transport mechanism
-            var transportInstance = REST.GetInstance(new NetworkCredential(_username, _password));
+            //create an instance of the Web transport mechanism
+            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
 
             //send the mail
             transportInstance.Deliver(message);
@@ -108,8 +108,8 @@ namespace Example
             //set the message subject
             message.Subject = "Hello World Gravatar Test";
 
-            //create an instance of the REST transport mechanism
-            var transportInstance = REST.GetInstance(new NetworkCredential(_username, _password));
+            //create an instance of the Web transport mechanism
+            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
 
             //enable gravatar
             message.EnableGravatar();
@@ -142,8 +142,8 @@ namespace Example
             //set the message subject
             message.Subject = "Hello World Open Tracking Test";
 
-            //create an instance of the REST transport mechanism
-            var transportInstance = REST.GetInstance(new NetworkCredential(_username, _password));
+            //create an instance of the Web transport mechanism
+            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
 
             //enable gravatar
             message.EnableOpenTracking();
@@ -181,8 +181,8 @@ namespace Example
             //set the message subject
             message.Subject = "Hello World Click Tracking Test";
 
-            //create an instance of the REST transport mechanism
-            var transportInstance = REST.GetInstance(new NetworkCredential(_username, _password));
+            //create an instance of the Web transport mechanism
+            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
 
             //enable clicktracking
             message.EnableClickTracking(false);
@@ -218,8 +218,8 @@ namespace Example
             //set the message subject
             message.Subject = "WIN A MILLION DOLLARS TODAY! WORK FROM HOME! A NIGERIAN PRINCE WANTS YOU!";
 
-            //create an instance of the REST transport mechanism
-            var transportInstance = REST.GetInstance(new NetworkCredential(_username, _password));
+            //create an instance of the Web transport mechanism
+            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
 
             //enable spamcheck
             message.EnableSpamCheck();
@@ -255,8 +255,8 @@ namespace Example
             //set the message subject
             message.Subject = "Hello World Unsubscribe Test";
 
-            //create an instance of the REST transport mechanism
-            var transportInstance = REST.GetInstance(new NetworkCredential(_username, _password));
+            //create an instance of the Web transport mechanism
+            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
 
             //enable spamcheck
             //or optionally, you can specify 'replace' instead of the text and html in order to 
@@ -295,8 +295,8 @@ namespace Example
             //set the message subject
             message.Subject = "Hello World Footer Test";
 
-            //create an instance of the REST transport mechanism
-            var transportInstance = REST.GetInstance(new NetworkCredential(_username, _password));
+            //create an instance of the Web transport mechanism
+            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
 
             //Enable Footer
             message.EnableFooter("PLAIN TEXT FOOTER", "<p color='blue'>HTML FOOTER TEXT</p>");
@@ -334,8 +334,8 @@ namespace Example
             //set the message subject
             message.Subject = "Hello World Footer Test";
 
-            //create an instance of the REST transport mechanism
-            var transportInstance = REST.GetInstance(new NetworkCredential(_username, _password));
+            //create an instance of the Web transport mechanism
+            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
 
             //enable Google Analytics
             message.EnableGoogleAnalytics("SendGridTest", "EMAIL", "Sendgrid", "ad-one", "My SG Campaign");
@@ -373,8 +373,8 @@ namespace Example
             //set the message subject
             message.Subject = "Hello World Template Test";
 
-            //create an instance of the REST transport mechanism
-            var transportInstance = REST.GetInstance(new NetworkCredential(_username, _password));
+            //create an instance of the Web transport mechanism
+            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
 
             //enable template
             message.EnableTemplate("<p>My Email Template <% body %> is awesome!</p>");
@@ -412,8 +412,8 @@ namespace Example
             //set the message subject
             message.Subject = "Hello World Bypass List Management Test";
 
-            //create an instance of the REST transport mechanism
-            var transportInstance = REST.GetInstance(new NetworkCredential(_username, _password));
+            //create an instance of the Web transport mechanism
+            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
 
             //enable bypass list management
             message.EnableBypassListManagement();
