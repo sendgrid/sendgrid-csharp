@@ -111,6 +111,30 @@ namespace Tests
             mock.Verify(foo => foo.AddSubVal("-name-", substitutionStrings));
         }
 
+        [Test]
+        public void TestAddUniqueIdentifier()
+        {
+
+            var kvp = new Dictionary<String, String> { {"foo", "bar"}, {"beer", "good"} };
+            var mock = new Mock<IHeader>();
+
+            var sg = new SendGrid(mock.Object);
+            sg.AddUniqueIdentifier(kvp);
+
+            mock.Verify(foo => foo.AddUniqueIdentifier(kvp));
+        }
+
+        [Test]
+        public void TestSetCategory()
+        {
+            var cat = "foo";
+            var mock = new Mock<IHeader>();
+
+            var sg = new SendGrid(mock.Object);
+            sg.SetCategory(cat);
+
+            mock.Verify(foo => foo.SetCategory(cat));
+        }
 
         [Test]
         public void TestGetRcpts()
