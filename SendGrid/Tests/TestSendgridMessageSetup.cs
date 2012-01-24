@@ -99,21 +99,17 @@ namespace Tests
             Assert.AreEqual("New Test Subject", sg.Subject, "null subject does not overide previous subject");
         }
 
-        /*
         [Test]
         public void TestAddSubVal()
         {
-            var header = new Header();
-            var sg = new SendGrid(header);
+            var substitutionStrings = new List<String> {"foo", "bar", "beer"};
+            var mock = new Mock<IHeader>();
 
-            var datastruct = new String[2];
-            datastruct[0] = "eric";
-            datastruct[1] = "tyler";
+            var sg = new SendGrid(mock.Object);
+            sg.AddSubVal("-name-", substitutionStrings);
 
-            sg.AddSubVal("-name-", datastruct);
-            Assert.AreEqual("test", sg.Header);
+            mock.Verify(foo => foo.AddSubVal("-name-", substitutionStrings));
         }
-        */
 
 
         [Test]

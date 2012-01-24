@@ -6,16 +6,6 @@ using System.Net.Mail;
 namespace SendGridMail
 {
     /// <summary>
-    /// Internal object to represent the way in which email may be sent.
-    /// The library supports sending through either SMTP or Web interfaces.
-    /// </summary>
-    public enum TransportType
-    {
-        SMTP,
-        REST
-    };
-
-    /// <summary>
     /// Represents the basic set of functions that will be called by the user
     /// includes basic message data manipulation and filter settings
     /// </summary>
@@ -33,7 +23,6 @@ namespace SendGridMail
         IHeader Header { get; set; }
         String Html { get; set; }
         String Text { get; set; }
-        TransportType Transport { get; set; }
         #endregion
 
         #region Interface for ITransport
@@ -42,13 +31,6 @@ namespace SendGridMail
         /// </summary>
         /// <returns>MIME to be sent</returns>
         MailMessage CreateMimeMessage();
-
-        /// <summary>
-        /// Creates a new transport object, and sends this message out.
-        /// </summary>
-        /// <param name="credentials">Sendgrid user credentials</param>
-        void Mail(NetworkCredential credentials);
-
         #endregion
 
         #region Methods for setting data
@@ -68,7 +50,7 @@ namespace SendGridMail
         /// Add to the 'To' address.
         /// </summary>
         /// <param name="addresssInfo"> the dictionary keys are the email addresses, which points to a dictionary of 
-        /// key value pairs mapping to other address codes, such as { foo@bar.com => { 'DisplayName' => 'Mr Foo' } } </param>
+        /// key substitutionValues pairs mapping to other address codes, such as { foo@bar.com => { 'DisplayName' => 'Mr Foo' } } </param>
         void AddTo(IDictionary<String, IDictionary<String, String>> addresssInfo);
 
         /// <summary>
@@ -87,7 +69,7 @@ namespace SendGridMail
         /// Add to the 'CC' address.
         /// </summary>
         /// <param name="addresssInfo">the dictionary keys are the email addresses, which points to a dictionary of 
-        /// key value pairs mapping to other address codes, such as { foo@bar.com => { 'DisplayName' => 'Mr Foo' } } </param>
+        /// key substitutionValues pairs mapping to other address codes, such as { foo@bar.com => { 'DisplayName' => 'Mr Foo' } } </param>
         void AddCc(IDictionary<String, IDictionary<String, String>> addresssInfo);
 
         /// <summary>
@@ -106,16 +88,30 @@ namespace SendGridMail
         /// Add to the 'Bcc' address.
         /// </summary>
         /// <param name="addresssInfo">the dictionary keys are the email addresses, which points to a dictionary of 
-        /// key value pairs mapping to other address codes, such as { foo@bar.com => { 'DisplayName' => 'Mr Foo' } }</param>
+        /// key substitutionValues pairs mapping to other address codes, such as { foo@bar.com => { 'DisplayName' => 'Mr Foo' } }</param>
         void AddBcc(IDictionary<String, IDictionary<String, String>> addresssInfo);
 
         /// <summary>
-        /// Adds a substitution value to be used during the mail merge.  Substitutions will happen in the order
-        /// added, so calls to this should match calls to addTo.
+        /// Defines a mapping between a replacement string in the text of the message to a list of 
+        /// substitution values to be used, one per each recipient, in the same order as the recipients were added. 
         /// </summary>
-        /// <param name="tag">the string in the email that you'll replace eg. '-name-'</param>
-        /// <param name="value">a list of values that will be substituted in for the tag, one for each recipient</param>
-        void AddSubVal(String tag, params String[] value);
+        /// <param name="replacementTag">the string in the email that you'll replace eg. '-name-'</param>
+        /// <param name="substitutionValues">a list of values that will be substituted in for the replacementTag, one for each recipient</param>
+        void AddSubVal(String replacementTag, List<String> substitutionValues);
+
+        /// <summary>
+        /// This adds parameters and values that will be bassed back through SendGrid's
+        /// Event API if an event notification is triggered by this email.
+        /// </summary>
+        /// <param name="identifiers">parameter substitutionValues pairs to be passed back on event notification</param>
+        void AddUniqueIdentifier(IDictionary<String, String> identifiers);
+
+        /// <summary>
+        /// This sets the category for this email.  Statistics are stored on a per category
+        /// basis, so this can be useful for tracking on a per group basis.
+        /// </summary>
+        /// <param name="category">categories applied to the message</param>
+        void SetCategory(String category);
 
         /// <summary>
         /// Add an attachment to the message.
@@ -132,7 +128,7 @@ namespace SendGridMail
         /// <summary>
         /// Add custom headers to the message
         /// </summary>
-        /// <param name="headers">key value pairs</param>
+        /// <param name="headers">key substitutionValues pairs</param>
         void AddHeaders(IDictionary<String, String> headers);
         #endregion
 
@@ -206,7 +202,7 @@ namespace SendGridMail
         /// <summary>
         /// Provides notification when emails are deteched that exceed a predefined spam threshold.
         /// </summary>
-        /// <param name="score">Emails with a SpamAssassin score over this value will be considered spam and not be delivered.</param>
+        /// <param name="score">Emails with a SpamAssassin score over this substitutionValues will be considered spam and not be delivered.</param>
         /// <param name="url">SendGrid will send an HTTP POST request to this url when a message is detected as spam</param>
         void EnableSpamCheck(int score = 5, String url = null);
 
@@ -243,7 +239,7 @@ namespace SendGridMail
         /// <summary>
         /// Wraps an HTML template around your email content.
         /// </summary>
-        /// <param name="html">HTML that your emails will be wrapped in, containing a body tag.</param>
+        /// <param name="html">HTML that your emails will be wrapped in, containing a body replacementTag.</param>
         void EnableTemplate(String html = null);
 
         /// <summary>
