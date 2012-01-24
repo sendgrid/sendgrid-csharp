@@ -13,7 +13,7 @@ namespace SendGridMail
     {
         #region constants/vars
         //private/constant vars:
-        private Dictionary<String, String> _filters;
+        private static readonly Dictionary<String, String> Filters = InitializeFilters();
         private MailMessage message;
 
         // TODO find appropriate types for these
@@ -49,14 +49,14 @@ namespace SendGridMail
         /// <param name="transport">Transport class to use for sending the message</param>
         /// <returns></returns>
         public static SendGrid GetInstance(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc,
-                                                String subject, String html, String text, TransportType transport)
+                                                String subject, String html, String text)
         {
             var header = new Header();
-            return new SendGrid(from, to, cc, bcc, subject, html, text, transport, header);
+            return new SendGrid(from, to, cc, bcc, subject, html, text, header);
         }
 
         internal SendGrid(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc, 
-            String subject, String html, String text, TransportType transport, IHeader header = null ) : this(header)
+            String subject, String html, String text, IHeader header = null ) : this(header)
         {
             From = from;
             To = to;
@@ -74,14 +74,11 @@ namespace SendGridMail
             message = new MailMessage();
             Header = header;
             Headers = new Dictionary<string, string>();
-
-            //initialize the filters, for use within the library
-            this.InitializeFilters();
         }
 
-        public void InitializeFilters()
+        private static Dictionary<string, string> InitializeFilters()
         {
-            this._filters =
+            return
             new Dictionary<string, string>
             {
                 {"Gravatar", "gravatar"},
@@ -191,7 +188,6 @@ namespace SendGridMail
         public IHeader Header { get; set; }
         public String Html { get; set; }
         public String Text { get; set; }
-        public TransportType Transport { get; set; }
         #endregion
 
         #region Methods for setting data
@@ -286,11 +282,22 @@ namespace SendGridMail
             set { _attachments = value.ToList(); }
         }
 
-        public void AddSubVal(String tag, params String[] value)
+        public void AddSubVal(String replacementTag, List<String> substitutionValues)
         {
             //let the system complain if they do something bad, since the function returns null
-            Header.AddSubVal(tag, value);
+            Header.AddSubVal(replacementTag, substitutionValues);
         }
+
+        public void AddUniqueIdentifier(IDictionary<String, String> identifiers)
+        {
+            Header.AddUniqueIdentifier(identifiers);
+        }
+
+        public void SetCategory(String category)
+        {
+            Header.SetCategory(category);
+        }
+
 
         public void AddAttachment(String filePath)
         {
@@ -316,67 +323,67 @@ namespace SendGridMail
         #region SMTP API Functions
         public void DisableGravatar()
         {
-            Header.Disable(_filters["Gravatar"]);
+            Header.Disable(Filters["Gravatar"]);
         }
 
         public void DisableOpenTracking()
         {
-            Header.Disable(_filters["OpenTracking"]);
+            Header.Disable(Filters["OpenTracking"]);
         }
 
         public void DisableClickTracking()
         {
-            Header.Disable(_filters["ClickTracking"]);
+            Header.Disable(Filters["ClickTracking"]);
         }
 
         public void DisableSpamCheck()
         {
-            Header.Disable(_filters["SpamCheck"]);
+            Header.Disable(Filters["SpamCheck"]);
         }
 
         public void DisableUnsubscribe()
         {
-            Header.Disable(_filters["Unsubscribe"]);
+            Header.Disable(Filters["Unsubscribe"]);
         }
 
         public void DisableFooter()
         {
-            Header.Disable(_filters["Footer"]);
+            Header.Disable(Filters["Footer"]);
         }
 
         public void DisableGoogleAnalytics()
         {
-            Header.Disable(_filters["GoogleAnalytics"]);
+            Header.Disable(Filters["GoogleAnalytics"]);
         }
 
         public void DisableTemplate()
         {
-            Header.Disable(_filters["Template"]);
+            Header.Disable(Filters["Template"]);
         }
 
         public void DisableBcc()
         {
-            Header.Disable(_filters["Bcc"]);
+            Header.Disable(Filters["Bcc"]);
         }
 
         public void DisableBypassListManagement()
         {
-            Header.Disable(_filters["BypassListManagement"]);
+            Header.Disable(Filters["BypassListManagement"]);
         }
 
         public void EnableGravatar()
         {
-            Header.Enable(_filters["Gravatar"]);
+            Header.Enable(Filters["Gravatar"]);
         }
 
         public void EnableOpenTracking()
         {
-            Header.Enable(_filters["OpenTracking"]);
+            Header.Enable(Filters["OpenTracking"]);
         }
 
         public void EnableClickTracking(bool includePlainText = false)
         {
-            var filter = _filters["ClickTracking"];
+            var filter = Filters["ClickTracking"];
                 
             Header.Enable(filter);
             if (includePlainText)
@@ -387,7 +394,7 @@ namespace SendGridMail
 
         public void EnableSpamCheck(int score = 5, string url = null)
         {
-            var filter = _filters["SpamCheck"];
+            var filter = Filters["SpamCheck"];
 
             Header.Enable(filter);
             Header.AddFilterSetting(filter, new List<string> { "maxscore" }, score.ToString(CultureInfo.InvariantCulture));
@@ -396,16 +403,16 @@ namespace SendGridMail
 
         public void EnableUnsubscribe(string text, string html)
         {
-            var filter = _filters["Unsubscribe"];
+            var filter = Filters["Unsubscribe"];
 
             if(!System.Text.RegularExpressions.Regex.IsMatch(text, ReText))
             {
-                throw new Exception("Missing substitution tag in text");
+                throw new Exception("Missing substitution replacementTag in text");
             }
 
             if(!System.Text.RegularExpressions.Regex.IsMatch(html, ReHtml))
             {
-                throw new Exception("Missing substitution tag in html");
+                throw new Exception("Missing substitution replacementTag in html");
             }
 
             Header.Enable(filter);
@@ -415,7 +422,7 @@ namespace SendGridMail
 
         public void EnableUnsubscribe(string replace)
         {
-            var filter = _filters["Unsubscribe"];
+            var filter = Filters["Unsubscribe"];
 
             Header.Enable(filter);
             Header.AddFilterSetting(filter, new List<string> { "replace" }, replace);
@@ -423,7 +430,7 @@ namespace SendGridMail
 
         public void EnableFooter(string text = null, string html = null)
         {
-            var filter = _filters["Footer"];
+            var filter = Filters["Footer"];
 
             Header.Enable(filter);
             Header.AddFilterSetting(filter, new List<string> { "text/plain" }, text);
@@ -432,7 +439,7 @@ namespace SendGridMail
 
         public void EnableGoogleAnalytics(string source, string medium, string term, string content = null, string campaign = null)
         {
-            var filter = _filters["GoogleAnalytics"];
+            var filter = Filters["GoogleAnalytics"];
 
             Header.Enable(filter);
             Header.AddFilterSetting(filter, new List<string> { "utm_source" }, source);
@@ -444,11 +451,11 @@ namespace SendGridMail
 
         public void EnableTemplate(string html)
         {
-            var filter = _filters["Template"];
+            var filter = Filters["Template"];
 
             if (!System.Text.RegularExpressions.Regex.IsMatch(html, ReHtml))
             {
-                throw new Exception("Missing substitution tag in html");
+                throw new Exception("Missing substitution replacementTag in html");
             }
 
             Header.Enable(filter);
@@ -457,7 +464,7 @@ namespace SendGridMail
 
         public void EnableBcc(string email)
         {
-            var filter = _filters["Bcc"];
+            var filter = Filters["Bcc"];
 
             Header.Enable(filter);
             Header.AddFilterSetting(filter, new List<string> { "email" }, email);
@@ -465,7 +472,7 @@ namespace SendGridMail
 
         public void EnableBypassListManagement()
         {
-            Header.Enable(_filters["BypassListManagement"]);
+            Header.Enable(Filters["BypassListManagement"]);
         }
         #endregion
 
@@ -520,23 +527,6 @@ namespace SendGridMail
                              };
             var msg = CreateMimeMessage();
             client.Send(msg);
-        }
-
-        public void Mail(NetworkCredential credentials)
-        {
-            ITransport transport;
-            switch (Transport)
-            {
-                case TransportType.SMTP:
-                    transport = SMTP.GetInstance(credentials);
-                    break;
-                case TransportType.REST:
-                    transport = Web.GetInstance(credentials);
-                    break;
-                default:
-                    throw new ArgumentException("Transport method not specified");
-            }
-            transport.Deliver(this);
         }
     }
 }
