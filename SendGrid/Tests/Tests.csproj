@@ -59,7 +59,7 @@
     <Compile Include="TestSendgridMessageSetup.cs" />
     <Compile Include="TestTreeNode.cs" />
     <Compile Include="TestUtils.cs" />
-    <Compile Include="Transport\TestREST.cs" />
+    <Compile Include="Transport\TestWeb.cs" />
     <Compile Include="Transport\TestSMTP.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@ namespace SendGridMail
 {
     /// <summary>
     /// Internal object to represent the way in which email may be sent.
-    /// The library supports sending through either SMTP or REST interfaces.
+    /// The library supports sending through either SMTP or Web interfaces.
     /// </summary>
     public enum TransportType
     {
