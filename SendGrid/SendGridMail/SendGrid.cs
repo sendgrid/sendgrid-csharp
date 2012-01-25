@@ -518,7 +518,7 @@ namespace SendGridMail
         /// Helper function lets us look at the mime before it is sent
         /// </summary>
         /// <param name="directory">directory in which we store this mime message</param>
-        public void SaveMessage(String directory)
+        internal void SaveMessage(String directory)
         {
             var client = new SmtpClient("localhost")
                              {
