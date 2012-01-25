@@ -104,7 +104,7 @@ namespace SendGridMail
         /// Event API if an event notification is triggered by this email.
         /// </summary>
         /// <param name="identifiers">parameter substitutionValues pairs to be passed back on event notification</param>
-        void AddUniqueIdentifier(IDictionary<String, String> identifiers);
+        void AddUniqueIdentifiers(IDictionary<String, String> identifiers);
 
         /// <summary>
         /// This sets the category for this email.  Statistics are stored on a per category

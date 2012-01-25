@@ -16,10 +16,11 @@ namespace Example
         {
             var username = "sgrid_username";
             var password = "sgrid_password";
-            var from = "cj.buchmann@sendgrid.com";
+            var from = "bar@domain.com";
             var to = new List<String>
                          {
-                             "foo@bar.com"
+                             "foo@domain.com",
+                             "raz@domain.com"
                          };
 
             //initialize the SMTPAPI example class
@@ -27,7 +28,7 @@ namespace Example
             var restapi = new WEBAPI(username, password, from, to);
 
             //use this section to test out our Web and SMTP examples!
-            restapi.EnableTemplateEmail();
+            smtpapi.SimpleHTMLEmail();
 
             Console.WriteLine("Done!");
             Console.ReadLine();
