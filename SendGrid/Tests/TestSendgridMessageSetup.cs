@@ -119,7 +119,7 @@ namespace Tests
             var mock = new Mock<IHeader>();
 
             var sg = new SendGrid(mock.Object);
-            sg.AddUniqueIdentifier(kvp);
+            sg.AddUniqueIdentifiers(kvp);
 
             mock.Verify(foo => foo.AddUniqueIdentifier(kvp));
         }

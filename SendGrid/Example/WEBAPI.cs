@@ -421,5 +421,128 @@ namespace Example
             //send the mail
             transportInstance.Deliver(message);
         }
+
+
+        /// <summary>
+        /// This feature allows you to create a message template, and specify different replacement
+        /// strings for each specific recipient
+        /// </summary>
+        public void AddSubstitutionValues()
+        {
+            //create a new message object
+            var message = SendGrid.GetInstance();
+
+            //set the message recipients
+            foreach (string recipient in _to)
+            {
+                message.AddTo(recipient);
+            }
+
+            //set the sender
+            message.From = new MailAddress(_from);
+
+            //set the message body
+            message.Text = "Hi %name%! Pleased to meet you!";
+
+            //set the message subject
+            message.Subject = "Testing Substitution Values";
+
+            //This replacement key must exist in the message body
+            var replacementKey = "%name%";
+
+            //There should be one value for each recipient in the To list
+            var substitutionValues = new List<String> { "Mr Foo", "Mrs Raz" };
+
+            message.AddSubVal(replacementKey, substitutionValues);
+
+            //create an instance of the SMTP transport mechanism
+            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+
+            //enable bypass list management
+            message.EnableBypassListManagement();
+
+            //send the mail
+            transportInstance.Deliver(message);
+        }
+
+        /// <summary>
+        /// This feature adds key value identifiers to be sent back as arguments over the event api for
+        /// various events
+        /// </summary>
+        public void AddUniqueIdentifiers()
+        {
+            //create a new message object
+            var message = SendGrid.GetInstance();
+
+            //set the message recipients
+            foreach (string recipient in _to)
+            {
+                message.AddTo(recipient);
+            }
+
+            //set the sender
+            message.From = new MailAddress(_from);
+
+            //set the message body
+            message.Text = "Hello World";
+
+            //set the message subject
+            message.Subject = "Testing Unique Identifiers";
+
+            var identifiers = new Dictionary<String, String>();
+            identifiers["customer"] = "someone";
+            identifiers["location"] = "somewhere";
+
+            message.AddUniqueIdentifiers(identifiers);
+
+            //create an instance of the SMTP transport mechanism
+            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+
+            //enable bypass list management
+            message.EnableBypassListManagement();
+
+            //send the mail
+            transportInstance.Deliver(message);
+
+        }
+
+        /// <summary>
+        /// This feature tags the message with a specific tracking category, which will have aggregated stats
+        /// viewable from your SendGrid account page.
+        /// </summary>
+        public void SetCategory()
+        {
+            //create a new message object
+            var message = SendGrid.GetInstance();
+
+            //set the message recipients
+            foreach (string recipient in _to)
+            {
+                message.AddTo(recipient);
+            }
+
+            //set the sender
+            message.From = new MailAddress(_from);
+
+            //set the message body
+            message.Text = "Hello World";
+
+            //set the message subject
+            message.Subject = "Testing Categories";
+
+            var category = "vipCustomers";
+
+            message.SetCategory(category);
+
+            //create an instance of the SMTP transport mechanism
+            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+
+            //enable bypass list management
+            message.EnableBypassListManagement();
+
+            //send the mail
+            transportInstance.Deliver(message);
+        }
+
     }
 }

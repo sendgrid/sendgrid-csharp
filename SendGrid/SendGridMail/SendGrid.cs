@@ -288,7 +288,7 @@ namespace SendGridMail
             Header.AddSubVal(replacementTag, substitutionValues);
         }
 
-        public void AddUniqueIdentifier(IDictionary<String, String> identifiers)
+        public void AddUniqueIdentifiers(IDictionary<String, String> identifiers)
         {
             Header.AddUniqueIdentifier(identifiers);
         }
