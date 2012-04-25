@@ -53,6 +53,7 @@
     <Compile Include="ISendGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendGrid.cs" />
+    <Compile Include="StreamedFileBody.cs" />
     <Compile Include="Transport\ITransport.cs" />
     <Compile Include="Transport\Web.cs" />
     <Compile Include="Transport\SMTP.cs" />
