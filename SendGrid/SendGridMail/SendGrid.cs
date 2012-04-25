@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -275,6 +276,13 @@ namespace SendGridMail
             }
         }
 
+        private Dictionary<String, MemoryStream> _streamedAttachments = new Dictionary<string, MemoryStream>();
+        public Dictionary<String, MemoryStream> StreamedAttachments
+        {
+            get { return _streamedAttachments; }
+            set { _streamedAttachments = value; }
+        }
+
         private List<String> _attachments = new List<String>(); 
         public String[] Attachments
         {
@@ -298,6 +306,12 @@ namespace SendGridMail
             Header.SetCategory(category);
         }
 
+        public void AddAttachment(Stream stream, String name)
+        {
+            MemoryStream ms = new MemoryStream();
+            stream.CopyTo(ms);
+            StreamedAttachments[name] = ms;
+        }
 
         public void AddAttachment(String filePath)
         {
@@ -494,6 +508,15 @@ namespace SendGridMail
                 {
                     message.Attachments.Add(new Attachment(attachment, MediaTypeNames.Application.Octet));
                 }                
+            }
+
+            if(StreamedAttachments != null)
+            {
+                foreach (var attachment in StreamedAttachments)
+                {
+                    attachment.Value.Position = 0;
+                    message.Attachments.Add(new Attachment(attachment.Value, attachment.Key));
+                }
             }
 
             if (Text != null)
