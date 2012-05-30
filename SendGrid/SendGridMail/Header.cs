@@ -21,6 +21,12 @@ namespace SendGridMail
             _settings.AddArray(keys, substitutions);
         }
 
+
+        public void AddTo(IEnumerable<string> recipients)
+        {
+            _settings.AddArray(new List<string> { "to" }, recipients);
+        }
+
         public void AddUniqueIdentifier(IDictionary<string, string> identifiers)
         {
             foreach (var key in identifiers.Keys)
