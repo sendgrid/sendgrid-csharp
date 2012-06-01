@@ -23,8 +23,8 @@ namespace SendGridMail
         /// This adds the "to" array to the X-SMTPAPI header so that multiple recipients
         /// may be addressed in a single email. (but they each get their own email, instead of a single email with multiple TO: addressees)
         /// </summary>
-        /// <param name="recipients">List of email addresses</param>
-        void AddTo(IEnumerable<string> recipients);
+        /// <param name="addresses">List of email addresses</param>
+        void AddTo(IEnumerable<string> addresses);
 
         /// <summary>
         /// This adds parameters and values that will be bassed back through SendGrid's
