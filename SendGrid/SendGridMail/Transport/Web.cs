@@ -85,7 +85,7 @@ namespace SendGridMail.Transport
         private void AttachFiles(ISendGrid message, MultipartEntity multipartEntity)
         {
             var files = FetchFileBodies(message);
-            files.ForEach(kvp => multipartEntity.AddBody(new FileBody("files[" + kvp.Key + "]", kvp.Key, kvp.Value)));
+            files.ForEach(kvp => multipartEntity.AddBody(new FileBody("files[" + Path.GetFileName(kvp.Key) + "]", Path.GetFileName(kvp.Key), kvp.Value)));
         }
 
         private void CheckForErrors(CodeScales.Http.Methods.HttpResponse response)
