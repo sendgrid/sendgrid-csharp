@@ -15,6 +15,14 @@ namespace SendGridMail
             _settings = new HeaderSettingsNode();
         }
 
+		public IEnumerable<string> To
+        {
+            get
+            {
+                return _settings.GetArray("to");
+            }
+        }
+
         public void AddSubVal(string tag, IEnumerable<string> substitutions)
         {
             var keys = new List<String> {"sub", tag};
