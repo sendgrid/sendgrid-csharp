@@ -298,7 +298,6 @@ namespace SendGridMail
             Header.SetCategory(category);
         }
 
-
         public void AddAttachment(String filePath)
         {
             _attachments.Add(filePath);
