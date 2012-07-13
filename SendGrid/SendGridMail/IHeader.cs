@@ -11,6 +11,11 @@ namespace SendGridMail
     /// </summary>
     public interface IHeader
     {
+		/// <summary>
+		/// Gets the array of recipient addresses from the X-SMTPAPI header
+		/// </summary>
+		IEnumerable<string> To { get; }
+
         /// <summary>
         /// This adds a substitution value to be used during the mail merge.  Substitutions
         /// will happen in order added, so calls to this should match calls to addTo in the mail message.

@@ -11,4 +11,6 @@ SendGrid/Example/bin/
 SendGrid/Example/obj/
 SendGrid/*/bin/
 SendGrid/*/obj/
-
+SendGrid/Tests/test-results/
+SendGrid/test-results/
+.DS_store
