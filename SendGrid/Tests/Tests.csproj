@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CodeScales.Http, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SendGridMail\lib\CodeScales.Http.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
@@ -57,6 +61,7 @@
     <Compile Include="TestJsonUtils.cs" />
     <Compile Include="TestSendgrid.cs" />
     <Compile Include="TestSendgridMessageSetup.cs" />
+    <Compile Include="TestStreamedFileBody.cs" />
     <Compile Include="TestTreeNode.cs" />
     <Compile Include="TestUtils.cs" />
     <Compile Include="Transport\TestWeb.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Mail;
 
@@ -17,6 +18,7 @@ namespace SendGridMail
         MailAddress[] Cc { get; }
         MailAddress[] Bcc { get; }
         MailAddress[] ReplyTo { get; set; }
+        Dictionary<String, MemoryStream> StreamedAttachments { get; set; }
         String[] Attachments { get; set; }
         String Subject { get; set; }
         Dictionary<String, String> Headers { get; set; }
@@ -118,6 +120,13 @@ namespace SendGridMail
         /// </summary>
         /// <param name="filePath">a fully qualified file path as a string</param>
         void AddAttachment(String filePath);
+
+        /// <summary>
+        /// Add a stream as an attachment to the message
+        /// </summary>
+        /// <param name="stream">Stream of file to be attached</param>
+        /// <param name="name">Name of file to be attached</param>
+        void AddAttachment(Stream stream, String name);
 
         /// <summary>
         /// GetRecipients returns a list of all the recepients by retrieving the to, cc, and bcc lists.

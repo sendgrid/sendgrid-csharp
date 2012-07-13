@@ -12,6 +12,18 @@ namespace Tests
     [TestFixture]
     public class TestSendgridMessageSetup
     {
+		[Test]
+        public void TestAddHeaderTo()
+        {
+            var mock = new Mock<Header>();
+            var sg = new SendGrid(mock.Object);
+
+			var strings = new string[2] {"eric@sendgrid.com", "tyler@sendgrid.com"};
+			sg.Header.AddTo(strings);
+			Assert.AreEqual(strings, sg.Header.To, "check the X-Smtpapi to array");
+        }
+
+
         [Test]
         public void TestAddTo()
         {
