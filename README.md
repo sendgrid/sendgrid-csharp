@@ -25,6 +25,12 @@ You can also easily get single or batched Events from an MVC controller with the
         }
     }
 
+If you are using the new `AddUniqueIdentifiers()` method on the Mail object, you can also retrieve those values by inheriting from EventData in a custom class. Just make sure the property is the same name as your identifier, and call this code instead:
+
+`var events = Events.GetEvents<YourEventDataType>(Request.InputStream);`
+You will then get back a List of your custom objects, instead of a `List<EventData>`.
+ 
+
 
 Bug tracker
 -----------
