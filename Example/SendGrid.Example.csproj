@@ -58,9 +58,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SendGrid\SendGrid.csproj">
+    <ProjectReference Include="..\SendGrid\SendGrid-NET45.csproj">
       <Project>{3c687bef-ff50-44ad-8315-2d4237281af8}</Project>
-      <Name>SendGrid</Name>
+      <Name>SendGrid-NET45</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

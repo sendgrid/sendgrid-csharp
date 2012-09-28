@@ -1,18 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0319E73A-7039-4858-B047-1EDF88BB6BD1}</ProjectGuid>
+    <ProjectGuid>{2808BF02-6229-4BC1-8553-A1F111EEB839}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SendGrid.Tests</RootNamespace>
-    <AssemblyName>SendGrid.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>SendGrid</RootNamespace>
+    <AssemblyName>SendGridPlus</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,7 +20,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,56 +28,63 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Release\SendGridPlus.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CodeScales.Http, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SendGridMail\lib\CodeScales.Http.dll</HintPath>
+      <HintPath>..\lib\CodeScales.Http.dll</HintPath>
     </Reference>
-    <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.mocks">
-      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll</HintPath>
-    </Reference>
-    <Reference Include="pnunit.framework">
-      <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.9\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestHeader.cs" />
+    <Compile Include="..\SendGrid\EventData.cs">
+      <Link>EventData.cs</Link>
+    </Compile>
+    <Compile Include="..\SendGrid\Events.cs">
+      <Link>Events.cs</Link>
+    </Compile>
+    <Compile Include="..\SendGrid\Header.cs">
+      <Link>Header.cs</Link>
+    </Compile>
+    <Compile Include="..\SendGrid\IHeader.cs">
+      <Link>IHeader.cs</Link>
+    </Compile>
+    <Compile Include="..\SendGrid\IMail.cs">
+      <Link>IMail.cs</Link>
+    </Compile>
+    <Compile Include="..\SendGrid\Mail.cs">
+      <Link>Mail.cs</Link>
+    </Compile>
+    <Compile Include="..\SendGrid\StreamedFileBody.cs">
+      <Link>StreamedFileBody.cs</Link>
+    </Compile>
+    <Compile Include="..\SendGrid\Transport\ITransport.cs">
+      <Link>Transport\ITransport.cs</Link>
+    </Compile>
+    <Compile Include="..\SendGrid\Transport\SMTP.cs">
+      <Link>Transport\SMTP.cs</Link>
+    </Compile>
+    <Compile Include="..\SendGrid\Transport\Web.cs">
+      <Link>Transport\Web.cs</Link>
+    </Compile>
+    <Compile Include="..\SendGrid\Utils.cs">
+      <Link>Utils.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestJsonUtils.cs" />
-    <Compile Include="TestSendgrid.cs" />
-    <Compile Include="TestSendgridMessageSetup.cs" />
-    <Compile Include="TestStreamedFileBody.cs" />
-    <Compile Include="TestTreeNode.cs" />
-    <Compile Include="TestUtils.cs" />
-    <Compile Include="Transport\TestWeb.cs" />
-    <Compile Include="Transport\TestSMTP.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SendGrid\SendGrid-NET45.csproj">
-      <Project>{3c687bef-ff50-44ad-8315-2d4237281af8}</Project>
-      <Name>SendGrid-NET45</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
