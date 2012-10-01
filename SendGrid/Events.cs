@@ -19,6 +19,7 @@ namespace SendGrid
         /// <returns></returns>
         public static EventData GetEvent(Stream inputStream)
         {
+            inputStream.Position = 0;
             var json = new StreamReader(inputStream).ReadToEnd();
             return GetEvent(json);
         }
@@ -31,6 +32,7 @@ namespace SendGrid
         /// <returns></returns>
         public static T GetEvent<T>(Stream inputStream) where T : EventData
         {
+            inputStream.Position = 0;
             var json = new StreamReader(inputStream).ReadToEnd();
             return GetEvent<T>(json);
         }
@@ -63,6 +65,7 @@ namespace SendGrid
         /// <returns></returns>
         public static List<EventData> GetEvents(Stream inputStream)
         {
+            inputStream.Position = 0;
             var json = new StreamReader(inputStream).ReadToEnd();
             return GetEvents(json);
         }
@@ -75,6 +78,7 @@ namespace SendGrid
         /// <returns></returns>
         public static List<T> GetEvents<T>(Stream inputStream) where T : EventData
         {
+            inputStream.Position = 0;
             var json = new StreamReader(inputStream).ReadToEnd();
             return GetEvents<T>(json);
         }
