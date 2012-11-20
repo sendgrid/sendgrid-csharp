@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SendGridMail.Web
+namespace SendGridMail.WebApi
 {
-    interface IWebApi
+    interface IWebApi : IBounceApi, IBlockApi
     {
         String user { get; set; }
         String pass { get; set; }
 
-        String GetBounces(int date, String days, DateTime start_date, DateTime end_date, int limit, int offset, int type, String email);
-        void DeleteBounces(DateTime start_date, DateTime end_date, String type, String email);
-        String GetBlocks(int days, DateTime start_date, DateTime end_date, String email);
-        void DeleteBlocks(String email);
         String GetEmailParse(String hostname, String url);
         void SetEmailParse(String hostname, String url);
         void EditEmailParse(String hostname, String url);

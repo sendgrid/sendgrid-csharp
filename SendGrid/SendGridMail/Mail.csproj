@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bounce.cs" />
+    <Compile Include="BounceType.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="IHeader.cs" />
     <Compile Include="ISendGrid.cs" />
@@ -58,6 +60,14 @@
     <Compile Include="Transport\Web.cs" />
     <Compile Include="Transport\SMTP.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="WebApi\IBlockApi.cs" />
+    <Compile Include="WebApi\IBounceApi.cs" />
+    <Compile Include="WebApi\IWebApi.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WebApi\WebBounce.cs" />
+    <Compile Include="WebApi\WebErrorChecker.cs" />
+    <Compile Include="WebApi\WebErrorCheckerExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\CodeScales.Http.dll" />
