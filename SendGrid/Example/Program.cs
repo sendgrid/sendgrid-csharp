@@ -26,6 +26,7 @@ namespace Example
                 {
                     Console.Write("Pick a command to test (? for help):");
                     String cmd = Console.ReadLine().ToLower().Trim();
+                    //TODO: ? make this a command pattern to eliminate code smell of these else-ifs.  Separate class for each command, name property, ask each command if it recognizes the cmd text
                     if (cmd == "?")
                         RunHelp();
                     else if (cmd == "bounces")
@@ -72,7 +73,7 @@ namespace Example
             var bcc = PromptDelimitedList("BCC (; delimited):", ";");
             var subject = PromptString("Subject ('Test email' default):", "Test email");
             var htmlBody = PromptString("Html Body (none for default test, space for none):", "<p>Hello World HTML Test</p>");
-            var textBody = PromptString("Text Body (none for default test, space for none):", "<p>Hello World Text Test</p>");
+            var textBody = PromptString("Text Body (none for default test, space for none):", "Hello World Text Test");
 
             var method = PromptString("Transport SMTP or Web? ('Web' default):", "Web");
             var gravatar = PromptBoolean("Enable gravatar (n)?", false);
