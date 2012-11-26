@@ -5,7 +5,10 @@ using System.Net;
 
 namespace SendGridMail.WebApi
 {
-    public class WebBounce : IBounceApi
+    /// <summary>
+    /// Allows you to retrieve and delete entries in the Bounces list with the Web API.
+    /// </summary>
+    public class WebBounceApi : IBounceApi
     {
         public const String Endpoint = "https://sendgrid.com/api/bounces";
         public const String JsonFormat = "json";
@@ -20,25 +23,14 @@ namespace SendGridMail.WebApi
         /// </summary>
         /// <param name="credentials">SendGrid user parameters</param>
         /// <param name="url">The uri of the Web endpoint</param>
-        internal WebBounce(NetworkCredential credentials, String url = Endpoint)
+        public WebBounceApi(NetworkCredential credentials, String url = Endpoint)
         {
             this._credentials = credentials;
 
             this._format = XmlFormat;
-            this._restEndpoint = string.Format("{0}.{1}", url, this._format);
+            this._restEndpoint = url;
         }
-
-        /// <summary>
-        /// Factory method for Web transport of sendgrid messages
-        /// </summary>
-        /// <param name="credentials">SendGrid credentials for sending mail messages</param>
-        /// <param name="url">The uri of the Web endpoint</param>
-        /// <returns>New instance of the transport mechanism</returns>
-        public static WebBounce GetInstance(NetworkCredential credentials, String url = Endpoint)
-        {
-            return new WebBounce(credentials, url);
-        }
-
+        
         /// <summary>
         /// Retrieve a list of bounces with addresses and response codes, optionally with dates.
         /// </summary>
@@ -53,7 +45,7 @@ namespace SendGridMail.WebApi
         /// <returns></returns>
         public List<Bounce> GetBounces(Boolean includeDate, Int32? days, DateTime? startDate, DateTime? endDate, Int32? limit, Int32? offset, BounceType type, string email)
         {
-            List<Bounce> bounces = new List<Bounce>();
+            List<Bounce> items = new List<Bounce>();
             System.Collections.Specialized.NameValueCollection reqParams = new System.Collections.Specialized.NameValueCollection();
             reqParams.Add("api_user", this._credentials.UserName);
             reqParams.Add("api_key", this._credentials.Password);
@@ -96,7 +88,7 @@ namespace SendGridMail.WebApi
 
             using (var client = new System.Net.WebClient()/*{ Credentials = _credentials }*/)
             {
-                byte[] responseBytes = client.UploadValues(String.Format("{0}.get.{1}", Endpoint, this._format), "POST", reqParams);
+                byte[] responseBytes = client.UploadValues(String.Format("{0}.get.{1}", _restEndpoint, this._format), "POST", reqParams);
                 System.IO.MemoryStream stream = new System.IO.MemoryStream(responseBytes);
                 System.Xml.Linq.XDocument doc = System.Xml.Linq.XDocument.Load(stream);
                 doc.ThrowOnSendGridError();
@@ -106,19 +98,21 @@ namespace SendGridMail.WebApi
                     Bounce item = new Bounce()
                     {
                         Email = node.Element("email").Value,
-                        Status = node.Element("status").Value,
                         Reason = node.Element("reason").Value
                     };
+                    var nodeStatus = node.Element("status");
+                    if (nodeStatus != null)
+                        item.Status = nodeStatus.Value;
                     var nodeCreated = node.Element("created");
                     DateTime created;
                     if (nodeCreated != null && DateTime.TryParseExact(nodeCreated.Value, "yyyy-MM-dd HH:mm:ss", null, System.Globalization.DateTimeStyles.AssumeUniversal, out created))
                     {
                         item.Created = created;
                     }
-                    bounces.Add(item);
+                    items.Add(item);
                 }
             }
-            return bounces;
+            return items;
         }
 
         /// <summary>
@@ -157,7 +151,7 @@ namespace SendGridMail.WebApi
 
             using (var client = new System.Net.WebClient()/*{ Credentials = _credentials }*/)
             {
-                byte[] responseBytes = client.UploadValues(String.Format("{0}.delete.{1}", Endpoint, this._format), "POST", reqParams);
+                byte[] responseBytes = client.UploadValues(String.Format("{0}.delete.{1}", _restEndpoint, this._format), "POST", reqParams);
                 System.IO.MemoryStream stream = new System.IO.MemoryStream(responseBytes);
                 System.Xml.Linq.XDocument doc = System.Xml.Linq.XDocument.Load(stream);
                 doc.ThrowOnSendGridError();

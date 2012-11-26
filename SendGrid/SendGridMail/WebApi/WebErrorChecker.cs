@@ -11,9 +11,9 @@ namespace SendGridMail.WebApi
             if (resultNode != null)
             {
                 var messageNodes = resultNode.Descendants("message");
-                if (messageNodes == null && messageNodes.Count() == 0)
+                if (messageNodes == null && messageNodes.Count() == 0 || messageNodes.First().Value == "success")
                 {
-                    return;
+                    return; //success
                 }
 
                 throw new ApplicationException(resultNode.Value); //concatenate all message node value text into one exception message.
@@ -24,7 +24,7 @@ namespace SendGridMail.WebApi
                 var errorNodes = resultNode.Descendants("error");
                 if (errorNodes == null && errorNodes.Count() == 0)
                 {
-                    return;
+                    return; //success
                 }
 
                 throw new ApplicationException(resultNode.Value); //concatenate all message node value text into one exception message.

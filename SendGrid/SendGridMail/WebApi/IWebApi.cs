@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SendGridMail.WebApi
 {
-    interface IWebApi : IBounceApi, IBlockApi
+    interface IWebApi : IBounceApi, IBlockApi, IInvalidEmailApi
     {
         String user { get; set; }
         String pass { get; set; }
@@ -20,9 +20,6 @@ namespace SendGridMail.WebApi
         void DeactivateFilter(String name);
         void SetupFilter(String user, String password, Dictionary<String, String> args);
         String GetFilterSettings(String name);
-        void GetInvalidEmails(int date, int days, DateTime start_date, DateTime end_date, int limit, int offset, String email);
-        void DeleteInvalidEmails(DateTime start_date, DateTime end_date, String email);
-        String CountInvalidEmails(DateTime start_date, DateTime end_date);
         String GetProfile();
         void UpdateProfile(String First_name, String last_name, String address, String city, String state, String country, int zip, int phone, String website);
         void SetUsername(String username);
