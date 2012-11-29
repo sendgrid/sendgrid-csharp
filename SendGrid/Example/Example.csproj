@@ -45,6 +45,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Blocks\BlockDeleteConsoleCommand.cs" />
+    <Compile Include="Commands\Blocks\BlockListConsoleCommand.cs" />
+    <Compile Include="Commands\Bounces\BounceDeleteConsoleCommand.cs" />
+    <Compile Include="Commands\Bounces\BounceListConsoleCommand.cs" />
+    <Compile Include="Commands\Delivery\SendEmailConsoleCommand.cs" />
+    <Compile Include="Commands\InvalidEmails\InvalidEmailDeleteConsoleCommand.cs" />
+    <Compile Include="Commands\InvalidEmails\InvalidEmailListConsoleCommand.cs" />
+    <Compile Include="Commands\SpamReports\SpamReportDeleteConsoleCommand.cs" />
+    <Compile Include="Commands\SpamReports\SpamReportListConsoleCommand.cs" />
+    <Compile Include="Commands\Unsubscribes\UnsubscribeAddConsoleCommand.cs" />
+    <Compile Include="Commands\Unsubscribes\UnsubscribeDeleteConsoleCommand.cs" />
+    <Compile Include="Commands\Unsubscribes\UnsubscribeListConsoleCommand.cs" />
+    <Compile Include="ConsoleCommandParser.cs" />
+    <Compile Include="Commands\IConsoleCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WEBAPI.cs" />
@@ -61,6 +75,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
