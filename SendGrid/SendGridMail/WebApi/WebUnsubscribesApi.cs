@@ -6,11 +6,11 @@ using System.Net;
 namespace SendGridMail.WebApi
 {
     /// <summary>
-    /// Allows you to retrieve and delete entries in the Bounces list with the Web API.
+    /// Retrieve, delete and add entries in the Unsubscribes list with the Web API.
     /// </summary>
-    public class WebBounceApi : IBounceApi
+    public class WebUnsubscribesApi : IUnsubscribesApi
     {
-        public const String Endpoint = "https://sendgrid.com/api/bounces";
+        public const String Endpoint = "https://sendgrid.com/api/unsubscribes";
         public const String JsonFormat = "json";
         public const String XmlFormat = "xml";
 
@@ -23,29 +23,28 @@ namespace SendGridMail.WebApi
         /// </summary>
         /// <param name="credentials">SendGrid user parameters</param>
         /// <param name="url">The uri of the Web endpoint</param>
-        public WebBounceApi(NetworkCredential credentials, String url = Endpoint)
+        public WebUnsubscribesApi(NetworkCredential credentials, String url = Endpoint)
         {
             this._credentials = credentials;
 
             this._format = XmlFormat;
             this._restEndpoint = url;
         }
-        
+
         /// <summary>
-        /// Retrieve a list of bounces with addresses and response codes, optionally with dates.
+        /// Retrieve a list of Unsubscribes with addresses and optionally with dates.
         /// </summary>
-        /// <param name="includeDate">Determines if the date of the bounce should be included.</param>
-        /// <param name="days">Number of days in the past for which to retrieve bounces (includes today).</param>
-        /// <param name="startDate">The start of the date range for which to retrieve bounces.</param>
-        /// <param name="endDate">The end of the date range for which to retrieve bounces.</param>
+        /// <param name="includeDate">Determines if the date of the unsubscribe should be included.</param>
+        /// <param name="days">Number of days in the past for which to retrieve unsubscribes (includes today).</param>
+        /// <param name="startDate">The start of the date range for which to retrieve unsubscribes.</param>
+        /// <param name="endDate">The end of the date range for which to retrieve unsubscribes.</param>
         /// <param name="limit">Limit the number of results returned.</param>
         /// <param name="offset">Beginning point in the list to retrieve from.</param>
-        /// <param name="type">The type(s) of bounces to include.</param>
         /// <param name="email">Optional email address to filter by.</param>
         /// <returns></returns>
-        public List<Bounce> GetBounces(Boolean includeDate, Int32? days, DateTime? startDate, DateTime? endDate, Int32? limit, Int32? offset, BounceType type, string email)
+        public List<Unsubscribe> GetUnsubscribes(bool includeDate, int? days, DateTime? startDate, DateTime? endDate, int? limit, int? offset, string email)
         {
-            List<Bounce> items = new List<Bounce>();
+            List<Unsubscribe> items = new List<Unsubscribe>();
             System.Collections.Specialized.NameValueCollection reqParams = new System.Collections.Specialized.NameValueCollection();
             reqParams.Add("api_user", this._credentials.UserName);
             reqParams.Add("api_key", this._credentials.Password);
@@ -73,14 +72,6 @@ namespace SendGridMail.WebApi
             {
                 reqParams.Add("offset", offset.ToString());
             }
-            if (type == BounceType.Hard)
-            {
-                reqParams.Add("type", "hard");
-            }
-            else if (type == BounceType.Soft)
-            {
-                reqParams.Add("type", "soft");
-            }
             if (!String.IsNullOrWhiteSpace(email))
             {
                 reqParams.Add("email", email);
@@ -88,21 +79,17 @@ namespace SendGridMail.WebApi
 
             using (var client = new System.Net.WebClient()/*{ Credentials = _credentials }*/)
             {
-                byte[] responseBytes = client.UploadValues(String.Format("{0}.get.{1}", _restEndpoint, this._format), "POST", reqParams);
+                byte[] responseBytes = client.UploadValues(String.Format("{0}.get.{1}", this._restEndpoint, this._format), "POST", reqParams);
                 System.IO.MemoryStream stream = new System.IO.MemoryStream(responseBytes);
                 System.Xml.Linq.XDocument doc = System.Xml.Linq.XDocument.Load(stream);
                 doc.ThrowOnSendGridError();
 
-                foreach (var node in doc.Descendants("bounce"))
+                foreach (var node in doc.Descendants("unsubscribe"))
                 {
-                    Bounce item = new Bounce()
+                    Unsubscribe item = new Unsubscribe()
                     {
-                        Email = node.Element("email").Value,
-                        Reason = node.Element("reason").Value
+                        Email = node.Element("email").Value
                     };
-                    var nodeStatus = node.Element("status");
-                    if (nodeStatus != null)
-                        item.Status = nodeStatus.Value;
                     var nodeCreated = node.Element("created");
                     DateTime created;
                     if (nodeCreated != null && DateTime.TryParseExact(nodeCreated.Value, "yyyy-MM-dd HH:mm:ss", null, System.Globalization.DateTimeStyles.AssumeUniversal, out created))
@@ -116,14 +103,13 @@ namespace SendGridMail.WebApi
         }
 
         /// <summary>
-        /// Delete an address from the Bounce list. Please note that if no parameters are specified the ENTIRE list will be deleted.
+        /// Delete an address from the Unsubscribe list. Please note that if no parameters are provided the ENTIRE list will be removed.
         /// </summary>
-        /// <param name="startDate">The start of the date range for which to retrieve bounces.</param>
-        /// <param name="endDate">The end of the date range for which to retrieve bounces.</param>
-        /// <param name="type">The type(s) of bounces to include.</param>
-        /// <param name="email">Optional email address to filter by.</param>
+        /// <param name="startDate">Optional date to start retrieving for.</param>
+        /// <param name="endDate">Optional date to end retrieving for.</param>
+        /// <param name="email">Unsubscribed email address to remove</param>
         /// <returns></returns>
-        public void DeleteBounces(DateTime? startDate, DateTime? endDate, BounceType type, string email)
+        public void DeleteUnsubscribes(DateTime? startDate, DateTime? endDate, string email)
         {
             System.Collections.Specialized.NameValueCollection reqParams = new System.Collections.Specialized.NameValueCollection();
             reqParams.Add("api_user", this._credentials.UserName);
@@ -136,14 +122,6 @@ namespace SendGridMail.WebApi
             {
                 reqParams.Add("end_date", endDate.Value.ToString("yyyy-MM-dd"));
             }
-            if (type == BounceType.Hard)
-            {
-                reqParams.Add("type", "hard");
-            }
-            else if (type == BounceType.Soft)
-            {
-                reqParams.Add("type", "soft");
-            }
             if (!String.IsNullOrWhiteSpace(email))
             {
                 reqParams.Add("email", email);
@@ -152,6 +130,26 @@ namespace SendGridMail.WebApi
             using (var client = new System.Net.WebClient()/*{ Credentials = _credentials }*/)
             {
                 byte[] responseBytes = client.UploadValues(String.Format("{0}.delete.{1}", _restEndpoint, this._format), "POST", reqParams);
+                System.IO.MemoryStream stream = new System.IO.MemoryStream(responseBytes);
+                System.Xml.Linq.XDocument doc = System.Xml.Linq.XDocument.Load(stream);
+                doc.ThrowOnSendGridError();
+            }
+        }
+
+        /// <summary>
+        /// Add email addresses to the Unsubscribe list.
+        /// </summary>
+        /// <param name="email">Email address to add to unsubscribe list.  Must be a valid email address.</param>
+        public void AddUnsubscribes(string email)
+        {
+            System.Collections.Specialized.NameValueCollection reqParams = new System.Collections.Specialized.NameValueCollection();
+            reqParams.Add("api_user", this._credentials.UserName);
+            reqParams.Add("api_key", this._credentials.Password);
+            reqParams.Add("email", email);
+
+            using (var client = new System.Net.WebClient()/*{ Credentials = _credentials }*/)
+            {
+                byte[] responseBytes = client.UploadValues(String.Format("{0}.add.{1}", _restEndpoint, this._format), "POST", reqParams);
                 System.IO.MemoryStream stream = new System.IO.MemoryStream(responseBytes);
                 System.Xml.Linq.XDocument doc = System.Xml.Linq.XDocument.Load(stream);
                 doc.ThrowOnSendGridError();

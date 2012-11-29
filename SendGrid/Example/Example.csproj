@@ -52,6 +52,11 @@
     <Compile Include="Commands\Delivery\SendEmailConsoleCommand.cs" />
     <Compile Include="Commands\InvalidEmails\InvalidEmailDeleteConsoleCommand.cs" />
     <Compile Include="Commands\InvalidEmails\InvalidEmailListConsoleCommand.cs" />
+    <Compile Include="Commands\SpamReports\SpamReportDeleteConsoleCommand.cs" />
+    <Compile Include="Commands\SpamReports\SpamReportListConsoleCommand.cs" />
+    <Compile Include="Commands\Unsubscribes\UnsubscribeAddConsoleCommand.cs" />
+    <Compile Include="Commands\Unsubscribes\UnsubscribeDeleteConsoleCommand.cs" />
+    <Compile Include="Commands\Unsubscribes\UnsubscribeListConsoleCommand.cs" />
     <Compile Include="ConsoleCommandParser.cs" />
     <Compile Include="Commands\IConsoleCommand.cs" />
     <Compile Include="Program.cs" />

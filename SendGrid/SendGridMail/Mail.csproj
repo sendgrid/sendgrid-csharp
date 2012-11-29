@@ -57,14 +57,18 @@
     <Compile Include="ISendGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendGrid.cs" />
+    <Compile Include="SpamReport.cs" />
     <Compile Include="StreamedFileBody.cs" />
     <Compile Include="Transport\ITransport.cs" />
     <Compile Include="Transport\Web.cs" />
     <Compile Include="Transport\SMTP.cs" />
+    <Compile Include="Unsubscribe.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="WebApi\IBlockApi.cs" />
     <Compile Include="WebApi\IBounceApi.cs" />
     <Compile Include="WebApi\IInvalidEmailApi.cs" />
+    <Compile Include="WebApi\ISpamReportApi.cs" />
+    <Compile Include="WebApi\IUnsubscribesApi.cs" />
     <Compile Include="WebApi\IWebApi.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -73,6 +77,8 @@
     <Compile Include="WebApi\WebErrorChecker.cs" />
     <Compile Include="WebApi\WebErrorCheckerExtensions.cs" />
     <Compile Include="WebApi\WebInvalidEmailApi.cs" />
+    <Compile Include="WebApi\WebSpamReportApi.cs" />
+    <Compile Include="WebApi\WebUnsubscribesApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\CodeScales.Http.dll" />

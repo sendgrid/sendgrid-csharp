@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SendGridMail.WebApi
 {
-    interface IWebApi : IBounceApi, IBlockApi, IInvalidEmailApi
+    interface IWebApi : IBounceApi, IBlockApi, IInvalidEmailApi, ISpamReportApi, IUnsubscribesApi
     {
         String user { get; set; }
         String pass { get; set; }
@@ -25,14 +25,9 @@ namespace SendGridMail.WebApi
         void SetUsername(String username);
         void SetPassword(String password, String confpass);
         void SetEmail(String email);
-        String GetSpamReports(int date, int days, DateTime start_date, DateTime end_date, int limit, int offset, String email);
-        void DeleteSpamReports(DateTime start_date, DateTime end_date, String email);
         String GetStats(int days, DateTime start_date, DateTime end_date);
         String GetAggregateStats();
         String GetCategoryStats();
         String GetCategoryStats(String category, int days, DateTime start_date, DateTime end_date);
-        String GetUnsubscribes(int date, int days, DateTime start_date, DateTime end_date, int limit, int offset, String email);
-        void DeleteUnsubscribes(DateTime start_date, DateTime end_date, String email);
-        void AddUnsubscribes(String email);
     }
 }

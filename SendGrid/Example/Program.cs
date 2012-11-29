@@ -67,6 +67,11 @@ namespace Example
             _commands.Add(new Example.Commands.InvalidEmails.InvalidEmailListConsoleCommand());
             _commands.Add(new Example.Commands.InvalidEmails.InvalidEmailDeleteConsoleCommand());
             _commands.Add(new Example.Commands.Delivery.SendEmailConsoleCommand());
+            _commands.Add(new Example.Commands.SpamReports.SpamReportListConsoleCommand());
+            _commands.Add(new Example.Commands.SpamReports.SpamReportDeleteConsoleCommand());
+            _commands.Add(new Example.Commands.Unsubscribes.UnsubscribeListConsoleCommand());
+            _commands.Add(new Example.Commands.Unsubscribes.UnsubscribeAddConsoleCommand());
+            _commands.Add(new Example.Commands.Unsubscribes.UnsubscribeDeleteConsoleCommand());
         }
 
         static void RunGetCredentials()

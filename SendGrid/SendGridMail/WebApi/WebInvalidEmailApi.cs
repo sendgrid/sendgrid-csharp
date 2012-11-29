@@ -19,7 +19,7 @@ namespace SendGridMail.WebApi
         private readonly String _format;
 
         /// <summary>
-        /// Creates a new Web interface for sending mail.  Preference is using the Factory method.
+        /// Creates a new instance of the web api
         /// </summary>
         /// <param name="credentials">SendGrid user parameters</param>
         /// <param name="url">The uri of the Web endpoint</param>
