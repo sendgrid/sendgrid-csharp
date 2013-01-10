@@ -14,3 +14,4 @@ SendGrid/*/obj/
 SendGrid/Tests/test-results/
 SendGrid/test-results/
 .DS_store
+SendGrid/SendGrid.userprefs
