@@ -107,7 +107,11 @@ namespace SendGridMail.Transport
                             case "result":
                                 break;
                             case "message": // success
-                                return;
+							    bool errors = reader.ReadToNextSibling("errors");
+								if (errors) 
+									throw new ProtocolViolationException(status);
+								else
+								    return;
                             case "error": // failure
                                 throw new ProtocolViolationException(status);
                             default:
