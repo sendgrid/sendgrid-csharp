@@ -38,14 +38,14 @@ namespace Tests.Transport
             mock.SetupProperty(foo => foo.EnableSsl);
             var client = mock.Object;
             var credentials = new NetworkCredential("username", "password");
-            var test = SMTP.GetInstance(client, credentials);
+            SMTP.GetInstance(client, credentials);
             mock.Verify(foo => foo.EnableSsl, Times.Never());
 
             mock = new Mock<SMTP.ISmtpClient>();
             mock.SetupProperty(foo => foo.EnableSsl);
             client = mock.Object;
             credentials = new NetworkCredential("username", "password");
-            test = SMTP.GetInstance(client, credentials, port:SMTP.SslPort);
+            SMTP.GetInstance(client, credentials, port:SMTP.SslPort);
             mock.VerifySet(foo => foo.EnableSsl = true);
 
             mock = new Mock<SMTP.ISmtpClient>();
@@ -54,7 +54,7 @@ namespace Tests.Transport
             credentials = new NetworkCredential("username", "password");
             try
             {
-                test = SMTP.GetInstance(client, credentials, port: SMTP.TlsPort);
+                SMTP.GetInstance(client, credentials, port: SMTP.TlsPort);
                 Assert.Fail("should have thrown an unsupported port exception");
             }
             catch (NotSupportedException ex)
