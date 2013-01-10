@@ -172,7 +172,6 @@ namespace Tests
             var foo = new Mock<IHeader>();
             var sg = new SendGrid(foo.Object);
 
-            var data = new Attachment("pnunit.framework.dll", MediaTypeNames.Application.Octet);
             sg.AddAttachment("pnunit.framework.dll");
             sg.AddAttachment("pnunit.framework.dll");
             //Assert.AreEqual(data.ContentStream, sg.Attachments.First().ContentStream, "Attach via path");
