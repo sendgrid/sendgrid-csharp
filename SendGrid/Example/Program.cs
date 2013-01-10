@@ -15,21 +15,18 @@ namespace Example
         // this code is used for the SMTPAPI examples
         static void Main(string[] args)
         {
-            var username = "sgrid_username";
-            var password = "sgrid_password";
-            var from = "bar@domain.com";
+            var username = "brandonmwest";
+            var password = "!!s3ndgr1d";
+            var from = "brandon.west@sendgrid.com";
             var to = new List<String>
                          {
-                             "foo@domain.com",
-                             "raz@domain.com"
+                             "@gmail.com",
                          };
 
-            //initialize the SMTPAPI example class
-            var smtpapi = new SMTPAPI(username, password, from, to);
             var restapi = new WEBAPI(username, password, from, to);
 
             //use this section to test out our Web and SMTP examples!
-            smtpapi.SimpleHTMLEmail();
+            restapi.SimpleHTMLEmail();
 
             Console.WriteLine("Done!");
             Console.ReadLine();
