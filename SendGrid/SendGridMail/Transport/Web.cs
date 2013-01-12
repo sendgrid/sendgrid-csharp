@@ -5,17 +5,15 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Xml;
-using CodeScales.Http;
-using CodeScales.Http.Entity;
-using CodeScales.Http.Entity.Mime;
-using CodeScales.Http.Methods;
+using RestSharp;
 
 namespace SendGridMail.Transport
 {
     public class Web : ITransport
     {
         #region Properties
-        public const String Endpoint = "http://sendgrid.com/api/mail.send";
+		public const String BaseURl = "http://sendgrid.com/api/";
+        public const String Endpoint = "mail.send";
         public const String JsonFormat = "json";
         public const String XmlFormat = "xml";
 
@@ -54,47 +52,48 @@ namespace SendGridMail.Transport
         /// <param name="message"></param>
         public void Deliver(ISendGrid message)
         {
-            MultipartEntity multipartEntity;
-            HttpPost postMethod;
-
-            var client = InitializeTransport(out multipartEntity, out postMethod);
-            AttachFormParams(message, multipartEntity);
-            AttachFiles(message, multipartEntity);
-            var response = client.Execute(postMethod);
+			var client = new RestClient(BaseURl);
+			var request = new RestRequest(Endpoint + ".xml", Method.POST);
+            AttachFormParams(message, request);
+            AttachFiles(message, request);
+            var response = client.Execute(request);
             CheckForErrors(response);
         }
 
         #region Support Methods
-
-        internal HttpClient InitializeTransport(out MultipartEntity multipartEntity, out HttpPost postMethod)
-        {
-            var client = new HttpClient();
-            postMethod = new HttpPost(new Uri(_restEndpoint));
-
-            multipartEntity = new MultipartEntity();
-            postMethod.Entity = multipartEntity;
-            return client;
-        }
-
-        private void AttachFormParams(ISendGrid message, MultipartEntity multipartEntity)
+        private void AttachFormParams(ISendGrid message, RestRequest request)
         {
             var formParams = FetchFormParams(message);
-            formParams.ForEach(kvp => multipartEntity.AddBody(new StringBody(Encoding.UTF8, kvp.Key, kvp.Value)));
+			formParams.ForEach(kvp => request.AddParameter(kvp.Key, kvp.Value));
         }
 
-        private void AttachFiles(ISendGrid message, MultipartEntity multipartEntity)
+		private void AttachFiles(ISendGrid message, RestRequest request)
         {
             var files = FetchFileBodies(message);
-            files.ForEach(kvp => multipartEntity.AddBody(new FileBody("files[" + Path.GetFileName(kvp.Key) + "]", Path.GetFileName(kvp.Key), kvp.Value)));
+			files.ForEach(kvp => request.AddFile(Path.GetFileName(kvp.Key), kvp.Key));
 
             var streamingFiles = FetchStreamingFileBodies(message);
-            streamingFiles.ForEach(kvp => multipartEntity.AddBody(new StreamedFileBody(kvp.Value, kvp.Key)));
+			foreach (KeyValuePair<string, MemoryStream> file in streamingFiles) {
+				var name = file.Key;
+				var stream = file.Value;
+				var writer = new Action<Stream>(
+					delegate(Stream stream2)
+					{
+						stream.CopyTo(stream2);
+					}
+				);
+
+				request.AddFile(name, writer, name);
+			}
         }
 
-        private void CheckForErrors(CodeScales.Http.Methods.HttpResponse response)
+        private void CheckForErrors(IRestResponse response)
         {
-            var status = EntityUtils.ToString(response.Entity);
+			//TODO: Check the response status: RestResponse.Status will be set to ResponseStatus.Error, otherwise it will be ResponseStatus.Completed.
+            var status = response.Content;
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(status));
+
+
 
             using (var reader = XmlReader.Create(stream))
             {
