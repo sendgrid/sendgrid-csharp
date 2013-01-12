@@ -12,7 +12,8 @@ namespace SendGridMail.Transport
     public class Web : ITransport
     {
         #region Properties
-		public const String BaseURl = "http://sendgrid.com/api/";
+		//TODO: Make this configurable
+		public const String BaseURl = "https://sendgrid.com/api/";
         public const String Endpoint = "mail.send";
         public const String JsonFormat = "json";
         public const String XmlFormat = "xml";
@@ -69,6 +70,8 @@ namespace SendGridMail.Transport
 
 		private void AttachFiles(ISendGrid message, RestRequest request)
         {
+			//TODO: think the files are being sent in the POST data... but we need to add them as params as well
+
             var files = FetchFileBodies(message);
 			files.ForEach(kvp => request.AddFile(Path.GetFileName(kvp.Key), kvp.Key));
 
@@ -77,9 +80,9 @@ namespace SendGridMail.Transport
 				var name = file.Key;
 				var stream = file.Value;
 				var writer = new Action<Stream>(
-					delegate(Stream stream2)
+					delegate(Stream s)
 					{
-						stream.CopyTo(stream2);
+						stream.CopyTo(s);
 					}
 				);
 
@@ -87,13 +90,16 @@ namespace SendGridMail.Transport
 			}
         }
 
-        private void CheckForErrors(IRestResponse response)
-        {
-			//TODO: Check the response status: RestResponse.Status will be set to ResponseStatus.Error, otherwise it will be ResponseStatus.Completed.
-            var status = response.Content;
-            var stream = new MemoryStream(Encoding.UTF8.GetBytes(status));
+        private void CheckForErrors (IRestResponse response)
+		{
+			//transport error
+			if (response.ResponseStatus == ResponseStatus.Error) {
+				throw new Exception(response.ErrorMessage);
+			}
 
-
+			//TODO: check for HTTP errors... don't throw exceptions just pass info along?
+			var content = response.Content;
+            var stream = new MemoryStream(Encoding.UTF8.GetBytes(content));
 
             using (var reader = XmlReader.Create(stream))
             {
@@ -108,11 +114,11 @@ namespace SendGridMail.Transport
                             case "message": // success
 							    bool errors = reader.ReadToNextSibling("errors");
 								if (errors) 
-									throw new ProtocolViolationException(status);
+									throw new ProtocolViolationException(content);
 								else
 								    return;
                             case "error": // failure
-                                throw new ProtocolViolationException(status);
+                                throw new ProtocolViolationException(content);
                             default:
                                 throw new ArgumentException("Unknown element: " + reader.Name);
                         }
