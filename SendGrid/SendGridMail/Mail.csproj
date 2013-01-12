@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
@@ -41,10 +44,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="CodeScales.Http">
-      <HintPath>lib\CodeScales.Http.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Header.cs" />
@@ -52,7 +51,6 @@
     <Compile Include="ISendGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendGrid.cs" />
-    <Compile Include="StreamedFileBody.cs" />
     <Compile Include="Transport\ITransport.cs" />
     <Compile Include="Transport\Web.cs" />
     <Compile Include="Transport\SMTP.cs" />
@@ -68,5 +66,8 @@
   -->
   <ItemGroup>
     <EmbeddedResource Include="lib\CodeScales.Http.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
