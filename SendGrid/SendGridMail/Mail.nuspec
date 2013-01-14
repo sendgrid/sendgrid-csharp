@@ -2,14 +2,17 @@
 <package >
   <metadata>
     <id>SendGrid</id>
-    <version>1.0.2</version>
+    <version>1.1.1</version>
     <title>SendGrid</title>
     <authors>CJ Buchmann, Tyler Bischel, Eric Becking, Brandon West</authors>
     <owners>Sendgrid</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Basic C# client library and examples for using SendGrid API's to send mail. Github repo located at : https://github.com/sendgrid/sendgrid-csharp</description>
-    <releaseNotes>Incorporates all changes through commit 52ff9277583c063a4b06165723bca2041a6aae5b on github</releaseNotes>
-    <copyright>Copyright 2012</copyright>
+    <releaseNotes>Removed CodeScales, now uses RestSharp</releaseNotes>
+    <copyright>Copyright 2013</copyright>
     <tags>SendGrid Email Mail Microsoft Azure</tags>
+    <dependencies>
+      <dependency id="RestSharp" version="104.1" />
+    </dependencies>
   </metadata>
 </package>
