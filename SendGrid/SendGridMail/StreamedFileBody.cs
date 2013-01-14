@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using CodeScales.Http.Entity.Mime;
-using CodeScales.Http.Network;
 
 namespace SendGridMail
 {
