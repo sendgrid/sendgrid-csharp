@@ -27,6 +27,5 @@ namespace SendGridMail
         {
             return "{"+String.Join(",",dic.Select(kvp => Serialize(kvp.Key) + ":" + Serialize(kvp.Value)))+"}";
         }
-
     }
 }
