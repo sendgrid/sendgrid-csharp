@@ -247,7 +247,6 @@ namespace Example
             message.From = new MailAddress(_from);
 
             //set the message body
-            var timestamp = DateTime.Now.ToString("HH:mm:ss tt");
             message.Html = "This is the HTML body";
 
             message.Text = "This is the plain text body";
@@ -256,7 +255,7 @@ namespace Example
             message.Subject = "Hello World Unsubscribe Test";
 
             //create an instance of the Web transport mechanism
-            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password), true);
 
             //enable spamcheck
             //or optionally, you can specify 'replace' instead of the text and html in order to 
