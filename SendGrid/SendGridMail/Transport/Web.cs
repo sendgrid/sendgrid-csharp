@@ -19,8 +19,6 @@ namespace SendGridMail.Transport
         public const String XmlFormat = "xml";
 
         private readonly NetworkCredential _credentials;
-        private readonly String _restEndpoint;
-        private readonly String _format;
         #endregion
 
         /// <summary>
@@ -42,9 +40,6 @@ namespace SendGridMail.Transport
         internal Web(NetworkCredential credentials, String url = Endpoint)
         {
             _credentials = credentials;
-
-            _format = XmlFormat;
-            _restEndpoint = url + "." + _format;
         }
 
         /// <summary>

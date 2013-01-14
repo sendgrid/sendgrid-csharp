@@ -30,6 +30,7 @@ namespace Example
 
             //use this section to test out our Web and SMTP examples!
             smtpapi.SimpleHTMLEmail();
+			restapi.SimpleHTMLEmail();
 
             Console.WriteLine("Done!");
             Console.ReadLine();

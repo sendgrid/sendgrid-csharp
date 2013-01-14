@@ -247,7 +247,6 @@ namespace Example
             message.From = new MailAddress(_from);
 
             //set the message body
-            var timestamp = DateTime.Now.ToString("HH:mm:ss tt");
             message.Html = "This is the HTML body";
 
             message.Text = "This is the plain text body";
