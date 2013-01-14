@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Mail;
 using SendGridMail;
 using SendGridMail.Transport;
+using System.IO;
 
 namespace Example
 {
@@ -45,6 +46,19 @@ namespace Example
 
             //set the message subject
             message.Subject = "Hello World HTML Test";
+
+			//add a file from stream
+			var file = "bar";
+			
+			var memoryStream = new MemoryStream();
+			var stream = new StreamWriter(memoryStream);
+			stream.Write(file);
+			message.AddAttachment(memoryStream, "foo.txt");
+			stream.Flush();
+			stream.Close();
+
+			//add a file from disk
+			message.AddAttachment("test.txt");
 
             //create an instance of the Web transport mechanism
             var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
