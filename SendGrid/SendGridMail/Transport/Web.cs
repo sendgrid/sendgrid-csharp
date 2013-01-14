@@ -5,17 +5,16 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Xml;
-using CodeScales.Http;
-using CodeScales.Http.Entity;
-using CodeScales.Http.Entity.Mime;
-using CodeScales.Http.Methods;
+using RestSharp;
 
 namespace SendGridMail.Transport
 {
     public class Web : ITransport
     {
         #region Properties
-        public const String Endpoint = "http://sendgrid.com/api/mail.send";
+		//TODO: Make this configurable
+		public const String BaseURl = "https://sendgrid.com/api/";
+        public const String Endpoint = "mail.send";
         public const String JsonFormat = "json";
         public const String XmlFormat = "xml";
 
@@ -54,47 +53,53 @@ namespace SendGridMail.Transport
         /// <param name="message"></param>
         public void Deliver(ISendGrid message)
         {
-            MultipartEntity multipartEntity;
-            HttpPost postMethod;
-
-            var client = InitializeTransport(out multipartEntity, out postMethod);
-            AttachFormParams(message, multipartEntity);
-            AttachFiles(message, multipartEntity);
-            var response = client.Execute(postMethod);
+			var client = new RestClient(BaseURl);
+			var request = new RestRequest(Endpoint + ".xml", Method.POST);
+            AttachFormParams(message, request);
+            AttachFiles(message, request);
+            var response = client.Execute(request);
             CheckForErrors(response);
         }
 
         #region Support Methods
-
-        internal HttpClient InitializeTransport(out MultipartEntity multipartEntity, out HttpPost postMethod)
-        {
-            var client = new HttpClient();
-            postMethod = new HttpPost(new Uri(_restEndpoint));
-
-            multipartEntity = new MultipartEntity();
-            postMethod.Entity = multipartEntity;
-            return client;
-        }
-
-        private void AttachFormParams(ISendGrid message, MultipartEntity multipartEntity)
+        private void AttachFormParams(ISendGrid message, RestRequest request)
         {
             var formParams = FetchFormParams(message);
-            formParams.ForEach(kvp => multipartEntity.AddBody(new StringBody(Encoding.UTF8, kvp.Key, kvp.Value)));
+			formParams.ForEach(kvp => request.AddParameter(kvp.Key, kvp.Value));
         }
 
-        private void AttachFiles(ISendGrid message, MultipartEntity multipartEntity)
-        {
-            var files = FetchFileBodies(message);
-            files.ForEach(kvp => multipartEntity.AddBody(new FileBody("files[" + Path.GetFileName(kvp.Key) + "]", Path.GetFileName(kvp.Key), kvp.Value)));
+		private void AttachFiles (ISendGrid message, RestRequest request)
+		{
+			//TODO: think the files are being sent in the POST data... but we need to add them as params as well
+
+			var files = FetchFileBodies (message);
+			files.ForEach (kvp => request.AddFile ("files[" + Path.GetFileName (kvp.Key) + "]", kvp.Value.FullName));
 
             var streamingFiles = FetchStreamingFileBodies(message);
-            streamingFiles.ForEach(kvp => multipartEntity.AddBody(new StreamedFileBody(kvp.Value, kvp.Key)));
+			foreach (KeyValuePair<string, MemoryStream> file in streamingFiles) {
+				var name = file.Key;
+				var stream = file.Value;
+				var writer = new Action<Stream>(
+					delegate(Stream s)
+					{
+						stream.CopyTo(s);
+					}
+				);
+
+				request.AddFile("files[" + name + "]", writer, name);
+			}
         }
 
-        private void CheckForErrors(CodeScales.Http.Methods.HttpResponse response)
-        {
-            var status = EntityUtils.ToString(response.Entity);
-            var stream = new MemoryStream(Encoding.UTF8.GetBytes(status));
+        private void CheckForErrors (IRestResponse response)
+		{
+			//transport error
+			if (response.ResponseStatus == ResponseStatus.Error) {
+				throw new Exception(response.ErrorMessage);
+			}
+
+			//TODO: check for HTTP errors... don't throw exceptions just pass info along?
+			var content = response.Content;
+            var stream = new MemoryStream(Encoding.UTF8.GetBytes(content));
 
             using (var reader = XmlReader.Create(stream))
             {
@@ -109,11 +114,11 @@ namespace SendGridMail.Transport
                             case "message": // success
 							    bool errors = reader.ReadToNextSibling("errors");
 								if (errors) 
-									throw new ProtocolViolationException(status);
+									throw new ProtocolViolationException(content);
 								else
 								    return;
                             case "error": // failure
-                                throw new ProtocolViolationException(status);
+                                throw new ProtocolViolationException(content);
                             default:
                                 throw new ArgumentException("Unknown element: " + reader.Name);
                         }

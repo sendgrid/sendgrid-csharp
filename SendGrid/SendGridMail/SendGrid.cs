@@ -310,6 +310,7 @@ namespace SendGridMail
         {
             MemoryStream ms = new MemoryStream();
             stream.CopyTo(ms);
+			ms.Seek(0,SeekOrigin.Begin);
             StreamedAttachments[name] = ms;
         }
 
