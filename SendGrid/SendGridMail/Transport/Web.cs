@@ -13,32 +13,34 @@ namespace SendGridMail.Transport
     {
         #region Properties
 		//TODO: Make this configurable
-		public const String BaseURl = "https://sendgrid.com/api/";
+		public const String BaseURl = "sendgrid.com/api/";
         public const String Endpoint = "mail.send";
         public const String JsonFormat = "json";
         public const String XmlFormat = "xml";
 
         private readonly NetworkCredential _credentials;
+		private readonly bool Https;
         #endregion
 
         /// <summary>
         /// Factory method for Web transport of sendgrid messages
         /// </summary>
         /// <param name="credentials">SendGrid credentials for sending mail messages</param>
-        /// <param name="url">The uri of the Web endpoint</param>
+        /// <param name="https">Use https?</param>
         /// <returns>New instance of the transport mechanism</returns>
-        public static Web GetInstance(NetworkCredential credentials, String url = Endpoint)
+        public static Web GetInstance(NetworkCredential credentials, bool https = true)
         {
-            return new Web(credentials, url);
+            return new Web(credentials, https);
         }
 
-        /// <summary>
-        /// Creates a new Web interface for sending mail.  Preference is using the Factory method.
+		/// <summary>
+		/// Creates a new Web interface for sending mail.  Preference is using the Factory method.
         /// </summary>
         /// <param name="credentials">SendGrid user parameters</param>
-        /// <param name="url">The uri of the Web endpoint</param>
-        internal Web(NetworkCredential credentials, String url = Endpoint)
+		/// <param name="https">Use https?</param>
+        internal Web(NetworkCredential credentials, bool https = true)
         {
+			Https = https;
             _credentials = credentials;
         }
 
@@ -48,7 +50,7 @@ namespace SendGridMail.Transport
         /// <param name="message"></param>
         public void Deliver(ISendGrid message)
         {
-			var client = new RestClient(BaseURl);
+			var client = Https ? new RestClient("https://" + BaseURl) : new RestClient("http://" + BaseURl);
 			var request = new RestRequest(Endpoint + ".xml", Method.POST);
             AttachFormParams(message, request);
             AttachFiles(message, request);
