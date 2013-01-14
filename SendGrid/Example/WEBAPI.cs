@@ -53,6 +53,8 @@ namespace Example
 			var memoryStream = new MemoryStream();
 			var stream = new StreamWriter(memoryStream);
 			stream.Write(file);
+			stream.Flush();
+			memoryStream.Seek(0, SeekOrigin.Begin);
 			message.AddAttachment(memoryStream, "foo.txt");
 			stream.Flush();
 			stream.Close();
