@@ -68,12 +68,17 @@ namespace SendGridMail.Transport
 			formParams.ForEach(kvp => request.AddParameter(kvp.Key, kvp.Value));
         }
 
-		private void AttachFiles(ISendGrid message, RestRequest request)
-        {
+		private void AttachFiles (ISendGrid message, RestRequest request)
+		{
 			//TODO: think the files are being sent in the POST data... but we need to add them as params as well
 
-            var files = FetchFileBodies(message);
-			files.ForEach(kvp => request.AddFile(Path.GetFileName(kvp.Key), kvp.Key));
+			var files = FetchFileBodies (message);
+			foreach (KeyValuePair<string, FileInfo> file in files) {
+				var name = Path.GetFileName(file.Key);
+				FileStream stream = File.OpenRead(file.Value.FullName);
+				request.AddParameter("files[" + Path.GetFileName(file.Key) + "]", Utils.ReadFully(stream));
+				stream.Close();
+			}
 
             var streamingFiles = FetchStreamingFileBodies(message);
 			foreach (KeyValuePair<string, MemoryStream> file in streamingFiles) {
@@ -87,6 +92,7 @@ namespace SendGridMail.Transport
 				);
 
 				request.AddFile(name, writer, name);
+				//request.AddParameter("files[" + name + "]","");
 			}
         }
 
