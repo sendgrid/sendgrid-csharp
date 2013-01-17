@@ -10,31 +10,31 @@ In order to send a simple HTML email using the SendGrid SMTP API, use this code 
 
 ```csharp
 public void SimpleHTMLEmail()
-        {
-            //create a new message object
-            var message = SendGrid.GetInstance();
+{
+    //create a new message object
+    var message = SendGrid.GetInstance();
 
-            //set the message recipients
-            foreach(string recipient in _to)
-            {
-                message.AddTo(recipient);
-            }
+    //set the message recipients
+    foreach(string recipient in _to)
+    {
+        message.AddTo(recipient);
+    }
 
-            //set the sender
-            message.From = new MailAddress(_from);
+    //set the sender
+    message.From = new MailAddress(_from);
 
-            //set the message body
-            message.Html = "<html>HelloWorld</html>";
+    //set the message body
+    message.Html = "<html>HelloWorld</html>";
 
-            //set the message subject
-            message.Subject = "Hello World HTML Test";
+    //set the message subject
+    message.Subject = "Hello World HTML Test";
 
-            //create an instance of the SMTP transport mechanism
-            var transportInstance = SMTP.GetInstance(new NetworkCredential(_username, _password));
+    //create an instance of the SMTP transport mechanism
+    var transportInstance = SMTP.GetInstance(new NetworkCredential(_username, _password));
 
-            //send the mail
-            transportInstance.Deliver(message);
-        }
+    //send the mail
+    transportInstance.Deliver(message);
+}
 ```
 
 There are two calls you can make to the AddTo function. One injects addresses into the standard MIME TO: field, and that's done (as in the above code sample) like so:
@@ -53,71 +53,71 @@ If you would prefer to send a simple HTML message using the SendGrid Web API, us
 
 ```csharp
 public void SimpleHTMLEmail()
-        {
-            //create a new message object
-            var message = SendGrid.GetInstance();
+{
+    //create a new message object
+    var message = SendGrid.GetInstance();
 
-            //set the message recipients
-            foreach (string recipient in _to)
-            {
-                message.AddTo(recipient);
-            }
+    //set the message recipients
+    foreach (string recipient in _to)
+    {
+        message.AddTo(recipient);
+    }
 
-            //set the sender
-            message.From = new MailAddress(_from);
+    //set the sender
+    message.From = new MailAddress(_from);
 
-            //set the message body
-            message.Html = "<html>HelloWorld</html>";
+    //set the message body
+    message.Html = "<html>HelloWorld</html>";
 
-            //set the message subject
-            message.Subject = "Hello World HTML Test";
+    //set the message subject
+    message.Subject = "Hello World HTML Test";
 
-            //create an instance of the Web transport mechanism
-            var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+    //create an instance of the Web transport mechanism
+    var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
 
-            //send the mail
-            transportInstance.Deliver(message);
-        }
+    //send the mail
+    transportInstance.Deliver(message);
+}
 ```
 
 The following is a code sample that allows you to add substitution values to your messages. This is a powerful feature that makes it significantly easier to generate personalized email messages:
 
 ```csharp
 public void AddSubstitutionValues()
-        {
-            //create a new message object
-            var message = SendGrid.GetInstance();
+{
+    //create a new message object
+    var message = SendGrid.GetInstance();
 
-            //set the message recipients
-            foreach (string recipient in _to)
-            {
-                message.AddTo(recipient);
-            }
+    //set the message recipients
+    foreach (string recipient in _to)
+    {
+        message.AddTo(recipient);
+    }
 
-            //set the sender
-            message.From = new MailAddress(_from);
+    //set the sender
+    message.From = new MailAddress(_from);
 
-            //set the message body
-            message.Text = "Hi %name%! Pleased to meet you!";
+    //set the message body
+    message.Text = "Hi %name%! Pleased to meet you!";
 
-            //set the message subject
-            message.Subject = "Testing Substitution Values";
+    //set the message subject
+    message.Subject = "Testing Substitution Values";
 
-            //This replacement key must exist in the message body
-            var replacementKey = "%name%";
+    //This replacement key must exist in the message body
+    var replacementKey = "%name%";
 
-            //There should be one value for each recipient in the To list
-            var substitutionValues = new List<String> {"Mr Foo", "Mrs Raz"};
+    //There should be one value for each recipient in the To list
+    var substitutionValues = new List<String> {"Mr Foo", "Mrs Raz"};
 
-            message.AddSubVal(replacementKey, substitutionValues);
+    message.AddSubVal(replacementKey, substitutionValues);
 
-            //create an instance of the SMTP transport mechanism
-            var transportInstance = SMTP.GetInstance(new NetworkCredential(_username, _password));
+    //create an instance of the SMTP transport mechanism
+    var transportInstance = SMTP.GetInstance(new NetworkCredential(_username, _password));
 
-            //enable bypass list management
-            message.EnableBypassListManagement();
+    //enable bypass list management
+    message.EnableBypassListManagement();
 
-            //send the mail
-            transportInstance.Deliver(message);
-        }
+    //send the mail
+    transportInstance.Deliver(message);
+}
 ```
