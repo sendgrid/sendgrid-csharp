@@ -4,7 +4,7 @@ To use SendGrid in your C# project, you can either <a href="https://github.com/s
 PM> Install-Package SendGrid 
 ```
 
-Once you have the SendGrid libraries properly referenced in your project, you can include calls to them in your code. This first example shows the basic structure of the code required to call the SendGrid libraries and send email. For a sample implementation, check the Examples folder of this repository.
+Once you have the SendGrid libraries properly referenced in your project, you can include calls to them in your code. This first example shows the basic structure of the code required to call the SendGrid libraries and send email. For a sample implementation, check the **Examples** folder of this repository.
 
 In order to send a simple HTML email using the SendGrid SMTP API, use this code sample:
 
