@@ -36,7 +36,6 @@ myMessage.Subject = "Testing the SendGrid Library";
 myMessage.Html = "<p>Hello World!</p>";
 myMessage.Text = "Hello World plain text!";
 ```
-For more information on all properties and methods supported by the **SendGrid** type, see [sendgrid-csharp](https://github.com/sendgrid/sendgrid-csharp) on GitHub.
 
 #How to: Send an Email
 
