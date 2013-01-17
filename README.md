@@ -7,118 +7,140 @@ PM> Install-Package SendGrid
 Once you have the SendGrid libraries properly referenced in your project, you can include calls to them in your code. 
 For a sample implementation, check the [Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/SendGrid/Example) folder.
 
-In order to send a simple HTML email using the SendGrid SMTP API, use this code sample:
+#How to: Create an email
+
+Use the static **SendGrid.GetInstance** method to create an email message that is of type **SendGrid**. Once the message is created, you can use **SendGrid** properties and methods to set values including the email sender, the email recipient, and the subject and body of the email.
+
+The following example demonstrates how to create an email object and populate it:
 
 ```csharp
-public void SimpleHTMLEmail()
+// Create the email object first, then add the properties.
+var myMessage = SendGrid.GetInstance();
+
+// Add the message properties.
+myMessage.From = new MailAddress("john@example.com");
+
+// Add multiple addresses to the To field.
+List<String> recipients = new List<String>
 {
-    //create a new message object
-    var message = SendGrid.GetInstance();
+    @"Jeff Smith <jeff@example.com>",
+    @"Anna Lidman <anna@example.com>",
+    @"Peter Saddow <peter@example.com>"
+};
 
-    //set the message recipients
-    foreach(string recipient in _to)
-    {
-        message.AddTo(recipient);
-    }
+myMessage.AddTo(recipients);
 
-    //set the sender
-    message.From = new MailAddress(_from);
+myMessage.Subject = "Testing the SendGrid Library";
 
-    //set the message body
-    message.Html = "<html>HelloWorld</html>";
-
-    //set the message subject
-    message.Subject = "Hello World HTML Test";
-
-    //create an instance of the SMTP transport mechanism
-    var transportInstance = SMTP.GetInstance(new NetworkCredential(_username, _password));
-
-    //send the mail
-    transportInstance.Deliver(message);
-}
+//Add the HTML and Text bodies
+myMessage.Html = "<p>Hello World!</p>";
+myMessage.Text = "Hello World plain text!";
 ```
+For more information on all properties and methods supported by the **SendGrid** type, see [sendgrid-csharp](https://github.com/sendgrid/sendgrid-csharp) on GitHub.
 
-There are two calls you can make to the AddTo function. One injects addresses into the standard MIME TO: field, and that's done (as in the above code sample) like so:
+#How to: Send an Email
+
+After creating an email message, you can send it using either SMTP or the Web API provided by SendGrid. For details about the benefits and drawbacks of each API, see [SMTP vs. Web API](http://sendgrid.com/docs/Integrate/) in the SendGrid documentation.
+
+Sending email with either protocol requires that you supply your SendGrid account credentials (username and password). The following code demonstrates how to wrap your credentials in a **NetworkCredential** object:
 
 ```csharp
-message.AddTo(sampleListName(){"foo@bar.com"});
+// Create network credentials to access your SendGrid account.
+var username = "your_sendgrid_username";
+var pswd = "your_sendgrid_password";
+
+var credentials = new NetworkCredential(username, pswd);
+```
+To send an email message, use the **Deliver** method on either the **SMTP** class, which uses the SMTP protocol, or the **Web** transport class, which calls the SendGrid Web API. The following examples show how to send a message using both SMTP and the Web API.
+
+
+##SMTP
+```csharp
+// Create the email object first, then add the properties.
+SendGrid myMessage = SendGrid.GetInstance();
+myMessage.AddTo("anna@example.com");
+myMessage.From = new MailAddress("john@example.com", "John Smith");
+myMessage.Subject = "Testing the SendGrid Library";
+myMessage.Text = "Hello World!";
+
+// Create credentials, specifying your user name and password.
+var credentials = new NetworkCredential("username", "password");
+
+// Create an SMTP transport for sending email.
+var transportSMTP = SMTP.GetInstance(credentials);
+
+// Send the email.
+transportSMTP.Deliver(myMessage);
 ```
 
-Using the X-SMTPAPI header makes this process a little cleaner and causes the message to appear as if it were sent directly to the recipient, as opposed to lots and lots of recipients. In order to inject addresses into into the X-SMTPAPI header, make the call like so:
+##Web API
+```csharp
+// Create the email object first, then add the properties.
+SendGrid myMessage = SendGrid.GenerateInstance();
+myMessage.AddTo("anna@example.com");
+myMessage.From = new MailAddress("john@example.com", "John Smith");
+myMessage.Subject = "Testing the SendGrid Library";
+myMessage.Text = "Hello World!";
+
+// Create credentials, specifying your user name and password.
+var credentials = new NetworkCredential("username", "password");
+
+// Create a Web transport for sending email.
+var transportWeb = Web.GetInstance(credentials);
+
+// Send the email.
+transportWeb.Deliver(myMessage);
+```
+
+#How to: Add an Attachment
+
+Attachments can be added to a message by calling the **AddAttachment** method and specifying the name and path of the file you want to attach, or by passing a stream. You can include multiple attachments by calling this method once for each file you wish to attach. The following example demonstrates adding an attachment to a message:
 
 ```csharp
-message.Header.AddTo(sampleListName(){"foo@bar.com"});
+SendGrid myMessage = SendGrid.GenerateInstance();
+myMessage.AddTo("anna@example.com");
+myMessage.From = new MailAddress("john@example.com", "John Smith");
+myMessage.Subject = "Testing the SendGrid Library";
+myMessage.Text = "Hello World!";
+
+myMessage.AddAttachment(@"C:\file1.txt");
 ```
 
-If you would prefer to send a simple HTML message using the SendGrid Web API, use this code:
+#How to: Use filters to enable footers, tracking, and analytics
 
+SendGrid provides additional email functionality through the use of filters. These are settings that can be added to an email message to enable specific functionality such as click tracking, Google analytics, subscription tracking, and so on. For a full list of filters, see [Filter Settings](http://docs.sendgrid.com/documentation/api/smtp-api/filter-settings/).
+
+Filters can be applied to **SendGrid** email messages using methods implemented as part of the **SendGrid** class. Before you can enable filters on an email message, you must first initialize the list of available filters by calling the **InitializeFilters** method.
+
+The following examples demonstrate the footer and click tracking filters:
+
+##Footer
 ```csharp
-public void SimpleHTMLEmail()
-{
-    //create a new message object
-    var message = SendGrid.GetInstance();
+// Create the email object first, then add the properties.
+SendGrid myMessage = SendGrid.GetInstance();
+myMessage.AddTo("anna@example.com");
+myMessage.From = new MailAddress("john@example.com", "John Smith");
+myMessage.Subject = "Testing the SendGrid Library";
+myMessage.Text = "Hello World!";
 
-    //set the message recipients
-    foreach (string recipient in _to)
-    {
-        message.AddTo(recipient);
-    }
-
-    //set the sender
-    message.From = new MailAddress(_from);
-
-    //set the message body
-    message.Html = "<html>HelloWorld</html>";
-
-    //set the message subject
-    message.Subject = "Hello World HTML Test";
-
-    //create an instance of the Web transport mechanism
-    var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
-
-    //send the mail
-    transportInstance.Deliver(message);
-}
+myMessage.InitializeFilters();
+// Add a footer to the message.
+myMessage.EnableFooter("PLAIN TEXT FOOTER", "<p><em>HTML FOOTER</em></p>");
 ```
 
-The following is a code sample that allows you to add substitution values to your messages. This is a powerful feature that makes it significantly easier to generate personalized email messages:
-
+##Click tracking
 ```csharp
-public void AddSubstitutionValues()
-{
-    //create a new message object
-    var message = SendGrid.GetInstance();
+// Create the email object first, then add the properties.
+SendGrid myMessage = SendGrid.GetInstance();
+myMessage.AddTo("anna@example.com");
+myMessage.From = new MailAddress("john@example.com", "John Smith");
+myMessage.Subject = "Testing the SendGrid Library";
+myMessage.Html = "<p><a href=\"http://www.example.com\">Hello World Link!</a></p>";
+myMessage.Text = "Hello World!";
 
-    //set the message recipients
-    foreach (string recipient in _to)
-    {
-        message.AddTo(recipient);
-    }
-
-    //set the sender
-    message.From = new MailAddress(_from);
-
-    //set the message body
-    message.Text = "Hi %name%! Pleased to meet you!";
-
-    //set the message subject
-    message.Subject = "Testing Substitution Values";
-
-    //This replacement key must exist in the message body
-    var replacementKey = "%name%";
-
-    //There should be one value for each recipient in the To list
-    var substitutionValues = new List<String> {"Mr Foo", "Mrs Raz"};
-
-    message.AddSubVal(replacementKey, substitutionValues);
-
-    //create an instance of the SMTP transport mechanism
-    var transportInstance = SMTP.GetInstance(new NetworkCredential(_username, _password));
-
-    //enable bypass list management
-    message.EnableBypassListManagement();
-
-    //send the mail
-    transportInstance.Deliver(message);
-}
+myMessage.InitializeFilters();
+// true indicates that links in plain text portions of the email 
+// should also be overwritten for link tracking purposes. 
+myMessage.EnableClickTracking(true);
 ```
+[SendGrid Documentation](http://www.sendgrid.com/docs)
