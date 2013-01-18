@@ -154,4 +154,4 @@ myMessage.EnableClickTracking(true);
 ```
 [SendGrid Documentation](http://www.sendgrid.com/docs)
 
-This readme adapted from the [How to Send Email Using SendGrid with Windows Azure](http://www.windowsazure.com/en-us/develop/net/how-to-guides/sendgrid-email-service/)
+This readme adapted from [How to Send Email Using SendGrid with Windows Azure](http://www.windowsazure.com/en-us/develop/net/how-to-guides/sendgrid-email-service/)
