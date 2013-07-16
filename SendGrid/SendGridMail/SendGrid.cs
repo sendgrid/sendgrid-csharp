@@ -306,6 +306,11 @@ namespace SendGridMail
             Header.SetCategory(category);
         }
 
+        public void SetCategories(IEnumerable<string> categories)
+        {
+            Header.SetCategories(categories);
+        }
+
         public void AddAttachment(Stream stream, String name)
         {
             MemoryStream ms = new MemoryStream();

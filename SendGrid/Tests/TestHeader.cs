@@ -40,6 +40,15 @@ namespace Tests
         }
 
         [Test]
+        public void TestSetCategories()
+        {
+            var test = new Header();
+            test.SetCategories(new List<string>{"dogs","animals","pets","mammals"});
+            var result = test.AsJson();
+            Assert.AreEqual("{\"category\" : [\"dogs\", \"animals\", \"pets\", \"mammals\"]}", result);
+        }
+
+        [Test]
         public void TestEnable()
         {
             var test = new Header();

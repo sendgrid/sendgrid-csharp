@@ -116,6 +116,13 @@ namespace SendGridMail
         void SetCategory(String category);
 
         /// <summary>
+        /// This sets the categories for this email.  Statistics are stored on a per category
+        /// basis, so this can be useful for tracking on a per group basis.
+        /// </summary>
+        /// <param name="categories">categories applied to the message</param>
+        void SetCategories(IEnumerable<String> categories);
+
+        /// <summary>
         /// Add an attachment to the message.
         /// </summary>
         /// <param name="filePath">a fully qualified file path as a string</param>
