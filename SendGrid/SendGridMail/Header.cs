@@ -50,6 +50,13 @@ namespace SendGridMail
             _settings.AddSetting(keys, category);
         }
 
+        public void SetCategories(IEnumerable<string> categories)
+        {
+            if (categories == null) return;
+            var keys = new List<String> { "category" };
+            _settings.AddArray(keys, categories);
+        }
+
         public void Enable(string filter)
         {
             AddFilterSetting(filter, new List<string>(){ "enable" }, "1");
