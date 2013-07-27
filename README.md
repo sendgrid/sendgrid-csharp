@@ -85,7 +85,7 @@ transportSMTP.Deliver(myMessage);
 ##Web API
 ```csharp
 // Create the email object first, then add the properties.
-SendGrid myMessage = SendGrid.GenerateInstance();
+SendGrid myMessage = SendGrid.GetInstance();
 myMessage.AddTo("anna@example.com");
 myMessage.From = new MailAddress("john@example.com", "John Smith");
 myMessage.Subject = "Testing the SendGrid Library";
@@ -106,7 +106,7 @@ transportWeb.Deliver(myMessage);
 Attachments can be added to a message by calling the **AddAttachment** method and specifying the name and path of the file you want to attach, or by passing a stream. You can include multiple attachments by calling this method once for each file you wish to attach. The following example demonstrates adding an attachment to a message:
 
 ```csharp
-SendGrid myMessage = SendGrid.GenerateInstance();
+SendGrid myMessage = SendGrid.GetInstance();
 myMessage.AddTo("anna@example.com");
 myMessage.From = new MailAddress("john@example.com", "John Smith");
 myMessage.Subject = "Testing the SendGrid Library";
