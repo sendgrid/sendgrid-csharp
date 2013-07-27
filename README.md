@@ -9,6 +9,7 @@ For a sample implementation, check the [Example](https://github.com/sendgrid/sen
 
 Add the following namespaces to use the library:
 ```csharp
+using System;
 using System.Net;
 using System.Net.Mail;
 using SendGridMail;
