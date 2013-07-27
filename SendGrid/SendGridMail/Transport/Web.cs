@@ -13,7 +13,7 @@ namespace SendGridMail.Transport
     {
         #region Properties
 		//TODO: Make this configurable
-        public const String BaseUrl = "sendgrid-com-ddrst15a2d5q.runscope.net";//"sendgrid.com/api/";
+        public const String BaseUrl = "sendgrid.com/api/";
         public const String Endpoint = "/api/mail.send";
         public const String JsonFormat = "json";
         public const String XmlFormat = "xml";
@@ -82,9 +82,11 @@ namespace SendGridMail.Transport
             
                 fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
                 {
-                    FileName = "files[" + Path.GetFileName(file.Key) + "]"
+                    Name =  "files[" + Path.GetFileName(file.Key) + "]",
+                    FileName = Path.GetFileName(file.Key)
                 };
 
+                fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
                 content.Add(fileContent); 
             }
            
@@ -93,12 +95,15 @@ namespace SendGridMail.Transport
 				var name = file.Key;
 				var stream = file.Value;
                 var fileContent = new StreamContent(stream);
-
-                fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+               
+                fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
                 {
-                    FileName = "files[" + name + "]"
+                    Name = "files[" + Path.GetFileName(file.Key) + "]",
+                    FileName = Path.GetFileName(file.Key)
                 };
-                content.Add(fileContent);
+
+                fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+                content.Add(fileContent); 
 			}
         }
 
