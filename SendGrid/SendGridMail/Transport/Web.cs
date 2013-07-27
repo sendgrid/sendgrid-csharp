@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
+using System.Net.Http.Headers;
 using System.Xml;
 using System.Net.Http;
 
@@ -13,13 +13,13 @@ namespace SendGridMail.Transport
     {
         #region Properties
 		//TODO: Make this configurable
-		public const String BaseURL = "sendgrid.com/api/";
+		public const String BaseUrl = "sendgrid.com/api/";
         public const String Endpoint = "mail.send";
         public const String JsonFormat = "json";
         public const String XmlFormat = "xml";
 
         private readonly NetworkCredential _credentials;
-		private readonly bool Https;
+		private readonly bool _https;
         #endregion
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace SendGridMail.Transport
 		/// <param name="https">Use https?</param>
         internal Web(NetworkCredential credentials, bool https = true)
         {
-			Https = https;
+			_https = https;
             _credentials = credentials;
         }
 
@@ -48,58 +48,69 @@ namespace SendGridMail.Transport
         /// Delivers a message over SendGrid's Web interface
         /// </summary>
         /// <param name="message"></param>
-        public void Deliver(ISendGrid message)
+        public async void Deliver(ISendGrid message)
         {
-            var client = new HttpClient();
-            var url = Https ? new Uri("https://" + BaseURL + Endpoint + ".xml") : new Uri("http://" + BaseURL + Endpoint + ".xml");
-			var request = new RestRequest(Endpoint + ".xml", Method.POST);
-            AttachFormParams(message, request);
-            AttachFiles(message, request);
-            var response = client.Execute(request);
+            var client = new HttpClient
+            {
+                BaseAddress = _https ? new Uri("https://" + BaseUrl) : new Uri("http://" + BaseUrl)
+            };
+
+            var content = new MultipartFormDataContent();
+            AttachFormParams(message, content);
+            AttachFiles(message, content);
+            var response = await client.PostAsync(Endpoint + ".xml", content);
+            response.EnsureSuccessStatusCode();
             CheckForErrors(response);
         }
 
         #region Support Methods
-        private void AttachFormParams(ISendGrid message, RestRequest request)
+        private void AttachFormParams(ISendGrid message, MultipartFormDataContent content)
         {
             var formParams = FetchFormParams(message);
-			formParams.ForEach(kvp => request.AddParameter(kvp.Key, kvp.Value));
+            foreach (var keyValuePair in formParams)
+            {
+                content.Add(new StringContent(keyValuePair.Value), keyValuePair.Key);
+            }
         }
 
-		private void AttachFiles (ISendGrid message, RestRequest request)
+        private void AttachFiles(ISendGrid message, MultipartFormDataContent content)
 		{
-			//TODO: think the files are being sent in the POST data... but we need to add them as params as well
-
 			var files = FetchFileBodies (message);
-			files.ForEach (kvp => request.AddFile ("files[" + Path.GetFileName (kvp.Key) + "]", kvp.Value.FullName));
-
+            foreach (var file in files)
+            {
+                var fileContent = new StreamContent(File.OpenRead(file.Value.FullName));
+                fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = "files[" + Path.GetFileName(file.Key) + "]"
+                };
+                content.Add(fileContent);
+            }
+           
             var streamingFiles = FetchStreamingFileBodies(message);
 			foreach (KeyValuePair<string, MemoryStream> file in streamingFiles) {
 				var name = file.Key;
 				var stream = file.Value;
-				var writer = new Action<Stream>(
-					delegate(Stream s)
-					{
-						stream.CopyTo(s);
-					}
-				);
+                var fileContent = new StreamContent(stream);
 
-				request.AddFile("files[" + name + "]", writer, name);
+                fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = "files[" + name + "]"
+                };
+                content.Add(fileContent);
 			}
         }
 
-        private void CheckForErrors (IRestResponse response)
+        private void CheckForErrors (HttpResponseMessage response)
 		{
 			//transport error
-			if (response.ResponseStatus == ResponseStatus.Error) {
-				throw new Exception(response.ErrorMessage);
+			if (response.StatusCode != HttpStatusCode.OK) {
+				throw new Exception(response.ReasonPhrase);
 			}
 
 			//TODO: check for HTTP errors... don't throw exceptions just pass info along?
-			var content = response.Content;
-            var stream = new MemoryStream(Encoding.UTF8.GetBytes(content));
+            var content = response.Content.ReadAsStreamAsync().Result;
 
-            using (var reader = XmlReader.Create(stream))
+            using (var reader = XmlReader.Create(content))
             {
                 while (reader.Read())
                 {
@@ -112,11 +123,10 @@ namespace SendGridMail.Transport
                             case "message": // success
 							    bool errors = reader.ReadToNextSibling("errors");
 								if (errors) 
-									throw new ProtocolViolationException(content);
-								else
-								    return;
+									throw new ProtocolViolationException();
+                                return;
                             case "error": // failure
-                                throw new ProtocolViolationException(content);
+                                throw new ProtocolViolationException();
                             default:
                                 throw new ArgumentException("Unknown element: " + reader.Name);
                         }
@@ -127,7 +137,7 @@ namespace SendGridMail.Transport
 
         internal List<KeyValuePair<String, String>> FetchFormParams(ISendGrid message)
         {
-            var result = new List<KeyValuePair<string, string>>()
+            var result = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<String, String>("api_user", _credentials.UserName),
                 new KeyValuePair<String, String>("api_key", _credentials.Password),
