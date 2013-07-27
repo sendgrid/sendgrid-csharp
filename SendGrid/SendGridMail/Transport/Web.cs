@@ -13,8 +13,8 @@ namespace SendGridMail.Transport
     {
         #region Properties
 		//TODO: Make this configurable
-		public const String BaseUrl = "sendgrid.com/api/";
-        public const String Endpoint = "mail.send";
+        public const String BaseUrl = "sendgrid-com-ddrst15a2d5q.runscope.net";//"sendgrid.com/api/";
+        public const String Endpoint = "/api/mail.send";
         public const String JsonFormat = "json";
         public const String XmlFormat = "xml";
 
@@ -48,7 +48,7 @@ namespace SendGridMail.Transport
         /// Delivers a message over SendGrid's Web interface
         /// </summary>
         /// <param name="message"></param>
-        public async void Deliver(ISendGrid message)
+        public void Deliver(ISendGrid message)
         {
             var client = new HttpClient
             {
@@ -58,8 +58,7 @@ namespace SendGridMail.Transport
             var content = new MultipartFormDataContent();
             AttachFormParams(message, content);
             AttachFiles(message, content);
-            var response = await client.PostAsync(Endpoint + ".xml", content);
-            response.EnsureSuccessStatusCode();
+            var response = client.PostAsync(Endpoint + ".xml", content).Result;
             CheckForErrors(response);
         }
 
@@ -78,12 +77,15 @@ namespace SendGridMail.Transport
 			var files = FetchFileBodies (message);
             foreach (var file in files)
             {
-                var fileContent = new StreamContent(File.OpenRead(file.Value.FullName));
-                fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                var fs = new FileStream(file.Key, FileMode.Open, FileAccess.Read);
+                var fileContent = new StreamContent(fs);
+            
+                fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
                 {
                     FileName = "files[" + Path.GetFileName(file.Key) + "]"
                 };
-                content.Add(fileContent);
+
+                content.Add(fileContent); 
             }
            
             var streamingFiles = FetchStreamingFileBodies(message);
