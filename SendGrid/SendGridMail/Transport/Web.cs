@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Xml;
-using RestSharp;
+using System.Net.Http;
 
 namespace SendGridMail.Transport
 {
@@ -13,7 +13,7 @@ namespace SendGridMail.Transport
     {
         #region Properties
 		//TODO: Make this configurable
-		public const String BaseURl = "sendgrid.com/api/";
+		public const String BaseURL = "sendgrid.com/api/";
         public const String Endpoint = "mail.send";
         public const String JsonFormat = "json";
         public const String XmlFormat = "xml";
@@ -50,7 +50,8 @@ namespace SendGridMail.Transport
         /// <param name="message"></param>
         public void Deliver(ISendGrid message)
         {
-			var client = Https ? new RestClient("https://" + BaseURl) : new RestClient("http://" + BaseURl);
+            var client = new HttpClient();
+            var url = Https ? new Uri("https://" + BaseURL + Endpoint + ".xml") : new Uri("http://" + BaseURL + Endpoint + ".xml");
 			var request = new RestRequest(Endpoint + ".xml", Method.POST);
             AttachFormParams(message, request);
             AttachFiles(message, request);
