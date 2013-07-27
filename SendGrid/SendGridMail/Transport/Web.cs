@@ -48,7 +48,7 @@ namespace SendGridMail.Transport
         /// Delivers a message over SendGrid's Web interface
         /// </summary>
         /// <param name="message"></param>
-        public void Deliver(ISendGrid message)
+        public async void Deliver(ISendGrid message)
         {
             var client = new HttpClient
             {
@@ -58,7 +58,7 @@ namespace SendGridMail.Transport
             var content = new MultipartFormDataContent();
             AttachFormParams(message, content);
             AttachFiles(message, content);
-            var response = client.PostAsync(Endpoint + ".xml", content).Result;
+            var response = await client.PostAsync(Endpoint + ".xml", content);
             CheckForErrors(response);
         }
 
@@ -107,7 +107,7 @@ namespace SendGridMail.Transport
 			}
         }
 
-        private void CheckForErrors (HttpResponseMessage response)
+        private async void CheckForErrors (HttpResponseMessage response)
 		{
 			//transport error
 			if (response.StatusCode != HttpStatusCode.OK) {
@@ -115,7 +115,7 @@ namespace SendGridMail.Transport
 			}
 
 			//TODO: check for HTTP errors... don't throw exceptions just pass info along?
-            var content = response.Content.ReadAsStreamAsync().Result;
+            var content = await response.Content.ReadAsStreamAsync();
 
             using (var reader = XmlReader.Create(content))
             {
