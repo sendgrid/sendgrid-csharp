@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SendGrid</id>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
     <title>SendGrid</title>
     <authors>CJ Buchmann, Tyler Bischel, Eric Becking, Brandon West</authors>
     <owners>SendGrid</owners>
@@ -12,7 +12,7 @@
     <copyright>Copyright 2013</copyright>
     <tags>SendGrid Email Mail Microsoft Azure</tags>
     <dependencies>
-      <dependency id="System.Net.Http" version="2.0.20710.0" />
+      <dependency id="Microsoft.Net.Http" version="2.2.13" />
     </dependencies>
   </metadata>
 </package>
