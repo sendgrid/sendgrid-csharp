@@ -1,6 +1,7 @@
 #Requirements
 
-This library requires .NET 4.5. If you need support for .NET 4.0, you may use [version 1.1.1](https://www.nuget.org/packages/Sendgrid/1.1.1)
+This library requires .NET 4.0 and above.
+
 #Installation
 
 To use SendGrid in your C# project, you can either <a href="https://github.com/sendgrid/sendgrid-csharp.git">download the SendGrid C# .NET libraries directly from our Github repository</a> or, if you have the NuGet package manager installed, you can grab them automatically.
