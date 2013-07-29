@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
 using SendGridMail;
 using SendGridMail.Transport;
 
@@ -15,22 +11,21 @@ namespace Example
         // this code is used for the SMTPAPI examples
         static void Main(string[] args)
         {
-            var username = "sgrid_username";
-            var password = "sgrid_password";
-            var from = "bar@domain.com";
-            var to = new List<String>
-                         {
-                             "foo@domain.com",
-                             "raz@domain.com"
-                         };
+            // Create the email object first, then add the properties.
+            SendGrid myMessage = SendGrid.GetInstance();
+            myMessage.AddTo("anna@example.com");
+            myMessage.From = new MailAddress("john@example.com", "John Smith");
+            myMessage.Subject = "Testing the SendGrid Library";
+            myMessage.Text = "Hello World!";
 
-            //initialize the SMTPAPI example class
-            var smtpapi = new SMTPAPI(username, password, from, to);
-            var restapi = new WEBAPI(username, password, from, to);
+            // Create credentials, specifying your user name and password.
+            var credentials = new NetworkCredential("username", "password");
 
-            //use this section to test out our Web and SMTP examples!
-            smtpapi.SimpleHTMLEmail();
-			restapi.SimpleHTMLEmail();
+            // Create a Web transport for sending email.
+            var transportWeb = Web.GetInstance(credentials);
+
+            // Send the email.
+            transportWeb.Deliver(myMessage);
 
             Console.WriteLine("Done!");
             Console.ReadLine();
