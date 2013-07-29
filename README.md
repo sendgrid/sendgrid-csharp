@@ -1,16 +1,21 @@
+#Requirements
+
+This library requires .NET 4.0 and above.
+
+#Installation
+
 To use SendGrid in your C# project, you can either <a href="https://github.com/sendgrid/sendgrid-csharp.git">download the SendGrid C# .NET libraries directly from our Github repository</a> or, if you have the NuGet package manager installed, you can grab them automatically.
 
 ```
 PM> Install-Package SendGrid 
 ```
 
-The SendGrid library depends on [RestSharp](https://github.com/restsharp/RestSharp). NuGet will handle this dependency automatically, otherwise you will need to add it manually. 
-
 Once you have the SendGrid libraries properly referenced in your project, you can include calls to them in your code. 
 For a sample implementation, check the [Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/SendGrid/Example) folder.
 
 Add the following namespaces to use the library:
 ```csharp
+using System;
 using System.Net;
 using System.Net.Mail;
 using SendGridMail;
