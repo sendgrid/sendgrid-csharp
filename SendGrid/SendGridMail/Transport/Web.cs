@@ -19,6 +19,8 @@ namespace SendGridMail.Transport
         public const String XmlFormat = "xml";
 
         private readonly NetworkCredential _credentials;
+        private readonly string _user;
+        private readonly string _pass;
 		private readonly bool _https;
         #endregion
 
@@ -33,6 +35,18 @@ namespace SendGridMail.Transport
             return new Web(credentials, https);
         }
 
+        /// <summary>
+        /// Factory method for Web transport of sendgrid messages.  Use in Medium-trust hosting evironments (godaddy etc.)
+        /// </summary>
+        /// <param name="user">SendGrid username</param>
+        /// <param name="password">SendGrid password</param>
+        /// <param name="https">Use https?</param>
+        /// <returns>New instance of the transport mechanism</returns>
+        public static Web GetInstance(string user, string password, bool https = true)
+        {
+            return new Web(user, password, https);
+        }
+
 		/// <summary>
 		/// Creates a new Web interface for sending mail.  Preference is using the Factory method.
         /// </summary>
@@ -42,6 +56,18 @@ namespace SendGridMail.Transport
         {
 			_https = https;
             _credentials = credentials;
+        }
+
+        /// <summary>
+        /// Creates a new Web interface for sending mail.  Use in Medium-trust hosting evironments (godaddy etc.) Preference is using the Factory method.
+        /// </summary>
+        /// <param name="credentials">SendGrid user parameters</param>
+        /// <param name="https">Use https?</param>
+        internal Web(string user, string password, bool https = true)
+        {
+            _https = https;
+            _user = user;
+            _pass = password;
         }
 
         /// <summary>
@@ -146,8 +172,8 @@ namespace SendGridMail.Transport
         {
             var result = new List<KeyValuePair<string, string>>
             {
-                new KeyValuePair<String, String>("api_user", _credentials.UserName),
-                new KeyValuePair<String, String>("api_key", _credentials.Password),
+                new KeyValuePair<String, String>("api_user", _credentials != null ? _credentials.UserName : _user),
+                new KeyValuePair<String, String>("api_key", _credentials != null ? _credentials.Password : _pass),
                 new KeyValuePair<String, String>("headers", message.Headers.Count == 0 ? null :  Utils.SerializeDictionary(message.Headers)),
                 new KeyValuePair<String, String>("replyto", message.ReplyTo.Length == 0 ? null : message.ReplyTo.ToList().First().Address),
                 new KeyValuePair<String, String>("from", message.From.Address),
