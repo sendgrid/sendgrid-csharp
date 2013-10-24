@@ -29,6 +29,12 @@ namespace SendGridMail
             _settings.AddArray(keys, substitutions);
         }
 
+        public void AddSection(string tag, string text)
+        {
+            var keys = new List<String> { "section", tag };
+            _settings.AddSetting(keys, text);
+        }
+
         public void AddTo(IEnumerable<string> addresses)
         {
             _settings.AddArray(new List<string> { "to" }, addresses);

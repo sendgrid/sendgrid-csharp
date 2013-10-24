@@ -25,6 +25,13 @@ namespace SendGridMail
         void AddSubVal(String tag, IEnumerable<String> substitutions);
 
         /// <summary>
+        /// Adds a substitution section to be used during the mail merge.
+        /// </summary>
+        /// <param name="tag">string to be replaced with the section in the message</param>
+        /// <param name="text">The text of the section. May include substituion tags.</param>
+        void AddSection(String tag, String text);
+
+        /// <summary>
         /// This adds the "to" array to the X-SMTPAPI header so that multiple recipients
         /// may be addressed in a single email. (but they each get their own email, instead of a single email with multiple TO: addressees)
         /// </summary>
