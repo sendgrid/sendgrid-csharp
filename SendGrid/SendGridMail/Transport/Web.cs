@@ -13,13 +13,12 @@ namespace SendGridMail.Transport
     {
         #region Properties
 		//TODO: Make this configurable
-        public const String BaseUrl = "sendgrid.com/api/";
+        public const String BaseUrl = "api.sendgrid.com";
         public const String Endpoint = "/api/mail.send";
         public const String JsonFormat = "json";
         public const String XmlFormat = "xml";
 
         private readonly NetworkCredential _credentials;
-		private readonly bool _https;
         #endregion
 
         /// <summary>
@@ -28,9 +27,9 @@ namespace SendGridMail.Transport
         /// <param name="credentials">SendGrid credentials for sending mail messages</param>
         /// <param name="https">Use https?</param>
         /// <returns>New instance of the transport mechanism</returns>
-        public static Web GetInstance(NetworkCredential credentials, bool https = true)
+        public static Web GetInstance(NetworkCredential credentials)
         {
-            return new Web(credentials, https);
+            return new Web(credentials);
         }
 
 		/// <summary>
@@ -38,9 +37,8 @@ namespace SendGridMail.Transport
         /// </summary>
         /// <param name="credentials">SendGrid user parameters</param>
 		/// <param name="https">Use https?</param>
-        internal Web(NetworkCredential credentials, bool https = true)
+        internal Web(NetworkCredential credentials)
         {
-			_https = https;
             _credentials = credentials;
         }
 
@@ -52,7 +50,7 @@ namespace SendGridMail.Transport
         {
             var client = new HttpClient
             {
-                BaseAddress = _https ? new Uri("https://" + BaseUrl) : new Uri("http://" + BaseUrl)
+                BaseAddress = new Uri("https://" + BaseUrl)
             };
 
             var content = new MultipartFormDataContent();
@@ -60,6 +58,24 @@ namespace SendGridMail.Transport
             AttachFiles(message, content);
             var response = client.PostAsync(Endpoint + ".xml", content).Result;
             CheckForErrors(response);
+        }
+
+        /// <summary>
+        /// Asynchronously delivers a message over SendGrid's Web interface
+        /// </summary>
+        /// <param name="message"></param>
+        public async void DeliverAsync(ISendGrid message)
+        {
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("https://" + BaseUrl)
+            };
+
+            var content = new MultipartFormDataContent();
+            AttachFormParams(message, content);
+            AttachFiles(message, content);
+            var response = await client.PostAsync(Endpoint + ".xml", content);
+            CheckForErrorsAsync(response);
         }
 
         #region Support Methods
@@ -114,9 +130,13 @@ namespace SendGridMail.Transport
 				throw new Exception(response.ReasonPhrase);
 			}
 
-			//TODO: check for HTTP errors... don't throw exceptions just pass info along?
             var content = response.Content.ReadAsStreamAsync().Result;
 
+            FindErrorsInResponse(content);
+        }
+
+        private static void FindErrorsInResponse(Stream content)
+        {
             using (var reader = XmlReader.Create(content))
             {
                 while (reader.Read())
@@ -128,9 +148,9 @@ namespace SendGridMail.Transport
                             case "result":
                                 break;
                             case "message": // success
-							    bool errors = reader.ReadToNextSibling("errors");
-								if (errors) 
-									throw new ProtocolViolationException();
+                                bool errors = reader.ReadToNextSibling("errors");
+                                if (errors)
+                                    throw new ProtocolViolationException();
                                 return;
                             case "error": // failure
                                 throw new ProtocolViolationException();
@@ -140,6 +160,19 @@ namespace SendGridMail.Transport
                     }
                 }
             }
+        }
+
+        private async void CheckForErrorsAsync(HttpResponseMessage response)
+        {
+            //transport error
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                throw new Exception(response.ReasonPhrase);
+            }
+
+            var content = await response.Content.ReadAsStreamAsync();
+
+            FindErrorsInResponse(content);
         }
 
         internal List<KeyValuePair<String, String>> FetchFormParams(ISendGrid message)

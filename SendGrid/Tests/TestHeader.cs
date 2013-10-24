@@ -22,6 +22,15 @@ namespace Tests
         }
 
         [Test]
+        public void TestAddSection()
+        {
+            var test = new Header();
+            test.AddSection("foo", "bar");
+            var result = test.AsJson();
+            Assert.AreEqual("{\"section\" : {\"foo\" : \"bar\"}}", result);
+        }
+
+        [Test]
         public void TestAddUniqueIdentifier()
         {
             var test = new Header();

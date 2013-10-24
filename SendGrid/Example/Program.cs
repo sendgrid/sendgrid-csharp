@@ -25,7 +25,7 @@ namespace Example
             var transportWeb = Web.GetInstance(credentials);
 
             // Send the email.
-            transportWeb.Deliver(myMessage);
+            transportWeb.DeliverAsync(myMessage);
 
             Console.WriteLine("Done!");
             Console.ReadLine();
