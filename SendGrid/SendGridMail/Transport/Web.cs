@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Xml;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace SendGridMail.Transport
 {
@@ -64,7 +65,7 @@ namespace SendGridMail.Transport
         /// Asynchronously delivers a message over SendGrid's Web interface
         /// </summary>
         /// <param name="message"></param>
-        public async void DeliverAsync(ISendGrid message)
+        public async Task DeliverAsync(ISendGrid message)
         {
             var client = new HttpClient
             {
@@ -75,7 +76,7 @@ namespace SendGridMail.Transport
             AttachFormParams(message, content);
             AttachFiles(message, content);
             var response = await client.PostAsync(Endpoint + ".xml", content);
-            CheckForErrorsAsync(response);
+            await CheckForErrorsAsync(response);
         }
 
         #region Support Methods
@@ -162,7 +163,7 @@ namespace SendGridMail.Transport
             }
         }
 
-        private async void CheckForErrorsAsync(HttpResponseMessage response)
+        private async Task CheckForErrorsAsync(HttpResponseMessage response)
         {
             //transport error
             if (response.StatusCode != HttpStatusCode.OK)
