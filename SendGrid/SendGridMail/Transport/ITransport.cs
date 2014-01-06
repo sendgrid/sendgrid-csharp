@@ -1,4 +1,4 @@
-﻿namespace SendGridMail.Transport
+﻿namespace SendGridMail
 {
     /// <summary>
     /// Encapsulates the transport mechanism so that it can be used in a generic way, 

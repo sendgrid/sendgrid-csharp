@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
-using SendGridMail.Transport;
+using Smtpapi;
 
 namespace SendGridMail
 {
@@ -290,15 +290,15 @@ namespace SendGridMail
             set { _attachments = value.ToList(); }
         }
 
-        public void AddSubVal(String replacementTag, List<String> substitutionValues)
+        public void AddSubstitution(String replacementTag, List<String> substitutionValues)
         {
             //let the system complain if they do something bad, since the function returns null
-            Header.AddSubVal(replacementTag, substitutionValues);
+            Header.AddSubstitution(replacementTag, substitutionValues);
         }
 
-        public void AddUniqueIdentifiers(IDictionary<String, String> identifiers)
+        public void AddUniqueArgs(IDictionary<String, String> identifiers)
         {
-            Header.AddUniqueIdentifier(identifiers);
+            Header.AddUniqueArgs(identifiers);
         }
 
         public void SetCategory(String category)
@@ -343,69 +343,69 @@ namespace SendGridMail
         #region SMTP API Functions
         public void DisableGravatar()
         {
-            Header.Disable(Filters["Gravatar"]);
+            Header.DisableFilter(Filters["Gravatar"]);
         }
 
         public void DisableOpenTracking()
         {
-            Header.Disable(Filters["OpenTracking"]);
+            Header.DisableFilter(Filters["OpenTracking"]);
         }
 
         public void DisableClickTracking()
         {
-            Header.Disable(Filters["ClickTracking"]);
+            Header.DisableFilter(Filters["ClickTracking"]);
         }
 
         public void DisableSpamCheck()
         {
-            Header.Disable(Filters["SpamCheck"]);
+            Header.DisableFilter(Filters["SpamCheck"]);
         }
 
         public void DisableUnsubscribe()
         {
-            Header.Disable(Filters["Unsubscribe"]);
+            Header.DisableFilter(Filters["Unsubscribe"]);
         }
 
         public void DisableFooter()
         {
-            Header.Disable(Filters["Footer"]);
+            Header.DisableFilter(Filters["Footer"]);
         }
 
         public void DisableGoogleAnalytics()
         {
-            Header.Disable(Filters["GoogleAnalytics"]);
+            Header.DisableFilter(Filters["GoogleAnalytics"]);
         }
 
         public void DisableTemplate()
         {
-            Header.Disable(Filters["Template"]);
+            Header.DisableFilter(Filters["Template"]);
         }
 
         public void DisableBcc()
         {
-            Header.Disable(Filters["Bcc"]);
+            Header.DisableFilter(Filters["Bcc"]);
         }
 
         public void DisableBypassListManagement()
         {
-            Header.Disable(Filters["BypassListManagement"]);
+            Header.DisableFilter(Filters["BypassListManagement"]);
         }
 
         public void EnableGravatar()
         {
-            Header.Enable(Filters["Gravatar"]);
+            Header.EnableFilter(Filters["Gravatar"]);
         }
 
         public void EnableOpenTracking()
         {
-            Header.Enable(Filters["OpenTracking"]);
+            Header.EnableFilter(Filters["OpenTracking"]);
         }
 
         public void EnableClickTracking(bool includePlainText = false)
         {
             var filter = Filters["ClickTracking"];
                 
-            Header.Enable(filter);
+            Header.EnableFilter(filter);
             if (includePlainText)
             {
                 Header.AddFilterSetting(filter, new List<string> { "enable_text" }, "1");
@@ -416,7 +416,7 @@ namespace SendGridMail
         {
             var filter = Filters["SpamCheck"];
 
-            Header.Enable(filter);
+            Header.EnableFilter(filter);
             Header.AddFilterSetting(filter, new List<string> { "maxscore" }, score.ToString(CultureInfo.InvariantCulture));
             Header.AddFilterSetting(filter, new List<string> { "url" }, url);
         }
@@ -435,7 +435,7 @@ namespace SendGridMail
                 throw new Exception("Missing substitution replacementTag in html");
             }
 
-            Header.Enable(filter);
+            Header.EnableFilter(filter);
             Header.AddFilterSetting(filter, new List<string> { "text/plain" }, text);
             Header.AddFilterSetting(filter, new List<string> {"text/html"}, html);
         }
@@ -444,7 +444,7 @@ namespace SendGridMail
         {
             var filter = Filters["Unsubscribe"];
 
-            Header.Enable(filter);
+            Header.EnableFilter(filter);
             Header.AddFilterSetting(filter, new List<string> { "replace" }, replace);
         }
 
@@ -452,7 +452,7 @@ namespace SendGridMail
         {
             var filter = Filters["Footer"];
 
-            Header.Enable(filter);
+            Header.EnableFilter(filter);
             Header.AddFilterSetting(filter, new List<string> { "text/plain" }, text);
             Header.AddFilterSetting(filter, new List<string> { "text/html" }, html);
         }
@@ -461,7 +461,7 @@ namespace SendGridMail
         {
             var filter = Filters["GoogleAnalytics"];
 
-            Header.Enable(filter);
+            Header.EnableFilter(filter);
             Header.AddFilterSetting(filter, new List<string> { "utm_source" }, source);
             Header.AddFilterSetting(filter, new List<string> { "utm_medium" }, medium);
             Header.AddFilterSetting(filter, new List<string> { "utm_term" }, term);
@@ -478,7 +478,7 @@ namespace SendGridMail
                 throw new Exception("Missing substitution replacementTag in html");
             }
 
-            Header.Enable(filter);
+            Header.EnableFilter(filter);
             Header.AddFilterSetting(filter, new List<string> { "text/html" }, html);
         }
 
@@ -486,19 +486,19 @@ namespace SendGridMail
         {
             var filter = Filters["Bcc"];
 
-            Header.Enable(filter);
+            Header.EnableFilter(filter);
             Header.AddFilterSetting(filter, new List<string> { "email" }, email);
         }
 
         public void EnableBypassListManagement()
         {
-            Header.Enable(Filters["BypassListManagement"]);
+            Header.EnableFilter(Filters["BypassListManagement"]);
         }
         #endregion
 
         public MailMessage CreateMimeMessage()
         {
-            String smtpapi = Header.AsJson();
+            String smtpapi = Header.JsonString();
 
             if (!String.IsNullOrEmpty(smtpapi))
                 message.Headers.Add("X-Smtpapi", smtpapi);

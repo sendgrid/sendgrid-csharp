@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Mail;
 using SendGridMail;
-using SendGridMail.Transport;
 
 namespace Example
 {

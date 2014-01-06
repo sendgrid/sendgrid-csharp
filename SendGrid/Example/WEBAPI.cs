@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using SendGridMail;
-using SendGridMail.Transport;
 
 namespace Example
 {
@@ -452,7 +451,7 @@ namespace Example
             //There should be one value for each recipient in the To list
             var substitutionValues = new List<String> { "Mr Foo", "Mrs Raz" };
 
-            message.AddSubVal(replacementKey, substitutionValues);
+            message.AddSubstitution(replacementKey, substitutionValues);
 
             //create an instance of the SMTP transport mechanism
             var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
@@ -492,7 +491,7 @@ namespace Example
             identifiers["customer"] = "someone";
             identifiers["location"] = "somewhere";
 
-            message.AddUniqueIdentifiers(identifiers);
+            message.AddUniqueArgs(identifiers);
 
             //create an instance of the SMTP transport mechanism
             var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
