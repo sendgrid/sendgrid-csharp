@@ -65,10 +65,9 @@ var pswd = "your_sendgrid_password";
 
 var credentials = new NetworkCredential(username, pswd);
 ```
-To send an email message, use the **Deliver** method on either the **SMTP** class, which uses the SMTP protocol, or the **Web** transport class, which calls the SendGrid Web API. The following examples show how to send a message using both SMTP and the Web API.
+To send an email message, use the **Deliver** method on the **Web** transport class, which calls the SendGrid Web API. The following example shows how to send a message.
 
 
-##SMTP
 ```csharp
 // Create the email object first, then add the properties.
 SendGrid myMessage = SendGrid.GetInstance();
@@ -80,30 +79,11 @@ myMessage.Text = "Hello World!";
 // Create credentials, specifying your user name and password.
 var credentials = new NetworkCredential("username", "password");
 
-// Create an SMTP transport for sending email.
-var transportSMTP = SMTP.GetInstance(credentials);
-
-// Send the email.
-transportSMTP.Deliver(myMessage);
-```
-
-##Web API
-```csharp
-// Create the email object first, then add the properties.
-SendGrid myMessage = SendGrid.GetInstance();
-myMessage.AddTo("anna@example.com");
-myMessage.From = new MailAddress("john@example.com", "John Smith");
-myMessage.Subject = "Testing the SendGrid Library";
-myMessage.Text = "Hello World!";
-
-// Create credentials, specifying your user name and password.
-var credentials = new NetworkCredential("username", "password");
-
-// Create a Web transport for sending email.
+// Create an Web transport for sending email.
 var transportWeb = Web.GetInstance(credentials);
 
 // Send the email.
-transportWeb.Deliver(myMessage);
+transportWeb.DeliverAsync(myMessage);
 ```
 
 #How to: Add an Attachment
