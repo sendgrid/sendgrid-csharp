@@ -56,7 +56,7 @@ myMessage.Text = "Hello World plain text!";
 
 After creating an email message, you can send it using the Web API provided by SendGrid. rate/) in the SendGrid documentation.
 
-Sending email with requires that you supply your SendGrid account credentials (username and password). The following code demonstrates how to wrap your credentials in a **NetworkCredential** object:
+Sending email requires that you supply your SendGrid account credentials (username and password). The following code demonstrates how to wrap your credentials in a **NetworkCredential** object:
 
 ```csharp
 // Create network credentials to access your SendGrid account.
