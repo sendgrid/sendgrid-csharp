@@ -54,9 +54,9 @@ myMessage.Text = "Hello World plain text!";
 
 #How to: Send an Email
 
-After creating an email message, you can send it using either SMTP or the Web API provided by SendGrid. For details about the benefits and drawbacks of each API, see [SMTP vs. Web API](http://sendgrid.com/docs/Integrate/) in the SendGrid documentation.
+After creating an email message, you can send it using the Web API provided by SendGrid. rate/) in the SendGrid documentation.
 
-Sending email with either protocol requires that you supply your SendGrid account credentials (username and password). The following code demonstrates how to wrap your credentials in a **NetworkCredential** object:
+Sending email with requires that you supply your SendGrid account credentials (username and password). The following code demonstrates how to wrap your credentials in a **NetworkCredential** object:
 
 ```csharp
 // Create network credentials to access your SendGrid account.
