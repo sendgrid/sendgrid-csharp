@@ -7,7 +7,6 @@ using System.Text;
 using Moq;
 using NUnit.Framework;
 using SendGridMail;
-using SendGridMail.Transport;
 
 namespace Tests.Transport
 {

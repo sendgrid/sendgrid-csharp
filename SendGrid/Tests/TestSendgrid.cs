@@ -7,6 +7,7 @@ using System.Net.Mail;
 using System.Text;
 using NUnit.Framework;
 using SendGridMail;
+using Smtpapi;
 
 namespace Tests
 {
@@ -21,7 +22,7 @@ namespace Tests
 
             sendgrid.DisableGravatar();
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"gravatar\" : {\"settings\" : {\"enable\" : \"0\"}}}}", json);
         }
 
@@ -33,7 +34,7 @@ namespace Tests
 
             sendgrid.DisableOpenTracking();
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"opentrack\" : {\"settings\" : {\"enable\" : \"0\"}}}}", json);
         }
 
@@ -45,7 +46,7 @@ namespace Tests
 
             sendgrid.DisableClickTracking();
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"clicktrack\" : {\"settings\" : {\"enable\" : \"0\"}}}}", json);
         }
 
@@ -57,7 +58,7 @@ namespace Tests
 
             sendgrid.DisableSpamCheck();
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"spamcheck\" : {\"settings\" : {\"enable\" : \"0\"}}}}", json);
         }
 
@@ -69,7 +70,7 @@ namespace Tests
 
             sendgrid.DisableUnsubscribe();
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"subscriptiontrack\" : {\"settings\" : {\"enable\" : \"0\"}}}}", json);
         }
 
@@ -81,7 +82,7 @@ namespace Tests
 
             sendgrid.DisableFooter();
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"footer\" : {\"settings\" : {\"enable\" : \"0\"}}}}", json);
         }
 
@@ -93,7 +94,7 @@ namespace Tests
 
             sendgrid.DisableGoogleAnalytics();
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"ganalytics\" : {\"settings\" : {\"enable\" : \"0\"}}}}", json);            
         }
 
@@ -105,7 +106,7 @@ namespace Tests
 
             sendgrid.DisableTemplate();
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"template\" : {\"settings\" : {\"enable\" : \"0\"}}}}", json);  
         }
 
@@ -117,7 +118,7 @@ namespace Tests
 
             sendgrid.DisableBcc();
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"bcc\" : {\"settings\" : {\"enable\" : \"0\"}}}}", json);  
         }
 
@@ -129,7 +130,7 @@ namespace Tests
 
             sendgrid.DisableBypassListManagement();
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"bypass_list_management\" : {\"settings\" : {\"enable\" : \"0\"}}}}", json);
         }
 
@@ -141,7 +142,7 @@ namespace Tests
 
             sendgrid.EnableGravatar();
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"gravatar\" : {\"settings\" : {\"enable\" : \"1\"}}}}", json);
         }
 
@@ -153,7 +154,7 @@ namespace Tests
 
             sendgrid.EnableOpenTracking();
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"opentrack\" : {\"settings\" : {\"enable\" : \"1\"}}}}", json);
         }
 
@@ -165,7 +166,7 @@ namespace Tests
             bool includePlainText = true;
             sendgrid.EnableClickTracking(includePlainText);
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"clicktrack\" : {\"settings\" : {\"enable\" : \"1\",\"enable_text\" : \"1\"}}}}", json);
         }
 
@@ -179,7 +180,7 @@ namespace Tests
             var url = "http://www.example.com";
             sendgrid.EnableSpamCheck(score, url);
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"spamcheck\" : {\"settings\" : {\"enable\" : \"1\",\"maxscore\" : \"5\",\"url\" : \"http:\\/\\/www.example.com\"}}}}", json);
         }
 
@@ -197,7 +198,7 @@ namespace Tests
 
             sendgrid.EnableUnsubscribe(text, html);
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"subscriptiontrack\" : {\"settings\" : {\"enable\" : \"1\","+
                 jsonText+","+jsonHtml+"}}}}", json);
 
@@ -209,7 +210,7 @@ namespace Tests
 
             sendgrid.EnableUnsubscribe(replace);
 
-            json = header.AsJson();
+            json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"subscriptiontrack\" : {\"settings\" : {\"enable\" : \"1\"," + jsonReplace + "}}}}", json);
 
             text = "bad";
@@ -234,7 +235,7 @@ namespace Tests
 
             sendgrid.EnableFooter(text, html);
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"footer\" : {\"settings\" : {\"enable\" : \"1\",\"text\\/plain\" : \""+text+"\",\"text\\/html\" : \""+escHtml+"\"}}}}", json);
         }
 
@@ -258,7 +259,7 @@ namespace Tests
             var jsonContent = "\"utm_content\" : \"" + content + "\"";
             var jsonCampaign = "\"utm_campaign\" : \"" + campaign + "\"";
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"ganalytics\" : {\"settings\" : {\"enable\" : \"1\","+
                             jsonSource+","+jsonMedium+","+jsonTerm+","+jsonContent+","+jsonCampaign+"}}}}", json);
         }
@@ -273,7 +274,7 @@ namespace Tests
             var escHtml = "<% hadhdhd %>";
             sendgrid.EnableTemplate(html);
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"template\" : {\"settings\" : {\"enable\" : \"1\",\"text\\/html\" : \""+escHtml+"\"}}}}", json);
 
             escHtml = "bad";
@@ -289,7 +290,7 @@ namespace Tests
             var email = "somebody@someplace.com";
             sendgrid.EnableBcc(email);
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"bcc\" : {\"settings\" : {\"enable\" : \"1\",\"email\" : \"" + email + "\"}}}}", json);
         }
 
@@ -301,7 +302,7 @@ namespace Tests
 
             sendgrid.EnableBypassListManagement();
 
-            String json = header.AsJson();
+            String json = header.JsonString();
             Assert.AreEqual("{\"filters\" : {\"bypass_list_management\" : {\"settings\" : {\"enable\" : \"1\"}}}}", json);
         }
 

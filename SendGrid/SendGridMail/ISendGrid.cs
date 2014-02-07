@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
+using Smtpapi;
 
 namespace SendGridMail
 {
@@ -99,14 +100,14 @@ namespace SendGridMail
         /// </summary>
         /// <param name="replacementTag">the string in the email that you'll replace eg. '-name-'</param>
         /// <param name="substitutionValues">a list of values that will be substituted in for the replacementTag, one for each recipient</param>
-        void AddSubVal(String replacementTag, List<String> substitutionValues);
+        void AddSubstitution(String replacementTag, List<String> substitutionValues);
 
         /// <summary>
         /// This adds parameters and values that will be bassed back through SendGrid's
         /// Event API if an event notification is triggered by this email.
         /// </summary>
         /// <param name="identifiers">parameter substitutionValues pairs to be passed back on event notification</param>
-        void AddUniqueIdentifiers(IDictionary<String, String> identifiers);
+        void AddUniqueArgs(IDictionary<String, String> identifiers);
 
         /// <summary>
         /// This sets the category for this email.  Statistics are stored on a per category

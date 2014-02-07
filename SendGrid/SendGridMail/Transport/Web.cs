@@ -7,8 +7,9 @@ using System.Net.Http.Headers;
 using System.Xml;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Smtpapi;
 
-namespace SendGridMail.Transport
+namespace SendGridMail
 {
     public class Web : ITransport
     {
@@ -189,7 +190,7 @@ namespace SendGridMail.Transport
                 new KeyValuePair<String, String>("subject", message.Subject),
                 new KeyValuePair<String, String>("text", message.Text),
                 new KeyValuePair<String, String>("html", message.Html),
-                new KeyValuePair<String, String>("x-smtpapi", message.Header.AsJson())
+                new KeyValuePair<String, String>("x-smtpapi", message.Header.JsonString())
             };
             if(message.To != null)
             {
