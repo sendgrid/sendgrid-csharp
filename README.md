@@ -100,6 +100,21 @@ myMessage.Text = "Hello World!";
 myMessage.AddAttachment(@"C:\file1.txt");
 ```
 
+You can also add attachments from the data's **Stream**. It can be done by calling the same method as above, **AddAttachment**, but by passing in the Stream of the data, and the filename you want it to show as in the message.
+
+```csharp
+SendGrid myMessage = SendGrid.GetInstance();
+myMessage.AddTo("anna@example.com");
+myMessage.From = new MailAddress("john@example.com", "John Smith");
+myMessage.Subject = "Testing the SendGrid Library";
+myMessage.Text = "Hello World!";
+
+using (var attachmentFileStream = new FileStream(@"C:\file.txt", FileMode.Open))
+{
+    message.AddAttachment(attachmentFileStream, "My Cool File.txt");
+}
+```
+
 #How to: Use filters to enable footers, tracking, and analytics
 
 SendGrid provides additional email functionality through the use of filters. These are settings that can be added to an email message to enable specific functionality such as click tracking, Google analytics, subscription tracking, and so on. For a full list of filters, see [Filter Settings](http://docs.sendgrid.com/documentation/api/smtp-api/filter-settings/).
