@@ -95,7 +95,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestSendgrid.cs" />
-    <Compile Include="Transport\TestWeb.cs" />
+    <Compile Include="Transport\TestWebApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
