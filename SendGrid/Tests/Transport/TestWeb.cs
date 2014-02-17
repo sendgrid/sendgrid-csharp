@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -11,57 +12,68 @@ namespace Tests.Transport
 	[TestFixture]
 	internal class TestWeb
 	{
-		private const string TestUsername = "usr";
-		private const string TestPassword = "psswd";
+		private const string TestUsername = "username";
+		private const string TestPassword = "password";
 
 		[Test]
 		public void TestFetchFileBodies()
 		{
-			var test = Web.GetInstance(new NetworkCredential(TestUsername, TestPassword));
+			var webApi = Web.GetInstance(new NetworkCredential(TestUsername, TestPassword));
 			var message = new Mock<ISendGrid>();
+			var attachments = new[] {"foo", "bar", "foobar"};
 			message.SetupProperty(foo => foo.Attachments, null);
-			var result = test.FetchFileBodies(message.Object);
+			var result = webApi.FetchFileBodies(message.Object);
 			Assert.AreEqual(0, result.Count);
 
-			message.SetupProperty(foo => foo.Attachments, new[] {"foo", "bar", "raz"});
-			result = test.FetchFileBodies(message.Object);
-			Assert.AreEqual(3, result.Count);
-			Assert.AreEqual(result[0].Key, "foo");
-			Assert.AreEqual(result[1].Key, "bar");
-			Assert.AreEqual(result[2].Key, "raz");
-			Assert.AreEqual(result[0].Value.Name, "foo");
-			Assert.AreEqual(result[1].Value.Name, "bar");
-			Assert.AreEqual(result[2].Value.Name, "raz");
+			message.SetupProperty(foo => foo.Attachments, attachments);
+			result = webApi.FetchFileBodies(message.Object);
+			Assert.AreEqual(attachments.Count(), result.Count);
+			for (var index = 0; index < attachments.Length; index++)
+				Assert.AreEqual(result[index].Value.Name, attachments[index]);
 		}
 
 		[Test]
 		public void TestFetchFormParams()
 		{
-			var bar = Web.GetInstance(new NetworkCredential(TestUsername, TestPassword));
-			var message = SendGrid.GetInstance();
-			message.AddTo("foo@bar.com");
-			message.AddCc("cc@bar.com");
-			message.AddBcc("bcc@bar.com");
-			message.From = new MailAddress("from@raz.com");
-			message.Subject = "subject";
-			message.Text = "text";
-			message.Html = "html";
-			message.AddHeaders(new Dictionary<string, string> {{"headerkey", "headervalue"}});
-			message.Header.SetCategory("cat");
+			// Test Variables
+			const string toAddress = "foobar@outlook.com";
+			const string ccAddress = "foo@outlook.com";
+			const string bccAddress = "bar@outlook.com";
+			const string fromAddress = "test@outlook.com";
+			const string subject = "Test Subject";
+			const string textBody = "Test Text Body";
+			const string htmlBody = "<p>Test HTML Body</p>";
+			const string headerKey = "headerkey";
+			var testHeader = new Dictionary<string, string> { { headerKey, "headervalue" } };
+			const string categoryName = "Example Category";
 
-			var result = bar.FetchFormParams(message);
+			var message = SendGrid.GetInstance();
+			message.AddTo(toAddress);
+			message.AddCc(ccAddress);
+			message.AddBcc(bccAddress);
+			message.From = new MailAddress(fromAddress);
+			message.Subject = subject;
+			message.Text = textBody;
+			message.Html = htmlBody;
+			message.AddHeaders(testHeader);
+			message.Header.SetCategory(categoryName);
+
+			var webApi = Web.GetInstance(new NetworkCredential(TestUsername, TestPassword));
+			var result = webApi.FetchFormParams(message);
 			Assert.True(result.Any(r => r.Key == "api_user" && r.Value == TestUsername));
 			Assert.True(result.Any(r => r.Key == "api_key" && r.Value == TestPassword));
-			Assert.True(result.Any(r => r.Key == "to[]" && r.Value == "foo@bar.com"));
-			Assert.True(result.Any(r => r.Key == "cc[]" && r.Value == "cc@bar.com"));
-			Assert.True(result.Any(r => r.Key == "bcc[]" && r.Value == "bcc@bar.com"));
-			Assert.True(result.Any(r => r.Key == "from" && r.Value == "from@raz.com"));
-			Assert.True(result.Any(r => r.Key == "subject" && r.Value == "subject"));
-			Assert.True(result.Any(r => r.Key == "text" && r.Value == "text"));
-			Assert.True(result.Any(r => r.Key == "html" && r.Value == "html"));
-			Assert.True(result.Any(r => r.Key == "headers" && r.Value == "{\"headerkey\":\"headervalue\"}"));
-			Assert.True(result.Any(r => r.Key == "x-smtpapi" && r.Value == "{\"category\" : \"cat\"}"));
-			Assert.True(result.Any(r => r.Key == "html" && r.Value == "html"));
+			Assert.True(result.Any(r => r.Key == "to[]" && r.Value == toAddress));
+			Assert.True(result.Any(r => r.Key == "cc[]" && r.Value == ccAddress));
+			Assert.True(result.Any(r => r.Key == "bcc[]" && r.Value == bccAddress));
+			Assert.True(result.Any(r => r.Key == "from" && r.Value == fromAddress));
+			Assert.True(result.Any(r => r.Key == "subject" && r.Value == subject));
+			Assert.True(result.Any(r => r.Key == "text" && r.Value == textBody));
+			Assert.True(result.Any(r => r.Key == "html" && r.Value == htmlBody));
+			Assert.True(
+				result.Any(
+					r => r.Key == "headers" && r.Value == String.Format("{{\"{0}\":\"{1}\"}}", headerKey, testHeader[headerKey])));
+			Assert.True(
+				result.Any(r => r.Key == "x-smtpapi" && r.Value == String.Format("{{\"category\" : \"{0}\"}}", categoryName)));
 		}
 	}
 }
