@@ -82,7 +82,7 @@ var credentials = new NetworkCredential("username", "password");
 var transportWeb = Web.GetInstance(credentials);
 
 // Send the email.
-transportWeb.DeliverAsync(myMessage);
+transportWeb.Deliver(myMessage);
 ```
 
 #How to: Add an Attachment
