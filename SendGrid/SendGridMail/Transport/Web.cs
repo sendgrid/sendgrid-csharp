@@ -207,8 +207,7 @@ namespace SendGridMail
 			}
 			if (message.Cc != null)
 			{
-				result = result.Concat(message.Cc.ToList().Select(a => new KeyValuePair<String, String>("cc[]", a.Address)))
-					.ToList();
+				throw new NotSupportedException("CC is not supported by the SendGrid Web API");
 			}
 			return result.Where(r => !String.IsNullOrEmpty(r.Value)).ToList();
 		}
