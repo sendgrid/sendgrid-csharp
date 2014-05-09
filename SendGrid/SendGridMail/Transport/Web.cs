@@ -29,7 +29,7 @@ namespace SendGridMail
 		/// </summary>
 		/// <param name="credentials">SendGrid user parameters</param>
 		/// <param name="https">Use https?</param>
-		internal Web(NetworkCredential credentials)
+		public Web(NetworkCredential credentials)
 		{
 			_credentials = credentials;
 		}
@@ -50,17 +50,6 @@ namespace SendGridMail
 			AttachFiles(message, content);
 			var response = client.PostAsync(Endpoint + ".xml", content).Result;
 			CheckForErrors(response);
-		}
-
-		/// <summary>
-		///     Factory method for Web transport of sendgrid messages
-		/// </summary>
-		/// <param name="credentials">SendGrid credentials for sending mail messages</param>
-		/// <param name="https">Use https?</param>
-		/// <returns>New instance of the transport mechanism</returns>
-		public static Web GetInstance(NetworkCredential credentials)
-		{
-			return new Web(credentials);
 		}
 
 		/// <summary>

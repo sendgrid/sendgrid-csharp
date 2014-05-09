@@ -21,7 +21,7 @@ namespace Example
 			var credentials = new NetworkCredential("username", "password");
 
 			// Create a Web transport for sending email.
-			var transportWeb = Web.GetInstance(credentials);
+			var transportWeb = new Web(credentials);
 
 			// Send the email.
 			if (transportWeb != null)

@@ -45,7 +45,7 @@ namespace Example
 			message.Subject = "Hello World HTML Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//send the mail
 			transportInstance.Deliver(message);
@@ -75,7 +75,7 @@ namespace Example
 			message.Subject = "Hello World Plain Text Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//send the mail
 			transportInstance.Deliver(message);
@@ -107,7 +107,7 @@ namespace Example
 			message.Subject = "Hello World Gravatar Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable gravatar
 			message.EnableGravatar();
@@ -141,7 +141,7 @@ namespace Example
 			message.Subject = "Hello World Open Tracking Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable gravatar
 			message.EnableOpenTracking();
@@ -180,7 +180,7 @@ namespace Example
 			message.Subject = "Hello World Click Tracking Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable clicktracking
 			message.EnableClickTracking();
@@ -217,7 +217,7 @@ namespace Example
 			message.Subject = "WIN A MILLION DOLLARS TODAY! WORK FROM HOME! A NIGERIAN PRINCE WANTS YOU!";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable spamcheck
 			message.EnableSpamCheck();
@@ -253,7 +253,7 @@ namespace Example
 			message.Subject = "Hello World Unsubscribe Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable spamcheck
 			//or optionally, you can specify 'replace' instead of the text and html in order to 
@@ -294,7 +294,7 @@ namespace Example
 			message.Subject = "Hello World Footer Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//Enable Footer
 			message.EnableFooter("PLAIN TEXT FOOTER", "<p color='blue'>HTML FOOTER TEXT</p>");
@@ -333,7 +333,7 @@ namespace Example
 			message.Subject = "Hello World Footer Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable Google Analytics
 			message.EnableGoogleAnalytics("SendGridTest", "EMAIL", "Sendgrid", "ad-one", "My SG Campaign");
@@ -372,7 +372,7 @@ namespace Example
 			message.Subject = "Hello World Template Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable template
 			message.EnableTemplate("<p>My Email Template <% body %> is awesome!</p>");
@@ -411,7 +411,7 @@ namespace Example
 			message.Subject = "Hello World Bypass List Management Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable bypass list management
 			message.EnableBypassListManagement();
@@ -454,7 +454,7 @@ namespace Example
 			message.AddSubstitution(replacementKey, substitutionValues);
 
 			//create an instance of the SMTP transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable bypass list management
 			message.EnableBypassListManagement();
@@ -494,7 +494,7 @@ namespace Example
 			message.AddUniqueArgs(identifiers);
 
 			//create an instance of the SMTP transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable bypass list management
 			message.EnableBypassListManagement();
@@ -532,7 +532,7 @@ namespace Example
 			message.SetCategory(category);
 
 			//create an instance of the SMTP transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable bypass list management
 			message.EnableBypassListManagement();

@@ -18,7 +18,7 @@ namespace Tests.Transport
 		[Test]
 		public void TestFetchFileBodies()
 		{
-			var webApi = Web.GetInstance(new NetworkCredential(TestUsername, TestPassword));
+			var webApi = new Web(new NetworkCredential(TestUsername, TestPassword));
 			var message = new Mock<ISendGrid>();
 			var attachments = new[] {"foo", "bar", "foobar"};
 			message.SetupProperty(foo => foo.Attachments, null);
@@ -58,7 +58,7 @@ namespace Tests.Transport
 			message.AddHeaders(testHeader);
 			message.Header.SetCategory(categoryName);
 
-			var webApi = Web.GetInstance(new NetworkCredential(TestUsername, TestPassword));
+			var webApi = new Web(new NetworkCredential(TestUsername, TestPassword));
 			var result = webApi.FetchFormParams(message);
 			Assert.True(result.Any(r => r.Key == "api_user" && r.Value == TestUsername));
 			Assert.True(result.Any(r => r.Key == "api_key" && r.Value == TestPassword));
