@@ -47,7 +47,7 @@ namespace Tests.Transport
 			var testHeader = new Dictionary<string, string> { { headerKey, "headervalue" } };
 			const string categoryName = "Example Category";
 
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 			message.AddTo(toAddress);
 			message.AddCc(ccAddress);
 			message.AddBcc(bccAddress);

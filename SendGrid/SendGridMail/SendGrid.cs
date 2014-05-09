@@ -23,8 +23,24 @@ namespace SendGridMail
 		#endregion
 
 		#region Initialization and Constructors
+        
+        /// <summary>
+        ///     Creates an instance of SendGrid's custom message object
+        /// </summary>
+        /// <returns></returns>
+	    public SendGrid() : this(new Header())
+	    {
+	        
+	    }
 
-		internal SendGrid(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc,
+        public SendGrid(IHeader header)
+        {
+            _message = new MailMessage();
+            Header = header;
+            Headers = new Dictionary<string, string>();
+        }
+
+		public SendGrid(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc,
 			String subject, String html, String text, IHeader header = null) : this(header)
 		{
 			From = from;
@@ -36,23 +52,6 @@ namespace SendGridMail
 
 			Text = text;
 			Html = html;
-		}
-
-		internal SendGrid(IHeader header)
-		{
-			_message = new MailMessage();
-			Header = header;
-			Headers = new Dictionary<string, string>();
-		}
-
-		/// <summary>
-		///     Creates an instance of SendGrid's custom message object
-		/// </summary>
-		/// <returns></returns>
-		public static SendGrid GetInstance()
-		{
-			var header = new Header();
-			return new SendGrid(header);
 		}
 
 		/// <summary>

@@ -11,7 +11,7 @@ namespace Example
 		private static void Main()
 		{
 			// Create the email object first, then add the properties.
-			var myMessage = SendGrid.GetInstance();
+			var myMessage = new SendGrid();
 			myMessage.AddTo("anna@example.com");
 			myMessage.From = new MailAddress("john@example.com", "John Smith");
 			myMessage.Subject = "Testing the SendGrid Library";

@@ -27,7 +27,7 @@ namespace Example
 		public void SimpleHTMLEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -57,7 +57,7 @@ namespace Example
 		public void SimplePlaintextEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -89,7 +89,7 @@ namespace Example
 		public void EnableGravatarEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -123,7 +123,7 @@ namespace Example
 		public void EnableOpenTrackingEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -158,7 +158,7 @@ namespace Example
 		public void EnableClickTrackingEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -197,7 +197,7 @@ namespace Example
 		public void EnableSpamCheckEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -233,7 +233,7 @@ namespace Example
 		public void EnableUnsubscribeEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -272,7 +272,7 @@ namespace Example
 		public void EnableFooterEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -310,7 +310,7 @@ namespace Example
 		public void EnableGoogleAnalytics()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -350,7 +350,7 @@ namespace Example
 		public void EnableTemplateEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -389,7 +389,7 @@ namespace Example
 		public void EnableBypassListManagementEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -428,7 +428,7 @@ namespace Example
 		public void AddSubstitutionValues()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -470,7 +470,7 @@ namespace Example
 		public void AddUniqueIdentifiers()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -510,7 +510,7 @@ namespace Example
 		public void SetCategory()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
