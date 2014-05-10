@@ -54,24 +54,6 @@ namespace SendGridMail
 			Html = html;
 		}
 
-		/// <summary>
-		///     Creates an instance of SendGrid's custom message object with mail parameters
-		/// </summary>
-		/// <param name="from">The email address of the sender</param>
-		/// <param name="to">An array of the recipients</param>
-		/// <param name="cc">Supported over SMTP, with future plans for support in the Web transport</param>
-		/// <param name="bcc">Blind recipients</param>
-		/// <param name="subject">The subject of the message</param>
-		/// <param name="html">the html content for the message</param>
-		/// <param name="text">the plain text part of the message</param>
-		/// <returns></returns>
-		public static SendGrid GetInstance(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc,
-			String subject, String html, String text)
-		{
-			var header = new Header();
-			return new SendGrid(from, to, cc, bcc, subject, html, text, header);
-		}
-
 		private static Dictionary<string, string> InitializeFilters()
 		{
 			return
