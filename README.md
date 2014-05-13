@@ -131,7 +131,6 @@ myMessage.From = new MailAddress("john@example.com", "John Smith");
 myMessage.Subject = "Testing the SendGrid Library";
 myMessage.Text = "Hello World!";
 
-myMessage.InitializeFilters();
 // Add a footer to the message.
 myMessage.EnableFooter("PLAIN TEXT FOOTER", "<p><em>HTML FOOTER</em></p>");
 ```
@@ -146,7 +145,6 @@ myMessage.Subject = "Testing the SendGrid Library";
 myMessage.Html = "<p><a href=\"http://www.example.com\">Hello World Link!</a></p>";
 myMessage.Text = "Hello World!";
 
-myMessage.InitializeFilters();
 // true indicates that links in plain text portions of the email 
 // should also be overwritten for link tracking purposes. 
 myMessage.EnableClickTracking(true);
