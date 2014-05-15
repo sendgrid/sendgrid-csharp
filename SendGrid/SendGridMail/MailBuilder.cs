@@ -1,10 +1,10 @@
-﻿using Smtpapi;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
+using Smtpapi;
 
 namespace SendGridMail {
     public sealed class MailBuilder {
@@ -124,7 +124,7 @@ namespace SendGridMail {
         public MailBuilder Html(AlternateView view) {
             return this
                 .Html(GetAlternateViewAsString(view))
-                .WithLinkedResources(view.LinkedResources);
+                .EmbedImages(view.LinkedResources);
         }
         public MailBuilder Html(string html) {
             sendgrid.Html = html;
@@ -140,62 +140,64 @@ namespace SendGridMail {
             return this;
         }
 
-        public MailBuilder WithAttachment(Stream stream, string name) {
+        public MailBuilder AttachFile(Stream stream, string name) {
             sendgrid.AddAttachment(stream, name);
             return this;
         }
-        public MailBuilder WithAttachment(string filePath) {
+        public MailBuilder AttachFile(string filePath) {
             sendgrid.AddAttachment(filePath);
             return this;
         }
-        public MailBuilder WithAttachment(Attachment attachment) {
-            return this.WithAttachment(attachment.ContentStream, attachment.Name);
+        public MailBuilder AttachFile(Attachment attachment) {
+            return this.AttachFile(attachment.ContentStream, attachment.Name);
         }
-        public MailBuilder WithAttachments(IEnumerable<Attachment> attachments) {
-            foreach (var attachment in attachments) { this.WithAttachment(attachment); }
+        public MailBuilder AttachFiles(IEnumerable<Attachment> attachments) {
+            foreach (var attachment in attachments) { this.AttachFile(attachment); }
             return this;
         }
-        public MailBuilder WithAttachments(AttachmentCollection attachments) {
-            return this.WithAttachments(attachments.ToList());
+        public MailBuilder AttachFiles(AttachmentCollection attachments) {
+            return this.AttachFiles(attachments.ToList());
         }
 
-        public MailBuilder WithLinkedResource(Stream stream, string name) {
+        public MailBuilder EmbedImage(Stream stream, string name, string cid) {
             sendgrid.AddAttachment(stream, name);
+            sendgrid.EmbedImage(name, cid);
             return this;
         }
-        public MailBuilder WithLinkedResource(string filePath) {
+        public MailBuilder EmbedImage(string filePath, string cid) {
             sendgrid.AddAttachment(filePath);
+            sendgrid.EmbedImage(new FileInfo(filePath).Name, cid);
             return this;
         }
-        public MailBuilder WithLinkedResource(LinkedResource resource) {
-            return this.WithAttachment(resource.ContentStream, resource.ContentId);
+        public MailBuilder EmbedImage(LinkedResource resource) {
+            return this.EmbedImage(resource.ContentStream, resource.ContentId, resource.ContentId);
         }
-        public MailBuilder WithLinkedResources(IEnumerable<LinkedResource> resources) {
-            foreach (var resource in resources) { this.WithLinkedResource(resource); }
+        public MailBuilder EmbedImages(IEnumerable<LinkedResource> resources) {
+            foreach (var resource in resources) { this.EmbedImage(resource); }
             return this;
         }
-        public MailBuilder WithLinkedResources(LinkedResourceCollection resources) {
-            return this.WithLinkedResources(resources.ToList());
+        public MailBuilder EmbedImages(LinkedResourceCollection resources) {
+            return this.EmbedImages(resources.ToList());
         }
 
-        public MailBuilder WithHeader(string key, string value) {
+        public MailBuilder AddHeader(string key, string value) {
             sendgrid.AddHeaders(new Dictionary<string, string> { { key, value } });
             return this;
         }
-        public MailBuilder WithHeaders(IDictionary<string, string> headers) {
+        public MailBuilder AddHeaders(IDictionary<string, string> headers) {
             sendgrid.AddHeaders(headers);
             return this;
         }
-        public MailBuilder WithSubstitution(string replacementTag, IEnumerable<string> substitutionValues) {
+        public MailBuilder Substitute(string replacementTag, IEnumerable<string> substitutionValues) {
             sendgrid.AddSubstitution(replacementTag, substitutionValues.ToList());
             return this;
         }
 
-        public MailBuilder WithUniqueArg(string key, string value) {
+        public MailBuilder IncludeUniqueArg(string key, string value) {
             sendgrid.AddUniqueArgs(new Dictionary<string, string> { { key, value } });
             return this;
         }
-        public MailBuilder WithUniqueArgs(IDictionary<string, string> identifiers) {
+        public MailBuilder IncludeUniqueArgs(IDictionary<string, string> identifiers) {
             sendgrid.AddUniqueArgs(identifiers);
             return this;
         }

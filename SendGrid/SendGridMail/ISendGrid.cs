@@ -164,6 +164,12 @@ namespace SendGridMail
 		/// <param name="headers">key substitutionValues pairs</param>
 		void AddHeaders(IDictionary<String, String> headers);
 
+		/// <summary>
+		///     Gets the list of embedded images
+		/// </summary>
+		/// <returns></returns>
+		IDictionary<string, string> GetEmbeddedImages();
+
 		#endregion
 
 		#region SMTP API Functions

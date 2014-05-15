@@ -210,6 +210,10 @@ namespace SendGridMail
 				result = result.Concat(message.Cc.ToList().Select(a => new KeyValuePair<String, String>("cc[]", a.Address)))
 					.ToList();
 			}
+			if (message.GetEmbeddedImages().Count > 0) {
+				result = result.Concat(message.GetEmbeddedImages().ToList().Select(x => new KeyValuePair<String, String>(string.Format("content[{0}]", x.Key), x.Value)))
+					.ToList();
+			}
 			return result.Where(r => !String.IsNullOrEmpty(r.Value)).ToList();
 		}
 
