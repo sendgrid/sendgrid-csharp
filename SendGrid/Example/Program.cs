@@ -30,16 +30,5 @@ namespace Example
 			Console.WriteLine("Done!");
 			Console.ReadLine();
 		}
-
-		private static SendGrid UseMailBuilder() 
-		{
-			// Fluently create the mail builder, add the properties, then build the email object
-			return MailBuilder.Create()
-				.To("anna@example.com")
-				.From("john@example.com", "John Smith")
-				.Subject("Testing the SendGrid Library")
-				.Text("Hello World!")
-				.Build();
-		}
 	}
 }
