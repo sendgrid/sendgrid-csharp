@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Mail;
-using Smtpapi;
+using SendGrid.SmtpApi;
 
-namespace SendGridMail
+namespace SendGrid
 {
 	/// <summary>
 	///     Represents the basic set of functions that will be called by the user
@@ -64,50 +64,6 @@ namespace SendGridMail
 		void AddTo(IDictionary<String, IDictionary<String, String>> addresssInfo);
 
 		/// <summary>
-		///     Add to the 'CC' address.
-		/// </summary>
-		/// <param name="address">a single email address eg "you@company.com"</param>
-		void AddCc(String address);
-
-		/// <summary>
-		///     Add to the 'CC' address.
-		/// </summary>
-		/// <param name="addresses">a list of email addresses as strings</param>
-		void AddCc(IEnumerable<String> addresses);
-
-		/// <summary>
-		///     Add to the 'CC' address.
-		/// </summary>
-		/// <param name="addresssInfo">
-		///     the dictionary keys are the email addresses, which points to a dictionary of
-		///     key substitutionValues pairs mapping to other address codes, such as { foo@bar.com => { 'DisplayName' => 'Mr Foo' }
-		///     }
-		/// </param>
-		void AddCc(IDictionary<String, IDictionary<String, String>> addresssInfo);
-
-		/// <summary>
-		///     Add to the 'Bcc' address.
-		/// </summary>
-		/// <param name="address">a single email as the input eg "you@company.com"</param>
-		void AddBcc(String address);
-
-		/// <summary>
-		///     Add to the 'Bcc' address.
-		/// </summary>
-		/// <param name="addresses">a list of emails as an array of strings.</param>
-		void AddBcc(IEnumerable<String> addresses);
-
-		/// <summary>
-		///     Add to the 'Bcc' address.
-		/// </summary>
-		/// <param name="addresssInfo">
-		///     the dictionary keys are the email addresses, which points to a dictionary of
-		///     key substitutionValues pairs mapping to other address codes, such as { foo@bar.com => { 'DisplayName' => 'Mr Foo' }
-		///     }
-		/// </param>
-		void AddBcc(IDictionary<String, IDictionary<String, String>> addresssInfo);
-
-		/// <summary>
 		///     Defines a mapping between a replacement string in the text of the message to a list of
 		///     substitution values to be used, one per each recipient, in the same order as the recipients were added.
 		/// </summary>
@@ -119,7 +75,7 @@ namespace SendGridMail
 		void AddSubstitution(String replacementTag, List<String> substitutionValues);
 
 		/// <summary>
-		///     This adds parameters and values that will be bassed back through SendGrid's
+		///     This adds parameters and values that will be bassed back through SendGridMessage's
 		///     Event API if an event notification is triggered by this email.
 		/// </summary>
 		/// <param name="identifiers">parameter substitutionValues pairs to be passed back on event notification</param>
@@ -235,7 +191,7 @@ namespace SendGridMail
 		void EnableOpenTracking();
 
 		/// <summary>
-		///     Causes all links to be overwritten, shortened, and pointed to SendGrid's servers so clicks will be tracked.
+		///     Causes all links to be overwritten, shortened, and pointed to SendGridMessage's servers so clicks will be tracked.
 		/// </summary>
 		/// <param name="includePlainText">true if links found in plain text portions of the message are to be overwritten</param>
 		void EnableClickTracking(bool includePlainText = false);
@@ -247,18 +203,18 @@ namespace SendGridMail
 		///     Emails with a SpamAssassin score over this substitutionValues will be considered spam and not be
 		///     delivered.
 		/// </param>
-		/// <param name="url">SendGrid will send an HTTP POST request to this url when a message is detected as spam</param>
+		/// <param name="url">SendGridMessage will send an HTTP POST request to this url when a message is detected as spam</param>
 		void EnableSpamCheck(int score = 5, String url = null);
 
 		/// <summary>
-		///     Allow's SendGrid to manage unsubscribes and ensure these users don't get future emails from the sender
+		///     Allow's SendGridMessage to manage unsubscribes and ensure these users don't get future emails from the sender
 		/// </summary>
 		/// <param name="text">String for the plain text email body showing what you want the message to look like.</param>
 		/// <param name="html">String for the HTML email body showing what you want the message to look like.</param>
 		void EnableUnsubscribe(String text, String html);
 
 		/// <summary>
-		///     Allow's SendGrid to manage unsubscribes and ensure these users don't get future emails from the sender
+		///     Allow's SendGridMessage to manage unsubscribes and ensure these users don't get future emails from the sender
 		/// </summary>
 		/// <param name="replace">Tag in the message body to be replaced with the unsubscribe link and message</param>
 		void EnableUnsubscribe(String replace);

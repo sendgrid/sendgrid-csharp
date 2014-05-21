@@ -6,11 +6,11 @@ using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text.RegularExpressions;
-using Smtpapi;
+using SendGrid.SmtpApi;
 
-namespace SendGridMail
+namespace SendGrid
 {
-	public class SendGrid : ISendGrid
+	public class SendGridMessage : ISendGrid
 	{
 		#region constants/vars
 		
@@ -25,22 +25,22 @@ namespace SendGridMail
 		#region Initialization and Constructors
         
         /// <summary>
-        ///     Creates an instance of SendGrid's custom message object
+        ///     Creates an instance of SendGridMessage's custom message object
         /// </summary>
         /// <returns></returns>
-	    public SendGrid() : this(new Header())
+	    public SendGridMessage() : this(new Header())
 	    {
 	        
 	    }
 
-        public SendGrid(IHeader header)
+        public SendGridMessage(IHeader header)
         {
             _message = new MailMessage();
             Header = header;
             Headers = new Dictionary<string, string>();
         }
 
-		public SendGrid(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc,
+		public SendGridMessage(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc,
 			String subject, String html, String text, IHeader header = null) : this(header)
 		{
 			From = from;
@@ -175,53 +175,7 @@ namespace SendGridMail
 			}
 		}
 
-		public void AddCc(String address)
-		{
-			var mailAddress = new MailAddress(address);
-			_message.CC.Add(mailAddress);
-		}
-
-		public void AddCc(IEnumerable<String> addresses)
-		{
-			if (addresses == null) return;
-			foreach (var address in addresses.Where(address => address != null))
-			{
-				AddCc(address);
-			}
-		}
-
-		public void AddCc(IDictionary<String, IDictionary<String, String>> addresssInfo)
-		{
-			foreach (var mailAddress in from address in addresssInfo.Keys let table = addresssInfo[address] select new MailAddress(address, table.ContainsKey("DisplayName") ? table["DisplayName"] : null))
-			{
-				_message.CC.Add(mailAddress);
-			}
-		}
-
-		public void AddBcc(String address)
-		{
-			var mailAddress = new MailAddress(address);
-			_message.Bcc.Add(mailAddress);
-		}
-
-		public void AddBcc(IEnumerable<String> addresses)
-		{
-			if (addresses == null) return;
-			foreach (var address in addresses.Where(address => address != null))
-			{
-				AddBcc(address);
-			}
-		}
-
-		public void AddBcc(IDictionary<String, IDictionary<String, String>> addresssInfo)
-		{
-			foreach (var mailAddress in from address in addresssInfo.Keys let table = addresssInfo[address] select new MailAddress(address, table.ContainsKey("DisplayName") ? table["DisplayName"] : null))
-			{
-				_message.Bcc.Add(mailAddress);
-			}
-		}
-
-		public Dictionary<String, MemoryStream> StreamedAttachments
+        public Dictionary<String, MemoryStream> StreamedAttachments
 		{
 			get { return _streamedAttachments; }
 			set { _streamedAttachments = value; }

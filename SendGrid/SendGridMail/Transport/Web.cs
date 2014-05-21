@@ -7,10 +7,10 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Xml;
-using Smtpapi;
+using SendGrid.SmtpApi;
 
 // ReSharper disable MemberCanBePrivate.Global
-namespace SendGridMail
+namespace SendGrid
 {
 	public class Web : ITransport
 	{
@@ -27,7 +27,7 @@ namespace SendGridMail
 		/// <summary>
 		///     Creates a new Web interface for sending mail.  Preference is using the Factory method.
 		/// </summary>
-		/// <param name="credentials">SendGrid user parameters</param>
+		/// <param name="credentials">SendGridMessage user parameters</param>
 		/// <param name="https">Use https?</param>
 		public Web(NetworkCredential credentials)
 		{
@@ -35,7 +35,7 @@ namespace SendGridMail
 		}
 
 		/// <summary>
-		///     Delivers a message over SendGrid's Web interface
+		///     Delivers a message over SendGridMessage's Web interface
 		/// </summary>
 		/// <param name="message"></param>
 		public void Deliver(ISendGrid message)
@@ -53,7 +53,7 @@ namespace SendGridMail
 		}
 
 		/// <summary>
-		///     Asynchronously delivers a message over SendGrid's Web interface
+		///     Asynchronously delivers a message over SendGridMessage's Web interface
 		/// </summary>
 		/// <param name="message"></param>
 		public async void DeliverAsync(ISendGrid message)

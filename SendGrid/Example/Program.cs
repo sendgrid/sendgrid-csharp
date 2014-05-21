@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
-using SendGridMail;
+using SendGrid;
 
 namespace Example
 {
@@ -11,10 +11,10 @@ namespace Example
 		private static void Main()
 		{
 			// Create the email object first, then add the properties.
-			var myMessage = new SendGrid();
+			var myMessage = new SendGridMessage();
 			myMessage.AddTo("anna@example.com");
 			myMessage.From = new MailAddress("john@example.com", "John Smith");
-			myMessage.Subject = "Testing the SendGrid Library";
+			myMessage.Subject = "Testing the SendGridMessage Library";
 			myMessage.Text = "Hello World!";
 
 			// Create credentials, specifying your user name and password.

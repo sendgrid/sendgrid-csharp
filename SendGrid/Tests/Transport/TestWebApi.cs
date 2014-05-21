@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Mail;
 using Moq;
 using NUnit.Framework;
-using SendGridMail;
+using SendGrid;
 
 namespace Tests.Transport
 {
@@ -37,8 +37,6 @@ namespace Tests.Transport
 		{
 			// Test Variables
 			const string toAddress = "foobar@outlook.com";
-			const string ccAddress = "foo@outlook.com";
-			const string bccAddress = "bar@outlook.com";
 			const string fromAddress = "test@outlook.com";
 			const string subject = "Test Subject";
 			const string textBody = "Test Text Body";
@@ -47,10 +45,8 @@ namespace Tests.Transport
 			var testHeader = new Dictionary<string, string> { { headerKey, "headervalue" } };
 			const string categoryName = "Example Category";
 
-			var message = new SendGrid();
+			var message = new SendGridMessage();
 			message.AddTo(toAddress);
-			message.AddCc(ccAddress);
-			message.AddBcc(bccAddress);
 			message.From = new MailAddress(fromAddress);
 			message.Subject = subject;
 			message.Text = textBody;
@@ -63,8 +59,6 @@ namespace Tests.Transport
 			Assert.True(result.Any(r => r.Key == "api_user" && r.Value == TestUsername));
 			Assert.True(result.Any(r => r.Key == "api_key" && r.Value == TestPassword));
 			Assert.True(result.Any(r => r.Key == "to[]" && r.Value == toAddress));
-			Assert.True(result.Any(r => r.Key == "cc[]" && r.Value == ccAddress));
-			Assert.True(result.Any(r => r.Key == "bcc[]" && r.Value == bccAddress));
 			Assert.True(result.Any(r => r.Key == "from" && r.Value == fromAddress));
 			Assert.True(result.Any(r => r.Key == "subject" && r.Value == subject));
 			Assert.True(result.Any(r => r.Key == "text" && r.Value == textBody));

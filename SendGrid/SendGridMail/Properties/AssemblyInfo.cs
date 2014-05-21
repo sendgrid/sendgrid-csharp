@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("SendGridMail")]
-[assembly: AssemblyDescription("A client library for interfacing with the SendGrid API")]
+[assembly: AssemblyDescription("A client library for interfacing with the SendGridMessage API")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("SendGrid")]
+[assembly: AssemblyCompany("SendGridMessage")]
 [assembly: AssemblyProduct("SendGridMail")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
-using SendGridMail;
+using SendGrid;
 
 namespace Example
 {
@@ -27,7 +27,7 @@ namespace Example
 		public void SimpleHTMLEmail()
 		{
 			//create a new message object
-			var message = new SendGrid();
+			var message = new SendGridMessage();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -57,7 +57,7 @@ namespace Example
 		public void SimplePlaintextEmail()
 		{
 			//create a new message object
-			var message = new SendGrid();
+			var message = new SendGridMessage();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -89,7 +89,7 @@ namespace Example
 		public void EnableGravatarEmail()
 		{
 			//create a new message object
-			var message = new SendGrid();
+			var message = new SendGridMessage();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -123,7 +123,7 @@ namespace Example
 		public void EnableOpenTrackingEmail()
 		{
 			//create a new message object
-			var message = new SendGrid();
+			var message = new SendGridMessage();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -158,7 +158,7 @@ namespace Example
 		public void EnableClickTrackingEmail()
 		{
 			//create a new message object
-			var message = new SendGrid();
+			var message = new SendGridMessage();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -191,13 +191,13 @@ namespace Example
 
 		/// <summary>
 		///     The Spam Checker filter, is useful when your web application allows your end users
-		///     to create content that is then emailed through your SendGrid account.
+		///     to create content that is then emailed through your SendGridMessage account.
 		///     http://docs.sendgrid.com/documentation/apps/spam-checker-filter/
 		/// </summary>
 		public void EnableSpamCheckEmail()
 		{
 			//create a new message object
-			var message = new SendGrid();
+			var message = new SendGridMessage();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -233,7 +233,7 @@ namespace Example
 		public void EnableUnsubscribeEmail()
 		{
 			//create a new message object
-			var message = new SendGrid();
+			var message = new SendGridMessage();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -272,7 +272,7 @@ namespace Example
 		public void EnableFooterEmail()
 		{
 			//create a new message object
-			var message = new SendGrid();
+			var message = new SendGridMessage();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -310,7 +310,7 @@ namespace Example
 		public void EnableGoogleAnalytics()
 		{
 			//create a new message object
-			var message = new SendGrid();
+			var message = new SendGridMessage();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -350,7 +350,7 @@ namespace Example
 		public void EnableTemplateEmail()
 		{
 			//create a new message object
-			var message = new SendGrid();
+			var message = new SendGridMessage();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -389,7 +389,7 @@ namespace Example
 		public void EnableBypassListManagementEmail()
 		{
 			//create a new message object
-			var message = new SendGrid();
+			var message = new SendGridMessage();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -428,7 +428,7 @@ namespace Example
 		public void AddSubstitutionValues()
 		{
 			//create a new message object
-			var message = new SendGrid();
+			var message = new SendGridMessage();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -470,7 +470,7 @@ namespace Example
 		public void AddUniqueIdentifiers()
 		{
 			//create a new message object
-			var message = new SendGrid();
+			var message = new SendGridMessage();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -505,12 +505,12 @@ namespace Example
 
 		/// <summary>
 		///     This feature tags the message with a specific tracking category, which will have aggregated stats
-		///     viewable from your SendGrid account page.
+		///     viewable from your SendGridMessage account page.
 		/// </summary>
 		public void SetCategory()
 		{
 			//create a new message object
-			var message = new SendGrid();
+			var message = new SendGridMessage();
 
 			//set the message recipients
 			foreach (var recipient in _to)

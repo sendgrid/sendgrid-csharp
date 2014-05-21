@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Mail;
 using NUnit.Framework;
-using SendGridMail;
-using Smtpapi;
+using SendGrid.SmtpApi;
+using SendGrid;
 
 namespace Tests
 {
@@ -14,7 +14,7 @@ namespace Tests
 		[Test]
 		public void CreateMimeMessage()
 		{
-			var message = new SendGrid();
+			var message = new SendGridMessage();
 			var attachment = Path.GetTempFileName();
 			var text = "this is a test";
 			var html = "<b>This<\b> is a better test";
@@ -52,7 +52,7 @@ namespace Tests
 		public void DisableBcc()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			sendgrid.DisableBcc();
 
@@ -64,7 +64,7 @@ namespace Tests
 		public void DisableBypassListManagement()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			sendgrid.DisableBypassListManagement();
 
@@ -76,7 +76,7 @@ namespace Tests
 		public void DisableClickTracking()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			sendgrid.DisableClickTracking();
 
@@ -88,7 +88,7 @@ namespace Tests
 		public void DisableFooter()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			sendgrid.DisableFooter();
 
@@ -100,7 +100,7 @@ namespace Tests
 		public void DisableGoogleAnalytics()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			sendgrid.DisableGoogleAnalytics();
 
@@ -112,7 +112,7 @@ namespace Tests
 		public void DisableSpamCheck()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			sendgrid.DisableSpamCheck();
 
@@ -124,7 +124,7 @@ namespace Tests
 		public void DisableTemplate()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			sendgrid.DisableTemplate();
 
@@ -136,7 +136,7 @@ namespace Tests
 		public void DisableUnsubscribe()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			sendgrid.DisableUnsubscribe();
 
@@ -148,7 +148,7 @@ namespace Tests
 		public void EnableBcc()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			var email = "somebody@someplace.com";
 			sendgrid.EnableBcc(email);
@@ -162,7 +162,7 @@ namespace Tests
 		public void EnableBypassListManagement()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			sendgrid.EnableBypassListManagement();
 
@@ -174,7 +174,7 @@ namespace Tests
 		public void EnableClickTracking()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 			sendgrid.EnableClickTracking(true);
 
 			var json = header.JsonString();
@@ -186,7 +186,7 @@ namespace Tests
 		public void EnableFooter()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			var text = "My Text";
 			var html = "<body><p>hello, <% name %></p></body>";
@@ -204,7 +204,7 @@ namespace Tests
 		public void EnableGoogleAnalytics()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			var source = "SomeDomain.com";
 			var medium = "Email";
@@ -230,7 +230,7 @@ namespace Tests
 		public void EnableGravatar()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			sendgrid.EnableGravatar();
 
@@ -242,7 +242,7 @@ namespace Tests
 		public void EnableOpenTracking()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			sendgrid.EnableOpenTracking();
 
@@ -254,7 +254,7 @@ namespace Tests
 		public void EnableSpamCheck()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			var score = 5;
 			var url = "http://www.example.com";
@@ -270,7 +270,7 @@ namespace Tests
 		public void EnableTemplate()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 			var html = "<% hadhdhd %>";
 
 			var escHtml = "<% hadhdhd %>";
@@ -288,7 +288,7 @@ namespace Tests
 		public void EnableUnsubscribe()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			var text = "<% %>";
 			var html = "<% name %>";
@@ -303,7 +303,7 @@ namespace Tests
 			                jsonText + "," + jsonHtml + "}}}}", json);
 
 			header = new Header();
-			sendgrid = new SendGrid(header);
+			sendgrid = new SendGridMessage(header);
 
 			var replace = "John";
 			var jsonReplace = "\"replace\" : \"" + replace + "\"";
@@ -327,7 +327,7 @@ namespace Tests
 		public void TestDisableGravatar()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			sendgrid.DisableGravatar();
 
@@ -339,7 +339,7 @@ namespace Tests
 		public void TestDisableOpenTracking()
 		{
 			var header = new Header();
-			var sendgrid = new SendGrid(header);
+			var sendgrid = new SendGridMessage(header);
 
 			sendgrid.DisableOpenTracking();
 
