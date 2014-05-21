@@ -14,7 +14,7 @@ namespace Tests
 		[Test]
 		public void CreateMimeMessage()
 		{
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 			var attachment = Path.GetTempFileName();
 			var text = "this is a test";
 			var html = "<b>This<\b> is a better test";

@@ -27,7 +27,7 @@ namespace Example
 		public void SimpleHTMLEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -45,7 +45,7 @@ namespace Example
 			message.Subject = "Hello World HTML Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//send the mail
 			transportInstance.Deliver(message);
@@ -57,7 +57,7 @@ namespace Example
 		public void SimplePlaintextEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -75,7 +75,7 @@ namespace Example
 			message.Subject = "Hello World Plain Text Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//send the mail
 			transportInstance.Deliver(message);
@@ -89,7 +89,7 @@ namespace Example
 		public void EnableGravatarEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -107,7 +107,7 @@ namespace Example
 			message.Subject = "Hello World Gravatar Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable gravatar
 			message.EnableGravatar();
@@ -123,7 +123,7 @@ namespace Example
 		public void EnableOpenTrackingEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -141,7 +141,7 @@ namespace Example
 			message.Subject = "Hello World Open Tracking Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable gravatar
 			message.EnableOpenTracking();
@@ -158,7 +158,7 @@ namespace Example
 		public void EnableClickTrackingEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -180,7 +180,7 @@ namespace Example
 			message.Subject = "Hello World Click Tracking Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable clicktracking
 			message.EnableClickTracking();
@@ -197,7 +197,7 @@ namespace Example
 		public void EnableSpamCheckEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -217,7 +217,7 @@ namespace Example
 			message.Subject = "WIN A MILLION DOLLARS TODAY! WORK FROM HOME! A NIGERIAN PRINCE WANTS YOU!";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable spamcheck
 			message.EnableSpamCheck();
@@ -233,7 +233,7 @@ namespace Example
 		public void EnableUnsubscribeEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -253,7 +253,7 @@ namespace Example
 			message.Subject = "Hello World Unsubscribe Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable spamcheck
 			//or optionally, you can specify 'replace' instead of the text and html in order to 
@@ -272,7 +272,7 @@ namespace Example
 		public void EnableFooterEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -294,7 +294,7 @@ namespace Example
 			message.Subject = "Hello World Footer Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//Enable Footer
 			message.EnableFooter("PLAIN TEXT FOOTER", "<p color='blue'>HTML FOOTER TEXT</p>");
@@ -310,7 +310,7 @@ namespace Example
 		public void EnableGoogleAnalytics()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -333,7 +333,7 @@ namespace Example
 			message.Subject = "Hello World Footer Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable Google Analytics
 			message.EnableGoogleAnalytics("SendGridTest", "EMAIL", "Sendgrid", "ad-one", "My SG Campaign");
@@ -350,7 +350,7 @@ namespace Example
 		public void EnableTemplateEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -372,7 +372,7 @@ namespace Example
 			message.Subject = "Hello World Template Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable template
 			message.EnableTemplate("<p>My Email Template <% body %> is awesome!</p>");
@@ -389,7 +389,7 @@ namespace Example
 		public void EnableBypassListManagementEmail()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -411,7 +411,7 @@ namespace Example
 			message.Subject = "Hello World Bypass List Management Test";
 
 			//create an instance of the Web transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable bypass list management
 			message.EnableBypassListManagement();
@@ -428,7 +428,7 @@ namespace Example
 		public void AddSubstitutionValues()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -454,7 +454,7 @@ namespace Example
 			message.AddSubstitution(replacementKey, substitutionValues);
 
 			//create an instance of the SMTP transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable bypass list management
 			message.EnableBypassListManagement();
@@ -470,7 +470,7 @@ namespace Example
 		public void AddUniqueIdentifiers()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -494,7 +494,7 @@ namespace Example
 			message.AddUniqueArgs(identifiers);
 
 			//create an instance of the SMTP transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable bypass list management
 			message.EnableBypassListManagement();
@@ -510,7 +510,7 @@ namespace Example
 		public void SetCategory()
 		{
 			//create a new message object
-			var message = SendGrid.GetInstance();
+			var message = new SendGrid();
 
 			//set the message recipients
 			foreach (var recipient in _to)
@@ -532,7 +532,7 @@ namespace Example
 			message.SetCategory(category);
 
 			//create an instance of the SMTP transport mechanism
-			var transportInstance = Web.GetInstance(new NetworkCredential(_username, _password));
+			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//enable bypass list management
 			message.EnableBypassListManagement();

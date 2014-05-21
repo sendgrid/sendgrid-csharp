@@ -23,8 +23,24 @@ namespace SendGridMail
 		#endregion
 
 		#region Initialization and Constructors
+        
+        /// <summary>
+        ///     Creates an instance of SendGrid's custom message object
+        /// </summary>
+        /// <returns></returns>
+	    public SendGrid() : this(new Header())
+	    {
+	        
+	    }
 
-		internal SendGrid(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc,
+        public SendGrid(IHeader header)
+        {
+            _message = new MailMessage();
+            Header = header;
+            Headers = new Dictionary<string, string>();
+        }
+
+		public SendGrid(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc,
 			String subject, String html, String text, IHeader header = null) : this(header)
 		{
 			From = from;
@@ -36,41 +52,6 @@ namespace SendGridMail
 
 			Text = text;
 			Html = html;
-		}
-
-		internal SendGrid(IHeader header)
-		{
-			_message = new MailMessage();
-			Header = header;
-			Headers = new Dictionary<string, string>();
-		}
-
-		/// <summary>
-		///     Creates an instance of SendGrid's custom message object
-		/// </summary>
-		/// <returns></returns>
-		public static SendGrid GetInstance()
-		{
-			var header = new Header();
-			return new SendGrid(header);
-		}
-
-		/// <summary>
-		///     Creates an instance of SendGrid's custom message object with mail parameters
-		/// </summary>
-		/// <param name="from">The email address of the sender</param>
-		/// <param name="to">An array of the recipients</param>
-		/// <param name="cc">Supported over SMTP, with future plans for support in the Web transport</param>
-		/// <param name="bcc">Blind recipients</param>
-		/// <param name="subject">The subject of the message</param>
-		/// <param name="html">the html content for the message</param>
-		/// <param name="text">the plain text part of the message</param>
-		/// <returns></returns>
-		public static SendGrid GetInstance(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc,
-			String subject, String html, String text)
-		{
-			var header = new Header();
-			return new SendGrid(from, to, cc, bcc, subject, html, text, header);
 		}
 
 		private static Dictionary<string, string> InitializeFilters()
