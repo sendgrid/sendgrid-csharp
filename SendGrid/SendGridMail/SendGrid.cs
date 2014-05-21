@@ -163,13 +163,14 @@ namespace SendGridMail
 		public IHeader Header { get; set; }
 		public String Html { get; set; }
 		public String Text { get; set; }
-
+		
 		#endregion
 
 		#region Methods for setting data
 
 		private List<String> _attachments = new List<String>();
 		private Dictionary<String, MemoryStream> _streamedAttachments = new Dictionary<string, MemoryStream>();
+		private Dictionary<String, String> _contentImages = new Dictionary<string, string>();
 
 		public void AddTo(String address)
 		{
@@ -249,6 +250,14 @@ namespace SendGridMail
 		{
 			get { return _attachments.ToArray(); }
 			set { _attachments = value.ToList(); }
+		}
+
+		public void EmbedImage(String filename, String cid) {
+			_contentImages[filename] = cid;
+		}
+
+		public IDictionary<string, string> GetEmbeddedImages() {
+			return new Dictionary<string, string>(_contentImages);
 		}
 
 		public void AddSubstitution(String replacementTag, List<String> substitutionValues)
