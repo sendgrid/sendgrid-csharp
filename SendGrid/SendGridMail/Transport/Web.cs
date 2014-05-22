@@ -35,7 +35,7 @@ namespace SendGrid
 		}
 
 		/// <summary>
-		///     Delivers a message over SendGridMessage's Web interface
+		///     Delivers a message over SendGrid's Web interface
 		/// </summary>
 		/// <param name="message"></param>
 		public void Deliver(ISendGrid message)
@@ -53,22 +53,22 @@ namespace SendGrid
 		}
 
 		/// <summary>
-		///     Asynchronously delivers a message over SendGridMessage's Web interface
+		///     Asynchronously delivers a message over SendGrid's Web interface
 		/// </summary>
 		/// <param name="message"></param>
-		public async void DeliverAsync(ISendGrid message)
-		{
-			var client = new HttpClient
-			{
-				BaseAddress = new Uri("https://" + BaseUrl)
-			};
+        public async Task DeliverAsync(ISendGrid message)
+        {
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("https://" + BaseUrl)
+            };
 
-			var content = new MultipartFormDataContent();
-			AttachFormParams(message, content);
-			AttachFiles(message, content);
-			var response = await client.PostAsync(Endpoint + ".xml", content);
-			await CheckForErrorsAsync(response);
-		}
+            var content = new MultipartFormDataContent();
+            AttachFormParams(message, content);
+            AttachFiles(message, content);
+            var response = await client.PostAsync(Endpoint + ".xml", content);
+            await CheckForErrorsAsync(response);
+        }
 
 		#region Support Methods
 
