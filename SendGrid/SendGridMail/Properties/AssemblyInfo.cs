@@ -24,14 +24,12 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
 [assembly: Guid("193fa200-8430-4206-aacd-2d2bb2dfa6cf")]
-[assembly: InternalsVisibleTo("Tests")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2," +
-                              "1310004000001000100c547cac37abd99c8db225ef2f6c8a3602f3b" +
-                              "PublicKey=002400000480000094000000060200000024000052534" +
-                              "3606cc9891605d02baa56104f4cfc0734aa39b93bf7852f7d926665" +
-                              "4753cc297e7d2edfe0bac1cdcf9f717241550e0a7b191195b7667bb" +
-                              "4f64bcb8e2121380fd1d9d46ad2d92d2d15605093924cceaf74c486" +
-                              "1eff62abf69b9291ed0a340e113be11e6a7d3113e92484cf7045cc7")]
+[assembly: InternalsVisibleTo("Tests," + "" +
+                              "PublicKey=00240000048000009400000006020000002400005253413100040000010001004126bffd5a4461" +
+                              "e915193b2695401cee8d67bb14b252a34e5230e6468582f108aafbe31d39f2059240461d622e86" +
+                              "2a294169d5f2659efe0d68b30d7ceee310356c70b54ece3c8c69bbd9db86e07c34ff4fd5d7528b" +
+                              "3ddf078d272025cb7a588030c78020f5eb91872b38dc2832f561fe184715bb8edb6f0b3b644de5" +
+                              "2bc588ae")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -44,5 +42,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("2.1.1")]
-[assembly: AssemblyFileVersion("2.1.1")]
+[assembly: AssemblyVersion("3.0.0")]
+[assembly: AssemblyFileVersion("3.0.0")]
