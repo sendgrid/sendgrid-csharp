@@ -25,7 +25,7 @@ namespace SendGrid
 		#region Initialization and Constructors
         
         /// <summary>
-        ///     Creates an instance of SendGridMessage's custom message object
+        ///     Creates an instance of SendGrid's custom message object
         /// </summary>
         /// <returns></returns>
 	    public SendGridMessage() : this(new Header())

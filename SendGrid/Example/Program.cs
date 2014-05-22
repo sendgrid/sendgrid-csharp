@@ -14,7 +14,7 @@ namespace Example
 			var myMessage = new SendGridMessage();
 			myMessage.AddTo("anna@example.com");
 			myMessage.From = new MailAddress("john@example.com", "John Smith");
-			myMessage.Subject = "Testing the SendGridMessage Library";
+			myMessage.Subject = "Testing the SendGrid Library";
 			myMessage.Text = "Hello World!";
 
 			// Create credentials, specifying your user name and password.

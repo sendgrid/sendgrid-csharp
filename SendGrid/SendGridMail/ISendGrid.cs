@@ -75,7 +75,7 @@ namespace SendGrid
 		void AddSubstitution(String replacementTag, List<String> substitutionValues);
 
 		/// <summary>
-		///     This adds parameters and values that will be bassed back through SendGridMessage's
+		///     This adds parameters and values that will be bassed back through SendGrid's
 		///     Event API if an event notification is triggered by this email.
 		/// </summary>
 		/// <param name="identifiers">parameter substitutionValues pairs to be passed back on event notification</param>
@@ -191,7 +191,7 @@ namespace SendGrid
 		void EnableOpenTracking();
 
 		/// <summary>
-		///     Causes all links to be overwritten, shortened, and pointed to SendGridMessage's servers so clicks will be tracked.
+		///     Causes all links to be overwritten, shortened, and pointed to SendGrid's servers so clicks will be tracked.
 		/// </summary>
 		/// <param name="includePlainText">true if links found in plain text portions of the message are to be overwritten</param>
 		void EnableClickTracking(bool includePlainText = false);
