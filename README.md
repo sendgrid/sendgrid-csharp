@@ -1,7 +1,6 @@
 ##Breaking API changes in 3.0.0! 
 
-Use 
-`new SendGridMessage()` instead of `SendGrid.GetInstance()` 
+Use `new SendGridMessage()` instead of `SendGrid.GetInstance()` 
 
 and `new Web()` instead of `Web.GetInstance()`
 
