@@ -1,3 +1,7 @@
+##Breaking API changes in 3.0.0! 
+
+Use `new SendGridMessage()` instead of `SendGrid.GetInstance()`
+
 #Requirements
 
 This library requires .NET 4.0 and above.
@@ -18,7 +22,7 @@ Add the following namespaces to use the library:
 using System;
 using System.Net;
 using System.Net.Mail;
-using SendGridMail;
+using SendGrid;
 ```
 
 #How to: Create an email
@@ -29,7 +33,7 @@ The following example demonstrates how to create an email object and populate it
 
 ```csharp
 // Create the email object first, then add the properties.
-var myMessage = SendGrid.GetInstance();
+var myMessage = new SendGridMessage();
 
 // Add the message properties.
 myMessage.From = new MailAddress("john@example.com");
@@ -53,7 +57,7 @@ myMessage.Text = "Hello World plain text!";
 
 #How to: Send an Email
 
-After creating an email message, you can send it using the Web API provided by SendGrid. rate/) in the SendGrid documentation.
+After creating an email message, you can send it using the Web API provided by SendGrid.
 
 Sending email requires that you supply your SendGrid account credentials (username and password). The following code demonstrates how to wrap your credentials in a **NetworkCredential** object:
 
@@ -69,7 +73,7 @@ To send an email message, use the **Deliver** method on the **Web** transport cl
 
 ```csharp
 // Create the email object first, then add the properties.
-SendGrid myMessage = SendGrid.GetInstance();
+SendGrid myMessage = new SendGridMessage();
 myMessage.AddTo("anna@example.com");
 myMessage.From = new MailAddress("john@example.com", "John Smith");
 myMessage.Subject = "Testing the SendGrid Library";
@@ -85,12 +89,15 @@ var transportWeb = Web.GetInstance(credentials);
 transportWeb.Deliver(myMessage);
 ```
 
+You can also use the **DeliverAsync** method, which returns an awaitable
+task.
+
 #How to: Add an Attachment
 
 Attachments can be added to a message by calling the **AddAttachment** method and specifying the name and path of the file you want to attach, or by passing a stream. You can include multiple attachments by calling this method once for each file you wish to attach. The following example demonstrates adding an attachment to a message:
 
 ```csharp
-SendGrid myMessage = SendGrid.GetInstance();
+SendGrid myMessage = New SendGridMessage();
 myMessage.AddTo("anna@example.com");
 myMessage.From = new MailAddress("john@example.com", "John Smith");
 myMessage.Subject = "Testing the SendGrid Library";
@@ -102,7 +109,7 @@ myMessage.AddAttachment(@"C:\file1.txt");
 You can also add attachments from the data's **Stream**. It can be done by calling the same method as above, **AddAttachment**, but by passing in the Stream of the data, and the filename you want it to show as in the message.
 
 ```csharp
-SendGrid myMessage = SendGrid.GetInstance();
+SendGrid myMessage = New SendGridMessage();
 myMessage.AddTo("anna@example.com");
 myMessage.From = new MailAddress("john@example.com", "John Smith");
 myMessage.Subject = "Testing the SendGrid Library";
@@ -125,7 +132,7 @@ The following examples demonstrate the footer and click tracking filters:
 ##Footer
 ```csharp
 // Create the email object first, then add the properties.
-SendGrid myMessage = SendGrid.GetInstance();
+SendGrid myMessage = New SendGridMessage();
 myMessage.AddTo("anna@example.com");
 myMessage.From = new MailAddress("john@example.com", "John Smith");
 myMessage.Subject = "Testing the SendGrid Library";
@@ -138,7 +145,7 @@ myMessage.EnableFooter("PLAIN TEXT FOOTER", "<p><em>HTML FOOTER</em></p>");
 ##Click tracking
 ```csharp
 // Create the email object first, then add the properties.
-SendGrid myMessage = SendGrid.GetInstance();
+SendGrid myMessage = New SendGridMessage();
 myMessage.AddTo("anna@example.com");
 myMessage.From = new MailAddress("john@example.com", "John Smith");
 myMessage.Subject = "Testing the SendGrid Library";
