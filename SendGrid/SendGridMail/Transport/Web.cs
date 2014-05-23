@@ -181,22 +181,12 @@ namespace SendGrid
 				new KeyValuePair<String, String>("subject", message.Subject),
 				new KeyValuePair<String, String>("text", message.Text),
 				new KeyValuePair<String, String>("html", message.Html),
-				new KeyValuePair<String, String>("x-smtpapi", message.Header.JsonString())
+				new KeyValuePair<String, String>("x-smtpapi", message.Header.JsonString() ?? "")
 			};
 			if (message.To != null)
 			{
 				result = result.Concat(message.To.ToList().Select(a => new KeyValuePair<String, String>("to[]", a.Address)))
 					.Concat(message.To.ToList().Select(a => new KeyValuePair<String, String>("toname[]", a.DisplayName)))
-					.ToList();
-			}
-			if (message.Bcc != null)
-			{
-				result = result.Concat(message.Bcc.ToList().Select(a => new KeyValuePair<String, String>("bcc[]", a.Address)))
-					.ToList();
-			}
-			if (message.Cc != null)
-			{
-				result = result.Concat(message.Cc.ToList().Select(a => new KeyValuePair<String, String>("cc[]", a.Address)))
 					.ToList();
 			}
 			if (message.GetEmbeddedImages().Count > 0) {

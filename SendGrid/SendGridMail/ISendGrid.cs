@@ -16,8 +16,6 @@ namespace SendGrid
 
 		MailAddress From { get; set; }
 		MailAddress[] To { get; set; }
-		MailAddress[] Cc { get; }
-		MailAddress[] Bcc { get; }
 		MailAddress[] ReplyTo { get; set; }
 		Dictionary<String, MemoryStream> StreamedAttachments { get; set; }
 		String[] Attachments { get; set; }

@@ -40,13 +40,11 @@ namespace SendGrid
             Headers = new Dictionary<string, string>();
         }
 
-		public SendGridMessage(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc,
-			String subject, String html, String text, IHeader header = null) : this(header)
+		public SendGridMessage(MailAddress from, MailAddress[] to,
+			String subject, String html, String text, IHeader header = null) : this()
 		{
 			From = from;
 			To = to;
-			Cc = cc;
-			Bcc = bcc;
 
 			_message.Subject = subject;
 
@@ -104,32 +102,6 @@ namespace SendGrid
 				foreach (var mailAddress in value)
 				{
 					_message.To.Add(mailAddress);
-				}
-			}
-		}
-
-		public MailAddress[] Cc
-		{
-			get { return _message.CC.ToArray(); }
-			set
-			{
-				_message.CC.Clear();
-				foreach (var mailAddress in value)
-				{
-					_message.CC.Add(mailAddress);
-				}
-			}
-		}
-
-		public MailAddress[] Bcc
-		{
-			get { return _message.Bcc.ToArray(); }
-			set
-			{
-				_message.Bcc.Clear();
-				foreach (var mailAddress in value)
-				{
-					_message.Bcc.Add(mailAddress);
 				}
 			}
 		}
