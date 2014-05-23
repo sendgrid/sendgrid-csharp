@@ -15,11 +15,11 @@ namespace SendGrid
 		#region constants/vars
 		
 		//apps list and settings
-		private const String ReText = @"<\%\s*\%>";
-		private const String ReHtml = @"<\%\s*[^\s]+\s*\%>";
 		private static readonly Dictionary<String, String> Filters = InitializeFilters();
 		private readonly MailMessage _message;
-
+        private static readonly Regex TemplateTest = new Regex(@"<%\s*body\s*%>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex TextUnsubscribeTest = new Regex(@"<%\s*%>", RegexOptions.Compiled);
+        private static readonly Regex HtmlUnsubscribeTest = new Regex(@"<%\s*([^\s%]+\s?)+\s*%>", RegexOptions.Compiled);
 		#endregion
 
 		#region Initialization and Constructors
@@ -332,12 +332,12 @@ namespace SendGrid
 		{
 			var filter = Filters["Unsubscribe"];
 
-			if (!Regex.IsMatch(text, ReText))
+            if (!TextUnsubscribeTest.IsMatch(text))
 			{
 				throw new Exception("Missing substitution replacementTag in text");
 			}
 
-			if (!Regex.IsMatch(html, ReHtml))
+            if (!HtmlUnsubscribeTest.IsMatch(html))
 			{
 				throw new Exception("Missing substitution replacementTag in html");
 			}
@@ -381,9 +381,9 @@ namespace SendGrid
 		{
 			var filter = Filters["Template"];
 
-			if (!Regex.IsMatch(html, ReHtml))
+            if (!TemplateTest.IsMatch(html))
 			{
-				throw new Exception("Missing substitution replacementTag in html");
+				throw new Exception("Missing <% body %> tag in template HTML");
 			}
 
 			Header.EnableFilter(filter);
