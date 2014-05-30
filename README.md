@@ -29,7 +29,7 @@ using SendGrid;
 
 #How to: Create an email
 
-Use the static **SendGrid.GetInstance** method to create an email message that is of type **SendGrid**. Once the message is created, you can use **SendGrid** properties and methods to set values including the email sender, the email recipient, and the subject and body of the email.
+Use the static **new SendGridMessage** constructor to create an email message that is of type **SendGridMessage**. Once the message is created, you can use **SendGridMessage** properties and methods to set values including the email sender, the email recipient, and the subject and body of the email.
 
 The following example demonstrates how to create an email object and populate it:
 
