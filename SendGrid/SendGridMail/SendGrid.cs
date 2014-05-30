@@ -65,6 +65,7 @@ namespace SendGrid
 					{"Footer", "footer"},
 					{"GoogleAnalytics", "ganalytics"},
 					{"Template", "template"},
+                    {"Templates","templates"},
 					{"Bcc", "bcc"},
 					{"BypassListManagement", "bypass_list_management"}
 				};
@@ -361,6 +362,14 @@ namespace SendGrid
 			Header.EnableFilter(filter);
 			Header.AddFilterSetting(filter, new List<string> {"text/html"}, html);
 		}
+
+        public void EnableTemplateEngine(string templateId)
+        {
+            var filter = Filters["Templates"];
+
+            Header.EnableFilter(filter);
+            Header.AddFilterSetting(filter, new List<string> { "template_id" }, templateId);
+        }
 
 		public void EnableBcc(string email)
 		{

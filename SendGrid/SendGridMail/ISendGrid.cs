@@ -240,6 +240,12 @@ namespace SendGrid
 		/// <param name="html">HTML that your emails will be wrapped in, containing a body replacementTag.</param>
 		void EnableTemplate(String html = null);
 
+        /// <summary>
+        ///     Enable a Template Engine template via the template ID
+        /// </summary>
+        /// <param name="template_id">The ID of the Template Engine template to use.</param>
+        void EnableTemplateEngine(String templateId);
+        
 		/// <summary>
 		///     Automatically sends a blind carbon copy to an address for every e-mail sent, without
 		///     adding that address to the header.
