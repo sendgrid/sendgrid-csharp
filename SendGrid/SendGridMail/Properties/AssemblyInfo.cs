@@ -1,6 +1,4 @@
-﻿#define build
-
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -27,7 +25,7 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("193fa200-8430-4206-aacd-2d2bb2dfa6cf")]
 
-#if (build)
+#if (BUILD)
 [assembly: InternalsVisibleTo("Tests")]
 #else
 [assembly: InternalsVisibleTo("Tests," + "" +
