@@ -19,7 +19,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <RestorePackages>false</RestorePackages>
+    <RestorePackages>true</RestorePackages>
     <Prefer32Bit>false</Prefer32Bit>
     <BuildPackage>false</BuildPackage>
     <SignAssembly>false</SignAssembly>
