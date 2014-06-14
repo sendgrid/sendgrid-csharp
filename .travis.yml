@@ -10,7 +10,7 @@ before_install:
 script:
 - cd SendGrid
 - xbuild /p:Configuration=BuildNet40
-- .ci/nunit.sh Tests/bin/BuildNet40/Tests.dll
+- .ci/tests.sh Tests/bin/BuildNet40/Tests.dll
 notifications:
   hipchat:
     rooms:
