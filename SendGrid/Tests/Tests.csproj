@@ -68,9 +68,6 @@
     <Reference Include="nunit.mocks">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.mocks.dll</HintPath>
     </Reference>
-    <Reference Include="pnunit.framework">
-      <HintPath>..\packages\NUnit.2.6.3\lib\pnunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="SendGrid.SmtpApi">
       <HintPath>..\packages\SendGrid.SmtpApi.1.1.3\lib\net40\SendGrid.SmtpApi.dll</HintPath>
     </Reference>
