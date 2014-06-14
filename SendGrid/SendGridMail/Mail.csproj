@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)' == 'ReleaseNet40'">
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>sendgrid-csharp.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <DebugType>pdbonly</DebugType>
     <Optimize>True</Optimize>
@@ -10,7 +12,21 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'BuildNet40'">
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <DebugType>pdbonly</DebugType>
+    <OutputPath>bin\BuildNet40\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RestorePackages>false</RestorePackages>
+    <Prefer32Bit>false</Prefer32Bit>
+    <BuildPackage>false</BuildPackage>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'ReleaseNet45'">
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>sendgrid-csharp.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DebugType>pdbonly</DebugType>
     <Optimize>True</Optimize>
@@ -21,7 +37,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
     <ProjectGuid>{3C687BEF-FF50-44AD-8315-2D4237281AF8}</ProjectGuid>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -40,10 +55,6 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <BuildPackage>true</BuildPackage>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>sendgrid-csharp.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -54,7 +65,7 @@
   <PropertyGroup>
     <AssemblyName>SendGridMail</AssemblyName>
   </PropertyGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'ReleaseNet40'">
+  <ItemGroup Condition="'$(Configuration)' == 'ReleaseNet40' Or '$(Configuration)' == 'BuildNet40'">
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>

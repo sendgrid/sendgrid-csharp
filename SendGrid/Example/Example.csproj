@@ -45,6 +45,9 @@
     <OutputPath>bin\x86\ReleaseNet45\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BuildNet40|x86'">
+    <OutputPath>bin\x86\BuildNet40\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="SendGrid.SmtpApi">
       <HintPath>..\SendGridMail\bin\Debug\SendGrid.SmtpApi.dll</HintPath>
