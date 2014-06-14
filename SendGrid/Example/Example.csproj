@@ -53,9 +53,6 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SendGrid.SmtpApi">
-      <HintPath>..\SendGridMail\bin\Debug\SendGrid.SmtpApi.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
