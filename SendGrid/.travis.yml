@@ -1,0 +1,15 @@
+language: objective-c
+
+env:
+ global:
+  - EnableNuGetPackageRestore=true 
+ matrix:
+  - MONO_VERSION="3.4.0"
+
+before_install:
+ - wget "http://download.xamarin.com/MonoFrameworkMDK/Macx86/MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg"
+ - sudo installer -pkg "MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg" -target /
+
+script:
+ - xbuild /p:Configuration=BuildNet40;build=true
+ - .ci/nunit.sh Tests/bin/BuildNet40/Tests.dll
