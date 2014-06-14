@@ -1,17 +1,22 @@
 language: objective-c
-
 env:
- global:
-  - EnableNuGetPackageRestore=true 
- matrix:
+  global:
+  - EnableNuGetPackageRestore=true
+  matrix:
   - MONO_VERSION="3.4.0"
-
 before_install:
- - wget "http://download.mono-project.com/archive/3.4.0/macos-10-x86/MonoFramework-MDK-3.4.0.macos10.xamarin.x86.pkg"
- - sudo installer -pkg "MonoFramework-MDK-3.4.0.macos10.xamarin.x86.pkg" -target /
-
+- wget "http://download.mono-project.com/archive/3.4.0/macos-10-x86/MonoFramework-MDK-3.4.0.macos10.xamarin.x86.pkg"
+- sudo installer -pkg "MonoFramework-MDK-3.4.0.macos10.xamarin.x86.pkg" -target /
 script:
- - cd SendGrid
- - xbuild /p:Configuration=BuildNet40;build=true 
- - .ci/nunit.sh Tests/bin/BuildNet40/Tests.dll
-
+- cd SendGrid
+- xbuild /p:Configuration=BuildNet40;build=true
+- .ci/nunit.sh Tests/bin/BuildNet40/Tests.dll
+notifications:
+  hipchat:
+    rooms:
+      secure: T8r/eNzevZXJDmSK7ZKG+t/Vx0cENHIMWVuKbt3RSYbXl6QsWv8UTPamFSkLP0zbcCyGQ7d+QKaEc18ffCtiBV9MXPy8Q1XFGzKxr5/GnwMx4p0ArTqbFLCyl3JuXBmCGouWG+ulb9eOGUFc6L/4p2cwAfXf2oTcXYqosBnfoHg=
+    template:
+    - '<a href="https://travis-ci.org/%{repository}/builds/%{build_id}">%{repository}
+      Build %{build_number}</a> on branch <i>%{branch}</i> by %{author}: <strong>%{message}</strong>
+      <a href="https://github.com/sendgrid/docs/commits/%{commit}">View on GitHub</a>'
+    format: html
