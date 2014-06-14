@@ -41,6 +41,14 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>sendgrid-csharp.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseNet40|AnyCPU'">
+    <OutputPath>bin\ReleaseNet40\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseNet45|AnyCPU'">
+    <OutputPath>bin\ReleaseNet45\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
