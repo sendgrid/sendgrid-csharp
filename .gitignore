@@ -16,4 +16,3 @@ SendGrid/test-results/
 .DS_store
 SendGrid/SendGrid.userprefs
 SendGrid/packages/
-SendGrid/.nuget/

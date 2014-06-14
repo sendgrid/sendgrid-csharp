@@ -1,3 +1,5 @@
+![travis build](https://travis-ci.org/sendgrid/sendgrid-csharp.svg?branch=master)
+
 ##Breaking API changes in 3.0.0! 
 
 Use `new SendGridMessage()` instead of `SendGrid.GetInstance()` 

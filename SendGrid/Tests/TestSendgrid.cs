@@ -271,9 +271,9 @@ namespace Tests
 		{
 			var header = new Header();
 			var sendgrid = new SendGridMessage(header);
-			var html = "<% hadhdhd %>";
+			var html = "<% body %>";
 
-			var escHtml = "<% hadhdhd %>";
+			var escHtml = "<% body %>";
 			sendgrid.EnableTemplate(html);
 
 			var json = header.JsonString();
