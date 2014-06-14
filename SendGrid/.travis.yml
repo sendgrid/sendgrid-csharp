@@ -13,3 +13,4 @@ before_install:
 script:
  - xbuild /p:Configuration=BuildNet40;build=true
  - .ci/nunit.sh Tests/bin/BuildNet40/Tests.dll
+
