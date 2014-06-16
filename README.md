@@ -1,4 +1,4 @@
-![travis build](https://travis-ci.org/sendgrid/sendgrid-csharp.svg?branch=master)
+[![BuildStatus](https://travis-ci.org/sendgrid/sendgrid-csharp.png?branch=master)](https://travis-ci.org/sendgrid/sendgrid-csharp)
 
 ##Breaking API changes in 3.0.0! 
 
