@@ -27,6 +27,8 @@ using System.Runtime.InteropServices;
 
 #if (BUILD)
 [assembly: InternalsVisibleTo("Tests")]
+#elif (DEBUG)
+[assembly: InternalsVisibleTo("Tests")]
 #else
 [assembly: InternalsVisibleTo("Tests," + "" +
                               "PublicKey=00240000048000009400000006020000002400005253413100040000010001004126bffd5a4461" +
@@ -46,5 +48,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("3.0.3")]
-[assembly: AssemblyFileVersion("3.0.3")]
+[assembly: AssemblyVersion("4.0.0")]
+[assembly: AssemblyFileVersion("4.0.0")]

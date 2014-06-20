@@ -9,8 +9,8 @@ before_install:
 - sudo installer -pkg "MonoFramework-MDK-3.4.0.macos10.xamarin.x86.pkg" -target /
 script:
 - cd SendGrid
-- xbuild /p:Configuration=BuildNet40
-- .ci/tests.sh Tests/bin/BuildNet40/Tests.dll
+- xbuild /p:Configuration=BuildNet45
+- .ci/tests.sh Tests/bin/BuildNet45/Tests.dll
 notifications:
   hipchat:
     rooms:
