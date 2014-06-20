@@ -1,11 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup Condition="'$(Configuration)' == 'BuildNet45' Or '$(Configuration)' == 'Debug'">
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <SignAssembly>false</SignAssembly>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <DebugType>pdbonly</DebugType>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE, DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RestorePackages>true</RestorePackages>
+    <Prefer32Bit>false</Prefer32Bit>
+    <BuildPackage>false</BuildPackage>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'BuildNet45'">
     <SignAssembly>false</SignAssembly>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DebugType>pdbonly</DebugType>
     <OutputPath>bin\BuildNet45\</OutputPath>
-    <DefineConstants>TRACE, BUILD, DEBUG</DefineConstants>
+    <DefineConstants>TRACE, BUILD</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RestorePackages>true</RestorePackages>
@@ -19,7 +32,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DebugType>pdbonly</DebugType>
     <Optimize>True</Optimize>
-    <OutputPath>bin\ReleaseNet45\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -44,7 +57,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <Configuration Condition=" '$(Configuration)' == '' ">ReleaseNet40</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <TargetFrameworkProfile />
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -58,19 +71,21 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <AssemblyOriginatorKeyFile>sendgrid-csharp.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE, RELEASE</DefineConstants>
+    <DebugType>
+    </DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'BuildNet45|AnyCPU' ">
     <Optimize>false</Optimize>
     <SignAssembly>false</SignAssembly>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DefineConstants>TRACE, BUILD</DefineConstants>
+    <DebugType>
+    </DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DefineConstants>TRACE, DEBUG</DefineConstants>
+    <SignAssembly>false</SignAssembly>
+    <Optimize>false</Optimize>
+    <DebugType>
+    </DebugType>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SendGrid.SmtpApi">

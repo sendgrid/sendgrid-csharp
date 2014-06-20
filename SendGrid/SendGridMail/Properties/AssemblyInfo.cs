@@ -25,11 +25,15 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("193fa200-8430-4206-aacd-2d2bb2dfa6cf")]
 
-#if BUILD
+#if (BUILD)
 [assembly: InternalsVisibleTo("Tests")]
-#elif DEBUG
+#endif
+
+#if (DEBUG)
 [assembly: InternalsVisibleTo("Tests")]
-#else
+#endif
+
+#if (RELEASE)
 [assembly: InternalsVisibleTo("Tests," + "" +
                               "PublicKey=00240000048000009400000006020000002400005253413100040000010001004126bffd5a4461" +
                               "e915193b2695401cee8d67bb14b252a34e5230e6468582f108aafbe31d39f2059240461d622e86" +
