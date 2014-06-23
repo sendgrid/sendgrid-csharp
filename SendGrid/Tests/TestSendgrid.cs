@@ -346,5 +346,56 @@ namespace Tests
 			var json = header.JsonString();
 			Assert.AreEqual("{\"filters\" : {\"opentrack\" : {\"settings\" : {\"enable\" : \"0\"}}}}", json);
 		}
+
+        [Test]
+        public void TestSendToSink()
+        {
+            // Arrange
+
+            var message = new SendGridMessage();
+            message.To = new[]
+	        {
+	            new MailAddress("foo@bar.com", "Foo Bar"),
+	        };
+            message.AddTo("foo1@bar1.com");
+
+            // Act
+
+            message.SendToSink();
+
+            // Assert
+
+            Assert.AreEqual("foo_at_bar.com@sink.sendgrid.net", message.To[0].Address);
+            Assert.AreEqual("Foo Bar", message.To[0].DisplayName);
+
+            Assert.AreEqual("foo1_at_bar1.com@sink.sendgrid.net", message.To[1].Address);
+            Assert.AreEqual("", message.To[1].DisplayName);
+        }
+
+        [Test]
+        public void TestSendToSinkOff()
+        {
+            // Arrange
+
+            var message = new SendGridMessage();
+            message.To = new[]
+	        {
+	            new MailAddress("foo@bar.com", "Foo Bar"),
+	        };
+            message.AddTo("foo1@bar1.com");
+            message.SendToSink();
+
+            // Act
+
+            message.SendToSink(false);
+
+            // Assert
+
+            Assert.AreEqual("foo@bar.com", message.To[0].Address);
+            Assert.AreEqual("Foo Bar", message.To[0].DisplayName);
+
+            Assert.AreEqual("foo1@bar1.com", message.To[1].Address);
+            Assert.AreEqual("", message.To[1].DisplayName);
+        }
 	}
 }
