@@ -8,7 +8,7 @@ and `new Web()` instead of `Web.GetInstance()`
 
 #Requirements
 
-This library requires .NET 4.0 and above.
+As of 4.0.0, this library requires .NET 4.5 and above. If you need .NET 4.0 support, `Install-Package sendgri -V 3.0.2`
 
 #Installation
 
