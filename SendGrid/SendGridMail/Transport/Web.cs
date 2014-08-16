@@ -189,6 +189,17 @@ namespace SendGrid
 					.Concat(message.To.ToList().Select(a => new KeyValuePair<String, String>("toname[]", a.DisplayName)))
 					.ToList();
 			}
+
+		    if (message.Cc != null)
+		    {
+		        result.AddRange(message.Cc.Select(c => new KeyValuePair<string, string>("cc[]", c.Address)));
+		    }
+
+		    if (message.Bcc != null)
+		    {
+		        result.AddRange(message.Bcc.Select(c => new KeyValuePair<string, string>("bcc[]", c.Address)));
+		    }
+            
 			if (message.GetEmbeddedImages().Count > 0) {
 				result = result.Concat(message.GetEmbeddedImages().ToList().Select(x => new KeyValuePair<String, String>(string.Format("content[{0}]", x.Key), x.Value)))
 					.ToList();
