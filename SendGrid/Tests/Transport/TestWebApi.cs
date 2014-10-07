@@ -37,6 +37,10 @@ namespace Tests.Transport
 		{
 			// Test Variables
 			const string toAddress = "foobar@outlook.com";
+		    const string ccAddress = "cc@outlook.com";
+		    const string bcc1Address = "bcc1@outlook.com";
+		    const string bcc2Address = "bcc2@outlook.com";
+		    MailAddress[] bccAddresses = {new MailAddress(bcc1Address), new MailAddress(bcc2Address)};
 			const string fromAddress = "test@outlook.com";
 			const string subject = "Test Subject";
 			const string textBody = "Test Text Body";
@@ -47,6 +51,8 @@ namespace Tests.Transport
 
 			var message = new SendGridMessage();
 			message.AddTo(toAddress);
+            message.AddCc(ccAddress);
+		    message.Bcc = bccAddresses;
 			message.From = new MailAddress(fromAddress);
 			message.Subject = subject;
 			message.Text = textBody;
@@ -59,6 +65,9 @@ namespace Tests.Transport
 			Assert.True(result.Any(r => r.Key == "api_user" && r.Value == TestUsername));
 			Assert.True(result.Any(r => r.Key == "api_key" && r.Value == TestPassword));
 			Assert.True(result.Any(r => r.Key == "to[]" && r.Value == toAddress));
+            Assert.True(result.Any(r => r.Key == "cc[]" && r.Value == ccAddress));
+            Assert.True(result.Any(r => r.Key == "bcc[]" && r.Value == bcc1Address));
+            Assert.True(result.Any(r => r.Key == "bcc[]" && r.Value == bcc2Address));
 			Assert.True(result.Any(r => r.Key == "from" && r.Value == fromAddress));
 			Assert.True(result.Any(r => r.Key == "subject" && r.Value == subject));
 			Assert.True(result.Any(r => r.Key == "text" && r.Value == textBody));

@@ -107,6 +107,32 @@ namespace SendGrid
 			}
 		}
 
+        public MailAddress[] Cc
+        {
+            get { return _message.CC.ToArray(); }
+            set
+            {
+                _message.CC.Clear();
+                foreach (var mailAddress in value)
+                {
+                    _message.CC.Add(mailAddress);
+                }
+            }
+        }
+
+        public MailAddress[] Bcc
+        {
+            get { return _message.Bcc.ToArray(); }
+            set
+            {
+                _message.Bcc.Clear();
+                foreach (var mailAddress in value)
+                {
+                    _message.Bcc.Add(mailAddress);
+                }
+            }
+        }
+
 		public String Subject
 		{
 			get { return _message.Subject; }
@@ -148,7 +174,29 @@ namespace SendGrid
 			}
 		}
 
-        public Dictionary<String, MemoryStream> StreamedAttachments
+	    public void AddCc(string address)
+	    {
+	        var mailAddress = new MailAddress(address);
+	        _message.CC.Add(mailAddress);
+	    }
+
+	    public void AddCc(MailAddress address)
+	    {
+	        _message.CC.Add(address);
+	    }
+
+	    public void AddBcc(string address)
+	    {
+	        var mailAddress = new MailAddress(address);
+            _message.Bcc.Add(mailAddress);
+	    }
+
+	    public void AddBcc(MailAddress address)
+	    {
+	        _message.Bcc.Add(address);
+	    }
+
+	    public Dictionary<String, MemoryStream> StreamedAttachments
 		{
 			get { return _streamedAttachments; }
 			set { _streamedAttachments = value; }
