@@ -127,7 +127,7 @@ using (var attachmentFileStream = new FileStream(@"C:\file.txt", FileMode.Open))
 
 #How to: Use filters to enable footers, tracking, and analytics
 
-SendGrid provides additional email functionality through the use of filters. These are settings that can be added to an email message to enable specific functionality such as click tracking, Google analytics, subscription tracking, and so on. For a full list of filters, see [Filter Settings](http://docs.sendgrid.com/documentation/api/smtp-api/filter-settings/).
+SendGrid provides additional email functionality through the use of filters. These are settings that can be added to an email message to enable specific functionality such as click tracking, Google analytics, subscription tracking, and so on. For a full list of filters, see [Filter Settings](https://sendgrid.com/docs/API_Reference/SMTP_API/apps.html).
 
 Filters can be applied to **SendGrid** email messages using methods implemented as part of the **SendGrid** class. Before you can enable filters on an email message, you must first initialize the list of available filters by calling the **InitializeFilters** method.
 
