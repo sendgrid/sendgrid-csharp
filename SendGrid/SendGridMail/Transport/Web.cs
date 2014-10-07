@@ -44,8 +44,8 @@ namespace SendGrid
 			{
 				BaseAddress = new Uri("https://" + BaseUrl)
 			};
-      client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/4.0.1;csharp");
 
+            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/4.0.1;csharp");
 
 			var content = new MultipartFormDataContent();
 			AttachFormParams(message, content);
