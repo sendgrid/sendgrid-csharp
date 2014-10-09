@@ -5,8 +5,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml;
+using Exceptions;
 using SendGrid.SmtpApi;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -45,7 +47,8 @@ namespace SendGrid
 				BaseAddress = new Uri("https://" + BaseUrl)
 			};
 
-            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/4.0.1;csharp");
+            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
 
 			var content = new MultipartFormDataContent();
 			AttachFormParams(message, content);
@@ -58,19 +61,22 @@ namespace SendGrid
 		///     Asynchronously delivers a message over SendGrid's Web interface
 		/// </summary>
 		/// <param name="message"></param>
-        public async Task DeliverAsync(ISendGrid message)
-        {
-            var client = new HttpClient
-            {
-                BaseAddress = new Uri("https://" + BaseUrl)
-            };
+		public async Task DeliverAsync(ISendGrid message)
+		{
+			var client = new HttpClient
+			{
+				BaseAddress = new Uri("https://" + BaseUrl)
+			};
 
-            var content = new MultipartFormDataContent();
-            AttachFormParams(message, content);
-            AttachFiles(message, content);
-            var response = await client.PostAsync(Endpoint + ".xml", content);
-            await CheckForErrorsAsync(response);
-        }
+            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
+
+			var content = new MultipartFormDataContent();
+			AttachFormParams(message, content);
+			AttachFiles(message, content);
+			var response = await client.PostAsync(Endpoint + ".xml", content);
+			await CheckForErrorsAsync(response);
+		}
 
 		#region Support Methods
 
@@ -120,15 +126,16 @@ namespace SendGrid
 
 		private static void CheckForErrors(HttpResponseMessage response)
 		{
-			//transport error
-			if (response.StatusCode != HttpStatusCode.OK)
-			{
-				throw new Exception(response.ReasonPhrase);
-			}
-
 			var content = response.Content.ReadAsStreamAsync().Result;
+			var errors = GetErrorsInResponse(content);
 
-			FindErrorsInResponse(content);
+			// API error
+			if (errors.Any())
+				throw new InvalidApiRequestException(response.StatusCode, errors, response.ReasonPhrase);
+
+			// Other error
+			if (response.StatusCode != HttpStatusCode.OK)
+				FindErrorsInResponse(content);
 		}
 
 		private static void FindErrorsInResponse(Stream content)
@@ -153,6 +160,13 @@ namespace SendGrid
 					}
 				}
 			}
+		}
+
+		private static string[] GetErrorsInResponse(Stream content)
+		{
+			var xmlDoc = new XmlDocument();
+			xmlDoc.Load(content);
+			return (from XmlNode errorNode in xmlDoc.SelectNodes("//error") select errorNode.InnerText).ToArray();
 		}
 
 		private static async Task CheckForErrorsAsync(HttpResponseMessage response)
