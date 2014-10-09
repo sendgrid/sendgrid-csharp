@@ -60,6 +60,12 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SendGridMail\Mail.csproj">
+      <Project>{3c687bef-ff50-44ad-8315-2d4237281af8}</Project>
+      <Name>Mail</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -69,10 +75,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <ProjectReference Include="..\SendGridMail\Mail.csproj">
-      <Project>{3C687BEF-FF50-44AD-8315-2D4237281AF8}</Project>
-      <Name>Mail</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>

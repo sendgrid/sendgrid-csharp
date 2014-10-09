@@ -5,8 +5,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml;
+using Exceptions;
 using SendGrid.SmtpApi;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -45,7 +47,8 @@ namespace SendGrid
 				BaseAddress = new Uri("https://" + BaseUrl)
 			};
 
-                        client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/4.0.1;csharp");
+            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
 
 			var content = new MultipartFormDataContent();
 			AttachFormParams(message, content);
@@ -64,6 +67,9 @@ namespace SendGrid
 			{
 				BaseAddress = new Uri("https://" + BaseUrl)
 			};
+
+            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
 
 			var content = new MultipartFormDataContent();
 			AttachFormParams(message, content);
