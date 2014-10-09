@@ -179,7 +179,15 @@ namespace SendGrid
 
 			var content = await response.Content.ReadAsStreamAsync();
 
-			FindErrorsInResponse(content);
+		    var errors = GetErrorsInResponse(content);
+
+            // API error
+            if (errors.Any())
+                throw new InvalidApiRequestException(response.StatusCode, errors, response.ReasonPhrase);
+
+            // Other error
+            if (response.StatusCode != HttpStatusCode.OK)
+                FindErrorsInResponse(content);
 		}
 
 		internal List<KeyValuePair<String, String>> FetchFormParams(ISendGrid message)

@@ -17,18 +17,29 @@ namespace Example
 			myMessage.Subject = "Testing the SendGrid Library";
 			myMessage.Text = "Hello World!";
 
-			// Create credentials, specifying your user name and password.
-			var credentials = new NetworkCredential("username", "password");
+		    SendAsync(myMessage);
 
-			// Create a Web transport for sending email.
-			var transportWeb = new Web(credentials);
-
-			// Send the email.
-			if (transportWeb != null)
-				transportWeb.DeliverAsync(myMessage);
-
-			Console.WriteLine("Done!");
 			Console.ReadLine();
 		}
+
+        private static async void SendAsync(SendGridMessage message)
+	    {
+            // Create credentials, specifying your user name and password.
+            var credentials = new NetworkCredential("username", "password");
+
+            // Create a Web transport for sending email.
+            var transportWeb = new Web(credentials);
+
+            // Send the email.
+            try
+            {
+                await transportWeb.DeliverAsync(message);
+                Console.WriteLine("Sent!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+	    }
 	}
 }
