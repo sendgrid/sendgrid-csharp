@@ -19,8 +19,7 @@ namespace SendGrid
 		#region Properties
 
 		//TODO: Make this configurable
-		public const String BaseUrl = "api.sendgrid.com";
-		public const String Endpoint = "/api/mail.send";
+		public const String Endpoint = "https://api.sendgrid.com/api/mail.send";
 
 		private readonly NetworkCredential _credentials;
 
@@ -42,10 +41,7 @@ namespace SendGrid
 		/// <param name="message"></param>
 		public void Deliver(ISendGrid message)
 		{
-			var client = new HttpClient
-			{
-				BaseAddress = new Uri("https://" + BaseUrl)
-			};
+			var client = new HttpClient ();
 
             var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
@@ -63,10 +59,7 @@ namespace SendGrid
 		/// <param name="message"></param>
 		public async Task DeliverAsync(ISendGrid message)
 		{
-			var client = new HttpClient
-			{
-				BaseAddress = new Uri("https://" + BaseUrl)
-			};
+			var client = new HttpClient ();
 
             var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
