@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using SendGrid;
@@ -15,7 +16,10 @@ namespace Example
 			myMessage.AddTo("anna@example.com");
 			myMessage.From = new MailAddress("john@example.com", "John Smith");
 			myMessage.Subject = "Testing the SendGrid Library";
-			myMessage.Text = "Hello World!";
+			myMessage.Text = "Hello World! %tag%";
+
+            var subs = new List<String> { "私はラーメンが大好き" };
+            myMessage.AddSubstitution("%tag%",subs);
 
 		    SendAsync(myMessage);
 
