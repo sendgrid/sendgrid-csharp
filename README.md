@@ -1,10 +1,6 @@
 [![BuildStatus](https://travis-ci.org/sendgrid/sendgrid-csharp.png?branch=master)](https://travis-ci.org/sendgrid/sendgrid-csharp)
 
-##Breaking API changes in 3.0.0! 
-
-Use `new SendGridMessage()` instead of `SendGrid.GetInstance()` 
-
-and `new Web()` instead of `Web.GetInstance()`
+See the [changelog](https://github.com/sendgrid/sendgrid-csharp/blob/master/CHANGELOG.md) for updates. 
 
 #Requirements
 
