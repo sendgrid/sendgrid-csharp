@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Users\wataru\sendgrid\csharp\v5\sendgrid-csharp\SendGrid\SendGrid.sln" total="24" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2015-01-28" time="18:16:02">
+  <environment nunit-version="2.6.3.13283" clr-version="2.0.50727.8009" os-version="Microsoft Windows NT 6.2.9200.0" platform="Win32NT" cwd="C:\Program Files (x86)\NUnit 2.6.3\bin" machine-name="WATARU-PC-VM" user="wataru" user-domain="wataru-pc-vm" />
+  <culture-info current-culture="ja-JP" current-uiculture="ja-JP" />
+  <test-suite type="Project" name="C:\Users\wataru\sendgrid\csharp\v5\sendgrid-csharp\SendGrid\SendGrid.sln" executed="True" result="Success" success="True" time="2.634" asserts="0">
+    <results>
+      <test-suite type="Assembly" name="C:\Users\wataru\sendgrid\csharp\v5\sendgrid-csharp\SendGrid\Tests\bin\BuildNet45\Tests.dll" executed="True" result="Success" success="True" time="2.552" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="Tests" executed="True" result="Success" success="True" time="2.551" asserts="0">
+            <results>
+              <test-suite type="TestFixture" name="TestSendgrid" executed="True" result="Success" success="True" time="1.407" asserts="0">
+                <results>
+                  <test-case name="Tests.TestSendgrid.CreateMimeMessage" executed="True" result="Success" success="True" time="0.807" asserts="5" />
+                  <test-case name="Tests.TestSendgrid.DisableBcc" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.DisableBypassListManagement" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.DisableClickTracking" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.DisableFooter" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.DisableGoogleAnalytics" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.DisableSpamCheck" executed="True" result="Success" success="True" time="0.003" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.DisableTemplate" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.DisableUnsubscribe" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.EnableBcc" executed="True" result="Success" success="True" time="0.003" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.EnableBypassListManagement" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.EnableClickTracking" executed="True" result="Success" success="True" time="0.003" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.EnableFooter" executed="True" result="Success" success="True" time="0.004" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.EnableGoogleAnalytics" executed="True" result="Success" success="True" time="0.004" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.EnableGravatar" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.EnableOpenTracking" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.EnableSpamCheck" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.EnableTemplate" executed="True" result="Success" success="True" time="0.052" asserts="2" />
+                  <test-case name="Tests.TestSendgrid.EnableUnsubscribe" executed="True" result="Success" success="True" time="0.055" asserts="4" />
+                  <test-case name="Tests.TestSendgrid.TestAddSection" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.TestDisableGravatar" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                  <test-case name="Tests.TestSendgrid.TestDisableOpenTracking" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                </results>
+              </test-suite>
+              <test-suite type="Namespace" name="Transport" executed="True" result="Success" success="True" time="1.129" asserts="0">
+                <results>
+                  <test-suite type="TestFixture" name="TestWebApi" executed="True" result="Success" success="True" time="1.126" asserts="0">
+                    <results>
+                      <test-case name="Tests.Transport.TestWebApi.TestFetchFileBodies" executed="True" result="Success" success="True" time="0.996" asserts="5" />
+                      <test-case name="Tests.Transport.TestWebApi.TestFetchFormParams" executed="True" result="Success" success="True" time="0.062" asserts="12" />
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="Assembly" name="C:\Users\wataru\sendgrid\csharp\v5\sendgrid-csharp\SendGrid\Example\bin\x86\BuildNet45\Example.exe" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0" />
+      <test-suite type="Assembly" name="C:\Users\wataru\sendgrid\csharp\v5\sendgrid-csharp\SendGrid\SendGridMail\bin\BuildNet45\SendGridMail.dll" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0" />
+    </results>
+  </test-suite>
+</test-results>

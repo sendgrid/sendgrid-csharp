@@ -13,13 +13,14 @@ namespace Example
 		{
 			// Create the email object first, then add the properties.
 			var myMessage = new SendGridMessage();
-			myMessage.AddTo("anna@example.com");
+            myMessage.AddTo("anna@example.com");
 			myMessage.From = new MailAddress("john@example.com", "John Smith");
 			myMessage.Subject = "Testing the SendGrid Library";
 			myMessage.Text = "Hello World! %tag%";
 
-            var subs = new List<String> { "私はラーメンが大好き" };
+            var subs = new List<String> { "私は%type%ラーメンが大好き" };
             myMessage.AddSubstitution("%tag%",subs);
+            myMessage.AddSection("%type%", "とんこつ");
 
 		    SendAsync(myMessage);
 
