@@ -108,6 +108,8 @@ namespace SendGrid
 		/// <param name="name">Name of file to be attached</param>
 		void AddAttachment(Stream stream, String name);
 
+	    void EmbedStreamImage(Stream stream, String name);
+
 		/// <summary>
 		///     GetRecipients returns a list of all the recepients by retrieving the to, cc, and bcc lists.
 		/// </summary>
