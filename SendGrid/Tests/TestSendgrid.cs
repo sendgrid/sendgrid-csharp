@@ -356,7 +356,7 @@ namespace Tests
 			sendgrid.AddSection("tag", "value");
 
 			var json = header.JsonString();
-			Assert.AreEqual("{\"section\" : {\"tag\" : \"value\"}}", json);
+			Assert.AreEqual("{\"section\" : {\"tag\" : \"value\"}}", json); 
 		}
 	}
 }
