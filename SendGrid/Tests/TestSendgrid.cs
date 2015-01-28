@@ -347,16 +347,16 @@ namespace Tests
 			Assert.AreEqual("{\"filters\" : {\"opentrack\" : {\"settings\" : {\"enable\" : \"0\"}}}}", json);
 		}
 
-        [Test]
-        public void TestAddSection()
-        {
-            var header = new Header();
-            var sendgrid = new SendGridMessage(header);
+		[Test]
+		public void TestAddSection()
+		{
+			var header = new Header();
+			var sendgrid = new SendGridMessage(header);
 
-            sendgrid.AddSection("tag", "value");
+			sendgrid.AddSection("tag", "value");
 
-            var json = header.JsonString();
-            Assert.AreEqual("{\"section\" : {\"tag\" : \"value\"}}", json);
-        }
+			var json = header.JsonString();
+			Assert.AreEqual("{\"section\" : {\"tag\" : \"value\"}}", json);
+		}
 	}
 }

@@ -16,3 +16,5 @@ SendGrid/test-results/
 .DS_store
 SendGrid/SendGrid.userprefs
 SendGrid/packages/
+SendGrid/TestResult.xml
+SendGrid/SendGrid.sln.VisualState.xml

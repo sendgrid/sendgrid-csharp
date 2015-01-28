@@ -221,10 +221,11 @@ namespace SendGrid
 			//let the system complain if they do something bad, since the function returns null
 			Header.AddSubstitution(replacementTag, substitutionValues);
 		}
-        public void AddSection(String relacementTag, String sectionValue)
-        {
-            Header.AddSection(relacementTag, sectionValue);
-        }
+
+		public void AddSection(String relacementTag, String sectionValue)
+		{
+			Header.AddSection(relacementTag, sectionValue);
+		}
 
 		public void AddUniqueArgs(IDictionary<String, String> identifiers)
 		{
