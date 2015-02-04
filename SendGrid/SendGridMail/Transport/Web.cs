@@ -66,7 +66,7 @@ namespace SendGrid
 			AttachFormParams(message, content);
 			AttachFiles(message, content);
 			var response = client.PostAsync(Endpoint + ".xml", content).Result;
-			CheckForErrors(response);
+			ErrorChecker.CheckForErrors(response);
 		}
 
 		/// <summary>
@@ -87,7 +87,7 @@ namespace SendGrid
 			AttachFormParams(message, content);
 			AttachFiles(message, content);
 			var response = await client.PostAsync(Endpoint + ".xml", content);
-			await CheckForErrorsAsync(response);
+            await ErrorChecker.CheckForErrorsAsync(response);
 		}
 
 	    #region Support Methods
@@ -136,66 +136,8 @@ namespace SendGrid
 			}
 		}
 
-		private static void CheckForErrors(HttpResponseMessage response)
-		{
-			var content = response.Content.ReadAsStreamAsync().Result;
-			var errors = GetErrorsInResponse(content);
-
-			// API error
-			if (errors.Any())
-				throw new InvalidApiRequestException(response.StatusCode, errors, response.ReasonPhrase);
-
-			// Other error
-			if (response.StatusCode != HttpStatusCode.OK)
-				FindErrorsInResponse(content);
-		}
-
-		private static void FindErrorsInResponse(Stream content)
-		{
-			using (var reader = XmlReader.Create(content))
-			{
-				while (reader.Read())
-				{
-					if (!reader.IsStartElement()) continue;
-					switch (reader.Name)
-					{
-						case "result":
-							break;
-						case "message": // success
-							if (reader.ReadToNextSibling("errors"))
-								throw new ProtocolViolationException();
-							return;
-						case "error": // failure
-							throw new ProtocolViolationException();
-						default:
-							throw new ArgumentException("Unknown element: " + reader.Name);
-					}
-				}
-			}
-		}
-
-		private static string[] GetErrorsInResponse(Stream content)
-		{
-			var xmlDoc = new XmlDocument();
-			xmlDoc.Load(content);
-			return (from XmlNode errorNode in xmlDoc.SelectNodes("//error") select errorNode.InnerText).ToArray();
-		}
-
-		private static async Task CheckForErrorsAsync(HttpResponseMessage response)
-		{
-			var content = await response.Content.ReadAsStreamAsync();
-
-		    var errors = GetErrorsInResponse(content);
-
-            // API error
-            if (errors.Any())
-                throw new InvalidApiRequestException(response.StatusCode, errors, response.ReasonPhrase);
-
-            // Other error
-            if (response.StatusCode != HttpStatusCode.OK)
-                FindErrorsInResponse(content);
-		}
-
+		
+        
 		internal List<KeyValuePair<String, String>> FetchFormParams(ISendGrid message)
 		{
 			var result = new List<KeyValuePair<string, string>>
