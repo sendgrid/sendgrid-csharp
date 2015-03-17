@@ -4,8 +4,7 @@ See the [changelog](https://github.com/sendgrid/sendgrid-csharp/blob/master/CHAN
 
 #Requirements
 
-As of 4.0.0, this library requires .NET 4.5 and above. If you need .NET 4.0 support:
-> `Install-Package SendGrid -V 3.0.2`
+As of 4.0.0, this library requires .NET 4.5 and above. [Fork with .NET 4.0 support](https://www.nuget.org/packages/SendGrid.Net40/)
 
 #Installation
 
