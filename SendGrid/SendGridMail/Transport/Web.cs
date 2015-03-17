@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using System.Xml;
 using Exceptions;
 using SendGrid.SmtpApi;
+#if PCL
+using SendGridPCL.IO;
+#endif
 
 // ReSharper disable MemberCanBePrivate.Global
 namespace SendGrid
@@ -59,7 +62,11 @@ namespace SendGrid
             client.BaseAddress = new Uri("https://" + BaseUrl);
 		    client.Timeout = _timeout;
 
+#if !PCL
             var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+#else
+            var version = "0.1.0-pcl";
+#endif
             client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
 
 			var content = new MultipartFormDataContent();
@@ -80,7 +87,11 @@ namespace SendGrid
 		    client.BaseAddress = new Uri("https://" + BaseUrl);
 		    client.Timeout = _timeout;
 
+#if !PCL
             var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+#else
+            var version = "0.1.0-pcl";
+#endif
             client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
 
 			var content = new MultipartFormDataContent();
@@ -103,6 +114,7 @@ namespace SendGrid
 
 		private void AttachFiles(ISendGrid message, MultipartFormDataContent content)
 		{
+#if !PCL
 			var files = FetchFileBodies(message);
 			foreach (var file in files)
 			{
@@ -118,7 +130,7 @@ namespace SendGrid
 				fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
 				content.Add(fileContent);
 			}
-
+#endif
 			var streamingFiles = FetchStreamingFileBodies(message);
 			foreach (var file in streamingFiles)
 			{
@@ -139,11 +151,13 @@ namespace SendGrid
 		private static void CheckForErrors(HttpResponseMessage response)
 		{
 			var content = response.Content.ReadAsStreamAsync().Result;
+#if !PCL
 			var errors = GetErrorsInResponse(content);
 
 			// API error
 			if (errors.Any())
 				throw new InvalidApiRequestException(response.StatusCode, errors, response.ReasonPhrase);
+#endif
 
 			// Other error
 			if (response.StatusCode != HttpStatusCode.OK)
@@ -174,23 +188,27 @@ namespace SendGrid
 			}
 		}
 
+#if !PCL
 		private static string[] GetErrorsInResponse(Stream content)
 		{
 			var xmlDoc = new XmlDocument();
 			xmlDoc.Load(content);
 			return (from XmlNode errorNode in xmlDoc.SelectNodes("//error") select errorNode.InnerText).ToArray();
 		}
+#else
 
+#endif
 		private static async Task CheckForErrorsAsync(HttpResponseMessage response)
 		{
 			var content = await response.Content.ReadAsStreamAsync();
 
+#if !PCL
 		    var errors = GetErrorsInResponse(content);
 
             // API error
             if (errors.Any())
                 throw new InvalidApiRequestException(response.StatusCode, errors, response.ReasonPhrase);
-
+#endif
             // Other error
             if (response.StatusCode != HttpStatusCode.OK)
                 FindErrorsInResponse(content);
@@ -241,13 +259,14 @@ namespace SendGrid
 		{
 			return message.StreamedAttachments.Select(kvp => kvp).ToList();
 		}
-
+#if !PCL
 		internal List<KeyValuePair<String, FileInfo>> FetchFileBodies(ISendGrid message)
 		{
 			return message.Attachments == null
 				? new List<KeyValuePair<string, FileInfo>>()
 				: message.Attachments.Select(name => new KeyValuePair<String, FileInfo>(name, new FileInfo(name))).ToList();
 		}
+#endif
 
 		#endregion
 	}

@@ -17,9 +17,16 @@ namespace SendGrid
 		//apps list and settings
 		private static readonly Dictionary<String, String> Filters = InitializeFilters();
 		private readonly MailMessage _message;
-        private static readonly Regex TemplateTest = new Regex(@"<%\s*body\s*%>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private static readonly Regex TextUnsubscribeTest = new Regex(@"<%\s*%>", RegexOptions.Compiled);
-        private static readonly Regex HtmlUnsubscribeTest = new Regex(@"<%\s*([^\s%]+\s?)+\s*%>", RegexOptions.Compiled);
+#if !PCL
+        private static RegexOptions _defaultRegexOptions = RegexOptions.Compiled;
+#else
+        private static RegexOptions _defaultRegexOptions = RegexOptions.None;
+
+#endif
+        private static readonly Regex TemplateTest = new Regex(@"<%\s*body\s*%>", _defaultRegexOptions | RegexOptions.IgnoreCase);
+        private static readonly Regex TextUnsubscribeTest = new Regex(@"<%\s*%>", _defaultRegexOptions);
+        private static readonly Regex HtmlUnsubscribeTest = new Regex(@"<%\s*([^\s%]+\s?)+\s*%>", _defaultRegexOptions);
+
 		#endregion
 
 		#region Initialization and Constructors
@@ -36,6 +43,7 @@ namespace SendGrid
         public SendGridMessage(IHeader header)
         {
             _message = new MailMessage();
+            
             Header = header;
             Headers = new Dictionary<string, string>();
         }
@@ -148,7 +156,10 @@ namespace SendGrid
 
 		#region Methods for setting data
 
+#if !PCL
 		private List<String> _attachments = new List<String>();
+#endif
+
 		private Dictionary<String, MemoryStream> _streamedAttachments = new Dictionary<string, MemoryStream>();
 		private Dictionary<String, String> _contentImages = new Dictionary<string, string>();
 
@@ -201,12 +212,15 @@ namespace SendGrid
 			get { return _streamedAttachments; }
 			set { _streamedAttachments = value; }
 		}
-
+#if !PCL
 		public String[] Attachments
 		{
 			get { return _attachments.ToArray(); }
 			set { _attachments = value.ToList(); }
 		}
+#else
+        public String[] Attachments {get; set;}
+#endif
 
 		public void EmbedImage(String filename, String cid) {
 			_contentImages[filename] = cid;
@@ -244,12 +258,13 @@ namespace SendGrid
 			ms.Seek(0, SeekOrigin.Begin);
 			StreamedAttachments[name] = ms;
 		}
-
-		public void AddAttachment(String filePath)
-		{
-			_attachments.Add(filePath);
+		public void AddAttachment(String filePath) {
+#if !PCL
+            _attachments.Add(filePath);
+#else
+            throw new NotImplementedException("loading attachments from filesystem is not supported in PCL");
+#endif
 		}
-
 		public IEnumerable<String> GetRecipients()
 		{
 			var tos = _message.To.ToList();
@@ -446,6 +461,7 @@ namespace SendGrid
 			_message.Attachments.Clear();
 			_message.AlternateViews.Clear();
 
+#if !PCL
 			if (Attachments != null)
 			{
 				foreach (var attachment in Attachments)
@@ -453,7 +469,7 @@ namespace SendGrid
 					_message.Attachments.Add(new Attachment(attachment, MediaTypeNames.Application.Octet));
 				}
 			}
-
+#endif
 			if (StreamedAttachments != null)
 			{
 				foreach (var attachment in StreamedAttachments)
@@ -480,6 +496,7 @@ namespace SendGrid
 			return _message;
 		}
 
+#if !PCL
 		/// <summary>
 		///     Helper function lets us look at the mime before it is sent
 		/// </summary>
@@ -494,5 +511,6 @@ namespace SendGrid
 			var msg = CreateMimeMessage();
 			client.Send(msg);
 		}
+#endif
 	}
 }
