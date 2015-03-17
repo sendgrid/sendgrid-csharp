@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+#if !PCL
 using System.Net.Mail;
+#endif
 using SendGrid.SmtpApi;
 
 namespace SendGrid
