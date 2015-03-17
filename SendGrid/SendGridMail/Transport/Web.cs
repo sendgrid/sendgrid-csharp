@@ -55,11 +55,14 @@ namespace SendGrid
 		///     Delivers a message over SendGrid's Web interface
 		/// </summary>
 		/// <param name="message"></param>
-		public void Deliver(ISendGrid message)
-		{
-            var client = new HttpClient();
+        public void Deliver(ISendGrid message) {
+            this.Deliver(message, new HttpClient());
+        }
 
-            client.BaseAddress = new Uri("https://" + BaseUrl);
+		public void Deliver(ISendGrid message, HttpClient client)
+		{
+
+            //client.BaseAddress = new Uri("https://" + BaseUrl);
 		    client.Timeout = _timeout;
 
 #if !PCL
@@ -72,19 +75,22 @@ namespace SendGrid
 			var content = new MultipartFormDataContent();
 			AttachFormParams(message, content);
 			AttachFiles(message, content);
-			var response = client.PostAsync(Endpoint + ".xml", content).Result;
+            var response = client.PostAsync("https://" + BaseUrl + Endpoint + ".xml", content).Result;
 			CheckForErrors(response);
 		}
 
 		/// <summary>
 		///     Asynchronously delivers a message over SendGrid's Web interface
 		/// </summary>
-		/// <param name="message"></param>
-		public async Task DeliverAsync(ISendGrid message)
+        /// <param name="message"></param>
+        public Task DeliverAsync(ISendGrid message) {
+            return this.DeliverAsync(message, new HttpClient());
+        }
+
+        public async Task DeliverAsync(ISendGrid message, HttpClient client)
 		{
-		    var client = new HttpClient();
             
-		    client.BaseAddress = new Uri("https://" + BaseUrl);
+		    //client.BaseAddress = new Uri("https://" + BaseUrl);
 		    client.Timeout = _timeout;
 
 #if !PCL
@@ -97,7 +103,7 @@ namespace SendGrid
 			var content = new MultipartFormDataContent();
 			AttachFormParams(message, content);
 			AttachFiles(message, content);
-			var response = await client.PostAsync(Endpoint + ".xml", content);
+            var response = await client.PostAsync("https://" + BaseUrl + Endpoint + ".xml", content);
 			await CheckForErrorsAsync(response);
 		}
 
@@ -137,13 +143,22 @@ namespace SendGrid
 				var stream = file.Value;
 				var fileContent = new StreamContent(stream);
 
+                var fileInfo = file.Key.Split(';');
+                var fileType = fileInfo.Length > 1 ? fileInfo[1] : "application/octet-stream";
+                var fileName = Path.GetFileName(fileInfo[0]);
+
+
 				fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
 				{
-					Name = "files[" + Path.GetFileName(file.Key) + "]",
-					FileName = Path.GetFileName(file.Key)
+                    Name = "files[" + fileName + "]",
+                    FileName = fileName
 				};
 
-				fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+                MediaTypeHeaderValue contentType;
+                if (!MediaTypeHeaderValue.TryParse(fileType, out contentType)) {
+                    contentType  = MediaTypeHeaderValue.Parse("application/octet-stream");
+                }
+                fileContent.Headers.ContentType = contentType;
 				content.Add(fileContent);
 			}
 		}
