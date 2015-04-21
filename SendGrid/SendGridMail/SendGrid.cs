@@ -234,6 +234,11 @@ namespace SendGrid
 			Header.AddSubstitution(replacementTag, substitutionValues);
 		}
 
+		public void AddSection(String relacementTag, String sectionValue)
+		{
+			Header.AddSection(relacementTag, sectionValue);
+		}
+
 		public void AddUniqueArgs(IDictionary<String, String> identifiers)
 		{
 			Header.AddUniqueArgs(identifiers);
