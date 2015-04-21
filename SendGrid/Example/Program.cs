@@ -18,8 +18,9 @@ namespace Example
 			myMessage.Subject = "Testing the SendGrid Library";
 			myMessage.Text = "Hello World! %tag%";
 
-            var subs = new List<String> { "私はラーメンが大好き" };
-            myMessage.AddSubstitution("%tag%",subs);
+			var subs = new List<String> { "私は%type%ラーメンが大好き" };
+			myMessage.AddSubstitution("%tag%",subs);
+			myMessage.AddSection("%type%", "とんこつ");
 
 		    SendAsync(myMessage);
 
