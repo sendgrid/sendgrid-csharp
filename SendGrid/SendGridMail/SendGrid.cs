@@ -20,7 +20,9 @@ namespace SendGrid
         private static readonly Regex TemplateTest = new Regex(@"<%\s*body\s*%>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex TextUnsubscribeTest = new Regex(@"<%\s*%>", RegexOptions.Compiled);
         private static readonly Regex HtmlUnsubscribeTest = new Regex(@"<%\s*([^\s%]+\s?)+\s*%>", RegexOptions.Compiled);
-		#endregion
+	    private const string SinkHost = "sink.sendgrid.net";
+
+	    #endregion
 
 		#region Initialization and Constructors
         
@@ -96,7 +98,16 @@ namespace SendGrid
 
 		public MailAddress[] To
 		{
-			get { return _message.To.ToArray(); }
+		    get
+		    {
+		        if (_sendToSink)
+		        {
+		            return _message.To
+                        .Select(ma => new MailAddress(string.Format("{0}_at_{1}@{2}", ma.User, ma.Host, SinkHost), ma.DisplayName))
+		                .ToArray();
+		        }
+		        return _message.To.ToArray();
+		    }
 			set
 			{
 				_message.To.Clear();
@@ -151,8 +162,9 @@ namespace SendGrid
 		private List<String> _attachments = new List<String>();
 		private Dictionary<String, MemoryStream> _streamedAttachments = new Dictionary<string, MemoryStream>();
 		private Dictionary<String, String> _contentImages = new Dictionary<string, string>();
+	    private bool _sendToSink;
 
-		public void AddTo(String address)
+	    public void AddTo(String address)
 		{
 			var mailAddress = new MailAddress(address);
 			_message.To.Add(mailAddress);
@@ -264,6 +276,11 @@ namespace SendGrid
 		{
 			headers.Keys.ToList().ForEach(key => Headers[key] = headers[key]);
 		}
+
+	    public void SendToSink(bool value = true)
+	    {
+	        _sendToSink = value;
+	    }
 
 		#endregion
 
