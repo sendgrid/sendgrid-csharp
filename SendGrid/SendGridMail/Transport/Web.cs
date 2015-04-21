@@ -55,8 +55,6 @@ namespace SendGrid
 		public void Deliver(ISendGrid message)
 		{
             var client = new HttpClient();
-
-            client.BaseAddress = new Uri("https://" + BaseUrl);
 		    client.Timeout = _timeout;
 
             var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
@@ -65,7 +63,7 @@ namespace SendGrid
 			var content = new MultipartFormDataContent();
 			AttachFormParams(message, content);
 			AttachFiles(message, content);
-			var response = client.PostAsync(Endpoint + ".xml", content).Result;
+			var response = client.PostAsync("https://" + BaseUrl + Endpoint + ".xml", content).Result;
 			CheckForErrors(response);
 		}
 
@@ -76,17 +74,16 @@ namespace SendGrid
 		public async Task DeliverAsync(ISendGrid message)
 		{
 		    var client = new HttpClient();
-            
-		    client.BaseAddress = new Uri("https://" + BaseUrl);
 		    client.Timeout = _timeout;
 
             var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
+
+			client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
 
 			var content = new MultipartFormDataContent();
 			AttachFormParams(message, content);
 			AttachFiles(message, content);
-			var response = await client.PostAsync(Endpoint + ".xml", content);
+			var response = await client.PostAsync("https://" + BaseUrl + Endpoint + ".xml", content);
 			await CheckForErrorsAsync(response);
 		}
 
