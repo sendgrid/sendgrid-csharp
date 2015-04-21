@@ -19,11 +19,10 @@ namespace SendGrid
 		#region Properties
 
 		//TODO: Make this configurable
-		public const String BaseUrl = "api.sendgrid.com";
-		public const String Endpoint = "/api/mail.send";
+		public const String Endpoint = "https://api.sendgrid.com/api/mail.send";
 
 		private readonly NetworkCredential _credentials;
-	    private readonly TimeSpan _timeout;
+	    	private readonly TimeSpan _timeout;
 
 		#endregion
 
@@ -37,16 +36,16 @@ namespace SendGrid
 		    _timeout = TimeSpan.FromSeconds(100);
 		}
 
-        /// <summary>
-        ///     Creates a new Web interface for sending mail.
-        /// </summary>
-        /// <param name="credentials">SendGridMessage user parameters</param>
-        /// <param name="httpTimeout">HTTP request timeout</param>
-	    public Web(NetworkCredential credentials, TimeSpan httpTimeout)
-	    {
-            _credentials = credentials;
-	        _timeout = httpTimeout;
-	    }
+        	/// <summary>
+        	///     Creates a new Web interface for sending mail.
+        	/// </summary>
+        	/// <param name="credentials">SendGridMessage user parameters</param>
+        	/// <param name="httpTimeout">HTTP request timeout</param>
+	    	public Web(NetworkCredential credentials, TimeSpan httpTimeout)
+	    	{
+            _		credentials = credentials;
+	        _	timeout = httpTimeout;
+	    	}
 
 		/// <summary>
 		///     Delivers a message over SendGrid's Web interface
@@ -54,8 +53,7 @@ namespace SendGrid
 		/// <param name="message"></param>
 		public void Deliver(ISendGrid message)
 		{
-            var client = new HttpClient();
-		    client.Timeout = _timeout;
+			var client = new HttpClient()
 
             var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
@@ -63,7 +61,7 @@ namespace SendGrid
 			var content = new MultipartFormDataContent();
 			AttachFormParams(message, content);
 			AttachFiles(message, content);
-			var response = client.PostAsync("https://" + BaseUrl + Endpoint + ".xml", content).Result;
+			var response = client.PostAsync(Endpoint + ".xml", content).Result;
 			CheckForErrors(response);
 		}
 
@@ -73,8 +71,7 @@ namespace SendGrid
 		/// <param name="message"></param>
 		public async Task DeliverAsync(ISendGrid message)
 		{
-		    var client = new HttpClient();
-		    client.Timeout = _timeout;
+			var client = new HttpClient ();
 
             var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
