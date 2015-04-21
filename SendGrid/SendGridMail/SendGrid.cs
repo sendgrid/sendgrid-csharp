@@ -257,6 +257,16 @@ namespace SendGrid
 			StreamedAttachments[name] = ms;
 		}
 
+        public void EmbedStreamImage(Stream stream, String name)
+	    {
+            var ms = new MemoryStream();
+            stream.CopyTo(ms);
+            ms.Seek(0, SeekOrigin.Begin);
+            StreamedAttachments[name] = ms;
+
+            _contentImages[name] = name;
+	    }
+
 		public void AddAttachment(String filePath)
 		{
 			_attachments.Add(filePath);

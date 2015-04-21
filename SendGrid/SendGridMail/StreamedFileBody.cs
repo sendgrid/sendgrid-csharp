@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SendGridMail
 {
-    public class StreamedFileBody : Body
+    public class StreamedFileBody 
     {
         private string _name;
         private string _filename;
