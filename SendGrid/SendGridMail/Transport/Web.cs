@@ -112,20 +112,6 @@ namespace SendGrid
 			}
 		}
 
-		private static void CheckForErrors(HttpResponseMessage response)
-		{
-			var content = response.Content.ReadAsStreamAsync().Result;
-			var errors = GetErrorsInResponse(content);
-
-			// API error
-			if (errors.Any())
-				throw new InvalidApiRequestException(response.StatusCode, errors, response.ReasonPhrase);
-
-			// Other error
-			if (response.StatusCode != HttpStatusCode.OK)
-				FindErrorsInResponse(content);
-		}
-
 		private static void FindErrorsInResponse(Stream content)
 		{
 			using (var reader = XmlReader.Create(content))
