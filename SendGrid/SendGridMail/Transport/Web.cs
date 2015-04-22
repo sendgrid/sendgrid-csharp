@@ -36,16 +36,16 @@ namespace SendGrid
 		    _timeout = TimeSpan.FromSeconds(100);
 		}
 
-        	/// <summary>
-        	///     Creates a new Web interface for sending mail.
-        	/// </summary>
-        	/// <param name="credentials">SendGridMessage user parameters</param>
-        	/// <param name="httpTimeout">HTTP request timeout</param>
-	    	public Web(NetworkCredential credentials, TimeSpan httpTimeout)
-	    	{
-            _		credentials = credentials;
-	        _	timeout = httpTimeout;
-	    	}
+        /// <summary>
+        ///     Creates a new Web interface for sending mail.
+        /// </summary>
+        /// <param name="credentials">SendGridMessage user parameters</param>
+        /// <param name="httpTimeout">HTTP request timeout</param>
+	    public Web(NetworkCredential credentials, TimeSpan httpTimeout)
+	    {
+        	_credentials = credentials;
+	    	_timeout = httpTimeout;
+	    }
 
 		/// <summary>
 		///     Delivers a message over SendGrid's Web interface
@@ -53,7 +53,7 @@ namespace SendGrid
 		/// <param name="message"></param>
 		public void Deliver(ISendGrid message)
 		{
-			var client = new HttpClient()
+		    var client = new HttpClient();
 
             var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
@@ -71,7 +71,7 @@ namespace SendGrid
 		/// <param name="message"></param>
 		public async Task DeliverAsync(ISendGrid message)
 		{
-			var client = new HttpClient ();
+			var client = new HttpClient();
 
             var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
@@ -80,7 +80,7 @@ namespace SendGrid
 			var content = new MultipartFormDataContent();
 			AttachFormParams(message, content);
 			AttachFiles(message, content);
-			var response = await client.PostAsync("https://" + BaseUrl + Endpoint + ".xml", content);
+			var response = await client.PostAsync(Endpoint + ".xml", content);
 			await CheckForErrorsAsync(response);
 		}
 
