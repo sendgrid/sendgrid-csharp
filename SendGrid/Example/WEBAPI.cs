@@ -48,7 +48,7 @@ namespace Example
 			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//send the mail
-			transportInstance.Deliver(message);
+			transportInstance.DeliverAsync(message);
 		}
 
 		/// <summary>
@@ -78,7 +78,7 @@ namespace Example
 			var transportInstance = new Web(new NetworkCredential(_username, _password));
 
 			//send the mail
-			transportInstance.Deliver(message);
+			transportInstance.DeliverAsync(message);
 		}
 
 		/// <summary>
@@ -113,7 +113,7 @@ namespace Example
 			message.EnableGravatar();
 
 			//send the mail
-			transportInstance.Deliver(message);
+			transportInstance.DeliverAsync(message);
 		}
 
 		/// <summary>
@@ -147,7 +147,7 @@ namespace Example
 			message.EnableOpenTracking();
 
 			//send the mail
-			transportInstance.Deliver(message);
+            transportInstance.DeliverAsync(message);
 		}
 
 		/// <summary>
@@ -186,7 +186,7 @@ namespace Example
 			message.EnableClickTracking();
 
 			//send the mail
-			transportInstance.Deliver(message);
+            transportInstance.DeliverAsync(message);
 		}
 
 		/// <summary>
@@ -223,7 +223,7 @@ namespace Example
 			message.EnableSpamCheck();
 
 			//send the mail
-			transportInstance.Deliver(message);
+			transportInstance.DeliverAsync(message);
 		}
 
 		/// <summary>
@@ -262,7 +262,7 @@ namespace Example
 				"Please click <% here %> to unsubscribe");
 
 			//send the mail
-			transportInstance.Deliver(message);
+			transportInstance.DeliverAsync(message);
 		}
 
 		/// <summary>
@@ -300,7 +300,7 @@ namespace Example
 			message.EnableFooter("PLAIN TEXT FOOTER", "<p color='blue'>HTML FOOTER TEXT</p>");
 
 			//send the mail
-			transportInstance.Deliver(message);
+			transportInstance.DeliverAsync(message);
 		}
 
 		/// <summary>
@@ -339,7 +339,7 @@ namespace Example
 			message.EnableGoogleAnalytics("SendGridTest", "EMAIL", "Sendgrid", "ad-one", "My SG Campaign");
 
 			//send the mail
-			transportInstance.Deliver(message);
+			transportInstance.DeliverAsync(message);
 		}
 
 		/// <summary>
@@ -378,7 +378,7 @@ namespace Example
 			message.EnableTemplate("<p>My Email Template <% body %> is awesome!</p>");
 
 			//send the mail
-			transportInstance.Deliver(message);
+			transportInstance.DeliverAsync(message);
 		}
 
 		/// <summary>
@@ -417,7 +417,7 @@ namespace Example
 			message.EnableBypassListManagement();
 
 			//send the mail
-			transportInstance.Deliver(message);
+			transportInstance.DeliverAsync(message);
 		}
 
 
@@ -460,7 +460,7 @@ namespace Example
 			message.EnableBypassListManagement();
 
 			//send the mail
-			transportInstance.Deliver(message);
+			transportInstance.DeliverAsync(message);
 		}
 
 		/// <summary>
@@ -500,7 +500,7 @@ namespace Example
 			message.EnableBypassListManagement();
 
 			//send the mail
-			transportInstance.Deliver(message);
+			transportInstance.DeliverAsync(message);
 		}
 
 		/// <summary>
@@ -538,7 +538,7 @@ namespace Example
 			message.EnableBypassListManagement();
 
 			//send the mail
-			transportInstance.Deliver(message);
+			transportInstance.DeliverAsync(message);
 		}
 	}
 }
