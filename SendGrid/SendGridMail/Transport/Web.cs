@@ -20,9 +20,9 @@ namespace SendGrid
 
 		//TODO: Make this configurable
 		public const String Endpoint = "https://api.sendgrid.com/api/mail.send.xml";
-
+	    
 		private readonly NetworkCredential _credentials;
-	    	private readonly TimeSpan _timeout;
+	    private readonly HttpClient _client;
 
 		#endregion
 
@@ -30,11 +30,8 @@ namespace SendGrid
 		///     Creates a new Web interface for sending mail
 		/// </summary>
 		/// <param name="credentials">SendGridMessage user parameters</param>
-		public Web(NetworkCredential credentials)
-		{
-			_credentials = credentials;
-		    _timeout = TimeSpan.FromSeconds(100);
-		}
+        public Web(NetworkCredential credentials)
+            : this(credentials, TimeSpan.FromSeconds(100)) { }
 
         /// <summary>
         ///     Creates a new Web interface for sending mail.
@@ -44,7 +41,11 @@ namespace SendGrid
 	    public Web(NetworkCredential credentials, TimeSpan httpTimeout)
 	    {
         	_credentials = credentials;
-	    	_timeout = httpTimeout;
+            _client = new HttpClient();
+            
+            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            _client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
+            _client.Timeout = httpTimeout;
 	    }
 
 		/// <summary>
@@ -53,16 +54,10 @@ namespace SendGrid
 		/// <param name="message"></param>
 		public async Task DeliverAsync(ISendGrid message)
 		{
-			var client = new HttpClient();
-
-            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-
-			client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
-
 			var content = new MultipartFormDataContent();
 			AttachFormParams(message, content);
 			AttachFiles(message, content);
-			var response = await client.PostAsync(Endpoint, content);
+			var response = await _client.PostAsync(Endpoint, content);
 			await CheckForErrorsAsync(response);
 		}
 
