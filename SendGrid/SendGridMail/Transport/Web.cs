@@ -19,7 +19,7 @@ namespace SendGrid
 		#region Properties
 
 		//TODO: Make this configurable
-		public const String Endpoint = "https://api.sendgrid.com/api/mail.send";
+		public const String Endpoint = "https://api.sendgrid.com/api/mail.send.xml";
 
 		private readonly NetworkCredential _credentials;
 	    	private readonly TimeSpan _timeout;
@@ -48,24 +48,6 @@ namespace SendGrid
 	    }
 
 		/// <summary>
-		///     Delivers a message over SendGrid's Web interface
-		/// </summary>
-		/// <param name="message"></param>
-		public void Deliver(ISendGrid message)
-		{
-		    var client = new HttpClient();
-
-            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
-
-			var content = new MultipartFormDataContent();
-			AttachFormParams(message, content);
-			AttachFiles(message, content);
-			var response = client.PostAsync(Endpoint + ".xml", content).Result;
-			CheckForErrors(response);
-		}
-
-		/// <summary>
 		///     Asynchronously delivers a message over SendGrid's Web interface
 		/// </summary>
 		/// <param name="message"></param>
@@ -80,7 +62,7 @@ namespace SendGrid
 			var content = new MultipartFormDataContent();
 			AttachFormParams(message, content);
 			AttachFiles(message, content);
-			var response = await client.PostAsync(Endpoint + ".xml", content);
+			var response = await client.PostAsync(Endpoint, content);
 			await CheckForErrorsAsync(response);
 		}
 
