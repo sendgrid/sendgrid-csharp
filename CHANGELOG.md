@@ -1,7 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [5.2.0] - 2015-4-22
+## [6.0.0] - 2015-4-22
+The only breaking change in this release is the removal of the non-async
+Deliver method. All other changes are backwards compatible.
+
 ### Added
 - AddSection() method for SMTP API substitution sections (thanks @awwa)
 - EmbedStreamImage() to embed directly from a memory stream with no disk
@@ -13,7 +16,7 @@ All notable changes to this project will be documented in this file.
 - SetAsmGroupId() method for using suppression groups
 
 ### Changed
-- Refactored error handling !!
+- Refactored error handling (thanks @HowardvanRooijen)
 - Removed non-async Deliver() method as it was mixing sync and async
   code.
 
