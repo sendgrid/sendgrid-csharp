@@ -234,15 +234,35 @@ namespace SendGrid
 			Header.AddSubstitution(replacementTag, substitutionValues);
 		}
 
-		public void AddSection(String relacementTag, String sectionValue)
+		public void AddSection(String replacementTag, String sectionValue)
 		{
-			Header.AddSection(relacementTag, sectionValue);
+			Header.AddSection(replacementTag, sectionValue);
 		}
 
 		public void AddUniqueArgs(IDictionary<String, String> identifiers)
 		{
 			Header.AddUniqueArgs(identifiers);
 		}
+
+	    public void SetAsmGroupId(int id)
+	    {
+	        Header.SetAsmGroupId(id);
+	    }
+
+        public void SetIpPool(string pool)
+        {
+            Header.SetIpPool(pool);
+        }
+
+	    public void SetSendAt(DateTime sendTime)
+	    {
+	        Header.SetSendAt(sendTime);
+	    }
+
+        public void SetSendEachAt(IEnumerable<DateTime> sendTimes)
+        {
+            Header.SetSendEachAt(sendTimes);
+        }
 
 		public void SetCategory(String category)
 		{

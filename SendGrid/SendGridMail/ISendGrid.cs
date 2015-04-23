@@ -63,6 +63,16 @@ namespace SendGrid
 		/// </param>
 		void AddTo(IDictionary<String, IDictionary<String, String>> addresssInfo);
 
+        /// <summary>
+        ///     Defines a mapping between a replacement string in the text of the message to a section of
+        ///     substitution values to be used
+        /// </summary>
+        /// <param name="replacementTag">the string in the email that you'll replace eg. '-itemsOrdered-'</param>
+        /// <param name="sectionValue">
+        ///     The content that will be substituted in for the replacementTag
+        /// </param>
+	    void AddSection(String replacementTag, String sectionValue);
+       
 		/// <summary>
 		///     Defines a mapping between a replacement string in the text of the message to a list of
 		///     substitution values to be used, one per each recipient, in the same order as the recipients were added.
@@ -81,6 +91,12 @@ namespace SendGrid
 		/// <param name="identifiers">parameter substitutionValues pairs to be passed back on event notification</param>
 		void AddUniqueArgs(IDictionary<String, String> identifiers);
 
+        /// <summary>
+        ///     This sets the suppression group id for this email. 
+        /// </summary>
+        /// <param name="id">the id of the suppression group</param>
+        void SetAsmGroupId(int id);
+
 		/// <summary>
 		///     This sets the category for this email.  Statistics are stored on a per category
 		///     basis, so this can be useful for tracking on a per group basis.
@@ -94,6 +110,24 @@ namespace SendGrid
 		/// </summary>
 		/// <param name="categories">categories applied to the message</param>
 		void SetCategories(IEnumerable<String> categories);
+
+        /// <summary>
+        ///     This sets the IP Pool for this email.
+        /// </summary>
+        /// <param name="pool">The name of the pool with which to send the message.</param>
+        void SetIpPool(String pool);
+
+        /// <summary>
+        ///     Define a send_at timestamp to schedule this send for the future.
+        /// </summary>
+        /// <param name="sendTime">The time at which to send the email</param>
+        void SetSendAt(DateTime sendTime);
+
+        /// <summary>
+        ///     Define a send_each_at timestamp to schedule individual send times per message
+        /// </summary>
+        /// <param name="sendTimes">The times at which to send the emails</param>
+        void SetSendEachAt(IEnumerable<DateTime> sendTimes);
 
 		/// <summary>
 		///     Add an attachment to the message.
