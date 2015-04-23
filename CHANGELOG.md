@@ -24,6 +24,7 @@ Deliver method. All other changes are backwards compatible.
 - SetAsmGroupId() method for using suppression groups
 
 ### Changed
+- Updated SendGrid.SmtpApi to 1.3.1
 - Refactored error handling (thanks @HowardvanRooijen)
 - Removed non-async Deliver() method as it was mixing sync and async
   code.
