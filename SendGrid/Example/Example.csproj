@@ -37,9 +37,11 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BuildNet45|x86'">
-    <OutputPath>bin\x86\BuildNet45\</OutputPath>
+    <OutputPath>bin\BuildNet45\</OutputPath>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>TRACE, BUILD</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SendGrid.SmtpApi, Version=1.3.1.0, Culture=neutral, PublicKeyToken=2ae73662c35d80e4, processorArchitecture=MSIL">
@@ -47,7 +49,6 @@
       <HintPath>..\packages\SendGrid.SmtpApi.1.3.1\lib\net40\SendGrid.SmtpApi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
