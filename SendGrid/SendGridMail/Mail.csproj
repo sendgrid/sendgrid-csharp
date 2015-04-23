@@ -103,6 +103,7 @@
     <Compile Include="ISendGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendGrid.cs" />
+    <Compile Include="Transport\ErrorChecker.cs" />
     <Compile Include="Transport\ITransport.cs" />
     <Compile Include="Transport\Web.cs" />
   </ItemGroup>
