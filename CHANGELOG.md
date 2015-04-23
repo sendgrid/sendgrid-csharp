@@ -26,7 +26,7 @@ Deliver method. All other changes are backwards compatible.
 
 - Connections were not being reused. This was causing degraded
   performance with multiple threads open. Performance should be much
-better. (with help from gatesvp)
+better. (with help from @gatesvp)
 
 ## [5.1.0] - 2015-1-26
 ### Added
