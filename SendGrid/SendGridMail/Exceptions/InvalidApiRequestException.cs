@@ -3,7 +3,8 @@ using System.Net;
 
 namespace Exceptions
 {
-	public class InvalidApiRequestException : Exception
+	[Serializable] 
+    public class InvalidApiRequestException : Exception
 	{
 		public InvalidApiRequestException(HttpStatusCode httpStatusCode, string[] errors, string httpResponsePhrase)
 			: base(httpResponsePhrase + " Check `Errors` for a list of errors returned by the API.")
