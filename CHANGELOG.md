@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [6.0.1] - 2015-4-24
+###Fixed
+Fixed the endpoint URL. (⌒_⌒;)
+
 ## [6.0.0] - 2015-4-22
 The only breaking change in this release is the removal of the non-async
 Deliver method. All other changes are backwards compatible.
