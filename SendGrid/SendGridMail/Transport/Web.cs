@@ -57,7 +57,7 @@ namespace SendGrid
 			var content = new MultipartFormDataContent();
 			AttachFormParams(message, content);
 			AttachFiles(message, content);
-			var response = await _client.PostAsync(Endpoint + ".xml", content);
+			var response = await _client.PostAsync(Endpoint, content);
             		await ErrorChecker.CheckForErrorsAsync(response);
 		}
 
