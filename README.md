@@ -86,11 +86,8 @@ var credentials = new NetworkCredential("username", "password");
 var transportWeb = new Web(credentials);
 
 // Send the email.
-transportWeb.Deliver(myMessage);
+transportWeb.DeliverAsync(myMessage);
 ```
-
-You can also use the **DeliverAsync** method, which returns an awaitable
-task.
 
 #How to: Add an Attachment
 
