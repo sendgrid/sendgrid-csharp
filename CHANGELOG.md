@@ -1,9 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [6.1.0] - 2015-4-27
+###Added
+- Added support for sending via API keys in addition to credentials. Pass an API Key string to the Web transport constructor.
+
 ## [6.0.1] - 2015-4-24
 ###Fixed
-Fixed the endpoint URL. (⌒_⌒;)
+- Fixed the endpoint URL. (⌒_⌒;)
 
 ## [6.0.0] - 2015-4-22
 The only breaking change in this release is the removal of the non-async
