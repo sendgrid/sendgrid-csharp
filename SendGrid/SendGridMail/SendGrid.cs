@@ -170,6 +170,12 @@ namespace SendGrid
 			_message.To.Add(mailAddress);
 		}
 
+		public void AddTo(MailAddress address)
+		{
+			if (address == null) return;
+			_message.To.Add(address);
+		}
+
 		public void AddTo(IEnumerable<String> addresses)
 		{
 			if (addresses == null) return;
