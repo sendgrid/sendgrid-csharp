@@ -47,6 +47,12 @@ namespace SendGrid
 		/// <param name="address">single string eg. 'you@company.com'</param>
 		void AddTo(String address);
 
+        /// <summary>
+        ///     Add to the 'To' address.
+        /// </summary>
+        /// <param name="address">MailAddress object</param>
+        void AddTo(MailAddress address);
+
 		/// <summary>
 		///     Add to the 'To' address.
 		/// </summary>
