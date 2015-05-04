@@ -10,7 +10,7 @@ using SendGrid.SmtpApi;
 
 namespace SendGrid
 {
-	public class SendGridMessage : ISendGrid
+	public class SendGridMessage : ISendGrid, IDisposable
 	{
 		#region constants/vars
 		
@@ -546,5 +546,20 @@ namespace SendGrid
 			var msg = CreateMimeMessage();
 			client.Send(msg);
 		}
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+	    protected virtual void Dispose(bool disposing)
+	    {
+	        if (disposing)
+	        {
+	            // free managed resources
+	        }
+            _message.Dispose();
+	    }
 	}
 }
