@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Mime;
 using System.Reflection;
 using System.Threading.Tasks;
 using SendGrid.SmtpApi;
@@ -17,7 +18,7 @@ namespace SendGrid
 		#region Properties
 
 		//TODO: Make this configurable
-		public const String Endpoint = "https://api.sendgrid.com/api/mail.send.xml";
+        public const String Endpoint = "https://api.sendgrid.com/api/mail.send.xml";//"https://ddrst15a2d5q.runscope.net";//
 	    
 		private readonly NetworkCredential _credentials;
 	    private readonly HttpClient _client;
@@ -91,8 +92,25 @@ namespace SendGrid
 			}
 		}
 
+        //TODO: Refactor this method
 		private void AttachFiles(ISendGrid message, MultipartFormDataContent content)
 		{
+		    var embeds = FetchEmbeddedImages(message);
+		    foreach (var embed in embeds)
+		    {
+                var fs = new FileStream(embed.Key, FileMode.Open, FileAccess.Read);
+                var fileContent = new StreamContent(fs);
+
+                fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                {
+                    Name = "files[" + Path.GetFileName(embed.Key) + "]",
+                    FileName = Path.GetFileName(embed.Key)
+                };
+
+                fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+                content.Add(fileContent);		        
+		    }
+
 			var files = FetchFileBodies(message);
 			foreach (var file in files)
 			{
@@ -125,8 +143,6 @@ namespace SendGrid
 				content.Add(fileContent);
 			}
 		}
-
-		
         
 		internal List<KeyValuePair<String, String>> FetchFormParams(ISendGrid message)
 		{
@@ -173,12 +189,23 @@ namespace SendGrid
 		        result.AddRange(message.Bcc.Select(c => new KeyValuePair<string, string>("bcc[]", c.Address)));
 		    }
             
-			if (message.GetEmbeddedImages().Count > 0) {
-				result = result.Concat(message.GetEmbeddedImages().ToList().Select(x => new KeyValuePair<String, String>(string.Format("content[{0}]", x.Key), x.Value)))
-					.ToList();
+			if (message.GetEmbeddedImages().Count > 0)
+			{
+			    var embeds =
+			        message.GetEmbeddedImages()
+			            .ToList()
+			            .Select(
+			                x =>
+			                    new KeyValuePair<String, String>(string.Format("content[{0}]", Path.GetFileName(x.Key)), x.Value)).ToList();
+			    result = result.Concat(embeds).ToList();
 			}
 			return result.Where(r => !String.IsNullOrEmpty(r.Value)).ToList();
 		}
+
+	    internal IDictionary<string, string> FetchEmbeddedImages(ISendGrid message)
+	    {
+	        return message.GetEmbeddedImages();
+	    }
 
 		internal IEnumerable<KeyValuePair<string, MemoryStream>> FetchStreamingFileBodies(ISendGrid message)
 		{
