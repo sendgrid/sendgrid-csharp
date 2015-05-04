@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
 
 namespace Exceptions
 {
@@ -16,5 +19,14 @@ namespace Exceptions
 		public String[] Errors { get; set; }
 
 		public HttpStatusCode ResponseStatusCode { get; private set; }
+
+        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+
+            info.AddValue("InvalidApiRequestException.ResponseStatusCode", this.ResponseStatusCode);
+            info.AddValue("MyException.Errors", this.Errors, typeof(IEnumerable<string>));
+        }
 	}
 }
