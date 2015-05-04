@@ -13,7 +13,7 @@ using SendGrid.SmtpApi;
 // ReSharper disable MemberCanBePrivate.Global
 namespace SendGrid
 {
-	public class Web : ITransport
+	public class Web : ITransport, IDisposable
 	{
 		#region Properties
 
@@ -220,5 +220,20 @@ namespace SendGrid
 		}
 
 		#endregion
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+            }
+            _client.Dispose();
+        }
 	}
 }
