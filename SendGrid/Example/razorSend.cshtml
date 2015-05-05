@@ -1,0 +1,23 @@
+@using SendGrid;
+@using System.Net.Mail;
+
+@{
+    SendGridSendAsync sendGridSendAsync = new SendGridSendAsync();
+
+    SendGridMessage sendGridMessage = new SendGridMessage();
+
+    sendGridMessage.From = new MailAddress("marcello@example.com", "Marcello Carreira");
+    sendGridMessage.AddTo("paulo@example.com");
+    sendGridMessage.Subject = "Testando o SendGrid diretamente do Razor";
+    sendGridMessage.Text = "Hello World!";
+    sendGridMessage.Html = "<p>Olá Mundo!<p>";
+
+    string response = sendGridSendAsync.sendMessageAsync(sendGridMessage).Result;
+}
+<!DOCTYPE HTML>
+<html>
+    <head></head>>
+        <body>
+            <p>Response: @response</p>
+        </body>
+</html>
