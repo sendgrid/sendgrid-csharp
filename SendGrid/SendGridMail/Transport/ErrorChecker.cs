@@ -16,12 +16,12 @@
             CheckForErrors(response, response.Content.ReadAsStreamAsync().Result);
         }
 
-        public static async Task CheckForErrorsAsync(HttpResponseMessage response)
+        public static async Task<HttpStatusCode> CheckForErrorsAsync(HttpResponseMessage response)
         {
-            CheckForErrors(response, await response.Content.ReadAsStreamAsync());
+            return CheckForErrors(response, await response.Content.ReadAsStreamAsync());
         }
 
-        private static void CheckForErrors(HttpResponseMessage response, Stream stream)
+        private static HttpStatusCode CheckForErrors(HttpResponseMessage response, Stream stream)
         {
             if (response.StatusCode != HttpStatusCode.OK)
             {
@@ -52,6 +52,7 @@
                     }
                 }
             }
+            return response.StatusCode;
         }
     }
 }
