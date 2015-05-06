@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-
+ 
 
 namespace SendGrid
 {
@@ -13,6 +13,6 @@ namespace SendGrid
         ///     Asynchronously delivers a message using the protocol of the derived class
         /// </summary>
         /// <param name="message">the message to be delivered</param>
-        Task DeliverAsync(ISendGrid message);
+        Task<string> DeliverAsync(ISendGrid message);
 	}
 }

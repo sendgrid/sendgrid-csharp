@@ -78,9 +78,9 @@ namespace SendGrid
 			AttachFormParams(message, content);
 			AttachFiles(message, content);
 			HttpResponseMessage response = await _client.PostAsync(Endpoint, content).ConfigureAwait(continueOnCapturedContext: false);
-            		HttpStatusCode statusCode = await ErrorChecker.CheckForErrorsAsync(response);
+            HttpStatusCode statusCode = await ErrorChecker.CheckForErrorsAsync(response);
             		
-            		return statusCode.ToString();
+            return statusCode.ToString();
 		}
 
 	    #region Support Methods
