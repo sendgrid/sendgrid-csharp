@@ -72,16 +72,29 @@ namespace SendGrid
 		///     Asynchronously delivers a message over SendGrid's Web interface
 		/// </summary>
 		/// <param name="message"></param>
-		public async Task<string> DeliverAsync(ISendGrid message)
+		public async Task DeliverAsync(ISendGrid message)
 		{
 			var content = new MultipartFormDataContent();
 			AttachFormParams(message, content);
 			AttachFiles(message, content);
-			HttpResponseMessage response = await _client.PostAsync(Endpoint, content).ConfigureAwait(continueOnCapturedContext: false);
-            HttpStatusCode statusCode = await ErrorChecker.CheckForErrorsAsync(response);
-            		
-            return statusCode.ToString();
+			var response = await _client.PostAsync(Endpoint, content);
+            await ErrorChecker.CheckForErrorsAsync(response);
 		}
+
+        /// <summary>
+        ///     Asynchronously delivers a message over SendGrid's Web interface
+        /// </summary>
+        /// <param name="message"></param>
+        public async Task<string> DeliverAsyncReturn(ISendGrid message)
+        {
+            var content = new MultipartFormDataContent();
+            AttachFormParams(message, content);
+            AttachFiles(message, content);
+            HttpResponseMessage response = await _client.PostAsync(Endpoint, content).ConfigureAwait(continueOnCapturedContext: false);
+            HttpStatusCode statusCode = await ErrorChecker.CheckForErrorsAsync(response);
+
+            return statusCode.ToString();
+        }
 
 	    #region Support Methods
 
