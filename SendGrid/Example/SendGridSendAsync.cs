@@ -35,7 +35,7 @@ public class SendGridSendAsync
 
         try
         {
-            string response = await transportWeb.DeliverAsync(sendGridMessage).ConfigureAwait(continueOnCapturedContext: false);
+            string response = await transportWeb.DeliverAsyncReturn(sendGridMessage).ConfigureAwait(continueOnCapturedContext: false);
             return response;
         }
         catch (InvalidApiRequestException ex)
