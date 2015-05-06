@@ -4,6 +4,7 @@ using System.Net.Mail;
 using SendGrid;
 using System.Threading.Tasks;
 using Exceptions;
+using System;
 
 /// <summary>
 ///
@@ -25,7 +26,7 @@ using Exceptions;
 /// </summary>
 public class SendGridSendAsync
 {
-    string SendGridApiKey = Convert.ToString(System.Configuration.ConfigurationManager.ConnectionStrings["SendGridApiKey"]);
+    string SendGridApiKey = "Your API Key";
 
     public async Task<string> sendMessageAsync(SendGridMessage sendGridMessage)
     {
