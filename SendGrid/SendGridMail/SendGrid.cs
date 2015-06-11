@@ -197,6 +197,14 @@ namespace SendGrid
 	        _message.CC.Add(address);
 	    }
 
+        public void AddCc(IEnumerable<String> addresses)
+        {
+            if (addresses == null) return;
+
+            foreach (var address in addresses.Where(address => address != null))
+                AddCc(address);
+        }
+
 	    public void AddBcc(string address)
 	    {
 	        var mailAddress = new MailAddress(address);
@@ -207,6 +215,14 @@ namespace SendGrid
 	    {
 	        _message.Bcc.Add(address);
 	    }
+
+        public void AddBcc(IEnumerable<String> addresses)
+        {
+            if (addresses == null) return;
+
+            foreach (var address in addresses.Where(address => address != null))
+                AddBcc(address);
+        }
 
 	    public Dictionary<String, MemoryStream> StreamedAttachments
 		{
