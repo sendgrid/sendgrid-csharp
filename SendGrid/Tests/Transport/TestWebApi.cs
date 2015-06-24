@@ -2,23 +2,41 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Mail;
+using System.Threading;
+using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using SendGrid;
 
 namespace Tests.Transport
 {
+    public class FakeHttpSendMessageHandler : HttpMessageHandler
+    {
+        public virtual HttpResponseMessage Send(HttpRequestMessage request)
+        {
+            throw new NotImplementedException("Ensure you setup this method as part of your test.");
+        }
+
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(Send(request));
+        }
+    }
+
 	[TestFixture]
 	internal class TestWebApi
 	{
 		private const string TestUsername = "username";
 		private const string TestPassword = "password";
 
+        private static readonly NetworkCredential Credentials = new NetworkCredential(TestUsername , TestPassword);
+
 		[Test]
 		public void TestFetchFileBodies()
 		{
-			var webApi = new Web(new NetworkCredential(TestUsername, TestPassword));
+			var webApi = new Web(Credentials);
 			var message = new Mock<ISendGrid>();
 			var attachments = new[] {"foo", "bar", "foobar"};
 			message.SetupProperty(foo => foo.Attachments, null);
@@ -60,7 +78,7 @@ namespace Tests.Transport
 			message.AddHeaders(testHeader);
 			message.Header.SetCategory(categoryName);
 
-			var webApi = new Web(new NetworkCredential(TestUsername, TestPassword));
+			var webApi = new Web(Credentials);
 			var result = webApi.FetchFormParams(message);
 			Assert.True(result.Any(r => r.Key == "api_user" && r.Value == TestUsername));
 			Assert.True(result.Any(r => r.Key == "api_key" && r.Value == TestPassword));
@@ -78,5 +96,31 @@ namespace Tests.Transport
 			Assert.True(
 				result.Any(r => r.Key == "x-smtpapi" && r.Value == String.Format("{{\"category\" : \"{0}\"}}", categoryName)));
 		}
+
+	    [Test]
+	    public void Test_ConstructWithClient_DelviersAMessage()
+	    {
+	        var handler = new Mock<FakeHttpSendMessageHandler> { CallBase = true };
+            handler
+                .Setup(h => h.Send(It.IsNotNull<HttpRequestMessage>()))
+                .Returns(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent("<xml><result>success</result></xml>")
+                });
+
+	        using (var client = new HttpClient(handler.Object))
+	        {
+                var webApi = new Web(Credentials, client);
+                var message = new SendGridMessage
+                {
+                    Subject = "Hello Test",
+                    From = new MailAddress("test@test.com")
+                };
+
+                Assert.DoesNotThrow(async () => await webApi.DeliverAsync(message));
+	        }
+
+            handler.VerifyAll();
+	    }
 	}
 }
