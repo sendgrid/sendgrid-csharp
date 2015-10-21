@@ -38,14 +38,16 @@ var myMessage = new SendGridMessage();
 // Add the message properties.
 myMessage.From = new MailAddress("john@example.com");
 
-// Add multiple addresses to the To field.
+// Set message recipient using the To field.
+myMessage.To = @"Sam Jackson <sam@example.com>";
+
+// For multiple recipients use AddTo method.
 List<String> recipients = new List<String>
 {
     @"Jeff Smith <jeff@example.com>",
     @"Anna Lidman <anna@example.com>",
     @"Peter Saddow <peter@example.com>"
 };
-
 myMessage.AddTo(recipients);
 
 myMessage.Subject = "Testing the SendGrid Library";
