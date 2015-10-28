@@ -91,6 +91,8 @@ var transportWeb = new Web("This string is an API key");
 
 // Send the email.
 transportWeb.DeliverAsync(myMessage);
+// If your developing a Console Application, use the following
+// transportWeb.DeliverAsync(myMessage).Wait();
 ```
 
 #How to: Add an Attachment
