@@ -13,30 +13,41 @@ namespace SendGrid
     public class Client
     {
         private HttpResponseMessage _response = new HttpResponseMessage();
-        private String _apiKey;
-        public Uri BaseUri;
+        private string _apiKey;
+        private Uri _baseUri;
         public APIKeys ApiKeys;
 
-        public Client(String api_key)
+        /// <summary>
+		///     Create a client that connects to the SendGrid Web API
+		/// </summary>
+		/// <param name="apiKey">Your SendGrid API Key</param>
+		/// <param name="baseUri">Base SendGrid API Uri</param>
+        public Client(string apiKey, string baseUri = "https://api.sendgrid.com/")
         {
-            BaseUri = new Uri("https://api.sendgrid.com/");
-            _apiKey = api_key;
+            _baseUri = new Uri(baseUri);
+            _apiKey = apiKey;
             ApiKeys = new APIKeys(this);
         }
 
-        async Task RequestAsync(String method, String endpoint, Object data)
+        /// <summary>
+        ///     Create a client that connects to the SendGrid Web API
+        /// </summary>
+        /// <param name="method">HTTP verb, case-insensitive</param>
+        /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
+        /// <param name="data">An object representing the resource's data</param>
+        /// <returns>An asyncronous task</returns>
+        private async Task RequestAsync(string method, string endpoint, Object data)
         {
             using (var client = new HttpClient())
             {
                 try
                 {
-                    client.BaseAddress = BaseUri;
+                    client.BaseAddress = _baseUri;
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
                     var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
                     client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
-                    StringContent content;
 
                     switch (method.ToLower())
                     {
@@ -47,8 +58,8 @@ namespace SendGrid
                             _response = await client.PostAsJsonAsync(endpoint, data);
                             break;
                         case "patch":
-                            endpoint = BaseUri + endpoint.Remove(0, 1);
-                            content = new StringContent(data.ToString(), Encoding.UTF8, "application/json");
+                            endpoint = _baseUri + endpoint;
+                            StringContent content = new StringContent(data.ToString(), Encoding.UTF8, "application/json");
                             HttpRequestMessage request = new HttpRequestMessage
                             {
                                 Method = new HttpMethod("PATCH"),
@@ -79,25 +90,35 @@ namespace SendGrid
             }
         }
 
-        public HttpResponseMessage Get(String endpoint)
+        /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
+        /// <returns>The resulting message from the API call</returns>
+        public HttpResponseMessage Get(string endpoint)
         {
             RequestAsync("GET", endpoint, null).Wait();
             return _response;
         }
 
-        public HttpResponseMessage Post(String endpoint, object data)
+        /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
+        /// <param name="data">An object representing the resource's data</param>
+        /// <returns>The resulting message from the API call</returns>
+        public HttpResponseMessage Post(string endpoint, object data)
         {
             RequestAsync("POST", endpoint, data).Wait();
             return _response;
         }
 
-        public HttpResponseMessage Delete(String endpoint)
+        /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
+        /// <returns>The resulting message from the API call</returns>
+        public HttpResponseMessage Delete(string endpoint)
         {
             RequestAsync("DELETE", endpoint, null).Wait();
             return _response;
         }
 
-        public HttpResponseMessage Patch(String endpoint, object data)
+        /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
+        /// <param name="data">An object representing the resource's data</param>
+        /// <returns>The resulting message from the API call</returns>
+        public HttpResponseMessage Patch(string endpoint, object data)
         {
             var json = new JavaScriptSerializer().Serialize(data);
             RequestAsync("PATCH", endpoint, json).Wait();

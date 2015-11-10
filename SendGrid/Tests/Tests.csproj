@@ -84,6 +84,10 @@
       <Project>{3C687BEF-FF50-44AD-8315-2D4237281AF8}</Project>
       <Name>Mail</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SendGrid\SendGrid.csproj">
+      <Project>{1c318867-440b-4eb9-99e3-c0cc2c556962}</Project>
+      <Name>SendGrid</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
