@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net.Http;
-using System.Web.Script.Serialization;
 
 namespace SendGrid.Resources
 {
@@ -30,8 +29,8 @@ namespace SendGrid.Resources
 
         public HttpResponseMessage Post(String Name)
         {
-            var Data = new APIKeysData() {name = Name};
-            return _client.Post(Endpoint, Data);
+            var data = new APIKeysData() {name = Name};
+            return _client.Post(Endpoint, data);
         }
 
         public HttpResponseMessage Delete(String ApiKeyID)
@@ -41,8 +40,8 @@ namespace SendGrid.Resources
 
         public HttpResponseMessage Patch(String ApiKeyID, String Name)
         {
-            var Data = new APIKeysData() { name = Name };
-            return _client.Patch(Endpoint + "/" + ApiKeyID, Data);
+            var data = new APIKeysData() { name = Name };
+            return _client.Patch(Endpoint + "/" + ApiKeyID, data);
         }
 
     }

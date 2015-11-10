@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.Text;
 using SendGrid.Resources;
 using System.Web.Script.Serialization;
+using System.Net;
 
 namespace SendGrid
 {
     public class Client
     {
-        private HttpResponseMessage _response;
+        private HttpResponseMessage _response = new HttpResponseMessage();
         private String _apiKey;
         public Uri BaseUri;
         public APIKeys ApiKeys;
@@ -43,7 +44,6 @@ namespace SendGrid
                             _response = await client.GetAsync(endpoint);
                             break;
                         case "post":
-                            content = new StringContent(data.ToString(), Encoding.UTF8, "application/json");
                             _response = await client.PostAsJsonAsync(endpoint, data);
                             break;
                         case "patch":
@@ -61,38 +61,20 @@ namespace SendGrid
                             _response = await client.DeleteAsync(endpoint);
                             break;
                         default:
-                            _response = null;
+                            _response.StatusCode = HttpStatusCode.MethodNotAllowed;
+                            _response.Content = new StringContent("Bad method call: " + method);
                             break;
-                    }
-
-                    if (_response == null)
-                    {
-                        //Console.WriteLine("Bad method call: " + method);
-                        //Console.ReadKey();
-                    }
-                    string responseBodyAsText = await _response.Content.ReadAsStringAsync();
-                    responseBodyAsText = responseBodyAsText.Replace("<br>", Environment.NewLine);
-                    if (_response.IsSuccessStatusCode)
-                    {
-                        //Console.WriteLine(_response.StatusCode);
-                        //Console.WriteLine(responseBodyAsText);
-                        //Console.ReadKey();
-                    }
-                    else
-                    {
-                        //Console.WriteLine(responseBodyAsText);
-                        //Console.ReadKey();
                     }
                 }
                 catch (HttpRequestException hre)
                 {
-                    //Console.WriteLine(hre.ToString());
-                    //Console.ReadKey();
+                    _response.StatusCode = HttpStatusCode.InternalServerError;
+                    _response.Content = new StringContent(hre.ToString());
                 }
                 catch (Exception ex)
                 {
-                    //Console.WriteLine(ex.ToString());
-                    //Console.ReadKey();
+                    _response.StatusCode = HttpStatusCode.InternalServerError;
+                    _response.Content = new StringContent(ex.ToString());
                 }
             }
         }
