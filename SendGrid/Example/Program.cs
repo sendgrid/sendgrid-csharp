@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
+using Newtonsoft.Json.Linq;
 using SendGrid.Resources;
 
 namespace Example
@@ -14,36 +15,40 @@ namespace Example
 		{  
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             var client = new SendGrid.Client(apiKey);
+		    string _api_key_id;
 
             // GET
-            HttpResponseMessage response = client.ApiKeys.Get();
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+            HttpResponseMessage responseGet = client.ApiKeys.Get();
+            Console.WriteLine(responseGet.StatusCode);
+            Console.WriteLine(responseGet.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("These are your current API Keys. Press any key to continue.");
             Console.ReadKey();
-
+     
             // POST
-            /*
-            HttpResponseMessage response = client.ApiKeys.Post("CSharpTestKey5");
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+            HttpResponseMessage responsePost = client.ApiKeys.Post("CSharpTestKey");
+            string rawString = responsePost.Content.ReadAsStringAsync().Result;
+            dynamic jsonObject = JObject.Parse(rawString);
+            _api_key_id = jsonObject.api_key_id.ToString();
+            Console.WriteLine(responsePost.StatusCode);
+            Console.WriteLine(responsePost.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("API Key created. Press any key to continue.");
             Console.ReadKey();
-            */
-
-            // DELETE
-            /*
-            HttpResponseMessage response = client.ApiKeys.Delete("<api_key_id>");
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
-            Console.ReadKey();
-            */
 
             // PATCH
-            /*
-            HttpResponseMessage response = client.ApiKeys.Patch("<api_key_id>", "CSharpTestKey7");
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+            HttpResponseMessage responsePatch = client.ApiKeys.Patch(_api_key_id, "CSharpTestKeyPatched");
+            Console.WriteLine(responsePatch.StatusCode);
+            Console.WriteLine(responsePatch.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("API Key patched. Press any key to continue.");
             Console.ReadKey();
-            */
+
+            // DELETE
+            Console.WriteLine("Deleting API Key, please wait.");
+            client.ApiKeys.Delete(_api_key_id);
+            HttpResponseMessage responseFinal = client.ApiKeys.Get();
+            Console.WriteLine(responseFinal.StatusCode);
+            Console.WriteLine(responseFinal.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("API Key Deleted, press any key to end");
+            Console.ReadKey();
 
             // SEND EMAIL
             /*
