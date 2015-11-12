@@ -7,21 +7,21 @@ using Newtonsoft.Json.Linq;
 
 namespace Example
 {
-	internal class Program
-	{
-		private static void Main()
-		{  
+    internal class Program
+    {
+        private static void Main()
+        {
             // Test sending email 
-		    string to = "example@example.com";
-		    string from = "example@example.com";
-		    string fromName = "Jane Doe";
+            string to = "example@example.com";
+            string from = "example@example.com";
+            string fromName = "Jane Doe";
             SendEmail(to, from, fromName);
             // Test viewing, creating, modifying and deleting API keys through our v3 Web API 
             ApiKeys();
         }
 
         private static void SendAsync(SendGrid.SendGridMessage message)
-	    {
+        {
             // Create credentials, specifying your user Name and password.
             string username = Environment.GetEnvironmentVariable("SENDGRID_USERNAME");
             string password = Environment.GetEnvironmentVariable("SENDGRID_PASSWORD");
@@ -46,10 +46,10 @@ namespace Example
                 Console.WriteLine("Press any key to continue.");
                 Console.ReadKey();
             }
-	    }
+        }
 
-	    private static void SendEmail(string to, string from, string fromName)
-	    {
+        private static void SendEmail(string to, string from, string fromName)
+        {
             // Create the email object first, then add the properties.
             var myMessage = new SendGrid.SendGridMessage();
             myMessage.AddTo(to);
@@ -64,8 +64,8 @@ namespace Example
             SendAsync(myMessage);
         }
 
-	    private static void ApiKeys()
-	    {
+        private static void ApiKeys()
+        {
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             var client = new SendGrid.Client(apiKey);
             string _api_key_id;
@@ -103,5 +103,5 @@ namespace Example
             Console.WriteLine("API Key Deleted, press any key to end");
             Console.ReadKey();
         }
-	}
+    }
 }

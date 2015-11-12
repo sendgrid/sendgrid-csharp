@@ -18,10 +18,10 @@ namespace SendGrid
         public APIKeys ApiKeys;
 
         /// <summary>
-		///     Create a client that connects to the SendGrid Web API
-		/// </summary>
-		/// <param name="apiKey">Your SendGrid API Key</param>
-		/// <param name="baseUri">Base SendGrid API Uri</param>
+        ///     Create a client that connects to the SendGrid Web API
+        /// </summary>
+        /// <param name="apiKey">Your SendGrid API Key</param>
+        /// <param name="baseUri">Base SendGrid API Uri</param>
         public Client(string apiKey, string baseUri = "https://api.sendgrid.com/")
         {
             _baseUri = new Uri(baseUri);
