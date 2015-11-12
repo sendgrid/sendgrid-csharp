@@ -7,7 +7,7 @@ using Moq;
 using NUnit.Framework;
 using SendGrid;
 
-namespace Tests.Transport
+namespace Transport
 {
 	[TestFixture]
 	internal class TestWebApi

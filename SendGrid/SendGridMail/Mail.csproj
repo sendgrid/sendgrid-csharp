@@ -74,18 +74,21 @@
     <DefineConstants>TRACE, RELEASE</DefineConstants>
     <DebugType>
     </DebugType>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'BuildNet45|AnyCPU' ">
     <Optimize>false</Optimize>
     <SignAssembly>false</SignAssembly>
     <DebugType>
     </DebugType>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <SignAssembly>false</SignAssembly>
     <Optimize>false</Optimize>
     <DebugType>
     </DebugType>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
