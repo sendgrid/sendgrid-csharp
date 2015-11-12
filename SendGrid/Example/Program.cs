@@ -12,9 +12,9 @@ namespace Example
 		private static void Main()
 		{  
             // Test sending email 
-		    string to = "elmer.thomas@sendgrid.com";
-		    string from = "dx@sendgrid.com";
-		    string fromName = "Elmer Thomas";
+		    string to = "example@example.com";
+		    string from = "example@example.com";
+		    string fromName = "Jane Doe";
             SendEmail(to, from, fromName);
             // Test viewing, creating, modifying and deleting API keys through our v3 Web API 
             ApiKeys();
