@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Newtonsoft.Json.Linq;
 using SendGrid;
 
 namespace UnitTest
 {
-    [TestClass]
+    [TestFixture]
     public class UnitTest
     {
         static string _baseUri = "https://api.sendgrid.com/";
@@ -15,7 +15,7 @@ namespace UnitTest
         public Client client = new Client(_apiKey, _baseUri);
         private static string _api_key_id = "";
 
-        [TestMethod]
+        [Test]
         public void ApiKeysIntegrationTest()
         {
             TestGet();
