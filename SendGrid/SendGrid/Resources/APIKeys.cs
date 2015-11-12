@@ -9,7 +9,6 @@ namespace SendGrid.Resources
 
     public class APIKeys
     {
-        public string Name { get; set; }
         private string _endpoint;
         private Client _client;
 
