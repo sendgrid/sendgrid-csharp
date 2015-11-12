@@ -8,7 +8,7 @@ using SendGrid;
 namespace UnitTest
 {
     [TestFixture]
-    public class UnitTest
+    public class APIKeys
     {
         static string _baseUri = "https://api.sendgrid.com/";
         static string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
