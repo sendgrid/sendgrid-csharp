@@ -11,7 +11,7 @@ namespace UnitTest
     public class UnitTest
     {
         static string _baseUri = "https://api.sendgrid.com/";
-        static string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+        static string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
         public Client client = new Client(_apiKey, _baseUri);
         private static string _api_key_id = "";
 
