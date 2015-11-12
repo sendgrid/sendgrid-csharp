@@ -49,6 +49,7 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
     </Reference>
@@ -68,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\TestApiKeys.cs" />
     <Compile Include="TestSendgrid.cs" />
     <Compile Include="Transport\TestErrorChecker.cs" />
     <Compile Include="Transport\TestWebApi.cs" />
