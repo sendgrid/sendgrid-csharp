@@ -7,6 +7,7 @@ install:
 - nuget restore SendGrid/SendGrid.sln
 - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
+- sudo apt-get update
 - xbuild /p:Configuration=BuildNet45 SendGrid/SendGrid.sln
 - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe SendGrid/Tests/bin/BuildNet45/Tests.dll
 - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe SendGrid/UnitTest/bin/Release/UnitTest.dll
