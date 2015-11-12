@@ -5,18 +5,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using SendGrid;
 
-namespace SendGridTests
+namespace UnitTest
 {
-    public class Base
+    [TestClass]
+    public class UnitTest
     {
         static string _baseUri = "https://api.sendgrid.com/";
         static string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
         public Client client = new Client(_apiKey, _baseUri);
-    }
-
-    [TestClass]
-    public class ApiKeys : Base
-    {
         private static string _api_key_id = "";
 
         [TestMethod]
