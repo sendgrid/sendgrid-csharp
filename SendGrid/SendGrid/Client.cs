@@ -12,10 +12,9 @@ namespace SendGrid
 {
     public class Client
     {
-        private HttpResponseMessage _response = new HttpResponseMessage();
         private string _apiKey;
-        private Uri _baseUri;
         public APIKeys ApiKeys;
+        private Uri _baseUri;
 
         /// <summary>
         ///     Create a client that connects to the SendGrid Web API
@@ -36,7 +35,7 @@ namespace SendGrid
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">An object representing the resource's data</param>
         /// <returns>An asyncronous task</returns>
-        private async Task RequestAsync(string method, string endpoint, Object data)
+        private async Task<HttpResponseMessage> RequestAsync(string method, string endpoint, Object data)
         {
             using (var client = new HttpClient())
             {
@@ -52,11 +51,9 @@ namespace SendGrid
                     switch (method.ToLower())
                     {
                         case "get":
-                            _response = await client.GetAsync(endpoint);
-                            break;
+                            return await client.GetAsync(endpoint);
                         case "post":
-                            _response = await client.PostAsJsonAsync(endpoint, data);
-                            break;
+                            return await client.PostAsJsonAsync(endpoint, data);
                         case "patch":
                             endpoint = _baseUri + endpoint;
                             StringContent content = new StringContent(data.ToString(), Encoding.UTF8, "application/json");
@@ -66,26 +63,27 @@ namespace SendGrid
                                 RequestUri = new Uri(endpoint),
                                 Content = content
                             };
-                            _response = await client.SendAsync(request);
-                            break;
+                            return await client.SendAsync(request);
                         case "delete":
-                            _response = await client.DeleteAsync(endpoint);
-                            break;
+                            return await client.DeleteAsync(endpoint);
                         default:
-                            _response.StatusCode = HttpStatusCode.MethodNotAllowed;
-                            _response.Content = new StringContent("Bad method call: " + method);
-                            break;
+                            HttpResponseMessage response = new HttpResponseMessage();
+                            response.StatusCode = HttpStatusCode.MethodNotAllowed;
+                            response.Content = new StringContent("Bad method call: " + method);
+                            return response;
                     }
                 }
                 catch (HttpRequestException hre)
                 {
-                    _response.StatusCode = HttpStatusCode.InternalServerError;
-                    _response.Content = new StringContent(hre.ToString());
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    response.Content = new StringContent(hre.Message);
+                    return response;
                 }
                 catch (Exception ex)
                 {
-                    _response.StatusCode = HttpStatusCode.InternalServerError;
-                    _response.Content = new StringContent(ex.ToString());
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    response.Content = new StringContent(ex.Message);
+                    return response;
                 }
             }
         }
@@ -94,8 +92,8 @@ namespace SendGrid
         /// <returns>The resulting message from the API call</returns>
         public HttpResponseMessage Get(string endpoint)
         {
-            RequestAsync("GET", endpoint, null).Wait();
-            return _response;
+            HttpResponseMessage response = new HttpResponseMessage();
+            return RequestAsync("GET", endpoint, null).Result;
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
@@ -103,16 +101,14 @@ namespace SendGrid
         /// <returns>The resulting message from the API call</returns>
         public HttpResponseMessage Post(string endpoint, object data)
         {
-            RequestAsync("POST", endpoint, data).Wait();
-            return _response;
+            return RequestAsync("POST", endpoint, data).Result;
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <returns>The resulting message from the API call</returns>
         public HttpResponseMessage Delete(string endpoint)
         {
-            RequestAsync("DELETE", endpoint, null).Wait();
-            return _response;
+            return RequestAsync("DELETE", endpoint, null).Result;
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
@@ -121,9 +117,7 @@ namespace SendGrid
         public HttpResponseMessage Patch(string endpoint, object data)
         {
             var json = new JavaScriptSerializer().Serialize(data);
-            RequestAsync("PATCH", endpoint, json).Wait();
-            return _response;
+            return RequestAsync("PATCH", endpoint, json).Result;
         }
-
     }
 }
