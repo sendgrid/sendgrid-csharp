@@ -26,6 +26,17 @@ namespace SendGrid
 
 		#endregion
 
+	    private static HttpClient CreateClient(TimeSpan httpTimeout)
+	    {
+            var client = new HttpClient();
+
+            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
+            client.Timeout = httpTimeout;
+
+	        return client;
+	    }
+
 		/// <summary>
 		///     Creates a new Web interface for sending mail
 		/// </summary>
@@ -39,13 +50,19 @@ namespace SendGrid
         /// <param name="credentials">SendGridMessage user parameters</param>
         /// <param name="httpTimeout">HTTP request timeout</param>
 	    public Web(NetworkCredential credentials, TimeSpan httpTimeout)
+            : this(credentials, CreateClient(httpTimeout))
 	    {
-        	_credentials = credentials;
-            _client = new HttpClient();
-            
-            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            _client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
-            _client.Timeout = httpTimeout;
+	    }
+
+	    /// <summary>
+	    ///     Create a new Web interface for sending mail.
+	    /// </summary>
+	    /// <param name="credentials">SendGridMessage user parameters</param>
+	    /// <param name="client"></param>
+	    public Web(NetworkCredential credentials, HttpClient client)
+        {
+            _credentials = credentials;
+	        _client = client;
 	    }
 
 		/// <summary>
