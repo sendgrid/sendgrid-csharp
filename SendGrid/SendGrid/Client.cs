@@ -94,32 +94,32 @@ namespace SendGrid
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <returns>The resulting message from the API call</returns>
-        public HttpResponseMessage Get(string endpoint)
+        public async Task<HttpResponseMessage> Get(string endpoint)
         {
-            return RequestAsync(Methods.GET, endpoint, null).Result;
+            return await RequestAsync(Methods.GET, endpoint, null);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">An JObject representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
-        public HttpResponseMessage Post(string endpoint, JObject data)
+        public async Task<HttpResponseMessage> Post(string endpoint, JObject data)
         {
-            return RequestAsync(Methods.POST, endpoint, data).Result;
+            return await RequestAsync(Methods.POST, endpoint, data);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <returns>The resulting message from the API call</returns>
-        public HttpResponseMessage Delete(string endpoint)
+        public async Task<HttpResponseMessage> Delete(string endpoint)
         {
-            return RequestAsync(Methods.DELETE, endpoint, null).Result;
+            return await RequestAsync(Methods.DELETE, endpoint, null);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">An JObject representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
-        public HttpResponseMessage Patch(string endpoint, JObject data)
+        public async Task<HttpResponseMessage> Patch(string endpoint, JObject data)
         {
-            return RequestAsync(Methods.PATCH, endpoint, data).Result;
+            return await RequestAsync(Methods.PATCH, endpoint, data);
         }
     }
 }

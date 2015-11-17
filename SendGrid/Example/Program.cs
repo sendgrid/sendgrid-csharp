@@ -70,14 +70,14 @@ namespace Example
             var client = new SendGrid.Client(apiKey);
 
             // GET API KEYS
-            HttpResponseMessage responseGet = client.ApiKeys.Get();
+            HttpResponseMessage responseGet = client.ApiKeys.Get().Result;
             Console.WriteLine(responseGet.StatusCode);
             Console.WriteLine(responseGet.Content.ReadAsStringAsync().Result);
             Console.WriteLine("These are your current API Keys. Press any key to continue.");
             Console.ReadKey();
 
             // POST API KEYS
-            HttpResponseMessage responsePost = client.ApiKeys.Post("CSharpTestKey");
+            HttpResponseMessage responsePost = client.ApiKeys.Post("CSharpTestKey").Result;
             var rawString = responsePost.Content.ReadAsStringAsync().Result;
             dynamic jsonObject = JObject.Parse(rawString);
             var apiKeyId = jsonObject.api_key_id.ToString();
@@ -87,7 +87,7 @@ namespace Example
             Console.ReadKey();
 
             // PATCH API KEYS
-            HttpResponseMessage responsePatch = client.ApiKeys.Patch(apiKeyId, "CSharpTestKeyPatched");
+            HttpResponseMessage responsePatch = client.ApiKeys.Patch(apiKeyId, "CSharpTestKeyPatched").Result;
             Console.WriteLine(responsePatch.StatusCode);
             Console.WriteLine(responsePatch.Content.ReadAsStringAsync().Result);
             Console.WriteLine("API Key patched. Press any key to continue.");
@@ -95,8 +95,9 @@ namespace Example
 
             // DELETE API KEYS
             Console.WriteLine("Deleting API Key, please wait.");
-            client.ApiKeys.Delete(apiKeyId);
-            HttpResponseMessage responseFinal = client.ApiKeys.Get();
+            HttpResponseMessage responseDelete = client.ApiKeys.Delete(apiKeyId).Result;
+            Console.WriteLine(responseDelete.StatusCode);
+            HttpResponseMessage responseFinal = client.ApiKeys.Get().Result;
             Console.WriteLine(responseFinal.StatusCode);
             Console.WriteLine(responseFinal.Content.ReadAsStringAsync().Result);
             Console.WriteLine("API Key Deleted, press any key to end");
