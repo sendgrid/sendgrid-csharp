@@ -15,6 +15,10 @@ namespace SendGrid
         private string _apiKey;
         public APIKeys ApiKeys;
         private Uri _baseUri;
+        private enum Methods
+        {
+            GET, POST, PATCH, DELETE
+        }
 
         /// <summary>
         ///     Create a client that connects to the SendGrid Web API
@@ -35,7 +39,7 @@ namespace SendGrid
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">An JObject representing the resource's data</param>
         /// <returns>An asyncronous task</returns>
-        private async Task<HttpResponseMessage> RequestAsync(string method, string endpoint, JObject data)
+        private async Task<HttpResponseMessage> RequestAsync(Methods method, string endpoint, JObject data)
         {
             using (var client = new HttpClient())
             {
@@ -48,13 +52,13 @@ namespace SendGrid
                     var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
                     client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
 
-                    switch (method.ToLower())
+                    switch (method)
                     {
-                        case "get":
+                        case Methods.GET:
                             return await client.GetAsync(endpoint);
-                        case "post":
+                        case Methods.POST:
                             return await client.PostAsJsonAsync(endpoint, data);
-                        case "patch":
+                        case Methods.PATCH:
                             endpoint = _baseUri + endpoint;
                             StringContent content = new StringContent(data.ToString(), Encoding.UTF8, "application/json");
                             HttpRequestMessage request = new HttpRequestMessage
@@ -64,7 +68,7 @@ namespace SendGrid
                                 Content = content
                             };
                             return await client.SendAsync(request);
-                        case "delete":
+                        case Methods.DELETE:
                             return await client.DeleteAsync(endpoint);
                         default:
                             HttpResponseMessage response = new HttpResponseMessage();
@@ -92,7 +96,7 @@ namespace SendGrid
         /// <returns>The resulting message from the API call</returns>
         public HttpResponseMessage Get(string endpoint)
         {
-            return RequestAsync("GET", endpoint, null).Result;
+            return RequestAsync(Methods.GET, endpoint, null).Result;
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
@@ -100,14 +104,14 @@ namespace SendGrid
         /// <returns>The resulting message from the API call</returns>
         public HttpResponseMessage Post(string endpoint, JObject data)
         {
-            return RequestAsync("POST", endpoint, data).Result;
+            return RequestAsync(Methods.POST, endpoint, data).Result;
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <returns>The resulting message from the API call</returns>
         public HttpResponseMessage Delete(string endpoint)
         {
-            return RequestAsync("DELETE", endpoint, null).Result;
+            return RequestAsync(Methods.DELETE, endpoint, null).Result;
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
@@ -115,7 +119,7 @@ namespace SendGrid
         /// <returns>The resulting message from the API call</returns>
         public HttpResponseMessage Patch(string endpoint, JObject data)
         {
-            return RequestAsync("PATCH", endpoint, data).Result;
+            return RequestAsync(Methods.PATCH, endpoint, data).Result;
         }
     }
 }
