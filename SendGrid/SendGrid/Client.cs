@@ -14,7 +14,9 @@ namespace SendGrid
     {
         private string _apiKey;
         public APIKeys ApiKeys;
+        public string Version;
         private Uri _baseUri;
+        private const string MediaType = "application/json";
         private enum Methods
         {
             GET, POST, PATCH, DELETE
@@ -29,6 +31,7 @@ namespace SendGrid
         {
             _baseUri = new Uri(baseUri);
             _apiKey = apiKey;
+            Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             ApiKeys = new APIKeys(this);
         }
 
@@ -47,10 +50,9 @@ namespace SendGrid
                 {
                     client.BaseAddress = _baseUri;
                     client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaType));
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
-                    var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                    client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + Version + ";csharp");
 
                     switch (method)
                     {
@@ -60,7 +62,7 @@ namespace SendGrid
                             return await client.PostAsJsonAsync(endpoint, data);
                         case Methods.PATCH:
                             endpoint = _baseUri + endpoint;
-                            StringContent content = new StringContent(data.ToString(), Encoding.UTF8, "application/json");
+                            StringContent content = new StringContent(data.ToString(), Encoding.UTF8, MediaType);
                             HttpRequestMessage request = new HttpRequestMessage
                             {
                                 Method = new HttpMethod("PATCH"),
@@ -80,13 +82,15 @@ namespace SendGrid
                 catch (HttpRequestException hre)
                 {
                     HttpResponseMessage response = new HttpResponseMessage();
-                    response.Content = new StringContent(hre.Message);
+                    var message = ".NET HttpRequestException, raw message: \n\n";
+                    response.Content = new StringContent(message + hre.Message);
                     return response;
                 }
                 catch (Exception ex)
                 {
                     HttpResponseMessage response = new HttpResponseMessage();
-                    response.Content = new StringContent(ex.Message);
+                    var message = ".NET Exception, raw message: \n\n";
+                    response.Content = new StringContent(message + ex.Message);
                     return response;
                 }
             }
