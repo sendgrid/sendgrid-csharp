@@ -80,17 +80,12 @@ namespace SendGrid
                             return response;
                     }
                 }
-                catch (HttpRequestException hre)
-                {
-                    HttpResponseMessage response = new HttpResponseMessage();
-                    var message = ".NET HttpRequestException, raw message: \n\n";
-                    response.Content = new StringContent(message + hre.Message);
-                    return response;
-                }
                 catch (Exception ex)
                 {
                     HttpResponseMessage response = new HttpResponseMessage();
-                    var message = ".NET Exception, raw message: \n\n";
+                    string message;
+                    message = (ex is HttpRequestException) ? ".NET HttpRequestException" : ".NET Exception";
+                    message = message + ", raw message: \n\n";
                     response.Content = new StringContent(message + ex.Message);
                     return response;
                 }
