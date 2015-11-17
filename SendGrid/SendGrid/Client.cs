@@ -75,7 +75,8 @@ namespace SendGrid
                         default:
                             HttpResponseMessage response = new HttpResponseMessage();
                             response.StatusCode = HttpStatusCode.MethodNotAllowed;
-                            response.Content = new StringContent("Bad method call: " + method);
+                            var message = "{\"errors\":[{\"message\":\"Bad method call, supported methods are GET, POST, PATCH and DELETE\"}]}";
+                            response.Content = new StringContent(message);
                             return response;
                     }
                 }
