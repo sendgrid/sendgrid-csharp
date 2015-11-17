@@ -5,8 +5,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Text;
 using SendGrid.Resources;
-using System.Web.Script.Serialization;
 using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace SendGrid
 {
@@ -33,9 +33,9 @@ namespace SendGrid
         /// </summary>
         /// <param name="method">HTTP verb, case-insensitive</param>
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
-        /// <param name="data">An object representing the resource's data</param>
+        /// <param name="data">An JObject representing the resource's data</param>
         /// <returns>An asyncronous task</returns>
-        private async Task<HttpResponseMessage> RequestAsync(string method, string endpoint, Object data)
+        private async Task<HttpResponseMessage> RequestAsync(string method, string endpoint, JObject data)
         {
             using (var client = new HttpClient())
             {
@@ -92,14 +92,13 @@ namespace SendGrid
         /// <returns>The resulting message from the API call</returns>
         public HttpResponseMessage Get(string endpoint)
         {
-            HttpResponseMessage response = new HttpResponseMessage();
             return RequestAsync("GET", endpoint, null).Result;
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
-        /// <param name="data">An object representing the resource's data</param>
+        /// <param name="data">An JObject representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
-        public HttpResponseMessage Post(string endpoint, object data)
+        public HttpResponseMessage Post(string endpoint, JObject data)
         {
             return RequestAsync("POST", endpoint, data).Result;
         }
@@ -112,12 +111,11 @@ namespace SendGrid
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
-        /// <param name="data">An object representing the resource's data</param>
+        /// <param name="data">An JObject representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
-        public HttpResponseMessage Patch(string endpoint, object data)
+        public HttpResponseMessage Patch(string endpoint, JObject data)
         {
-            var json = new JavaScriptSerializer().Serialize(data);
-            return RequestAsync("PATCH", endpoint, json).Result;
+            return RequestAsync("PATCH", endpoint, data).Result;
         }
     }
 }

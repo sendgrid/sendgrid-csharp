@@ -1,12 +1,9 @@
 ﻿using System.Net.Http;
+using System.Runtime.InteropServices;
+using Newtonsoft.Json.Linq;
 
 namespace SendGrid.Resources
 {
-    public class APIKeysData
-    {
-        public string name { get; set; }
-    }
-
     public class APIKeys
     {
         private string _endpoint;
@@ -40,7 +37,7 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html</returns>
         public HttpResponseMessage Post(string apiKeyName)
         {
-            var data = new APIKeysData() {name = apiKeyName};
+            var data = new JObject {{"name", apiKeyName}};
             return _client.Post(_endpoint, data);
         }
 
@@ -62,7 +59,7 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html</returns>
         public HttpResponseMessage Patch(string apiKeyId, string apiKeyName)
         {
-            var data = new APIKeysData() { name = apiKeyName };
+            var data = new JObject { { "name", apiKeyName } };
             return _client.Patch(_endpoint + "/" + apiKeyId, data);
         }
 

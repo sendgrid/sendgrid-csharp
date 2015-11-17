@@ -12,9 +12,9 @@ namespace Example
         private static void Main()
         {
             // Test sending email 
-            string to = "example@example.com";
-            string from = "example@example.com";
-            string fromName = "Jane Doe";
+            var to = "example@example.com";
+            var from = "example@example.com";
+            var fromName = "Jane Doe";
             SendEmail(to, from, fromName);
             // Test viewing, creating, modifying and deleting API keys through our v3 Web API 
             ApiKeys();
@@ -23,8 +23,8 @@ namespace Example
         private static void SendAsync(SendGrid.SendGridMessage message)
         {
             // Create credentials, specifying your user Name and password.
-            string username = Environment.GetEnvironmentVariable("SENDGRID_USERNAME");
-            string password = Environment.GetEnvironmentVariable("SENDGRID_PASSWORD");
+            var username = Environment.GetEnvironmentVariable("SENDGRID_USERNAME");
+            var password = Environment.GetEnvironmentVariable("SENDGRID_PASSWORD");
             //string apikey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
             var credentials = new NetworkCredential(username, password);
 
@@ -68,7 +68,6 @@ namespace Example
         {
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             var client = new SendGrid.Client(apiKey);
-            string _api_key_id;
 
             // GET API KEYS
             HttpResponseMessage responseGet = client.ApiKeys.Get();
@@ -79,16 +78,16 @@ namespace Example
 
             // POST API KEYS
             HttpResponseMessage responsePost = client.ApiKeys.Post("CSharpTestKey");
-            string rawString = responsePost.Content.ReadAsStringAsync().Result;
+            var rawString = responsePost.Content.ReadAsStringAsync().Result;
             dynamic jsonObject = JObject.Parse(rawString);
-            _api_key_id = jsonObject.api_key_id.ToString();
+            var apiKeyId = jsonObject.api_key_id.ToString();
             Console.WriteLine(responsePost.StatusCode);
             Console.WriteLine(responsePost.Content.ReadAsStringAsync().Result);
             Console.WriteLine("API Key created. Press any key to continue.");
             Console.ReadKey();
 
             // PATCH API KEYS
-            HttpResponseMessage responsePatch = client.ApiKeys.Patch(_api_key_id, "CSharpTestKeyPatched");
+            HttpResponseMessage responsePatch = client.ApiKeys.Patch(apiKeyId, "CSharpTestKeyPatched");
             Console.WriteLine(responsePatch.StatusCode);
             Console.WriteLine(responsePatch.Content.ReadAsStringAsync().Result);
             Console.WriteLine("API Key patched. Press any key to continue.");
@@ -96,7 +95,7 @@ namespace Example
 
             // DELETE API KEYS
             Console.WriteLine("Deleting API Key, please wait.");
-            client.ApiKeys.Delete(_api_key_id);
+            client.ApiKeys.Delete(apiKeyId);
             HttpResponseMessage responseFinal = client.ApiKeys.Get();
             Console.WriteLine(responseFinal.StatusCode);
             Console.WriteLine(responseFinal.Content.ReadAsStringAsync().Result);
