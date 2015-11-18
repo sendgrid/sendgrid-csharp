@@ -174,7 +174,7 @@ List all API Keys belonging to the authenticated user [GET]
 String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 var client = new SendGrid.Client(apiKey);
 // Leave off .Result for an asyncronous call
-HttpResponseMessage responseGet = client.ApiKeys.Get().Result; // Leave off .Result for an asyncronous call
+HttpResponseMessage responseGet = client.ApiKeys.Get().Result;
 ```
 
 Generate a new API Key for the authenticated user [POST]
@@ -211,7 +211,7 @@ HttpResponseMessage responseDelete = client.ApiKeys.Delete(apiKeyId).Result;
 #How to: Testing
 
 * Load the solution (We have tested using the Visual Studio Community Edition)
-* In the Test Explorer, click "Run All". Tests for the Mail Send v2 endpoint are in the Tests project, while the tests for the v3 endpoints are in the UnitTests project. Selecting "Run All" from the Test Explorer will run the tests in both projects.
+* In the Test Explorer, click "Run All". Tests for the Mail Send v2 endpoint are in the "Tests" project, while the tests for the v3 endpoints are in the "UnitTests" project. Selecting "Run All" from the Test Explorer will run the tests in both projects.
 
 You can also test the code by building and running our "Example" project. It will run through the examples using an interactive console. You will need your API key to run the examples against your account.
 
