@@ -5,27 +5,33 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Text;
 using SendGrid.Resources;
-using System.Web.Script.Serialization;
 using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace SendGrid
 {
     public class Client
     {
-        private HttpResponseMessage _response = new HttpResponseMessage();
         private string _apiKey;
-        private Uri _baseUri;
         public APIKeys ApiKeys;
+        public string Version;
+        private Uri _baseUri;
+        private const string MediaType = "application/json";
+        private enum Methods
+        {
+            GET, POST, PATCH, DELETE
+        }
 
         /// <summary>
-		///     Create a client that connects to the SendGrid Web API
-		/// </summary>
-		/// <param name="apiKey">Your SendGrid API Key</param>
-		/// <param name="baseUri">Base SendGrid API Uri</param>
+        ///     Create a client that connects to the SendGrid Web API
+        /// </summary>
+        /// <param name="apiKey">Your SendGrid API Key</param>
+        /// <param name="baseUri">Base SendGrid API Uri</param>
         public Client(string apiKey, string baseUri = "https://api.sendgrid.com/")
         {
             _baseUri = new Uri(baseUri);
             _apiKey = apiKey;
+            Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             ApiKeys = new APIKeys(this);
         }
 
@@ -34,9 +40,9 @@ namespace SendGrid
         /// </summary>
         /// <param name="method">HTTP verb, case-insensitive</param>
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
-        /// <param name="data">An object representing the resource's data</param>
+        /// <param name="data">An JObject representing the resource's data</param>
         /// <returns>An asyncronous task</returns>
-        private async Task RequestAsync(string method, string endpoint, Object data)
+        private async Task<HttpResponseMessage> RequestAsync(Methods method, string endpoint, JObject data)
         {
             using (var client = new HttpClient())
             {
@@ -44,86 +50,76 @@ namespace SendGrid
                 {
                     client.BaseAddress = _baseUri;
                     client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaType));
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
-                    var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                    client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + Version + ";csharp");
 
-                    switch (method.ToLower())
+                    switch (method)
                     {
-                        case "get":
-                            _response = await client.GetAsync(endpoint);
-                            break;
-                        case "post":
-                            _response = await client.PostAsJsonAsync(endpoint, data);
-                            break;
-                        case "patch":
+                        case Methods.GET:
+                            return await client.GetAsync(endpoint);
+                        case Methods.POST:
+                            return await client.PostAsJsonAsync(endpoint, data);
+                        case Methods.PATCH:
                             endpoint = _baseUri + endpoint;
-                            StringContent content = new StringContent(data.ToString(), Encoding.UTF8, "application/json");
+                            StringContent content = new StringContent(data.ToString(), Encoding.UTF8, MediaType);
                             HttpRequestMessage request = new HttpRequestMessage
                             {
                                 Method = new HttpMethod("PATCH"),
                                 RequestUri = new Uri(endpoint),
                                 Content = content
                             };
-                            _response = await client.SendAsync(request);
-                            break;
-                        case "delete":
-                            _response = await client.DeleteAsync(endpoint);
-                            break;
+                            return await client.SendAsync(request);
+                        case Methods.DELETE:
+                            return await client.DeleteAsync(endpoint);
                         default:
-                            _response.StatusCode = HttpStatusCode.MethodNotAllowed;
-                            _response.Content = new StringContent("Bad method call: " + method);
-                            break;
+                            HttpResponseMessage response = new HttpResponseMessage();
+                            response.StatusCode = HttpStatusCode.MethodNotAllowed;
+                            var message = "{\"errors\":[{\"message\":\"Bad method call, supported methods are GET, POST, PATCH and DELETE\"}]}";
+                            response.Content = new StringContent(message);
+                            return response;
                     }
-                }
-                catch (HttpRequestException hre)
-                {
-                    _response.StatusCode = HttpStatusCode.InternalServerError;
-                    _response.Content = new StringContent(hre.ToString());
                 }
                 catch (Exception ex)
                 {
-                    _response.StatusCode = HttpStatusCode.InternalServerError;
-                    _response.Content = new StringContent(ex.ToString());
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    string message;
+                    message = (ex is HttpRequestException) ? ".NET HttpRequestException" : ".NET Exception";
+                    message = message + ", raw message: \n\n";
+                    response.Content = new StringContent(message + ex.Message);
+                    return response;
                 }
             }
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <returns>The resulting message from the API call</returns>
-        public HttpResponseMessage Get(string endpoint)
+        public async Task<HttpResponseMessage> Get(string endpoint)
         {
-            RequestAsync("GET", endpoint, null).Wait();
-            return _response;
+            return await RequestAsync(Methods.GET, endpoint, null);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
-        /// <param name="data">An object representing the resource's data</param>
+        /// <param name="data">An JObject representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
-        public HttpResponseMessage Post(string endpoint, object data)
+        public async Task<HttpResponseMessage> Post(string endpoint, JObject data)
         {
-            RequestAsync("POST", endpoint, data).Wait();
-            return _response;
+            return await RequestAsync(Methods.POST, endpoint, data);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <returns>The resulting message from the API call</returns>
-        public HttpResponseMessage Delete(string endpoint)
+        public async Task<HttpResponseMessage> Delete(string endpoint)
         {
-            RequestAsync("DELETE", endpoint, null).Wait();
-            return _response;
+            return await RequestAsync(Methods.DELETE, endpoint, null);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
-        /// <param name="data">An object representing the resource's data</param>
+        /// <param name="data">An JObject representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
-        public HttpResponseMessage Patch(string endpoint, object data)
+        public async Task<HttpResponseMessage> Patch(string endpoint, JObject data)
         {
-            var json = new JavaScriptSerializer().Serialize(data);
-            RequestAsync("PATCH", endpoint, json).Wait();
-            return _response;
+            return await RequestAsync(Methods.PATCH, endpoint, data);
         }
-
     }
 }

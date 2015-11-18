@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Newtonsoft.Json.Linq;
 using SendGrid;
@@ -8,7 +9,7 @@ using SendGrid;
 namespace UnitTest
 {
     [TestFixture]
-    public class UnitTest
+    public class APIKeys
     {
         static string _baseUri = "https://api.sendgrid.com/";
         static string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
@@ -26,7 +27,7 @@ namespace UnitTest
 
         private void TestGet()
         {
-            HttpResponseMessage response = client.ApiKeys.Get();
+            HttpResponseMessage response = client.ApiKeys.Get().Result;
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             string rawString = response.Content.ReadAsStringAsync().Result;
             dynamic jsonObject = JObject.Parse(rawString);
@@ -36,7 +37,7 @@ namespace UnitTest
 
         private void TestPost()
         {
-            HttpResponseMessage response = client.ApiKeys.Post("CSharpTestKey");
+            HttpResponseMessage response = client.ApiKeys.Post("CSharpTestKey").Result;
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
             string rawString = response.Content.ReadAsStringAsync().Result;
             dynamic jsonObject = JObject.Parse(rawString);
@@ -50,7 +51,7 @@ namespace UnitTest
 
         private void TestPatch()
         {
-            HttpResponseMessage response = client.ApiKeys.Patch(_api_key_id, "CSharpTestKeyPatched");
+            HttpResponseMessage response = client.ApiKeys.Patch(_api_key_id, "CSharpTestKeyPatched").Result;
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             string rawString = response.Content.ReadAsStringAsync().Result;
             dynamic jsonObject = JObject.Parse(rawString);
@@ -62,8 +63,35 @@ namespace UnitTest
 
         private void TestDelete()
         {
-            HttpResponseMessage response = client.ApiKeys.Delete(_api_key_id);
+            HttpResponseMessage response = client.ApiKeys.Delete(_api_key_id).Result;
             Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
+        }
+
+        [Test]
+        public void TestGetOnce()
+        {
+            var responseGet = client.ApiKeys.Get().Result;
+        }
+
+        [Test]
+        public void TestGetTenTimes()
+        {
+            HttpResponseMessage responseGet;
+            for (int i = 0; i < 10; i++)
+            {
+                responseGet = client.ApiKeys.Get().Result;
+            }
+        }
+
+        [Test]
+        public void TestGetTenTimesAsync()
+        {
+            Task[] tasks = new Task[10];
+            for (int i = 0; i < 10; i++)
+            {
+                tasks[i] = client.ApiKeys.Get();
+            }
+            Task.WaitAll(tasks);
         }
     }
 }
