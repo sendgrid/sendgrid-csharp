@@ -159,6 +159,62 @@ myMessage.Text = "Hello World!";
 // should also be overwritten for link tracking purposes. 
 myMessage.EnableClickTracking(true);
 ```
+
+#How to: Use the [Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html)
+
+Note: We have just begun to implement support for these endpoints and therefore only the following endpoints are currently supported. This functionality is located in the "SendGrid" project.
+
+## API Keys ##
+
+Please refer to [our documentation](https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html) for further details.
+
+List all API Keys belonging to the authenticated user [GET]
+
+```csharp
+String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+var client = new SendGrid.Client(apiKey);
+// Leave off .Result for an asyncronous call
+HttpResponseMessage responseGet = client.ApiKeys.Get().Result; // Leave off .Result for an asyncronous call
+```
+
+Generate a new API Key for the authenticated user [POST]
+
+```csharp
+String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+var client = new SendGrid.Client(apiKey);
+var apiKeyName = "CSharpTestKey"; 
+// Leave off .Result for an asyncronous call
+HttpResponseMessage responsePost = client.ApiKeys.Post(apiKeyName).Result; 
+```
+
+Update the name of an existing API Key [PATCH]
+
+```csharp
+String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+var client = new SendGrid.Client(apiKey);
+var apiKeyName = "CSharpTestKey"; 
+ver apiKeyId = "<API Key ID>";
+// Leave off .Result for an asyncronous call
+HttpResponseMessage responsePatch = client.ApiKeys.Patch(apiKeyId, apiKeyName).Result; 
+```
+
+Revoke an existing API Key [DELETE]
+
+```csharp
+String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+var client = new SendGrid.Client(apiKey);
+ver apiKeyId = "<API Key ID>";
+// Leave off .Result for an asyncronous call
+HttpResponseMessage responseDelete = client.ApiKeys.Delete(apiKeyId).Result; 
+```
+
+#How to: Testing
+
+* Load the solution (We have tested using the Visual Studio Community Edition)
+* In the Test Explorer, click "Run All". Tests for the Mail Send v2 endpoint are in the Tests project, while the tests for the v3 endpoints are in the UnitTests project. Selecting "Run All" from the Test Explorer will run the tests in both projects.
+
+You can also test the code by building and running our "Example" project. It will run through the examples using an interactive console. You will need your API key to run the examples against your account.
+
 [SendGrid Documentation](http://www.sendgrid.com/docs)
 
 This readme adapted from [How to Send Email Using SendGrid with Windows Azure](http://www.windowsazure.com/en-us/develop/net/how-to-guides/sendgrid-email-service/)
