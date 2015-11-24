@@ -23,27 +23,48 @@ namespace SendGrid
 	    
 		private readonly NetworkCredential _credentials;
 	    private readonly HttpClient _client;
+	    private readonly string _apiKey;
 
 		#endregion
+
+	    /// <summary>
+	    ///     Creates a new Web interface for sending mail
+	    /// </summary>
+	    /// <param name="apiKey">The API Key with which to send</param>
+	    public Web(string apiKey)
+	        : this(apiKey, null, TimeSpan.FromSeconds(100)) { }
+
+        ///     Creates a new Web interface for sending mail
+        /// </summary>
+        /// <param name="apiKey">The API Key with which to send</param>
+        /// <param name="httpTimeout">HTTP request timeout</param>
+        public Web(string apiKey, TimeSpan httpTimeout)
+            : this(apiKey, null, httpTimeout) { }
 
 		/// <summary>
 		///     Creates a new Web interface for sending mail
 		/// </summary>
 		/// <param name="credentials">SendGridMessage user parameters</param>
         public Web(NetworkCredential credentials)
-            : this(credentials, TimeSpan.FromSeconds(100)) { }
+            : this(null, credentials, TimeSpan.FromSeconds(100)) { }
 
         /// <summary>
         ///     Creates a new Web interface for sending mail.
         /// </summary>
+        /// <param name="apiKey">The API Key with which to send</param>
         /// <param name="credentials">SendGridMessage user parameters</param>
         /// <param name="httpTimeout">HTTP request timeout</param>
-	    public Web(NetworkCredential credentials, TimeSpan httpTimeout)
+	    public Web(string apiKey, NetworkCredential credentials, TimeSpan httpTimeout)
 	    {
         	_credentials = credentials;
             _client = new HttpClient();
-            
+            _apiKey = apiKey;
+
             var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            if (credentials == null)
+            {
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+            }
             _client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + version + ";csharp");
             _client.Timeout = httpTimeout;
 	    }
@@ -113,8 +134,7 @@ namespace SendGrid
 		{
 			var result = new List<KeyValuePair<string, string>>
 			{
-				new KeyValuePair<String, String>("api_user", _credentials.UserName),
-				new KeyValuePair<String, String>("api_key", _credentials.Password),
+				
 				new KeyValuePair<String, String>("headers",
 					message.Headers.Count == 0 ? null : Utils.SerializeDictionary(message.Headers)),
 				new KeyValuePair<String, String>("replyto",
@@ -126,6 +146,18 @@ namespace SendGrid
 				new KeyValuePair<String, String>("html", message.Html),
 				new KeyValuePair<String, String>("x-smtpapi", message.Header.JsonString() ?? "")
 			};
+
+            //if the api key is not specified, use the username and password
+		    if (_credentials != null)
+		    {
+		        var creds = new List<KeyValuePair<string, string>>
+		        {
+		            new KeyValuePair<String, String>("api_user", _credentials.UserName),
+		            new KeyValuePair<String, String>("api_key", _credentials.Password)
+		        };
+		        result.AddRange(creds);
+		    }
+
 			if (message.To != null)
 			{
 				result = result.Concat(message.To.ToList().Select(a => new KeyValuePair<String, String>("to[]", a.Address)))
