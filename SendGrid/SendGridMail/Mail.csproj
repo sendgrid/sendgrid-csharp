@@ -91,10 +91,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>sendgrid-csharp.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>SendGridMail.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SendGrid.SmtpApi, Version=1.3.1.0, Culture=neutral, PublicKeyToken=2ae73662c35d80e4, processorArchitecture=MSIL">
@@ -118,6 +118,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="sendgrid-csharp.snk" />
+    <None Include="SendGridMail.pfx" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

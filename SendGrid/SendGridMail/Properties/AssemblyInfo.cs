@@ -26,16 +26,26 @@ using System.Runtime.InteropServices;
 [assembly: Guid("193fa200-8430-4206-aacd-2d2bb2dfa6cf")]
 
 #if (BUILD)
-[assembly: InternalsVisibleTo("Tests")]
+[assembly: InternalsVisibleTo("Tests," + "" +
+                              "PublicKey=0024000004800000940000000602000000240000525341310004000001000100812ec26a66c8e0" +
+                              "8c790704ac4b46bcc9da9f4bca4da0ec7c06ce6dcd73baeb2c5525f36a237b253e80e16febb4c0" +
+                              "52f50734d5e1cf3bf478d9c88f0f69df53b47306419182983bc35c33c3bafb5e90b9bd7aa7b9a9" +
+                              "da09abe3667d50db891012e077e4b9aefe9799a58222fa67127c230219755d7670073c7463d90c" +
+                              "f9e79dba")]
 #elif (DEBUG)
-[assembly: InternalsVisibleTo("Tests")]
+[assembly: InternalsVisibleTo("Tests," + "" +
+                              "PublicKey=0024000004800000940000000602000000240000525341310004000001000100812ec26a66c8e0" +
+                              "8c790704ac4b46bcc9da9f4bca4da0ec7c06ce6dcd73baeb2c5525f36a237b253e80e16febb4c0" +
+                              "52f50734d5e1cf3bf478d9c88f0f69df53b47306419182983bc35c33c3bafb5e90b9bd7aa7b9a9" +
+                              "da09abe3667d50db891012e077e4b9aefe9799a58222fa67127c230219755d7670073c7463d90c" +
+                              "f9e79dba")]
 #else
 [assembly: InternalsVisibleTo("Tests," + "" +
-                              "PublicKey=00240000048000009400000006020000002400005253413100040000010001004126bffd5a4461" +
-                              "e915193b2695401cee8d67bb14b252a34e5230e6468582f108aafbe31d39f2059240461d622e86" +
-                              "2a294169d5f2659efe0d68b30d7ceee310356c70b54ece3c8c69bbd9db86e07c34ff4fd5d7528b" +
-                              "3ddf078d272025cb7a588030c78020f5eb91872b38dc2832f561fe184715bb8edb6f0b3b644de5" +
-                              "2bc588ae")]
+                              "PublicKey=0024000004800000940000000602000000240000525341310004000001000100812ec26a66c8e0" +
+                              "8c790704ac4b46bcc9da9f4bca4da0ec7c06ce6dcd73baeb2c5525f36a237b253e80e16febb4c0" +
+                              "52f50734d5e1cf3bf478d9c88f0f69df53b47306419182983bc35c33c3bafb5e90b9bd7aa7b9a9" +
+                              "da09abe3667d50db891012e077e4b9aefe9799a58222fa67127c230219755d7670073c7463d90c" +
+                              "f9e79dba")]
 #endif
 // Version information for an assembly consists of the following four values:
 //
