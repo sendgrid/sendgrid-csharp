@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [6.2.0] - 2015-11-18
+###Added
+- Added support for using the Web API v3 endpoints.
+- Implemented the api_keys endpoint [GET, POST, PATCH, DELETE]
+
 ## [6.1.0] - 2015-4-27
 ###Added
 - Added support for sending via API keys in addition to credentials. Pass an API Key string to the Web transport constructor.
