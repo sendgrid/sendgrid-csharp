@@ -18,5 +18,5 @@ SendGrid/SendGrid.userprefs
 SendGrid/packages/
 SendGrid/TestResult.xml
 SendGrid/SendGrid.sln.VisualState.xml
-
-*.snk
+*.pfx
+*.PublicKey

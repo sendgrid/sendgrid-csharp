@@ -15,6 +15,7 @@ namespace Transport
 		private const string TestUsername = "username";
 		private const string TestPassword = "password";
 
+        
 		[Test]
 		public void TestFetchFileBodies()
 		{
@@ -78,5 +79,6 @@ namespace Transport
 			Assert.True(
 				result.Any(r => r.Key == "x-smtpapi" && r.Value == String.Format("{{\"category\" : \"{0}\"}}", categoryName)));
 		}
+        
 	}
 }
