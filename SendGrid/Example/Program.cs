@@ -22,15 +22,9 @@ namespace Example
 
         private static void SendAsync(SendGrid.SendGridMessage message)
         {
-            // Create credentials, specifying your user Name and password.
-            var username = Environment.GetEnvironmentVariable("SENDGRID_USERNAME");
-            var password = Environment.GetEnvironmentVariable("SENDGRID_PASSWORD");
-            //string apikey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
-            var credentials = new NetworkCredential(username, password);
-
+            string apikey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
             // Create a Web transport for sending email.
-            var transportWeb = new SendGrid.Web(credentials);
-            //var transportWeb2 = new SendGrid.Web(apikey);
+            var transportWeb = new SendGrid.Web(apikey);
 
             // Send the email.
             try
