@@ -61,16 +61,7 @@ After creating an email message, you can send it using the Web API provided by S
 
 Sending email requires that you supply your SendGrid account credentials (username and password) OR a SendGrid API Key. API Key is the preferred method. API Keys are in beta. To configure API keys, visit https://sendgrid.com/beta/settings/api_keys
 
-Using Credentials
-```csharp
-// Create network credentials to access your SendGrid account.
-var username = "your_sendgrid_username";
-var pswd = "your_sendgrid_password";
-
-var credentials = new NetworkCredential(username, pswd);
-```
 To send an email message, use the **DeliverAsync** method on the **Web** transport class, which calls the SendGrid Web API. The following example shows how to send a message.
-
 
 ```csharp
 // Create the email object first, then add the properties.
@@ -80,18 +71,12 @@ myMessage.From = new MailAddress("john@example.com", "John Smith");
 myMessage.Subject = "Testing the SendGrid Library";
 myMessage.Text = "Hello World!";
 
-// Create credentials, specifying your user name and password.
-var credentials = new NetworkCredential("username", "password");
-
-// Create an Web transport for sending email, using credentials...
-//var transportWeb = new Web(credentials);
-
-// ...OR create a Web transport, using API Key (preferred)
-var transportWeb = new Web("This string is an API key");
+// Create a Web transport, using API Key
+var transportWeb = new Web("This string is a SendGrid API key");
 
 // Send the email.
 transportWeb.DeliverAsync(myMessage);
-// If your developing a Console Application, use the following
+// NOTE: If your developing a Console Application, use the following so that the API call has time to complete
 // transportWeb.DeliverAsync(myMessage).Wait();
 ```
 
