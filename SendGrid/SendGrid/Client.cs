@@ -14,6 +14,7 @@ namespace SendGrid
     {
         private string _apiKey;
         public APIKeys ApiKeys;
+        public UnsubscribeGroups UnsubscribeGroups;
         public string Version;
         private Uri _baseUri;
         private const string MediaType = "application/json";
@@ -33,6 +34,7 @@ namespace SendGrid
             _apiKey = apiKey;
             Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             ApiKeys = new APIKeys(this);
+            UnsubscribeGroups = new UnsubscribeGroups(this);
         }
 
         /// <summary>

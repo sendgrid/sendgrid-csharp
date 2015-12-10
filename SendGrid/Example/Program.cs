@@ -15,11 +15,13 @@ namespace Example
             var to = "example@example.com";
             var from = "example@example.com";
             var fromName = "Jane Doe";
-            SendEmail(to, from, fromName);
+            // SendEmail(to, from, fromName);
             // Test viewing, creating, modifying and deleting API keys through our v3 Web API 
-            ApiKeys();
+            // ApiKeys();
+            UnsubscribeGroups();
         }
-
+        
+        /*
         private static void SendAsync(SendGrid.SendGridMessage message)
         {
             // Create credentials, specifying your user Name and password.
@@ -101,6 +103,28 @@ namespace Example
             Console.WriteLine(responseFinal.StatusCode);
             Console.WriteLine(responseFinal.Content.ReadAsStringAsync().Result);
             Console.WriteLine("API Key Deleted, press any key to end");
+            Console.ReadKey();
+        }
+        */
+
+        private static void UnsubscribeGroups()
+        {
+            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            var client = new SendGrid.Client(apiKey);
+
+            // GET UNSUBSCRIBE GROUPS
+            HttpResponseMessage responseGet = client.UnsubscribeGroups.Get().Result;
+            Console.WriteLine(responseGet.StatusCode);
+            Console.WriteLine(responseGet.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("These are your current Unsubscribe Groups. Press any key to continue.");
+            Console.ReadKey();
+
+            // GET A PARTICULAR UNSUBSCRIBE GROUP
+            int unsubscribeGroupID = 69;
+            HttpResponseMessage responseGetUnique = client.UnsubscribeGroups.Get(unsubscribeGroupID).Result;
+            Console.WriteLine(responseGetUnique.StatusCode);
+            Console.WriteLine(responseGetUnique.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("These is an Unsubscribe Group with ID: " + unsubscribeGroupID.ToString() + ". Press any key to continue.");
             Console.ReadKey();
         }
     }
