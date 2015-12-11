@@ -66,18 +66,5 @@ namespace SendGrid.Resources
         {
             return await _client.Delete(_endpoint + "/" + unsubscribeGroupId);
         }
-
-        /// <summary>
-        /// Delete a suppression group.
-        /// </summary>
-        /// <param name="apiKeyId">ID of the suppression group to rename</param>
-        /// <param name="apiKeyName">New supression group name</param>
-        /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
-        public async Task<HttpResponseMessage> Patch(string unsubscribeGroupId, string unsubscribeGroupName)
-        {
-            var data = new JObject { { "name", unsubscribeGroupName } };
-            return await _client.Patch(_endpoint + "/" + unsubscribeGroupId, data);
-        }
-
     }
 }

@@ -15,24 +15,18 @@ namespace Example
             var to = "example@example.com";
             var from = "example@example.com";
             var fromName = "Jane Doe";
-            // SendEmail(to, from, fromName);
+            SendEmail(to, from, fromName);
             // Test viewing, creating, modifying and deleting API keys through our v3 Web API 
-            // ApiKeys();
+            ApiKeys();
             UnsubscribeGroups();
         }
         
-        /*
         private static void SendAsync(SendGrid.SendGridMessage message)
         {
-            // Create credentials, specifying your user Name and password.
-            var username = Environment.GetEnvironmentVariable("SENDGRID_USERNAME");
-            var password = Environment.GetEnvironmentVariable("SENDGRID_PASSWORD");
-            //string apikey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
-            var credentials = new NetworkCredential(username, password);
+            string apikey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
 
             // Create a Web transport for sending email.
-            var transportWeb = new SendGrid.Web(credentials);
-            //var transportWeb2 = new SendGrid.Web(apikey);
+            var transportWeb = new SendGrid.Web(apikey);
 
             // Send the email.
             try
@@ -105,7 +99,6 @@ namespace Example
             Console.WriteLine("API Key Deleted, press any key to end");
             Console.ReadKey();
         }
-        */
 
         private static void UnsubscribeGroups()
         {
@@ -125,6 +118,26 @@ namespace Example
             Console.WriteLine(responseGetUnique.StatusCode);
             Console.WriteLine(responseGetUnique.Content.ReadAsStringAsync().Result);
             Console.WriteLine("These is an Unsubscribe Group with ID: " + unsubscribeGroupID.ToString() + ". Press any key to continue.");
+            Console.ReadKey();
+
+            // POST UNSUBSCRIBE GROUP
+            HttpResponseMessage responsePost = client.UnsubscribeGroups.Post("C Sharp Unsubscribes", "Testing the C Sharp Library", false).Result;
+            var rawString = responsePost.Content.ReadAsStringAsync().Result;
+            dynamic jsonObject = JObject.Parse(rawString);
+            var unsubscribeGroupId = jsonObject.id.ToString();
+            Console.WriteLine(responsePost.StatusCode);
+            Console.WriteLine(responsePost.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("Unsubscribe Group created. Press any key to continue.");
+            Console.ReadKey();
+
+            // DELETE UNSUBSCRIBE GROUP
+            Console.WriteLine("Deleting Unsubscribe Group, please wait.");
+            HttpResponseMessage responseDelete = client.UnsubscribeGroups.Delete(unsubscribeGroupId).Result;
+            Console.WriteLine(responseDelete.StatusCode);
+            HttpResponseMessage responseFinal = client.UnsubscribeGroups.Get().Result;
+            Console.WriteLine(responseFinal.StatusCode);
+            Console.WriteLine(responseFinal.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("Unsubscribe Group Deleted, press any key to end");
             Console.ReadKey();
         }
     }
