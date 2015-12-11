@@ -68,8 +68,8 @@ namespace SendGrid
             var content = new MultipartFormDataContent();
             AttachFormParams(message, content);
             AttachFiles(message, content);
-            var response = await _client.PostAsync(Endpoint, content);
-            await ErrorChecker.CheckForErrorsAsync(response);
+            var response = await _client.PostAsync(Endpoint, content).ConfigureAwait(false);
+            await ErrorChecker.CheckForErrorsAsync(response).ConfigureAwait(false);
         }
 
         #region Support Methods
