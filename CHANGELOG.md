@@ -1,6 +1,10 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [6.3.1] - 2015-12-10
+###Added
+- Implemented the unsubscribe groups /asm/groups endpoint [GET, POST, DELETE]
+
 ## [6.3.0] - 2015-11-24
 ###Added
 - Send emails using API Key
