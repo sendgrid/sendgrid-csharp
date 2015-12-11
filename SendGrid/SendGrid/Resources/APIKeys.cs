@@ -1,5 +1,4 @@
 ﻿using System.Net.Http;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
@@ -53,7 +52,7 @@ namespace SendGrid.Resources
         }
 
         /// <summary>
-        /// Delete a API key
+        /// Patch a API key
         /// </summary>
         /// <param name="apiKeyId">ID of the API Key to rename</param>
         /// <param name="apiKeyName">New API Key name</param>

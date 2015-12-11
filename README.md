@@ -193,6 +193,54 @@ ver apiKeyId = "<API Key ID>";
 HttpResponseMessage responseDelete = client.ApiKeys.Delete(apiKeyId).Result; 
 ```
 
+## Unsubscribe Groups ##
+
+Please refer to [our documentation](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html) for further details.
+
+Retrieve all suppression groups associated with the user. [GET]
+
+```csharp
+String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+var client = new SendGrid.Client(apiKey);
+// Leave off .Result for an asyncronous call
+HttpResponseMessage responseGet = client.ApiKeys.Get().Result;
+```
+
+Get information on a single suppression group. [GET]
+
+```csharp
+String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+var client = new SendGrid.Client(apiKey);
+// Leave off .Result for an asyncronous call
+HttpResponseMessage responseGet = client.UnsubscribeGroups.Get().Result;
+```
+
+Create a new suppression group. [POST]
+
+There is a limit of 25 groups per user.
+
+```csharp
+String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+var client = new SendGrid.Client(apiKey);
+var unsubscribeGroupName = "CSharpTestUnsubscribeGroup"; 
+var unsubscribeGroupDescription = "CSharp test Unsubscribe Group description."; 
+var unsubscribeGroupIsDefault = false; 
+// Leave off .Result for an asyncronous call
+HttpResponseMessage responsePost = client.UnsubscribeGroups.Post(unsubscribeGroupName, unsubscribeGroupDescription, unsubscribeGroupIsDefault ).Result; 
+```
+
+Delete a suppression group. [DELETE]
+
+You can only delete groups that have not been attached to sent mail in the last 60 days. If a recipient uses the “one-click unsubscribe” option on an email associated with a deleted group, that recipient will be added to the global suppression list.
+
+```csharp
+String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+var client = new SendGrid.Client(apiKey);
+ver unsubscribeGroupId = "<UNSUBSCRIBE GROUP ID>";
+// Leave off .Result for an asyncronous call
+HttpResponseMessage responseDelete = client.UnsubscribeGroups.Delete(unsubscribeGroupId).Result; 
+```
+
 #How to: Testing
 
 * Load the solution (We have tested using the Visual Studio Community Edition)
