@@ -24,7 +24,6 @@ namespace Example
         private static void SendAsync(SendGrid.SendGridMessage message)
         {
             string apikey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
-
             // Create a Web transport for sending email.
             var transportWeb = new SendGrid.Web(apikey);
 
