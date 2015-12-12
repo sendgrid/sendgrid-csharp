@@ -22,7 +22,7 @@ namespace SendGrid.Resources
         }
 
         /// <summary>
-        /// Retrieve all suppression groups associated with the user.s
+        /// Retrieve all suppression groups associated with the user.
         /// </summary>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
         public async Task<HttpResponseMessage> Get()
@@ -31,13 +31,13 @@ namespace SendGrid.Resources
         }
 
         /// <summary>
-        /// Retrieve all suppression groups associated with the user.s
+        /// Get information on a single suppression group.
         /// </summary>
+        /// <param name="unsubscribeGroupId">ID of the suppression group to delete</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
-        public async Task<HttpResponseMessage> Get(int unsubscribeGroupID)
+        public async Task<HttpResponseMessage> Get(int unsubscribeGroupId)
         {
-            string endpoint = _endpoint + "/" + unsubscribeGroupID;
-            return await _client.Get(endpoint);
+            return await _client.Get(_endpoint + "/" + unsubscribeGroupId);
         }
 
         /// <summary>

@@ -18,6 +18,7 @@ namespace Example
             // Test viewing, creating, modifying and deleting API keys through our v3 Web API 
             ApiKeys();
             UnsubscribeGroups();
+            Suppressions();
         }
         
         private static void SendAsync(SendGrid.SendGridMessage message)
@@ -115,7 +116,7 @@ namespace Example
             HttpResponseMessage responseGetUnique = client.UnsubscribeGroups.Get(unsubscribeGroupID).Result;
             Console.WriteLine(responseGetUnique.StatusCode);
             Console.WriteLine(responseGetUnique.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("These is an Unsubscribe Group with ID: " + unsubscribeGroupID.ToString() + ". Press any key to continue.");
+            Console.WriteLine("This is an Unsubscribe Group with ID: " + unsubscribeGroupID.ToString() + ". Press any key to continue.");
             Console.ReadKey();
 
             // POST UNSUBSCRIBE GROUP
@@ -138,5 +139,42 @@ namespace Example
             Console.WriteLine("Unsubscribe Group Deleted, press any key to end");
             Console.ReadKey();
         }
+        
+        private static void Suppressions()
+        {
+            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            var client = new SendGrid.Client(apiKey);
+
+            // GET SUPPRESSED ADDRESSES FOR A GIVEN GROUP
+            int groupID = 69;
+            HttpResponseMessage responseGetUnique = client.Suppressions.Get(groupID).Result;
+            Console.WriteLine(responseGetUnique.StatusCode);
+            Console.WriteLine(responseGetUnique.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("These are the suppressed emails with group ID: " + groupID.ToString() + ". Press any key to continue.");
+            Console.ReadKey();
+
+            // ADD EMAILS TO A SUPPRESSION GROUP
+            string[] emails = { "example@example.com", "example2@example.com" };
+            HttpResponseMessage responsePost = client.Suppressions.Post(groupID, emails).Result;
+            var rawString = responsePost.Content.ReadAsStringAsync().Result;
+            dynamic jsonObject = JObject.Parse(rawString);
+            Console.WriteLine(responsePost.StatusCode);
+            Console.WriteLine(responsePost.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("Emails added to Suppression Group:" + groupID.ToString() + ". Press any key to continue.");
+            Console.ReadKey();
+
+            // DELETE EMAILS FROM A SUPPRESSION GROUP
+            Console.WriteLine("Deleting emails from Suppression Group, please wait.");
+            HttpResponseMessage responseDelete1 = client.Suppressions.Delete(groupID, "example@example.com").Result;
+            Console.WriteLine(responseDelete1.StatusCode);
+            HttpResponseMessage responseDelete2 = client.Suppressions.Delete(groupID, "example2@example.com").Result;
+            Console.WriteLine(responseDelete2.StatusCode);
+            HttpResponseMessage responseFinal = client.Suppressions.Get(groupID).Result;
+            Console.WriteLine(responseFinal.StatusCode);
+            Console.WriteLine(responseFinal.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("Emails removed from Suppression Group" + groupID.ToString() + "Deleted. Press any key to end");
+            Console.ReadKey();
+        }
+
     }
 }

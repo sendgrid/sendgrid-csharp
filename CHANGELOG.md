@@ -1,6 +1,10 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [6.3.2] - 2015-12-11
+###Added
+- Implemented the suppressions /asm/groups/:group_id/suppressions endpoint [GET, POST, DELETE]
+
 ## [6.3.1] - 2015-12-10
 ###Added
 - Implemented the unsubscribe groups /asm/groups endpoint [GET, POST, DELETE]
