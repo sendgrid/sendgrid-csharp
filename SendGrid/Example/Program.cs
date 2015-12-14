@@ -10,7 +10,6 @@ namespace Example
     {
         private static void Main()
         {
-            /*
             // Test sending email 
             var to = "example@example.com";
             var from = "example@example.com";
@@ -20,7 +19,6 @@ namespace Example
             ApiKeys();
             UnsubscribeGroups();
             Suppressions();
-            */
             GlobalSuppressions();
         }
         
