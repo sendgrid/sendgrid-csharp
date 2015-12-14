@@ -10,6 +10,7 @@ namespace Example
     {
         private static void Main()
         {
+            /*
             // Test sending email 
             var to = "example@example.com";
             var from = "example@example.com";
@@ -20,6 +21,8 @@ namespace Example
             UnsubscribeGroups();
             Suppressions();
             GlobalSuppressions();
+            */
+            GlobalStats();
         }
         
         private static void SendAsync(SendGrid.SendGridMessage message)
@@ -182,7 +185,7 @@ namespace Example
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             var client = new SendGrid.Client(apiKey);
 
-            // GET SUPPRESSED ADDRESSES FOR A GIVEN GROUP
+            // CHECK IF EMAIL IS ON THE GLOBAL SUPPRESSION LIST
             var email = "elmer.thomas+test_global@gmail.com";
             HttpResponseMessage responseGetUnique = client.GlobalSuppressions.Get(email).Result;
             Console.WriteLine(responseGetUnique.StatusCode);
@@ -190,7 +193,7 @@ namespace Example
             Console.WriteLine("Determines if the given email is listed on the Global Suppressions list. Press any key to continue.");
             Console.ReadKey();
 
-            // ADD EMAILS TO A SUPPRESSION GROUP
+            // ADD EMAILS TO THE GLOBAL SUPPRESSION LIST
             string[] emails = { "example@example.com", "example2@example.com" };
             HttpResponseMessage responsePost = client.GlobalSuppressions.Post(emails).Result;
             var rawString = responsePost.Content.ReadAsStringAsync().Result;
@@ -200,7 +203,7 @@ namespace Example
             Console.WriteLine("Emails added to Global Suppression Group. Press any key to continue.");
             Console.ReadKey();
 
-            // DELETE EMAILS FROM A SUPPRESSION GROUP
+            // DELETE EMAILS FROM THE GLOBAL SUPPRESSION GROUP
             Console.WriteLine("Deleting emails from Global Suppression Group, please wait.");
             HttpResponseMessage responseDelete1 = client.GlobalSuppressions.Delete("example@example.com").Result;
             Console.WriteLine(responseDelete1.StatusCode);
@@ -214,6 +217,22 @@ namespace Example
             Console.WriteLine(responseFinal2.Content.ReadAsStringAsync().Result);
             Console.WriteLine("Emails removed from Global Suppression Group. Press any key to end.");
             Console.ReadKey();
+        }
+
+        private static void GlobalStats()
+        {
+            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            var client = new SendGrid.Client(apiKey);
+
+            // Global Stats provide all of your user’s email statistics for a given date range.
+            var startDate = "2015-12-01";
+            HttpResponseMessage responseGetUnique = client.GlobalStats.Get(startDate).Result;
+            Console.WriteLine(responseGetUnique.StatusCode);
+            Console.WriteLine(responseGetUnique.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("Display global email stats, with start date " + startDate + "and no end date. Press any key to continue.");
+            Console.ReadKey();
+
+            // TODO: Cover case for the remaining two parameters
         }
 
     }
