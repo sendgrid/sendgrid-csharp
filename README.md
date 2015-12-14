@@ -277,6 +277,42 @@ ver groupId = "<UNSUBSCRIBE GROUP ID>";
 HttpResponseMessage responseDelete1 = client.Suppressions.Delete(groupId, "example@example.com").Result;
 ```
 
+## Global Suppressions ##
+
+Please refer to [our documentation](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/global_suppressions.html) for further details.
+
+Check if a recipient address is in the global suppressions group. [GET]
+
+```csharp
+String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+var client = new SendGrid.Client(apiKey);
+// Leave off .Result for an asyncronous call
+string email = "example@example.com";
+HttpResponseMessage responseGet = client.GlobalSuppressions.Get(email).Result;
+```
+
+Add recipient addresses to the global suppression group. [POST]
+
+If the group has been deleted, this request will add the address to the global suppression.
+
+```csharp
+String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+var client = new SendGrid.Client(apiKey);
+string[] emails = { "example@example.com", "example2@example.com" };
+// Leave off .Result for an asyncronous call
+HttpResponseMessage responsePost = client.GlobalSuppressions.Post(emails).Result;
+```
+
+Delete a recipient email from the global suppressions group. [DELETE]
+
+```csharp
+String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+var client = new SendGrid.Client(apiKey);
+string email = "example@example.com";
+// Leave off .Result for an asyncronous call
+HttpResponseMessage responseDelete1 = client.GlobalSuppressions.Delete(email).Result;
+```
+
 #How to: Testing
 
 * Load the solution (We have tested using the Visual Studio Community Edition)
