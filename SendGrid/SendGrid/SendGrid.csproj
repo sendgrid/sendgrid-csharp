@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\GlobalSuppressions.cs" />
     <Compile Include="Resources\Suppressions.cs" />
     <Compile Include="Resources\UnsubscribeGroups.cs" />
     <Compile Include="Resources\APIKeys.cs" />
