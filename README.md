@@ -313,6 +313,22 @@ string email = "example@example.com";
 HttpResponseMessage responseDelete1 = client.GlobalSuppressions.Delete(email).Result;
 ```
 
+## Global Stats ##
+
+Please refer to [our documentation](https://sendgrid.com/docs/API_Reference/Web_API_v3/Stats/global.html) for further details.
+
+Global Stats provide all of your user’s email statistics for a given date range. [GET]
+
+```csharp
+String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+var client = new SendGrid.Client(apiKey);
+var startDate = "2015-11-01"; // required
+var endDate = "2015-12-01";
+var aggregatedBy = "day"; // "week" or "month" are also options
+// Leave off .Result for an asyncronous call
+HttpResponseMessage responseGet = client.GlobalStats.Get(startDate, endDate, aggregatedBy).Result;
+```
+
 #How to: Testing
 
 * Load the solution (We have tested using the Visual Studio Community Edition)

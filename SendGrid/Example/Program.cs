@@ -20,6 +20,7 @@ namespace Example
             UnsubscribeGroups();
             Suppressions();
             GlobalSuppressions();
+            GlobalStats();
         }
         
         private static void SendAsync(SendGrid.SendGridMessage message)
@@ -33,13 +34,13 @@ namespace Example
             {
                 transportWeb.DeliverAsync(message).Wait();
                 Console.WriteLine("Email sent to " + message.To.GetValue(0));
-                Console.WriteLine("Press any key to continue.");
+                Console.WriteLine("\n\nPress any key to continue.");
                 Console.ReadKey();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                Console.WriteLine("Press any key to continue.");
+                Console.WriteLine("\n\nPress any key to continue.");
                 Console.ReadKey();
             }
         }
@@ -69,7 +70,7 @@ namespace Example
             HttpResponseMessage responseGet = client.ApiKeys.Get().Result;
             Console.WriteLine(responseGet.StatusCode);
             Console.WriteLine(responseGet.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("These are your current API Keys. Press any key to continue.");
+            Console.WriteLine("These are your current API Keys.\n\nPress any key to continue.");
             Console.ReadKey();
 
             // POST API KEYS
@@ -79,14 +80,14 @@ namespace Example
             var apiKeyId = jsonObject.api_key_id.ToString();
             Console.WriteLine(responsePost.StatusCode);
             Console.WriteLine(responsePost.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("API Key created. Press any key to continue.");
+            Console.WriteLine("API Key created.\n\nPress any key to continue.");
             Console.ReadKey();
 
             // PATCH API KEYS
             HttpResponseMessage responsePatch = client.ApiKeys.Patch(apiKeyId, "CSharpTestKeyPatched").Result;
             Console.WriteLine(responsePatch.StatusCode);
             Console.WriteLine(responsePatch.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("API Key patched. Press any key to continue.");
+            Console.WriteLine("API Key patched.\n\nPress any key to continue.");
             Console.ReadKey();
 
             // DELETE API KEYS
@@ -96,7 +97,7 @@ namespace Example
             HttpResponseMessage responseFinal = client.ApiKeys.Get().Result;
             Console.WriteLine(responseFinal.StatusCode);
             Console.WriteLine(responseFinal.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("API Key Deleted, press any key to end.");
+            Console.WriteLine("API Key Deleted.\n\nPress any key to end.");
             Console.ReadKey();
         }
 
@@ -117,7 +118,7 @@ namespace Example
             HttpResponseMessage responseGetUnique = client.UnsubscribeGroups.Get(unsubscribeGroupID).Result;
             Console.WriteLine(responseGetUnique.StatusCode);
             Console.WriteLine(responseGetUnique.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("This is an Unsubscribe Group with ID: " + unsubscribeGroupID.ToString() + ". Press any key to continue.");
+            Console.WriteLine("This is an Unsubscribe Group with ID: " + unsubscribeGroupID.ToString() + ".\n\nPress any key to continue.");
             Console.ReadKey();
 
             // POST UNSUBSCRIBE GROUP
@@ -127,7 +128,7 @@ namespace Example
             var unsubscribeGroupId = jsonObject.id.ToString();
             Console.WriteLine(responsePost.StatusCode);
             Console.WriteLine(responsePost.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("Unsubscribe Group created. Press any key to continue.");
+            Console.WriteLine("Unsubscribe Group created.\n\nPress any key to continue.");
             Console.ReadKey();
 
             // DELETE UNSUBSCRIBE GROUP
@@ -137,7 +138,7 @@ namespace Example
             HttpResponseMessage responseFinal = client.UnsubscribeGroups.Get().Result;
             Console.WriteLine(responseFinal.StatusCode);
             Console.WriteLine(responseFinal.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("Unsubscribe Group Deleted, press any key to end.");
+            Console.WriteLine("Unsubscribe Group Deleted.\n\nPress any key to end.");
             Console.ReadKey();
         }
         
@@ -161,7 +162,7 @@ namespace Example
             dynamic jsonObject = JObject.Parse(rawString);
             Console.WriteLine(responsePost.StatusCode);
             Console.WriteLine(responsePost.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("Emails added to Suppression Group:" + groupID.ToString() + ". Press any key to continue.");
+            Console.WriteLine("Emails added to Suppression Group:" + groupID.ToString() + ".\n\nPress any key to continue.");
             Console.ReadKey();
 
             // DELETE EMAILS FROM A SUPPRESSION GROUP
@@ -173,7 +174,7 @@ namespace Example
             HttpResponseMessage responseFinal = client.Suppressions.Get(groupID).Result;
             Console.WriteLine(responseFinal.StatusCode);
             Console.WriteLine(responseFinal.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("Emails removed from Suppression Group" + groupID.ToString() + "Deleted. Press any key to end.");
+            Console.WriteLine("Emails removed from Suppression Group" + groupID.ToString() + "Deleted.\n\nPress any key to end.");
             Console.ReadKey();
         }
 
@@ -182,7 +183,7 @@ namespace Example
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             var client = new SendGrid.Client(apiKey);
 
-            // GET SUPPRESSED ADDRESSES FOR A GIVEN GROUP
+            // CHECK IF EMAIL IS ON THE GLOBAL SUPPRESSION LIST
             var email = "elmer.thomas+test_global@gmail.com";
             HttpResponseMessage responseGetUnique = client.GlobalSuppressions.Get(email).Result;
             Console.WriteLine(responseGetUnique.StatusCode);
@@ -190,17 +191,17 @@ namespace Example
             Console.WriteLine("Determines if the given email is listed on the Global Suppressions list. Press any key to continue.");
             Console.ReadKey();
 
-            // ADD EMAILS TO A SUPPRESSION GROUP
+            // ADD EMAILS TO THE GLOBAL SUPPRESSION LIST
             string[] emails = { "example@example.com", "example2@example.com" };
             HttpResponseMessage responsePost = client.GlobalSuppressions.Post(emails).Result;
             var rawString = responsePost.Content.ReadAsStringAsync().Result;
             dynamic jsonObject = JObject.Parse(rawString);
             Console.WriteLine(responsePost.StatusCode);
             Console.WriteLine(responsePost.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("Emails added to Global Suppression Group. Press any key to continue.");
+            Console.WriteLine("Emails added to Global Suppression Group.\n\nPress any key to continue.");
             Console.ReadKey();
 
-            // DELETE EMAILS FROM A SUPPRESSION GROUP
+            // DELETE EMAILS FROM THE GLOBAL SUPPRESSION GROUP
             Console.WriteLine("Deleting emails from Global Suppression Group, please wait.");
             HttpResponseMessage responseDelete1 = client.GlobalSuppressions.Delete("example@example.com").Result;
             Console.WriteLine(responseDelete1.StatusCode);
@@ -212,7 +213,49 @@ namespace Example
             HttpResponseMessage responseFinal2 = client.GlobalSuppressions.Get("example2@example.com").Result;
             Console.WriteLine(responseFinal2.StatusCode);
             Console.WriteLine(responseFinal2.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("Emails removed from Global Suppression Group. Press any key to end.");
+            Console.WriteLine("Emails removed from Global Suppression Group.\n\nPress any key to end.");
+            Console.ReadKey();
+        }
+
+        private static void GlobalStats()
+        {
+            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            var client = new SendGrid.Client(apiKey);
+
+            // Global Stats provide all of your user’s email statistics for a given date range.
+            var startDate = "2015-11-01";
+            HttpResponseMessage response = client.GlobalStats.Get(startDate).Result;
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("Display global email stats, with start date " + startDate + "and no end date.\n\nPress any key to continue.");
+            Console.ReadKey();
+
+            var endDate = "2015-12-01";
+            response = client.GlobalStats.Get(startDate, endDate).Result;
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("Display global email stats, with start date " + startDate + "and end date " + endDate + ".\n\nPress any key to continue.");
+            Console.ReadKey();
+
+            var aggregatedBy = "day";
+            response = client.GlobalStats.Get(startDate, endDate, aggregatedBy).Result;
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("Display global email stats, with start date " + startDate + "and end date " + endDate + " and aggregated by " + aggregatedBy + ".\n\nPress any key to continue.");
+            Console.ReadKey();
+
+            aggregatedBy = "week";
+            response = client.GlobalStats.Get(startDate, endDate, aggregatedBy).Result;
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("Display global email stats, with start date " + startDate + "and end date " + endDate + " and aggregated by " + aggregatedBy + ".\n\nPress any key to continue.");
+            Console.ReadKey();
+
+            aggregatedBy = "month";
+            response = client.GlobalStats.Get(startDate, endDate, aggregatedBy).Result;
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("Display global email stats, with start date " + startDate + "and end date " + endDate + " and aggregated by " + aggregatedBy + ".\n\nPress any key to continue.");
             Console.ReadKey();
         }
 

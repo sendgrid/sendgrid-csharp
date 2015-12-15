@@ -1,6 +1,10 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [6.3.4] - 2015-12-15
+###Added
+- Implemented the global stats /asm/stats endpoint [GET]
+
 ## [6.3.3] - 2015-12-14
 ###Added
 - Implemented the global suppressions /asm/suppressions/global endpoint [GET, POST, DELETE]
