@@ -6,8 +6,8 @@ namespace SendGrid.Resources
 {
     public class APIKeys
     {
-        private string _endpoint;
-        private Client _client;
+        private readonly string _endpoint;
+        private readonly Client _client;
 
         /// <summary>
         /// Constructs the SendGrid APIKeys object.
@@ -48,7 +48,7 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html</returns>
         public async Task<HttpResponseMessage> Delete(string apiKeyId)
         {
-            return await _client.Delete(_endpoint + "/" + apiKeyId);
+            return await _client.Delete(string.Format("{0}/{1}", _endpoint, apiKeyId));
         }
 
         /// <summary>
@@ -59,9 +59,8 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html</returns>
         public async Task<HttpResponseMessage> Patch(string apiKeyId, string apiKeyName)
         {
-            var data = new JObject { { "name", apiKeyName } };
-            return await _client.Patch(_endpoint + "/" + apiKeyId, data);
+            var data = new JObject {{"name", apiKeyName}};
+            return await _client.Patch(string.Format("{0}/{1}", _endpoint, apiKeyId), data);
         }
-
     }
 }

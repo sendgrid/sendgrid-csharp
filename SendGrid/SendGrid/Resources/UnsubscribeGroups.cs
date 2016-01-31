@@ -6,8 +6,8 @@ namespace SendGrid.Resources
 {
     public class UnsubscribeGroups
     {
-        private string _endpoint;
-        private Client _client;
+        private readonly string _endpoint;
+        private readonly Client _client;
 
         /// <summary>
         /// Constructs the SendGrid UnsubscribeGroups object.
@@ -37,7 +37,7 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
         public async Task<HttpResponseMessage> Get(int unsubscribeGroupId)
         {
-            return await _client.Get(_endpoint + "/" + unsubscribeGroupId);
+            return await _client.Get(string.Format("{0}/{1}", _endpoint, unsubscribeGroupId));
         }
 
         /// <summary>
@@ -54,6 +54,7 @@ namespace SendGrid.Resources
             var data = new JObject {{"name", unsubscribeGroupName},
                                     {"description", unsubscribeGroupDescription},
                                     {"is_default", unsubscribeGroupIsDefault}};
+
             return await _client.Post(_endpoint, data);
         }
 
@@ -64,7 +65,7 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
         public async Task<HttpResponseMessage> Delete(string unsubscribeGroupId)
         {
-            return await _client.Delete(_endpoint + "/" + unsubscribeGroupId);
+            return await _client.Delete(string.Format("{0}/{1}", _endpoint, unsubscribeGroupId));
         }
     }
 }
