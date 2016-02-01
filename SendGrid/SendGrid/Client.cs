@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using SendGrid.Resources;
+using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Text;
-using SendGrid.Resources;
-using System.Net;
-using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 
 namespace SendGrid
 {
@@ -52,6 +52,32 @@ namespace SendGrid
         /// <returns>An asyncronous task</returns>
         private async Task<HttpResponseMessage> RequestAsync(Methods method, string endpoint, JObject data)
         {
+            var content = (data == null ? null : new StringContent(data.ToString(), Encoding.UTF8, MediaType));
+            return await RequestAsync(method, endpoint, content);
+        }
+
+        /// <summary>
+        ///     Create a client that connects to the SendGrid Web API
+        /// </summary>
+        /// <param name="method">HTTP verb, case-insensitive</param>
+        /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
+        /// <param name="data">An JArray representing the resource's data</param>
+        /// <returns>An asyncronous task</returns>
+        private async Task<HttpResponseMessage> RequestAsync(Methods method, string endpoint, JArray data)
+        {
+            var content = (data == null ? null : new StringContent(data.ToString(), Encoding.UTF8, MediaType));
+            return await RequestAsync(method, endpoint, content);
+        }
+
+        /// <summary>
+        ///     Create a client that connects to the SendGrid Web API
+        /// </summary>
+        /// <param name="method">HTTP verb, case-insensitive</param>
+        /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
+        /// <param name="data">A StringContent representing the content of the http request</param>
+        /// <returns>An asyncronous task</returns>
+        private async Task<HttpResponseMessage> RequestAsync(Methods method, string endpoint, StringContent content)
+        {
             using (var client = new HttpClient())
             {
                 try
@@ -62,31 +88,30 @@ namespace SendGrid
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
                     client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + Version + ";csharp");
 
+                    var methodAsString = "";
                     switch (method)
                     {
-                        case Methods.GET:
-                            return await client.GetAsync(endpoint);
-                        case Methods.POST:
-                            return await client.PostAsJsonAsync(endpoint, data);
-                        case Methods.PATCH:
-                            endpoint = _baseUri + endpoint;
-                            StringContent content = new StringContent(data.ToString(), Encoding.UTF8, MediaType);
-                            HttpRequestMessage request = new HttpRequestMessage
-                            {
-                                Method = new HttpMethod("PATCH"),
-                                RequestUri = new Uri(endpoint),
-                                Content = content
-                            };
-                            return await client.SendAsync(request);
-                        case Methods.DELETE:
-                            return await client.DeleteAsync(endpoint);
+                        case Methods.GET: methodAsString = "GET"; break;
+                        case Methods.POST: methodAsString = "POST"; break;
+                        case Methods.PATCH: methodAsString = "PATCH"; break;
+                        case Methods.DELETE: methodAsString = "DELETE"; break;
                         default:
-                            HttpResponseMessage response = new HttpResponseMessage();
-                            response.StatusCode = HttpStatusCode.MethodNotAllowed;
                             var message = "{\"errors\":[{\"message\":\"Bad method call, supported methods are GET, POST, PATCH and DELETE\"}]}";
-                            response.Content = new StringContent(message);
+                            var response = new HttpResponseMessage(HttpStatusCode.MethodNotAllowed)
+                            {
+                                Content = new StringContent(message)
+                            };
                             return response;
                     }
+
+                    var postRequest = new HttpRequestMessage
+                    {
+                        Method = new HttpMethod(methodAsString),
+                        RequestUri = new Uri(_baseUri + endpoint),
+                        Content = content
+                    };
+                    return await client.SendAsync(postRequest);
+
                 }
                 catch (Exception ex)
                 {
@@ -104,7 +129,7 @@ namespace SendGrid
         /// <returns>The resulting message from the API call</returns>
         public async Task<HttpResponseMessage> Get(string endpoint)
         {
-            return await RequestAsync(Methods.GET, endpoint, null);
+            return await RequestAsync(Methods.GET, endpoint, (StringContent)null);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
@@ -116,10 +141,11 @@ namespace SendGrid
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
+        /// <param name="data">An optional JArray representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
-        public async Task<HttpResponseMessage> Delete(string endpoint)
+        public async Task<HttpResponseMessage> Delete(string endpoint, JArray data = null)
         {
-            return await RequestAsync(Methods.DELETE, endpoint, null);
+            return await RequestAsync(Methods.DELETE, endpoint, data);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
