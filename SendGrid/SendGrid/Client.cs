@@ -104,7 +104,7 @@ namespace SendGrid
                             return response;
                     }
 
-                    var postRequest = new HttpRequestMessage
+                    var postRequest = new HttpRequestMessage()
                     {
                         Method = new HttpMethod(methodAsString),
                         RequestUri = new Uri(_baseUri + endpoint),
@@ -115,11 +115,11 @@ namespace SendGrid
                 }
                 catch (Exception ex)
                 {
-                    HttpResponseMessage response = new HttpResponseMessage();
-                    string message;
-                    message = (ex is HttpRequestException) ? ".NET HttpRequestException" : ".NET Exception";
-                    message = message + ", raw message: \n\n";
-                    response.Content = new StringContent(message + ex.Message);
+                    var message = string.Format(".NET {0}, raw message: \n\n{1}", (ex is HttpRequestException) ? "HttpRequestException" : "Exception", ex.Message);
+                    var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
+                    {
+                        Content = new StringContent(message)
+                    };
                     return response;
                 }
             }
