@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using SendGrid.Model;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Mail;
-using Newtonsoft.Json.Linq;
 
 namespace Example
 {
@@ -22,7 +23,7 @@ namespace Example
             GlobalSuppressions();
             GlobalStats();
         }
-        
+
         private static void SendAsync(SendGrid.SendGridMessage message)
         {
             string apikey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
@@ -141,7 +142,7 @@ namespace Example
             Console.WriteLine("Unsubscribe Group Deleted.\n\nPress any key to end.");
             Console.ReadKey();
         }
-        
+
         private static void Suppressions()
         {
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
@@ -219,45 +220,31 @@ namespace Example
 
         private static void GlobalStats()
         {
-            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            Console.WriteLine("\n***** GLOBAL STATS *****");
+
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             var client = new SendGrid.Client(apiKey);
 
             // Global Stats provide all of your user’s email statistics for a given date range.
-            var startDate = "2015-11-01";
-            HttpResponseMessage response = client.GlobalStats.Get(startDate).Result;
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("Display global email stats, with start date " + startDate + "and no end date.\n\nPress any key to continue.");
-            Console.ReadKey();
+            var startDate = new DateTime(2015, 11, 01);
+            var stats = client.GlobalStats.GetAsync(startDate).Result;
+            Console.WriteLine("Number of stats with start date {0} and no end date: {1}", startDate.ToShortDateString(), stats.Length);
 
-            var endDate = "2015-12-01";
-            response = client.GlobalStats.Get(startDate, endDate).Result;
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("Display global email stats, with start date " + startDate + "and end date " + endDate + ".\n\nPress any key to continue.");
-            Console.ReadKey();
+            var endDate = new DateTime(2015, 12, 01);
+            stats = client.GlobalStats.GetAsync(startDate, endDate).Result;
+            Console.WriteLine("Number of stats with start date {0} and end date {1}: {2}", startDate.ToShortDateString(), endDate.ToShortDateString(), stats.Length);
 
-            var aggregatedBy = "day";
-            response = client.GlobalStats.Get(startDate, endDate, aggregatedBy).Result;
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("Display global email stats, with start date " + startDate + "and end date " + endDate + " and aggregated by " + aggregatedBy + ".\n\nPress any key to continue.");
-            Console.ReadKey();
+            stats = client.GlobalStats.GetAsync(startDate, endDate, AggregateBy.Day).Result;
+            Console.WriteLine("Number of stats with start date {0} and end date {1} and aggregated by day: {2}", startDate.ToShortDateString(), endDate.ToShortDateString(), stats.Length);
 
-            aggregatedBy = "week";
-            response = client.GlobalStats.Get(startDate, endDate, aggregatedBy).Result;
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("Display global email stats, with start date " + startDate + "and end date " + endDate + " and aggregated by " + aggregatedBy + ".\n\nPress any key to continue.");
-            Console.ReadKey();
+            stats = client.GlobalStats.GetAsync(startDate, endDate, AggregateBy.Week).Result;
+            Console.WriteLine("Number of stats with start date {0} and end date {1} and aggregated by week: {2}", startDate.ToShortDateString(), endDate.ToShortDateString(), stats.Length);
 
-            aggregatedBy = "month";
-            response = client.GlobalStats.Get(startDate, endDate, aggregatedBy).Result;
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("Display global email stats, with start date " + startDate + "and end date " + endDate + " and aggregated by " + aggregatedBy + ".\n\nPress any key to continue.");
+            stats = client.GlobalStats.GetAsync(startDate, endDate, AggregateBy.Month).Result;
+            Console.WriteLine("Number of stats with start date {0} and end date {1} and aggregated by month: {2}", startDate.ToShortDateString(), endDate.ToShortDateString(), stats.Length);
+
+            Console.WriteLine("\n\nPress any key to continue");
             Console.ReadKey();
         }
-
     }
 }
