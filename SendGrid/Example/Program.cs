@@ -2,8 +2,10 @@
 using SendGrid.Model;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
+using System.Net.Security;
 
 namespace Example
 {
@@ -11,17 +13,36 @@ namespace Example
     {
         private static void Main()
         {
+            // Do you want to proxy requests through fiddler?
+            var useFiddler = false;
+
+            if (useFiddler)
+            {
+                // This is necessary to ensure HTTPS traffic can be proxied through Fiddler without any certificate validation error.
+                // This is fine for testing but not advisable in production
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(delegate { return true; });
+            }
+
+            // Direct all traffic through fiddler running on the local machine
+            var httpClient = new HttpClient(
+                new HttpClientHandler()
+                {
+                    Proxy = new WebProxy("http://localhost:8888"),
+                    UseProxy = useFiddler
+                }
+            );
+            
             // Test sending email 
             var to = "example@example.com";
             var from = "example@example.com";
             var fromName = "Jane Doe";
             SendEmail(to, from, fromName);
             // Test viewing, creating, modifying and deleting API keys through our v3 Web API 
-            ApiKeys();
-            UnsubscribeGroups();
-            Suppressions();
-            GlobalSuppressions();
-            GlobalStats();
+            ApiKeys(httpClient);
+            UnsubscribeGroups(httpClient);
+            Suppressions(httpClient);
+            GlobalSuppressions(httpClient);
+            GlobalStats(httpClient);
         }
 
         private static void SendAsync(SendGrid.SendGridMessage message)
@@ -62,10 +83,10 @@ namespace Example
             SendAsync(myMessage);
         }
 
-        private static void ApiKeys()
+        private static void ApiKeys(HttpClient httpClient)
         {
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-            var client = new SendGrid.Client(apiKey);
+            var client = new SendGrid.Client(apiKey: apiKey, httpClient: httpClient);
 
             // GET API KEYS
             HttpResponseMessage responseGet = client.ApiKeys.Get().Result;
@@ -102,48 +123,38 @@ namespace Example
             Console.ReadKey();
         }
 
-        private static void UnsubscribeGroups()
+        private static void UnsubscribeGroups(HttpClient httpClient)
         {
-            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-            var client = new SendGrid.Client(apiKey);
+            Console.WriteLine("\n***** UNSUBSCRIBE GROUPS *****");
+
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            var client = new SendGrid.Client(apiKey: apiKey, httpClient: httpClient);
+
+            // CREATE A NEW SUPPRESSION GROUP
+            var newGroup = client.UnsubscribeGroups.CreateAsync("New group", "This is a new group for testing purposes", false).Result;
+            Console.WriteLine("Unique ID of the new suppresion group: {0}", newGroup.Id);
+            
+            // UPDATE A SUPPRESSION GROUP
+            var updatedGroup = client.UnsubscribeGroups.UpdateAsync(newGroup.Id, "This is the updated name").Result;
+            Console.WriteLine("Suppresion group {0} updated", updatedGroup.Id);
 
             // GET UNSUBSCRIBE GROUPS
-            HttpResponseMessage responseGet = client.UnsubscribeGroups.Get().Result;
-            Console.WriteLine(responseGet.StatusCode);
-            Console.WriteLine(responseGet.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("These are your current Unsubscribe Groups. Press any key to continue.");
-            Console.ReadKey();
+            var groups = client.UnsubscribeGroups.GetAllAsync().Result;
+            Console.WriteLine("There are {0} suppresion groups", groups.Length);
 
             // GET A PARTICULAR UNSUBSCRIBE GROUP
-            int unsubscribeGroupID = 69;
-            HttpResponseMessage responseGetUnique = client.UnsubscribeGroups.Get(unsubscribeGroupID).Result;
-            Console.WriteLine(responseGetUnique.StatusCode);
-            Console.WriteLine(responseGetUnique.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("This is an Unsubscribe Group with ID: " + unsubscribeGroupID.ToString() + ".\n\nPress any key to continue.");
-            Console.ReadKey();
-
-            // POST UNSUBSCRIBE GROUP
-            HttpResponseMessage responsePost = client.UnsubscribeGroups.Post("C Sharp Unsubscribes", "Testing the C Sharp Library", false).Result;
-            var rawString = responsePost.Content.ReadAsStringAsync().Result;
-            dynamic jsonObject = JObject.Parse(rawString);
-            var unsubscribeGroupId = jsonObject.id.ToString();
-            Console.WriteLine(responsePost.StatusCode);
-            Console.WriteLine(responsePost.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("Unsubscribe Group created.\n\nPress any key to continue.");
-            Console.ReadKey();
+            var group = client.UnsubscribeGroups.GetAsync(newGroup.Id).Result;
+            Console.WriteLine("Retrieved unsubscribe group {0}: {1}", group.Id, group.Name);
 
             // DELETE UNSUBSCRIBE GROUP
-            Console.WriteLine("Deleting Unsubscribe Group, please wait.");
-            HttpResponseMessage responseDelete = client.UnsubscribeGroups.Delete(unsubscribeGroupId).Result;
-            Console.WriteLine(responseDelete.StatusCode);
-            HttpResponseMessage responseFinal = client.UnsubscribeGroups.Get().Result;
-            Console.WriteLine(responseFinal.StatusCode);
-            Console.WriteLine(responseFinal.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("Unsubscribe Group Deleted.\n\nPress any key to end.");
+            client.UnsubscribeGroups.DeleteAsync(newGroup.Id).Wait();
+            Console.WriteLine("Suppression group {0} deleted", newGroup.Id);
+
+            Console.WriteLine("\n\nPress any key to continue");
             Console.ReadKey();
         }
 
-        private static void Suppressions()
+        private static void Suppressions(HttpClient httpClient)
         {
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             var client = new SendGrid.Client(apiKey);
@@ -179,17 +190,17 @@ namespace Example
             Console.ReadKey();
         }
 
-        private static void GlobalSuppressions()
+        private static void GlobalSuppressions(HttpClient httpClient)
         {
             Console.WriteLine("\n***** GLOBAL SUPPRESSION *****");
 
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-            var client = new SendGrid.Client(apiKey);
+            var client = new SendGrid.Client(apiKey: apiKey, httpClient: httpClient);
 
             // ADD EMAILS TO THE GLOBAL SUPPRESSION LIST
             var emails = new[] { "example@example.com", "example2@example.com" };
             client.GlobalSuppressions.AddAsync(emails).Wait();
-            Console.WriteLine("\nThe following emails have been added to the global suppression list: {0}", string.Join(", ", emails));
+            Console.WriteLine("The following emails have been added to the global suppression list: {0}", string.Join(", ", emails));
             Console.WriteLine("Is {0} unsubscribed (should be true): {1}", emails[0], client.GlobalSuppressions.IsUnsubscribedAsync(emails[0]).Result);
             Console.WriteLine("Is {0} unsubscribed (should be true): {1}", emails[1], client.GlobalSuppressions.IsUnsubscribedAsync(emails[1]).Result);
 
@@ -206,12 +217,12 @@ namespace Example
             Console.ReadKey();
         }
 
-        private static void GlobalStats()
+        private static void GlobalStats(HttpClient httpClient)
         {
             Console.WriteLine("\n***** GLOBAL STATS *****");
 
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-            var client = new SendGrid.Client(apiKey);
+            var client = new SendGrid.Client(apiKey: apiKey, httpClient: httpClient);
 
             // Global Stats provide all of your user’s email statistics for a given date range.
             var startDate = new DateTime(2015, 11, 01);

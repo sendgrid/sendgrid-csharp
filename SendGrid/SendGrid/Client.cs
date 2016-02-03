@@ -13,34 +13,44 @@ namespace SendGrid
     public class Client
     {
         private string _apiKey;
-        public APIKeys ApiKeys;
-        public UnsubscribeGroups UnsubscribeGroups;
-        public Suppressions Suppressions;
-        public GlobalSuppressions GlobalSuppressions;
-        public GlobalStats GlobalStats;
-        public string Version;
         private Uri _baseUri;
+        private HttpClient _httpClient;
         private const string MediaType = "application/json";
         private enum Methods
         {
             GET, POST, PATCH, DELETE
         }
 
+        public APIKeys ApiKeys { get; private set; }
+        public UnsubscribeGroups UnsubscribeGroups { get; private set; }
+        public Suppressions Suppressions { get; private set; }
+        public GlobalSuppressions GlobalSuppressions { get; private set; }
+        public GlobalStats GlobalStats { get; private set; }
+        public string Version { get; private set; }
+
         /// <summary>
         ///     Create a client that connects to the SendGrid Web API
         /// </summary>
         /// <param name="apiKey">Your SendGrid API Key</param>
         /// <param name="baseUri">Base SendGrid API Uri</param>
-        public Client(string apiKey, string baseUri = "https://api.sendgrid.com/")
+        public Client(string apiKey, string baseUri = "https://api.sendgrid.com/", HttpClient httpClient = null)
         {
             _baseUri = new Uri(baseUri);
             _apiKey = apiKey;
+
             Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             ApiKeys = new APIKeys(this);
             UnsubscribeGroups = new UnsubscribeGroups(this);
             Suppressions = new Suppressions(this);
             GlobalSuppressions = new GlobalSuppressions(this);
             GlobalStats = new GlobalStats(this);
+
+            _httpClient = httpClient ?? new HttpClient();
+            _httpClient.BaseAddress = _baseUri;
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaType));
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+            _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", string.Format("sendgrid/{0};csharp", Version));
         }
 
         /// <summary>
@@ -78,50 +88,40 @@ namespace SendGrid
         /// <returns>An asyncronous task</returns>
         private async Task<HttpResponseMessage> RequestAsync(Methods method, string endpoint, StringContent content)
         {
-            using (var client = new HttpClient())
+            try
             {
-                try
+                var methodAsString = "";
+                switch (method)
                 {
-                    client.BaseAddress = _baseUri;
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaType));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
-                    client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + Version + ";csharp");
-
-                    var methodAsString = "";
-                    switch (method)
-                    {
-                        case Methods.GET: methodAsString = "GET"; break;
-                        case Methods.POST: methodAsString = "POST"; break;
-                        case Methods.PATCH: methodAsString = "PATCH"; break;
-                        case Methods.DELETE: methodAsString = "DELETE"; break;
-                        default:
-                            var message = "{\"errors\":[{\"message\":\"Bad method call, supported methods are GET, POST, PATCH and DELETE\"}]}";
-                            var response = new HttpResponseMessage(HttpStatusCode.MethodNotAllowed)
-                            {
-                                Content = new StringContent(message)
-                            };
-                            return response;
-                    }
-
-                    var postRequest = new HttpRequestMessage()
-                    {
-                        Method = new HttpMethod(methodAsString),
-                        RequestUri = new Uri(_baseUri + endpoint),
-                        Content = content
-                    };
-                    return await client.SendAsync(postRequest);
-
+                    case Methods.GET: methodAsString = "GET"; break;
+                    case Methods.POST: methodAsString = "POST"; break;
+                    case Methods.PATCH: methodAsString = "PATCH"; break;
+                    case Methods.DELETE: methodAsString = "DELETE"; break;
+                    default:
+                        var message = "{\"errors\":[{\"message\":\"Bad method call, supported methods are GET, POST, PATCH and DELETE\"}]}";
+                        var response = new HttpResponseMessage(HttpStatusCode.MethodNotAllowed)
+                        {
+                            Content = new StringContent(message)
+                        };
+                        return response;
                 }
-                catch (Exception ex)
+
+                var httpRequest = new HttpRequestMessage()
                 {
-                    var message = string.Format(".NET {0}, raw message: \n\n{1}", (ex is HttpRequestException) ? "HttpRequestException" : "Exception", ex.Message);
-                    var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
-                    {
-                        Content = new StringContent(message)
-                    };
-                    return response;
-                }
+                    Method = new HttpMethod(methodAsString),
+                    RequestUri = new Uri(_baseUri + endpoint),
+                    Content = content
+                };
+                return await _httpClient.SendAsync(httpRequest);
+            }
+            catch (Exception ex)
+            {
+                var message = string.Format(".NET {0}, raw message: \n\n{1}", (ex is HttpRequestException) ? "HttpRequestException" : "Exception", ex.Message);
+                var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent(message)
+                };
+                return response;
             }
         }
 
