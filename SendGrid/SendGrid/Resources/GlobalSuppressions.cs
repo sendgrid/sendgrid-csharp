@@ -1,6 +1,8 @@
-﻿using System.Net.Http;
+﻿using Newtonsoft.Json.Linq;
+using SendGrid.Utilities;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 
 namespace SendGrid.Resources
 {
@@ -26,9 +28,24 @@ namespace SendGrid.Resources
         /// </summary>
         /// <param name="email">email address to check</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/global_suppressions.html</returns>
-        public async Task<HttpResponseMessage> Get(string email)
+        public async Task<bool> IsUnsubscribedAsync(string email)
         {
-            return await _client.Get(_endpoint + "/" + email);
+            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, email));
+            response.EnsureSuccess();
+
+            // If the email address is on the global suppression list, the response will look like this:
+            //  {
+            //      "recipient_email": "{email}"
+            //  }
+            // If the email address is not on the global suppression list, the response will be empty
+            //
+            // Therefore, we check for the presence of the 'recipient_email' to indicate if the email 
+            // address is on the global suppression list or not.
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var dynamicObject = JObject.Parse(responseContent);
+            var propertyDictionary = (IDictionary<string, JToken>)dynamicObject;
+            return propertyDictionary.ContainsKey("recipient_email");
         }
 
         /// <summary>
@@ -36,12 +53,12 @@ namespace SendGrid.Resources
         /// </summary>
         /// <param name="recipient_emails">Array of email addresses to add to the suppression group</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/global_suppressions.html</returns>
-        public async Task<HttpResponseMessage> Post(string[] emails)
+        public async Task AddAsync(IEnumerable<string> emails)
         {
-            JArray receipient_emails = new JArray();
-            foreach (string email in emails) { receipient_emails.Add(email); }
+            var receipient_emails = new JArray(emails.ToArray());
             var data = new JObject(new JProperty("recipient_emails", receipient_emails));
-            return await _client.Post(_endpoint, data);
+            var response = await _client.Post(_endpoint, data);
+            response.EnsureSuccess();
         }
 
         /// <summary>
@@ -49,9 +66,10 @@ namespace SendGrid.Resources
         /// </summary>
         /// <param name="email">email address to be removed from the global suppressions group</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/global_suppressions.html</returns>
-        public async Task<HttpResponseMessage> Delete(string email)
+        public async Task RemoveAsync(string email)
         {
-            return await _client.Delete(_endpoint + "/" + email);
+            var response = await _client.Delete(string.Format("{0}/{1}", _endpoint, email));
+            response.EnsureSuccess();
         }
     }
 }
