@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="Model\SuppressionGroup.cs" />
     <Compile Include="Model\Stats.cs" />
     <Compile Include="Model\Metrics.cs" />
     <Compile Include="Model\GlobalStat.cs" />
