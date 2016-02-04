@@ -31,7 +31,7 @@ namespace Example
                     UseProxy = useFiddler
                 }
             );
-            
+
             // Test sending email 
             var to = "example@example.com";
             var from = "example@example.com";
@@ -40,7 +40,6 @@ namespace Example
             // Test viewing, creating, modifying and deleting API keys through our v3 Web API 
             ApiKeys(httpClient);
             UnsubscribeGroups(httpClient);
-            Suppressions(httpClient);
             GlobalSuppressions(httpClient);
             GlobalStats(httpClient);
         }
@@ -132,61 +131,53 @@ namespace Example
 
             // CREATE A NEW SUPPRESSION GROUP
             var newGroup = client.UnsubscribeGroups.CreateAsync("New group", "This is a new group for testing purposes", false).Result;
-            Console.WriteLine("Unique ID of the new suppresion group: {0}", newGroup.Id);
-            
+            Console.WriteLine("Unique ID of the new unsubscribe group: {0}", newGroup.Id);
+
             // UPDATE A SUPPRESSION GROUP
             var updatedGroup = client.UnsubscribeGroups.UpdateAsync(newGroup.Id, "This is the updated name").Result;
-            Console.WriteLine("Suppresion group {0} updated", updatedGroup.Id);
+            Console.WriteLine("Unsubscribe group {0} updated", updatedGroup.Id);
 
             // GET UNSUBSCRIBE GROUPS
             var groups = client.UnsubscribeGroups.GetAllAsync().Result;
-            Console.WriteLine("There are {0} suppresion groups", groups.Length);
+            Console.WriteLine("There are {0} unsubscribe groups", groups.Length);
 
             // GET A PARTICULAR UNSUBSCRIBE GROUP
             var group = client.UnsubscribeGroups.GetAsync(newGroup.Id).Result;
             Console.WriteLine("Retrieved unsubscribe group {0}: {1}", group.Id, group.Name);
+
+            // ADD A FEW ADDRESSES TO UNSUBSCRIBE GROUP
+            client.Suppressions.AddAddressToUnsubscribeGroupAsync(group.Id, "test1@example.com").Wait();
+            Console.WriteLine("Added test1@example.com to unsubscribe group {0}", group.Id);
+            client.Suppressions.AddAddressToUnsubscribeGroupAsync(group.Id, "test2@example.com").Wait();
+            Console.WriteLine("Added test2@example.com to unsubscribe group {0}", group.Id);
+
+            // GET THE ADDRESSES IN A GROUP
+            var unsubscribedAddresses = client.Suppressions.GetUnsubscribedAddressesAsync(group.Id).Result;
+            Console.WriteLine("There are {0} unsubscribed addresses in group {1}", unsubscribedAddresses.Length, group.Id);
+
+            // REMOVE ALL ADDRESSES FROM UNSUBSCRIBE GROUP
+            foreach (var address in unsubscribedAddresses)
+            {
+                client.Suppressions.RemoveAddressFromSuppressionGroupAsync(group.Id, address).Wait();
+                Console.WriteLine("{0} removed from unsubscribe group {1}", address, group.Id);
+            }
+
+            // MAKE SURE THERE ARE NO ADDRESSES IN THE GROUP
+            unsubscribedAddresses = client.Suppressions.GetUnsubscribedAddressesAsync(group.Id).Result;
+            if (unsubscribedAddresses.Length == 0)
+            {
+                Console.WriteLine("As expected, there are no more addresses in group {0}", group.Id);
+            }
+            else
+            {
+                Console.WriteLine("We expected the group {1} to be empty but instead we found {0} unsubscribed addresses.", unsubscribedAddresses.Length, group.Id);
+            }
 
             // DELETE UNSUBSCRIBE GROUP
             client.UnsubscribeGroups.DeleteAsync(newGroup.Id).Wait();
             Console.WriteLine("Suppression group {0} deleted", newGroup.Id);
 
             Console.WriteLine("\n\nPress any key to continue");
-            Console.ReadKey();
-        }
-
-        private static void Suppressions(HttpClient httpClient)
-        {
-            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-            var client = new SendGrid.Client(apiKey);
-
-            // GET SUPPRESSED ADDRESSES FOR A GIVEN GROUP
-            int groupID = 69;
-            HttpResponseMessage responseGetUnique = client.Suppressions.Get(groupID).Result;
-            Console.WriteLine(responseGetUnique.StatusCode);
-            Console.WriteLine(responseGetUnique.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("These are the suppressed emails with group ID: " + groupID.ToString() + ". Press any key to continue.");
-            Console.ReadKey();
-
-            // ADD EMAILS TO A SUPPRESSION GROUP
-            string[] emails = { "example@example.com", "example2@example.com" };
-            HttpResponseMessage responsePost = client.Suppressions.Post(groupID, emails).Result;
-            var rawString = responsePost.Content.ReadAsStringAsync().Result;
-            dynamic jsonObject = JObject.Parse(rawString);
-            Console.WriteLine(responsePost.StatusCode);
-            Console.WriteLine(responsePost.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("Emails added to Suppression Group:" + groupID.ToString() + ".\n\nPress any key to continue.");
-            Console.ReadKey();
-
-            // DELETE EMAILS FROM A SUPPRESSION GROUP
-            Console.WriteLine("Deleting emails from Suppression Group, please wait.");
-            HttpResponseMessage responseDelete1 = client.Suppressions.Delete(groupID, "example@example.com").Result;
-            Console.WriteLine(responseDelete1.StatusCode);
-            HttpResponseMessage responseDelete2 = client.Suppressions.Delete(groupID, "example2@example.com").Result;
-            Console.WriteLine(responseDelete2.StatusCode);
-            HttpResponseMessage responseFinal = client.Suppressions.Get(groupID).Result;
-            Console.WriteLine(responseFinal.StatusCode);
-            Console.WriteLine(responseFinal.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("Emails removed from Suppression Group" + groupID.ToString() + "Deleted.\n\nPress any key to end.");
             Console.ReadKey();
         }
 
