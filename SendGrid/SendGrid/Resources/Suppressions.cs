@@ -1,6 +1,8 @@
-﻿using System.Net.Http;
+﻿using Newtonsoft.Json.Linq;
+using SendGrid.Utilities;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 
 namespace SendGrid.Resources
 {
@@ -26,9 +28,27 @@ namespace SendGrid.Resources
         /// </summary>
         /// <param name="groupId">ID of the suppression group</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/suppressions.html</returns>
-        public async Task<HttpResponseMessage> Get(int groupId)
+        public async Task<string[]> GetUnsubscribedAddressesAsync(int groupId)
         {
-            return await _client.Get(_endpoint + "/" + groupId.ToString() + "/suppressions");
+            var response = await _client.Get(string.Format("{0}/{1}/suppressions", _endpoint, groupId));
+            response.EnsureSuccess();
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var suppressedAddresses = JArray.Parse(responseContent).ToObject<string[]>();
+            return suppressedAddresses;
+        }
+
+        /// <summary>
+        /// Add recipient address to the suppressions list for a given group.
+        /// 
+        /// If the group has been deleted, this request will add the address to the global suppression.
+        /// </summary>
+        /// <param name="groupId">ID of the suppression group</param>
+        /// <param name="email">Email address to add to the suppression group</param>
+        /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/suppressions.html</returns>
+        public async Task AddAddressToUnsubscribeGroupAsync(int groupId, string email)
+        {
+            await AddAddressToUnsubscribeGroupAsync(groupId, new[] { email });
         }
 
         /// <summary>
@@ -37,24 +57,25 @@ namespace SendGrid.Resources
         /// If the group has been deleted, this request will add the address to the global suppression.
         /// </summary>
         /// <param name="groupId">ID of the suppression group</param>
-        /// <param name="recipient_emails">Array of email addresses to add to the suppression group</param>
+        /// <param name="emails">Email addresses to add to the suppression group</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/suppressions.html</returns>
-        public async Task<HttpResponseMessage> Post(int groupId, string[] emails)
+        public async Task AddAddressToUnsubscribeGroupAsync(int groupId, IEnumerable<string> emails)
         {
-            JArray receipient_emails = new JArray();
-            foreach (string email in emails) { receipient_emails.Add(email); }
-            var data = new JObject(new JProperty("recipient_emails", receipient_emails));
-            return await _client.Post(_endpoint + "/" + groupId.ToString() + "/suppressions", data);
+            var data = new JObject(new JProperty("recipient_emails", new JArray(emails.ToArray())));
+            var response = await _client.Post(string.Format("{0}/{1}/suppressions", _endpoint, groupId), data);
+            response.EnsureSuccess();
         }
 
         /// <summary>
-        /// Delete a suppression group.
+        /// Delete a recipient email from the suppressions list for a group.
         /// </summary>
         /// <param name="groupId">ID of the suppression group to delete</param>
+        /// <param name="email">Email address to remove from the suppression group</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/suppressions.html</returns>
-        public async Task<HttpResponseMessage> Delete(int groupId, string email)
+        public async Task RemoveAddressFromSuppressionGroupAsync(int groupId, string email)
         {
-            return await _client.Delete(_endpoint + "/" + groupId.ToString() + "/suppressions/" + email);
+            var response = await _client.Delete(string.Format("{0}/{1}/suppressions/{2}", _endpoint, groupId, email));
+            response.EnsureSuccess();
         }
     }
 }
