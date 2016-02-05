@@ -141,6 +141,14 @@ namespace SendGrid
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
+        /// <param name="data">An JArray representing the resource's data</param>
+        /// <returns>The resulting message from the API call</returns>
+        public async Task<HttpResponseMessage> Post(string endpoint, JArray data)
+        {
+            return await RequestAsync(Methods.POST, endpoint, data);
+        }
+
+        /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">An optional JArray representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
         public async Task<HttpResponseMessage> Delete(string endpoint, JArray data = null)
