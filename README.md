@@ -109,7 +109,7 @@ using (var attachmentFileStream = new FileStream(@"C:\file.txt", FileMode.Open))
 }
 ```
 
-#How to: Use filters to enable footers, tracking, and analytics
+#How to: Use filters to enable footers, tracking, analytics and templates
 
 SendGrid provides additional email functionality through the use of filters. These are settings that can be added to an email message to enable specific functionality such as click tracking, Google analytics, subscription tracking, and so on. For a full list of filters, see [Filter Settings](https://sendgrid.com/docs/API_Reference/SMTP_API/apps.html).
 
@@ -143,6 +143,19 @@ myMessage.Text = "Hello World!";
 // true indicates that links in plain text portions of the email 
 // should also be overwritten for link tracking purposes. 
 myMessage.EnableClickTracking(true);
+```
+
+##Template
+```csharp
+// Create the email object first, then add the properties.
+SendGridMessage myMessage = new SendGridMessage();
+myMessage.AddTo("anna@example.com");
+myMessage.From = new MailAddress("john@example.com", "John Smith");
+myMessage.Subject = "Testing the SendGrid Library";
+myMessage.Text = "Hello World!";
+
+// Enable template engine, you must send the template id
+ myMessage.EnableTemplateEngine("template id");
 ```
 
 #How to: Use the [Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html)
