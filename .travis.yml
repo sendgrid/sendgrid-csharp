@@ -2,7 +2,7 @@ language: csharp
 solution: SendGrid/SendGrid.sln
 env:
   global:
-    - secure: "S6rHgh05/IRe/UjhObIK/IX4O2B9dXgvpKln2bM1trJcZsO1uRN74UjQ22ExKQBpAfKwxG9yNOdomxoIn1/WhwQfmwSKrnegN86l09aNzKSSdoK7wt1pfJz952/FO/a4jV/e1p3E5g2hEpopG+KLmaipwE+qmlQrEaZUgZLx/mI="
+    - secure: "EBXXiL1KZrKPCIax45R0bmF+cpEITZOOVgYA1aPLoUmzILh2gEkVkgOxAxDpglY/JltzEgG9AdmF7Y6Eip7Rs0yfYUVG1bSah2bGD03oVWCrLk4yOcbGslYblA0dMbHsiA+754KDGLGWyOMQ4y5w+8VGjyCDFPuwv0KShlLPJEI="
 install:
 - nuget restore SendGrid/SendGrid.sln
 - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
