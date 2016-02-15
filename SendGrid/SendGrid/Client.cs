@@ -27,7 +27,9 @@ namespace SendGrid
         public GlobalSuppressions GlobalSuppressions { get; private set; }
         public GlobalStats GlobalStats { get; private set; }
         public Bounces Bounces { get; private set; }
+        public User User { get; private set; }
         public CustomFields CustomFields { get; private set; }
+        public Contacts Contacts { get; private set; }
         public string Version { get; private set; }
 
         /// <summary>
@@ -46,6 +48,8 @@ namespace SendGrid
             Suppressions = new Suppressions(this);
             GlobalSuppressions = new GlobalSuppressions(this);
             GlobalStats = new GlobalStats(this);
+            User = new User(this);
+            Contacts = new Contacts(this);
             Bounces = new Bounces(this);
             CustomFields = new CustomFields(this);
 
@@ -120,7 +124,7 @@ namespace SendGrid
             }
             catch (Exception ex)
             {
-                var message = string.Format(".NET {0}, raw message: \n\n{1}", (ex is HttpRequestException) ? "HttpRequestException" : "Exception", ex.Message);
+                var message = string.Format(".NET {0}, raw message: \n\n{1}", (ex is HttpRequestException) ? "HttpRequestException" : "Exception", ex.GetBaseException().Message);
                 var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
                     Content = new StringContent(message)
