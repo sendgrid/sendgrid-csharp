@@ -26,6 +26,7 @@ namespace SendGrid
         public Suppressions Suppressions { get; private set; }
         public GlobalSuppressions GlobalSuppressions { get; private set; }
         public GlobalStats GlobalStats { get; private set; }
+        public Bounces Bounces { get; private set; }
         public string Version { get; private set; }
 
         /// <summary>
@@ -44,6 +45,7 @@ namespace SendGrid
             Suppressions = new Suppressions(this);
             GlobalSuppressions = new GlobalSuppressions(this);
             GlobalStats = new GlobalStats(this);
+            Bounces = new Bounces(this);
 
             _httpClient = httpClient ?? new HttpClient();
             _httpClient.BaseAddress = _baseUri;
@@ -146,6 +148,21 @@ namespace SendGrid
         public async Task<HttpResponseMessage> Post(string endpoint, JArray data)
         {
             return await RequestAsync(Methods.POST, endpoint, data);
+        }
+
+        /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
+        /// <returns>The resulting message from the API call</returns>
+        public async Task<HttpResponseMessage> Delete(string endpoint)
+        {
+            return await RequestAsync(Methods.DELETE, endpoint, (StringContent)null);
+        }
+
+        /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
+        /// <param name="data">An optional JObject representing the resource's data</param>
+        /// <returns>The resulting message from the API call</returns>
+        public async Task<HttpResponseMessage> Delete(string endpoint, JObject data = null)
+        {
+            return await RequestAsync(Methods.DELETE, endpoint, data);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
