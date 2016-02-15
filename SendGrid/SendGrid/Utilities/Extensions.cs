@@ -6,6 +6,18 @@ namespace SendGrid.Utilities
 {
     public static class Extensions
     {
+        private static readonly DateTime EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+        public static DateTime FromUnixTime(this long unixTime)
+        {
+            return EPOCH.AddSeconds(unixTime);
+        }
+
+        public static long ToUnixTime(this DateTime date)
+        {
+            return Convert.ToInt64((date.ToUniversalTime() - EPOCH).TotalSeconds);
+        }
+
         public static string GetDescription(this Enum value)
         {
             var fieldInfo = value.GetType().GetField(value.ToString());
