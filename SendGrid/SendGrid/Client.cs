@@ -18,6 +18,9 @@ namespace SendGrid
         public Suppressions Suppressions;
         public GlobalSuppressions GlobalSuppressions;
         public GlobalStats GlobalStats;
+        public Templates Templates;
+        public Versions Versions;
+        public Batches Batches;
         public string Version;
         private Uri _baseUri;
         private const string MediaType = "application/json";
@@ -41,6 +44,9 @@ namespace SendGrid
             Suppressions = new Suppressions(this);
             GlobalSuppressions = new GlobalSuppressions(this);
             GlobalStats = new GlobalStats(this);
+            Templates = new Templates(this);
+            Versions = new Versions(this);
+            Batches = new Batches(this);
         }
 
         /// <summary>
