@@ -69,6 +69,7 @@
     <Compile Include="Model\CustomField.cs" />
     <Compile Include="Model\FieldType.cs" />
     <Compile Include="Model\Bounce.cs" />
+    <Compile Include="Model\List.cs" />
     <Compile Include="Model\SuppressionGroup.cs" />
     <Compile Include="Model\Stats.cs" />
     <Compile Include="Model\Metrics.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Resources\CustomFields.cs" />
     <Compile Include="Resources\GlobalSuppressions.cs" />
     <Compile Include="Resources\GlobalStats.cs" />
+    <Compile Include="Resources\Lists.cs" />
     <Compile Include="Resources\Suppressions.cs" />
     <Compile Include="Resources\UnsubscribeGroups.cs" />
     <Compile Include="Resources\APIKeys.cs" />

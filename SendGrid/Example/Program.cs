@@ -42,6 +42,7 @@ namespace Example
             UnsubscribeGroups(httpClient);
             GlobalSuppressions(httpClient);
             GlobalStats(httpClient);
+            Lists(httpClient);
         }
 
         private static void SendAsync(SendGrid.SendGridMessage message)
@@ -232,6 +233,38 @@ namespace Example
 
             stats = client.GlobalStats.GetAsync(startDate, endDate, AggregateBy.Month).Result;
             Console.WriteLine("Number of stats with start date {0} and end date {1} and aggregated by month: {2}", startDate.ToShortDateString(), endDate.ToShortDateString(), stats.Length);
+
+            Console.WriteLine("\n\nPress any key to continue");
+            Console.ReadKey();
+        }
+
+        private static void Lists(HttpClient httpClient)
+        {
+            Console.WriteLine("\n***** LISTS *****");
+
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            var client = new SendGrid.Client(apiKey: apiKey, httpClient: httpClient);
+
+            var firstList = client.Lists.CreateAsync("My first list").Result;
+            Console.WriteLine("List '{0}' created. Id: {1}", firstList.Name, firstList.Id);
+
+            var secondList = client.Lists.CreateAsync("My second list").Result;
+            Console.WriteLine("List '{0}' created. Id: {1}", secondList.Name, secondList.Id);
+
+            client.Lists.UpdateAsync(firstList.Id, "New name").Wait();
+            Console.WriteLine("List '{0}' updated", firstList.Id);
+
+            var lists = client.Lists.GetAllAsync().Result;
+            Console.WriteLine("All lists retrieved. There are {0} lists", lists.Length);
+
+            client.Lists.DeleteAsync(firstList.Id).Wait();
+            Console.WriteLine("List {0} deleted", firstList.Id);
+
+            client.Lists.DeleteAsync(secondList.Id).Wait();
+            Console.WriteLine("List {0} deleted", secondList.Id);
+
+            lists = client.Lists.GetAllAsync().Result;
+            Console.WriteLine("All lists retrieved. There are {0} lists", lists.Length);
 
             Console.WriteLine("\n\nPress any key to continue");
             Console.ReadKey();
