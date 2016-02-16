@@ -43,6 +43,7 @@ namespace Example
             GlobalSuppressions(httpClient);
             GlobalStats(httpClient);
             Lists(httpClient);
+            CustomFields(httpClient);
         }
 
         private static void SendAsync(SendGrid.SendGridMessage message)
@@ -265,6 +266,41 @@ namespace Example
 
             lists = client.Lists.GetAllAsync().Result;
             Console.WriteLine("All lists retrieved. There are {0} lists", lists.Length);
+
+            Console.WriteLine("\n\nPress any key to continue");
+            Console.ReadKey();
+        }
+
+        private static void CustomFields(HttpClient httpClient)
+        {
+            Console.WriteLine("\n***** CUSTOM FIELDS *****");
+
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            var client = new SendGrid.Client(apiKey: apiKey, httpClient: httpClient);
+
+            var firstField = client.CustomFields.CreateAsync("first_field", FieldType.Text).Result;
+            Console.WriteLine("Field '{0}' created. Id: {1}", firstField.Name, firstField.Id);
+
+            var secondField = client.CustomFields.CreateAsync("second_field", FieldType.Number).Result;
+            Console.WriteLine("Field '{0}' created. Id: {1}", secondField.Name, secondField.Id);
+
+            var thirdField = client.CustomFields.CreateAsync("third field", FieldType.Date).Result;
+            Console.WriteLine("Field '{0}' created. Id: {1}", thirdField.Name, thirdField.Id);
+
+            var fields = client.CustomFields.GetAllAsync().Result;
+            Console.WriteLine("All custom fields retrieved. There are {0} fields", fields.Length);
+
+            client.CustomFields.DeleteAsync(firstField.Id).Wait();
+            Console.WriteLine("Field {0} deleted", firstField.Id);
+
+            client.CustomFields.DeleteAsync(secondField.Id).Wait();
+            Console.WriteLine("Field {0} deleted", secondField.Id);
+
+            client.CustomFields.DeleteAsync(thirdField.Id).Wait();
+            Console.WriteLine("Field {0} deleted", thirdField.Id);
+
+            fields = client.CustomFields.GetAllAsync().Result;
+            Console.WriteLine("All custom fields retrieved. There are {0} fields", fields.Length);
 
             Console.WriteLine("\n\nPress any key to continue");
             Console.ReadKey();
