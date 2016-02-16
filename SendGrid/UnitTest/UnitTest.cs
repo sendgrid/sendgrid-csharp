@@ -417,8 +417,9 @@ namespace UnitTest
     public class Batches
     {
         static string _baseUri = "https://api.sendgrid.com/";
-        static string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
-        public Client client = new Client(_apiKey, _baseUri);
+        static string _userName = Environment.GetEnvironmentVariable("SENDGRID_USERNAME");
+        static string _password = Environment.GetEnvironmentVariable("SENDGRID_PASSWORD");
+        public Client client = new Client(_userName, _password, _baseUri);
         private static string _batch_id = "";
 
         [Test]

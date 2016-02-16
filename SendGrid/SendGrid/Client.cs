@@ -13,6 +13,8 @@ namespace SendGrid
     public class Client
     {
         private string _apiKey;
+        private string _userName;
+        private string _password;
         public APIKeys ApiKeys;
         public UnsubscribeGroups UnsubscribeGroups;
         public Suppressions Suppressions;
@@ -38,15 +40,34 @@ namespace SendGrid
         {
             _baseUri = new Uri(baseUri);
             _apiKey = apiKey;
+            Initialize();   
+        }
+
+        /// <summary>
+        ///     Create a client that connects to the SendGrid Web API
+        /// </summary>
+        /// <param name="username">Your SendGrid Username</param>
+        /// <param name="password">Your SendGrid Password</param>
+        /// <param name="baseUri">Base SendGrid API Uri</param>
+        public Client(string userName, string password, string baseUri = "https://api.sendgrid.com/")
+        {
+            _baseUri = new Uri( baseUri );
+            _userName = userName;
+            _password = password;
+            Initialize();
+        }
+
+        private void Initialize()
+        {
             Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            ApiKeys = new APIKeys(this);
-            UnsubscribeGroups = new UnsubscribeGroups(this);
-            Suppressions = new Suppressions(this);
-            GlobalSuppressions = new GlobalSuppressions(this);
-            GlobalStats = new GlobalStats(this);
-            Templates = new Templates(this);
-            Versions = new Versions(this);
-            Batches = new Batches(this);
+            ApiKeys = new APIKeys( this );
+            UnsubscribeGroups = new UnsubscribeGroups( this );
+            Suppressions = new Suppressions( this );
+            GlobalSuppressions = new GlobalSuppressions( this );
+            GlobalStats = new GlobalStats( this );
+            Templates = new Templates( this );
+            Versions = new Versions( this );
+            Batches = new Batches( this );
         }
 
         /// <summary>
@@ -65,7 +86,15 @@ namespace SendGrid
                     client.BaseAddress = _baseUri;
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaType));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+                    if (!string.IsNullOrWhiteSpace(_userName) && !string.IsNullOrWhiteSpace(_password))
+                    {
+                        var byteArray = Encoding.ASCII.GetBytes(string.Format("{0}:{1}", _userName, _password));
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+                    }
+                    else
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+                    }
                     client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + Version + ";csharp");
 
                     switch (method)
