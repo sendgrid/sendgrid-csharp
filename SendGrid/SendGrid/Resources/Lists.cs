@@ -73,7 +73,7 @@ namespace SendGrid.Resources
 
         public async Task DeleteAsync(IEnumerable<long> recipientIds)
         {
-            var data = new JArray(recipientIds.ToArray());
+            var data = JArray.FromObject(recipientIds.ToArray());
             var response = await _client.Delete(_endpoint, data);
             response.EnsureSuccess();
         }
@@ -127,7 +127,7 @@ namespace SendGrid.Resources
             response.EnsureSuccess();
         }
 
-        public async Task<Recipient[]> GetRecipientsAsync(long listId, int recordsPerPage = 100, int page = 1)
+        public async Task<Contact[]> GetRecipientsAsync(long listId, int recordsPerPage = 100, int page = 1)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["page_size"] = recordsPerPage.ToString(CultureInfo.InvariantCulture);
@@ -158,7 +158,7 @@ namespace SendGrid.Resources
             dynamic dynamicObject = JObject.Parse(responseContent);
             dynamic dynamicArray = dynamicObject.recipients;
 
-            var recipients = dynamicArray.ToObject<Recipient[]>();
+            var recipients = dynamicArray.ToObject<Contact[]>();
             return recipients;
         }
 
@@ -176,7 +176,7 @@ namespace SendGrid.Resources
 
         public async Task AddRecipientsAsync(long listId, IEnumerable<string> recipientIds)
         {
-            var data = new JArray(recipientIds.ToArray());
+            var data = JArray.FromObject(recipientIds.ToArray());
             var response = await _client.Post(string.Format("{0}/{1}/recipients", _endpoint, listId), data);
             response.EnsureSuccess();
         }

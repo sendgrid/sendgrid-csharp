@@ -61,7 +61,7 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/suppressions.html</returns>
         public async Task AddAddressToUnsubscribeGroupAsync(int groupId, IEnumerable<string> emails)
         {
-            var data = new JObject(new JProperty("recipient_emails", new JArray(emails.ToArray())));
+            var data = new JObject(new JProperty("recipient_emails", JArray.FromObject(emails.ToArray())));
             var response = await _client.Post(string.Format("{0}/{1}/suppressions", _endpoint, groupId), data);
             response.EnsureSuccess();
         }

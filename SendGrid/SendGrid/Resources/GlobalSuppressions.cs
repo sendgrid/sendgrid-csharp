@@ -55,7 +55,7 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/global_suppressions.html</returns>
         public async Task AddAsync(IEnumerable<string> emails)
         {
-            var data = new JObject(new JProperty("recipient_emails", new JArray(emails.ToArray())));
+            var data = new JObject(new JProperty("recipient_emails", JArray.FromObject(emails.ToArray())));
             var response = await _client.Post(_endpoint, data);
             response.EnsureSuccess();
         }

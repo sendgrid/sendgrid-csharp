@@ -73,7 +73,7 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/bounces.html</returns>
         public async Task DeleteAsync(IEnumerable<string> emails)
         {
-            var data = new JObject(new JProperty("emails", new JArray(emails.ToArray())));
+            var data = new JObject(new JProperty("emails", JArray.FromObject(emails.ToArray())));
             var response = await _client.Delete(_endpoint, data);
             response.EnsureSuccess();
         }
