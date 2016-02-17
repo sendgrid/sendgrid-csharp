@@ -37,12 +37,12 @@ namespace Example
             var from = "example@example.com";
             var fromName = "Jane Doe";
             SendEmail(to, from, fromName);
-            // Test viewing, creating, modifying and deleting API keys through our v3 Web API 
+
             ApiKeys(httpClient);
             UnsubscribeGroups(httpClient);
             GlobalSuppressions(httpClient);
             GlobalStats(httpClient);
-            Lists(httpClient);
+            ListsAndSegments(httpClient);
             CustomFields(httpClient);
         }
 
@@ -239,9 +239,9 @@ namespace Example
             Console.ReadKey();
         }
 
-        private static void Lists(HttpClient httpClient)
+        private static void ListsAndSegments(HttpClient httpClient)
         {
-            Console.WriteLine("\n***** LISTS *****");
+            Console.WriteLine("\n***** LISTS AND SEGMENTS *****");
 
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             var client = new SendGrid.Client(apiKey: apiKey, httpClient: httpClient);
@@ -257,6 +257,18 @@ namespace Example
 
             var lists = client.Lists.GetAllAsync().Result;
             Console.WriteLine("All lists retrieved. There are {0} lists", lists.Length);
+
+            var hotmailCondition = new Condition() { Field = "email", Operator = ConditionOperator.Contains, Value = "hotmail.com", AndOr = ConditionLogicalConjunction.None };
+            var segment = client.Segments.CreateAsync("Recipients @ Hotmail", firstList.Id, new[] { hotmailCondition }).Result;
+            Console.WriteLine("Segment '{0}' created. Id: {1}", segment.Name, segment.Id);
+
+            var millerLastNameCondition = new Condition() { Field = "last_name", Operator = ConditionOperator.Equal, Value = "Miller", AndOr = ConditionLogicalConjunction.None };
+            var clickedRecentlyCondition = new Condition() { Field = "last_clicked", Operator = ConditionOperator.GreaterThan, Value = DateTime.UtcNow.AddDays(-30).ToString("MM/dd/yyyy"), AndOr = ConditionLogicalConjunction.And };
+            segment = client.Segments.UpdateAsync(segment.Id, "Last Name is Miller and clicked recently", null, new[] { millerLastNameCondition, clickedRecentlyCondition }).Result;
+            Console.WriteLine("Segment {0} updated. The new name is: '{1}'", segment.Id, segment.Name);
+
+            client.Segments.DeleteAsync(segment.Id).Wait();
+            Console.WriteLine("Segment {0} deleted", segment.Id);
 
             client.Lists.DeleteAsync(firstList.Id).Wait();
             Console.WriteLine("List {0} deleted", firstList.Id);

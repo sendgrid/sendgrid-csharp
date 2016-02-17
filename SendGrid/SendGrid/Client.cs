@@ -31,6 +31,7 @@ namespace SendGrid
         public CustomFields CustomFields { get; private set; }
         public Contacts Contacts { get; private set; }
         public Lists Lists { get; private set; }
+        public Segments Segments { get; private set; }
         public string Version { get; private set; }
 
         /// <summary>
@@ -54,6 +55,7 @@ namespace SendGrid
             Bounces = new Bounces(this);
             CustomFields = new CustomFields(this);
             Lists = new Lists(this);
+            Segments = new Segments(this);
 
             _httpClient = httpClient ?? new HttpClient();
             _httpClient.BaseAddress = _baseUri;

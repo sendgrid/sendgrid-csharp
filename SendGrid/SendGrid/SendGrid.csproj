@@ -65,10 +65,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="Model\ConditionLogicalConjunction.cs" />
     <Compile Include="Model\Field.cs" />
     <Compile Include="Model\CustomField.cs" />
+    <Compile Include="Model\ConditionOperator.cs" />
     <Compile Include="Model\FieldType.cs" />
     <Compile Include="Model\Bounce.cs" />
+    <Compile Include="Model\Condition.cs" />
+    <Compile Include="Model\Segment.cs" />
     <Compile Include="Model\List.cs" />
     <Compile Include="Model\SuppressionGroup.cs" />
     <Compile Include="Model\Stats.cs" />
@@ -81,6 +85,7 @@
     <Compile Include="Resources\GlobalSuppressions.cs" />
     <Compile Include="Resources\GlobalStats.cs" />
     <Compile Include="Resources\Lists.cs" />
+    <Compile Include="Resources\Segments.cs" />
     <Compile Include="Resources\Suppressions.cs" />
     <Compile Include="Resources\UnsubscribeGroups.cs" />
     <Compile Include="Resources\APIKeys.cs" />
