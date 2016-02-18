@@ -42,6 +42,11 @@ namespace SendGrid
             Headers = new Dictionary<string, string>();
         }
 
+	    public SendGridMessage(MailMessage mailMessage)
+	    {
+	        _message = mailMessage;
+	    }
+
 		public SendGridMessage(MailAddress from, MailAddress[] to,
 			String subject, String html, String text, IHeader header = null) : this()
 		{
