@@ -44,7 +44,19 @@ namespace SendGrid
 
 	    public SendGridMessage(MailMessage mailMessage)
 	    {
-	        _message = mailMessage;
+            From = mailMessage.From;
+            To = mailMessage.To.ToArray();
+
+            _message.Subject = mailMessage.Subject;
+
+	        if (mailMessage.IsBodyHtml)
+	        {
+	            Html = mailMessage.Body;
+	        }
+	        else
+	        {
+	            Text = mailMessage.Body;
+	        }
 	    }
 
 		public SendGridMessage(MailAddress from, MailAddress[] to,
