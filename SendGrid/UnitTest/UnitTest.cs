@@ -14,12 +14,25 @@ namespace UnitTest
     {
         static string _baseUri = "https://api.sendgrid.com/";
         static string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
-        public Client client = new Client(_apiKey, _baseUri);
+        static string _sendGridUsername = Environment.GetEnvironmentVariable("SENDGRID_USERNAME");
+        static string _sendGridPassword = Environment.GetEnvironmentVariable("SENDGRID_PASSWORD");
+        public Client client;
         private static string _api_key_id = "";
 
         [Test]
-        public void ApiKeysIntegrationTest()
+        public void ApiKeysIntegrationTestUsingApiKey()
         {
+            client = new Client(_apiKey, _baseUri);
+            TestGet();
+            TestPost();
+            TestPatch();
+            TestDelete();
+        }
+
+        [Test]
+        public void ApiKeysIntegrationTestUsingCredentials()
+        {
+            client = new Client(new NetworkCredential(_sendGridUsername, _sendGridPassword), _baseUri);
             TestGet();
             TestPost();
             TestPatch();

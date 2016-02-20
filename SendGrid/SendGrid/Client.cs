@@ -13,6 +13,7 @@ namespace SendGrid
     public class Client
     {
         private string _apiKey;
+        private NetworkCredential _credentials;
         public APIKeys ApiKeys;
         public UnsubscribeGroups UnsubscribeGroups;
         public Suppressions Suppressions;
@@ -27,7 +28,7 @@ namespace SendGrid
         }
 
         /// <summary>
-        ///     Create a client that connects to the SendGrid Web API
+        ///     Create a client that connects to the SendGrid Web API using an ApiKey
         /// </summary>
         /// <param name="apiKey">Your SendGrid API Key</param>
         /// <param name="baseUri">Base SendGrid API Uri</param>
@@ -42,6 +43,24 @@ namespace SendGrid
             GlobalSuppressions = new GlobalSuppressions(this);
             GlobalStats = new GlobalStats(this);
         }
+
+        /// <summary>
+        ///     Create a client that connects to the SendGrid Web API using NetworkCredentials
+        /// </summary>
+        /// <param name="credentials">Your SendGrid Credentials for the Account</param>
+        /// <param name="baseUri">Base SendGrid API Uri</param>
+        public Client(NetworkCredential credentials, string baseUri = "https://api.sendgrid.com/")
+        {
+            _baseUri = new Uri(baseUri);
+            _credentials = credentials;
+            Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            ApiKeys = new APIKeys(this);
+            UnsubscribeGroups = new UnsubscribeGroups(this);
+            Suppressions = new Suppressions(this);
+            GlobalSuppressions = new GlobalSuppressions(this);
+            GlobalStats = new GlobalStats(this);
+        }
+
 
         /// <summary>
         ///     Create a client that connects to the SendGrid Web API
@@ -59,7 +78,7 @@ namespace SendGrid
                     client.BaseAddress = _baseUri;
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaType));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+                    AddAuthorizationHeaderToRequest(client);
                     client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + Version + ";csharp");
 
                     switch (method)
@@ -97,6 +116,20 @@ namespace SendGrid
                     response.Content = new StringContent(message + ex.Message);
                     return response;
                 }
+            }
+        }
+
+
+        private void AddAuthorizationHeaderToRequest(HttpClient client)
+        {
+            if (_apiKey != null)
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+            }
+            else if (_credentials != null)
+            {
+                string encodedCredentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(_credentials.UserName + ":" + _credentials.Password));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", encodedCredentials);
             }
         }
 
