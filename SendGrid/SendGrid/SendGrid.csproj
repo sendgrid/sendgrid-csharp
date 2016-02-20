@@ -66,14 +66,18 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="Model\ConditionLogicalConjunction.cs" />
-    <Compile Include="Model\Field.cs" />
     <Compile Include="Model\CustomField.cs" />
+    <Compile Include="Model\Field.cs" />
+    <Compile Include="Model\CustomFieldMetadata.cs" />
     <Compile Include="Model\ConditionOperator.cs" />
     <Compile Include="Model\FieldType.cs" />
+    <Compile Include="Model\ImportResult.cs" />
+    <Compile Include="Model\Error.cs" />
     <Compile Include="Model\Bounce.cs" />
     <Compile Include="Model\Condition.cs" />
     <Compile Include="Model\Segment.cs" />
     <Compile Include="Model\List.cs" />
+    <Compile Include="Model\Contact.cs" />
     <Compile Include="Model\SuppressionGroup.cs" />
     <Compile Include="Model\Stats.cs" />
     <Compile Include="Model\Metrics.cs" />
@@ -84,6 +88,7 @@
     <Compile Include="Resources\CustomFields.cs" />
     <Compile Include="Resources\GlobalSuppressions.cs" />
     <Compile Include="Resources\GlobalStats.cs" />
+    <Compile Include="Resources\Contacts.cs" />
     <Compile Include="Resources\Lists.cs" />
     <Compile Include="Resources\Segments.cs" />
     <Compile Include="Resources\Suppressions.cs" />

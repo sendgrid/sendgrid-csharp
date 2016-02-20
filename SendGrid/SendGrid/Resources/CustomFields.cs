@@ -24,7 +24,7 @@ namespace SendGrid.Resources
             _client = client;
         }
 
-        public async Task<CustomField> CreateAsync(string name, FieldType type)
+        public async Task<CustomFieldMetadata> CreateAsync(string name, FieldType type)
         {
             var data = new JObject()
             {
@@ -35,11 +35,11 @@ namespace SendGrid.Resources
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
-            var field = JObject.Parse(responseContent).ToObject<CustomField>();
+            var field = JObject.Parse(responseContent).ToObject<CustomFieldMetadata>();
             return field;
         }
 
-        public async Task<CustomField[]> GetAllAsync()
+        public async Task<CustomFieldMetadata[]> GetAllAsync()
         {
             var response = await _client.Get(_endpoint);
             response.EnsureSuccess();
@@ -70,17 +70,17 @@ namespace SendGrid.Resources
             dynamic dynamicObject = JObject.Parse(responseContent);
             dynamic dynamicArray = dynamicObject.custom_fields;
 
-            var fields = dynamicArray.ToObject<CustomField[]>();
+            var fields = dynamicArray.ToObject<CustomFieldMetadata[]>();
             return fields;
         }
 
-        public async Task<CustomField> GetAsync(int fieldId)
+        public async Task<CustomFieldMetadata> GetAsync(int fieldId)
         {
             var response = await _client.Get(string.Format("{0}/{1}", _endpoint, fieldId));
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
-            var field = JObject.Parse(responseContent).ToObject<CustomField>();
+            var field = JObject.Parse(responseContent).ToObject<CustomFieldMetadata>();
             return field;
         }
 

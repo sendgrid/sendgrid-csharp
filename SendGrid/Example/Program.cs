@@ -2,6 +2,7 @@
 using SendGrid.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
@@ -43,7 +44,7 @@ namespace Example
             GlobalSuppressions(httpClient);
             GlobalStats(httpClient);
             ListsAndSegments(httpClient);
-            CustomFields(httpClient);
+            ContactsAndCustomFields(httpClient);
         }
 
         private static void SendAsync(SendGrid.SendGridMessage message)
@@ -283,33 +284,68 @@ namespace Example
             Console.ReadKey();
         }
 
-        private static void CustomFields(HttpClient httpClient)
+        private static void ContactsAndCustomFields(HttpClient httpClient)
         {
-            Console.WriteLine("\n***** CUSTOM FIELDS *****");
+            Console.WriteLine("\n***** CONTACTS AND CUSTOM FIELDS *****");
 
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             var client = new SendGrid.Client(apiKey: apiKey, httpClient: httpClient);
 
-            var firstField = client.CustomFields.CreateAsync("first_field", FieldType.Text).Result;
-            Console.WriteLine("Field '{0}' created. Id: {1}", firstField.Name, firstField.Id);
-
-            var secondField = client.CustomFields.CreateAsync("second_field", FieldType.Number).Result;
-            Console.WriteLine("Field '{0}' created. Id: {1}", secondField.Name, secondField.Id);
-
-            var thirdField = client.CustomFields.CreateAsync("third field", FieldType.Date).Result;
-            Console.WriteLine("Field '{0}' created. Id: {1}", thirdField.Name, thirdField.Id);
-
             var fields = client.CustomFields.GetAllAsync().Result;
             Console.WriteLine("All custom fields retrieved. There are {0} fields", fields.Length);
 
-            client.CustomFields.DeleteAsync(firstField.Id).Wait();
-            Console.WriteLine("Field {0} deleted", firstField.Id);
+            CustomFieldMetadata nicknameField;
+            if (fields.Any(f => f.Name == "nickname")) nicknameField = fields.Single(f => f.Name == "nickname");
+            else nicknameField = client.CustomFields.CreateAsync("nickname", FieldType.Text).Result;
+            Console.WriteLine("Field '{0}' Id: {1}", nicknameField.Name, nicknameField.Id);
 
-            client.CustomFields.DeleteAsync(secondField.Id).Wait();
-            Console.WriteLine("Field {0} deleted", secondField.Id);
+            CustomFieldMetadata ageField;
+            if (fields.Any(f => f.Name == "age")) ageField = fields.Single(f => f.Name == "age");
+            else ageField = client.CustomFields.CreateAsync("age", FieldType.Number).Result;
+            Console.WriteLine("Field '{0}' Id: {1}", ageField.Name, ageField.Id);
 
-            client.CustomFields.DeleteAsync(thirdField.Id).Wait();
-            Console.WriteLine("Field {0} deleted", thirdField.Id);
+            CustomFieldMetadata customerSinceField;
+            if (fields.Any(f => f.Name == "customer_since")) customerSinceField = fields.Single(f => f.Name == "customer_since");
+            else customerSinceField = client.CustomFields.CreateAsync("customer_since", FieldType.Date).Result;
+            Console.WriteLine("Field '{0}' Id: {1}", customerSinceField.Name, customerSinceField.Id);
+
+            fields = client.CustomFields.GetAllAsync().Result;
+            Console.WriteLine("All custom fields retrieved. There are {0} fields", fields.Length);
+
+            var contact1 = new Contact()
+            {
+                Email = "111@example.com",
+                FirstName = "Robert",
+                LastName = "Unknown",
+                CustomFields = new CustomFieldMetadata[] 
+                {
+                    new CustomField<string>() { Name = "nickname", Value = "Bob" },
+                    new CustomField<int>() { Name = "age", Value = 42 },
+                    new CustomField<DateTime>() { Name = "customer_since", Value = new DateTime(2000, 12, 1) },
+                }
+            };
+            contact1.Id = client.Contacts.CreateAsync(contact1).Result;
+            Console.WriteLine("{0} {1} created. Id: {2}", contact1.FirstName, contact1.LastName, contact1.Id);
+
+            var contact2 = new Contact()
+            {
+                Email = "111@example.com",
+                LastName = "Smith"
+            };
+            contact1.Id = client.Contacts.UpdateAsync(contact2).Result;
+            Console.WriteLine("{0} {1} updated. Id: {2}", contact1.FirstName, contact2.LastName, contact1.Id);
+
+            client.Contacts.DeleteAsync(contact1.Id).Wait();
+            Console.WriteLine("{0} {1} deleted. Id: {2}", contact1.FirstName, contact2.LastName, contact1.Id);
+
+            client.CustomFields.DeleteAsync(nicknameField.Id).Wait();
+            Console.WriteLine("Field {0} deleted", nicknameField.Id);
+
+            client.CustomFields.DeleteAsync(ageField.Id).Wait();
+            Console.WriteLine("Field {0} deleted", ageField.Id);
+
+            client.CustomFields.DeleteAsync(customerSinceField.Id).Wait();
+            Console.WriteLine("Field {0} deleted", customerSinceField.Id);
 
             fields = client.CustomFields.GetAllAsync().Result;
             Console.WriteLine("All custom fields retrieved. There are {0} fields", fields.Length);

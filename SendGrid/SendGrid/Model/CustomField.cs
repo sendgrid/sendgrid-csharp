@@ -2,9 +2,9 @@
 
 namespace SendGrid.Model
 {
-    public class CustomField : Field
+    public class CustomField<T> : CustomFieldMetadata
     {
-        [JsonProperty("id")]
-        public int Id { get; set; }
+        [JsonProperty("value")]
+        public T Value { get; set; }
     }
 }
