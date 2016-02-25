@@ -13,12 +13,15 @@
     {
         public static void CheckForErrors(HttpResponseMessage response)
         {
-            CheckForErrors(response, response.Content.ReadAsStreamAsync().Result);
+            CheckForErrorsAsync(response).RunSynchronously();
         }
 
         public static async Task CheckForErrorsAsync(HttpResponseMessage response)
         {
-            CheckForErrors(response, await response.Content.ReadAsStreamAsync());
+            // Should this be disposed?
+            var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+
+            CheckForErrors(response, stream);
         }
 
         private static void CheckForErrors(HttpResponseMessage response, Stream stream)

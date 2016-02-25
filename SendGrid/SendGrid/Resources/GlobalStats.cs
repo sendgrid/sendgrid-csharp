@@ -29,7 +29,7 @@ namespace SendGrid.Resources
         /// <param name="endDate">The end date of the statistics to retrieve, formatted as YYYY-MM-DD. Defaults to today.</param>
         /// <param name="aggregatedBy">How to group the statistics, must be day|week|month</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Stats/global.html</returns>
-        public async Task<HttpResponseMessage> Get(string startDate, string endDate = null, string aggregatedBy = null)
+        public Task<HttpResponseMessage> Get(string startDate, string endDate = null, string aggregatedBy = null)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["start_date"] = startDate;
@@ -41,7 +41,7 @@ namespace SendGrid.Resources
             {
                 query["aggregated_by"] = aggregatedBy;
             }
-            return await _client.Get(_endpoint + "?" + query);
+            return _client.Get(_endpoint + "?" + query);
         }
 
     }
