@@ -45,6 +45,7 @@ namespace Example
             GlobalStats(httpClient);
             ListsAndSegments(httpClient);
             ContactsAndCustomFields(httpClient);
+            Templates(httpClient);
         }
 
         private static void SendAsync(SendGrid.SendGridMessage message)
@@ -349,6 +350,44 @@ namespace Example
 
             fields = client.CustomFields.GetAllAsync().Result;
             Console.WriteLine("All custom fields retrieved. There are {0} fields", fields.Length);
+
+            Console.WriteLine("\n\nPress any key to continue");
+            Console.ReadKey();
+        }
+
+        private static void Templates(HttpClient httpClient)
+        {
+            Console.WriteLine("\n***** TEMPLATES *****");
+
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            var client = new SendGrid.Client(apiKey: apiKey, httpClient: httpClient);
+
+            var template = client.Templates.CreateAsync("My template").Result;
+            Console.WriteLine("Template '{0}' created. Id: {1}", template.Name, template.Id);
+
+            client.Templates.UpdateAsync(template.Id, "New name").Wait();
+            Console.WriteLine("Template '{0}' updated", template.Id);
+
+            template = client.Templates.GetAsync(template.Id).Result;
+            Console.WriteLine("Template '{0}' retrieved.", template.Id);
+
+            var firstVersion = client.Templates.CreateVersionAsync(template.Id, "Version 1", "My first Subject <%subject%>", "<html<body>hello world<br/><%body%></body></html>", "Hello world <%body%>", true).Result;
+            Console.WriteLine("First version created. Id: {0}", firstVersion.Id);
+
+            var secondVersion = client.Templates.CreateVersionAsync(template.Id, "Version 2", "My second Subject <%subject%>", "<html<body>Qwerty<br/><%body%></body></html>", "Qwerty <%body%>", true).Result;
+            Console.WriteLine("Second version created. Id: {0}", secondVersion.Id);
+
+            var templates = client.Templates.GetAllAsync().Result;
+            Console.WriteLine("All templates retrieved. There are {0} templates", templates.Length);
+
+            client.Templates.DeleteVersionAsync(template.Id, firstVersion.Id).Wait();
+            Console.WriteLine("Version {0} deleted", firstVersion.Id);
+
+            client.Templates.DeleteVersionAsync(template.Id, secondVersion.Id).Wait();
+            Console.WriteLine("Version {0} deleted", secondVersion.Id);
+
+            client.Templates.DeleteAsync(template.Id).Wait();
+            Console.WriteLine("Template {0} deleted", template.Id);
 
             Console.WriteLine("\n\nPress any key to continue");
             Console.ReadKey();
