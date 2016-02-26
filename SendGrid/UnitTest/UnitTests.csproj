@@ -79,8 +79,12 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest.cs" />
+    <Compile Include="APIKeys.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Suppressions.cs" />
+    <Compile Include="GlobalStats.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnsubscribeGroups.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SendGrid\SendGrid.csproj">
