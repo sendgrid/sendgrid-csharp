@@ -1,19 +1,13 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using NUnit.Framework;
-using SendGrid;
 using Newtonsoft.Json;
 
 namespace UnitTest
 {
     [TestFixture]
-    public class GlobalStats
+    public class GlobalStats : BaseIntegrationTest
     {
-        static string _baseUri = "https://api.sendgrid.com/";
-        static string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
-        public Client client = new Client(_apiKey, _baseUri);
-
         [Test]
         public void GlobalStatsIntegrationTest()
         {
@@ -31,7 +25,7 @@ namespace UnitTest
 
         private void TestGet(string startDate, string endDate = null, string aggregatedBy = null)
         {
-            HttpResponseMessage response = client.GlobalStats.Get(startDate, endDate, aggregatedBy).Result;
+            HttpResponseMessage response = Client.GlobalStats.Get(startDate, endDate, aggregatedBy).Result;
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             string rawString = response.Content.ReadAsStringAsync().Result;
             dynamic jsonObject = JsonConvert.DeserializeObject(rawString);

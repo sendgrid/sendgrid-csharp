@@ -1,20 +1,15 @@
-using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SendGrid;
 
 namespace UnitTest
 {
     [TestFixture]
-    public class APIKeys
+    public class APIKeys : BaseIntegrationTest
     {
-        static string _baseUri = "https://api.sendgrid.com/";
-        static string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
-        public Client client = new Client(_apiKey, _baseUri);
-        private static string _api_key_id = "";
+        private static string _apiKeyId;
 
         [Test]
         public void ApiKeysIntegrationTest()
@@ -27,7 +22,7 @@ namespace UnitTest
 
         private void TestGet()
         {
-            HttpResponseMessage response = client.ApiKeys.Get().Result;
+            HttpResponseMessage response = Client.ApiKeys.Get().Result;
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             string rawString = response.Content.ReadAsStringAsync().Result;
             dynamic jsonObject = JObject.Parse(rawString);
@@ -37,40 +32,40 @@ namespace UnitTest
 
         private void TestPost()
         {
-            HttpResponseMessage response = client.ApiKeys.Post("CSharpTestKey").Result;
+            HttpResponseMessage response = Client.ApiKeys.Post("CSharpTestKey").Result;
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
             string rawString = response.Content.ReadAsStringAsync().Result;
             dynamic jsonObject = JObject.Parse(rawString);
             string api_key = jsonObject.api_key.ToString();
-            _api_key_id = jsonObject.api_key_id.ToString();
+            _apiKeyId = jsonObject.api_key_id.ToString();
             string name = jsonObject.name.ToString();
             Assert.IsNotNull(api_key);
-            Assert.IsNotNull(_api_key_id);
+            Assert.IsNotNull(_apiKeyId);
             Assert.IsNotNull(name);
         }
 
         private void TestPatch()
         {
-            HttpResponseMessage response = client.ApiKeys.Patch(_api_key_id, "CSharpTestKeyPatched").Result;
+            HttpResponseMessage response = Client.ApiKeys.Patch(_apiKeyId, "CSharpTestKeyPatched").Result;
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             string rawString = response.Content.ReadAsStringAsync().Result;
             dynamic jsonObject = JObject.Parse(rawString);
-            _api_key_id = jsonObject.api_key_id.ToString();
+            _apiKeyId = jsonObject.api_key_id.ToString();
             string name = jsonObject.name.ToString();
-            Assert.IsNotNull(_api_key_id);
+            Assert.IsNotNull(_apiKeyId);
             Assert.IsNotNull(name);
         }
 
         private void TestDelete()
         {
-            HttpResponseMessage response = client.ApiKeys.Delete(_api_key_id).Result;
+            HttpResponseMessage response = Client.ApiKeys.Delete(_apiKeyId).Result;
             Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
         public void TestGetOnce()
         {
-            var responseGet = client.ApiKeys.Get().Result;
+            var responseGet = Client.ApiKeys.Get().Result;
         }
 
         [Test]
@@ -79,7 +74,7 @@ namespace UnitTest
             HttpResponseMessage responseGet;
             for (int i = 0; i < 10; i++)
             {
-                responseGet = client.ApiKeys.Get().Result;
+                responseGet = Client.ApiKeys.Get().Result;
             }
         }
 
@@ -89,7 +84,7 @@ namespace UnitTest
             Task[] tasks = new Task[10];
             for (int i = 0; i < 10; i++)
             {
-                tasks[i] = client.ApiKeys.Get();
+                tasks[i] = Client.ApiKeys.Get();
             }
             Task.WaitAll(tasks);
         }

@@ -80,6 +80,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="APIKeys.cs" />
+    <Compile Include="BaseIntegrationTest.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Suppressions.cs" />
     <Compile Include="GlobalStats.cs" />
