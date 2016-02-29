@@ -4,6 +4,7 @@ using SendGrid.Utilities;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -26,13 +27,13 @@ namespace SendGrid.Resources
             _client = client;
         }
 
-        public async Task<List> CreateAsync(string name)
+        public async Task<List> CreateAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = new JObject()
             {
                 new JProperty("name", name)
             };
-            var response = await _client.Post(_endpoint, data);
+            var response = await _client.Post(_endpoint, data, cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -40,9 +41,9 @@ namespace SendGrid.Resources
             return bulkUpsertResult;
         }
 
-        public async Task<List[]> GetAllAsync()
+        public async Task<List[]> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(_endpoint);
+            var response = await _client.Get(_endpoint, cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -65,26 +66,26 @@ namespace SendGrid.Resources
             return lists;
         }
 
-        public async Task DeleteAsync(long listId)
+        public async Task DeleteAsync(long listId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Delete(string.Format("{0}/{1}", _endpoint, listId));
+            var response = await _client.Delete(string.Format("{0}/{1}", _endpoint, listId), cancellationToken);
             response.EnsureSuccess();
         }
 
-        public async Task DeleteAsync(IEnumerable<long> recipientIds)
+        public async Task DeleteAsync(IEnumerable<long> recipientIds, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = JArray.FromObject(recipientIds.ToArray());
-            var response = await _client.Delete(_endpoint, data);
+            var response = await _client.Delete(_endpoint, data, cancellationToken);
             response.EnsureSuccess();
         }
 
-        public async Task<List[]> GetAsync(int recordsPerPage = 100, int page = 1)
+        public async Task<List[]> GetAsync(int recordsPerPage = 100, int page = 1, CancellationToken cancellationToken = default(CancellationToken))
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["page_size"] = recordsPerPage.ToString(CultureInfo.InvariantCulture);
             query["page"] = page.ToString(CultureInfo.InvariantCulture);
 
-            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query));
+            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query), cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -107,9 +108,9 @@ namespace SendGrid.Resources
             return recipients;
         }
 
-        public async Task<List> GetAsync(long listId)
+        public async Task<List> GetAsync(long listId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, listId));
+            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, listId), cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -117,23 +118,23 @@ namespace SendGrid.Resources
             return list;
         }
 
-        public async Task UpdateAsync(long listId, string name)
+        public async Task UpdateAsync(long listId, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = new JObject()
             {
                 new JProperty("name", name)
             };
-            var response = await _client.Patch(string.Format("{0}/{1}", _endpoint, listId), data);
+            var response = await _client.Patch(string.Format("{0}/{1}", _endpoint, listId), data, cancellationToken);
             response.EnsureSuccess();
         }
 
-        public async Task<Contact[]> GetRecipientsAsync(long listId, int recordsPerPage = 100, int page = 1)
+        public async Task<Contact[]> GetRecipientsAsync(long listId, int recordsPerPage = 100, int page = 1, CancellationToken cancellationToken = default(CancellationToken))
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["page_size"] = recordsPerPage.ToString(CultureInfo.InvariantCulture);
             query["page"] = page.ToString(CultureInfo.InvariantCulture);
 
-            var response = await _client.Get(string.Format("{0}/{1}/recipients?{2}", _endpoint, listId, query));
+            var response = await _client.Get(string.Format("{0}/{1}/recipients?{2}", _endpoint, listId, query), cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -162,22 +163,22 @@ namespace SendGrid.Resources
             return recipients;
         }
 
-        public async Task AddRecipientAsync(long listId, string recipientId)
+        public async Task AddRecipientAsync(long listId, string recipientId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Post(string.Format("{0}/{1}/recipients/{2}", _endpoint, listId, recipientId), (JObject)null);
+            var response = await _client.Post(string.Format("{0}/{1}/recipients/{2}", _endpoint, listId, recipientId), (JObject)null, cancellationToken);
             response.EnsureSuccess();
         }
 
-        public async Task RemoveRecipientAsync(long listId, string recipientId)
+        public async Task RemoveRecipientAsync(long listId, string recipientId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Delete(string.Format("{0}/{1}/recipients/{2}", _endpoint, listId, recipientId));
+            var response = await _client.Delete(string.Format("{0}/{1}/recipients/{2}", _endpoint, listId, recipientId), cancellationToken);
             response.EnsureSuccess();
         }
 
-        public async Task AddRecipientsAsync(long listId, IEnumerable<string> recipientIds)
+        public async Task AddRecipientsAsync(long listId, IEnumerable<string> recipientIds, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = JArray.FromObject(recipientIds.ToArray());
-            var response = await _client.Post(string.Format("{0}/{1}/recipients", _endpoint, listId), data);
+            var response = await _client.Post(string.Format("{0}/{1}/recipients", _endpoint, listId), data, cancellationToken);
             response.EnsureSuccess();
         }
     }

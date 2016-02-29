@@ -2,6 +2,7 @@
 using SendGrid.Utilities;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SendGrid.Resources
@@ -28,9 +29,9 @@ namespace SendGrid.Resources
         /// </summary>
         /// <param name="email">email address to check</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/global_suppressions.html</returns>
-        public async Task<bool> IsUnsubscribedAsync(string email)
+        public async Task<bool> IsUnsubscribedAsync(string email, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, email));
+            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, email), cancellationToken);
             response.EnsureSuccess();
 
             // If the email address is on the global suppression list, the response will look like this:
@@ -53,10 +54,10 @@ namespace SendGrid.Resources
         /// </summary>
         /// <param name="recipient_emails">Array of email addresses to add to the suppression group</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/global_suppressions.html</returns>
-        public async Task AddAsync(IEnumerable<string> emails)
+        public async Task AddAsync(IEnumerable<string> emails, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = new JObject(new JProperty("recipient_emails", JArray.FromObject(emails.ToArray())));
-            var response = await _client.Post(_endpoint, data);
+            var response = await _client.Post(_endpoint, data, cancellationToken);
             response.EnsureSuccess();
         }
 
@@ -65,9 +66,9 @@ namespace SendGrid.Resources
         /// </summary>
         /// <param name="email">email address to be removed from the global suppressions group</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/global_suppressions.html</returns>
-        public async Task RemoveAsync(string email)
+        public async Task RemoveAsync(string email, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Delete(string.Format("{0}/{1}", _endpoint, email));
+            var response = await _client.Delete(string.Format("{0}/{1}", _endpoint, email), cancellationToken);
             response.EnsureSuccess();
         }
     }

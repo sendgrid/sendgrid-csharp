@@ -3,6 +3,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using SendGrid.Model;
 using SendGrid.Utilities;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SendGrid.Resources
@@ -24,14 +25,14 @@ namespace SendGrid.Resources
             _client = client;
         }
 
-        public async Task<CustomFieldMetadata> CreateAsync(string name, FieldType type)
+        public async Task<CustomFieldMetadata> CreateAsync(string name, FieldType type, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = new JObject()
             {
                 { "name", name },
                 { "type", JToken.Parse(JsonConvert.SerializeObject(type, Formatting.None, new StringEnumConverter())).Value<string>() }
             };
-            var response = await _client.Post(_endpoint, data);
+            var response = await _client.Post(_endpoint, data, cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -39,9 +40,9 @@ namespace SendGrid.Resources
             return field;
         }
 
-        public async Task<CustomFieldMetadata[]> GetAllAsync()
+        public async Task<CustomFieldMetadata[]> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(_endpoint);
+            var response = await _client.Get(_endpoint, cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -74,9 +75,9 @@ namespace SendGrid.Resources
             return fields;
         }
 
-        public async Task<CustomFieldMetadata> GetAsync(int fieldId)
+        public async Task<CustomFieldMetadata> GetAsync(int fieldId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, fieldId));
+            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, fieldId), cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -84,15 +85,15 @@ namespace SendGrid.Resources
             return field;
         }
 
-        public async Task DeleteAsync(int fieldId)
+        public async Task DeleteAsync(int fieldId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Delete(string.Format("{0}/{1}", _endpoint, fieldId));
+            var response = await _client.Delete(string.Format("{0}/{1}", _endpoint, fieldId), cancellationToken);
             response.EnsureSuccess();
         }
 
-        public async Task<Field[]> GetReservedFieldsAsync()
+        public async Task<Field[]> GetReservedFieldsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(_endpoint);
+            var response = await _client.Get(_endpoint, cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();

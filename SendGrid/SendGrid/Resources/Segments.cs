@@ -4,6 +4,7 @@ using SendGrid.Utilities;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -26,7 +27,7 @@ namespace SendGrid.Resources
             _client = client;
         }
 
-        public async Task<Segment> CreateAsync(string name, long listId, IEnumerable<Condition> conditions)
+        public async Task<Segment> CreateAsync(string name, long listId, IEnumerable<Condition> conditions, CancellationToken cancellationToken = default(CancellationToken))
         {
             conditions = (conditions ?? Enumerable.Empty<Condition>());
 
@@ -36,7 +37,7 @@ namespace SendGrid.Resources
                 { "list_id", listId },
                 { "conditions", JArray.FromObject(conditions.ToArray()) }
             };
-            var response = await _client.Post(_endpoint, data);
+            var response = await _client.Post(_endpoint, data, cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -44,9 +45,9 @@ namespace SendGrid.Resources
             return segment;
         }
 
-        public async Task<Segment[]> GetAllAsync()
+        public async Task<Segment[]> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(_endpoint);
+            var response = await _client.Get(_endpoint, cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -78,9 +79,9 @@ namespace SendGrid.Resources
             return segments;
         }
 
-        public async Task<Segment> GetAsync(long segmentId)
+        public async Task<Segment> GetAsync(long segmentId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, segmentId));
+            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, segmentId), cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -88,7 +89,7 @@ namespace SendGrid.Resources
             return segment;
         }
 
-        public async Task<Segment> UpdateAsync(long segmentId, string name = null, long? listId = null, IEnumerable<Condition> conditions = null)
+        public async Task<Segment> UpdateAsync(long segmentId, string name = null, long? listId = null, IEnumerable<Condition> conditions = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             conditions = (conditions ?? Enumerable.Empty<Condition>());
 
@@ -97,7 +98,7 @@ namespace SendGrid.Resources
             if (listId.HasValue) data.Add("list_id", listId.Value);
             if (conditions.Any()) data.Add("conditions", JArray.FromObject(conditions.ToArray()));
 
-            var response = await _client.Patch(string.Format("{0}/{1}", _endpoint, segmentId), data);
+            var response = await _client.Patch(string.Format("{0}/{1}", _endpoint, segmentId), data, cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -105,22 +106,22 @@ namespace SendGrid.Resources
             return segment;
         }
 
-        public async Task DeleteAsync(long segmentId, bool deleteMatchingContacts = false)
+        public async Task DeleteAsync(long segmentId, bool deleteMatchingContacts = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["delete_contacts"] = (deleteMatchingContacts ? "true" : "false");
 
-            var response = await _client.Delete(string.Format("{0}/{1}?{2}", _endpoint, segmentId, query));
+            var response = await _client.Delete(string.Format("{0}/{1}?{2}", _endpoint, segmentId, query), cancellationToken);
             response.EnsureSuccess();
         }
 
-        public async Task<Contact[]> GetRecipientsAsync(long segmentId, int recordsPerPage = 100, int page = 1)
+        public async Task<Contact[]> GetRecipientsAsync(long segmentId, int recordsPerPage = 100, int page = 1, CancellationToken cancellationToken = default(CancellationToken))
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["page_size"] = recordsPerPage.ToString(CultureInfo.InvariantCulture);
             query["page"] = page.ToString(CultureInfo.InvariantCulture);
 
-            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query));
+            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query), cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();

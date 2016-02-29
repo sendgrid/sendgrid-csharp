@@ -2,6 +2,7 @@
 using SendGrid.Utilities;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SendGrid.Resources
@@ -28,9 +29,9 @@ namespace SendGrid.Resources
         /// </summary>
         /// <param name="groupId">ID of the suppression group</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/suppressions.html</returns>
-        public async Task<string[]> GetUnsubscribedAddressesAsync(int groupId)
+        public async Task<string[]> GetUnsubscribedAddressesAsync(int groupId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(string.Format("{0}/{1}/suppressions", _endpoint, groupId));
+            var response = await _client.Get(string.Format("{0}/{1}/suppressions", _endpoint, groupId), cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -46,9 +47,9 @@ namespace SendGrid.Resources
         /// <param name="groupId">ID of the suppression group</param>
         /// <param name="email">Email address to add to the suppression group</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/suppressions.html</returns>
-        public async Task AddAddressToUnsubscribeGroupAsync(int groupId, string email)
+        public async Task AddAddressToUnsubscribeGroupAsync(int groupId, string email, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await AddAddressToUnsubscribeGroupAsync(groupId, new[] { email });
+            await AddAddressToUnsubscribeGroupAsync(groupId, new[] { email }, cancellationToken);
         }
 
         /// <summary>
@@ -59,10 +60,10 @@ namespace SendGrid.Resources
         /// <param name="groupId">ID of the suppression group</param>
         /// <param name="emails">Email addresses to add to the suppression group</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/suppressions.html</returns>
-        public async Task AddAddressToUnsubscribeGroupAsync(int groupId, IEnumerable<string> emails)
+        public async Task AddAddressToUnsubscribeGroupAsync(int groupId, IEnumerable<string> emails, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = new JObject(new JProperty("recipient_emails", JArray.FromObject(emails.ToArray())));
-            var response = await _client.Post(string.Format("{0}/{1}/suppressions", _endpoint, groupId), data);
+            var response = await _client.Post(string.Format("{0}/{1}/suppressions", _endpoint, groupId), data, cancellationToken);
             response.EnsureSuccess();
         }
 
@@ -72,9 +73,9 @@ namespace SendGrid.Resources
         /// <param name="groupId">ID of the suppression group to delete</param>
         /// <param name="email">Email address to remove from the suppression group</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/suppressions.html</returns>
-        public async Task RemoveAddressFromSuppressionGroupAsync(int groupId, string email)
+        public async Task RemoveAddressFromSuppressionGroupAsync(int groupId, string email, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Delete(string.Format("{0}/{1}/suppressions/{2}", _endpoint, groupId, email));
+            var response = await _client.Delete(string.Format("{0}/{1}/suppressions/{2}", _endpoint, groupId, email), cancellationToken);
             response.EnsureSuccess();
         }
     }

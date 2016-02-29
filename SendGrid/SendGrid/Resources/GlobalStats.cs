@@ -2,6 +2,7 @@
 using SendGrid.Model;
 using SendGrid.Utilities;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -31,14 +32,14 @@ namespace SendGrid.Resources
         /// <param name="endDate">The end date of the statistics to retrieve. Defaults to today.</param>
         /// <param name="aggregatedBy">How to group the statistics, must be day|week|month</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Stats/global.html</returns>
-        public async Task<GlobalStat[]> GetAsync(DateTime startDate, DateTime? endDate = null, AggregateBy aggregatedBy = AggregateBy.None)
+        public async Task<GlobalStat[]> GetAsync(DateTime startDate, DateTime? endDate = null, AggregateBy aggregatedBy = AggregateBy.None, CancellationToken cancellationToken = default(CancellationToken))
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["start_date"] = startDate.ToString("yyyy-MM-dd");
             if (endDate.HasValue) query["end_date"] = endDate.Value.ToString("yyyy-MM-dd");
             if (aggregatedBy != AggregateBy.None) query["aggregated_by"] = aggregatedBy.GetDescription();
 
-            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query));
+            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query), cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();

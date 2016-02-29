@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -27,9 +28,9 @@ namespace SendGrid.Resources
             _client = client;
         }
 
-        public async Task<string> CreateAsync(Contact contact)
+        public async Task<string> CreateAsync(Contact contact, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var importResult = await ImportAsync(new[] { contact });
+            var importResult = await ImportAsync(new[] { contact }, cancellationToken);
             if (importResult.ErrorCount > 0)
             {
                 // There should only be one error message but to be safe let's combine all error messages into a single string
@@ -39,10 +40,10 @@ namespace SendGrid.Resources
             return importResult.PersistedRecipients.Single();
         }
 
-        public async Task<string> UpdateAsync(Contact contact)
+        public async Task<string> UpdateAsync(Contact contact, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = new JArray(ConvertContactToJObject(contact));
-            var response = await _client.Patch(_endpoint, data);
+            var response = await _client.Patch(_endpoint, data, cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -56,7 +57,7 @@ namespace SendGrid.Resources
             return importResult.PersistedRecipients.Single();
         }
 
-        public async Task<ImportResult> ImportAsync(IEnumerable<Contact> contacts)
+        public async Task<ImportResult> ImportAsync(IEnumerable<Contact> contacts, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = new JArray();
             foreach (var contact in contacts)
@@ -64,7 +65,7 @@ namespace SendGrid.Resources
                 data.Add(ConvertContactToJObject(contact));
             }
 
-            var response = await _client.Post(_endpoint, data);
+            var response = await _client.Post(_endpoint, data, cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -72,25 +73,25 @@ namespace SendGrid.Resources
             return importResult;
         }
 
-        public async Task DeleteAsync(string contactId)
+        public async Task DeleteAsync(string contactId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await DeleteAsync(new[] { contactId });
+            await DeleteAsync(new[] { contactId }, cancellationToken);
         }
 
-        public async Task DeleteAsync(IEnumerable<string> contactId)
+        public async Task DeleteAsync(IEnumerable<string> contactId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = JArray.FromObject(contactId.ToArray());
-            var response = await _client.Delete(_endpoint, data);
+            var response = await _client.Delete(_endpoint, data, cancellationToken);
             response.EnsureSuccess();
         }
 
-        public async Task<Contact[]> GetAsync(int recordsPerPage = 100, int page = 1)
+        public async Task<Contact[]> GetAsync(int recordsPerPage = 100, int page = 1, CancellationToken cancellationToken = default(CancellationToken))
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["page_size"] = recordsPerPage.ToString(CultureInfo.InvariantCulture);
             query["page"] = page.ToString(CultureInfo.InvariantCulture);
 
-            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query));
+            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query), cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -119,9 +120,9 @@ namespace SendGrid.Resources
             return recipients;
         }
 
-        public async Task<long> GetBillableCountAsync()
+        public async Task<long> GetBillableCountAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(string.Format("{0}/billable_count", _endpoint));
+            var response = await _client.Get(string.Format("{0}/billable_count", _endpoint), cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -138,9 +139,9 @@ namespace SendGrid.Resources
             return count;
         }
 
-        public async Task<long> GetTotalCountAsync()
+        public async Task<long> GetTotalCountAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(string.Format("{0}/count", _endpoint));
+            var response = await _client.Get(string.Format("{0}/count", _endpoint), cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -157,12 +158,12 @@ namespace SendGrid.Resources
             return count;
         }
 
-        public async Task<Contact[]> SearchAsync(string fieldName, string value)
+        public async Task<Contact[]> SearchAsync(string fieldName, string value, CancellationToken cancellationToken = default(CancellationToken))
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query[fieldName] = value;
 
-            var response = await _client.Get(string.Format("{0}/search?{1}", _endpoint, query));
+            var response = await _client.Get(string.Format("{0}/search?{1}", _endpoint, query), cancellationToken);
             response.EnsureSuccess();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -191,14 +192,14 @@ namespace SendGrid.Resources
             return recipients;
         }
 
-        public async Task<Contact[]> SearchAsync(string fieldName, DateTime value)
+        public async Task<Contact[]> SearchAsync(string fieldName, DateTime value, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await SearchAsync(fieldName, value.ToUnixTime().ToString(CultureInfo.InvariantCulture));
+            return await SearchAsync(fieldName, value.ToUnixTime().ToString(CultureInfo.InvariantCulture), cancellationToken);
         }
 
-        public async Task<Contact[]> SearchAsync(string fieldName, long value)
+        public async Task<Contact[]> SearchAsync(string fieldName, long value, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await SearchAsync(fieldName, value.ToString(CultureInfo.InvariantCulture));
+            return await SearchAsync(fieldName, value.ToString(CultureInfo.InvariantCulture), cancellationToken);
         }
 
         private static JObject ConvertContactToJObject(Contact contact)

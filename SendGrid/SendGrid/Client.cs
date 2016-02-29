@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SendGrid
@@ -74,10 +75,10 @@ namespace SendGrid
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">An JObject representing the resource's data</param>
         /// <returns>An asyncronous task</returns>
-        private async Task<HttpResponseMessage> RequestAsync(Methods method, string endpoint, JObject data)
+        private async Task<HttpResponseMessage> RequestAsync(Methods method, string endpoint, JObject data, CancellationToken cancellationToken = default(CancellationToken))
         {
             var content = (data == null ? null : new StringContent(data.ToString(), Encoding.UTF8, MediaType));
-            return await RequestAsync(method, endpoint, content);
+            return await RequestAsync(method, endpoint, content, cancellationToken);
         }
 
         /// <summary>
@@ -87,10 +88,10 @@ namespace SendGrid
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">An JArray representing the resource's data</param>
         /// <returns>An asyncronous task</returns>
-        private async Task<HttpResponseMessage> RequestAsync(Methods method, string endpoint, JArray data)
+        private async Task<HttpResponseMessage> RequestAsync(Methods method, string endpoint, JArray data, CancellationToken cancellationToken = default(CancellationToken))
         {
             var content = (data == null ? null : new StringContent(data.ToString(), Encoding.UTF8, MediaType));
-            return await RequestAsync(method, endpoint, content);
+            return await RequestAsync(method, endpoint, content, cancellationToken);
         }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace SendGrid
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">A StringContent representing the content of the http request</param>
         /// <returns>An asyncronous task</returns>
-        private async Task<HttpResponseMessage> RequestAsync(Methods method, string endpoint, StringContent content)
+        private async Task<HttpResponseMessage> RequestAsync(Methods method, string endpoint, StringContent content, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -126,7 +127,7 @@ namespace SendGrid
                     RequestUri = new Uri(_baseUri + endpoint),
                     Content = content
                 };
-                return await _httpClient.SendAsync(httpRequest);
+                return await _httpClient.SendAsync(httpRequest, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -141,64 +142,64 @@ namespace SendGrid
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <returns>The resulting message from the API call</returns>
-        public async Task<HttpResponseMessage> Get(string endpoint)
+        public async Task<HttpResponseMessage> Get(string endpoint, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.GET, endpoint, (StringContent)null);
+            return await RequestAsync(Methods.GET, endpoint, (StringContent)null, cancellationToken);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">An JObject representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
-        public async Task<HttpResponseMessage> Post(string endpoint, JObject data)
+        public async Task<HttpResponseMessage> Post(string endpoint, JObject data, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.POST, endpoint, data);
+            return await RequestAsync(Methods.POST, endpoint, data, cancellationToken);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">An JArray representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
-        public async Task<HttpResponseMessage> Post(string endpoint, JArray data)
+        public async Task<HttpResponseMessage> Post(string endpoint, JArray data, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.POST, endpoint, data);
+            return await RequestAsync(Methods.POST, endpoint, data, cancellationToken);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <returns>The resulting message from the API call</returns>
-        public async Task<HttpResponseMessage> Delete(string endpoint)
+        public async Task<HttpResponseMessage> Delete(string endpoint, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.DELETE, endpoint, (StringContent)null);
+            return await RequestAsync(Methods.DELETE, endpoint, (StringContent)null, cancellationToken);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">An optional JObject representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
-        public async Task<HttpResponseMessage> Delete(string endpoint, JObject data = null)
+        public async Task<HttpResponseMessage> Delete(string endpoint, JObject data = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.DELETE, endpoint, data);
+            return await RequestAsync(Methods.DELETE, endpoint, data, cancellationToken);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">An optional JArray representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
-        public async Task<HttpResponseMessage> Delete(string endpoint, JArray data = null)
+        public async Task<HttpResponseMessage> Delete(string endpoint, JArray data = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.DELETE, endpoint, data);
+            return await RequestAsync(Methods.DELETE, endpoint, data, cancellationToken);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">An JObject representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
-        public async Task<HttpResponseMessage> Patch(string endpoint, JObject data)
+        public async Task<HttpResponseMessage> Patch(string endpoint, JObject data, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.PATCH, endpoint, data);
+            return await RequestAsync(Methods.PATCH, endpoint, data, cancellationToken);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">An JArray representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
-        public async Task<HttpResponseMessage> Patch(string endpoint, JArray data)
+        public async Task<HttpResponseMessage> Patch(string endpoint, JArray data, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.PATCH, endpoint, data);
+            return await RequestAsync(Methods.PATCH, endpoint, data, cancellationToken);
         }
     }
 }
