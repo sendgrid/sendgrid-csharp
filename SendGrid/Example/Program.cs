@@ -46,6 +46,8 @@ namespace Example
             ListsAndSegments(httpClient);
             ContactsAndCustomFields(httpClient);
             Templates(httpClient);
+            Categories(httpClient);
+            User(httpClient);
         }
 
         private static void SendAsync(SendGrid.SendGridMessage message)
@@ -350,6 +352,49 @@ namespace Example
 
             fields = client.CustomFields.GetAllAsync().Result;
             Console.WriteLine("All custom fields retrieved. There are {0} fields", fields.Length);
+
+            Console.WriteLine("\n\nPress any key to continue");
+            Console.ReadKey();
+        }
+
+        private static void Categories(HttpClient httpClient)
+        {
+            Console.WriteLine("\n***** CATEGORIES *****");
+
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            var client = new SendGrid.Client(apiKey: apiKey, httpClient: httpClient);
+
+            var categories = client.Categories.GetAsync().Result;
+            Console.WriteLine("Number of categories: {0}", categories.Length);
+            Console.WriteLine("Categories: {0}", string.Join(", ", categories));
+
+            Console.WriteLine("\n\nPress any key to continue");
+            Console.ReadKey();
+        }
+
+        private static void User(HttpClient httpClient)
+        {
+            Console.WriteLine("\n***** USERS *****");
+
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            var client = new SendGrid.Client(apiKey: apiKey, httpClient: httpClient);
+
+            // RETRIEVE YOUR ACCOUNT INFORMATION
+            var account = client.User.GetAccountAsync().Result;
+            Console.WriteLine("Account type: {0}; Reputation: {1}", account.Type, account.Reputation);
+
+            // RETRIEVE YOUR USER PROFILE
+            var profile = client.User.GetProfileAsync().Result;
+            Console.WriteLine("Hello {0} from {1}", profile.FirstName, string.IsNullOrEmpty(profile.State) ? "unknown location" : profile.State);
+
+            // UPDATE YOUR USER PROFILE
+            profile.State = (profile.State == "Florida" ? "California" : "Florida");
+            client.User.UpdateProfileAsync(profile).Wait();
+            Console.WriteLine("The 'State' property on your profile has been updated");
+
+            // VERIFY THAT YOUR PROFILE HAS BEEN UPDATED
+            var updatedProfile = client.User.GetProfileAsync().Result;
+            Console.WriteLine("Hello {0} from {1}", profile.FirstName, string.IsNullOrEmpty(profile.State) ? "unknown location" : profile.State);
 
             Console.WriteLine("\n\nPress any key to continue");
             Console.ReadKey();

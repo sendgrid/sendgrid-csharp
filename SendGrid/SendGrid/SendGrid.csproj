@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="Model\Account.cs" />
     <Compile Include="Model\ConditionLogicalConjunction.cs" />
     <Compile Include="Model\CustomField.cs" />
     <Compile Include="Model\Field.cs" />
@@ -85,8 +86,10 @@
     <Compile Include="Model\AggregateBy.cs" />
     <Compile Include="Model\Template.cs" />
     <Compile Include="Model\TemplateVersion.cs" />
+    <Compile Include="Model\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Bounces.cs" />
+    <Compile Include="Resources\Categories.cs" />
     <Compile Include="Resources\CustomFields.cs" />
     <Compile Include="Resources\GlobalSuppressions.cs" />
     <Compile Include="Resources\GlobalStats.cs" />
@@ -97,6 +100,7 @@
     <Compile Include="Resources\Templates.cs" />
     <Compile Include="Resources\UnsubscribeGroups.cs" />
     <Compile Include="Resources\APIKeys.cs" />
+    <Compile Include="Resources\User.cs" />
     <Compile Include="Utilities\SendGridDateTimeConverter.cs" />
     <Compile Include="Utilities\EpochConverter.cs" />
     <Compile Include="Utilities\Extensions.cs" />
