@@ -34,6 +34,7 @@ namespace SendGrid
         public Lists Lists { get; private set; }
         public Segments Segments { get; private set; }
         public Templates Templates { get; private set; }
+        public Categories Categories { get; private set; }
         public string Version { get; private set; }
 
         /// <summary>
@@ -59,6 +60,7 @@ namespace SendGrid
             Lists = new Lists(this);
             Segments = new Segments(this);
             Templates = new Templates(this);
+            Categories = new Categories(this);
 
             _httpClient = httpClient ?? new HttpClient();
             _httpClient.BaseAddress = _baseUri;
