@@ -56,6 +56,7 @@ Global
 		{F39ADCE7-63B5-406D-9BE8-C407920B6B8F}.BuildNet45|x86.ActiveCfg = BuildNet45|Any CPU
 		{F39ADCE7-63B5-406D-9BE8-C407920B6B8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F39ADCE7-63B5-406D-9BE8-C407920B6B8F}.Debug|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F39ADCE7-63B5-406D-9BE8-C407920B6B8F}.Debug|Mixed Platforms.Build.0 = Release|Any CPU
 		{F39ADCE7-63B5-406D-9BE8-C407920B6B8F}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{F39ADCE7-63B5-406D-9BE8-C407920B6B8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F39ADCE7-63B5-406D-9BE8-C407920B6B8F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
