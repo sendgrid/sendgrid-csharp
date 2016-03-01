@@ -21,6 +21,7 @@ namespace SendGrid
         private readonly NetworkCredential _credentials;
         private readonly HttpClient _client;
         private readonly string _apiKey;
+        private readonly IWebProxy _proxy;
 
         #endregion
 
@@ -29,14 +30,14 @@ namespace SendGrid
         /// </summary>
         /// <param name="apiKey">The API Key with which to send</param>
         public Web(string apiKey)
-            : this(apiKey, null, TimeSpan.FromSeconds(100)) { }
+            : this(apiKey, null, TimeSpan.FromSeconds(100), null) { }
 
         /// <summary>
         ///     Creates a new Web interface for sending mail
         /// </summary>
         /// <param name="credentials">SendGridMessage user parameters</param>
         public Web(NetworkCredential credentials)
-            : this(null, credentials, TimeSpan.FromSeconds(100)) { }
+            : this(null, credentials, TimeSpan.FromSeconds(100), null) { }
 
         /// <summary>
         ///     Creates a new Web interface for sending mail.
@@ -45,10 +46,34 @@ namespace SendGrid
         /// <param name="credentials">SendGridMessage user parameters</param>
         /// <param name="httpTimeout">HTTP request timeout</param>
         public Web(string apiKey, NetworkCredential credentials, TimeSpan httpTimeout)
+            : this(apiKey, credentials, httpTimeout, null) { }
+
+        /// <summary>
+        ///     Creates a new Web interface for sending mail.
+        /// </summary>
+        /// <param name="apiKey">The API Key with which to send</param>
+        /// <param name="credentials">SendGridMessage user parameters</param>
+        /// <param name="httpTimeout">HTTP request timeout</param>
+        /// <param name="proxy">Proxy server</param>
+        public Web(string apiKey, NetworkCredential credentials, TimeSpan httpTimeout, IWebProxy proxy)
         {
             _credentials = credentials;
-            _client = new HttpClient();
             _apiKey = apiKey;
+            _proxy = proxy;
+
+            if (_proxy == null)
+            {
+                _client = new HttpClient();
+            }
+            else
+            {
+                var handler = new HttpClientHandler
+                {
+                    UseProxy = true,
+                    Proxy = _proxy
+                };
+                _client = new HttpClient(handler);
+            }
 
             var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             if (credentials == null)
