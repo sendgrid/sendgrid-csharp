@@ -91,10 +91,12 @@ namespace SendGrid
                 var fs = new FileStream(file.Key, FileMode.Open, FileAccess.Read);
                 var fileContent = new StreamContent(fs);
 
+                var fileName = Path.GetFileName(file.Key)?.Internationalize();
+
                 fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
                 {
-                    Name = "files[" + Path.GetFileName(file.Key) + "]",
-                    FileName = Path.GetFileName(file.Key)
+                    Name = "files[" + fileName + "]",
+                    FileName = fileName
                 };
 
                 fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
@@ -107,10 +109,12 @@ namespace SendGrid
                 var stream = file.Value;
                 var fileContent = new StreamContent(stream);
 
+                var fileName = Path.GetFileName(file.Key)?.Internationalize();
+
                 fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
                 {
-                    Name = "files[" + Path.GetFileName(file.Key) + "]",
-                    FileName = Path.GetFileName(file.Key)
+                    Name = "files[" + fileName + "]",
+                    FileName = fileName
                 };
 
                 fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");

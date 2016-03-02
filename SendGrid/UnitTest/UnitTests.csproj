@@ -79,10 +79,15 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Attachment.cs" />
     <Compile Include="UnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SendGridMail\Mail.csproj">
+      <Project>{3C687BEF-FF50-44AD-8315-2D4237281AF8}</Project>
+      <Name>Mail</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SendGrid\SendGrid.csproj">
       <Project>{1c318867-440b-4eb9-99e3-c0cc2c556962}</Project>
       <Name>SendGrid</Name>
