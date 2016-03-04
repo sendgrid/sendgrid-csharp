@@ -39,7 +39,7 @@ namespace SendGrid.Resources
         public async Task<HttpResponseMessage> Post(string apiKeyName, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = new JObject { { "name", apiKeyName } };
-            return await _client.Post(_endpoint, data, cancellationToken);
+            return await _client.Post(_endpoint, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html</returns>
         public async Task<HttpResponseMessage> Delete(string apiKeyId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await _client.Delete(_endpoint + "/" + apiKeyId, cancellationToken);
+            return await _client.Delete(_endpoint + "/" + apiKeyId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -61,8 +61,7 @@ namespace SendGrid.Resources
         public async Task<HttpResponseMessage> Patch(string apiKeyId, string apiKeyName, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = new JObject { { "name", apiKeyName } };
-            return await _client.Patch(_endpoint + "/" + apiKeyId, data, cancellationToken);
+            return await _client.Patch(_endpoint + "/" + apiKeyId, data, cancellationToken).ConfigureAwait(false);
         }
-
     }
 }

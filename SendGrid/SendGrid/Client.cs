@@ -80,7 +80,7 @@ namespace SendGrid
         private async Task<HttpResponseMessage> RequestAsync(Methods method, string endpoint, JObject data, CancellationToken cancellationToken = default(CancellationToken))
         {
             var content = (data == null ? null : new StringContent(data.ToString(), Encoding.UTF8, MediaType));
-            return await RequestAsync(method, endpoint, content, cancellationToken);
+            return await RequestAsync(method, endpoint, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace SendGrid
         private async Task<HttpResponseMessage> RequestAsync(Methods method, string endpoint, JArray data, CancellationToken cancellationToken = default(CancellationToken))
         {
             var content = (data == null ? null : new StringContent(data.ToString(), Encoding.UTF8, MediaType));
-            return await RequestAsync(method, endpoint, content, cancellationToken);
+            return await RequestAsync(method, endpoint, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace SendGrid
                     RequestUri = new Uri(_baseUri + endpoint),
                     Content = content
                 };
-                return await _httpClient.SendAsync(httpRequest, cancellationToken);
+                return await _httpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -146,7 +146,7 @@ namespace SendGrid
         /// <returns>The resulting message from the API call</returns>
         public async Task<HttpResponseMessage> Get(string endpoint, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.GET, endpoint, (StringContent)null, cancellationToken);
+            return await RequestAsync(Methods.GET, endpoint, (StringContent)null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
@@ -154,7 +154,7 @@ namespace SendGrid
         /// <returns>The resulting message from the API call</returns>
         public async Task<HttpResponseMessage> Post(string endpoint, JObject data, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.POST, endpoint, data, cancellationToken);
+            return await RequestAsync(Methods.POST, endpoint, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
@@ -162,14 +162,14 @@ namespace SendGrid
         /// <returns>The resulting message from the API call</returns>
         public async Task<HttpResponseMessage> Post(string endpoint, JArray data, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.POST, endpoint, data, cancellationToken);
+            return await RequestAsync(Methods.POST, endpoint, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <returns>The resulting message from the API call</returns>
         public async Task<HttpResponseMessage> Delete(string endpoint, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.DELETE, endpoint, (StringContent)null, cancellationToken);
+            return await RequestAsync(Methods.DELETE, endpoint, (StringContent)null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
@@ -177,7 +177,7 @@ namespace SendGrid
         /// <returns>The resulting message from the API call</returns>
         public async Task<HttpResponseMessage> Delete(string endpoint, JObject data = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.DELETE, endpoint, data, cancellationToken);
+            return await RequestAsync(Methods.DELETE, endpoint, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
@@ -185,7 +185,7 @@ namespace SendGrid
         /// <returns>The resulting message from the API call</returns>
         public async Task<HttpResponseMessage> Delete(string endpoint, JArray data = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.DELETE, endpoint, data, cancellationToken);
+            return await RequestAsync(Methods.DELETE, endpoint, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
@@ -193,7 +193,7 @@ namespace SendGrid
         /// <returns>The resulting message from the API call</returns>
         public async Task<HttpResponseMessage> Patch(string endpoint, JObject data, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.PATCH, endpoint, data, cancellationToken);
+            return await RequestAsync(Methods.PATCH, endpoint, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
@@ -201,7 +201,7 @@ namespace SendGrid
         /// <returns>The resulting message from the API call</returns>
         public async Task<HttpResponseMessage> Patch(string endpoint, JArray data, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.PATCH, endpoint, data, cancellationToken);
+            return await RequestAsync(Methods.PATCH, endpoint, data, cancellationToken).ConfigureAwait(false);
         }
     }
 }

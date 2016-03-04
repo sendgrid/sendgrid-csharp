@@ -39,10 +39,10 @@ namespace SendGrid.Resources
             if (endDate.HasValue) query["end_date"] = endDate.Value.ToString("yyyy-MM-dd");
             if (aggregatedBy != AggregateBy.None) query["aggregated_by"] = aggregatedBy.GetDescription();
 
-            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query), cancellationToken);
+            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var getStatsResult = JArray.Parse(responseContent).ToObject<GlobalStat[]>();
             return getStatsResult;
         }

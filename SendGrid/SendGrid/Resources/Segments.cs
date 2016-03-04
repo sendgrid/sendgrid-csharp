@@ -37,20 +37,20 @@ namespace SendGrid.Resources
                 { "list_id", listId },
                 { "conditions", JArray.FromObject(conditions.ToArray()) }
             };
-            var response = await _client.Post(_endpoint, data, cancellationToken);
+            var response = await _client.Post(_endpoint, data, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var segment = JObject.Parse(responseContent).ToObject<Segment>();
             return segment;
         }
 
         public async Task<Segment[]> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(_endpoint, cancellationToken);
+            var response = await _client.Get(_endpoint, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             // Response looks like this:
             // {
@@ -81,10 +81,10 @@ namespace SendGrid.Resources
 
         public async Task<Segment> GetAsync(long segmentId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, segmentId), cancellationToken);
+            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, segmentId), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var segment = JObject.Parse(responseContent).ToObject<Segment>();
             return segment;
         }
@@ -98,10 +98,10 @@ namespace SendGrid.Resources
             if (listId.HasValue) data.Add("list_id", listId.Value);
             if (conditions.Any()) data.Add("conditions", JArray.FromObject(conditions.ToArray()));
 
-            var response = await _client.Patch(string.Format("{0}/{1}", _endpoint, segmentId), data, cancellationToken);
+            var response = await _client.Patch(string.Format("{0}/{1}", _endpoint, segmentId), data, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var segment = JObject.Parse(responseContent).ToObject<Segment>();
             return segment;
         }
@@ -111,7 +111,7 @@ namespace SendGrid.Resources
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["delete_contacts"] = (deleteMatchingContacts ? "true" : "false");
 
-            var response = await _client.Delete(string.Format("{0}/{1}?{2}", _endpoint, segmentId, query), cancellationToken);
+            var response = await _client.Delete(string.Format("{0}/{1}?{2}", _endpoint, segmentId, query), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
         }
 
@@ -121,10 +121,10 @@ namespace SendGrid.Resources
             query["page_size"] = recordsPerPage.ToString(CultureInfo.InvariantCulture);
             query["page"] = page.ToString(CultureInfo.InvariantCulture);
 
-            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query), cancellationToken);
+            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             // Response looks like this:
             // {
