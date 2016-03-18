@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using SendGrid.Model;
+﻿using SendGrid.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,41 +89,36 @@ namespace Example
 
         private static void ApiKeys(HttpClient httpClient)
         {
-            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            Console.WriteLine("\n***** API KEYS *****");
+
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             var client = new SendGrid.Client(apiKey: apiKey, httpClient: httpClient);
 
-            // GET API KEYS
-            HttpResponseMessage responseGet = client.ApiKeys.Get().Result;
-            Console.WriteLine(responseGet.StatusCode);
-            Console.WriteLine(responseGet.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("These are your current API Keys.\n\nPress any key to continue.");
-            Console.ReadKey();
+            // CREATE A NEW API KEY
+            var newApiKey = client.ApiKeys.CreateAsync("New group", new[] { "alerts.read", "api_keys.read" }).Result;
+            Console.WriteLine("Unique ID of the new Api Key: {0}", newApiKey.KeyId);
 
-            // POST API KEYS
-            HttpResponseMessage responsePost = client.ApiKeys.Post("CSharpTestKey").Result;
-            var rawString = responsePost.Content.ReadAsStringAsync().Result;
-            dynamic jsonObject = JObject.Parse(rawString);
-            var apiKeyId = jsonObject.api_key_id.ToString();
-            Console.WriteLine(responsePost.StatusCode);
-            Console.WriteLine(responsePost.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("API Key created.\n\nPress any key to continue.");
-            Console.ReadKey();
+            // UPDATE THE API KEY'S NAME
+            var updatedApiKey = client.ApiKeys.UpdateAsync(newApiKey.KeyId, "This is the updated name").Result;
+            Console.WriteLine("The name of Api Key {0} updated", updatedApiKey.KeyId);
 
-            // PATCH API KEYS
-            HttpResponseMessage responsePatch = client.ApiKeys.Patch(apiKeyId, "CSharpTestKeyPatched").Result;
-            Console.WriteLine(responsePatch.StatusCode);
-            Console.WriteLine(responsePatch.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("API Key patched.\n\nPress any key to continue.");
-            Console.ReadKey();
+            // UPDATE THE API KEY'S SCOPES
+            updatedApiKey = client.ApiKeys.UpdateAsync(newApiKey.KeyId, updatedApiKey.Name, new[] { "alerts.read", "api_keys.read", "categories.read", "stats.read" }).Result;
+            Console.WriteLine("The scopes of Api Key {0} updated", updatedApiKey.KeyId);
 
-            // DELETE API KEYS
-            Console.WriteLine("Deleting API Key, please wait.");
-            HttpResponseMessage responseDelete = client.ApiKeys.Delete(apiKeyId).Result;
-            Console.WriteLine(responseDelete.StatusCode);
-            HttpResponseMessage responseFinal = client.ApiKeys.Get().Result;
-            Console.WriteLine(responseFinal.StatusCode);
-            Console.WriteLine(responseFinal.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("API Key Deleted.\n\nPress any key to end.");
+            // GET ALL THE API KEYS
+            var apiKeys = client.ApiKeys.GetAsync().Result;
+            Console.WriteLine("There are {0} Api Keys", apiKeys.Length);
+
+            // GET ONE API KEY
+            var key = client.ApiKeys.GetAsync(newApiKey.KeyId).Result;
+            Console.WriteLine("The name of api key {0} is: {1}", newApiKey.KeyId, key.Name);
+
+            // DELETE API KEY
+            client.ApiKeys.DeleteAsync(newApiKey.KeyId).Wait();
+            Console.WriteLine("Api Key {0} deleted", newApiKey.KeyId);
+
+            Console.WriteLine("\n\nPress any key to continue");
             Console.ReadKey();
         }
 

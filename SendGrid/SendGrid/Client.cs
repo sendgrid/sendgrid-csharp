@@ -19,10 +19,10 @@ namespace SendGrid
         private const string MediaType = "application/json";
         private enum Methods
         {
-            GET, POST, PATCH, DELETE
+            GET, PUT, POST, PATCH, DELETE
         }
 
-        public APIKeys ApiKeys { get; private set; }
+        public ApiKeys ApiKeys { get; private set; }
         public UnsubscribeGroups UnsubscribeGroups { get; private set; }
         public Suppressions Suppressions { get; private set; }
         public GlobalSuppressions GlobalSuppressions { get; private set; }
@@ -35,6 +35,7 @@ namespace SendGrid
         public Segments Segments { get; private set; }
         public Templates Templates { get; private set; }
         public Categories Categories { get; private set; }
+        public Campaigns Campaigns { get; private set; }
         public string Version { get; private set; }
 
         /// <summary>
@@ -48,7 +49,7 @@ namespace SendGrid
             _apiKey = apiKey;
 
             Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            ApiKeys = new APIKeys(this);
+            ApiKeys = new ApiKeys(this);
             UnsubscribeGroups = new UnsubscribeGroups(this);
             Suppressions = new Suppressions(this);
             GlobalSuppressions = new GlobalSuppressions(this);
@@ -61,6 +62,7 @@ namespace SendGrid
             Segments = new Segments(this);
             Templates = new Templates(this);
             Categories = new Categories(this);
+            Campaigns = new Campaigns(this);
 
             _httpClient = httpClient ?? new HttpClient();
             _httpClient.BaseAddress = _baseUri;
@@ -111,11 +113,12 @@ namespace SendGrid
                 switch (method)
                 {
                     case Methods.GET: methodAsString = "GET"; break;
+                    case Methods.PUT: methodAsString = "PUT"; break;
                     case Methods.POST: methodAsString = "POST"; break;
                     case Methods.PATCH: methodAsString = "PATCH"; break;
                     case Methods.DELETE: methodAsString = "DELETE"; break;
                     default:
-                        var message = "{\"errors\":[{\"message\":\"Bad method call, supported methods are GET, POST, PATCH and DELETE\"}]}";
+                        var message = "{\"errors\":[{\"message\":\"Bad method call, supported methods are GET, PUT, POST, PATCH and DELETE\"}]}";
                         var response = new HttpResponseMessage(HttpStatusCode.MethodNotAllowed)
                         {
                             Content = new StringContent(message)
@@ -202,6 +205,14 @@ namespace SendGrid
         public async Task<HttpResponseMessage> Patch(string endpoint, JArray data, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await RequestAsync(Methods.PATCH, endpoint, data, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
+        /// <param name="data">An JObject representing the resource's data</param>
+        /// <returns>The resulting message from the API call</returns>
+        public async Task<HttpResponseMessage> Put(string endpoint, JObject data, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await RequestAsync(Methods.PUT, endpoint, data, cancellationToken).ConfigureAwait(false);
         }
     }
 }
