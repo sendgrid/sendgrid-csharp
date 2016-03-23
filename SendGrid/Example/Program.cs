@@ -47,6 +47,7 @@ namespace Example
             Templates(httpClient);
             Categories(httpClient);
             User(httpClient);
+            Campaigns(httpClient);
         }
 
         private static void SendAsync(SendGrid.SendGridMessage message)
@@ -95,7 +96,7 @@ namespace Example
             var client = new SendGrid.Client(apiKey: apiKey, httpClient: httpClient);
 
             // CREATE A NEW API KEY
-            var newApiKey = client.ApiKeys.CreateAsync("New group", new[] { "alerts.read", "api_keys.read" }).Result;
+            var newApiKey = client.ApiKeys.CreateAsync("My new api key", new[] { "alerts.read", "api_keys.read" }).Result;
             Console.WriteLine("Unique ID of the new Api Key: {0}", newApiKey.KeyId);
 
             // UPDATE THE API KEY'S NAME
@@ -427,6 +428,46 @@ namespace Example
 
             client.Templates.DeleteAsync(template.Id).Wait();
             Console.WriteLine("Template {0} deleted", template.Id);
+
+            Console.WriteLine("\n\nPress any key to continue");
+            Console.ReadKey();
+        }
+
+        private static void Campaigns(HttpClient httpClient)
+        {
+            Console.WriteLine("\n***** CAMPAIGNS *****");
+
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            var client = new SendGrid.Client(apiKey: apiKey, httpClient: httpClient);
+
+            // NOTE: as of March 2016 the sendGrid API v3 does not allow creating senders. 
+            // Therefore you have to create a new sender manually in the SendGrid UI and 
+            // copy/paste the unique identifier of your new sender on the next line.
+            var senderId = 18914;
+
+            var dummyList = client.Lists.CreateAsync("Dummy list").Result;
+            Console.WriteLine("Dummy list created");
+
+            var campaign = client.Campaigns.CreateAsync("My campaign", "This is the subject", senderId, "<html><body>Hello <b>World</b></body></html", "Hello world", new[] { dummyList.Id }).Result;
+            Console.WriteLine("Campaign '{0}' created. Id: {1}", campaign.Title, campaign.Id);
+
+            client.Campaigns.UpdateAsync(campaign.Id, categories: new[] { "category1", "category2" }).Wait();
+            Console.WriteLine("Campaign '{0}' updated", campaign.Id);
+
+            var campaigns = client.Campaigns.GetAsync(100, 0).Result;
+            Console.WriteLine("All campaigns retrieved. There are {0} campaigns", campaigns.Length);
+
+            client.Campaigns.SendTestAsync(campaign.Id, new[] { "myemail@test.com" }).Wait();
+            Console.WriteLine("Test sent");
+
+            client.Lists.DeleteAsync(dummyList.Id).Wait();
+            Console.WriteLine("Dummy list deleted");
+
+            client.Campaigns.DeleteAsync(campaign.Id).Wait();
+            Console.WriteLine("Campaign {0} deleted", campaign.Id);
+
+            campaigns = client.Campaigns.GetAsync(100, 0).Result;
+            Console.WriteLine("All campaigns retrieved. There are {0} campaigns", campaigns.Length);
 
             Console.WriteLine("\n\nPress any key to continue");
             Console.ReadKey();
