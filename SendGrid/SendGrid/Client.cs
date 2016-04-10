@@ -11,11 +11,12 @@ using System.Threading.Tasks;
 
 namespace SendGrid
 {
-    public class Client
+    public class Client : IDisposable
     {
         private string _apiKey;
         private Uri _baseUri;
         private HttpClient _httpClient;
+        private bool _mustDisposeHttpClient;
         private const string MediaType = "application/json";
         private enum Methods
         {
@@ -64,6 +65,7 @@ namespace SendGrid
             Categories = new Categories(this);
             Campaigns = new Campaigns(this);
 
+            _mustDisposeHttpClient = (httpClient == null);
             _httpClient = httpClient ?? new HttpClient();
             _httpClient.BaseAddress = _baseUri;
             _httpClient.DefaultRequestHeaders.Accept.Clear();
@@ -213,6 +215,52 @@ namespace SendGrid
         public async Task<HttpResponseMessage> Put(string endpoint, JObject data, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await RequestAsync(Methods.PUT, endpoint, data, cancellationToken).ConfigureAwait(false);
+        }
+
+        ~Client()
+        {
+            // The object went out of scope and finalized is called.
+            // Call 'Dispose' to release unmanaged resources 
+            // Managed resources will be released when GC runs the next time.
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            // Call 'Dispose' to release resources
+            Dispose(true);
+
+            // Tell the GC that we have done the cleanup and there is nothing left for the Finalizer to do
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                ReleaseManagedResources();
+            }
+            else
+            {
+                // The object went out of scope and the Finalizer has been called.
+                // The GC will take care of releasing managed resources, therefore there is nothing to do here.
+            }
+
+            ReleaseUnmanagedResources();
+        }
+
+        private void ReleaseManagedResources()
+        {
+            if (_httpClient != null && _mustDisposeHttpClient)
+            {
+                _httpClient.Dispose();
+                _httpClient = null;
+            }
+        }
+
+        private void ReleaseUnmanagedResources()
+        {
+            // We do not hold references to unmanaged resources
         }
     }
 }
