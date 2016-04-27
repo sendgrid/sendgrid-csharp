@@ -191,7 +191,7 @@ Update the name of an existing API Key [PATCH]
 String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 var client = new SendGrid.Client(apiKey);
 var apiKeyName = "CSharpTestKey"; 
-ver apiKeyId = "<API Key ID>";
+var apiKeyId = "<API Key ID>";
 // Leave off .Result for an asyncronous call
 HttpResponseMessage responsePatch = client.ApiKeys.Patch(apiKeyId, apiKeyName).Result; 
 ```
@@ -201,7 +201,7 @@ Revoke an existing API Key [DELETE]
 ```csharp
 String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 var client = new SendGrid.Client(apiKey);
-ver apiKeyId = "<API Key ID>";
+var apiKeyId = "<API Key ID>";
 // Leave off .Result for an asyncronous call
 HttpResponseMessage responseDelete = client.ApiKeys.Delete(apiKeyId).Result; 
 ```
@@ -249,7 +249,7 @@ You can only delete groups that have not been attached to sent mail in the last 
 ```csharp
 String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 var client = new SendGrid.Client(apiKey);
-ver unsubscribeGroupId = "<UNSUBSCRIBE GROUP ID>";
+var unsubscribeGroupId = "<UNSUBSCRIBE GROUP ID>";
 // Leave off .Result for an asyncronous call
 HttpResponseMessage responseDelete = client.UnsubscribeGroups.Delete(unsubscribeGroupId).Result; 
 ```
@@ -285,7 +285,7 @@ Delete a recipient email from the suppressions list for a group. [DELETE]
 ```csharp
 String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 var client = new SendGrid.Client(apiKey);
-ver groupId = "<UNSUBSCRIBE GROUP ID>";
+var groupId = "<UNSUBSCRIBE GROUP ID>";
 // Leave off .Result for an asyncronous call
 HttpResponseMessage responseDelete1 = client.Suppressions.Delete(groupId, "example@example.com").Result;
 ```
