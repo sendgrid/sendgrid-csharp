@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [7.0.0] - XXXX-XX-XX
+### Added
+- Breaking change to support the v3 Web API
+- New HTTP client
+- v3 Mail Send helper
+
 ## [6.3.4] - 2015-12-15
 ###Added
 - Implemented the global stats /asm/stats endpoint [GET]

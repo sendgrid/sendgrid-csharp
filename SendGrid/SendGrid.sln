@@ -3,20 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{0319E73A-7039-4858-B047-1EDF88BB6BD1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{F39ADCE7-63B5-406D-9BE8-C407920B6B8F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8} = {3C687BEF-FF50-44AD-8315-2D4237281AF8}
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DAC6CBA4-41D4-490D-B9BE-A8E3AB2E8A96}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mail", "SendGridMail\Mail.csproj", "{3C687BEF-FF50-44AD-8315-2D4237281AF8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendGrid", "SendGrid\SendGrid.csproj", "{1C318867-440B-4EB9-99E3-C0CC2C556962}"
 EndProject
@@ -35,22 +28,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0319E73A-7039-4858-B047-1EDF88BB6BD1}.BuildNet45|Any CPU.ActiveCfg = BuildNet45|Any CPU
-		{0319E73A-7039-4858-B047-1EDF88BB6BD1}.BuildNet45|Any CPU.Build.0 = BuildNet45|Any CPU
-		{0319E73A-7039-4858-B047-1EDF88BB6BD1}.BuildNet45|Mixed Platforms.ActiveCfg = BuildNet45|Any CPU
-		{0319E73A-7039-4858-B047-1EDF88BB6BD1}.BuildNet45|Mixed Platforms.Build.0 = BuildNet45|Any CPU
-		{0319E73A-7039-4858-B047-1EDF88BB6BD1}.BuildNet45|x86.ActiveCfg = BuildNet45|Any CPU
-		{0319E73A-7039-4858-B047-1EDF88BB6BD1}.BuildNet45|x86.Build.0 = BuildNet45|Any CPU
-		{0319E73A-7039-4858-B047-1EDF88BB6BD1}.Debug|Any CPU.ActiveCfg = BuildNet45|Any CPU
-		{0319E73A-7039-4858-B047-1EDF88BB6BD1}.Debug|Any CPU.Build.0 = BuildNet45|Any CPU
-		{0319E73A-7039-4858-B047-1EDF88BB6BD1}.Debug|Mixed Platforms.ActiveCfg = BuildNet45|Any CPU
-		{0319E73A-7039-4858-B047-1EDF88BB6BD1}.Debug|Mixed Platforms.Build.0 = BuildNet45|Any CPU
-		{0319E73A-7039-4858-B047-1EDF88BB6BD1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0319E73A-7039-4858-B047-1EDF88BB6BD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0319E73A-7039-4858-B047-1EDF88BB6BD1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0319E73A-7039-4858-B047-1EDF88BB6BD1}.Release|Mixed Platforms.ActiveCfg = BuildNet45|Any CPU
-		{0319E73A-7039-4858-B047-1EDF88BB6BD1}.Release|Mixed Platforms.Build.0 = BuildNet45|Any CPU
-		{0319E73A-7039-4858-B047-1EDF88BB6BD1}.Release|x86.ActiveCfg = Release|Any CPU
 		{F39ADCE7-63B5-406D-9BE8-C407920B6B8F}.BuildNet45|Any CPU.ActiveCfg = BuildNet45|Any CPU
 		{F39ADCE7-63B5-406D-9BE8-C407920B6B8F}.BuildNet45|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F39ADCE7-63B5-406D-9BE8-C407920B6B8F}.BuildNet45|x86.ActiveCfg = BuildNet45|Any CPU
@@ -60,22 +37,6 @@ Global
 		{F39ADCE7-63B5-406D-9BE8-C407920B6B8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F39ADCE7-63B5-406D-9BE8-C407920B6B8F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F39ADCE7-63B5-406D-9BE8-C407920B6B8F}.Release|x86.ActiveCfg = Release|Any CPU
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8}.BuildNet45|Any CPU.ActiveCfg = BuildNet45|Any CPU
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8}.BuildNet45|Any CPU.Build.0 = BuildNet45|Any CPU
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8}.BuildNet45|Mixed Platforms.ActiveCfg = BuildNet45|Any CPU
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8}.BuildNet45|Mixed Platforms.Build.0 = BuildNet45|Any CPU
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8}.BuildNet45|x86.ActiveCfg = BuildNet45|Any CPU
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8}.BuildNet45|x86.Build.0 = BuildNet45|Any CPU
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8}.Debug|Any CPU.ActiveCfg = BuildNet45|Any CPU
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8}.Debug|Any CPU.Build.0 = BuildNet45|Any CPU
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8}.Debug|Mixed Platforms.ActiveCfg = BuildNet45|Any CPU
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8}.Debug|Mixed Platforms.Build.0 = BuildNet45|Any CPU
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8}.Release|Mixed Platforms.ActiveCfg = BuildNet45|Any CPU
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8}.Release|Mixed Platforms.Build.0 = BuildNet45|Any CPU
-		{3C687BEF-FF50-44AD-8315-2D4237281AF8}.Release|x86.ActiveCfg = Release|Any CPU
 		{1C318867-440B-4EB9-99E3-C0CC2C556962}.BuildNet45|Any CPU.ActiveCfg = Release|Any CPU
 		{1C318867-440B-4EB9-99E3-C0CC2C556962}.BuildNet45|Any CPU.Build.0 = Release|Any CPU
 		{1C318867-440B-4EB9-99E3-C0CC2C556962}.BuildNet45|Mixed Platforms.ActiveCfg = Release|Any CPU
