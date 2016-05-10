@@ -1,68 +1,143 @@
 ﻿using Newtonsoft.Json.Linq;
+using SendGrid.Model;
+using SendGrid.Utilities;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SendGrid.Resources
 {
-    public class ApiKeys
-    {
-        private readonly string _endpoint;
-        private readonly Client _client;
+	public class ApiKeys
+	{
+		private string _endpoint;
+		private Client _client;
 
-        /// <summary>
-        /// Constructs the SendGrid APIKeys object.
-        /// See https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html
-        /// </summary>
-        /// <param name="client">SendGrid Web API v3 client</param>
-        /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
-        public ApiKeys(Client client, string endpoint = "v3/api_keys")
-        {
-            _endpoint = endpoint;
-            _client = client;
-        }
+		/// <summary>
+		/// Constructs the SendGrid APIKeys object.
+		/// See https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html
+		/// </summary>
+		/// <param name="client">SendGrid Web API v3 client</param>
+		/// <param name="endpoint">Resource endpoint, do not prepend slash</param>
+		public ApiKeys(Client client, string endpoint = "v3/api_keys")
+		{
+			_endpoint = endpoint;
+			_client = client;
+		}
 
-        /// <summary>
-        /// Get a list of active API Keys
-        /// </summary>
-        /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html</returns>
-        public Task<HttpResponseMessage> Get(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return _client.Get(_endpoint, cancellationToken);
-        }
+		/// <summary>
+		/// Get an existing API Key
+		/// </summary>
+		/// <param name="keyId"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public async Task<ApiKey> GetAsync(string keyId, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			var response = await _client.Get(string.Format("{0}/{1}", _endpoint, keyId), cancellationToken).ConfigureAwait(false);
+			response.EnsureSuccess();
 
-        /// <summary>
-        /// Create a new API key
-        /// </summary>
-        /// <param name="apiKeyName">Name of the new API Key</param>
-        /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html</returns>
-        public Task<HttpResponseMessage> Post(string apiKeyName, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var data = new JObject { { "name", apiKeyName } };
-            return _client.Post(_endpoint, data, cancellationToken);
-        }
+			var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+			var apikey = JObject.Parse(responseContent).ToObject<ApiKey>();
+			return apikey;
+		}
 
-        /// <summary>
-        /// Delete a API key
-        /// </summary>
-        /// <param name="apiKeyId">ID of the API Key to delete</param>
-        /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html</returns>
-        public Task<HttpResponseMessage> Delete(string apiKeyId, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return _client.Delete(_endpoint + "/" + apiKeyId, cancellationToken);
-        }
+		/// <summary>
+		/// Get all API Keys belonging to the authenticated user
+		/// </summary>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public async Task<ApiKey[]> GetAsync(CancellationToken cancellationToken = default(CancellationToken))
+		{
+			var response = await _client.Get(_endpoint, cancellationToken).ConfigureAwait(false);
+			response.EnsureSuccess();
 
-        /// <summary>
-        /// Patch a API key
-        /// </summary>
-        /// <param name="apiKeyId">ID of the API Key to rename</param>
-        /// <param name="apiKeyName">New API Key name</param>
-        /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html</returns>
-        public Task<HttpResponseMessage> Patch(string apiKeyId, string apiKeyName, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var data = new JObject { { "name", apiKeyName } };
-            return _client.Patch(_endpoint + "/" + apiKeyId, data, cancellationToken);
-        }
+			var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-    }
+			// Response looks like this:
+			// {
+			//   "result": [
+			//     {
+			//       "name": "A New Hope",
+			//       "api_key_id": "xxxxxxxx"
+			//     }
+			//	]
+			// }
+			// We use a dynamic object to get rid of the 'result' property and simply return an array of api keys
+			dynamic dynamicObject = JObject.Parse(responseContent);
+			dynamic dynamicArray = dynamicObject.result;
+
+			var apikeys = dynamicArray.ToObject<ApiKey[]>();
+			return apikeys;
+		}
+
+		/// <summary>
+		/// Generate a new API Key
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="scopes"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public async Task<ApiKey> CreateAsync(string name, IEnumerable<string> scopes = null, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			scopes = (scopes ?? Enumerable.Empty<string>());
+
+			var data = CreateJObjectForApiKey(name, scopes);
+			var response = await _client.Post(_endpoint, data, cancellationToken).ConfigureAwait(false);
+			response.EnsureSuccess();
+
+			var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+			var apikey = JObject.Parse(responseContent).ToObject<ApiKey>();
+			return apikey;
+		}
+
+		/// <summary>
+		/// Revoke an existing API Key
+		/// </summary>
+		/// <param name="keyId"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public async Task DeleteAsync(string keyId, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			var response = await _client.Delete(string.Format("{0}/{1}", _endpoint, keyId), cancellationToken).ConfigureAwait(false);
+			response.EnsureSuccess();
+		}
+
+		/// <summary>
+		/// Update an API Key
+		/// </summary>
+		/// <param name="keyId"></param>
+		/// <param name="name"></param>
+		/// <param name="scopes"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public async Task<ApiKey> UpdateAsync(string keyId, string name = null, IEnumerable<string> scopes = null, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			scopes = (scopes ?? Enumerable.Empty<string>());
+
+			HttpResponseMessage response = null;
+			var data = CreateJObjectForApiKey(name, scopes);
+			if (scopes.Any())
+			{
+				response = await _client.Put(string.Format("{0}/{1}", _endpoint, keyId), data, cancellationToken).ConfigureAwait(false);
+			}
+			else
+			{
+				response = await _client.Patch(string.Format("{0}/{1}", _endpoint, keyId), data, cancellationToken).ConfigureAwait(false);
+			}
+			response.EnsureSuccess();
+
+			var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+			var apikey = JObject.Parse(responseContent).ToObject<ApiKey>();
+			return apikey;
+		}
+
+		private static JObject CreateJObjectForApiKey(string name = null, IEnumerable<string> scopes = null)
+		{
+			var result = new JObject();
+			if (!string.IsNullOrEmpty(name)) result.Add("name", name);
+			if (scopes != null && scopes.Any()) result.Add("scopes", JArray.FromObject(scopes.ToArray()));
+			return result;
+		}
+	}
 }
