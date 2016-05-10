@@ -30,20 +30,15 @@ namespace SendGrid
         ///     Creates an instance of SendGrid's custom message object
         /// </summary>
         /// <returns></returns>
-	    public SendGridMessage() : this(new Header())
-	    {
-	        
-	    }
-
-        public SendGridMessage(IHeader header)
+        public SendGridMessage(IHeader header = null)
         {
             _message = new MailMessage();
-            Header = header;
+            Header = header ?? new Header();
             Headers = new Dictionary<string, string>();
         }
 
 		public SendGridMessage(MailAddress from, MailAddress[] to,
-			String subject, String html, String text, IHeader header = null) : this()
+			String subject, String html, String text, IHeader header = null) : this(header)
 		{
 			From = from;
 			To = to;
