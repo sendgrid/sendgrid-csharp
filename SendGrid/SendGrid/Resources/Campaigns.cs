@@ -34,7 +34,7 @@ namespace SendGrid.Resources
             segmentIds = (segmentIds ?? Enumerable.Empty<long>());
             categories = (categories ?? Enumerable.Empty<string>());
 
-            if (!listIds.Any() && !segmentIds.Any()) throw new ArgumentNullException("You must specify at least one list or segment");
+            if (!listIds.Any() && !segmentIds.Any()) throw new ArgumentException("You must specify at least one list or segment");
 
             var data = CreateJObjectForCampaign(title, subject, senderId, htmlContent, textContent, listIds, segmentIds, categories, suppressionGroupId, customUnsubscribeUrl, ipPool);
             var response = await _client.Post(_endpoint, data, cancellationToken).ConfigureAwait(false);
@@ -124,14 +124,14 @@ namespace SendGrid.Resources
 
         public async Task SendAsync(long campaignId, DateTime? sendOn = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = (sendOn.HasValue ? new JObject() { { "send_at", sendOn.Value.ToUnixTime() } } : null);
+            var data = (sendOn.HasValue ? new JObject { { "send_at", sendOn.Value.ToUnixTime() } } : null);
             var response = await _client.Post(string.Format("{0}/{1}/schedules", _endpoint, campaignId), data, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
         }
 
         public async Task UpdateScheduledDateAsync(long campaignId, DateTime sendOn, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = new JObject()
+            var data = new JObject
             {
                 { "send_at", sendOn.ToUnixTime() }
             };

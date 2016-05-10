@@ -212,9 +212,9 @@ namespace SendGrid
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">An JObject representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
-        public async Task<HttpResponseMessage> Put(string endpoint, JObject data, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<HttpResponseMessage> Put(string endpoint, JObject data, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Methods.PUT, endpoint, data, cancellationToken).ConfigureAwait(false);
+            return RequestAsync(Methods.PUT, endpoint, data, cancellationToken);
         }
 
         ~Client()
