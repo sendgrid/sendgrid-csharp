@@ -43,10 +43,10 @@ namespace SendGrid.Resources
         public async Task<string> UpdateAsync(Contact contact, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = new JArray(ConvertContactToJObject(contact));
-            var response = await _client.Patch(_endpoint, data, cancellationToken);
+            var response = await _client.Patch(_endpoint, data, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var importResult = JObject.Parse(responseContent).ToObject<ImportResult>();
             if (importResult.ErrorCount > 0)
             {
@@ -65,10 +65,10 @@ namespace SendGrid.Resources
                 data.Add(ConvertContactToJObject(contact));
             }
 
-            var response = await _client.Post(_endpoint, data, cancellationToken);
+            var response = await _client.Post(_endpoint, data, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var importResult = JObject.Parse(responseContent).ToObject<ImportResult>();
             return importResult;
         }
@@ -81,7 +81,7 @@ namespace SendGrid.Resources
         public async Task DeleteAsync(IEnumerable<string> contactId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = JArray.FromObject(contactId.ToArray());
-            var response = await _client.Delete(_endpoint, data, cancellationToken);
+            var response = await _client.Delete(_endpoint, data, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
         }
 
@@ -91,10 +91,10 @@ namespace SendGrid.Resources
             query["page_size"] = recordsPerPage.ToString(CultureInfo.InvariantCulture);
             query["page"] = page.ToString(CultureInfo.InvariantCulture);
 
-            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query), cancellationToken);
+            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             // Response looks like this:
             // {
@@ -122,10 +122,10 @@ namespace SendGrid.Resources
 
         public async Task<long> GetBillableCountAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(string.Format("{0}/billable_count", _endpoint), cancellationToken);
+            var response = await _client.Get(string.Format("{0}/billable_count", _endpoint), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             // Response looks like this:
             // {
@@ -141,10 +141,10 @@ namespace SendGrid.Resources
 
         public async Task<long> GetTotalCountAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(string.Format("{0}/count", _endpoint), cancellationToken);
+            var response = await _client.Get(string.Format("{0}/count", _endpoint), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             // Response looks like this:
             // {
@@ -163,10 +163,10 @@ namespace SendGrid.Resources
             var query = HttpUtility.ParseQueryString(string.Empty);
             query[fieldName] = value;
 
-            var response = await _client.Get(string.Format("{0}/search?{1}", _endpoint, query), cancellationToken);
+            var response = await _client.Get(string.Format("{0}/search?{1}", _endpoint, query), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             // Response looks like this:
             // {

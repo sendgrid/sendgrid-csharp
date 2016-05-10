@@ -29,10 +29,10 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
         public async Task<SuppressionGroup[]> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(_endpoint, cancellationToken);
+            var response = await _client.Get(_endpoint, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var groups = JArray.Parse(responseContent).ToObject<SuppressionGroup[]>();
             return groups;
         }
@@ -44,10 +44,10 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
         public async Task<SuppressionGroup> GetAsync(int groupId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, groupId), cancellationToken);
+            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, groupId), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var group = JObject.Parse(responseContent).ToObject<SuppressionGroup>();
             return group;
         }
@@ -67,10 +67,10 @@ namespace SendGrid.Resources
                 { "description", description },
                 { "is_default", isDefault }
             };
-            var response = await _client.Post(_endpoint, data, cancellationToken);
+            var response = await _client.Post(_endpoint, data, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var group = JObject.Parse(responseContent).ToObject<SuppressionGroup>();
             return group;
         }
@@ -87,10 +87,10 @@ namespace SendGrid.Resources
             if (name != null) data.Add("name", name);
             if (description != null) data.Add("description", description);
 
-            var response = await _client.Patch(string.Format("{0}/{1}", _endpoint, groupId), data, cancellationToken);
+            var response = await _client.Patch(string.Format("{0}/{1}", _endpoint, groupId), data, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var group = JObject.Parse(responseContent).ToObject<SuppressionGroup>();
             return group;
         }
@@ -102,7 +102,7 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
         public async Task DeleteAsync(int groupId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Delete(string.Format("{0}/{1}", _endpoint, groupId), cancellationToken);
+            var response = await _client.Delete(string.Format("{0}/{1}", _endpoint, groupId), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
         }
     }

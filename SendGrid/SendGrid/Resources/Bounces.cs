@@ -37,10 +37,10 @@ namespace SendGrid.Resources
             if (start.HasValue) query["start_time"] = start.Value.ToUnixTime().ToString();
             if (end.HasValue) query["end_time"] = end.Value.ToUnixTime().ToString();
 
-            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query), cancellationToken);
+            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var bounces = JArray.Parse(responseContent).ToObject<Bounce[]>();
             return bounces;
         }
@@ -51,10 +51,10 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/bounces.html</returns>
         public async Task<Bounce[]> GetAsync(string email, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, email), cancellationToken);
+            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, email), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var bounces = JArray.Parse(responseContent).ToObject<Bounce[]>();
             return bounces;
         }
@@ -64,7 +64,7 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/bounces.html</returns>
         public async Task DeleteAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Delete(_endpoint, cancellationToken);
+            var response = await _client.Delete(_endpoint, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
         }
 
@@ -75,7 +75,7 @@ namespace SendGrid.Resources
         public async Task DeleteAsync(IEnumerable<string> emails, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = new JObject(new JProperty("emails", JArray.FromObject(emails.ToArray())));
-            var response = await _client.Delete(_endpoint, data, cancellationToken);
+            var response = await _client.Delete(_endpoint, data, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
         }
 
@@ -85,7 +85,7 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/bounces.html</returns>
         public async Task DeleteAsync(string email, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Delete(string.Format("{0}/{1}", _endpoint, email), cancellationToken);
+            var response = await _client.Delete(string.Format("{0}/{1}", _endpoint, email), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
         }
     }

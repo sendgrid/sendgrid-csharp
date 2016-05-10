@@ -29,20 +29,20 @@ namespace SendGrid.Resources
             {
                 { "name", name }
             };
-            var response = await _client.Post(_endpoint, data, cancellationToken);
+            var response = await _client.Post(_endpoint, data, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var template = JObject.Parse(responseContent).ToObject<Template>();
             return template;
         }
 
         public async Task<Template[]> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(_endpoint, cancellationToken);
+            var response = await _client.Get(_endpoint, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             // Response looks like this:
             // {
@@ -72,10 +72,10 @@ namespace SendGrid.Resources
 
         public async Task<Template> GetAsync(string templateId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, templateId), cancellationToken);
+            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, templateId), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var template = JObject.Parse(responseContent).ToObject<Template>();
             return template;
         }
@@ -86,10 +86,10 @@ namespace SendGrid.Resources
             {
                 { "name", name }
             };
-            var response = await _client.Patch(string.Format("{0}/{1}", _endpoint, templateId), data, cancellationToken);
+            var response = await _client.Patch(string.Format("{0}/{1}", _endpoint, templateId), data, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var template = JObject.Parse(responseContent).ToObject<Template>();
             return template;
         }
@@ -110,30 +110,30 @@ namespace SendGrid.Resources
                 { "plain_content", textContent },
                 { "active", isActive ? 1 : 0 }
             };
-            var response = await _client.Post(string.Format("{0}/{1}/versions", _endpoint, templateId), data, cancellationToken);
+            var response = await _client.Post(string.Format("{0}/{1}/versions", _endpoint, templateId), data, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var templateVersion = JObject.Parse(responseContent).ToObject<TemplateVersion>();
             return templateVersion;
         }
 
         public async Task<TemplateVersion> ActivateVersionAsync(string templateId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Post(string.Format("{0}/{1}/versions/{2}/activate", _endpoint, templateId, versionId), (JObject)null, cancellationToken);
+            var response = await _client.Post(string.Format("{0}/{1}/versions/{2}/activate", _endpoint, templateId, versionId), (JObject)null, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var templateVersion = JObject.Parse(responseContent).ToObject<TemplateVersion>();
             return templateVersion;
         }
 
         public async Task<TemplateVersion> GetVersionAsync(string templateId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(string.Format("{0}/{1}/versions/{2}", _endpoint, templateId, versionId), cancellationToken);
+            var response = await _client.Get(string.Format("{0}/{1}/versions/{2}", _endpoint, templateId, versionId), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var templateVersion = JObject.Parse(responseContent).ToObject<TemplateVersion>();
             return templateVersion;
         }
@@ -147,17 +147,17 @@ namespace SendGrid.Resources
             if (!string.IsNullOrEmpty(textContent)) data.Add("plain_content", textContent);
             if (isActive.HasValue) data.Add("active", isActive.Value ? 1 : 0);
 
-            var response = await _client.Patch(string.Format("{0}/{1}/versions/{2}", _endpoint, templateId, versionId), data, cancellationToken);
+            var response = await _client.Patch(string.Format("{0}/{1}/versions/{2}", _endpoint, templateId, versionId), data, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var templateVersion = JObject.Parse(responseContent).ToObject<TemplateVersion>();
             return templateVersion;
         }
 
         public async Task DeleteVersionAsync(string templateId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Delete(string.Format("{0}/{1}/versions/{2}", _endpoint, templateId, versionId), cancellationToken);
+            var response = await _client.Delete(string.Format("{0}/{1}/versions/{2}", _endpoint, templateId, versionId), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
         }
     }

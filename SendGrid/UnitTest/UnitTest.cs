@@ -1,11 +1,9 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using NUnit.Framework;
-using Newtonsoft.Json.Linq;
+﻿using NUnit.Framework;
 using SendGrid;
-using Newtonsoft.Json;
+using SendGrid.Model;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace UnitTest
 {
@@ -28,69 +26,56 @@ namespace UnitTest
 
         private void TestGet()
         {
-            HttpResponseMessage response = client.ApiKeys.Get().Result;
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            string rawString = response.Content.ReadAsStringAsync().Result;
-            dynamic jsonObject = JObject.Parse(rawString);
-            string jsonString = jsonObject.result.ToString();
-            Assert.IsNotNull(jsonString);
+            var apiKeys = client.ApiKeys.GetAsync().Result;
+            Assert.IsNotNull(apiKeys);
         }
 
         private void TestPost()
         {
-            HttpResponseMessage response = client.ApiKeys.Post("CSharpTestKey").Result;
-            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-            string rawString = response.Content.ReadAsStringAsync().Result;
-            dynamic jsonObject = JObject.Parse(rawString);
-            string api_key = jsonObject.api_key.ToString();
-            _api_key_id = jsonObject.api_key_id.ToString();
-            string name = jsonObject.name.ToString();
-            Assert.IsNotNull(api_key);
-            Assert.IsNotNull(_api_key_id);
-            Assert.IsNotNull(name);
+            var keyName = "CSharpTestKey";
+            var apiKey = client.ApiKeys.CreateAsync(keyName).Result;
+            _api_key_id = apiKey.KeyId;
+            Assert.IsNotNull(apiKey);
+            Assert.IsNotNull(apiKey.KeyId);
+            Assert.AreEqual(keyName, apiKey.Name);
         }
 
         private void TestPatch()
         {
-            HttpResponseMessage response = client.ApiKeys.Patch(_api_key_id, "CSharpTestKeyPatched").Result;
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            string rawString = response.Content.ReadAsStringAsync().Result;
-            dynamic jsonObject = JObject.Parse(rawString);
-            _api_key_id = jsonObject.api_key_id.ToString();
-            string name = jsonObject.name.ToString();
-            Assert.IsNotNull(_api_key_id);
-            Assert.IsNotNull(name);
+            var updatedKeyName = "CSharpTestKeyPatched";
+            var apiKey = client.ApiKeys.UpdateAsync(_api_key_id, updatedKeyName).Result;
+            Assert.IsNotNull(apiKey.KeyId);
+            Assert.AreEqual(updatedKeyName, apiKey.Name);
         }
 
         private void TestDelete()
         {
-            HttpResponseMessage response = client.ApiKeys.Delete(_api_key_id).Result;
-            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
+            client.ApiKeys.DeleteAsync(_api_key_id).Wait();
         }
 
         [Test]
         public void TestGetOnce()
         {
-            var responseGet = client.ApiKeys.Get().Result;
+            var responseGet = client.ApiKeys.GetAsync().Result;
         }
 
         [Test]
         public void TestGetTenTimes()
         {
-            HttpResponseMessage responseGet;
+            IEnumerable<ApiKey> apiKeys;
             for (int i = 0; i < 10; i++)
             {
-                responseGet = client.ApiKeys.Get().Result;
+                apiKeys = client.ApiKeys.GetAsync().Result;
             }
         }
 
         [Test]
         public void TestGetTenTimesAsync()
         {
-            Task[] tasks = new Task[10];
+            var tasks = new Task[10];
             for (int i = 0; i < 10; i++)
             {
-                tasks[i] = client.ApiKeys.Get();
+                tasks[i] = client.ApiKeys.GetAsync();
             }
             Task.WaitAll(tasks);
         }
@@ -102,7 +87,7 @@ namespace UnitTest
         static string _baseUri = "https://api.sendgrid.com/";
         static string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
         public Client client = new Client(_apiKey, _baseUri);
-        private static string _unsubscribe_groups_key_id = "";
+        private static int _unsubscribe_groups_key_id;
 
         [Test]
         public void UnsubscribeGroupsIntegrationTest()
@@ -117,44 +102,31 @@ namespace UnitTest
 
         private void TestGet()
         {
-            HttpResponseMessage response = client.UnsubscribeGroups.Get().Result;
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            string rawString = response.Content.ReadAsStringAsync().Result;
-            dynamic jsonObject = JsonConvert.DeserializeObject(rawString);
-            Assert.IsNotNull(jsonObject);
+            var unsubscribeGroups = client.UnsubscribeGroups.GetAllAsync().Result;
+            Assert.IsNotNull(unsubscribeGroups);
         }
 
         private void TestGetUnique(int unsubscribeGroupId)
         {
-            HttpResponseMessage response = client.UnsubscribeGroups.Get(unsubscribeGroupId).Result;
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            string rawString = response.Content.ReadAsStringAsync().Result;
-            dynamic jsonObject = JsonConvert.DeserializeObject(rawString);
-            Assert.IsNotNull(jsonObject);
+            var unsubscribeGroup = client.UnsubscribeGroups.GetAsync(unsubscribeGroupId).Result;
+            Assert.IsNotNull(unsubscribeGroup);
         }
 
         private void TestPost()
         {
-            HttpResponseMessage response = client.UnsubscribeGroups.Post("C Sharp Unsubscribes", "Testing the C Sharp Library", false).Result;
-            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-            string rawString = response.Content.ReadAsStringAsync().Result;
-            dynamic jsonObject = JObject.Parse(rawString);
-            string name = jsonObject.name.ToString();
-            string description = jsonObject.description.ToString();
-            _unsubscribe_groups_key_id = jsonObject.id.ToString();
-            bool is_default = jsonObject.is_default;
-            Assert.IsNotNull(name);
-            Assert.IsNotNull(description);
+            var unsubscribeGroup = client.UnsubscribeGroups.CreateAsync("C Sharp Unsubscribes", "Testing the C Sharp Library", false).Result;
+            Assert.IsNotNull(unsubscribeGroup);
+            _unsubscribe_groups_key_id = unsubscribeGroup.Id;
+            Assert.IsNotNull(unsubscribeGroup.Name);
+            Assert.IsNotNull(unsubscribeGroup.Description);
             Assert.IsNotNull(_unsubscribe_groups_key_id);
-            Assert.IsNotNull(is_default);
+            Assert.IsFalse(unsubscribeGroup.IsDefault);
         }
 
         private void TestDelete()
         {
-            HttpResponseMessage response = client.UnsubscribeGroups.Delete(_unsubscribe_groups_key_id).Result;
-            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
+            client.UnsubscribeGroups.DeleteAsync(_unsubscribe_groups_key_id).Wait();
         }
-
     }
 
     [TestFixture]
@@ -178,27 +150,18 @@ namespace UnitTest
 
         private void TestGet(int unsubscribeGroupId)
         {
-            HttpResponseMessage response = client.Suppressions.Get(unsubscribeGroupId).Result;
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            string rawString = response.Content.ReadAsStringAsync().Result;
-            dynamic jsonObject = JsonConvert.DeserializeObject(rawString);
-            Assert.IsNotNull(jsonObject);
+            var emailAddresses = client.Suppressions.GetUnsubscribedAddressesAsync(unsubscribeGroupId).Result;
+            Assert.IsNotNull(emailAddresses);
         }
 
         private void TestPost(int unsubscribeGroupId, string[] emails)
         {
-            HttpResponseMessage response = client.Suppressions.Post(unsubscribeGroupId, emails).Result;
-            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-            string rawString = response.Content.ReadAsStringAsync().Result;
-            dynamic jsonObject = JObject.Parse(rawString);
-            string recipient_emails = jsonObject.recipient_emails.ToString();
-            Assert.IsNotNull(recipient_emails);
+            client.Suppressions.AddAddressToUnsubscribeGroupAsync(unsubscribeGroupId, emails).Wait();
         }
 
         private void TestDelete(int unsubscribeGroupId, string email)
         {
-            HttpResponseMessage response = client.Suppressions.Delete(unsubscribeGroupId, email).Result;
-            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
+            client.Suppressions.RemoveAddressFromSuppressionGroupAsync(unsubscribeGroupId, email).Wait();
         }
 
     }
@@ -224,27 +187,18 @@ namespace UnitTest
 
         private void TestGet(string email)
         {
-            HttpResponseMessage response = client.GlobalSuppressions.Get(email).Result;
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            string rawString = response.Content.ReadAsStringAsync().Result;
-            dynamic jsonObject = JsonConvert.DeserializeObject(rawString);
-            Assert.IsNotNull(jsonObject);
+            var isUnsubscribed = client.GlobalSuppressions.IsUnsubscribedAsync(email).Result;
+            Assert.IsFalse(isUnsubscribed);
         }
 
         private void TestPost(string[] emails)
         {
-            HttpResponseMessage response = client.GlobalSuppressions.Post(emails).Result;
-            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-            string rawString = response.Content.ReadAsStringAsync().Result;
-            dynamic jsonObject = JObject.Parse(rawString);
-            string recipient_emails = jsonObject.recipient_emails.ToString();
-            Assert.IsNotNull(recipient_emails);
+            client.GlobalSuppressions.AddAsync(emails).Wait();
         }
 
         private void TestDelete(string email)
         {
-            HttpResponseMessage response = client.GlobalSuppressions.Delete(email).Result;
-            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
+            client.GlobalSuppressions.RemoveAsync(email).Wait();
         }
     }
 
@@ -258,25 +212,20 @@ namespace UnitTest
         [Test]
         public void GlobalStatsIntegrationTest()
         {
-            string startDate = "2015-11-01";
-            string endDate = "2015-12-01";
-            string aggregatedBy = "day";
+            var startDate = new DateTime(2015, 11, 1);
+            var endDate = new DateTime(2015, 12, 1);
+
             TestGet(startDate);
             TestGet(startDate, endDate);
-            TestGet(startDate, endDate, aggregatedBy);
-            aggregatedBy = "week";
-            TestGet(startDate, endDate, aggregatedBy);
-            aggregatedBy = "month";
-            TestGet(startDate, endDate, aggregatedBy);
+            TestGet(startDate, endDate, AggregateBy.Day);
+            TestGet(startDate, endDate, AggregateBy.Week);
+            TestGet(startDate, endDate, AggregateBy.Month);
         }
 
-        private void TestGet(string startDate, string endDate=null, string aggregatedBy=null)
+        private void TestGet(DateTime startDate, DateTime? endDate = null, AggregateBy aggregatedBy = AggregateBy.None)
         {
-            HttpResponseMessage response = client.GlobalStats.Get(startDate, endDate, aggregatedBy).Result;
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            string rawString = response.Content.ReadAsStringAsync().Result;
-            dynamic jsonObject = JsonConvert.DeserializeObject(rawString);
-            Assert.IsNotNull(jsonObject);
+            var globalStats = client.GlobalStats.GetAsync(startDate, endDate, aggregatedBy).Result;
+            Assert.IsNotNull(globalStats);
         }
     }
 }

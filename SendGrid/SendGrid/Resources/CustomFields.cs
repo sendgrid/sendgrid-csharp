@@ -32,20 +32,20 @@ namespace SendGrid.Resources
                 { "name", name },
                 { "type", JToken.Parse(JsonConvert.SerializeObject(type, Formatting.None, new StringEnumConverter())).Value<string>() }
             };
-            var response = await _client.Post(_endpoint, data, cancellationToken);
+            var response = await _client.Post(_endpoint, data, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var field = JObject.Parse(responseContent).ToObject<CustomFieldMetadata>();
             return field;
         }
 
         public async Task<CustomFieldMetadata[]> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(_endpoint, cancellationToken);
+            var response = await _client.Get(_endpoint, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             // Response looks like this:
             //{
@@ -77,26 +77,26 @@ namespace SendGrid.Resources
 
         public async Task<CustomFieldMetadata> GetAsync(int fieldId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, fieldId), cancellationToken);
+            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, fieldId), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var field = JObject.Parse(responseContent).ToObject<CustomFieldMetadata>();
             return field;
         }
 
         public async Task DeleteAsync(int fieldId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Delete(string.Format("{0}/{1}", _endpoint, fieldId), cancellationToken);
+            var response = await _client.Delete(string.Format("{0}/{1}", _endpoint, fieldId), cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
         }
 
         public async Task<Field[]> GetReservedFieldsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await _client.Get(_endpoint, cancellationToken);
+            var response = await _client.Get(_endpoint, cancellationToken).ConfigureAwait(false);
             response.EnsureSuccess();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var fields = JArray.Parse(responseContent).ToObject<Field[]>();
             return fields;
         }

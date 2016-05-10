@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SendGrid.Resources
 {
-    public class APIKeys
+    public class ApiKeys
     {
         private readonly string _endpoint;
         private readonly Client _client;
@@ -16,7 +16,7 @@ namespace SendGrid.Resources
         /// </summary>
         /// <param name="client">SendGrid Web API v3 client</param>
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
-        public APIKeys(Client client, string endpoint = "v3/api_keys")
+        public ApiKeys(Client client, string endpoint = "v3/api_keys")
         {
             _endpoint = endpoint;
             _client = client;

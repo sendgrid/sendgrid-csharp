@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using SendGrid.Model;
+﻿using SendGrid.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +47,7 @@ namespace Example
             Templates(httpClient);
             Categories(httpClient);
             User(httpClient);
+            Campaigns(httpClient);
         }
 
         private static void SendAsync(SendGrid.SendGridMessage message)
@@ -90,41 +90,36 @@ namespace Example
 
         private static void ApiKeys(HttpClient httpClient)
         {
-            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            Console.WriteLine("\n***** API KEYS *****");
+
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             var client = new SendGrid.Client(apiKey: apiKey, httpClient: httpClient);
 
-            // GET API KEYS
-            HttpResponseMessage responseGet = client.ApiKeys.Get().Result;
-            Console.WriteLine(responseGet.StatusCode);
-            Console.WriteLine(responseGet.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("These are your current API Keys.\n\nPress any key to continue.");
-            Console.ReadKey();
+            // CREATE A NEW API KEY
+            var newApiKey = client.ApiKeys.CreateAsync("My new api key", new[] { "alerts.read", "api_keys.read" }).Result;
+            Console.WriteLine("Unique ID of the new Api Key: {0}", newApiKey.KeyId);
 
-            // POST API KEYS
-            HttpResponseMessage responsePost = client.ApiKeys.Post("CSharpTestKey").Result;
-            var rawString = responsePost.Content.ReadAsStringAsync().Result;
-            dynamic jsonObject = JObject.Parse(rawString);
-            var apiKeyId = jsonObject.api_key_id.ToString();
-            Console.WriteLine(responsePost.StatusCode);
-            Console.WriteLine(responsePost.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("API Key created.\n\nPress any key to continue.");
-            Console.ReadKey();
+            // UPDATE THE API KEY'S NAME
+            var updatedApiKey = client.ApiKeys.UpdateAsync(newApiKey.KeyId, "This is the updated name").Result;
+            Console.WriteLine("The name of Api Key {0} updated", updatedApiKey.KeyId);
 
-            // PATCH API KEYS
-            HttpResponseMessage responsePatch = client.ApiKeys.Patch(apiKeyId, "CSharpTestKeyPatched").Result;
-            Console.WriteLine(responsePatch.StatusCode);
-            Console.WriteLine(responsePatch.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("API Key patched.\n\nPress any key to continue.");
-            Console.ReadKey();
+            // UPDATE THE API KEY'S SCOPES
+            updatedApiKey = client.ApiKeys.UpdateAsync(newApiKey.KeyId, updatedApiKey.Name, new[] { "alerts.read", "api_keys.read", "categories.read", "stats.read" }).Result;
+            Console.WriteLine("The scopes of Api Key {0} updated", updatedApiKey.KeyId);
 
-            // DELETE API KEYS
-            Console.WriteLine("Deleting API Key, please wait.");
-            HttpResponseMessage responseDelete = client.ApiKeys.Delete(apiKeyId).Result;
-            Console.WriteLine(responseDelete.StatusCode);
-            HttpResponseMessage responseFinal = client.ApiKeys.Get().Result;
-            Console.WriteLine(responseFinal.StatusCode);
-            Console.WriteLine(responseFinal.Content.ReadAsStringAsync().Result);
-            Console.WriteLine("API Key Deleted.\n\nPress any key to end.");
+            // GET ALL THE API KEYS
+            var apiKeys = client.ApiKeys.GetAsync().Result;
+            Console.WriteLine("There are {0} Api Keys", apiKeys.Length);
+
+            // GET ONE API KEY
+            var key = client.ApiKeys.GetAsync(newApiKey.KeyId).Result;
+            Console.WriteLine("The name of api key {0} is: {1}", newApiKey.KeyId, key.Name);
+
+            // DELETE API KEY
+            client.ApiKeys.DeleteAsync(newApiKey.KeyId).Wait();
+            Console.WriteLine("Api Key {0} deleted", newApiKey.KeyId);
+
+            Console.WriteLine("\n\nPress any key to continue");
             Console.ReadKey();
         }
 
@@ -433,6 +428,46 @@ namespace Example
 
             client.Templates.DeleteAsync(template.Id).Wait();
             Console.WriteLine("Template {0} deleted", template.Id);
+
+            Console.WriteLine("\n\nPress any key to continue");
+            Console.ReadKey();
+        }
+
+        private static void Campaigns(HttpClient httpClient)
+        {
+            Console.WriteLine("\n***** CAMPAIGNS *****");
+
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            var client = new SendGrid.Client(apiKey: apiKey, httpClient: httpClient);
+
+            // NOTE: as of March 2016 the sendGrid API v3 does not allow creating senders. 
+            // Therefore you have to create a new sender manually in the SendGrid UI and 
+            // copy/paste the unique identifier of your new sender on the next line.
+            var senderId = 18914;
+
+            var dummyList = client.Lists.CreateAsync("Dummy list").Result;
+            Console.WriteLine("Dummy list created");
+
+            var campaign = client.Campaigns.CreateAsync("My campaign", "This is the subject", senderId, "<html><body>Hello <b>World</b></body></html", "Hello world", new[] { dummyList.Id }).Result;
+            Console.WriteLine("Campaign '{0}' created. Id: {1}", campaign.Title, campaign.Id);
+
+            client.Campaigns.UpdateAsync(campaign.Id, categories: new[] { "category1", "category2" }).Wait();
+            Console.WriteLine("Campaign '{0}' updated", campaign.Id);
+
+            var campaigns = client.Campaigns.GetAsync(100, 0).Result;
+            Console.WriteLine("All campaigns retrieved. There are {0} campaigns", campaigns.Length);
+
+            client.Campaigns.SendTestAsync(campaign.Id, new[] { "myemail@test.com" }).Wait();
+            Console.WriteLine("Test sent");
+
+            client.Lists.DeleteAsync(dummyList.Id).Wait();
+            Console.WriteLine("Dummy list deleted");
+
+            client.Campaigns.DeleteAsync(campaign.Id).Wait();
+            Console.WriteLine("Campaign {0} deleted", campaign.Id);
+
+            campaigns = client.Campaigns.GetAsync(100, 0).Result;
+            Console.WriteLine("All campaigns retrieved. There are {0} campaigns", campaigns.Length);
 
             Console.WriteLine("\n\nPress any key to continue");
             Console.ReadKey();
