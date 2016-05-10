@@ -52,7 +52,7 @@ namespace SendGrid.Resources
         /// <summary>
         /// Add recipient addresses to the global suppression group.
         /// </summary>
-        /// <param name="recipient_emails">Array of email addresses to add to the suppression group</param>
+        /// <param name="emails">Array of email addresses to add to the suppression group</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/global_suppressions.html</returns>
         public async Task AddAsync(IEnumerable<string> emails, CancellationToken cancellationToken = default(CancellationToken))
         {

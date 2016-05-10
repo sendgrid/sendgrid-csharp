@@ -41,7 +41,7 @@ namespace SendGrid
         /// <summary>
         ///     Creates a new Web interface for sending mail.
         /// </summary>
-        /// <param name="apKey">The API Key with which to send</param>
+        /// <param name="apiKey">The API Key with which to send</param>
         /// <param name="credentials">SendGridMessage user parameters</param>
         /// <param name="httpTimeout">HTTP request timeout</param>
         public Web(string apiKey, NetworkCredential credentials, TimeSpan httpTimeout)

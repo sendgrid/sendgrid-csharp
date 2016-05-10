@@ -281,7 +281,7 @@ namespace SendGrid
         /// <summary>
         ///     Enable a Template Engine template via the template ID
         /// </summary>
-        /// <param name="template_id">The ID of the Template Engine template to use.</param>
+        /// <param name="templateId">The ID of the Template Engine template to use.</param>
         void EnableTemplateEngine(String templateId);
         
 		/// <summary>

@@ -98,7 +98,7 @@ namespace SendGrid.Resources
         /// <summary>
         /// Delete a suppression group.
         /// </summary>
-        /// <param name="unsubscribeGroupId">ID of the suppression group to delete</param>
+        /// <param name="groupId">ID of the suppression group to delete</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
         public async Task DeleteAsync(int groupId, CancellationToken cancellationToken = default(CancellationToken))
         {
