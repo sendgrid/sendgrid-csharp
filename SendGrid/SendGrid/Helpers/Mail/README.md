@@ -2,11 +2,11 @@
 
 # Quick Start
 
-Run the [example]() (make sure you have set your environment variable to include your SENDGRID_API_KEY).
+Run the [example](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/examples) (make sure you have set your environment variable to include your SENDGRID_API_KEY).
 
 Click on the Example project, then click the `Start` button in the menu.
 
 ## Usage
 
-- See the example for a complete working example.
-- [Documentation]()
+- See the [example](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/examples) for a complete working example.
+- [Documentation](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/overview.html)

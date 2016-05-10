@@ -1,4 +1,4 @@
-﻿[![BuildStatus](https://travis-ci.org/sendgrid/sendgrid-csharp.png?branch=master)](https://travis-ci.org/sendgrid/sendgrid-csharp)
+﻿[![BuildStatus](https://travis-ci.org/sendgrid/sendgrid-csharp.png?branch=v3beta)](https://travis-ci.org/sendgrid/sendgrid-csharp)
 
 **This library allows you to quickly and easily use the SendGrid Web API via C Sharp with .NET.**
 
@@ -113,16 +113,16 @@ Thank you for your continued support!
 
 We encourage contribution to our libraries, please see our [CONTRIBUTING](https://github.com/sendgrid/sendgrid-csharp/blob/master/CONTRIBUTING.md) guide for details.
 
-* [Feature Request](https://github.com/sendgrid/sendgrid-csharp/blob/master/CONTRIBUTING.md#feature_request)
-* [Bug Reports](https://github.com/sendgrid/sendgrid-csharp/blob/master/CONTRIBUTING.md#submit_a_bug_report)
-* [Improvements to the Codebase](https://github.com/sendgrid/sendgrid-csharp/blob/master/CONTRIBUTING.md#improvements_to_the_codebase)
+* [Feature Request](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/CONTRIBUTING.md#feature_request)
+* [Bug Reports](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/CONTRIBUTING.md#submit_a_bug_report)
+* [Improvements to the Codebase](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/CONTRIBUTING.md#improvements_to_the_codebase)
 
 ## Usage
 
 - [SendGrid Docs](https://sendgrid.com/docs/API_Reference/index.html)
-- [v3 Web API](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md)
-- [Example Code](https://github.com/sendgrid/sendgrid-csharp/blob/master/examples)
-- [v3 Web API Mail Send Helper]()
+- [v3 Web API](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/USAGE.md)
+- [Example Code](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/examples)
+- [v3 Web API Mail Send Helper](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/SendGrid/SendGrid/Helpers/Mail)
 
 ## Unsupported Libraries
 

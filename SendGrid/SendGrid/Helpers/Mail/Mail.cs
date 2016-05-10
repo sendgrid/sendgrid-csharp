@@ -70,7 +70,7 @@ namespace SendGrid.Helpers.Mail
             }
         }
 
-        [JsonProperty(PropertyName = "personalization")]
+        [JsonProperty(PropertyName = "personalizations")]
         public List<Personalization> Personalization
         {
             get

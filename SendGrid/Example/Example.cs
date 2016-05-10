@@ -21,7 +21,7 @@ namespace Example
         private static void HelloEmail()
         {
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://3wyb2hp7emnqja6ys.stoplight-proxy.io");
+            dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
 
             Email from = new Email("dx@sendgrid.com");
             String subject = "Hello World from the SendGrid CSharp Library";
@@ -47,7 +47,7 @@ namespace Example
         private static void KitchenSink()
         {
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://3wyb2hp7emnqja6ys.stoplight-proxy.io");
+            dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
 
             Mail mail = new Mail();
 
@@ -176,7 +176,8 @@ namespace Example
 
             mail.SetIpPoolId = "23";
 
-            mail.BatchId = "some_batch_id";
+            // This must be a valid [batch ID](https://sendgrid.com/docs/API_Reference/SMTP_API/scheduling_parameters.html)
+            // mail.BatchId = "some_batch_id";
 
             MailSettings mailSettings = new MailSettings();
             BCCSettings bccSettings = new BCCSettings();
@@ -245,7 +246,7 @@ namespace Example
         private static void ApiKeys()
         {
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io");
+            dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
 
             string queryParams = @"{
                 'limit': 100
