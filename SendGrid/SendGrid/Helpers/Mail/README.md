@@ -1,9 +1,5 @@
 **This helper allows you to quickly and easily build a Mail object for sending email through SendGrid.**
 
-## Dependencies
-
-- [JSON.Net](http://www.newtonsoft.com/json)
-
 # Quick Start
 
 Run the [example]() (make sure you have set your environment variable to include your SENDGRID_API_KEY).

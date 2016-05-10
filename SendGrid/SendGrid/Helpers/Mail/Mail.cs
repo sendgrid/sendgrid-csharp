@@ -11,7 +11,7 @@ namespace SendGrid.Helpers.Mail
     {
         private Email from;
         private String subject;
-        private List<Personalization> personalization;
+        private List<Personalization> personalizations;
         private List<Content> contents;
         private List<Attachment> attachments;
         private String templateId;
@@ -26,6 +26,21 @@ namespace SendGrid.Helpers.Mail
         private MailSettings mailSettings;
         private TrackingSettings trackingSettings;
         private Email replyTo;
+
+        public Mail()
+        {
+            return;
+        }
+
+        public Mail(Email from, String subject, Email to, Content content)
+        {
+            this.From = from;
+            Personalization personalization = new Personalization();
+            personalization.AddTo(to);
+            this.AddPersonalization(personalization);
+            this.Subject = "Hello World from the SendGrid CSharp Library";
+            this.AddContent(content);
+        }
 
         [JsonProperty(PropertyName = "from")]
         public Email From
@@ -60,12 +75,12 @@ namespace SendGrid.Helpers.Mail
         {
             get
             {
-                return personalization;
+                return personalizations;
             }
 
             set
             {
-                personalization = value;
+                personalizations = value;
             }
         }
 
@@ -551,7 +566,7 @@ namespace SendGrid.Helpers.Mail
             }
         }
 
-        [JsonProperty(PropertyName = "utm_name")]
+        [JsonProperty(PropertyName = "utm_campaign")]
         public string UtmCampaign
         {
             get
@@ -1007,6 +1022,17 @@ namespace SendGrid.Helpers.Mail
         private String type;
         private String value;
 
+        public Content()
+        {
+            return;
+        }
+
+        public Content(String type, String value)
+        {
+            this.Type = type;
+            this.Value = value;
+        }
+
         [JsonProperty(PropertyName = "type")]
         public string Type
         {
@@ -1042,6 +1068,17 @@ namespace SendGrid.Helpers.Mail
         private String name;
         private String address;
 
+        public Email()
+        {
+            return;
+        }
+
+        public Email(String email, String name = null)
+        {
+            this.Address = email;
+            this.Name = name;
+        }
+
         [JsonProperty(PropertyName = "name")]
         public string Name
         {
@@ -1074,9 +1111,9 @@ namespace SendGrid.Helpers.Mail
 
     public class Personalization
     {
-        private List<Email> to;
-        private List<Email> cc;
-        private List<String> bcc;
+        private List<Email> tos;
+        private List<Email> ccs;
+        private List<Email> bccs;
         private String subject;
         private Dictionary<String, String> headers;
         private Dictionary<String, String> substitutions;
@@ -1084,44 +1121,44 @@ namespace SendGrid.Helpers.Mail
         private long sendAt;
 
         [JsonProperty(PropertyName = "to")]
-        public List<Email> To
+        public List<Email> Tos
         {
             get
             {
-                return to;
+                return tos;
             }
 
             set
             {
-                to = value;
+                tos = value;
             }
         }
 
         [JsonProperty(PropertyName = "cc")]
-        public List<Email> Cc
+        public List<Email> Ccs
         {
             get
             {
-                return cc;
+                return ccs;
             }
 
             set
             {
-                cc = value;
+                ccs = value;
             }
         }
 
         [JsonProperty(PropertyName = "bcc")]
-        public List<string> Bcc
+        public List<Email> Bccs
         {
             get
             {
-                return bcc;
+                return bccs;
             }
 
             set
             {
-                bcc = value;
+                bccs = value;
             }
         }
 
@@ -1197,30 +1234,30 @@ namespace SendGrid.Helpers.Mail
 
         public void AddTo(Email email)
         {
-            if (to == null)
+            if (tos == null)
             {
-                to = new List<Email>();
+                tos = new List<Email>();
 
             }
-            to.Add(email);
+            tos.Add(email);
         }
 
         public void AddCc(Email email)
         {
-            if (cc == null)
+            if (ccs == null)
             {
-                cc = new List<Email>();
+                ccs = new List<Email>();
             }
-            cc.Add(email);
+            ccs.Add(email);
         }
 
-        public void AddBcc(String email)
+        public void AddBcc(Email email)
         {
-            if (bcc == null)
+            if (bccs == null)
             {
-                bcc = new List<String>();
+                bccs = new List<Email>();
             }
-            bcc.Add(email);
+            bccs.Add(email);
         }
 
         public void AddHeader(String key, String value)
