@@ -26,9 +26,9 @@ namespace SendGrid.Resources
         /// Get a list of active API Keys
         /// </summary>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html</returns>
-        public async Task<HttpResponseMessage> Get(CancellationToken cancellationToken = default(CancellationToken))
+        public Task<HttpResponseMessage> Get(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await _client.Get(_endpoint, cancellationToken);
+            return _client.Get(_endpoint, cancellationToken);
         }
 
         /// <summary>
@@ -36,10 +36,10 @@ namespace SendGrid.Resources
         /// </summary>
         /// <param name="apiKeyName">Name of the new API Key</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html</returns>
-        public async Task<HttpResponseMessage> Post(string apiKeyName, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<HttpResponseMessage> Post(string apiKeyName, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = new JObject { { "name", apiKeyName } };
-            return await _client.Post(_endpoint, data, cancellationToken);
+            return _client.Post(_endpoint, data, cancellationToken);
         }
 
         /// <summary>
@@ -47,9 +47,9 @@ namespace SendGrid.Resources
         /// </summary>
         /// <param name="apiKeyId">ID of the API Key to delete</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html</returns>
-        public async Task<HttpResponseMessage> Delete(string apiKeyId, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<HttpResponseMessage> Delete(string apiKeyId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await _client.Delete(_endpoint + "/" + apiKeyId, cancellationToken);
+            return _client.Delete(_endpoint + "/" + apiKeyId, cancellationToken);
         }
 
         /// <summary>
@@ -58,10 +58,10 @@ namespace SendGrid.Resources
         /// <param name="apiKeyId">ID of the API Key to rename</param>
         /// <param name="apiKeyName">New API Key name</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html</returns>
-        public async Task<HttpResponseMessage> Patch(string apiKeyId, string apiKeyName, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<HttpResponseMessage> Patch(string apiKeyId, string apiKeyName, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = new JObject { { "name", apiKeyName } };
-            return await _client.Patch(_endpoint + "/" + apiKeyId, data, cancellationToken);
+            return _client.Patch(_endpoint + "/" + apiKeyId, data, cancellationToken);
         }
 
     }

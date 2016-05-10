@@ -73,9 +73,9 @@ namespace SendGrid.Resources
             return importResult;
         }
 
-        public async Task DeleteAsync(string contactId, CancellationToken cancellationToken = default(CancellationToken))
+        public Task DeleteAsync(string contactId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await DeleteAsync(new[] { contactId }, cancellationToken);
+            return DeleteAsync(new[] { contactId }, cancellationToken);
         }
 
         public async Task DeleteAsync(IEnumerable<string> contactId, CancellationToken cancellationToken = default(CancellationToken))
@@ -192,14 +192,14 @@ namespace SendGrid.Resources
             return recipients;
         }
 
-        public async Task<Contact[]> SearchAsync(string fieldName, DateTime value, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Contact[]> SearchAsync(string fieldName, DateTime value, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await SearchAsync(fieldName, value.ToUnixTime().ToString(CultureInfo.InvariantCulture), cancellationToken);
+            return SearchAsync(fieldName, value.ToUnixTime().ToString(CultureInfo.InvariantCulture), cancellationToken);
         }
 
-        public async Task<Contact[]> SearchAsync(string fieldName, long value, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Contact[]> SearchAsync(string fieldName, long value, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await SearchAsync(fieldName, value.ToString(CultureInfo.InvariantCulture), cancellationToken);
+            return SearchAsync(fieldName, value.ToString(CultureInfo.InvariantCulture), cancellationToken);
         }
 
         private static JObject ConvertContactToJObject(Contact contact)

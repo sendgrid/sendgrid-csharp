@@ -47,9 +47,9 @@ namespace SendGrid.Resources
         /// <param name="groupId">ID of the suppression group</param>
         /// <param name="email">Email address to add to the suppression group</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/suppressions.html</returns>
-        public async Task AddAddressToUnsubscribeGroupAsync(int groupId, string email, CancellationToken cancellationToken = default(CancellationToken))
+        public Task AddAddressToUnsubscribeGroupAsync(int groupId, string email, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await AddAddressToUnsubscribeGroupAsync(groupId, new[] { email }, cancellationToken);
+            return AddAddressToUnsubscribeGroupAsync(groupId, new[] { email }, cancellationToken);
         }
 
         /// <summary>
