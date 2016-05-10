@@ -27,7 +27,7 @@ namespace SendGrid.Resources
 
         public async Task<CustomFieldMetadata> CreateAsync(string name, FieldType type, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = new JObject()
+            var data = new JObject
             {
                 { "name", name },
                 { "type", JToken.Parse(JsonConvert.SerializeObject(type, Formatting.None, new StringEnumConverter())).Value<string>() }

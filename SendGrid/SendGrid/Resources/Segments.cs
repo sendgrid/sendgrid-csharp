@@ -31,7 +31,7 @@ namespace SendGrid.Resources
         {
             conditions = (conditions ?? Enumerable.Empty<Condition>());
 
-            var data = new JObject()
+            var data = new JObject
             {
                 { "name", name },
                 { "list_id", listId },

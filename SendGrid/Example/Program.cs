@@ -26,7 +26,7 @@ namespace Example
 
             // Direct all traffic through fiddler running on the local machine
             var httpClient = new HttpClient(
-                new HttpClientHandler()
+                new HttpClientHandler
                 {
                     Proxy = new WebProxy("http://localhost:8888"),
                     UseProxy = useFiddler
@@ -262,12 +262,12 @@ namespace Example
             var lists = client.Lists.GetAllAsync().Result;
             Console.WriteLine("All lists retrieved. There are {0} lists", lists.Length);
 
-            var hotmailCondition = new Condition() { Field = "email", Operator = ConditionOperator.Contains, Value = "hotmail.com", AndOr = ConditionLogicalConjunction.None };
+            var hotmailCondition = new Condition { Field = "email", Operator = ConditionOperator.Contains, Value = "hotmail.com", AndOr = ConditionLogicalConjunction.None };
             var segment = client.Segments.CreateAsync("Recipients @ Hotmail", firstList.Id, new[] { hotmailCondition }).Result;
             Console.WriteLine("Segment '{0}' created. Id: {1}", segment.Name, segment.Id);
 
-            var millerLastNameCondition = new Condition() { Field = "last_name", Operator = ConditionOperator.Equal, Value = "Miller", AndOr = ConditionLogicalConjunction.None };
-            var clickedRecentlyCondition = new Condition() { Field = "last_clicked", Operator = ConditionOperator.GreaterThan, Value = DateTime.UtcNow.AddDays(-30).ToString("MM/dd/yyyy"), AndOr = ConditionLogicalConjunction.And };
+            var millerLastNameCondition = new Condition { Field = "last_name", Operator = ConditionOperator.Equal, Value = "Miller", AndOr = ConditionLogicalConjunction.None };
+            var clickedRecentlyCondition = new Condition { Field = "last_clicked", Operator = ConditionOperator.GreaterThan, Value = DateTime.UtcNow.AddDays(-30).ToString("MM/dd/yyyy"), AndOr = ConditionLogicalConjunction.And };
             segment = client.Segments.UpdateAsync(segment.Id, "Last Name is Miller and clicked recently", null, new[] { millerLastNameCondition, clickedRecentlyCondition }).Result;
             Console.WriteLine("Segment {0} updated. The new name is: '{1}'", segment.Id, segment.Name);
 
@@ -315,22 +315,22 @@ namespace Example
             fields = client.CustomFields.GetAllAsync().Result;
             Console.WriteLine("All custom fields retrieved. There are {0} fields", fields.Length);
 
-            var contact1 = new Contact()
+            var contact1 = new Contact
             {
                 Email = "111@example.com",
                 FirstName = "Robert",
                 LastName = "Unknown",
                 CustomFields = new CustomFieldMetadata[] 
                 {
-                    new CustomField<string>() { Name = "nickname", Value = "Bob" },
-                    new CustomField<int>() { Name = "age", Value = 42 },
-                    new CustomField<DateTime>() { Name = "customer_since", Value = new DateTime(2000, 12, 1) },
+                    new CustomField<string> { Name = "nickname", Value = "Bob" },
+                    new CustomField<int> { Name = "age", Value = 42 },
+                    new CustomField<DateTime> { Name = "customer_since", Value = new DateTime(2000, 12, 1) },
                 }
             };
             contact1.Id = client.Contacts.CreateAsync(contact1).Result;
             Console.WriteLine("{0} {1} created. Id: {2}", contact1.FirstName, contact1.LastName, contact1.Id);
 
-            var contact2 = new Contact()
+            var contact2 = new Contact
             {
                 Email = "111@example.com",
                 LastName = "Smith"

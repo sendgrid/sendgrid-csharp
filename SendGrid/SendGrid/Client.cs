@@ -123,7 +123,7 @@ namespace SendGrid
                         return response;
                 }
 
-                var httpRequest = new HttpRequestMessage()
+                var httpRequest = new HttpRequestMessage
                 {
                     Method = new HttpMethod(methodAsString),
                     RequestUri = new Uri(_baseUri + endpoint),

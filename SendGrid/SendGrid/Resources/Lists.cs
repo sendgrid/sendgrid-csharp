@@ -29,7 +29,7 @@ namespace SendGrid.Resources
 
         public async Task<List> CreateAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = new JObject()
+            var data = new JObject
             {
                 new JProperty("name", name)
             };
@@ -120,7 +120,7 @@ namespace SendGrid.Resources
 
         public async Task UpdateAsync(long listId, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = new JObject()
+            var data = new JObject
             {
                 new JProperty("name", name)
             };

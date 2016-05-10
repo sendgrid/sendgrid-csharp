@@ -61,7 +61,7 @@ namespace SendGrid.Resources
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
         public async Task<SuppressionGroup> CreateAsync(string name, string description, bool isDefault, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = new JObject()
+            var data = new JObject
             {
                 { "name", name },
                 { "description", description },

@@ -25,7 +25,7 @@ namespace SendGrid.Resources
 
         public async Task<Template> CreateAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = new JObject()
+            var data = new JObject
             {
                 { "name", name }
             };
@@ -82,7 +82,7 @@ namespace SendGrid.Resources
 
         public async Task<Template> UpdateAsync(string templateId, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = new JObject() 
+            var data = new JObject 
             {
                 { "name", name }
             };
@@ -102,7 +102,7 @@ namespace SendGrid.Resources
 
         public async Task<TemplateVersion> CreateVersionAsync(string templateId, string name, string subject, string htmlContent, string textContent, bool isActive, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = new JObject()
+            var data = new JObject
             {
                 { "name", name },
                 { "subject", subject },
