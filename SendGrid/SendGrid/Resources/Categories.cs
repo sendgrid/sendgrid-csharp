@@ -10,8 +10,8 @@ namespace SendGrid.Resources
 {
 	public class Categories
 	{
-		private string _endpoint;
-		private Client _client;
+		private readonly string _endpoint;
+		private readonly Client _client;
 
 		/// <summary>
 		/// Constructs the SendGrid Categories object.
