@@ -324,7 +324,7 @@ namespace Example
                 {
                     new CustomField<string> { Name = "nickname", Value = "Bob" },
                     new CustomField<int> { Name = "age", Value = 42 },
-                    new CustomField<DateTime> { Name = "customer_since", Value = new DateTime(2000, 12, 1) },
+                    new CustomField<DateTime> { Name = "customer_since", Value = new DateTime(2000, 12, 1) }
                 }
             };
             contact1.Id = client.Contacts.CreateAsync(contact1).Result;

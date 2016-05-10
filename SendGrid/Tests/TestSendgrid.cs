@@ -372,7 +372,7 @@ namespace Tests
             var message = new SendGridMessage();
             message.To = new[]
             {
-                new MailAddress("foo@bar.com", "Foo Bar"),
+                new MailAddress("foo@bar.com", "Foo Bar")
             };
             message.AddTo("foo1@bar1.com");
 
@@ -397,7 +397,7 @@ namespace Tests
             var message = new SendGridMessage();
             message.To = new[]
             {
-                new MailAddress("foo@bar.com", "Foo Bar"),
+                new MailAddress("foo@bar.com", "Foo Bar")
             };
             message.AddTo("foo1@bar1.com");
             message.SendToSink();
