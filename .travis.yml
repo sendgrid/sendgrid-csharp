@@ -8,7 +8,7 @@ install:
 - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
 - xbuild /p:Configuration=Release SendGrid/SendGrid.sln
-- mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe UnitTest/bin/Release/UnitTest.dll -domain:None
+- mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe SendGrid/UnitTest/bin/Release/UnitTest.dll -domain:None
 notifications:
   hipchat:
     rooms:
