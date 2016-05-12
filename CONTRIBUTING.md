@@ -119,12 +119,6 @@ Click on the Example project, then click the `Start` button in the menu.
 
 Generally, we follow the style guidelines as suggested by the official language. However, we ask that you conform to the styles that already exist in the library. If you wish to deviate, please explain your reasoning. In this case, we generally follow the [C# Naming Conventions](https://msdn.microsoft.com/library/ms229045(v=vs.100).aspx) and the suggestions provided by the Visual Studio IDE.
 
-### Directory Structure
-
-* `SendGrid` for the interface to the SendGrid API
-* `Example`, for example calls
-* `UnitTest`, for all tests
-
 ## Creating a Pull Request<a name="creating_a_pull_request"></a>
 
 1. [Fork](https://help.github.com/fork-a-repo/) the project, clone your fork,

@@ -37,12 +37,12 @@ namespace UnitTest
             SendGrid.Helpers.Mail.Mail mail = new SendGrid.Helpers.Mail.Mail();
 
             Email email = new Email();
-            email.Address = "dx@sendgrid.com";
+            email.Address = "test@example.com";
             mail.From = email;
 
             Personalization personalization = new Personalization();
             email = new Email();
-            email.Address = "elmer.thomas@sendgrid.com";
+            email.Address = "test@example.com";
             personalization.AddTo(email);
             mail.AddPersonalization(personalization);
 
@@ -58,7 +58,7 @@ namespace UnitTest
             mail.AddContent(content);
 
             String ret = mail.Get();
-            Assert.AreEqual(ret, "{\"from\":{\"email\":\"dx@sendgrid.com\"},\"subject\":\"Hello World from the SendGrid CSharp Library\",\"personalizations\":[{\"to\":[{\"email\":\"elmer.thomas@sendgrid.com\"}]}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Textual content\"},{\"type\":\"text/html\",\"value\":\"<html><body>HTML content</body></html>\"}]}");
+            Assert.AreEqual(ret, "{\"from\":{\"email\":\"test@example.com\"},\"subject\":\"Hello World from the SendGrid CSharp Library\",\"personalizations\":[{\"to\":[{\"email\":\"test@example.com\"}]}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Textual content\"},{\"type\":\"text/html\",\"value\":\"<html><body>HTML content</body></html>\"}]}");
         }
 
         // All paramaters available for sending an email
@@ -68,38 +68,38 @@ namespace UnitTest
             SendGrid.Helpers.Mail.Mail mail = new SendGrid.Helpers.Mail.Mail();
 
             Email email = new Email();
-            email.Name = "DX";
-            email.Address = "dx@sendgrid.com";
+            email.Name = "Example User";
+            email.Address = "test@example.com";
             mail.From = email;
 
             mail.Subject = "Hello World from the SendGrid CSharp Library";
 
             Personalization personalization = new Personalization();
             email = new Email();
-            email.Name = "Elmer Thomas";
-            email.Address = "elmer.thomas@sendgrid.com";
+            email.Name = "Example User";
+            email.Address = "test@example.com";
             personalization.AddTo(email);
             email = new Email();
-            email.Name = "Matt Bernier";
-            email.Address = "matt.bernier@sendgrid.com";
+            email.Name = "Example User";
+            email.Address = "test@example.com";
             personalization.AddCc(email);
             email = new Email();
-            email.Name = "Eric Shallock";
-            email.Address = "eric.shallock@sendgrid.com";
+            email.Name = "Example User";
+            email.Address = "test@example.com";
             personalization.AddCc(email);
             email = new Email();
-            email.Name = "Elmer Thomas Secret";
-            email.Address = "elmer.thomas + secret@sengrid.com";
+            email.Name = "Example User";
+            email.Address = "test@example.com";
             personalization.AddBcc(email);
             email = new Email();
-            email.Name = "Elmer Thomas Secret 2";
-            email.Address = "elmer.thomas+secret@elmer.thomas.com";
+            email.Name = "Example User";
+            email.Address = "test@example.com";
             personalization.AddBcc(email);
             personalization.Subject = "Thank you for signing up, %name%";
             personalization.AddHeader("X-Test", "True");
             personalization.AddHeader("X-Mock", "True");
-            personalization.AddSubstitution("%name%", "Elmer");
-            personalization.AddSubstitution("%city%", "Moreno Valley");
+            personalization.AddSubstitution("%name%", "Example User");
+            personalization.AddSubstitution("%city%", "Denver");
             personalization.AddCustomArgs("marketing", "false");
             personalization.AddCustomArgs("transactional", "true");
             personalization.SendAt = 1461775051;
@@ -107,30 +107,30 @@ namespace UnitTest
 
             personalization = new Personalization();
             email = new Email();
-            email.Name = "Elmer Thomas";
-            email.Address = "elmer.thomas@gmail.com";
+            email.Name = "Example User";
+            email.Address = "test@example.com";
             personalization.AddTo(email);
             email = new Email();
-            email.Name = "Matt Bernier";
-            email.Address = "matt.bernier@sendgrid.com";
+            email.Name = "Example User";
+            email.Address = "test@example.com";
             personalization.AddCc(email);
             email = new Email();
-            email.Name = "Eric Shallock";
-            email.Address = "eric.shallock@sendgrid.com";
+            email.Name = "Example User";
+            email.Address = "test@example.com";
             personalization.AddCc(email);
             email = new Email();
-            email.Name = "Elmer Thomas Secret";
-            email.Address = "elmer.thomas + secret@sengrid.com";
+            email.Name = "Example User";
+            email.Address = "test@example.com";
             personalization.AddBcc(email);
             email = new Email();
-            email.Name = "Elmer Thomas Secret 2";
-            email.Address = "elmer.thomas+secret@elmer.thomas.com";
+            email.Name = "Example User";
+            email.Address = "test@example.com";
             personalization.AddBcc(email);
             personalization.Subject = "Thank you for signing up, %name%";
             personalization.AddHeader("X-Test", "True");
             personalization.AddHeader("X-Mock", "True");
-            personalization.AddSubstitution("%name%", "Elmer");
-            personalization.AddSubstitution("%city%", "Moreno Valley");
+            personalization.AddSubstitution("%name%", "Example User");
+            personalization.AddSubstitution("%city%", "Denver");
             personalization.AddCustomArgs("marketing", "false");
             personalization.AddCustomArgs("transactional", "true");
             personalization.SendAt = 1461775051;
@@ -198,7 +198,7 @@ namespace UnitTest
             MailSettings mailSettings = new MailSettings();
             BCCSettings bccSettings = new BCCSettings();
             bccSettings.Enable = true;
-            bccSettings.Email = "dx@sendgrid.com";
+            bccSettings.Email = "test@example.com";
             mailSettings.BccSettings = bccSettings;
             BypassListManagement bypassListManagement = new BypassListManagement();
             bypassListManagement.Enable = true;
@@ -244,11 +244,11 @@ namespace UnitTest
             mail.TrackingSettings = trackingSettings;
 
             email = new Email();
-            email.Address = "dx@sendgrid.com";
+            email.Address = "test@example.com";
             mail.ReplyTo = email;
 
             String ret = mail.Get();
-            Assert.AreEqual(ret, "{\"from\":{\"name\":\"DX\",\"email\":\"dx@sendgrid.com\"},\"subject\":\"Hello World from the SendGrid CSharp Library\",\"personalizations\":[{\"to\":[{\"name\":\"Elmer Thomas\",\"email\":\"elmer.thomas@sendgrid.com\"}],\"cc\":[{\"name\":\"Matt Bernier\",\"email\":\"matt.bernier@sendgrid.com\"},{\"name\":\"Eric Shallock\",\"email\":\"eric.shallock@sendgrid.com\"}],\"bcc\":[{\"name\":\"Elmer Thomas Secret\",\"email\":\"elmer.thomas + secret@sengrid.com\"},{\"name\":\"Elmer Thomas Secret 2\",\"email\":\"elmer.thomas+secret@elmer.thomas.com\"}],\"subject\":\"Thank you for signing up, %name%\",\"headers\":{\"X-Test\":\"True\",\"X-Mock\":\"True\"},\"substitutions\":{\"%name%\":\"Elmer\",\"%city%\":\"Moreno Valley\"},\"custom_args\":{\"marketing\":\"false\",\"transactional\":\"true\"},\"send_at\":1461775051},{\"to\":[{\"name\":\"Elmer Thomas\",\"email\":\"elmer.thomas@gmail.com\"}],\"cc\":[{\"name\":\"Matt Bernier\",\"email\":\"matt.bernier@sendgrid.com\"},{\"name\":\"Eric Shallock\",\"email\":\"eric.shallock@sendgrid.com\"}],\"bcc\":[{\"name\":\"Elmer Thomas Secret\",\"email\":\"elmer.thomas + secret@sengrid.com\"},{\"name\":\"Elmer Thomas Secret 2\",\"email\":\"elmer.thomas+secret@elmer.thomas.com\"}],\"subject\":\"Thank you for signing up, %name%\",\"headers\":{\"X-Test\":\"True\",\"X-Mock\":\"True\"},\"substitutions\":{\"%name%\":\"Elmer\",\"%city%\":\"Moreno Valley\"},\"custom_args\":{\"marketing\":\"false\",\"transactional\":\"true\"},\"send_at\":1461775051}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Textual content\"},{\"type\":\"text/html\",\"value\":\"<html><body>HTML content</body></html>\"},{\"type\":\"text/calendar\",\"value\":\"Party Time!!\"}],\"attachments\":[{\"content\":\"TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gQ3JhcyBwdW12\",\"type\":\"application/pdf\",\"filename\":\"balance_001.pdf\",\"disposition\":\"attachment\",\"content_id\":\"Balance Sheet\"},{\"content\":\"BwdW\",\"type\":\"image/png\",\"filename\":\"banner.png\",\"disposition\":\"inline\",\"content_id\":\"Banner\"}],\"template_id\":\"13b8f94f-bcae-4ec6-b752-70d6cb59f932\",\"headers\":{\"X-Day\":\"Monday\",\"X-Month\":\"January\"},\"sections\":{\"%section1\":\"Substitution for Section 1 Tag\",\"%section2\":\"Substitution for Section 2 Tag\"},\"categories\":[\"customer\",\"vip\"],\"custom_args\":{\"campaign\":\"welcome\",\"sequence\":\"2\"},\"send_at\":1461775051,\"asm\":{\"group_id\":3,\"groups_to_display\":[1,4,5]},\"ip_pool_name\":\"23\",\"mail_settings\":{\"bcc\":{\"enable\":true,\"email\":\"dx@sendgrid.com\"},\"bypass_list_management\":{\"enable\":true},\"footer\":{\"enable\":true,\"text\":\"Some Footer Text\",\"html\":\"<bold>Some HTML Here</bold>\"},\"sandbox_mode\":{\"enable\":true},\"spam_check\":{\"enable\":true,\"threshold\":1,\"post_to_url\":\"https://gotchya.example.com\"}},\"tracking_settings\":{\"click_tracking\":{\"enable\":true},\"open_tracking\":{\"enable\":true,\"substitution_tag\":\"Optional tag to replace with the open image in the body of the message\"},\"subscription_tracking\":{\"enable\":true,\"text\":\"text to insert into the text/plain portion of the message\",\"html\":\"<bold>HTML to insert into the text/html portion of the message</bold>\",\"substitution_tag\":\"text to insert into the text/plain portion of the message\"},\"ganalytics\":{\"enable\":true,\"utm_source\":\"some source\",\"utm_medium\":\"some medium\",\"utm_term\":\"some term\",\"utm_content\":\"some content\",\"utm_campaign\":\"some campaign\"}},\"reply_to\":{\"email\":\"dx@sendgrid.com\"}}");
+            Assert.AreEqual(ret, "{\"from\":{\"name\":\"DX\",\"email\":\"test@example.com\"},\"subject\":\"Hello World from the SendGrid CSharp Library\",\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"cc\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"},{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"},{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"subject\":\"Thank you for signing up, %name%\",\"headers\":{\"X-Test\":\"True\",\"X-Mock\":\"True\"},\"substitutions\":{\"%name%\":\"Example User\",\"%city%\":\"Denver\"},\"custom_args\":{\"marketing\":\"false\",\"transactional\":\"true\"},\"send_at\":1461775051},{\"to\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"cc\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"},{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"},{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"subject\":\"Thank you for signing up, %name%\",\"headers\":{\"X-Test\":\"True\",\"X-Mock\":\"True\"},\"substitutions\":{\"%name%\":\"Example User\",\"%city%\":\"Denver\"},\"custom_args\":{\"marketing\":\"false\",\"transactional\":\"true\"},\"send_at\":1461775051}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Textual content\"},{\"type\":\"text/html\",\"value\":\"<html><body>HTML content</body></html>\"},{\"type\":\"text/calendar\",\"value\":\"Party Time!!\"}],\"attachments\":[{\"content\":\"TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gQ3JhcyBwdW12\",\"type\":\"application/pdf\",\"filename\":\"balance_001.pdf\",\"disposition\":\"attachment\",\"content_id\":\"Balance Sheet\"},{\"content\":\"BwdW\",\"type\":\"image/png\",\"filename\":\"banner.png\",\"disposition\":\"inline\",\"content_id\":\"Banner\"}],\"template_id\":\"13b8f94f-bcae-4ec6-b752-70d6cb59f932\",\"headers\":{\"X-Day\":\"Monday\",\"X-Month\":\"January\"},\"sections\":{\"%section1\":\"Substitution for Section 1 Tag\",\"%section2\":\"Substitution for Section 2 Tag\"},\"categories\":[\"customer\",\"vip\"],\"custom_args\":{\"campaign\":\"welcome\",\"sequence\":\"2\"},\"send_at\":1461775051,\"asm\":{\"group_id\":3,\"groups_to_display\":[1,4,5]},\"ip_pool_name\":\"23\",\"mail_settings\":{\"bcc\":{\"enable\":true,\"email\":\"test@example.com\"},\"bypass_list_management\":{\"enable\":true},\"footer\":{\"enable\":true,\"text\":\"Some Footer Text\",\"html\":\"<bold>Some HTML Here</bold>\"},\"sandbox_mode\":{\"enable\":true},\"spam_check\":{\"enable\":true,\"threshold\":1,\"post_to_url\":\"https://gotchya.example.com\"}},\"tracking_settings\":{\"click_tracking\":{\"enable\":true},\"open_tracking\":{\"enable\":true,\"substitution_tag\":\"Optional tag to replace with the open image in the body of the message\"},\"subscription_tracking\":{\"enable\":true,\"text\":\"text to insert into the text/plain portion of the message\",\"html\":\"<bold>HTML to insert into the text/html portion of the message</bold>\",\"substitution_tag\":\"text to insert into the text/plain portion of the message\"},\"ganalytics\":{\"enable\":true,\"utm_source\":\"some source\",\"utm_medium\":\"some medium\",\"utm_term\":\"some term\",\"utm_content\":\"some content\",\"utm_campaign\":\"some campaign\"}},\"reply_to\":{\"email\":\"test@example.com\"}}");
         }
     }
 }

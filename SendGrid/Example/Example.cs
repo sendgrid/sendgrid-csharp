@@ -13,7 +13,7 @@ namespace Example
             HelloEmail(); // this will actually send an email
             KitchenSink(); // this will only send an email if you set SandBox Mode to false
 
-            // v3 Web API 
+            // v3 Web API
             ApiKeys();
 
         }
@@ -23,12 +23,12 @@ namespace Example
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
 
-            Email from = new Email("dx@sendgrid.com");
+            Email from = new Email("test@example.com");
             String subject = "Hello World from the SendGrid CSharp Library";
-            Email to = new Email("elmer.thomas@sendgrid.com");
+            Email to = new Email("test@example.com");
             Content content = new Content("text/plain", "Textual content");
             Mail mail = new Mail(from, subject, to, content);
-            Email email = new Email("elmer.thomas+add_second_email@sendgrid.com");
+            Email email = new Email("test2@example.com");
             mail.Personalization[0].AddTo(email);
 
             String ret = mail.Get();
@@ -52,38 +52,38 @@ namespace Example
             Mail mail = new Mail();
 
             Email email = new Email();
-            email.Name = "DX";
-            email.Address = "dx@sendgrid.com";
+            email.Name = "Example User";
+            email.Address = "test@example.com";
             mail.From = email;
 
             mail.Subject = "Hello World from the SendGrid CSharp Library";
 
             Personalization personalization = new Personalization();
             email = new Email();
-            email.Name = "Elmer Thomas";
-            email.Address = "elmer.thomas@sendgrid.com";
+            email.Name = "Example User";
+            email.Address = "test1@example.com";
             personalization.AddTo(email);
             email = new Email();
-            email.Name = "Matt Bernier";
-            email.Address = "matt.bernier@sendgrid.com";
+            email.Name = "Example User";
+            email.Address = "test2@example.com";
             personalization.AddCc(email);
             email = new Email();
-            email.Name = "Eric Shallock";
-            email.Address = "eric.shallock@sendgrid.com";
+            email.Name = "Example User";
+            email.Address = "test3@example.com";
             personalization.AddCc(email);
             email = new Email();
-            email.Name = "Elmer Thomas Secret";
-            email.Address = "elmer.thomas + secret@sengrid.com";
+            email.Name = "Example User";
+            email.Address = "test4@example.com";
             personalization.AddBcc(email);
             email = new Email();
-            email.Name = "Elmer Thomas Secret 2";
-            email.Address = "elmer.thomas+secret@elmer.thomas.com";
+            email.Name = "Example User";
+            email.Address = "test5@example.com";
             personalization.AddBcc(email);
             personalization.Subject = "Thank you for signing up, %name%";
             personalization.AddHeader("X-Test", "True");
             personalization.AddHeader("X-Mock", "True");
-            personalization.AddSubstitution("%name%", "Elmer");
-            personalization.AddSubstitution("%city%", "Moreno Valley");
+            personalization.AddSubstitution("%name%", "Example User");
+            personalization.AddSubstitution("%city%", "Denver");
             personalization.AddCustomArgs("marketing", "false");
             personalization.AddCustomArgs("transactional", "true");
             personalization.SendAt = 1461775051;
@@ -91,30 +91,30 @@ namespace Example
 
             personalization = new Personalization();
             email = new Email();
-            email.Name = "Elmer Thomas";
-            email.Address = "elmer.thomas@gmail.com";
+            email.Name = "Example User";
+            email.Address = "test1@example.com";
             personalization.AddTo(email);
             email = new Email();
-            email.Name = "Matt Bernier";
-            email.Address = "matt.bernier@sendgrid.com";
+            email.Name = "Example User";
+            email.Address = "test2@example.com";
             personalization.AddCc(email);
             email = new Email();
-            email.Name = "Eric Shallock";
-            email.Address = "eric.shallock@sendgrid.com";
+            email.Name = "Example User";
+            email.Address = "test3@example.com";
             personalization.AddCc(email);
             email = new Email();
-            email.Name = "Elmer Thomas Secret";
-            email.Address = "elmer.thomas + secret@sengrid.com";
+            email.Name = "Example User";
+            email.Address = "test4@example.com";
             personalization.AddBcc(email);
             email = new Email();
-            email.Name = "Elmer Thomas Secret 2";
-            email.Address = "elmer.thomas+secret@elmer.thomas.com";
+            email.Name = "Example User";
+            email.Address = "test5@example.com";
             personalization.AddBcc(email);
             personalization.Subject = "Thank you for signing up, %name%";
             personalization.AddHeader("X-Test", "True");
             personalization.AddHeader("X-Mock", "True");
-            personalization.AddSubstitution("%name%", "Elmer");
-            personalization.AddSubstitution("%city%", "Moreno Valley");
+            personalization.AddSubstitution("%name%", "Example User");
+            personalization.AddSubstitution("%city%", "Denver");
             personalization.AddCustomArgs("marketing", "false");
             personalization.AddCustomArgs("transactional", "true");
             personalization.SendAt = 1461775051;
@@ -182,7 +182,7 @@ namespace Example
             MailSettings mailSettings = new MailSettings();
             BCCSettings bccSettings = new BCCSettings();
             bccSettings.Enable = true;
-            bccSettings.Email = "dx@sendgrid.com";
+            bccSettings.Email = "test@example.com";
             mailSettings.BccSettings = bccSettings;
             BypassListManagement bypassListManagement = new BypassListManagement();
             bypassListManagement.Enable = true;
@@ -228,7 +228,7 @@ namespace Example
             mail.TrackingSettings = trackingSettings;
 
             email = new Email();
-            email.Address = "dx@sendgrid.com";
+            email.Address = "test@example.com";
             mail.ReplyTo = email;
 
             String ret = mail.Get();

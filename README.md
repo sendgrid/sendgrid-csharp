@@ -4,7 +4,7 @@
 
 **NOTE: The `/mail/send/beta` endpoint is currently in beta!
 
-Since this is not a general release, we do not recommend POSTing production level traffic through this endpoint or integrating your production servers with this endpoint. 
+Since this is not a general release, we do not recommend POSTing production level traffic through this endpoint or integrating your production servers with this endpoint.
 
 When this endpoint is ready for general release, your code will require an update in order to use the official URI.
 
@@ -12,13 +12,38 @@ By using this endpoint, you accept that you may encounter bugs and that the endp
 
 # Installation
 
+## Environment Variables
+
+First, get your free SendGrid account [here](https://sendgrid.com/free?source=sendgrid-csharp).
+
+Next, update your Environment (user space) with your [SENDGRID_API_KEY](https://app.sendgrid.com/settings/api_keys).
+
+## TRYING OUT THE V3 BETA MAIL SEND
+
+* Check out the v3beta branch from `https://github.com/sendgrid/sendgrid-csharp.git` using your favorite Git client.
+* Open the [solution](https://github.com/sendgrid/sendgrid-csharp/blob/v3beta/SendGrid/SendGrid.sln) in Visual Studio (we have tested with the Community Edition).
+* Update the to and from [emails](https://github.com/sendgrid/sendgrid-csharp/blob/v3beta/SendGrid/Example/Example.cs#L26).
+* Build the Solution.
+* Build the Example project and click `Start`.
+* Check out the documentation for [Web API v3 /mail/send/beta endpoint](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/index.html).
+
+## TRYING OUT THE V3 BETA WEB API
+
+* Check out the v3beta branch from `https://github.com/sendgrid/sendgrid-csharp.git` using your favorite Git client.
+* Open the [solution](https://github.com/sendgrid/sendgrid-csharp/blob/v3beta/SendGrid/SendGrid.sln) in Visual Studio (we have tested with the Community Edition).
+* Check out the documentation for [Web API v3 endpoints](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html).
+* Review the corresponding [examples](https://github.com/sendgrid/sendgrid-python/blob/v3beta/examples).
+* From the root directory of this repo, use `from sendgrid import *`
+
+## Once we are out of v3 BETA, the following will apply
+
 To use SendGrid in your C# project, you can either <a href="https://github.com/sendgrid/sendgrid-csharp.git">download the SendGrid C# .NET libraries directly from our Github repository</a> or, if you have the NuGet package manager installed, you can grab them automatically.
 
 ```
-PM> Install-Package SendGrid 
+PM> Install-Package SendGrid
 ```
 
-Once you have the SendGrid libraries properly referenced in your project, you can include calls to them in your code. 
+Once you have the SendGrid libraries properly referenced in your project, you can include calls to them in your code.
 For a sample implementation, check the [Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/SendGrid/Example) folder.
 
 Add the following namespaces to use the library:
@@ -32,7 +57,7 @@ using SendGrid;
 
 - [SendGrid.CSharp.HTTP.Client](https://github.com/sendgrid/csharp-http-client)
 
-## Environment Variables 
+## Environment Variables
 
 First, get your free SendGrid account [here](https://sendgrid.com/free?source=sendgrid-csharp).
 
@@ -55,9 +80,9 @@ namespace Example
 	    String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             dynamic sg = new SendGrid.SendGridAPIClient(apiKey);
 
-            Email from = new Email("dx@sendgrid.com");
+            Email from = new Email("test@example.com");
             String subject = "Hello World from the SendGrid CSharp Library";
-            Email to = new Email("elmer.thomas@sendgrid.com");
+            Email to = new Email("test@example.com");
             Content content = new Content("text/plain", "Textual content");
             Mail mail = new Mail(from, subject, to, content);
 
