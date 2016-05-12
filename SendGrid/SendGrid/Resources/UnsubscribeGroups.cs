@@ -1,13 +1,15 @@
-﻿using System.Net.Http;
+﻿using Newtonsoft.Json.Linq;
+using SendGrid.Model;
+using SendGrid.Utilities;
+using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 
 namespace SendGrid.Resources
 {
     public class UnsubscribeGroups
     {
-        private string _endpoint;
-        private Client _client;
+        private readonly string _endpoint;
+        private readonly Client _client;
 
         /// <summary>
         /// Constructs the SendGrid UnsubscribeGroups object.
@@ -25,46 +27,83 @@ namespace SendGrid.Resources
         /// Retrieve all suppression groups associated with the user.
         /// </summary>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
-        public async Task<HttpResponseMessage> Get()
+        public async Task<SuppressionGroup[]> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await _client.Get(_endpoint);
+            var response = await _client.Get(_endpoint, cancellationToken).ConfigureAwait(false);
+            response.EnsureSuccess();
+
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var groups = JArray.Parse(responseContent).ToObject<SuppressionGroup[]>();
+            return groups;
         }
 
         /// <summary>
         /// Get information on a single suppression group.
         /// </summary>
-        /// <param name="unsubscribeGroupId">ID of the suppression group to delete</param>
+        /// <param name="groupId">ID of the suppression group to delete</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
-        public async Task<HttpResponseMessage> Get(int unsubscribeGroupId)
+        public async Task<SuppressionGroup> GetAsync(int groupId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await _client.Get(_endpoint + "/" + unsubscribeGroupId);
+            var response = await _client.Get(string.Format("{0}/{1}", _endpoint, groupId), cancellationToken).ConfigureAwait(false);
+            response.EnsureSuccess();
+
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var group = JObject.Parse(responseContent).ToObject<SuppressionGroup>();
+            return group;
         }
 
         /// <summary>
         /// Create a new suppression group.
         /// </summary>
-        /// <param name="unsubscribeGroupName">The name of the new suppression group</param>
-        /// <param name="unsubscribeGroupDescription">A description of the suppression group</param>
-        /// <param name="unsubscribeGroupIsDefault">Default value is false</param>
+        /// <param name="name">The name of the new suppression group</param>
+        /// <param name="description">A description of the suppression group</param>
+        /// <param name="isDefault">Default value is false</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
-        public async Task<HttpResponseMessage> Post(string unsubscribeGroupName, 
-                                                    string unsubscribeGroupDescription,
-                                                    bool unsubscribeGroupIsDefault)
+        public async Task<SuppressionGroup> CreateAsync(string name, string description, bool isDefault, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = new JObject {{"name", unsubscribeGroupName},
-                                    {"description", unsubscribeGroupDescription},
-                                    {"is_default", unsubscribeGroupIsDefault}};
-            return await _client.Post(_endpoint, data);
+            var data = new JObject
+            {
+                { "name", name },
+                { "description", description },
+                { "is_default", isDefault }
+            };
+            var response = await _client.Post(_endpoint, data, cancellationToken).ConfigureAwait(false);
+            response.EnsureSuccess();
+
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var group = JObject.Parse(responseContent).ToObject<SuppressionGroup>();
+            return group;
+        }
+
+        /// <summary>
+        /// Update an existing suppression group.
+        /// </summary>
+        /// <param name="name">The name of the new suppression group</param>
+        /// <param name="description">A description of the suppression group</param>
+        /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
+        public async Task<SuppressionGroup> UpdateAsync(int groupId, string name = null, string description = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var data = new JObject();
+            if (name != null) data.Add("name", name);
+            if (description != null) data.Add("description", description);
+
+            var response = await _client.Patch(string.Format("{0}/{1}", _endpoint, groupId), data, cancellationToken).ConfigureAwait(false);
+            response.EnsureSuccess();
+
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var group = JObject.Parse(responseContent).ToObject<SuppressionGroup>();
+            return group;
         }
 
         /// <summary>
         /// Delete a suppression group.
         /// </summary>
-        /// <param name="unsubscribeGroupId">ID of the suppression group to delete</param>
+        /// <param name="groupId">ID of the suppression group to delete</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
-        public async Task<HttpResponseMessage> Delete(string unsubscribeGroupId)
+        public async Task DeleteAsync(int groupId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await _client.Delete(_endpoint + "/" + unsubscribeGroupId);
+            var response = await _client.Delete(string.Format("{0}/{1}", _endpoint, groupId), cancellationToken).ConfigureAwait(false);
+            response.EnsureSuccess();
         }
     }
 }

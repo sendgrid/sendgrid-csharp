@@ -1,5 +1,8 @@
-﻿using System;
-using System.Net.Http;
+﻿using Newtonsoft.Json.Linq;
+using SendGrid.Model;
+using SendGrid.Utilities;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -7,8 +10,8 @@ namespace SendGrid.Resources
 {
     public class GlobalStats
     {
-        private string _endpoint;
-        private Client _client;
+        private readonly string _endpoint;
+        private readonly Client _client;
 
         /// <summary>
         /// Constructs the SendGrid GlobalStats object.
@@ -25,24 +28,23 @@ namespace SendGrid.Resources
         /// <summary>
         /// https://sendgrid.com/docs/API_Reference/Web_API_v3/Stats/global.html
         /// </summary>
-        /// <param name="startDate">The starting date of the statistics to retrieve, formatted as YYYY-MM-DD.</param>
-        /// <param name="endDate">The end date of the statistics to retrieve, formatted as YYYY-MM-DD. Defaults to today.</param>
+        /// <param name="startDate">The starting date of the statistics to retrieve.</param>
+        /// <param name="endDate">The end date of the statistics to retrieve. Defaults to today.</param>
         /// <param name="aggregatedBy">How to group the statistics, must be day|week|month</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Stats/global.html</returns>
-        public async Task<HttpResponseMessage> Get(string startDate, string endDate = null, string aggregatedBy = null)
+        public async Task<GlobalStat[]> GetAsync(DateTime startDate, DateTime? endDate = null, AggregateBy aggregatedBy = AggregateBy.None, CancellationToken cancellationToken = default(CancellationToken))
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
-            query["start_date"] = startDate;
-            if (endDate != null)
-            {
-                query["end_date"] = endDate;
-            }
-            if (aggregatedBy != null)
-            {
-                query["aggregated_by"] = aggregatedBy;
-            }
-            return await _client.Get(_endpoint + "?" + query);
-        }
+            query["start_date"] = startDate.ToString("yyyy-MM-dd");
+            if (endDate.HasValue) query["end_date"] = endDate.Value.ToString("yyyy-MM-dd");
+            if (aggregatedBy != AggregateBy.None) query["aggregated_by"] = aggregatedBy.GetDescription();
 
+            var response = await _client.Get(string.Format("{0}?{1}", _endpoint, query), cancellationToken).ConfigureAwait(false);
+            response.EnsureSuccess();
+
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var getStatsResult = JArray.Parse(responseContent).ToObject<GlobalStat[]>();
+            return getStatsResult;
+        }
     }
 }
