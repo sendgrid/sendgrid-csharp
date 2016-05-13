@@ -53,9 +53,9 @@ myMessage.From = new MailAddress("john@example.com");
 // Add multiple addresses to the To field.
 List<String> recipients = new List<String>
 {
-    @"Jeff Smith <jeff@example.com>",
-    @"Anna Lidman <anna@example.com>",
-    @"Peter Saddow <peter@example.com>"
+    "jeff@example.com",
+    "anna@example.com",
+    "peter@example.com"
 };
 
 myMessage.AddTo(recipients);
