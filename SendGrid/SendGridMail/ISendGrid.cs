@@ -50,6 +50,12 @@ namespace SendGrid
 		/// <summary>
 		///     Add to the 'To' address.
 		/// </summary>
+		/// <param name="address">MailAddress object</param>
+		void AddTo(MailAddress address);
+
+		/// <summary>
+		///     Add to the 'To' address.
+		/// </summary>
 		/// <param name="addresses">list of email addresses as strings</param>
 		void AddTo(IEnumerable<String> addresses);
 
