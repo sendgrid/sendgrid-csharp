@@ -25,9 +25,9 @@ namespace SendGrid.Resources
         /// Retrieve all suppression groups associated with the user.
         /// </summary>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
-        public async Task<HttpResponseMessage> Get()
+        public Task<HttpResponseMessage> Get()
         {
-            return await _client.Get(_endpoint);
+            return _client.Get(_endpoint);
         }
 
         /// <summary>
@@ -35,9 +35,9 @@ namespace SendGrid.Resources
         /// </summary>
         /// <param name="unsubscribeGroupId">ID of the suppression group to delete</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
-        public async Task<HttpResponseMessage> Get(int unsubscribeGroupId)
+        public Task<HttpResponseMessage> Get(int unsubscribeGroupId)
         {
-            return await _client.Get(_endpoint + "/" + unsubscribeGroupId);
+            return _client.Get(_endpoint + "/" + unsubscribeGroupId);
         }
 
         /// <summary>
@@ -47,14 +47,14 @@ namespace SendGrid.Resources
         /// <param name="unsubscribeGroupDescription">A description of the suppression group</param>
         /// <param name="unsubscribeGroupIsDefault">Default value is false</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
-        public async Task<HttpResponseMessage> Post(string unsubscribeGroupName, 
+        public Task<HttpResponseMessage> Post(string unsubscribeGroupName, 
                                                     string unsubscribeGroupDescription,
                                                     bool unsubscribeGroupIsDefault)
         {
             var data = new JObject {{"name", unsubscribeGroupName},
                                     {"description", unsubscribeGroupDescription},
                                     {"is_default", unsubscribeGroupIsDefault}};
-            return await _client.Post(_endpoint, data);
+            return _client.Post(_endpoint, data);
         }
 
         /// <summary>
@@ -62,9 +62,9 @@ namespace SendGrid.Resources
         /// </summary>
         /// <param name="unsubscribeGroupId">ID of the suppression group to delete</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html</returns>
-        public async Task<HttpResponseMessage> Delete(string unsubscribeGroupId)
+        public Task<HttpResponseMessage> Delete(string unsubscribeGroupId)
         {
-            return await _client.Delete(_endpoint + "/" + unsubscribeGroupId);
+            return _client.Delete(_endpoint + "/" + unsubscribeGroupId);
         }
     }
 }

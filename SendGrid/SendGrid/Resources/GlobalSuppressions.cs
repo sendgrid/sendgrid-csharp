@@ -26,9 +26,9 @@ namespace SendGrid.Resources
         /// </summary>
         /// <param name="email">email address to check</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/global_suppressions.html</returns>
-        public async Task<HttpResponseMessage> Get(string email)
+        public Task<HttpResponseMessage> Get(string email)
         {
-            return await _client.Get(_endpoint + "/" + email);
+            return _client.Get(_endpoint + "/" + email);
         }
 
         /// <summary>
@@ -36,12 +36,12 @@ namespace SendGrid.Resources
         /// </summary>
         /// <param name="recipient_emails">Array of email addresses to add to the suppression group</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/global_suppressions.html</returns>
-        public async Task<HttpResponseMessage> Post(string[] emails)
+        public Task<HttpResponseMessage> Post(string[] emails)
         {
             JArray receipient_emails = new JArray();
             foreach (string email in emails) { receipient_emails.Add(email); }
             var data = new JObject(new JProperty("recipient_emails", receipient_emails));
-            return await _client.Post(_endpoint, data);
+            return _client.Post(_endpoint, data);
         }
 
         /// <summary>
@@ -49,9 +49,9 @@ namespace SendGrid.Resources
         /// </summary>
         /// <param name="email">email address to be removed from the global suppressions group</param>
         /// <returns>https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/global_suppressions.html</returns>
-        public async Task<HttpResponseMessage> Delete(string email)
+        public Task<HttpResponseMessage> Delete(string email)
         {
-            return await _client.Delete(_endpoint + "/" + email);
+            return _client.Delete(_endpoint + "/" + email);
         }
     }
 }

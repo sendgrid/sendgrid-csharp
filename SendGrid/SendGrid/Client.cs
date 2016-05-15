@@ -65,9 +65,9 @@ namespace SendGrid
                     switch (method)
                     {
                         case Methods.GET:
-                            return await client.GetAsync(endpoint);
+                            return await client.GetAsync(endpoint).ConfigureAwait(false);
                         case Methods.POST:
-                            return await client.PostAsJsonAsync(endpoint, data);
+                            return await client.PostAsJsonAsync(endpoint, data).ConfigureAwait(false);
                         case Methods.PATCH:
                             endpoint = _baseUri + endpoint;
                             StringContent content = new StringContent(data.ToString(), Encoding.UTF8, MediaType);
@@ -77,9 +77,9 @@ namespace SendGrid
                                 RequestUri = new Uri(endpoint),
                                 Content = content
                             };
-                            return await client.SendAsync(request);
+                            return await client.SendAsync(request).ConfigureAwait(false);
                         case Methods.DELETE:
-                            return await client.DeleteAsync(endpoint);
+                            return await client.DeleteAsync(endpoint).ConfigureAwait(false);
                         default:
                             HttpResponseMessage response = new HttpResponseMessage();
                             response.StatusCode = HttpStatusCode.MethodNotAllowed;
@@ -102,32 +102,32 @@ namespace SendGrid
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <returns>The resulting message from the API call</returns>
-        public async Task<HttpResponseMessage> Get(string endpoint)
+        public Task<HttpResponseMessage> Get(string endpoint)
         {
-            return await RequestAsync(Methods.GET, endpoint, null);
+            return RequestAsync(Methods.GET, endpoint, null);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">An JObject representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
-        public async Task<HttpResponseMessage> Post(string endpoint, JObject data)
+        public Task<HttpResponseMessage> Post(string endpoint, JObject data)
         {
-            return await RequestAsync(Methods.POST, endpoint, data);
+            return RequestAsync(Methods.POST, endpoint, data);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <returns>The resulting message from the API call</returns>
-        public async Task<HttpResponseMessage> Delete(string endpoint)
+        public Task<HttpResponseMessage> Delete(string endpoint)
         {
-            return await RequestAsync(Methods.DELETE, endpoint, null);
+            return RequestAsync(Methods.DELETE, endpoint, null);
         }
 
         /// <param name="endpoint">Resource endpoint, do not prepend slash</param>
         /// <param name="data">An JObject representing the resource's data</param>
         /// <returns>The resulting message from the API call</returns>
-        public async Task<HttpResponseMessage> Patch(string endpoint, JObject data)
+        public Task<HttpResponseMessage> Patch(string endpoint, JObject data)
         {
-            return await RequestAsync(Methods.PATCH, endpoint, data);
+            return RequestAsync(Methods.PATCH, endpoint, data);
         }
     }
 }
