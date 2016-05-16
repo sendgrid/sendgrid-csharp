@@ -42,6 +42,23 @@ namespace SendGrid
             Headers = new Dictionary<string, string>();
         }
 
+	    public SendGridMessage(MailMessage mailMessage)
+	    {
+            From = mailMessage.From;
+            To = mailMessage.To.ToArray();
+
+            _message.Subject = mailMessage.Subject;
+
+	        if (mailMessage.IsBodyHtml)
+	        {
+	            Html = mailMessage.Body;
+	        }
+	        else
+	        {
+	            Text = mailMessage.Body;
+	        }
+	    }
+
 		public SendGridMessage(MailAddress from, MailAddress[] to,
 			String subject, String html, String text, IHeader header = null) : this()
 		{
