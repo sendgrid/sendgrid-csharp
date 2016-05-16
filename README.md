@@ -71,7 +71,7 @@ myMessage.Text = "Hello World plain text!";
 
 After creating an email message, you can send it using the Web API provided by SendGrid.
 
-Sending email requires that you supply your SendGrid account credentials (username and password) OR a SendGrid API Key. API Key is the preferred method. API Keys are in beta. To configure API keys, visit https://sendgrid.com/beta/settings/api_keys
+Sending email requires that you supply your SendGrid account credentials (username and password) OR a SendGrid API Key. API Key is the preferred method. API Keys are in beta. To configure API keys, visit https://app.sendgrid.com/settings/api_keys
 
 To send an email message, use the **DeliverAsync** method on the **Web** transport class, which calls the SendGrid Web API. The following example shows how to send a message.
 
