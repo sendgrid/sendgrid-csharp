@@ -12,19 +12,24 @@ namespace SendGrid
 {
     public class Client
     {
-        private string _apiKey;
-        public APIKeys ApiKeys;
-        public UnsubscribeGroups UnsubscribeGroups;
-        public Suppressions Suppressions;
-        public GlobalSuppressions GlobalSuppressions;
-        public GlobalStats GlobalStats;
-        public string Version;
-        private Uri _baseUri;
+        private readonly string _apiKey;
+        private readonly Uri _baseUri;
         private const string MediaType = "application/json";
+
         private enum Methods
         {
-            GET, POST, PATCH, DELETE
+            GET,
+            POST,
+            PATCH,
+            DELETE
         }
+
+        public readonly APIKeys ApiKeys;
+        public readonly UnsubscribeGroups UnsubscribeGroups;
+        public readonly Suppressions Suppressions;
+        public readonly GlobalSuppressions GlobalSuppressions;
+        public readonly GlobalStats GlobalStats;
+        public readonly string Version;
 
         /// <summary>
         ///     Create a client that connects to the SendGrid Web API
@@ -60,42 +65,47 @@ namespace SendGrid
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaType));
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
-                    client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "sendgrid/" + Version + ";csharp");
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent",
+                        string.Format("sendgrid/{0};csharp", Version));
 
                     switch (method)
                     {
                         case Methods.GET:
                             return await client.GetAsync(endpoint);
+
                         case Methods.POST:
                             return await client.PostAsJsonAsync(endpoint, data);
+
                         case Methods.PATCH:
-                            endpoint = _baseUri + endpoint;
-                            StringContent content = new StringContent(data.ToString(), Encoding.UTF8, MediaType);
-                            HttpRequestMessage request = new HttpRequestMessage
+                            var request = new HttpRequestMessage
                             {
                                 Method = new HttpMethod("PATCH"),
-                                RequestUri = new Uri(endpoint),
-                                Content = content
+                                RequestUri = new Uri(string.Format("{0}{1}", _baseUri, endpoint)),
+                                Content = new StringContent(data.ToString(), Encoding.UTF8, MediaType)
                             };
+
                             return await client.SendAsync(request);
+
                         case Methods.DELETE:
                             return await client.DeleteAsync(endpoint);
+
                         default:
-                            HttpResponseMessage response = new HttpResponseMessage();
-                            response.StatusCode = HttpStatusCode.MethodNotAllowed;
-                            var message = "{\"errors\":[{\"message\":\"Bad method call, supported methods are GET, POST, PATCH and DELETE\"}]}";
-                            response.Content = new StringContent(message);
-                            return response;
+                            return new HttpResponseMessage
+                            {
+                                StatusCode = HttpStatusCode.MethodNotAllowed,
+                                Content =
+                                    new StringContent(
+                                        "{\"errors\":[{\"message\":\"Bad method call, supported methods are GET, POST, PATCH and DELETE\"}]}")
+                            };
                     }
                 }
                 catch (Exception ex)
                 {
-                    HttpResponseMessage response = new HttpResponseMessage();
-                    string message;
-                    message = (ex is HttpRequestException) ? ".NET HttpRequestException" : ".NET Exception";
-                    message = message + ", raw message: \n\n";
-                    response.Content = new StringContent(message + ex.Message);
-                    return response;
+                    return new HttpResponseMessage
+                    {
+                        Content = new StringContent(string.Format("{0}, raw message: \n\n{1}",
+                            ex is HttpRequestException ? ".NET HttpRequestException" : ".NET Exception", ex.Message))
+                    };
                 }
             }
         }
