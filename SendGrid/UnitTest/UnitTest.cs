@@ -279,4 +279,176 @@ namespace UnitTest
             Assert.IsNotNull(jsonObject);
         }
     }
+
+    [TestFixture]
+    public class Templates
+    {
+        static string _baseUri = "https://api.sendgrid.com/";
+        static string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
+        public Client client = new Client(_apiKey, _baseUri);
+        private static string _template_id = "";
+
+        [Test]
+        public void TemplatesIntegrationTest()
+        {
+            string templateId = "";
+
+            TestGet();
+            TestGetUnique(templateId);
+            TestPost();
+            TestPatch();
+            TestDelete();
+        }
+
+        private void TestGet()
+        {
+            HttpResponseMessage response = client.Templates.Get().Result;
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            string rawString = response.Content.ReadAsStringAsync().Result;
+            dynamic jsonObject = JsonConvert.DeserializeObject(rawString);
+            Assert.IsNotNull(jsonObject);
+        }
+
+        private void TestGetUnique(string templateId)
+        {
+            HttpResponseMessage response = client.Templates.Get(templateId).Result;
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            string rawString = response.Content.ReadAsStringAsync().Result;
+            dynamic jsonObject = JsonConvert.DeserializeObject(rawString);
+            Assert.IsNotNull(jsonObject);
+        }
+
+        private void TestPost()
+        {
+            HttpResponseMessage response = client.Templates.Post("C Sharp Template").Result;
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+            string rawString = response.Content.ReadAsStringAsync().Result;
+            dynamic jsonObject = JObject.Parse(rawString);
+            string name = jsonObject.name.ToString();
+            _template_id = jsonObject.id.ToString();
+            Assert.IsNotNull(name);
+            Assert.IsNotNull(_template_id);
+        }
+
+        private void TestPatch()
+        {
+            HttpResponseMessage response = client.Templates.Patch(_template_id, "CSharpTemplatePatched").Result;
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            string rawString = response.Content.ReadAsStringAsync().Result;
+            dynamic jsonObject = JObject.Parse(rawString);
+            _template_id = jsonObject.id.ToString();
+            string name = jsonObject.name.ToString();
+            Assert.IsNotNull(_template_id);
+            Assert.IsNotNull(name);
+        }
+
+        private void TestDelete()
+        {
+            HttpResponseMessage response = client.Templates.Delete(_template_id).Result;
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
+        }
+    }
+
+    [TestFixture]
+    public class Versions
+    {
+        static string _baseUri = "https://api.sendgrid.com/";
+        static string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
+        public Client client = new Client(_apiKey, _baseUri);
+        private static string _template_id = "";
+        private static string _version_id = "";
+
+        [Test]
+        public void VersionsIntegrationTest()
+        {
+            string templateId = "";
+            string versionId = "";
+
+            TestGetUnique(templateId, versionId);
+            TestPost(templateId);
+            TestPatch();
+            TestDelete();
+        }
+
+        private void TestGetUnique(string templateId, string versionId)
+        {
+            HttpResponseMessage response = client.Versions.Get(templateId, versionId).Result;
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            string rawString = response.Content.ReadAsStringAsync().Result;
+            dynamic jsonObject = JsonConvert.DeserializeObject(rawString);
+            Assert.IsNotNull(jsonObject);
+        }
+
+        private void TestPost(string templateId)
+        {
+            HttpResponseMessage response = client.Versions.Post(templateId, "C Sharp Template", "C Sharp <%subject%>", "C Sharp Html <%body%>", "C Sharp Plain <%body%>", true).Result;
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+            string rawString = response.Content.ReadAsStringAsync().Result;
+            dynamic jsonObject = JObject.Parse(rawString);
+            _version_id = jsonObject.id.ToString();
+            _template_id = jsonObject.template_id.ToString();
+            string name = jsonObject.name.ToString();
+            Assert.IsNotNull(name);
+            Assert.IsNotNull(_version_id);
+            Assert.IsNotNull(_template_id);
+        }
+
+        private void TestPatch()
+        {
+            HttpResponseMessage response = client.Versions.Patch(_template_id, _version_id, "C Sharp Template Patched", "C Sharp <%subject%> Patched", "C Sharp Html <%body%> Patched", "C Sharp Plain <%body%> Patched", true).Result;
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            string rawString = response.Content.ReadAsStringAsync().Result;
+            dynamic jsonObject = JObject.Parse(rawString);
+            _version_id = jsonObject.id.ToString();
+            string name = jsonObject.name.ToString();
+            Assert.IsNotNull(name);
+            Assert.IsNotNull(_version_id);
+            Assert.IsNotNull(_template_id);
+        }
+
+        private void TestDelete()
+        {
+            HttpResponseMessage response = client.Versions.Delete(_template_id, _version_id).Result;
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
+        }
+    }
+
+    [TestFixture]
+    public class Batches
+    {
+        static string _baseUri = "https://api.sendgrid.com/";
+        static string _userName = Environment.GetEnvironmentVariable("SENDGRID_USERNAME");
+        static string _password = Environment.GetEnvironmentVariable("SENDGRID_PASSWORD");
+        public Client client = new Client(_userName, _password, _baseUri);
+        private static string _batch_id = "";
+
+        [Test]
+        public void BatchesIntegrationTest()
+        {
+            string batchId = "";
+            
+            TestGetUnique(batchId);
+            TestPost();
+        }
+        
+        private void TestGetUnique(string templateId)
+        {
+            HttpResponseMessage response = client.Batches.Get(templateId).Result;
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            string rawString = response.Content.ReadAsStringAsync().Result;
+            dynamic jsonObject = JsonConvert.DeserializeObject(rawString);
+            Assert.IsNotNull(jsonObject);
+        }
+
+        private void TestPost()
+        {
+            HttpResponseMessage response = client.Batches.Post().Result;
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+            string rawString = response.Content.ReadAsStringAsync().Result;
+            dynamic jsonObject = JObject.Parse(rawString);
+            _batch_id = jsonObject.batch_id.ToString();
+            Assert.IsNotNull(_batch_id);
+        }
+ 
+    }
 }

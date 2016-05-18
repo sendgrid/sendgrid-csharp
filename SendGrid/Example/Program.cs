@@ -21,6 +21,9 @@ namespace Example
             Suppressions();
             GlobalSuppressions();
             GlobalStats();
+            Templates();
+            Versions();
+            Batches();
         }
         
         private static void SendAsync(SendGrid.SendGridMessage message)
@@ -259,5 +262,118 @@ namespace Example
             Console.ReadKey();
         }
 
+        private static void Templates()
+        {
+            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            var client = new SendGrid.Client(apiKey);
+
+            // GET TEMPLATES
+            HttpResponseMessage responseGet = client.Templates.Get().Result;
+            Console.WriteLine(responseGet.StatusCode);
+            Console.WriteLine(responseGet.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("These are your current Templates. Press any key to continue.");
+            Console.ReadKey();
+
+            // GET A PARTICULAR TEMPLATE
+            string templateID = "";
+            HttpResponseMessage responseGetUnique = client.Templates.Get(templateID).Result;
+            Console.WriteLine(responseGetUnique.StatusCode);
+            Console.WriteLine(responseGetUnique.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("This is a Template with ID: " + templateID + ".\n\nPress any key to continue.");
+            Console.ReadKey();
+
+            // POST TEMPLATE
+            HttpResponseMessage responsePost = client.Templates.Post("C Sharp Templates").Result;
+            var rawString = responsePost.Content.ReadAsStringAsync().Result;
+            dynamic jsonObject = JObject.Parse(rawString);
+            var templateId = jsonObject.id.ToString();
+            Console.WriteLine(responsePost.StatusCode);
+            Console.WriteLine(responsePost.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("Template created.\n\nPress any key to continue.");
+            Console.ReadKey();
+
+            // PATCH TEMPLATE
+            HttpResponseMessage responsePatch = client.Templates.Patch(templateId, "CSharpTestTemplatePatched").Result;
+            Console.WriteLine(responsePatch.StatusCode);
+            Console.WriteLine(responsePatch.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("Template patched.\n\nPress any key to continue.");
+            Console.ReadKey();
+
+            // DELETE TEMPLATE
+            Console.WriteLine("Deleting Template, please wait.");
+            HttpResponseMessage responseDelete = client.Templates.Delete(templateId).Result;
+            Console.WriteLine(responseDelete.StatusCode);
+            HttpResponseMessage responseFinal = client.Templates.Get().Result;
+            Console.WriteLine(responseFinal.StatusCode);
+            Console.WriteLine(responseFinal.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("Template Deleted.\n\nPress any key to end.");
+            Console.ReadKey();
+        }
+
+        private static void Versions()
+        {
+            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            var client = new SendGrid.Client(apiKey);
+
+            // GET A PARTICULAR VERSION
+            string templateID = "";
+            string versionId = "";
+            HttpResponseMessage responseGetUnique = client.Versions.Get(templateID, versionId).Result;
+            Console.WriteLine(responseGetUnique.StatusCode);
+            Console.WriteLine(responseGetUnique.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("This is a Template Version with ID: " + templateID + "/" + versionId + ".\n\nPress any key to continue.");
+            Console.ReadKey();
+
+            // POST VERSION
+            HttpResponseMessage responsePost = client.Versions.Post(templateID, "C Sharp Template", "C Sharp <%subject%>", "C Sharp Html <%body%>", "C Sharp Plain <%body%>", true).Result;
+            var rawString = responsePost.Content.ReadAsStringAsync().Result;
+            dynamic jsonObject = JObject.Parse(rawString);
+            var templateId = jsonObject.id.ToString();
+            Console.WriteLine(responsePost.StatusCode);
+            Console.WriteLine(responsePost.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("Template Version created.\n\nPress any key to continue.");
+            Console.ReadKey();
+
+            // PATCH VERSION
+            HttpResponseMessage responsePatch = client.Versions.Patch(templateId, versionId, "C Sharp Template Patched", "C Sharp <%subject%> Patched", "C Sharp Html <%body%> Patched", "C Sharp Plain <%body%> Patched", true).Result;
+            Console.WriteLine(responsePatch.StatusCode);
+            Console.WriteLine(responsePatch.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("Template Version patched.\n\nPress any key to continue.");
+            Console.ReadKey();
+
+            // DELETE VERSION
+            Console.WriteLine("Deleting Template Version, please wait.");
+            HttpResponseMessage responseDelete = client.Versions.Delete(templateId, versionId).Result;
+            Console.WriteLine(responseDelete.StatusCode);
+            HttpResponseMessage responseFinal = client.Templates.Get().Result;
+            Console.WriteLine(responseFinal.StatusCode);
+            Console.WriteLine(responseFinal.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("Template Version Deleted.\n\nPress any key to end.");
+            Console.ReadKey();
+        }
+
+        private static void Batches()
+        {
+            String apiKey = Environment.GetEnvironmentVariable( "SENDGRID_APIKEY", EnvironmentVariableTarget.User );
+            var client = new SendGrid.Client( apiKey );
+
+            // GET A PARTICULAR BATCH
+            string batchID = "";
+            HttpResponseMessage responseGetUnique = client.Batches.Get( batchID ).Result;
+            Console.WriteLine( responseGetUnique.StatusCode );
+            Console.WriteLine( responseGetUnique.Content.ReadAsStringAsync().Result );
+            Console.WriteLine( "This is a Batch with ID: " + batchID + ".\n\nPress any key to continue." );
+            Console.ReadKey();
+
+            // POST BATCH
+            HttpResponseMessage responsePost = client.Batches.Post().Result;
+            var rawString = responsePost.Content.ReadAsStringAsync().Result;
+            dynamic jsonObject = JObject.Parse( rawString );
+            var batchId = jsonObject.id.ToString();
+            Console.WriteLine( responsePost.StatusCode );
+            Console.WriteLine( responsePost.Content.ReadAsStringAsync().Result );
+            Console.WriteLine( "Batch created.\n\nPress any key to continue." );
+            Console.ReadKey();
+        }
     }
 }
