@@ -1,14 +1,28 @@
-Hello! Thank you for choosing to help contribute to the sendgrid-csharp library. There are many ways you can contribute and help is always welcome.
+Hello! Thank you for choosing to help contribute to one of the SendGrid open source libraries. There are many ways you can contribute and help is always welcome.  We simply ask that you follow the following contribution policies.
 
+- [CLAs and CCLAs](#cla)
+- [Roadmap & Milestones](#roadmap)
+- [Feature Request](#feature_request)
+- [Submit a Bug Report](#submit_a_bug_report)
+- [Improvements to the Codebase](#improvements_to_the_codebase)
+- [Understanding the Code Base](#understanding_the_codebase)
+- [Testing](#testing)
+- [Style Guidelines & Naming Conventions](#style_guidelines_and_naming_conventions)
+- [Creating a Pull Request](#creating_a_pull_request)
+
+<a name="roadmap"></a>
 We use [Milestones](https://github.com/sendgrid/sendgrid-csharp/milestones) to help define current roadmaps, please feel free to grab an issue from the current milestone. Please indicate that you have begun work on it to avoid collisions. Once a PR is made, community review, comments, suggestions and additional PRs are welcomed and encouraged.
 
-* [Feature Request](#feature_request)
-* [Submit a Bug Report](#submit_a_bug_report)
-* [Improvements to the Codebase](#improvements_to_the_codebase)
-* [Understanding the Code Base](#understanding_the_codebase)
-* [Testing](#testing)
-* [Style Guidelines & Naming Conventions](#style_guidelines_and_naming_conventions)
-* [Creating a Pull Request](#creating_a_pull_request)
+<a name="cla"></a>
+## CLAs and CCLAs
+
+Before you get started, SendGrid requires that a SendGrid Contributor License Agreement (CLA) or a SendGrid Company Contributor Licensing Agreement (CCLA) be filled out by every contributor to a SendGrid open source project.
+
+Our goal with the CLA and CCLA is to clarify the rights of our contributors and reduce other risks arising from inappropriate contributions.  The CLA also clarifies the rights SendGrid holds in each contribution and helps to avoid misunderstandings over what rights each contributor is required to grant to SendGrid when making a contribution.  In this way the CLA and CCLA encourage broad participation by our open source community and help us build strong open source projects, free from any individual contributor withholding or revoking rights to any contribution.
+
+SendGrid does not merge a pull request made against a SendGrid open source project until that pull request is associated with a signed CLA (or CCLA). Copies of the CLA and CCLA are available [here](https://drive.google.com/a/sendgrid.com/file/d/0B0PlcM9qA91LN2VEUTJWU2RIVXc/view).
+
+You may submit your completed [CLA or CCLA](https://drive.google.com/a/sendgrid.com/file/d/0B0PlcM9qA91LN2VEUTJWU2RIVXc/view) to SendGrid at [dx@sendgrid.com](mailto:dx@sendgrid.com).  SendGrid will then confirm you are ready to begin making contributions.
 
 There are a few ways to contribute, which we'll enumerate below:
 
@@ -37,29 +51,7 @@ Before you decide to create a new issue, please try the following:
 
 ### Please use our Bug Report Template
 
-In order to make the process easier, we've included a sample bug report template (borrowed from [Ghost](https://github.com/TryGhost/Ghost/)). The template uses [GitHub flavored markdown](https://help.github.com/articles/github-flavored-markdown/) for formatting.
-
-```
-Short and descriptive example bug report title
-
-#### Issue Summary
-
-A summary of the issue and the environment in which it occurs. If suitable, include the steps required to reproduce the bug. Please feel free to include screenshots, screencasts, code examples.
-
-
-#### Steps to Reproduce
-
-1. This is the first step
-2. This is the second step
-3. Further steps, etc.
-
-Any other information you want to share that is relevant to the issue being reported. Especially, why do you consider this to be a bug? What do you expect to happen instead?
-
-#### Technical details:
-
-* sendgrid-charp Version: master (latest commit: 2cb34372ef0f31352f7c90015a45e1200cb849da)
-* .NET Version: 4.5.2
-```
+In order to make the process easier, we've included a [sample bug report template](https://github.com/sendgrid/sendgrid-csharp/.github/ISSUE_TEMPLATE) (borrowed from [Ghost](https://github.com/TryGhost/Ghost/)). The template uses [GitHub flavored markdown](https://help.github.com/articles/github-flavored-markdown/) for formatting.
 
 <a name="improvements_to_the_codebase"></a>
 ## Improvements to the Codebase
@@ -68,25 +60,31 @@ We welcome direct contributions to the sendgrid-csharp code base. Thank you!
 
 ### Development Environment ###
 
-#### Install and run locally ####
+#### Install and Run Locally ####
 
 ##### Prerequisites #####
 
-* .NET 4.5.2
-* SendGrid.CSharp.HTTP.Client
-* Newtonsoft.Json
+- .NET 4.5.2
+- [SendGrid.CSharp.HTTP.Client](https://www.nuget.org/packages/SendGrid.CSharp.HTTP.Client/)
+- [Newtonsoft.Json](http://www.newtonsoft.com/json)
 
 ##### Initial setup: #####
 
-```
+```bash
 git clone https://github.com/sendgrid/sendgrid-csharp.git
 ```
 
 Open `sendgrid-csharp/SendGrid/SendGrid.sln`
 
+## Environment Variables
+
+First, get your free SendGrid account [here](https://sendgrid.com/free?source=sendgrid-csharp).
+
+Next, update your Environment (user space) with your [SENDGRID_API_KEY](https://app.sendgrid.com/settings/api_keys).
+
 ##### Execute: #####
 
-See the [Example project]() to get started quickly.
+See the [examples folder](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/SendGrid/Example) to get started quickly.
 
 <a name="understanding_the_codebase"></a>
 ## Understanding the Code Base
@@ -99,20 +97,20 @@ Working examples that demonstrate usage.
 
 The main interface to the SendGrid API is the class `SendGridAPIClient`.
 
+**/UnitTest**
+
+Unit tests
+
 <a name="testing"></a>
 ## Testing
 
 All PRs require passing tests before the PR will be reviewed.
 
-All test files are in the [`UnitTest`](https://github.com/sendgrid/sendgrid-csharp/tree/master/UnitTest) directory.
+All test files are in the [`UnitTest`](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/SendGrid/UnitTest) directory.
 
-For the purposes of contributing to this repo, please update the [`UnitTest.cs`](https://github.com/sendgrid/sendgrid-sharp/blob/master/UnitTest/UnitTest.cs) file with unit tests as you modify the code.
+For the purposes of contributing to this repo, please update the [`UnitTest.cs`](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/test/SendGrid/UnitTest/UnitTest.cs) file with unit tests as you modify the code.
 
-Within the Test Explorer, click on the "Run All" link.
-
-### Execute: ###
-
-Click on the Example project, then click the `Start` button in the menu.
+<!--- describe how to run the tests --->
 
 <a name="style_guidelines_and_naming_conventions"></a>
 ## Style Guidelines & Naming Conventions
@@ -128,7 +126,7 @@ Generally, we follow the style guidelines as suggested by the official language.
    # Clone your fork of the repo into the current directory
    git clone https://github.com/sendgrid/sendgrid-csharp
    # Navigate to the newly cloned directory
-   cd sendgrid-csharp
+   cd sendgrid-python
    # Assign the original repo to a remote called "upstream"
    git remote add upstream https://github.com/sendgrid/sendgrid-csharp
    ```
