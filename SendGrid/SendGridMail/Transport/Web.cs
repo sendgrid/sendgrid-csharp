@@ -23,7 +23,6 @@ namespace SendGrid
         private readonly string _apiKey;
         private bool _disposed = false;
 
-
         #endregion
 
         /// <summary>
