@@ -20,7 +20,9 @@ namespace SendGrid
         private static readonly Regex TemplateTest = new Regex(@"<%\s*body\s*%>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex TextUnsubscribeTest = new Regex(@"<%\s*%>", RegexOptions.Compiled);
         private static readonly Regex HtmlUnsubscribeTest = new Regex(@"<%\s*([^\s%]+\s?)+\s*%>", RegexOptions.Compiled);
-		#endregion
+	    private const string SinkHost = "sink.sendgrid.net";
+
+	    #endregion
 
 		#region Initialization and Constructors
         
@@ -40,13 +42,11 @@ namespace SendGrid
             Headers = new Dictionary<string, string>();
         }
 
-		public SendGridMessage(MailAddress from, MailAddress[] to, MailAddress[] cc, MailAddress[] bcc,
-			String subject, String html, String text, IHeader header = null) : this(header)
+		public SendGridMessage(MailAddress from, MailAddress[] to,
+			String subject, String html, String text, IHeader header = null) : this()
 		{
 			From = from;
 			To = to;
-			Cc = cc;
-			Bcc = bcc;
 
 			_message.Subject = subject;
 
@@ -67,6 +67,7 @@ namespace SendGrid
 					{"Footer", "footer"},
 					{"GoogleAnalytics", "ganalytics"},
 					{"Template", "template"},
+                    {"Templates","templates"},
 					{"Bcc", "bcc"},
 					{"BypassListManagement", "bypass_list_management"}
 				};
@@ -97,7 +98,16 @@ namespace SendGrid
 
 		public MailAddress[] To
 		{
-			get { return _message.To.ToArray(); }
+		    get
+		    {
+		        if (_sendToSink)
+		        {
+		            return _message.To
+                        .Select(ma => new MailAddress(string.Format("{0}_at_{1}@{2}", ma.User, ma.Host, SinkHost), ma.DisplayName))
+		                .ToArray();
+		        }
+		        return _message.To.ToArray();
+		    }
 			set
 			{
 				_message.To.Clear();
@@ -108,31 +118,31 @@ namespace SendGrid
 			}
 		}
 
-		public MailAddress[] Cc
-		{
-			get { return _message.CC.ToArray(); }
-			set
-			{
-				_message.CC.Clear();
-				foreach (var mailAddress in value)
-				{
-					_message.CC.Add(mailAddress);
-				}
-			}
-		}
+        public MailAddress[] Cc
+        {
+            get { return _message.CC.ToArray(); }
+            set
+            {
+                _message.CC.Clear();
+                foreach (var mailAddress in value)
+                {
+                    _message.CC.Add(mailAddress);
+                }
+            }
+        }
 
-		public MailAddress[] Bcc
-		{
-			get { return _message.Bcc.ToArray(); }
-			set
-			{
-				_message.Bcc.Clear();
-				foreach (var mailAddress in value)
-				{
-					_message.Bcc.Add(mailAddress);
-				}
-			}
-		}
+        public MailAddress[] Bcc
+        {
+            get { return _message.Bcc.ToArray(); }
+            set
+            {
+                _message.Bcc.Clear();
+                foreach (var mailAddress in value)
+                {
+                    _message.Bcc.Add(mailAddress);
+                }
+            }
+        }
 
 		public String Subject
 		{
@@ -152,8 +162,9 @@ namespace SendGrid
 		private List<String> _attachments = new List<String>();
 		private Dictionary<String, MemoryStream> _streamedAttachments = new Dictionary<string, MemoryStream>();
 		private Dictionary<String, String> _contentImages = new Dictionary<string, string>();
+	    private bool _sendToSink;
 
-		public void AddTo(String address)
+	    public void AddTo(String address)
 		{
 			var mailAddress = new MailAddress(address);
 			_message.To.Add(mailAddress);
@@ -175,7 +186,29 @@ namespace SendGrid
 			}
 		}
 
-        public Dictionary<String, MemoryStream> StreamedAttachments
+	    public void AddCc(string address)
+	    {
+	        var mailAddress = new MailAddress(address);
+	        _message.CC.Add(mailAddress);
+	    }
+
+	    public void AddCc(MailAddress address)
+	    {
+	        _message.CC.Add(address);
+	    }
+
+	    public void AddBcc(string address)
+	    {
+	        var mailAddress = new MailAddress(address);
+            _message.Bcc.Add(mailAddress);
+	    }
+
+	    public void AddBcc(MailAddress address)
+	    {
+	        _message.Bcc.Add(address);
+	    }
+
+	    public Dictionary<String, MemoryStream> StreamedAttachments
 		{
 			get { return _streamedAttachments; }
 			set { _streamedAttachments = value; }
@@ -201,10 +234,35 @@ namespace SendGrid
 			Header.AddSubstitution(replacementTag, substitutionValues);
 		}
 
+		public void AddSection(String replacementTag, String sectionValue)
+		{
+			Header.AddSection(replacementTag, sectionValue);
+		}
+
 		public void AddUniqueArgs(IDictionary<String, String> identifiers)
 		{
 			Header.AddUniqueArgs(identifiers);
 		}
+
+	    public void SetAsmGroupId(int id)
+	    {
+	        Header.SetAsmGroupId(id);
+	    }
+
+        public void SetIpPool(string pool)
+        {
+            Header.SetIpPool(pool);
+        }
+
+	    public void SetSendAt(DateTime sendTime)
+	    {
+	        Header.SetSendAt(sendTime);
+	    }
+
+        public void SetSendEachAt(IEnumerable<DateTime> sendTimes)
+        {
+            Header.SetSendEachAt(sendTimes);
+        }
 
 		public void SetCategory(String category)
 		{
@@ -223,6 +281,16 @@ namespace SendGrid
 			ms.Seek(0, SeekOrigin.Begin);
 			StreamedAttachments[name] = ms;
 		}
+
+        public void EmbedStreamImage(Stream stream, String name)
+	    {
+            var ms = new MemoryStream();
+            stream.CopyTo(ms);
+            ms.Seek(0, SeekOrigin.Begin);
+            StreamedAttachments[name] = ms;
+
+            _contentImages[name] = name;
+	    }
 
 		public void AddAttachment(String filePath)
 		{
@@ -243,6 +311,11 @@ namespace SendGrid
 		{
 			headers.Keys.ToList().ForEach(key => Headers[key] = headers[key]);
 		}
+
+	    public void SendToSink(bool value = true)
+	    {
+	        _sendToSink = value;
+	    }
 
 		#endregion
 
@@ -389,6 +462,14 @@ namespace SendGrid
 			Header.EnableFilter(filter);
 			Header.AddFilterSetting(filter, new List<string> {"text/html"}, html);
 		}
+
+        public void EnableTemplateEngine(string templateId)
+        {
+            var filter = Filters["Templates"];
+
+            Header.EnableFilter(filter);
+            Header.AddFilterSetting(filter, new List<string> { "template_id" }, templateId);
+        }
 
 		public void EnableBcc(string email)
 		{

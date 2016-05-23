@@ -16,4 +16,7 @@ SendGrid/test-results/
 .DS_store
 SendGrid/SendGrid.userprefs
 SendGrid/packages/
-SendGrid/.nuget/
+SendGrid/TestResult.xml
+SendGrid/SendGrid.sln.VisualState.xml
+*.pfx
+*.PublicKey

@@ -1,0 +1,21 @@
+language: csharp
+solution: SendGrid/SendGrid.sln
+env:
+  matrix:
+    secure: KJrQ+NfmzlgCSXRyqeAMDGZUG6GO4/+xk1T0wGy1BgVz8seo/fDWL8osWEljB4Sj05sfFj7CM+rociwL6sdVyqCiHbCAM7XuHs58D+4Tlh5pGHL+G1qOl65/pDl0ulq+M7PwDxHPZ60/oyH2a16t5jtD9e4W31y2fXzEbHGLHXg=
+install:
+- nuget restore SendGrid/SendGrid.sln
+- nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+script:
+- xbuild /p:Configuration=BuildNet45 SendGrid/SendGrid.sln
+- mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe SendGrid/Tests/bin/BuildNet45/Tests.dll
+- mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe SendGrid/UnitTest/bin/Release/UnitTest.dll
+notifications:
+  hipchat:
+    rooms:
+      secure: T8r/eNzevZXJDmSK7ZKG+t/Vx0cENHIMWVuKbt3RSYbXl6QsWv8UTPamFSkLP0zbcCyGQ7d+QKaEc18ffCtiBV9MXPy8Q1XFGzKxr5/GnwMx4p0ArTqbFLCyl3JuXBmCGouWG+ulb9eOGUFc6L/4p2cwAfXf2oTcXYqosBnfoHg=
+    template:
+    - '<a href="https://travis-ci.org/%{repository}/builds/%{build_id}">%{repository}
+      Build %{build_number}</a> on branch <i>%{branch}</i> by %{author}: <strong>%{message}</strong>
+      <a href="https://github.com/%{repository}/commits/%{commit}">View on GitHub</a>'
+    format: html
