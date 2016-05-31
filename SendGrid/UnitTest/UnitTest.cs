@@ -243,22 +243,22 @@ namespace UnitTest
         [Test]
         public void test_access_settings_activity_get()
         {
-            params = @"{'limit': 1}"
+            var params = @"{'limit': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.access_settings.activity.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.access_settings.activity.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_access_settings_whitelist_post()
         {
-            data = @"{u'ips': [{u'ip': u'192.168.1.1'}, {u'ip': u'192.*.*.*'}, {u'ip': u'192.168.1.3/32'}]}"
+            var data = @"{u'ips': [{u'ip': u'192.168.1.1'}, {u'ip': u'192.*.*.*'}, {u'ip': u'192.168.1.3/32'}]}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.access_settings.whitelist.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.access_settings.whitelist.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
@@ -268,18 +268,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.access_settings.whitelist.get(requestHeaders: headers)
+            dynamic response = sg.client.access_settings.whitelist.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_access_settings_whitelist_delete()
         {
-            data = @"{u'ids': [1, 2, 3]}"
+            var data = @"{u'ids': [1, 2, 3]}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.access_settings.whitelist.delete(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.access_settings.whitelist.delete(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -290,7 +290,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.access_settings.whitelist._(rule_id).get(requestHeaders: headers)
+            dynamic response = sg.client.access_settings.whitelist._(rule_id).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -301,18 +301,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.access_settings.whitelist._(rule_id).delete(requestHeaders: headers)
+            dynamic response = sg.client.access_settings.whitelist._(rule_id).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_api_keys_post()
         {
-            data = @"{u'scopes': [u'mail.send', u'alerts.create', u'alerts.read'], u'name': u'My API Key'}"
+            var data = @"{u'scopes': [u'mail.send', u'alerts.create', u'alerts.read'], u'name': u'My API Key'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.api_keys.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.api_keys.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
@@ -322,31 +322,31 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.api_keys.get(requestHeaders: headers)
+            dynamic response = sg.client.api_keys.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_api_keys__api_key_id__put()
         {
-            data = @"{u'scopes': [u'user.profile.read', u'user.profile.update'], u'name': u'A New Hope'}"
+            var data = @"{u'scopes': [u'user.profile.read', u'user.profile.update'], u'name': u'A New Hope'}";
             api_key_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.api_keys._(api_key_id).put(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.api_keys._(api_key_id).put(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_api_keys__api_key_id__patch()
         {
-            data = @"{u'name': u'A New Hope'}"
+            var data = @"{u'name': u'A New Hope'}";
             api_key_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.api_keys._(api_key_id).patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.api_keys._(api_key_id).patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -357,7 +357,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.api_keys._(api_key_id).get(requestHeaders: headers)
+            dynamic response = sg.client.api_keys._(api_key_id).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -368,18 +368,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.api_keys._(api_key_id).delete(requestHeaders: headers)
+            dynamic response = sg.client.api_keys._(api_key_id).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_asm_groups_post()
         {
-            data = @"{u'is_default': False, u'description': u'A group description', u'name': u'A group name'}"
+            var data = @"{u'is_default': False, u'description': u'A group description', u'name': u'A group name'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.asm.groups.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.asm.groups.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -389,19 +389,19 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.asm.groups.get(requestHeaders: headers)
+            dynamic response = sg.client.asm.groups.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_asm_groups__group_id__patch()
         {
-            data = @"{u'description': u'Suggestions for items our users might like.', u'name': u'Item Suggestions', u'id': 103}"
+            var data = @"{u'description': u'Suggestions for items our users might like.', u'name': u'Item Suggestions', u'id': 103}";
             group_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.asm.groups._(group_id).patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.asm.groups._(group_id).patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
@@ -412,7 +412,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.asm.groups._(group_id).get(requestHeaders: headers)
+            dynamic response = sg.client.asm.groups._(group_id).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -423,19 +423,19 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.asm.groups._(group_id).delete(requestHeaders: headers)
+            dynamic response = sg.client.asm.groups._(group_id).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_asm_groups__group_id__suppressions_post()
         {
-            data = @"{u'recipient_emails': [u'test1@example.com', u'test2@example.com']}"
+            var data = @"{u'recipient_emails': [u'test1@example.com', u'test2@example.com']}";
             group_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.asm.groups._(group_id).suppressions.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.asm.groups._(group_id).suppressions.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
@@ -446,7 +446,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.asm.groups._(group_id).suppressions.get(requestHeaders: headers)
+            dynamic response = sg.client.asm.groups._(group_id).suppressions.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -458,18 +458,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.asm.groups._(group_id).suppressions._(email).delete(requestHeaders: headers)
+            dynamic response = sg.client.asm.groups._(group_id).suppressions._(email).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_asm_suppressions_global_post()
         {
-            data = @"{u'recipient_emails': [u'test1@example.com', u'test2@example.com']}"
+            var data = @"{u'recipient_emails': [u'test1@example.com', u'test2@example.com']}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.asm.suppressions.global.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.asm.suppressions.global.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
@@ -480,7 +480,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.asm.suppressions.global._(email).get(requestHeaders: headers)
+            dynamic response = sg.client.asm.suppressions.global._(email).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -491,52 +491,52 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.asm.suppressions.global._(email).delete(requestHeaders: headers)
+            dynamic response = sg.client.asm.suppressions.global._(email).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_browsers_stats_get()
         {
-            params = @"{'end_date': '2016-04-01', 'aggregated_by': 'day', 'browsers': 'test_string', 'limit': 'test_string', 'offset': 'test_string', 'start_date': '2016-01-01'}"
+            var params = @"{'end_date': '2016-04-01', 'aggregated_by': 'day', 'browsers': 'test_string', 'limit': 'test_string', 'offset': 'test_string', 'start_date': '2016-01-01'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.browsers.stats.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.browsers.stats.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_campaigns_post()
         {
-            data = @"{u'custom_unsubscribe_url': u'', u'html_content': u'<html><head><title></title></head><body><p>Check out our spring line!</p></body></html>', u'list_ids': [110, 124], u'sender_id': 124451, u'subject': u'New Products for Spring!', u'plain_content': u'Check out our spring line!', u'suppression_group_id': 42, u'title': u'March Newsletter', u'segment_ids': [110], u'categories': [u'spring line'], u'ip_pool': u'marketing'}"
+            var data = @"{u'custom_unsubscribe_url': u'', u'html_content': u'<html><head><title></title></head><body><p>Check out our spring line!</p></body></html>', u'list_ids': [110, 124], u'sender_id': 124451, u'subject': u'New Products for Spring!', u'plain_content': u'Check out our spring line!', u'suppression_group_id': 42, u'title': u'March Newsletter', u'segment_ids': [110], u'categories': [u'spring line'], u'ip_pool': u'marketing'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.campaigns.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.campaigns.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
         [Test]
         public void test_campaigns_get()
         {
-            params = @"{'limit': 0, 'offset': 0}"
+            var params = @"{'limit': 0, 'offset': 0}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.campaigns.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.campaigns.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_campaigns__campaign_id__patch()
         {
-            data = @"{u'html_content': u'<html><head><title></title></head><body><p>Check out our summer line!</p></body></html>', u'subject': u'New Products for Summer!', u'title': u'May Newsletter', u'categories': [u'summer line'], u'plain_content': u'Check out our summer line!'}"
+            var data = @"{u'html_content': u'<html><head><title></title></head><body><p>Check out our summer line!</p></body></html>', u'subject': u'New Products for Summer!', u'title': u'May Newsletter', u'categories': [u'summer line'], u'plain_content': u'Check out our summer line!'}";
             campaign_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.campaigns._(campaign_id).patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.campaigns._(campaign_id).patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -547,7 +547,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.campaigns._(campaign_id).get(requestHeaders: headers)
+            dynamic response = sg.client.campaigns._(campaign_id).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -558,31 +558,31 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.campaigns._(campaign_id).delete(requestHeaders: headers)
+            dynamic response = sg.client.campaigns._(campaign_id).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_campaigns__campaign_id__schedules_patch()
         {
-            data = @"{u'send_at': 1489451436}"
+            var data = @"{u'send_at': 1489451436}";
             campaign_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.campaigns._(campaign_id).schedules.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.campaigns._(campaign_id).schedules.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_campaigns__campaign_id__schedules_post()
         {
-            data = @"{u'send_at': 1489771528}"
+            var data = @"{u'send_at': 1489771528}";
             campaign_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.campaigns._(campaign_id).schedules.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.campaigns._(campaign_id).schedules.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
@@ -593,7 +593,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.campaigns._(campaign_id).schedules.get(requestHeaders: headers)
+            dynamic response = sg.client.campaigns._(campaign_id).schedules.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -604,7 +604,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.campaigns._(campaign_id).schedules.delete(requestHeaders: headers)
+            dynamic response = sg.client.campaigns._(campaign_id).schedules.delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -615,86 +615,86 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.campaigns._(campaign_id).schedules.now.post(requestHeaders: headers)
+            dynamic response = sg.client.campaigns._(campaign_id).schedules.now.post(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
         [Test]
         public void test_campaigns__campaign_id__schedules_test_post()
         {
-            data = @"{u'to': u'your.email@example.com'}"
+            var data = @"{u'to': u'your.email@example.com'}";
             campaign_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.campaigns._(campaign_id).schedules.test.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.campaigns._(campaign_id).schedules.test.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_categories_get()
         {
-            params = @"{'category': 'test_string', 'limit': 1, 'offset': 1}"
+            var params = @"{'category': 'test_string', 'limit': 1, 'offset': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.categories.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.categories.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_categories_stats_get()
         {
-            params = @"{'end_date': '2016-04-01', 'aggregated_by': 'day', 'limit': 1, 'offset': 1, 'start_date': '2016-01-01', 'categories': 'test_string'}"
+            var params = @"{'end_date': '2016-04-01', 'aggregated_by': 'day', 'limit': 1, 'offset': 1, 'start_date': '2016-01-01', 'categories': 'test_string'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.categories.stats.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.categories.stats.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_categories_stats_sums_get()
         {
-            params = @"{'end_date': '2016-04-01', 'aggregated_by': 'day', 'limit': 1, 'sort_by_metric': 'test_string', 'offset': 1, 'start_date': '2016-01-01', 'sort_by_direction': 'asc'}"
+            var params = @"{'end_date': '2016-04-01', 'aggregated_by': 'day', 'limit': 1, 'sort_by_metric': 'test_string', 'offset': 1, 'start_date': '2016-01-01', 'sort_by_direction': 'asc'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.categories.stats.sums.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.categories.stats.sums.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_clients_stats_get()
         {
-            params = @"{'aggregated_by': 'day', 'start_date': '2016-01-01', 'end_date': '2016-04-01'}"
+            var params = @"{'aggregated_by': 'day', 'start_date': '2016-01-01', 'end_date': '2016-04-01'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.clients.stats.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.clients.stats.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_clients__client_type__stats_get()
         {
-            params = @"{'aggregated_by': 'day', 'start_date': '2016-01-01', 'end_date': '2016-04-01'}"
+            var params = @"{'aggregated_by': 'day', 'start_date': '2016-01-01', 'end_date': '2016-04-01'}";
             client_type = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.clients._(client_type).stats.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.clients._(client_type).stats.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_contactdb_custom_fields_post()
         {
-            data = @"{u'type': u'text', u'name': u'pet'}"
+            var data = @"{u'type': u'text', u'name': u'pet'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.contactdb.custom_fields.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.custom_fields.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
@@ -704,7 +704,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.custom_fields.get(requestHeaders: headers)
+            dynamic response = sg.client.contactdb.custom_fields.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -715,7 +715,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.custom_fields._(custom_field_id).get(requestHeaders: headers)
+            dynamic response = sg.client.contactdb.custom_fields._(custom_field_id).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -726,18 +726,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 202);
-            dynamic response = sg.client.contactdb.custom_fields._(custom_field_id).delete(requestHeaders: headers)
+            dynamic response = sg.client.contactdb.custom_fields._(custom_field_id).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 202);
         }
 
         [Test]
         public void test_contactdb_lists_post()
         {
-            data = @"{u'name': u'your list name'}"
+            var data = @"{u'name': u'your list name'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.contactdb.lists.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.lists.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
@@ -747,79 +747,79 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.lists.get(requestHeaders: headers)
+            dynamic response = sg.client.contactdb.lists.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_contactdb_lists_delete()
         {
-            data = @"[1, 2, 3, 4]"
+            var data = @"[1, 2, 3, 4]";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.contactdb.lists.delete(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.lists.delete(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_contactdb_lists__list_id__patch()
         {
-            data = @"{u'name': u'newlistname'}"
-            params = @"{'list_id': 0}"
+            var data = @"{u'name': u'newlistname'}";
+            var params = @"{'list_id': 0}";
             list_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.lists._(list_id).patch(requestBody: data, queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.lists._(list_id).patch(requestBody: data, queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_contactdb_lists__list_id__get()
         {
-            params = @"{'list_id': 0}"
+            var params = @"{'list_id': 0}";
             list_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.lists._(list_id).get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.lists._(list_id).get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_contactdb_lists__list_id__delete()
         {
-            params = @"{'delete_contacts': 'true'}"
+            var params = @"{'delete_contacts': 'true'}";
             list_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 202);
-            dynamic response = sg.client.contactdb.lists._(list_id).delete(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.lists._(list_id).delete(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 202);
         }
 
         [Test]
         public void test_contactdb_lists__list_id__recipients_post()
         {
-            data = @"[u'recipient_id1', u'recipient_id2']"
+            var data = @"[u'recipient_id1', u'recipient_id2']";
             list_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.contactdb.lists._(list_id).recipients.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.lists._(list_id).recipients.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
         [Test]
         public void test_contactdb_lists__list_id__recipients_get()
         {
-            params = @"{'page': 1, 'page_size': 1, 'list_id': 0}"
+            var params = @"{'page': 1, 'page_size': 1, 'list_id': 0}";
             list_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.lists._(list_id).recipients.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.lists._(list_id).recipients.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -831,64 +831,64 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.contactdb.lists._(list_id).recipients._(recipient_id).post(requestHeaders: headers)
+            dynamic response = sg.client.contactdb.lists._(list_id).recipients._(recipient_id).post(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
         [Test]
         public void test_contactdb_lists__list_id__recipients__recipient_id__delete()
         {
-            params = @"{'recipient_id': 0, 'list_id': 0}"
+            var params = @"{'recipient_id': 0, 'list_id': 0}";
             list_id = "test_url_param";
         recipient_id = "test_url_param"
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.contactdb.lists._(list_id).recipients._(recipient_id).delete(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.lists._(list_id).recipients._(recipient_id).delete(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_contactdb_recipients_patch()
         {
-            data = @"[{u'first_name': u'Guy', u'last_name': u'Jones', u'email': u'jones@example.com'}]"
+            var data = @"[{u'first_name': u'Guy', u'last_name': u'Jones', u'email': u'jones@example.com'}]";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.contactdb.recipients.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.recipients.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
         [Test]
         public void test_contactdb_recipients_post()
         {
-            data = @"[{u'age': 25, u'last_name': u'User', u'email': u'example@example.com', u'first_name': u''}, {u'age': 25, u'last_name': u'User', u'email': u'example2@example.com', u'first_name': u'Example'}]"
+            var data = @"[{u'age': 25, u'last_name': u'User', u'email': u'example@example.com', u'first_name': u''}, {u'age': 25, u'last_name': u'User', u'email': u'example2@example.com', u'first_name': u'Example'}]";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.contactdb.recipients.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.recipients.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
         [Test]
         public void test_contactdb_recipients_get()
         {
-            params = @"{'page': 1, 'page_size': 1}"
+            var params = @"{'page': 1, 'page_size': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.recipients.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.recipients.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_contactdb_recipients_delete()
         {
-            data = @"[u'recipient_id1', u'recipient_id2']"
+            var data = @"[u'recipient_id1', u'recipient_id2']";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.recipients.delete(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.recipients.delete(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -898,7 +898,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.recipients.billable_count.get(requestHeaders: headers)
+            dynamic response = sg.client.contactdb.recipients.billable_count.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -908,18 +908,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.recipients.count.get(requestHeaders: headers)
+            dynamic response = sg.client.contactdb.recipients.count.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_contactdb_recipients_search_get()
         {
-            params = @"{'{field_name}': 'test_string'}"
+            var params = @"{'{field_name}': 'test_string'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.recipients.search.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.recipients.search.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -930,7 +930,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.recipients._(recipient_id).get(requestHeaders: headers)
+            dynamic response = sg.client.contactdb.recipients._(recipient_id).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -941,7 +941,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.contactdb.recipients._(recipient_id).delete(requestHeaders: headers)
+            dynamic response = sg.client.contactdb.recipients._(recipient_id).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -952,7 +952,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.recipients._(recipient_id).lists.get(requestHeaders: headers)
+            dynamic response = sg.client.contactdb.recipients._(recipient_id).lists.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -962,18 +962,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.reserved_fields.get(requestHeaders: headers)
+            dynamic response = sg.client.contactdb.reserved_fields.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_contactdb_segments_post()
         {
-            data = @"{u'conditions': [{u'operator': u'eq', u'field': u'last_name', u'and_or': u'', u'value': u'Miller'}, {u'operator': u'gt', u'field': u'last_clicked', u'and_or': u'and', u'value': u'01/02/2015'}, {u'operator': u'eq', u'field': u'clicks.campaign_identifier', u'and_or': u'or', u'value': u'513'}], u'name': u'Last Name Miller', u'list_id': 4}"
+            var data = @"{u'conditions': [{u'operator': u'eq', u'field': u'last_name', u'and_or': u'', u'value': u'Miller'}, {u'operator': u'gt', u'field': u'last_clicked', u'and_or': u'and', u'value': u'01/02/2015'}, {u'operator': u'eq', u'field': u'clicks.campaign_identifier', u'and_or': u'or', u'value': u'513'}], u'name': u'Last Name Miller', u'list_id': 4}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.segments.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.segments.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -983,89 +983,89 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.segments.get(requestHeaders: headers)
+            dynamic response = sg.client.contactdb.segments.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_contactdb_segments__segment_id__patch()
         {
-            data = @"{u'conditions': [{u'operator': u'eq', u'field': u'last_name', u'and_or': u'', u'value': u'Miller'}], u'name': u'The Millers', u'list_id': 5}"
-            params = @"{'segment_id': 'test_string'}"
+            var data = @"{u'conditions': [{u'operator': u'eq', u'field': u'last_name', u'and_or': u'', u'value': u'Miller'}], u'name': u'The Millers', u'list_id': 5}";
+            var params = @"{'segment_id': 'test_string'}";
             segment_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.segments._(segment_id).patch(requestBody: data, queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.segments._(segment_id).patch(requestBody: data, queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_contactdb_segments__segment_id__get()
         {
-            params = @"{'segment_id': 0}"
+            var params = @"{'segment_id': 0}";
             segment_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.segments._(segment_id).get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.segments._(segment_id).get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_contactdb_segments__segment_id__delete()
         {
-            params = @"{'delete_contacts': 'true'}"
+            var params = @"{'delete_contacts': 'true'}";
             segment_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.contactdb.segments._(segment_id).delete(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.segments._(segment_id).delete(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_contactdb_segments__segment_id__recipients_get()
         {
-            params = @"{'page': 1, 'page_size': 1}"
+            var params = @"{'page': 1, 'page_size': 1}";
             segment_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.contactdb.segments._(segment_id).recipients.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.contactdb.segments._(segment_id).recipients.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_devices_stats_get()
         {
-            params = @"{'aggregated_by': 'day', 'limit': 1, 'start_date': '2016-01-01', 'end_date': '2016-04-01', 'offset': 1}"
+            var params = @"{'aggregated_by': 'day', 'limit': 1, 'start_date': '2016-01-01', 'end_date': '2016-04-01', 'offset': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.devices.stats.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.devices.stats.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_geo_stats_get()
         {
-            params = @"{'end_date': '2016-04-01', 'country': 'US', 'aggregated_by': 'day', 'limit': 1, 'offset': 1, 'start_date': '2016-01-01'}"
+            var params = @"{'end_date': '2016-04-01', 'country': 'US', 'aggregated_by': 'day', 'limit': 1, 'offset': 1, 'start_date': '2016-01-01'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.geo.stats.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.geo.stats.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_ips_get()
         {
-            params = @"{'subuser': 'test_string', 'ip': 'test_string', 'limit': 1, 'exclude_whitelabels': 'true', 'offset': 1}"
+            var params = @"{'subuser': 'test_string', 'ip': 'test_string', 'limit': 1, 'exclude_whitelabels': 'true', 'offset': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.ips.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.ips.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1075,18 +1075,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.ips.assigned.get(requestHeaders: headers)
+            dynamic response = sg.client.ips.assigned.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_ips_pools_post()
         {
-            data = @"{u'name': u'marketing'}"
+            var data = @"{u'name': u'marketing'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.ips.pools.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.ips.pools.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1096,19 +1096,19 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.ips.pools.get(requestHeaders: headers)
+            dynamic response = sg.client.ips.pools.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_ips_pools__pool_name__put()
         {
-            data = @"{u'name': u'new_pool_name'}"
+            var data = @"{u'name': u'new_pool_name'}";
             pool_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.ips.pools._(pool_name).put(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.ips.pools._(pool_name).put(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1119,7 +1119,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.ips.pools._(pool_name).get(requestHeaders: headers)
+            dynamic response = sg.client.ips.pools._(pool_name).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1130,19 +1130,19 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.ips.pools._(pool_name).delete(requestHeaders: headers)
+            dynamic response = sg.client.ips.pools._(pool_name).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_ips_pools__pool_name__ips_post()
         {
-            data = @"{u'ip': u'0.0.0.0'}"
+            var data = @"{u'ip': u'0.0.0.0'}";
             pool_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.ips.pools._(pool_name).ips.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.ips.pools._(pool_name).ips.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
@@ -1154,18 +1154,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.ips.pools._(pool_name).ips._(ip).delete(requestHeaders: headers)
+            dynamic response = sg.client.ips.pools._(pool_name).ips._(ip).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_ips_warmup_post()
         {
-            data = @"{u'ip': u'0.0.0.0'}"
+            var data = @"{u'ip': u'0.0.0.0'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.ips.warmup.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.ips.warmup.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1175,7 +1175,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.ips.warmup.get(requestHeaders: headers)
+            dynamic response = sg.client.ips.warmup.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1186,7 +1186,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.ips.warmup._(ip_address).get(requestHeaders: headers)
+            dynamic response = sg.client.ips.warmup._(ip_address).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1197,7 +1197,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.ips.warmup._(ip_address).delete(requestHeaders: headers)
+            dynamic response = sg.client.ips.warmup._(ip_address).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -1208,7 +1208,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.ips._(ip_address).get(requestHeaders: headers)
+            dynamic response = sg.client.ips._(ip_address).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1218,7 +1218,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.mail.batch.post(requestHeaders: headers)
+            dynamic response = sg.client.mail.batch.post(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
@@ -1229,40 +1229,40 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail.batch._(batch_id).get(requestHeaders: headers)
+            dynamic response = sg.client.mail.batch._(batch_id).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_mail_send_beta_post()
         {
-            data = @"{u'custom_args': {u'New Argument 1': u'New Value 1', u'activationAttempt': u'1', u'customerAccountNumber': u'[CUSTOMER ACCOUNT NUMBER GOES HERE]'}, u'from': {u'email': u'sam.smith@example.com', u'name': u'Sam Smith'}, u'attachments': [{u'name': u'file1', u'filename': u'file1.jpg', u'content': u'[BASE64 encoded content block here]', u'disposition': u'inline', u'content_id': u'ii_139db99fdb5c3704', u'type': u'jpg'}], u'personalizations': [{u'to': [{u'email': u'john.doe@example.com', u'name': u'John Doe'}], u'cc': [{u'email': u'jane.doe@example.com', u'name': u'Jane Doe'}], u'bcc': [{u'email': u'sam.doe@example.com', u'name': u'Sam Doe'}], u'custom_args': {u'New Argument 1': u'New Value 1', u'activationAttempt': u'1', u'customerAccountNumber': u'[CUSTOMER ACCOUNT NUMBER GOES HERE]'}, u'headers': {u'X-Accept-Language': u'en', u'X-Mailer': u'MyApp'}, u'send_at': 1409348513, u'substitutions': {u'sub': {u'%name%': [u'John', u'Jane', u'Sam']}}, u'subject': u'Hello, World!'}], u'subject': u'Hello, World!', u'ip_pool_name': u'[YOUR POOL NAME GOES HERE]', u'content': [{u'type': u'text/html', u'value': u"<html><p>Hello, world!</p><img src='cid:ii_139db99fdb5c3704'></img></html>"}], u'headers': {}, u'asm': {u'groups_to_display': [1, 2, 3], u'group_id': 1}, u'batch_id': u'[YOUR BATCH ID GOES HERE]', u'tracking_settings': {u'subscription_tracking': {u'text': u'If you would like to unsubscribe and stop receiveing these emails <% click here %>.', u'enable': True, u'html': u'If you would like to unsubscribe and stop receiving these emails <% clickhere %>.', u'substitution_tag': u'<%click here%>'}, u'open_tracking': {u'enable': True, u'substitution_tag': u'%opentrack'}, u'click_tracking': {u'enable': True, u'enable_text': True}, u'ganalytics': {u'utm_campaign': u'[NAME OF YOUR REFERRER SOURCE]', u'enable': True, u'utm_name': u'[NAME OF YOUR CAMPAIGN]', u'utm_term': u'[IDENTIFY PAID KEYWORDS HERE]', u'utm_content': u'[USE THIS SPACE TO DIFFERENTIATE YOUR EMAIL FROM ADS]', u'utm_medium': u'[NAME OF YOUR MARKETING MEDIUM e.g. email]'}}, u'mail_settings': {u'footer': {u'text': u'Thanks,/n The SendGrid Team', u'enable': True, u'html': u'<p>Thanks</br>The SendGrid Team</p>'}, u'spam_check': {u'threshold': 3, u'post_to_url': u'http://example.com/compliance', u'enable': True}, u'bypass_list_management': {u'enable': True}, u'sandbox_mode': {u'enable': False}, u'bcc': {u'enable': True, u'email': u'ben.doe@example.com'}}, u'reply_to': {u'email': u'sam.smith@example.com', u'name': u'Sam Smith'}, u'sections': {u'section': {u':sectionName2': u'section 2 text', u':sectionName1': u'section 1 text'}}, u'template_id': u'[YOUR TEMPLATE ID GOES HERE]', u'categories': [u'category1', u'category2'], u'send_at': 1409348513}"
+            var data = @"{u'custom_args': {u'New Argument 1': u'New Value 1', u'activationAttempt': u'1', u'customerAccountNumber': u'[CUSTOMER ACCOUNT NUMBER GOES HERE]'}, u'from': {u'email': u'sam.smith@example.com', u'name': u'Sam Smith'}, u'attachments': [{u'name': u'file1', u'filename': u'file1.jpg', u'content': u'[BASE64 encoded content block here]', u'disposition': u'inline', u'content_id': u'ii_139db99fdb5c3704', u'type': u'jpg'}], u'personalizations': [{u'to': [{u'email': u'john.doe@example.com', u'name': u'John Doe'}], u'cc': [{u'email': u'jane.doe@example.com', u'name': u'Jane Doe'}], u'bcc': [{u'email': u'sam.doe@example.com', u'name': u'Sam Doe'}], u'custom_args': {u'New Argument 1': u'New Value 1', u'activationAttempt': u'1', u'customerAccountNumber': u'[CUSTOMER ACCOUNT NUMBER GOES HERE]'}, u'headers': {u'X-Accept-Language': u'en', u'X-Mailer': u'MyApp'}, u'send_at': 1409348513, u'substitutions': {u'sub': {u'%name%': [u'John', u'Jane', u'Sam']}}, u'subject': u'Hello, World!'}], u'subject': u'Hello, World!', u'ip_pool_name': u'[YOUR POOL NAME GOES HERE]', u'content': [{u'type': u'text/html', u'value': u"<html><p>Hello, world!</p><img src='cid:ii_139db99fdb5c3704'></img></html>"}], u'headers': {}, u'asm': {u'groups_to_display': [1, 2, 3], u'group_id': 1}, u'batch_id': u'[YOUR BATCH ID GOES HERE]', u'tracking_settings': {u'subscription_tracking': {u'text': u'If you would like to unsubscribe and stop receiveing these emails <% click here %>.', u'enable': True, u'html': u'If you would like to unsubscribe and stop receiving these emails <% clickhere %>.', u'substitution_tag': u'<%click here%>'}, u'open_tracking': {u'enable': True, u'substitution_tag': u'%opentrack'}, u'click_tracking': {u'enable': True, u'enable_text': True}, u'ganalytics': {u'utm_campaign': u'[NAME OF YOUR REFERRER SOURCE]', u'enable': True, u'utm_name': u'[NAME OF YOUR CAMPAIGN]', u'utm_term': u'[IDENTIFY PAID KEYWORDS HERE]', u'utm_content': u'[USE THIS SPACE TO DIFFERENTIATE YOUR EMAIL FROM ADS]', u'utm_medium': u'[NAME OF YOUR MARKETING MEDIUM e.g. email]'}}, u'mail_settings': {u'footer': {u'text': u'Thanks,/n The SendGrid Team', u'enable': True, u'html': u'<p>Thanks</br>The SendGrid Team</p>'}, u'spam_check': {u'threshold': 3, u'post_to_url': u'http://example.com/compliance', u'enable': True}, u'bypass_list_management': {u'enable': True}, u'sandbox_mode': {u'enable': False}, u'bcc': {u'enable': True, u'email': u'ben.doe@example.com'}}, u'reply_to': {u'email': u'sam.smith@example.com', u'name': u'Sam Smith'}, u'sections': {u'section': {u':sectionName2': u'section 2 text', u':sectionName1': u'section 1 text'}}, u'template_id': u'[YOUR TEMPLATE ID GOES HERE]', u'categories': [u'category1', u'category2'], u'send_at': 1409348513}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 202);
-            dynamic response = sg.client.mail.send.beta.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.mail.send.beta.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 202);
         }
 
         [Test]
         public void test_mail_settings_get()
         {
-            params = @"{'limit': 1, 'offset': 1}"
+            var params = @"{'limit': 1, 'offset': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_mail_settings_address_whitelist_patch()
         {
-            data = @"{u'list': [u'email1@example.com', u'example.com'], u'enabled': True}"
+            var data = @"{u'list': [u'email1@example.com', u'example.com'], u'enabled': True}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.address_whitelist.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.address_whitelist.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1272,18 +1272,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.address_whitelist.get(requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.address_whitelist.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_mail_settings_bcc_patch()
         {
-            data = @"{u'enabled': False, u'email': u'email@example.com'}"
+            var data = @"{u'enabled': False, u'email': u'email@example.com'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.bcc.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.bcc.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1293,18 +1293,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.bcc.get(requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.bcc.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_mail_settings_bounce_purge_patch()
         {
-            data = @"{u'hard_bounces': 5, u'soft_bounces': 5, u'enabled': True}"
+            var data = @"{u'hard_bounces': 5, u'soft_bounces': 5, u'enabled': True}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.bounce_purge.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.bounce_purge.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1314,18 +1314,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.bounce_purge.get(requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.bounce_purge.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_mail_settings_footer_patch()
         {
-            data = @"{u'html_content': u'...', u'enabled': True, u'plain_content': u'...'}"
+            var data = @"{u'html_content': u'...', u'enabled': True, u'plain_content': u'...'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.footer.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.footer.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1335,18 +1335,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.footer.get(requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.footer.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_mail_settings_forward_bounce_patch()
         {
-            data = @"{u'enabled': True, u'email': u'example@example.com'}"
+            var data = @"{u'enabled': True, u'email': u'example@example.com'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.forward_bounce.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.forward_bounce.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1356,18 +1356,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.forward_bounce.get(requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.forward_bounce.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_mail_settings_forward_spam_patch()
         {
-            data = @"{u'enabled': False, u'email': u''}"
+            var data = @"{u'enabled': False, u'email': u''}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.forward_spam.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.forward_spam.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1377,18 +1377,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.forward_spam.get(requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.forward_spam.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_mail_settings_plain_content_patch()
         {
-            data = @"{u'enabled': False}"
+            var data = @"{u'enabled': False}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.plain_content.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.plain_content.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1398,18 +1398,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.plain_content.get(requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.plain_content.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_mail_settings_spam_check_patch()
         {
-            data = @"{u'url': u'url', u'max_score': 5, u'enabled': True}"
+            var data = @"{u'url': u'url', u'max_score': 5, u'enabled': True}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.spam_check.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.spam_check.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1419,18 +1419,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.spam_check.get(requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.spam_check.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_mail_settings_template_patch()
         {
-            data = @"{u'html_content': u'<% body %>', u'enabled': True}"
+            var data = @"{u'html_content': u'<% body %>', u'enabled': True}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.template.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.template.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1440,40 +1440,40 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mail_settings.template.get(requestHeaders: headers)
+            dynamic response = sg.client.mail_settings.template.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_mailbox_providers_stats_get()
         {
-            params = @"{'end_date': '2016-04-01', 'mailbox_providers': 'test_string', 'aggregated_by': 'day', 'limit': 1, 'offset': 1, 'start_date': '2016-01-01'}"
+            var params = @"{'end_date': '2016-04-01', 'mailbox_providers': 'test_string', 'aggregated_by': 'day', 'limit': 1, 'offset': 1, 'start_date': '2016-01-01'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.mailbox_providers.stats.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.mailbox_providers.stats.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_partner_settings_get()
         {
-            params = @"{'limit': 1, 'offset': 1}"
+            var params = @"{'limit': 1, 'offset': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.partner_settings.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.partner_settings.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_partner_settings_new_relic_patch()
         {
-            data = @"{u'enable_subuser_statistics': True, u'enabled': True, u'license_key': u''}"
+            var data = @"{u'enable_subuser_statistics': True, u'enabled': True, u'license_key': u''}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.partner_settings.new_relic.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.partner_settings.new_relic.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1483,7 +1483,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.partner_settings.new_relic.get(requestHeaders: headers)
+            dynamic response = sg.client.partner_settings.new_relic.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1493,96 +1493,96 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.scopes.get(requestHeaders: headers)
+            dynamic response = sg.client.scopes.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_stats_get()
         {
-            params = @"{'aggregated_by': 'day', 'limit': 1, 'start_date': '2016-01-01', 'end_date': '2016-04-01', 'offset': 1}"
+            var params = @"{'aggregated_by': 'day', 'limit': 1, 'start_date': '2016-01-01', 'end_date': '2016-04-01', 'offset': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.stats.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.stats.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_subusers_post()
         {
-            data = @"{u'username': u'John@example.com', u'ips': [u'1.1.1.1', u'2.2.2.2'], u'password': u'johns_password', u'email': u'John@example.com'}"
+            var data = @"{u'username': u'John@example.com', u'ips': [u'1.1.1.1', u'2.2.2.2'], u'password': u'johns_password', u'email': u'John@example.com'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.subusers.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.subusers.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_subusers_get()
         {
-            params = @"{'username': 'test_string', 'limit': 0, 'offset': 0}"
+            var params = @"{'username': 'test_string', 'limit': 0, 'offset': 0}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.subusers.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.subusers.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_subusers_reputations_get()
         {
-            params = @"{'usernames': 'test_string'}"
+            var params = @"{'usernames': 'test_string'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.subusers.reputations.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.subusers.reputations.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_subusers_stats_get()
         {
-            params = @"{'end_date': '2016-04-01', 'aggregated_by': 'day', 'limit': 1, 'offset': 1, 'start_date': '2016-01-01', 'subusers': 'test_string'}"
+            var params = @"{'end_date': '2016-04-01', 'aggregated_by': 'day', 'limit': 1, 'offset': 1, 'start_date': '2016-01-01', 'subusers': 'test_string'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.subusers.stats.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.subusers.stats.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_subusers_stats_monthly_get()
         {
-            params = @"{'subuser': 'test_string', 'limit': 1, 'sort_by_metric': 'test_string', 'offset': 1, 'date': 'test_string', 'sort_by_direction': 'asc'}"
+            var params = @"{'subuser': 'test_string', 'limit': 1, 'sort_by_metric': 'test_string', 'offset': 1, 'date': 'test_string', 'sort_by_direction': 'asc'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.subusers.stats.monthly.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.subusers.stats.monthly.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_subusers_stats_sums_get()
         {
-            params = @"{'end_date': '2016-04-01', 'aggregated_by': 'day', 'limit': 1, 'sort_by_metric': 'test_string', 'offset': 1, 'start_date': '2016-01-01', 'sort_by_direction': 'asc'}"
+            var params = @"{'end_date': '2016-04-01', 'aggregated_by': 'day', 'limit': 1, 'sort_by_metric': 'test_string', 'offset': 1, 'start_date': '2016-01-01', 'sort_by_direction': 'asc'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.subusers.stats.sums.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.subusers.stats.sums.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_subusers__subuser_name__patch()
         {
-            data = @"{u'disabled': False}"
+            var data = @"{u'disabled': False}";
             subuser_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.subusers._(subuser_name).patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.subusers._(subuser_name).patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -1593,43 +1593,43 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.subusers._(subuser_name).delete(requestHeaders: headers)
+            dynamic response = sg.client.subusers._(subuser_name).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_subusers__subuser_name__ips_put()
         {
-            data = @"[u'127.0.0.1']"
+            var data = @"[u'127.0.0.1']";
             subuser_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.subusers._(subuser_name).ips.put(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.subusers._(subuser_name).ips.put(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_subusers__subuser_name__monitor_put()
         {
-            data = @"{u'frequency': 500, u'email': u'example@example.com'}"
+            var data = @"{u'frequency': 500, u'email': u'example@example.com'}";
             subuser_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.subusers._(subuser_name).monitor.put(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.subusers._(subuser_name).monitor.put(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_subusers__subuser_name__monitor_post()
         {
-            data = @"{u'frequency': 50000, u'email': u'example@example.com'}"
+            var data = @"{u'frequency': 50000, u'email': u'example@example.com'}";
             subuser_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.subusers._(subuser_name).monitor.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.subusers._(subuser_name).monitor.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1640,7 +1640,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.subusers._(subuser_name).monitor.get(requestHeaders: headers)
+            dynamic response = sg.client.subusers._(subuser_name).monitor.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1651,41 +1651,41 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.subusers._(subuser_name).monitor.delete(requestHeaders: headers)
+            dynamic response = sg.client.subusers._(subuser_name).monitor.delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_subusers__subuser_name__stats_monthly_get()
         {
-            params = @"{'date': 'test_string', 'sort_by_direction': 'asc', 'limit': 0, 'sort_by_metric': 'test_string', 'offset': 1}"
+            var params = @"{'date': 'test_string', 'sort_by_direction': 'asc', 'limit': 0, 'sort_by_metric': 'test_string', 'offset': 1}";
             subuser_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.subusers._(subuser_name).stats.monthly.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.subusers._(subuser_name).stats.monthly.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_suppression_blocks_get()
         {
-            params = @"{'start_time': 1, 'limit': 1, 'end_time': 1, 'offset': 1}"
+            var params = @"{'start_time': 1, 'limit': 1, 'end_time': 1, 'offset': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.suppression.blocks.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.suppression.blocks.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_suppression_blocks_delete()
         {
-            data = @"{u'emails': [u'example1@example.com', u'example2@example.com'], u'delete_all': False}"
+            var data = @"{u'emails': [u'example1@example.com', u'example2@example.com'], u'delete_all': False}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.suppression.blocks.delete(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.suppression.blocks.delete(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -1696,7 +1696,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.suppression.blocks._(email).get(requestHeaders: headers)
+            dynamic response = sg.client.suppression.blocks._(email).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1707,29 +1707,29 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.suppression.blocks._(email).delete(requestHeaders: headers)
+            dynamic response = sg.client.suppression.blocks._(email).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_suppression_bounces_get()
         {
-            params = @"{'start_time': 0, 'end_time': 0}"
+            var params = @"{'start_time': 0, 'end_time': 0}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.suppression.bounces.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.suppression.bounces.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_suppression_bounces_delete()
         {
-            data = @"{u'emails': [u'example@example.com', u'example2@example.com'], u'delete_all': True}"
+            var data = @"{u'emails': [u'example@example.com', u'example2@example.com'], u'delete_all': True}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.suppression.bounces.delete(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.suppression.bounces.delete(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -1740,41 +1740,41 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.suppression.bounces._(email).get(requestHeaders: headers)
+            dynamic response = sg.client.suppression.bounces._(email).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_suppression_bounces__email__delete()
         {
-            params = @"{'email_address': 'example@example.com'}"
+            var params = @"{'email_address': 'example@example.com'}";
             email = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.suppression.bounces._(email).delete(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.suppression.bounces._(email).delete(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_suppression_invalid_emails_get()
         {
-            params = @"{'start_time': 1, 'limit': 1, 'end_time': 1, 'offset': 1}"
+            var params = @"{'start_time': 1, 'limit': 1, 'end_time': 1, 'offset': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.suppression.invalid_emails.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.suppression.invalid_emails.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_suppression_invalid_emails_delete()
         {
-            data = @"{u'emails': [u'example1@example.com', u'example2@example.com'], u'delete_all': False}"
+            var data = @"{u'emails': [u'example1@example.com', u'example2@example.com'], u'delete_all': False}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.suppression.invalid_emails.delete(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.suppression.invalid_emails.delete(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -1785,7 +1785,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.suppression.invalid_emails._(email).get(requestHeaders: headers)
+            dynamic response = sg.client.suppression.invalid_emails._(email).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1796,7 +1796,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.suppression.invalid_emails._(email).delete(requestHeaders: headers)
+            dynamic response = sg.client.suppression.invalid_emails._(email).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -1807,7 +1807,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.suppression.spam_report._(email).get(requestHeaders: headers)
+            dynamic response = sg.client.suppression.spam_report._(email).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1818,51 +1818,51 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.suppression.spam_report._(email).delete(requestHeaders: headers)
+            dynamic response = sg.client.suppression.spam_report._(email).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_suppression_spam_reports_get()
         {
-            params = @"{'start_time': 1, 'limit': 1, 'end_time': 1, 'offset': 1}"
+            var params = @"{'start_time': 1, 'limit': 1, 'end_time': 1, 'offset': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.suppression.spam_reports.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.suppression.spam_reports.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_suppression_spam_reports_delete()
         {
-            data = @"{u'emails': [u'example1@example.com', u'example2@example.com'], u'delete_all': False}"
+            var data = @"{u'emails': [u'example1@example.com', u'example2@example.com'], u'delete_all': False}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.suppression.spam_reports.delete(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.suppression.spam_reports.delete(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_suppression_unsubscribes_get()
         {
-            params = @"{'start_time': 1, 'limit': 1, 'end_time': 1, 'offset': 1}"
+            var params = @"{'start_time': 1, 'limit': 1, 'end_time': 1, 'offset': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.suppression.unsubscribes.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.suppression.unsubscribes.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_templates_post()
         {
-            data = @"{u'name': u'example_name'}"
+            var data = @"{u'name': u'example_name'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.templates.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.templates.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
@@ -1872,19 +1872,19 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.templates.get(requestHeaders: headers)
+            dynamic response = sg.client.templates.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_templates__template_id__patch()
         {
-            data = @"{u'name': u'new_example_name'}"
+            var data = @"{u'name': u'new_example_name'}";
             template_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.templates._(template_id).patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.templates._(template_id).patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1895,7 +1895,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.templates._(template_id).get(requestHeaders: headers)
+            dynamic response = sg.client.templates._(template_id).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1906,32 +1906,32 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.templates._(template_id).delete(requestHeaders: headers)
+            dynamic response = sg.client.templates._(template_id).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_templates__template_id__versions_post()
         {
-            data = @"{u'name': u'example_version_name', u'html_content': u'<%body%>', u'plain_content': u'<%body%>', u'active': 1, u'template_id': u'ddb96bbc-9b92-425e-8979-99464621b543', u'subject': u'<%subject%>'}"
+            var data = @"{u'name': u'example_version_name', u'html_content': u'<%body%>', u'plain_content': u'<%body%>', u'active': 1, u'template_id': u'ddb96bbc-9b92-425e-8979-99464621b543', u'subject': u'<%subject%>'}";
             template_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.templates._(template_id).versions.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.templates._(template_id).versions.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
         [Test]
         public void test_templates__template_id__versions__version_id__patch()
         {
-            data = @"{u'active': 1, u'html_content': u'<%body%>', u'subject': u'<%subject%>', u'name': u'updated_example_name', u'plain_content': u'<%body%>'}"
+            var data = @"{u'active': 1, u'html_content': u'<%body%>', u'subject': u'<%subject%>', u'name': u'updated_example_name', u'plain_content': u'<%body%>'}";
             template_id = "test_url_param";
         version_id = "test_url_param"
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.templates._(template_id).versions._(version_id).patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.templates._(template_id).versions._(version_id).patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1943,7 +1943,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.templates._(template_id).versions._(version_id).get(requestHeaders: headers)
+            dynamic response = sg.client.templates._(template_id).versions._(version_id).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1955,7 +1955,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.templates._(template_id).versions._(version_id).delete(requestHeaders: headers)
+            dynamic response = sg.client.templates._(template_id).versions._(version_id).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -1967,29 +1967,29 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.templates._(template_id).versions._(version_id).activate.post(requestHeaders: headers)
+            dynamic response = sg.client.templates._(template_id).versions._(version_id).activate.post(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_tracking_settings_get()
         {
-            params = @"{'limit': 1, 'offset': 1}"
+            var params = @"{'limit': 1, 'offset': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.tracking_settings.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.tracking_settings.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_tracking_settings_click_patch()
         {
-            data = @"{u'enabled': True}"
+            var data = @"{u'enabled': True}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.tracking_settings.click.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.tracking_settings.click.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1999,18 +1999,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.tracking_settings.click.get(requestHeaders: headers)
+            dynamic response = sg.client.tracking_settings.click.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_tracking_settings_google_analytics_patch()
         {
-            data = @"{u'utm_campaign': u'website', u'utm_term': u'', u'utm_content': u'', u'enabled': True, u'utm_source': u'sendgrid.com', u'utm_medium': u'email'}"
+            var data = @"{u'utm_campaign': u'website', u'utm_term': u'', u'utm_content': u'', u'enabled': True, u'utm_source': u'sendgrid.com', u'utm_medium': u'email'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.tracking_settings.google_analytics.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.tracking_settings.google_analytics.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2020,18 +2020,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.tracking_settings.google_analytics.get(requestHeaders: headers)
+            dynamic response = sg.client.tracking_settings.google_analytics.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_tracking_settings_open_patch()
         {
-            data = @"{u'enabled': True}"
+            var data = @"{u'enabled': True}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.tracking_settings.open.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.tracking_settings.open.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2041,18 +2041,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.tracking_settings.open.get(requestHeaders: headers)
+            dynamic response = sg.client.tracking_settings.open.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_tracking_settings_subscription_patch()
         {
-            data = @"{u'url': u'url', u'html_content': u'html content', u'enabled': True, u'landing': u'landing page html', u'replace': u'replacement tag', u'plain_content': u'text content'}"
+            var data = @"{u'url': u'url', u'html_content': u'html content', u'enabled': True, u'landing': u'landing page html', u'replace': u'replacement tag', u'plain_content': u'text content'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.tracking_settings.subscription.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.tracking_settings.subscription.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2062,7 +2062,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.tracking_settings.subscription.get(requestHeaders: headers)
+            dynamic response = sg.client.tracking_settings.subscription.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2072,7 +2072,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.account.get(requestHeaders: headers)
+            dynamic response = sg.client.user.account.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2082,18 +2082,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.credits.get(requestHeaders: headers)
+            dynamic response = sg.client.user.credits.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_user_email_put()
         {
-            data = @"{u'email': u'example@example.com'}"
+            var data = @"{u'email': u'example@example.com'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.email.put(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.user.email.put(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2103,29 +2103,29 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.email.get(requestHeaders: headers)
+            dynamic response = sg.client.user.email.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_user_password_put()
         {
-            data = @"{u'new_password': u'new_password', u'old_password': u'old_password'}"
+            var data = @"{u'new_password': u'new_password', u'old_password': u'old_password'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.password.put(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.user.password.put(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_user_profile_patch()
         {
-            data = @"{u'city': u'Orange', u'first_name': u'Example', u'last_name': u'User'}"
+            var data = @"{u'city': u'Orange', u'first_name': u'Example', u'last_name': u'User'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.profile.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.user.profile.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2135,18 +2135,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.profile.get(requestHeaders: headers)
+            dynamic response = sg.client.user.profile.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_user_scheduled_sends_post()
         {
-            data = @"{u'batch_id': u'YOUR_BATCH_ID', u'status': u'pause'}"
+            var data = @"{u'batch_id': u'YOUR_BATCH_ID', u'status': u'pause'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.user.scheduled_sends.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.user.scheduled_sends.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
@@ -2156,19 +2156,19 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.scheduled_sends.get(requestHeaders: headers)
+            dynamic response = sg.client.user.scheduled_sends.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_user_scheduled_sends__batch_id__patch()
         {
-            data = @"{u'status': u'pause'}"
+            var data = @"{u'status': u'pause'}";
             batch_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.user.scheduled_sends._(batch_id).patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.user.scheduled_sends._(batch_id).patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -2179,7 +2179,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.scheduled_sends._(batch_id).get(requestHeaders: headers)
+            dynamic response = sg.client.user.scheduled_sends._(batch_id).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2190,18 +2190,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.user.scheduled_sends._(batch_id).delete(requestHeaders: headers)
+            dynamic response = sg.client.user.scheduled_sends._(batch_id).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_user_settings_enforced_tls_patch()
         {
-            data = @"{u'require_tls': True, u'require_valid_cert': False}"
+            var data = @"{u'require_tls': True, u'require_valid_cert': False}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.settings.enforced_tls.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.user.settings.enforced_tls.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2211,18 +2211,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.settings.enforced_tls.get(requestHeaders: headers)
+            dynamic response = sg.client.user.settings.enforced_tls.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_user_username_put()
         {
-            data = @"{u'username': u'test_username'}"
+            var data = @"{u'username': u'test_username'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.username.put(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.user.username.put(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2232,18 +2232,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.username.get(requestHeaders: headers)
+            dynamic response = sg.client.user.username.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_user_webhooks_event_settings_patch()
         {
-            data = @"{u'group_resubscribe': True, u'delivered': True, u'group_unsubscribe': True, u'spam_report': True, u'url': u'url', u'enabled': True, u'bounce': True, u'deferred': True, u'unsubscribe': True, u'dropped': True, u'open': True, u'click': True, u'processed': True}"
+            var data = @"{u'group_resubscribe': True, u'delivered': True, u'group_unsubscribe': True, u'spam_report': True, u'url': u'url', u'enabled': True, u'bounce': True, u'deferred': True, u'unsubscribe': True, u'dropped': True, u'open': True, u'click': True, u'processed': True}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.webhooks.event.settings.patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.user.webhooks.event.settings.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2253,18 +2253,18 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.webhooks.event.settings.get(requestHeaders: headers)
+            dynamic response = sg.client.user.webhooks.event.settings.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_user_webhooks_event_test_post()
         {
-            data = @"{u'url': u'url'}"
+            var data = @"{u'url': u'url'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.user.webhooks.event.test.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.user.webhooks.event.test.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -2274,40 +2274,40 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.webhooks.parse.settings.get(requestHeaders: headers)
+            dynamic response = sg.client.user.webhooks.parse.settings.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_user_webhooks_parse_stats_get()
         {
-            params = @"{'aggregated_by': 'day', 'limit': 'test_string', 'start_date': '2016-01-01', 'end_date': '2016-04-01', 'offset': 'test_string'}"
+            var params = @"{'aggregated_by': 'day', 'limit': 'test_string', 'start_date': '2016-01-01', 'end_date': '2016-04-01', 'offset': 'test_string'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.user.webhooks.parse.stats.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.user.webhooks.parse.stats.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_whitelabel_domains_post()
         {
-            data = @"{u'automatic_security': False, u'username': u'john@example.com', u'domain': u'example.com', u'default': True, u'custom_spf': True, u'ips': [u'192.168.1.1', u'192.168.1.2'], u'subdomain': u'news'}"
+            var data = @"{u'automatic_security': False, u'username': u'john@example.com', u'domain': u'example.com', u'default': True, u'custom_spf': True, u'ips': [u'192.168.1.1', u'192.168.1.2'], u'subdomain': u'news'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.whitelabel.domains.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.domains.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
         [Test]
         public void test_whitelabel_domains_get()
         {
-            params = @"{'username': 'test_string', 'domain': 'test_string', 'exclude_subusers': 'true', 'limit': 1, 'offset': 1}"
+            var params = @"{'username': 'test_string', 'domain': 'test_string', 'exclude_subusers': 'true', 'limit': 1, 'offset': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.domains.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.domains.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2317,7 +2317,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.domains.default.get(requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.domains.default.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2327,7 +2327,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.domains.subuser.get(requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.domains.subuser.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2337,19 +2337,19 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.whitelabel.domains.subuser.delete(requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.domains.subuser.delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_whitelabel_domains__domain_id__patch()
         {
-            data = @"{u'default': False, u'custom_spf': True}"
+            var data = @"{u'default': False, u'custom_spf': True}";
             domain_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.domains._(domain_id).patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.domains._(domain_id).patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2360,7 +2360,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.domains._(domain_id).get(requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.domains._(domain_id).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2371,31 +2371,31 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.whitelabel.domains._(domain_id).delete(requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.domains._(domain_id).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_whitelabel_domains__domain_id__subuser_post()
         {
-            data = @"{u'username': u'jane@example.com'}"
+            var data = @"{u'username': u'jane@example.com'}";
             domain_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.whitelabel.domains._(domain_id).subuser.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.domains._(domain_id).subuser.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
         [Test]
         public void test_whitelabel_domains__id__ips_post()
         {
-            data = @"{u'ip': u'192.168.0.1'}"
+            var data = @"{u'ip': u'192.168.0.1'}";
             id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.domains._(id).ips.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.domains._(id).ips.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2407,7 +2407,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.domains._(id).ips._(ip).delete(requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.domains._(id).ips._(ip).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2418,29 +2418,29 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.domains._(id).validate.post(requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.domains._(id).validate.post(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_whitelabel_ips_post()
         {
-            data = @"{u'ip': u'192.168.1.1', u'domain': u'example.com', u'subdomain': u'email'}"
+            var data = @"{u'ip': u'192.168.1.1', u'domain': u'example.com', u'subdomain': u'email'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.whitelabel.ips.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.ips.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
         [Test]
         public void test_whitelabel_ips_get()
         {
-            params = @"{'ip': 'test_string', 'limit': 1, 'offset': 1}"
+            var params = @"{'ip': 'test_string', 'limit': 1, 'offset': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.ips.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.ips.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2451,7 +2451,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.ips._(id).get(requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.ips._(id).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2462,7 +2462,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.whitelabel.ips._(id).delete(requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.ips._(id).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -2473,75 +2473,75 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.ips._(id).validate.post(requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.ips._(id).validate.post(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_whitelabel_links_post()
         {
-            data = @"{u'default': True, u'domain': u'example.com', u'subdomain': u'mail'}"
-            params = @"{'limit': 1, 'offset': 1}"
+            var data = @"{u'default': True, u'domain': u'example.com', u'subdomain': u'mail'}";
+            var params = @"{'limit': 1, 'offset': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
-            dynamic response = sg.client.whitelabel.links.post(requestBody: data, queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.links.post(requestBody: data, queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
         [Test]
         public void test_whitelabel_links_get()
         {
-            params = @"{'limit': 1}"
+            var params = @"{'limit': 1}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.links.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.links.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_whitelabel_links_default_get()
         {
-            params = @"{'domain': 'test_string'}"
+            var params = @"{'domain': 'test_string'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.links.default.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.links.default.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_whitelabel_links_subuser_get()
         {
-            params = @"{'username': 'test_string'}"
+            var params = @"{'username': 'test_string'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.links.subuser.get(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.links.subuser.get(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_whitelabel_links_subuser_delete()
         {
-            params = @"{'username': 'test_string'}"
+            var params = @"{'username': 'test_string'}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.whitelabel.links.subuser.delete(queryParams: params, requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.links.subuser.delete(queryParams: params, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
         [Test]
         public void test_whitelabel_links__id__patch()
         {
-            data = @"{u'default': True}"
+            var data = @"{u'default': True}";
             id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.links._(id).patch(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.links._(id).patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2552,7 +2552,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.links._(id).get(requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.links._(id).get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2563,7 +2563,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
-            dynamic response = sg.client.whitelabel.links._(id).delete(requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.links._(id).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -2574,19 +2574,19 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.links._(id).validate.post(requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.links._(id).validate.post(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
         [Test]
         public void test_whitelabel_links__link_id__subuser_post()
         {
-            data = @"{u'username': u'jane@example.com'}"
+            var data = @"{u'username': u'jane@example.com'}";
             link_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
-            dynamic response = sg.client.whitelabel.links._(link_id).subuser.post(requestBody: data, requestHeaders: headers)
+            dynamic response = sg.client.whitelabel.links._(link_id).subuser.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
