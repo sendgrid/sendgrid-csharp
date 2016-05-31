@@ -1,4 +1,4 @@
-[![BuildStatus](https://travis-ci.org/sendgrid/sendgrid-csharp.png?branch=v3beta)](https://travis-ci.org/sendgrid/sendgrid-csharp
+[![BuildStatus](https://travis-ci.org/sendgrid/sendgrid-csharp.png?branch=v3beta)](https://travis-ci.org/sendgrid/sendgrid-csharp)
 
 **This library allows you to quickly and easily use the SendGrid Web API via C Sharp with .NET.**
 
