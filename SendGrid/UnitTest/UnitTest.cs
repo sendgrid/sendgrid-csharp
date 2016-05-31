@@ -238,7 +238,7 @@ namespace UnitTest
     public class v3WebAPI
     {
         static string _apiKey = "SendGrid API Key";
-        host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+        var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
         public dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
         [Test]
         public void test_access_settings_activity_get()
