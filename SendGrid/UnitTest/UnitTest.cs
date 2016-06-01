@@ -252,7 +252,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.access_settings.activity.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -278,7 +278,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.access_settings.whitelist.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -291,7 +291,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.access_settings.whitelist.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -311,7 +311,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.access_settings.whitelist.delete(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -325,7 +325,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.access_settings.whitelist._(rule_id).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -339,7 +339,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.access_settings.whitelist._(rule_id).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -360,7 +360,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.api_keys.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -373,7 +373,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.api_keys.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -394,7 +394,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.api_keys._(api_key_id).put(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -411,7 +411,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.api_keys._(api_key_id).patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -425,7 +425,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.api_keys._(api_key_id).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -439,7 +439,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.api_keys._(api_key_id).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -457,7 +457,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.asm.groups.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -470,7 +470,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.asm.groups.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -489,7 +489,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.asm.groups._(group_id).patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -503,7 +503,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.asm.groups._(group_id).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -517,7 +517,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.asm.groups._(group_id).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -537,7 +537,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.asm.groups._(group_id).suppressions.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -551,7 +551,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.asm.groups._(group_id).suppressions.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -566,7 +566,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.asm.groups._(group_id).suppressions._(email).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -585,7 +585,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.asm.suppressions.global.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -599,7 +599,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.asm.suppressions.global._(email).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -613,7 +613,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.asm.suppressions.global._(email).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -634,7 +634,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.browsers.stats.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -667,7 +667,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.campaigns.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -684,7 +684,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.campaigns.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -707,7 +707,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.campaigns._(campaign_id).patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -721,7 +721,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.campaigns._(campaign_id).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -735,7 +735,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.campaigns._(campaign_id).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -752,7 +752,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.campaigns._(campaign_id).schedules.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -769,7 +769,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.campaigns._(campaign_id).schedules.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -783,7 +783,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.campaigns._(campaign_id).schedules.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -797,7 +797,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.campaigns._(campaign_id).schedules.delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -811,7 +811,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.campaigns._(campaign_id).schedules.now.post(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -828,7 +828,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.campaigns._(campaign_id).schedules.test.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -846,7 +846,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.categories.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -867,7 +867,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.categories.stats.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -889,7 +889,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.categories.stats.sums.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -907,7 +907,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.clients.stats.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -926,7 +926,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.clients._(client_type).stats.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -943,7 +943,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.contactdb.custom_fields.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -956,7 +956,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.custom_fields.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -970,7 +970,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.custom_fields._(custom_field_id).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -984,7 +984,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "202");
             dynamic response = sg.client.contactdb.custom_fields._(custom_field_id).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 202);
+            Assert.AreEqual(response.StatusCode, );
         }
 
         [Test]
@@ -1000,7 +1000,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.contactdb.lists.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -1013,7 +1013,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.lists.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1032,7 +1032,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.contactdb.lists.delete(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -1052,7 +1052,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.lists._(list_id).patch(requestBody: data, queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1069,7 +1069,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.lists._(list_id).get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1086,7 +1086,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "202");
             dynamic response = sg.client.contactdb.lists._(list_id).delete(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 202);
+            Assert.AreEqual(response.StatusCode, );
         }
 
         [Test]
@@ -1104,7 +1104,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.contactdb.lists._(list_id).recipients.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -1123,7 +1123,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.lists._(list_id).recipients.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1138,7 +1138,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.contactdb.lists._(list_id).recipients._(recipient_id).post(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -1157,7 +1157,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.contactdb.lists._(list_id).recipients._(recipient_id).delete(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -1177,7 +1177,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.contactdb.recipients.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -1204,7 +1204,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.contactdb.recipients.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -1221,7 +1221,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.recipients.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1238,7 +1238,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.recipients.delete(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1251,7 +1251,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.recipients.billable_count.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1264,7 +1264,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.recipients.count.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1280,7 +1280,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.recipients.search.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1294,7 +1294,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.recipients._(recipient_id).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1308,7 +1308,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.contactdb.recipients._(recipient_id).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -1322,7 +1322,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.recipients._(recipient_id).lists.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1335,7 +1335,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.reserved_fields.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1372,7 +1372,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.segments.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1385,7 +1385,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.segments.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1414,7 +1414,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.segments._(segment_id).patch(requestBody: data, queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1431,7 +1431,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.segments._(segment_id).get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1448,7 +1448,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.contactdb.segments._(segment_id).delete(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -1466,7 +1466,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.contactdb.segments._(segment_id).recipients.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1486,7 +1486,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.devices.stats.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1507,7 +1507,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.geo.stats.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1527,7 +1527,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.ips.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1540,7 +1540,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.ips.assigned.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1556,7 +1556,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.ips.pools.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1569,7 +1569,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.ips.pools.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1586,7 +1586,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.ips.pools._(pool_name).put(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1600,7 +1600,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.ips.pools._(pool_name).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1614,7 +1614,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.ips.pools._(pool_name).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -1631,7 +1631,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.ips.pools._(pool_name).ips.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -1646,7 +1646,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.ips.pools._(pool_name).ips._(ip).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -1662,7 +1662,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.ips.warmup.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1675,7 +1675,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.ips.warmup.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1689,7 +1689,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.ips.warmup._(ip_address).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1703,7 +1703,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.ips.warmup._(ip_address).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -1717,7 +1717,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.ips._(ip_address).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1730,7 +1730,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.mail.batch.post(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -1744,7 +1744,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail.batch._(batch_id).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1900,7 +1900,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "202");
             dynamic response = sg.client.mail.send.beta.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 202);
+            Assert.AreEqual(response.StatusCode, );
         }
 
         [Test]
@@ -1917,7 +1917,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1937,7 +1937,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.address_whitelist.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1950,7 +1950,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.address_whitelist.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1967,7 +1967,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.bcc.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1980,7 +1980,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.bcc.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -1998,7 +1998,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.bounce_purge.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2011,7 +2011,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.bounce_purge.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2029,7 +2029,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.footer.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2042,7 +2042,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.footer.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2059,7 +2059,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.forward_bounce.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2072,7 +2072,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.forward_bounce.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2089,7 +2089,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.forward_spam.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2102,7 +2102,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.forward_spam.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2118,7 +2118,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.plain_content.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2131,7 +2131,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.plain_content.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2149,7 +2149,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.spam_check.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2162,7 +2162,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.spam_check.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2179,7 +2179,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.template.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2192,7 +2192,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mail_settings.template.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2213,7 +2213,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.mailbox_providers.stats.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2230,7 +2230,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.partner_settings.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2248,7 +2248,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.partner_settings.new_relic.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2261,7 +2261,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.partner_settings.new_relic.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2274,7 +2274,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.scopes.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2294,7 +2294,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.stats.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2316,7 +2316,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.subusers.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2334,7 +2334,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.subusers.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2350,7 +2350,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.subusers.reputations.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2371,7 +2371,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.subusers.stats.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2392,7 +2392,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.subusers.stats.monthly.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2414,7 +2414,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.subusers.stats.sums.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2431,7 +2431,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.subusers._(subuser_name).patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -2445,7 +2445,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.subusers._(subuser_name).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -2462,7 +2462,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.subusers._(subuser_name).ips.put(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2480,7 +2480,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.subusers._(subuser_name).monitor.put(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2498,7 +2498,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.subusers._(subuser_name).monitor.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2512,7 +2512,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.subusers._(subuser_name).monitor.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2526,7 +2526,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.subusers._(subuser_name).monitor.delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -2547,7 +2547,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.subusers._(subuser_name).stats.monthly.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2566,7 +2566,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.suppression.blocks.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2586,7 +2586,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.suppression.blocks.delete(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -2600,7 +2600,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.suppression.blocks._(email).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2614,7 +2614,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.suppression.blocks._(email).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -2631,7 +2631,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.suppression.bounces.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2651,7 +2651,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.suppression.bounces.delete(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -2665,7 +2665,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.suppression.bounces._(email).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2682,7 +2682,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.suppression.bounces._(email).delete(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -2701,7 +2701,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.suppression.invalid_emails.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2721,7 +2721,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.suppression.invalid_emails.delete(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -2735,7 +2735,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.suppression.invalid_emails._(email).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2749,7 +2749,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.suppression.invalid_emails._(email).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -2763,7 +2763,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.suppression.spam_report._(email).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2777,7 +2777,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.suppression.spam_report._(email).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -2796,7 +2796,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.suppression.spam_reports.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2816,7 +2816,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.suppression.spam_reports.delete(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -2835,7 +2835,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.suppression.unsubscribes.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2851,7 +2851,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.templates.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -2864,7 +2864,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.templates.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2881,7 +2881,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.templates._(template_id).patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2895,7 +2895,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.templates._(template_id).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2909,7 +2909,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.templates._(template_id).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -2931,7 +2931,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.templates._(template_id).versions.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -2953,7 +2953,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.templates._(template_id).versions._(version_id).patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2968,7 +2968,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.templates._(template_id).versions._(version_id).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2983,7 +2983,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.templates._(template_id).versions._(version_id).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -2998,7 +2998,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.templates._(template_id).versions._(version_id).activate.post(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3015,7 +3015,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.tracking_settings.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3031,7 +3031,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.tracking_settings.click.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3044,7 +3044,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.tracking_settings.click.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3065,7 +3065,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.tracking_settings.google_analytics.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3078,7 +3078,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.tracking_settings.google_analytics.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3094,7 +3094,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.tracking_settings.open.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3107,7 +3107,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.tracking_settings.open.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3128,7 +3128,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.tracking_settings.subscription.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3141,7 +3141,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.tracking_settings.subscription.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3154,7 +3154,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.account.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3167,7 +3167,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.credits.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3183,7 +3183,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.email.put(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3196,7 +3196,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.email.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3213,7 +3213,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.password.put(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3231,7 +3231,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.profile.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3244,7 +3244,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.profile.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3261,7 +3261,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.user.scheduled_sends.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -3274,7 +3274,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.scheduled_sends.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3291,7 +3291,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.user.scheduled_sends._(batch_id).patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -3305,7 +3305,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.scheduled_sends._(batch_id).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3319,7 +3319,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.user.scheduled_sends._(batch_id).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -3336,7 +3336,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.settings.enforced_tls.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3349,7 +3349,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.settings.enforced_tls.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3365,7 +3365,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.username.put(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3378,7 +3378,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.username.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3406,7 +3406,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.webhooks._("event").settings.patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3419,7 +3419,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.webhooks._("event").settings.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3435,7 +3435,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.user.webhooks._("event").test.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -3448,7 +3448,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.webhooks.parse.settings.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3468,7 +3468,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.user.webhooks.parse.stats.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3493,7 +3493,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.whitelabel.domains.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -3513,7 +3513,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.domains.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3526,7 +3526,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.domains._("default").get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3539,7 +3539,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.domains.subuser.get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3552,7 +3552,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.whitelabel.domains.subuser.delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -3570,7 +3570,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.domains._(domain_id).patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3584,7 +3584,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.domains._(domain_id).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3598,7 +3598,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.whitelabel.domains._(domain_id).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -3615,7 +3615,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.whitelabel.domains._(domain_id).subuser.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -3632,7 +3632,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.domains._(id).ips.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3647,7 +3647,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.domains._(id).ips._(ip).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3661,7 +3661,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.domains._(id).validate.post(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3679,7 +3679,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.whitelabel.ips.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -3697,7 +3697,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.ips.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3711,7 +3711,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.ips._(id).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3725,7 +3725,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.whitelabel.ips._(id).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -3739,7 +3739,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.ips._(id).validate.post(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3761,7 +3761,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             dynamic response = sg.client.whitelabel.links.post(requestBody: data, queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -3777,7 +3777,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.links.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3793,7 +3793,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.links._("default").get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3809,7 +3809,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.links.subuser.get(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3825,7 +3825,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.whitelabel.links.subuser.delete(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -3842,7 +3842,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.links._(id).patch(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3856,7 +3856,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.links._(id).get(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3870,7 +3870,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.whitelabel.links._(id).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 204);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -3884,7 +3884,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.links._(id).validate.post(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -3901,7 +3901,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.whitelabel.links._(link_id).subuser.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, 200);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
     }
