@@ -245,13 +245,13 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'limit': 1
 }";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.access_settings.activity.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.access_settings.activity.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -622,7 +622,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'aggregated_by': 'day',
   'browsers': 'test_string',
   'end_date': '2016-04-01',
@@ -633,7 +633,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.browsers.stats.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.browsers.stats.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -676,14 +676,14 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'limit': 0,
   'offset': 0
 }";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.campaigns.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.campaigns.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -837,7 +837,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'category': 'test_string',
   'limit': 1,
   'offset': 1
@@ -845,7 +845,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.categories.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.categories.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -855,7 +855,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'aggregated_by': 'day',
   'categories': 'test_string',
   'end_date': '2016-04-01',
@@ -866,7 +866,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.categories.stats.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.categories.stats.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -876,7 +876,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'aggregated_by': 'day',
   'end_date': '2016-04-01',
   'limit': 1,
@@ -888,7 +888,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.categories.stats.sums.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.categories.stats.sums.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -898,7 +898,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'aggregated_by': 'day',
   'end_date': '2016-04-01',
   'start_date': '2016-01-01'
@@ -906,7 +906,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.clients.stats.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.clients.stats.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -916,7 +916,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'aggregated_by': 'day',
   'end_date': '2016-04-01',
   'start_date': '2016-01-01'
@@ -925,7 +925,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.clients._(client_type).stats.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.clients._(client_type).stats.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1044,14 +1044,14 @@ namespace UnitTest
             string data = @"{
   'name': 'newlistname'
 }";
-            string params = @"{
+            string queryParams = @"{
   'list_id': 0
 }";
             var list_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.contactdb.lists._(list_id).patch(requestBody: data, queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.contactdb.lists._(list_id).patch(requestBody: data, queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1061,14 +1061,14 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'list_id': 0
 }";
             var list_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.contactdb.lists._(list_id).get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.contactdb.lists._(list_id).get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1078,14 +1078,14 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'delete_contacts': 'true'
 }";
             var list_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "202");
-            dynamic response = sg.client.contactdb.lists._(list_id).delete(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.contactdb.lists._(list_id).delete(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 202);
         }
 
@@ -1113,7 +1113,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'list_id': 0,
   'page': 1,
   'page_size': 1
@@ -1122,7 +1122,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.contactdb.lists._(list_id).recipients.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.contactdb.lists._(list_id).recipients.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1147,7 +1147,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'list_id': 0,
   'recipient_id': 0
 }";
@@ -1156,7 +1156,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = sg.client.contactdb.lists._(list_id).recipients._(recipient_id).delete(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.contactdb.lists._(list_id).recipients._(recipient_id).delete(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -1213,14 +1213,14 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'page': 1,
   'page_size': 1
 }";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.contactdb.recipients.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.contactdb.recipients.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1273,13 +1273,13 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   '{field_name}': 'test_string'
 }";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.contactdb.recipients.search.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.contactdb.recipients.search.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1406,14 +1406,14 @@ namespace UnitTest
   'list_id': 5,
   'name': 'The Millers'
 }";
-            string params = @"{
+            string queryParams = @"{
   'segment_id': 'test_string'
 }";
             var segment_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.contactdb.segments._(segment_id).patch(requestBody: data, queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.contactdb.segments._(segment_id).patch(requestBody: data, queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1423,14 +1423,14 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'segment_id': 0
 }";
             var segment_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.contactdb.segments._(segment_id).get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.contactdb.segments._(segment_id).get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1440,14 +1440,14 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'delete_contacts': 'true'
 }";
             var segment_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = sg.client.contactdb.segments._(segment_id).delete(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.contactdb.segments._(segment_id).delete(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -1457,7 +1457,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'page': 1,
   'page_size': 1
 }";
@@ -1465,7 +1465,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.contactdb.segments._(segment_id).recipients.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.contactdb.segments._(segment_id).recipients.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1475,7 +1475,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'aggregated_by': 'day',
   'end_date': '2016-04-01',
   'limit': 1,
@@ -1485,7 +1485,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.devices.stats.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.devices.stats.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1495,7 +1495,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'aggregated_by': 'day',
   'country': 'US',
   'end_date': '2016-04-01',
@@ -1506,7 +1506,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.geo.stats.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.geo.stats.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1516,7 +1516,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'exclude_whitelabels': 'true',
   'ip': 'test_string',
   'limit': 1,
@@ -1526,7 +1526,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.ips.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.ips.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -1909,14 +1909,14 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'limit': 1,
   'offset': 1
 }";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.mail_settings.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.mail_settings.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2201,7 +2201,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'aggregated_by': 'day',
   'end_date': '2016-04-01',
   'limit': 1,
@@ -2212,7 +2212,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.mailbox_providers.stats.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.mailbox_providers.stats.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2222,14 +2222,14 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'limit': 1,
   'offset': 1
 }";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.partner_settings.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.partner_settings.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2283,7 +2283,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'aggregated_by': 'day',
   'end_date': '2016-04-01',
   'limit': 1,
@@ -2293,7 +2293,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.stats.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.stats.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2325,7 +2325,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'limit': 0,
   'offset': 0,
   'username': 'test_string'
@@ -2333,7 +2333,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.subusers.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.subusers.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2343,13 +2343,13 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'usernames': 'test_string'
 }";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.subusers.reputations.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.subusers.reputations.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2359,7 +2359,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'aggregated_by': 'day',
   'end_date': '2016-04-01',
   'limit': 1,
@@ -2370,7 +2370,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.subusers.stats.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.subusers.stats.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2380,7 +2380,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'date': 'test_string',
   'limit': 1,
   'offset': 1,
@@ -2391,7 +2391,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.subusers.stats.monthly.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.subusers.stats.monthly.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2401,7 +2401,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'aggregated_by': 'day',
   'end_date': '2016-04-01',
   'limit': 1,
@@ -2413,7 +2413,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.subusers.stats.sums.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.subusers.stats.sums.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2535,7 +2535,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'date': 'test_string',
   'limit': 0,
   'offset': 1,
@@ -2546,7 +2546,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.subusers._(subuser_name).stats.monthly.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.subusers._(subuser_name).stats.monthly.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2556,7 +2556,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'end_time': 1,
   'limit': 1,
   'offset': 1,
@@ -2565,7 +2565,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.suppression.blocks.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.suppression.blocks.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2623,14 +2623,14 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'end_time': 0,
   'start_time': 0
 }";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.suppression.bounces.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.suppression.bounces.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2674,14 +2674,14 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'email_address': 'example@example.com'
 }";
             var email = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = sg.client.suppression.bounces._(email).delete(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.suppression.bounces._(email).delete(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
@@ -2691,7 +2691,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'end_time': 1,
   'limit': 1,
   'offset': 1,
@@ -2700,7 +2700,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.suppression.invalid_emails.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.suppression.invalid_emails.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2786,7 +2786,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'end_time': 1,
   'limit': 1,
   'offset': 1,
@@ -2795,7 +2795,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.suppression.spam_reports.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.suppression.spam_reports.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -2825,7 +2825,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'end_time': 1,
   'limit': 1,
   'offset': 1,
@@ -2834,7 +2834,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.suppression.unsubscribes.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.suppression.unsubscribes.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -3007,14 +3007,14 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'limit': 1,
   'offset': 1
 }";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.tracking_settings.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.tracking_settings.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -3457,7 +3457,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'aggregated_by': 'day',
   'end_date': '2016-04-01',
   'limit': 'test_string',
@@ -3467,7 +3467,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.user.webhooks.parse.stats.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.user.webhooks.parse.stats.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -3502,7 +3502,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'domain': 'test_string',
   'exclude_subusers': 'true',
   'limit': 1,
@@ -3512,7 +3512,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.whitelabel.domains.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.whitelabel.domains.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -3688,7 +3688,7 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'ip': 'test_string',
   'limit': 1,
   'offset': 1
@@ -3696,7 +3696,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.whitelabel.ips.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.whitelabel.ips.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -3753,14 +3753,14 @@ namespace UnitTest
   'domain': 'example.com',
   'subdomain': 'mail'
 }";
-            string params = @"{
+            string queryParams = @"{
   'limit': 1,
   'offset': 1
 }";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = sg.client.whitelabel.links.post(requestBody: data, queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.whitelabel.links.post(requestBody: data, queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 201);
         }
 
@@ -3770,13 +3770,13 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'limit': 1
 }";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.whitelabel.links.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.whitelabel.links.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -3786,13 +3786,13 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'domain': 'test_string'
 }";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.whitelabel.links._("default").get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.whitelabel.links._("default").get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -3802,13 +3802,13 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'username': 'test_string'
 }";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.whitelabel.links.subuser.get(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.whitelabel.links.subuser.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 200);
         }
 
@@ -3818,13 +3818,13 @@ namespace UnitTest
             string _apiKey = "SendGrid API Key";
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
-            string params = @"{
+            string queryParams = @"{
   'username': 'test_string'
 }";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = sg.client.whitelabel.links.subuser.delete(queryParams: params, requestHeaders: headers);
+            dynamic response = sg.client.whitelabel.links.subuser.delete(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, 204);
         }
 
