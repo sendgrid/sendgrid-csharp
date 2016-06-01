@@ -243,7 +243,12 @@ namespace UnitTest
         public void test_access_settings_activity_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'limit': 1
@@ -259,7 +264,12 @@ namespace UnitTest
         public void test_access_settings_whitelist_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'ips': [
@@ -285,7 +295,12 @@ namespace UnitTest
         public void test_access_settings_whitelist_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -298,7 +313,12 @@ namespace UnitTest
         public void test_access_settings_whitelist_delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'ids': [
@@ -318,7 +338,12 @@ namespace UnitTest
         public void test_access_settings_whitelist__rule_id__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var rule_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -332,7 +357,12 @@ namespace UnitTest
         public void test_access_settings_whitelist__rule_id__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var rule_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -346,7 +376,12 @@ namespace UnitTest
         public void test_api_keys_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'name': 'My API Key',
@@ -367,7 +402,12 @@ namespace UnitTest
         public void test_api_keys_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -380,7 +420,12 @@ namespace UnitTest
         public void test_api_keys__api_key_id__put()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'name': 'A New Hope',
@@ -401,7 +446,12 @@ namespace UnitTest
         public void test_api_keys__api_key_id__patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'name': 'A New Hope'
@@ -418,7 +468,12 @@ namespace UnitTest
         public void test_api_keys__api_key_id__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var api_key_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -432,7 +487,12 @@ namespace UnitTest
         public void test_api_keys__api_key_id__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var api_key_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -446,7 +506,12 @@ namespace UnitTest
         public void test_asm_groups_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'description': 'A group description',
@@ -464,7 +529,12 @@ namespace UnitTest
         public void test_asm_groups_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -477,7 +547,12 @@ namespace UnitTest
         public void test_asm_groups__group_id__patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'description': 'Suggestions for items our users might like.',
@@ -496,7 +571,12 @@ namespace UnitTest
         public void test_asm_groups__group_id__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var group_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -510,7 +590,12 @@ namespace UnitTest
         public void test_asm_groups__group_id__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var group_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -524,7 +609,12 @@ namespace UnitTest
         public void test_asm_groups__group_id__suppressions_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'recipient_emails': [
@@ -544,7 +634,12 @@ namespace UnitTest
         public void test_asm_groups__group_id__suppressions_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var group_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -558,7 +653,12 @@ namespace UnitTest
         public void test_asm_groups__group_id__suppressions__email__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var group_id = "test_url_param";
             var email = "test_url_param";
@@ -573,7 +673,12 @@ namespace UnitTest
         public void test_asm_suppressions_global_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'recipient_emails': [
@@ -592,7 +697,12 @@ namespace UnitTest
         public void test_asm_suppressions_global__email__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var email = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -606,7 +716,12 @@ namespace UnitTest
         public void test_asm_suppressions_global__email__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var email = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -620,7 +735,12 @@ namespace UnitTest
         public void test_browsers_stats_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'aggregated_by': 'day',
@@ -641,7 +761,12 @@ namespace UnitTest
         public void test_campaigns_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'categories': [
@@ -674,7 +799,12 @@ namespace UnitTest
         public void test_campaigns_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'limit': 0,
@@ -691,7 +821,12 @@ namespace UnitTest
         public void test_campaigns__campaign_id__patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'categories': [
@@ -714,7 +849,12 @@ namespace UnitTest
         public void test_campaigns__campaign_id__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var campaign_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -728,7 +868,12 @@ namespace UnitTest
         public void test_campaigns__campaign_id__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var campaign_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -742,7 +887,12 @@ namespace UnitTest
         public void test_campaigns__campaign_id__schedules_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'send_at': 1489451436
@@ -759,7 +909,12 @@ namespace UnitTest
         public void test_campaigns__campaign_id__schedules_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'send_at': 1489771528
@@ -776,7 +931,12 @@ namespace UnitTest
         public void test_campaigns__campaign_id__schedules_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var campaign_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -790,7 +950,12 @@ namespace UnitTest
         public void test_campaigns__campaign_id__schedules_delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var campaign_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -804,7 +969,12 @@ namespace UnitTest
         public void test_campaigns__campaign_id__schedules_now_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var campaign_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -818,7 +988,12 @@ namespace UnitTest
         public void test_campaigns__campaign_id__schedules_test_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'to': 'your.email@example.com'
@@ -835,7 +1010,12 @@ namespace UnitTest
         public void test_categories_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'category': 'test_string',
@@ -853,7 +1033,12 @@ namespace UnitTest
         public void test_categories_stats_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'aggregated_by': 'day',
@@ -874,7 +1059,12 @@ namespace UnitTest
         public void test_categories_stats_sums_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'aggregated_by': 'day',
@@ -896,7 +1086,12 @@ namespace UnitTest
         public void test_clients_stats_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'aggregated_by': 'day',
@@ -914,7 +1109,12 @@ namespace UnitTest
         public void test_clients__client_type__stats_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'aggregated_by': 'day',
@@ -933,7 +1133,12 @@ namespace UnitTest
         public void test_contactdb_custom_fields_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'name': 'pet',
@@ -950,7 +1155,12 @@ namespace UnitTest
         public void test_contactdb_custom_fields_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -963,7 +1173,12 @@ namespace UnitTest
         public void test_contactdb_custom_fields__custom_field_id__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var custom_field_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -977,7 +1192,12 @@ namespace UnitTest
         public void test_contactdb_custom_fields__custom_field_id__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var custom_field_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -991,7 +1211,12 @@ namespace UnitTest
         public void test_contactdb_lists_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'name': 'your list name'
@@ -1007,7 +1232,12 @@ namespace UnitTest
         public void test_contactdb_lists_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1020,7 +1250,12 @@ namespace UnitTest
         public void test_contactdb_lists_delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"[
   1,
@@ -1039,7 +1274,12 @@ namespace UnitTest
         public void test_contactdb_lists__list_id__patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'name': 'newlistname'
@@ -1059,7 +1299,12 @@ namespace UnitTest
         public void test_contactdb_lists__list_id__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'list_id': 0
@@ -1076,7 +1321,12 @@ namespace UnitTest
         public void test_contactdb_lists__list_id__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'delete_contacts': 'true'
@@ -1093,7 +1343,12 @@ namespace UnitTest
         public void test_contactdb_lists__list_id__recipients_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"[
   'recipient_id1',
@@ -1111,7 +1366,12 @@ namespace UnitTest
         public void test_contactdb_lists__list_id__recipients_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'list_id': 0,
@@ -1130,7 +1390,12 @@ namespace UnitTest
         public void test_contactdb_lists__list_id__recipients__recipient_id__post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var list_id = "test_url_param";
             var recipient_id = "test_url_param";
@@ -1145,7 +1410,12 @@ namespace UnitTest
         public void test_contactdb_lists__list_id__recipients__recipient_id__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'list_id': 0,
@@ -1164,7 +1434,12 @@ namespace UnitTest
         public void test_contactdb_recipients_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"[
   {
@@ -1184,7 +1459,12 @@ namespace UnitTest
         public void test_contactdb_recipients_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"[
   {
@@ -1211,7 +1491,12 @@ namespace UnitTest
         public void test_contactdb_recipients_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'page': 1,
@@ -1228,7 +1513,12 @@ namespace UnitTest
         public void test_contactdb_recipients_delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"[
   'recipient_id1',
@@ -1245,7 +1535,12 @@ namespace UnitTest
         public void test_contactdb_recipients_billable_count_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1258,7 +1553,12 @@ namespace UnitTest
         public void test_contactdb_recipients_count_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1271,7 +1571,12 @@ namespace UnitTest
         public void test_contactdb_recipients_search_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   '{field_name}': 'test_string'
@@ -1287,7 +1592,12 @@ namespace UnitTest
         public void test_contactdb_recipients__recipient_id__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var recipient_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -1301,7 +1611,12 @@ namespace UnitTest
         public void test_contactdb_recipients__recipient_id__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var recipient_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -1315,7 +1630,12 @@ namespace UnitTest
         public void test_contactdb_recipients__recipient_id__lists_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var recipient_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -1329,7 +1649,12 @@ namespace UnitTest
         public void test_contactdb_reserved_fields_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1342,7 +1667,12 @@ namespace UnitTest
         public void test_contactdb_segments_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'conditions': [
@@ -1379,7 +1709,12 @@ namespace UnitTest
         public void test_contactdb_segments_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1392,7 +1727,12 @@ namespace UnitTest
         public void test_contactdb_segments__segment_id__patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'conditions': [
@@ -1421,7 +1761,12 @@ namespace UnitTest
         public void test_contactdb_segments__segment_id__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'segment_id': 0
@@ -1438,7 +1783,12 @@ namespace UnitTest
         public void test_contactdb_segments__segment_id__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'delete_contacts': 'true'
@@ -1455,7 +1805,12 @@ namespace UnitTest
         public void test_contactdb_segments__segment_id__recipients_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'page': 1,
@@ -1473,7 +1828,12 @@ namespace UnitTest
         public void test_devices_stats_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'aggregated_by': 'day',
@@ -1493,7 +1853,12 @@ namespace UnitTest
         public void test_geo_stats_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'aggregated_by': 'day',
@@ -1514,7 +1879,12 @@ namespace UnitTest
         public void test_ips_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'exclude_whitelabels': 'true',
@@ -1534,7 +1904,12 @@ namespace UnitTest
         public void test_ips_assigned_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1547,7 +1922,12 @@ namespace UnitTest
         public void test_ips_pools_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'name': 'marketing'
@@ -1563,7 +1943,12 @@ namespace UnitTest
         public void test_ips_pools_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1576,7 +1961,12 @@ namespace UnitTest
         public void test_ips_pools__pool_name__put()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'name': 'new_pool_name'
@@ -1593,7 +1983,12 @@ namespace UnitTest
         public void test_ips_pools__pool_name__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var pool_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -1607,7 +2002,12 @@ namespace UnitTest
         public void test_ips_pools__pool_name__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var pool_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -1621,7 +2021,12 @@ namespace UnitTest
         public void test_ips_pools__pool_name__ips_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'ip': '0.0.0.0'
@@ -1638,7 +2043,12 @@ namespace UnitTest
         public void test_ips_pools__pool_name__ips__ip__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var pool_name = "test_url_param";
             var ip = "test_url_param";
@@ -1653,7 +2063,12 @@ namespace UnitTest
         public void test_ips_warmup_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'ip': '0.0.0.0'
@@ -1669,7 +2084,12 @@ namespace UnitTest
         public void test_ips_warmup_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1682,7 +2102,12 @@ namespace UnitTest
         public void test_ips_warmup__ip_address__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var ip_address = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -1696,7 +2121,12 @@ namespace UnitTest
         public void test_ips_warmup__ip_address__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var ip_address = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -1710,7 +2140,12 @@ namespace UnitTest
         public void test_ips__ip_address__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var ip_address = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -1724,7 +2159,12 @@ namespace UnitTest
         public void test_mail_batch_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1737,7 +2177,12 @@ namespace UnitTest
         public void test_mail_batch__batch_id__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var batch_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -1751,7 +2196,12 @@ namespace UnitTest
         public void test_mail_send_beta_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'asm': {
@@ -1907,7 +2357,12 @@ namespace UnitTest
         public void test_mail_settings_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'limit': 1,
@@ -1924,7 +2379,12 @@ namespace UnitTest
         public void test_mail_settings_address_whitelist_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'enabled': true,
@@ -1944,7 +2404,12 @@ namespace UnitTest
         public void test_mail_settings_address_whitelist_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1957,7 +2422,12 @@ namespace UnitTest
         public void test_mail_settings_bcc_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'email': 'email@example.com',
@@ -1974,7 +2444,12 @@ namespace UnitTest
         public void test_mail_settings_bcc_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1987,7 +2462,12 @@ namespace UnitTest
         public void test_mail_settings_bounce_purge_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'enabled': true,
@@ -2005,7 +2485,12 @@ namespace UnitTest
         public void test_mail_settings_bounce_purge_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -2018,7 +2503,12 @@ namespace UnitTest
         public void test_mail_settings_footer_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'enabled': true,
@@ -2036,7 +2526,12 @@ namespace UnitTest
         public void test_mail_settings_footer_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -2049,7 +2544,12 @@ namespace UnitTest
         public void test_mail_settings_forward_bounce_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'email': 'example@example.com',
@@ -2066,7 +2566,12 @@ namespace UnitTest
         public void test_mail_settings_forward_bounce_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -2079,7 +2584,12 @@ namespace UnitTest
         public void test_mail_settings_forward_spam_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'email': '',
@@ -2096,7 +2606,12 @@ namespace UnitTest
         public void test_mail_settings_forward_spam_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -2109,7 +2624,12 @@ namespace UnitTest
         public void test_mail_settings_plain_content_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'enabled': false
@@ -2125,7 +2645,12 @@ namespace UnitTest
         public void test_mail_settings_plain_content_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -2138,7 +2663,12 @@ namespace UnitTest
         public void test_mail_settings_spam_check_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'enabled': true,
@@ -2156,7 +2686,12 @@ namespace UnitTest
         public void test_mail_settings_spam_check_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -2169,7 +2704,12 @@ namespace UnitTest
         public void test_mail_settings_template_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'enabled': true,
@@ -2186,7 +2726,12 @@ namespace UnitTest
         public void test_mail_settings_template_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -2199,7 +2744,12 @@ namespace UnitTest
         public void test_mailbox_providers_stats_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'aggregated_by': 'day',
@@ -2220,7 +2770,12 @@ namespace UnitTest
         public void test_partner_settings_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'limit': 1,
@@ -2237,7 +2792,12 @@ namespace UnitTest
         public void test_partner_settings_new_relic_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'enable_subuser_statistics': true,
@@ -2255,7 +2815,12 @@ namespace UnitTest
         public void test_partner_settings_new_relic_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -2268,7 +2833,12 @@ namespace UnitTest
         public void test_scopes_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -2281,7 +2851,12 @@ namespace UnitTest
         public void test_stats_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'aggregated_by': 'day',
@@ -2301,7 +2876,12 @@ namespace UnitTest
         public void test_subusers_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'email': 'John@example.com',
@@ -2323,7 +2903,12 @@ namespace UnitTest
         public void test_subusers_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'limit': 0,
@@ -2341,7 +2926,12 @@ namespace UnitTest
         public void test_subusers_reputations_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'usernames': 'test_string'
@@ -2357,7 +2947,12 @@ namespace UnitTest
         public void test_subusers_stats_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'aggregated_by': 'day',
@@ -2378,7 +2973,12 @@ namespace UnitTest
         public void test_subusers_stats_monthly_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'date': 'test_string',
@@ -2399,7 +2999,12 @@ namespace UnitTest
         public void test_subusers_stats_sums_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'aggregated_by': 'day',
@@ -2421,7 +3026,12 @@ namespace UnitTest
         public void test_subusers__subuser_name__patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'disabled': false
@@ -2438,7 +3048,12 @@ namespace UnitTest
         public void test_subusers__subuser_name__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var subuser_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -2452,7 +3067,12 @@ namespace UnitTest
         public void test_subusers__subuser_name__ips_put()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"[
   '127.0.0.1'
@@ -2469,7 +3089,12 @@ namespace UnitTest
         public void test_subusers__subuser_name__monitor_put()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'email': 'example@example.com',
@@ -2487,7 +3112,12 @@ namespace UnitTest
         public void test_subusers__subuser_name__monitor_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'email': 'example@example.com',
@@ -2505,7 +3135,12 @@ namespace UnitTest
         public void test_subusers__subuser_name__monitor_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var subuser_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -2519,7 +3154,12 @@ namespace UnitTest
         public void test_subusers__subuser_name__monitor_delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var subuser_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -2533,7 +3173,12 @@ namespace UnitTest
         public void test_subusers__subuser_name__stats_monthly_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'date': 'test_string',
@@ -2554,7 +3199,12 @@ namespace UnitTest
         public void test_suppression_blocks_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'end_time': 1,
@@ -2573,7 +3223,12 @@ namespace UnitTest
         public void test_suppression_blocks_delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'delete_all': false,
@@ -2593,7 +3248,12 @@ namespace UnitTest
         public void test_suppression_blocks__email__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var email = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -2607,7 +3267,12 @@ namespace UnitTest
         public void test_suppression_blocks__email__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var email = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -2621,7 +3286,12 @@ namespace UnitTest
         public void test_suppression_bounces_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'end_time': 0,
@@ -2638,7 +3308,12 @@ namespace UnitTest
         public void test_suppression_bounces_delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'delete_all': true,
@@ -2658,7 +3333,12 @@ namespace UnitTest
         public void test_suppression_bounces__email__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var email = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -2672,7 +3352,12 @@ namespace UnitTest
         public void test_suppression_bounces__email__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'email_address': 'example@example.com'
@@ -2689,7 +3374,12 @@ namespace UnitTest
         public void test_suppression_invalid_emails_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'end_time': 1,
@@ -2708,7 +3398,12 @@ namespace UnitTest
         public void test_suppression_invalid_emails_delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'delete_all': false,
@@ -2728,7 +3423,12 @@ namespace UnitTest
         public void test_suppression_invalid_emails__email__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var email = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -2742,7 +3442,12 @@ namespace UnitTest
         public void test_suppression_invalid_emails__email__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var email = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -2756,7 +3461,12 @@ namespace UnitTest
         public void test_suppression_spam_report__email__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var email = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -2770,7 +3480,12 @@ namespace UnitTest
         public void test_suppression_spam_report__email__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var email = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -2784,7 +3499,12 @@ namespace UnitTest
         public void test_suppression_spam_reports_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'end_time': 1,
@@ -2803,7 +3523,12 @@ namespace UnitTest
         public void test_suppression_spam_reports_delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'delete_all': false,
@@ -2823,7 +3548,12 @@ namespace UnitTest
         public void test_suppression_unsubscribes_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'end_time': 1,
@@ -2842,7 +3572,12 @@ namespace UnitTest
         public void test_templates_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'name': 'example_name'
@@ -2858,7 +3593,12 @@ namespace UnitTest
         public void test_templates_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -2871,7 +3611,12 @@ namespace UnitTest
         public void test_templates__template_id__patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'name': 'new_example_name'
@@ -2888,7 +3633,12 @@ namespace UnitTest
         public void test_templates__template_id__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var template_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -2902,7 +3652,12 @@ namespace UnitTest
         public void test_templates__template_id__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var template_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -2916,7 +3671,12 @@ namespace UnitTest
         public void test_templates__template_id__versions_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'active': 1,
@@ -2938,7 +3698,12 @@ namespace UnitTest
         public void test_templates__template_id__versions__version_id__patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'active': 1,
@@ -2960,7 +3725,12 @@ namespace UnitTest
         public void test_templates__template_id__versions__version_id__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var template_id = "test_url_param";
             var version_id = "test_url_param";
@@ -2975,7 +3745,12 @@ namespace UnitTest
         public void test_templates__template_id__versions__version_id__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var template_id = "test_url_param";
             var version_id = "test_url_param";
@@ -2990,7 +3765,12 @@ namespace UnitTest
         public void test_templates__template_id__versions__version_id__activate_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var template_id = "test_url_param";
             var version_id = "test_url_param";
@@ -3005,7 +3785,12 @@ namespace UnitTest
         public void test_tracking_settings_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'limit': 1,
@@ -3022,7 +3807,12 @@ namespace UnitTest
         public void test_tracking_settings_click_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'enabled': true
@@ -3038,7 +3828,12 @@ namespace UnitTest
         public void test_tracking_settings_click_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -3051,7 +3846,12 @@ namespace UnitTest
         public void test_tracking_settings_google_analytics_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'enabled': true,
@@ -3072,7 +3872,12 @@ namespace UnitTest
         public void test_tracking_settings_google_analytics_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -3085,7 +3890,12 @@ namespace UnitTest
         public void test_tracking_settings_open_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'enabled': true
@@ -3101,7 +3911,12 @@ namespace UnitTest
         public void test_tracking_settings_open_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -3114,7 +3929,12 @@ namespace UnitTest
         public void test_tracking_settings_subscription_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'enabled': true,
@@ -3135,7 +3955,12 @@ namespace UnitTest
         public void test_tracking_settings_subscription_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -3148,7 +3973,12 @@ namespace UnitTest
         public void test_user_account_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -3161,7 +3991,12 @@ namespace UnitTest
         public void test_user_credits_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -3174,7 +4009,12 @@ namespace UnitTest
         public void test_user_email_put()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'email': 'example@example.com'
@@ -3190,7 +4030,12 @@ namespace UnitTest
         public void test_user_email_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -3203,7 +4048,12 @@ namespace UnitTest
         public void test_user_password_put()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'new_password': 'new_password',
@@ -3220,7 +4070,12 @@ namespace UnitTest
         public void test_user_profile_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'city': 'Orange',
@@ -3238,7 +4093,12 @@ namespace UnitTest
         public void test_user_profile_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -3251,7 +4111,12 @@ namespace UnitTest
         public void test_user_scheduled_sends_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'batch_id': 'YOUR_BATCH_ID',
@@ -3268,7 +4133,12 @@ namespace UnitTest
         public void test_user_scheduled_sends_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -3281,7 +4151,12 @@ namespace UnitTest
         public void test_user_scheduled_sends__batch_id__patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'status': 'pause'
@@ -3298,7 +4173,12 @@ namespace UnitTest
         public void test_user_scheduled_sends__batch_id__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var batch_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -3312,7 +4192,12 @@ namespace UnitTest
         public void test_user_scheduled_sends__batch_id__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var batch_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -3326,7 +4211,12 @@ namespace UnitTest
         public void test_user_settings_enforced_tls_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'require_tls': true,
@@ -3343,7 +4233,12 @@ namespace UnitTest
         public void test_user_settings_enforced_tls_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -3356,7 +4251,12 @@ namespace UnitTest
         public void test_user_username_put()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'username': 'test_username'
@@ -3372,7 +4272,12 @@ namespace UnitTest
         public void test_user_username_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -3385,7 +4290,12 @@ namespace UnitTest
         public void test_user_webhooks_event_settings_patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'bounce': true,
@@ -3413,7 +4323,12 @@ namespace UnitTest
         public void test_user_webhooks_event_settings_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -3426,7 +4341,12 @@ namespace UnitTest
         public void test_user_webhooks_event_test_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'url': 'url'
@@ -3442,7 +4362,12 @@ namespace UnitTest
         public void test_user_webhooks_parse_settings_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -3455,7 +4380,12 @@ namespace UnitTest
         public void test_user_webhooks_parse_stats_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'aggregated_by': 'day',
@@ -3475,7 +4405,12 @@ namespace UnitTest
         public void test_whitelabel_domains_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'automatic_security': false,
@@ -3500,7 +4435,12 @@ namespace UnitTest
         public void test_whitelabel_domains_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'domain': 'test_string',
@@ -3520,7 +4460,12 @@ namespace UnitTest
         public void test_whitelabel_domains_default_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -3533,7 +4478,12 @@ namespace UnitTest
         public void test_whitelabel_domains_subuser_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -3546,7 +4496,12 @@ namespace UnitTest
         public void test_whitelabel_domains_subuser_delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -3559,7 +4514,12 @@ namespace UnitTest
         public void test_whitelabel_domains__domain_id__patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'custom_spf': true,
@@ -3577,7 +4537,12 @@ namespace UnitTest
         public void test_whitelabel_domains__domain_id__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var domain_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -3591,7 +4556,12 @@ namespace UnitTest
         public void test_whitelabel_domains__domain_id__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var domain_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -3605,7 +4575,12 @@ namespace UnitTest
         public void test_whitelabel_domains__domain_id__subuser_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'username': 'jane@example.com'
@@ -3622,7 +4597,12 @@ namespace UnitTest
         public void test_whitelabel_domains__id__ips_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'ip': '192.168.0.1'
@@ -3639,7 +4619,12 @@ namespace UnitTest
         public void test_whitelabel_domains__id__ips__ip__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var id = "test_url_param";
             var ip = "test_url_param";
@@ -3654,7 +4639,12 @@ namespace UnitTest
         public void test_whitelabel_domains__id__validate_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -3668,7 +4658,12 @@ namespace UnitTest
         public void test_whitelabel_ips_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'domain': 'example.com',
@@ -3686,7 +4681,12 @@ namespace UnitTest
         public void test_whitelabel_ips_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'ip': 'test_string',
@@ -3704,7 +4704,12 @@ namespace UnitTest
         public void test_whitelabel_ips__id__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -3718,7 +4723,12 @@ namespace UnitTest
         public void test_whitelabel_ips__id__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -3732,7 +4742,12 @@ namespace UnitTest
         public void test_whitelabel_ips__id__validate_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -3746,7 +4761,12 @@ namespace UnitTest
         public void test_whitelabel_links_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'default': true,
@@ -3768,7 +4788,12 @@ namespace UnitTest
         public void test_whitelabel_links_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'limit': 1
@@ -3784,7 +4809,12 @@ namespace UnitTest
         public void test_whitelabel_links_default_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'domain': 'test_string'
@@ -3800,7 +4830,12 @@ namespace UnitTest
         public void test_whitelabel_links_subuser_get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'username': 'test_string'
@@ -3816,7 +4851,12 @@ namespace UnitTest
         public void test_whitelabel_links_subuser_delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string queryParams = @"{
   'username': 'test_string'
@@ -3832,7 +4872,12 @@ namespace UnitTest
         public void test_whitelabel_links__id__patch()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'default': true
@@ -3849,7 +4894,12 @@ namespace UnitTest
         public void test_whitelabel_links__id__get()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -3863,7 +4913,12 @@ namespace UnitTest
         public void test_whitelabel_links__id__delete()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -3877,7 +4932,12 @@ namespace UnitTest
         public void test_whitelabel_links__id__validate_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -3891,7 +4951,12 @@ namespace UnitTest
         public void test_whitelabel_links__link_id__subuser_post()
         {
             string _apiKey = "SendGrid API Key";
-            var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
   'username': 'jane@example.com'
