@@ -243,7 +243,9 @@ namespace UnitTest
         [Test]
         public void test_access_settings_activity_get()
         {
-            var params = @"{'limit': 1}";
+            string params = @"{
+  'limit': 1
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -254,7 +256,19 @@ namespace UnitTest
         [Test]
         public void test_access_settings_whitelist_post()
         {
-            var data = @"{u'ips': [{u'ip': u'192.168.1.1'}, {u'ip': u'192.*.*.*'}, {u'ip': u'192.168.1.3/32'}]}";
+            string data = @"{
+  'ips': [
+    {
+      'ip': '192.168.1.1'
+    },
+    {
+      'ip': '192.*.*.*'
+    },
+    {
+      'ip': '192.168.1.3/32'
+    }
+  ]
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
@@ -275,7 +289,13 @@ namespace UnitTest
         [Test]
         public void test_access_settings_whitelist_delete()
         {
-            var data = @"{u'ids': [1, 2, 3]}";
+            string data = @"{
+  'ids': [
+    1,
+    2,
+    3
+  ]
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
@@ -308,7 +328,14 @@ namespace UnitTest
         [Test]
         public void test_api_keys_post()
         {
-            var data = @"{u'scopes': [u'mail.send', u'alerts.create', u'alerts.read'], u'name': u'My API Key'}";
+            string data = @"{
+  'name': 'My API Key',
+  'scopes': [
+    'mail.send',
+    'alerts.create',
+    'alerts.read'
+  ]
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
@@ -329,7 +356,13 @@ namespace UnitTest
         [Test]
         public void test_api_keys__api_key_id__put()
         {
-            var data = @"{u'scopes': [u'user.profile.read', u'user.profile.update'], u'name': u'A New Hope'}";
+            string data = @"{
+  'name': 'A New Hope',
+  'scopes': [
+    'user.profile.read',
+    'user.profile.update'
+  ]
+}";
             api_key_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -341,7 +374,9 @@ namespace UnitTest
         [Test]
         public void test_api_keys__api_key_id__patch()
         {
-            var data = @"{u'name': u'A New Hope'}";
+            string data = @"{
+  'name': 'A New Hope'
+}";
             api_key_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -375,7 +410,11 @@ namespace UnitTest
         [Test]
         public void test_asm_groups_post()
         {
-            var data = @"{u'is_default': False, u'description': u'A group description', u'name': u'A group name'}";
+            string data = @"{
+  'description': 'A group description',
+  'is_default': false,
+  'name': 'A group name'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -396,7 +435,11 @@ namespace UnitTest
         [Test]
         public void test_asm_groups__group_id__patch()
         {
-            var data = @"{u'description': u'Suggestions for items our users might like.', u'name': u'Item Suggestions', u'id': 103}";
+            string data = @"{
+  'description': 'Suggestions for items our users might like.',
+  'id': 103,
+  'name': 'Item Suggestions'
+}";
             group_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -430,7 +473,12 @@ namespace UnitTest
         [Test]
         public void test_asm_groups__group_id__suppressions_post()
         {
-            var data = @"{u'recipient_emails': [u'test1@example.com', u'test2@example.com']}";
+            string data = @"{
+  'recipient_emails': [
+    'test1@example.com',
+    'test2@example.com'
+  ]
+}";
             group_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -465,7 +513,12 @@ namespace UnitTest
         [Test]
         public void test_asm_suppressions_global_post()
         {
-            var data = @"{u'recipient_emails': [u'test1@example.com', u'test2@example.com']}";
+            string data = @"{
+  'recipient_emails': [
+    'test1@example.com',
+    'test2@example.com'
+  ]
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
@@ -498,7 +551,14 @@ namespace UnitTest
         [Test]
         public void test_browsers_stats_get()
         {
-            var params = @"{'end_date': '2016-04-01', 'aggregated_by': 'day', 'browsers': 'test_string', 'limit': 'test_string', 'offset': 'test_string', 'start_date': '2016-01-01'}";
+            string params = @"{
+  'aggregated_by': 'day',
+  'browsers': 'test_string',
+  'end_date': '2016-04-01',
+  'limit': 'test_string',
+  'offset': 'test_string',
+  'start_date': '2016-01-01'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -509,7 +569,26 @@ namespace UnitTest
         [Test]
         public void test_campaigns_post()
         {
-            var data = @"{u'custom_unsubscribe_url': u'', u'html_content': u'<html><head><title></title></head><body><p>Check out our spring line!</p></body></html>', u'list_ids': [110, 124], u'sender_id': 124451, u'subject': u'New Products for Spring!', u'plain_content': u'Check out our spring line!', u'suppression_group_id': 42, u'title': u'March Newsletter', u'segment_ids': [110], u'categories': [u'spring line'], u'ip_pool': u'marketing'}";
+            string data = @"{
+  'categories': [
+    'spring line'
+  ],
+  'custom_unsubscribe_url': '',
+  'html_content': '<html><head><title></title></head><body><p>Check out our spring line!</p></body></html>',
+  'ip_pool': 'marketing',
+  'list_ids': [
+    110,
+    124
+  ],
+  'plain_content': 'Check out our spring line!',
+  'segment_ids': [
+    110
+  ],
+  'sender_id': 124451,
+  'subject': 'New Products for Spring!',
+  'suppression_group_id': 42,
+  'title': 'March Newsletter'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
@@ -520,7 +599,10 @@ namespace UnitTest
         [Test]
         public void test_campaigns_get()
         {
-            var params = @"{'limit': 0, 'offset': 0}";
+            string params = @"{
+  'limit': 0,
+  'offset': 0
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -531,7 +613,15 @@ namespace UnitTest
         [Test]
         public void test_campaigns__campaign_id__patch()
         {
-            var data = @"{u'html_content': u'<html><head><title></title></head><body><p>Check out our summer line!</p></body></html>', u'subject': u'New Products for Summer!', u'title': u'May Newsletter', u'categories': [u'summer line'], u'plain_content': u'Check out our summer line!'}";
+            string data = @"{
+  'categories': [
+    'summer line'
+  ],
+  'html_content': '<html><head><title></title></head><body><p>Check out our summer line!</p></body></html>',
+  'plain_content': 'Check out our summer line!',
+  'subject': 'New Products for Summer!',
+  'title': 'May Newsletter'
+}";
             campaign_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -565,7 +655,9 @@ namespace UnitTest
         [Test]
         public void test_campaigns__campaign_id__schedules_patch()
         {
-            var data = @"{u'send_at': 1489451436}";
+            string data = @"{
+  'send_at': 1489451436
+}";
             campaign_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -577,7 +669,9 @@ namespace UnitTest
         [Test]
         public void test_campaigns__campaign_id__schedules_post()
         {
-            var data = @"{u'send_at': 1489771528}";
+            string data = @"{
+  'send_at': 1489771528
+}";
             campaign_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -622,7 +716,9 @@ namespace UnitTest
         [Test]
         public void test_campaigns__campaign_id__schedules_test_post()
         {
-            var data = @"{u'to': u'your.email@example.com'}";
+            string data = @"{
+  'to': 'your.email@example.com'
+}";
             campaign_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -634,7 +730,11 @@ namespace UnitTest
         [Test]
         public void test_categories_get()
         {
-            var params = @"{'category': 'test_string', 'limit': 1, 'offset': 1}";
+            string params = @"{
+  'category': 'test_string',
+  'limit': 1,
+  'offset': 1
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -645,7 +745,14 @@ namespace UnitTest
         [Test]
         public void test_categories_stats_get()
         {
-            var params = @"{'end_date': '2016-04-01', 'aggregated_by': 'day', 'limit': 1, 'offset': 1, 'start_date': '2016-01-01', 'categories': 'test_string'}";
+            string params = @"{
+  'aggregated_by': 'day',
+  'categories': 'test_string',
+  'end_date': '2016-04-01',
+  'limit': 1,
+  'offset': 1,
+  'start_date': '2016-01-01'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -656,7 +763,15 @@ namespace UnitTest
         [Test]
         public void test_categories_stats_sums_get()
         {
-            var params = @"{'end_date': '2016-04-01', 'aggregated_by': 'day', 'limit': 1, 'sort_by_metric': 'test_string', 'offset': 1, 'start_date': '2016-01-01', 'sort_by_direction': 'asc'}";
+            string params = @"{
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'limit': 1,
+  'offset': 1,
+  'sort_by_direction': 'asc',
+  'sort_by_metric': 'test_string',
+  'start_date': '2016-01-01'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -667,7 +782,11 @@ namespace UnitTest
         [Test]
         public void test_clients_stats_get()
         {
-            var params = @"{'aggregated_by': 'day', 'start_date': '2016-01-01', 'end_date': '2016-04-01'}";
+            string params = @"{
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'start_date': '2016-01-01'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -678,7 +797,11 @@ namespace UnitTest
         [Test]
         public void test_clients__client_type__stats_get()
         {
-            var params = @"{'aggregated_by': 'day', 'start_date': '2016-01-01', 'end_date': '2016-04-01'}";
+            string params = @"{
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'start_date': '2016-01-01'
+}";
             client_type = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -690,7 +813,10 @@ namespace UnitTest
         [Test]
         public void test_contactdb_custom_fields_post()
         {
-            var data = @"{u'type': u'text', u'name': u'pet'}";
+            string data = @"{
+  'name': 'pet',
+  'type': 'text'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
@@ -733,7 +859,9 @@ namespace UnitTest
         [Test]
         public void test_contactdb_lists_post()
         {
-            var data = @"{u'name': u'your list name'}";
+            string data = @"{
+  'name': 'your list name'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
@@ -754,7 +882,12 @@ namespace UnitTest
         [Test]
         public void test_contactdb_lists_delete()
         {
-            var data = @"[1, 2, 3, 4]";
+            string data = @"[
+  1,
+  2,
+  3,
+  4
+]";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
@@ -765,8 +898,12 @@ namespace UnitTest
         [Test]
         public void test_contactdb_lists__list_id__patch()
         {
-            var data = @"{u'name': u'newlistname'}";
-            var params = @"{'list_id': 0}";
+            string data = @"{
+  'name': 'newlistname'
+}";
+            string params = @"{
+  'list_id': 0
+}";
             list_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -778,7 +915,9 @@ namespace UnitTest
         [Test]
         public void test_contactdb_lists__list_id__get()
         {
-            var params = @"{'list_id': 0}";
+            string params = @"{
+  'list_id': 0
+}";
             list_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -790,7 +929,9 @@ namespace UnitTest
         [Test]
         public void test_contactdb_lists__list_id__delete()
         {
-            var params = @"{'delete_contacts': 'true'}";
+            string params = @"{
+  'delete_contacts': 'true'
+}";
             list_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -802,7 +943,10 @@ namespace UnitTest
         [Test]
         public void test_contactdb_lists__list_id__recipients_post()
         {
-            var data = @"[u'recipient_id1', u'recipient_id2']";
+            string data = @"[
+  'recipient_id1',
+  'recipient_id2'
+]";
             list_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -814,7 +958,11 @@ namespace UnitTest
         [Test]
         public void test_contactdb_lists__list_id__recipients_get()
         {
-            var params = @"{'page': 1, 'page_size': 1, 'list_id': 0}";
+            string params = @"{
+  'list_id': 0,
+  'page': 1,
+  'page_size': 1
+}";
             list_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -838,7 +986,10 @@ namespace UnitTest
         [Test]
         public void test_contactdb_lists__list_id__recipients__recipient_id__delete()
         {
-            var params = @"{'recipient_id': 0, 'list_id': 0}";
+            string params = @"{
+  'list_id': 0,
+  'recipient_id': 0
+}";
             list_id = "test_url_param";
         recipient_id = "test_url_param"
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -851,7 +1002,13 @@ namespace UnitTest
         [Test]
         public void test_contactdb_recipients_patch()
         {
-            var data = @"[{u'first_name': u'Guy', u'last_name': u'Jones', u'email': u'jones@example.com'}]";
+            string data = @"[
+  {
+    'email': 'jones@example.com',
+    'first_name': 'Guy',
+    'last_name': 'Jones'
+  }
+]";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
@@ -862,7 +1019,20 @@ namespace UnitTest
         [Test]
         public void test_contactdb_recipients_post()
         {
-            var data = @"[{u'age': 25, u'last_name': u'User', u'email': u'example@example.com', u'first_name': u''}, {u'age': 25, u'last_name': u'User', u'email': u'example2@example.com', u'first_name': u'Example'}]";
+            string data = @"[
+  {
+    'age': 25,
+    'email': 'example@example.com',
+    'first_name': '',
+    'last_name': 'User'
+  },
+  {
+    'age': 25,
+    'email': 'example2@example.com',
+    'first_name': 'Example',
+    'last_name': 'User'
+  }
+]";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
@@ -873,7 +1043,10 @@ namespace UnitTest
         [Test]
         public void test_contactdb_recipients_get()
         {
-            var params = @"{'page': 1, 'page_size': 1}";
+            string params = @"{
+  'page': 1,
+  'page_size': 1
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -884,7 +1057,10 @@ namespace UnitTest
         [Test]
         public void test_contactdb_recipients_delete()
         {
-            var data = @"[u'recipient_id1', u'recipient_id2']";
+            string data = @"[
+  'recipient_id1',
+  'recipient_id2'
+]";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -915,7 +1091,9 @@ namespace UnitTest
         [Test]
         public void test_contactdb_recipients_search_get()
         {
-            var params = @"{'{field_name}': 'test_string'}";
+            string params = @"{
+  '{field_name}': 'test_string'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -969,7 +1147,30 @@ namespace UnitTest
         [Test]
         public void test_contactdb_segments_post()
         {
-            var data = @"{u'conditions': [{u'operator': u'eq', u'field': u'last_name', u'and_or': u'', u'value': u'Miller'}, {u'operator': u'gt', u'field': u'last_clicked', u'and_or': u'and', u'value': u'01/02/2015'}, {u'operator': u'eq', u'field': u'clicks.campaign_identifier', u'and_or': u'or', u'value': u'513'}], u'name': u'Last Name Miller', u'list_id': 4}";
+            string data = @"{
+  'conditions': [
+    {
+      'and_or': '',
+      'field': 'last_name',
+      'operator': 'eq',
+      'value': 'Miller'
+    },
+    {
+      'and_or': 'and',
+      'field': 'last_clicked',
+      'operator': 'gt',
+      'value': '01/02/2015'
+    },
+    {
+      'and_or': 'or',
+      'field': 'clicks.campaign_identifier',
+      'operator': 'eq',
+      'value': '513'
+    }
+  ],
+  'list_id': 4,
+  'name': 'Last Name Miller'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -990,8 +1191,21 @@ namespace UnitTest
         [Test]
         public void test_contactdb_segments__segment_id__patch()
         {
-            var data = @"{u'conditions': [{u'operator': u'eq', u'field': u'last_name', u'and_or': u'', u'value': u'Miller'}], u'name': u'The Millers', u'list_id': 5}";
-            var params = @"{'segment_id': 'test_string'}";
+            string data = @"{
+  'conditions': [
+    {
+      'and_or': '',
+      'field': 'last_name',
+      'operator': 'eq',
+      'value': 'Miller'
+    }
+  ],
+  'list_id': 5,
+  'name': 'The Millers'
+}";
+            string params = @"{
+  'segment_id': 'test_string'
+}";
             segment_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1003,7 +1217,9 @@ namespace UnitTest
         [Test]
         public void test_contactdb_segments__segment_id__get()
         {
-            var params = @"{'segment_id': 0}";
+            string params = @"{
+  'segment_id': 0
+}";
             segment_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1015,7 +1231,9 @@ namespace UnitTest
         [Test]
         public void test_contactdb_segments__segment_id__delete()
         {
-            var params = @"{'delete_contacts': 'true'}";
+            string params = @"{
+  'delete_contacts': 'true'
+}";
             segment_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1027,7 +1245,10 @@ namespace UnitTest
         [Test]
         public void test_contactdb_segments__segment_id__recipients_get()
         {
-            var params = @"{'page': 1, 'page_size': 1}";
+            string params = @"{
+  'page': 1,
+  'page_size': 1
+}";
             segment_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1039,7 +1260,13 @@ namespace UnitTest
         [Test]
         public void test_devices_stats_get()
         {
-            var params = @"{'aggregated_by': 'day', 'limit': 1, 'start_date': '2016-01-01', 'end_date': '2016-04-01', 'offset': 1}";
+            string params = @"{
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'limit': 1,
+  'offset': 1,
+  'start_date': '2016-01-01'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1050,7 +1277,14 @@ namespace UnitTest
         [Test]
         public void test_geo_stats_get()
         {
-            var params = @"{'end_date': '2016-04-01', 'country': 'US', 'aggregated_by': 'day', 'limit': 1, 'offset': 1, 'start_date': '2016-01-01'}";
+            string params = @"{
+  'aggregated_by': 'day',
+  'country': 'US',
+  'end_date': '2016-04-01',
+  'limit': 1,
+  'offset': 1,
+  'start_date': '2016-01-01'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1061,7 +1295,13 @@ namespace UnitTest
         [Test]
         public void test_ips_get()
         {
-            var params = @"{'subuser': 'test_string', 'ip': 'test_string', 'limit': 1, 'exclude_whitelabels': 'true', 'offset': 1}";
+            string params = @"{
+  'exclude_whitelabels': 'true',
+  'ip': 'test_string',
+  'limit': 1,
+  'offset': 1,
+  'subuser': 'test_string'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1082,7 +1322,9 @@ namespace UnitTest
         [Test]
         public void test_ips_pools_post()
         {
-            var data = @"{u'name': u'marketing'}";
+            string data = @"{
+  'name': 'marketing'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1103,7 +1345,9 @@ namespace UnitTest
         [Test]
         public void test_ips_pools__pool_name__put()
         {
-            var data = @"{u'name': u'new_pool_name'}";
+            string data = @"{
+  'name': 'new_pool_name'
+}";
             pool_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1137,7 +1381,9 @@ namespace UnitTest
         [Test]
         public void test_ips_pools__pool_name__ips_post()
         {
-            var data = @"{u'ip': u'0.0.0.0'}";
+            string data = @"{
+  'ip': '0.0.0.0'
+}";
             pool_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1161,7 +1407,9 @@ namespace UnitTest
         [Test]
         public void test_ips_warmup_post()
         {
-            var data = @"{u'ip': u'0.0.0.0'}";
+            string data = @"{
+  'ip': '0.0.0.0'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1236,7 +1484,149 @@ namespace UnitTest
         [Test]
         public void test_mail_send_beta_post()
         {
-            var data = @"{u'custom_args': {u'New Argument 1': u'New Value 1', u'activationAttempt': u'1', u'customerAccountNumber': u'[CUSTOMER ACCOUNT NUMBER GOES HERE]'}, u'from': {u'email': u'sam.smith@example.com', u'name': u'Sam Smith'}, u'attachments': [{u'name': u'file1', u'filename': u'file1.jpg', u'content': u'[BASE64 encoded content block here]', u'disposition': u'inline', u'content_id': u'ii_139db99fdb5c3704', u'type': u'jpg'}], u'personalizations': [{u'to': [{u'email': u'john.doe@example.com', u'name': u'John Doe'}], u'cc': [{u'email': u'jane.doe@example.com', u'name': u'Jane Doe'}], u'bcc': [{u'email': u'sam.doe@example.com', u'name': u'Sam Doe'}], u'custom_args': {u'New Argument 1': u'New Value 1', u'activationAttempt': u'1', u'customerAccountNumber': u'[CUSTOMER ACCOUNT NUMBER GOES HERE]'}, u'headers': {u'X-Accept-Language': u'en', u'X-Mailer': u'MyApp'}, u'send_at': 1409348513, u'substitutions': {u'sub': {u'%name%': [u'John', u'Jane', u'Sam']}}, u'subject': u'Hello, World!'}], u'subject': u'Hello, World!', u'ip_pool_name': u'[YOUR POOL NAME GOES HERE]', u'content': [{u'type': u'text/html', u'value': u"<html><p>Hello, world!</p><img src='cid:ii_139db99fdb5c3704'></img></html>"}], u'headers': {}, u'asm': {u'groups_to_display': [1, 2, 3], u'group_id': 1}, u'batch_id': u'[YOUR BATCH ID GOES HERE]', u'tracking_settings': {u'subscription_tracking': {u'text': u'If you would like to unsubscribe and stop receiveing these emails <% click here %>.', u'enable': True, u'html': u'If you would like to unsubscribe and stop receiving these emails <% clickhere %>.', u'substitution_tag': u'<%click here%>'}, u'open_tracking': {u'enable': True, u'substitution_tag': u'%opentrack'}, u'click_tracking': {u'enable': True, u'enable_text': True}, u'ganalytics': {u'utm_campaign': u'[NAME OF YOUR REFERRER SOURCE]', u'enable': True, u'utm_name': u'[NAME OF YOUR CAMPAIGN]', u'utm_term': u'[IDENTIFY PAID KEYWORDS HERE]', u'utm_content': u'[USE THIS SPACE TO DIFFERENTIATE YOUR EMAIL FROM ADS]', u'utm_medium': u'[NAME OF YOUR MARKETING MEDIUM e.g. email]'}}, u'mail_settings': {u'footer': {u'text': u'Thanks,/n The SendGrid Team', u'enable': True, u'html': u'<p>Thanks</br>The SendGrid Team</p>'}, u'spam_check': {u'threshold': 3, u'post_to_url': u'http://example.com/compliance', u'enable': True}, u'bypass_list_management': {u'enable': True}, u'sandbox_mode': {u'enable': False}, u'bcc': {u'enable': True, u'email': u'ben.doe@example.com'}}, u'reply_to': {u'email': u'sam.smith@example.com', u'name': u'Sam Smith'}, u'sections': {u'section': {u':sectionName2': u'section 2 text', u':sectionName1': u'section 1 text'}}, u'template_id': u'[YOUR TEMPLATE ID GOES HERE]', u'categories': [u'category1', u'category2'], u'send_at': 1409348513}";
+            string data = @"{
+  'asm': {
+    'group_id': 1,
+    'groups_to_display': [
+      1,
+      2,
+      3
+    ]
+  },
+  'attachments': [
+    {
+      'content': '[BASE64 encoded content block here]',
+      'content_id': 'ii_139db99fdb5c3704',
+      'disposition': 'inline',
+      'filename': 'file1.jpg',
+      'name': 'file1',
+      'type': 'jpg'
+    }
+  ],
+  'batch_id': '[YOUR BATCH ID GOES HERE]',
+  'categories': [
+    'category1',
+    'category2'
+  ],
+  'content': [
+    {
+      'type': 'text/html',
+      'value': '<html><p>Hello, world!</p><img src='cid:ii_139db99fdb5c3704'></img></html>'
+    }
+  ],
+  'custom_args': {
+    'New Argument 1': 'New Value 1',
+    'activationAttempt': '1',
+    'customerAccountNumber': '[CUSTOMER ACCOUNT NUMBER GOES HERE]'
+  },
+  'from': {
+    'email': 'sam.smith@example.com',
+    'name': 'Sam Smith'
+  },
+  'headers': {},
+  'ip_pool_name': '[YOUR POOL NAME GOES HERE]',
+  'mail_settings': {
+    'bcc': {
+      'email': 'ben.doe@example.com',
+      'enable': true
+    },
+    'bypass_list_management': {
+      'enable': true
+    },
+    'footer': {
+      'enable': true,
+      'html': '<p>Thanks</br>The SendGrid Team</p>',
+      'text': 'Thanks,/n The SendGrid Team'
+    },
+    'sandbox_mode': {
+      'enable': false
+    },
+    'spam_check': {
+      'enable': true,
+      'post_to_url': 'http://example.com/compliance',
+      'threshold': 3
+    }
+  },
+  'personalizations': [
+    {
+      'bcc': [
+        {
+          'email': 'sam.doe@example.com',
+          'name': 'Sam Doe'
+        }
+      ],
+      'cc': [
+        {
+          'email': 'jane.doe@example.com',
+          'name': 'Jane Doe'
+        }
+      ],
+      'custom_args': {
+        'New Argument 1': 'New Value 1',
+        'activationAttempt': '1',
+        'customerAccountNumber': '[CUSTOMER ACCOUNT NUMBER GOES HERE]'
+      },
+      'headers': {
+        'X-Accept-Language': 'en',
+        'X-Mailer': 'MyApp'
+      },
+      'send_at': 1409348513,
+      'subject': 'Hello, World!',
+      'substitutions': {
+        'sub': {
+          '%name%': [
+            'John',
+            'Jane',
+            'Sam'
+          ]
+        }
+      },
+      'to': [
+        {
+          'email': 'john.doe@example.com',
+          'name': 'John Doe'
+        }
+      ]
+    }
+  ],
+  'reply_to': {
+    'email': 'sam.smith@example.com',
+    'name': 'Sam Smith'
+  },
+  'sections': {
+    'section': {
+      ':sectionName1': 'section 1 text',
+      ':sectionName2': 'section 2 text'
+    }
+  },
+  'send_at': 1409348513,
+  'subject': 'Hello, World!',
+  'template_id': '[YOUR TEMPLATE ID GOES HERE]',
+  'tracking_settings': {
+    'click_tracking': {
+      'enable': true,
+      'enable_text': true
+    },
+    'ganalytics': {
+      'enable': true,
+      'utm_campaign': '[NAME OF YOUR REFERRER SOURCE]',
+      'utm_content': '[USE THIS SPACE TO DIFFERENTIATE YOUR EMAIL FROM ADS]',
+      'utm_medium': '[NAME OF YOUR MARKETING MEDIUM e.g. email]',
+      'utm_name': '[NAME OF YOUR CAMPAIGN]',
+      'utm_term': '[IDENTIFY PAID KEYWORDS HERE]'
+    },
+    'open_tracking': {
+      'enable': true,
+      'substitution_tag': '%opentrack'
+    },
+    'subscription_tracking': {
+      'enable': true,
+      'html': 'If you would like to unsubscribe and stop receiving these emails <% clickhere %>.',
+      'substitution_tag': '<%click here%>',
+      'text': 'If you would like to unsubscribe and stop receiveing these emails <% click here %>.'
+    }
+  }
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 202);
@@ -1247,7 +1637,10 @@ namespace UnitTest
         [Test]
         public void test_mail_settings_get()
         {
-            var params = @"{'limit': 1, 'offset': 1}";
+            string params = @"{
+  'limit': 1,
+  'offset': 1
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1258,7 +1651,13 @@ namespace UnitTest
         [Test]
         public void test_mail_settings_address_whitelist_patch()
         {
-            var data = @"{u'list': [u'email1@example.com', u'example.com'], u'enabled': True}";
+            string data = @"{
+  'enabled': true,
+  'list': [
+    'email1@example.com',
+    'example.com'
+  ]
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1279,7 +1678,10 @@ namespace UnitTest
         [Test]
         public void test_mail_settings_bcc_patch()
         {
-            var data = @"{u'enabled': False, u'email': u'email@example.com'}";
+            string data = @"{
+  'email': 'email@example.com',
+  'enabled': false
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1300,7 +1702,11 @@ namespace UnitTest
         [Test]
         public void test_mail_settings_bounce_purge_patch()
         {
-            var data = @"{u'hard_bounces': 5, u'soft_bounces': 5, u'enabled': True}";
+            string data = @"{
+  'enabled': true,
+  'hard_bounces': 5,
+  'soft_bounces': 5
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1321,7 +1727,11 @@ namespace UnitTest
         [Test]
         public void test_mail_settings_footer_patch()
         {
-            var data = @"{u'html_content': u'...', u'enabled': True, u'plain_content': u'...'}";
+            string data = @"{
+  'enabled': true,
+  'html_content': '...',
+  'plain_content': '...'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1342,7 +1752,10 @@ namespace UnitTest
         [Test]
         public void test_mail_settings_forward_bounce_patch()
         {
-            var data = @"{u'enabled': True, u'email': u'example@example.com'}";
+            string data = @"{
+  'email': 'example@example.com',
+  'enabled': true
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1363,7 +1776,10 @@ namespace UnitTest
         [Test]
         public void test_mail_settings_forward_spam_patch()
         {
-            var data = @"{u'enabled': False, u'email': u''}";
+            string data = @"{
+  'email': '',
+  'enabled': false
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1384,7 +1800,9 @@ namespace UnitTest
         [Test]
         public void test_mail_settings_plain_content_patch()
         {
-            var data = @"{u'enabled': False}";
+            string data = @"{
+  'enabled': false
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1405,7 +1823,11 @@ namespace UnitTest
         [Test]
         public void test_mail_settings_spam_check_patch()
         {
-            var data = @"{u'url': u'url', u'max_score': 5, u'enabled': True}";
+            string data = @"{
+  'enabled': true,
+  'max_score': 5,
+  'url': 'url'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1426,7 +1848,10 @@ namespace UnitTest
         [Test]
         public void test_mail_settings_template_patch()
         {
-            var data = @"{u'html_content': u'<% body %>', u'enabled': True}";
+            string data = @"{
+  'enabled': true,
+  'html_content': '<% body %>'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1447,7 +1872,14 @@ namespace UnitTest
         [Test]
         public void test_mailbox_providers_stats_get()
         {
-            var params = @"{'end_date': '2016-04-01', 'mailbox_providers': 'test_string', 'aggregated_by': 'day', 'limit': 1, 'offset': 1, 'start_date': '2016-01-01'}";
+            string params = @"{
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'limit': 1,
+  'mailbox_providers': 'test_string',
+  'offset': 1,
+  'start_date': '2016-01-01'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1458,7 +1890,10 @@ namespace UnitTest
         [Test]
         public void test_partner_settings_get()
         {
-            var params = @"{'limit': 1, 'offset': 1}";
+            string params = @"{
+  'limit': 1,
+  'offset': 1
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1469,7 +1904,11 @@ namespace UnitTest
         [Test]
         public void test_partner_settings_new_relic_patch()
         {
-            var data = @"{u'enable_subuser_statistics': True, u'enabled': True, u'license_key': u''}";
+            string data = @"{
+  'enable_subuser_statistics': true,
+  'enabled': true,
+  'license_key': ''
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1500,7 +1939,13 @@ namespace UnitTest
         [Test]
         public void test_stats_get()
         {
-            var params = @"{'aggregated_by': 'day', 'limit': 1, 'start_date': '2016-01-01', 'end_date': '2016-04-01', 'offset': 1}";
+            string params = @"{
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'limit': 1,
+  'offset': 1,
+  'start_date': '2016-01-01'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1511,7 +1956,15 @@ namespace UnitTest
         [Test]
         public void test_subusers_post()
         {
-            var data = @"{u'username': u'John@example.com', u'ips': [u'1.1.1.1', u'2.2.2.2'], u'password': u'johns_password', u'email': u'John@example.com'}";
+            string data = @"{
+  'email': 'John@example.com',
+  'ips': [
+    '1.1.1.1',
+    '2.2.2.2'
+  ],
+  'password': 'johns_password',
+  'username': 'John@example.com'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1522,7 +1975,11 @@ namespace UnitTest
         [Test]
         public void test_subusers_get()
         {
-            var params = @"{'username': 'test_string', 'limit': 0, 'offset': 0}";
+            string params = @"{
+  'limit': 0,
+  'offset': 0,
+  'username': 'test_string'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1533,7 +1990,9 @@ namespace UnitTest
         [Test]
         public void test_subusers_reputations_get()
         {
-            var params = @"{'usernames': 'test_string'}";
+            string params = @"{
+  'usernames': 'test_string'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1544,7 +2003,14 @@ namespace UnitTest
         [Test]
         public void test_subusers_stats_get()
         {
-            var params = @"{'end_date': '2016-04-01', 'aggregated_by': 'day', 'limit': 1, 'offset': 1, 'start_date': '2016-01-01', 'subusers': 'test_string'}";
+            string params = @"{
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'limit': 1,
+  'offset': 1,
+  'start_date': '2016-01-01',
+  'subusers': 'test_string'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1555,7 +2021,14 @@ namespace UnitTest
         [Test]
         public void test_subusers_stats_monthly_get()
         {
-            var params = @"{'subuser': 'test_string', 'limit': 1, 'sort_by_metric': 'test_string', 'offset': 1, 'date': 'test_string', 'sort_by_direction': 'asc'}";
+            string params = @"{
+  'date': 'test_string',
+  'limit': 1,
+  'offset': 1,
+  'sort_by_direction': 'asc',
+  'sort_by_metric': 'test_string',
+  'subuser': 'test_string'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1566,7 +2039,15 @@ namespace UnitTest
         [Test]
         public void test_subusers_stats_sums_get()
         {
-            var params = @"{'end_date': '2016-04-01', 'aggregated_by': 'day', 'limit': 1, 'sort_by_metric': 'test_string', 'offset': 1, 'start_date': '2016-01-01', 'sort_by_direction': 'asc'}";
+            string params = @"{
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'limit': 1,
+  'offset': 1,
+  'sort_by_direction': 'asc',
+  'sort_by_metric': 'test_string',
+  'start_date': '2016-01-01'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1577,7 +2058,9 @@ namespace UnitTest
         [Test]
         public void test_subusers__subuser_name__patch()
         {
-            var data = @"{u'disabled': False}";
+            string data = @"{
+  'disabled': false
+}";
             subuser_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1600,7 +2083,9 @@ namespace UnitTest
         [Test]
         public void test_subusers__subuser_name__ips_put()
         {
-            var data = @"[u'127.0.0.1']";
+            string data = @"[
+  '127.0.0.1'
+]";
             subuser_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1612,7 +2097,10 @@ namespace UnitTest
         [Test]
         public void test_subusers__subuser_name__monitor_put()
         {
-            var data = @"{u'frequency': 500, u'email': u'example@example.com'}";
+            string data = @"{
+  'email': 'example@example.com',
+  'frequency': 500
+}";
             subuser_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1624,7 +2112,10 @@ namespace UnitTest
         [Test]
         public void test_subusers__subuser_name__monitor_post()
         {
-            var data = @"{u'frequency': 50000, u'email': u'example@example.com'}";
+            string data = @"{
+  'email': 'example@example.com',
+  'frequency': 50000
+}";
             subuser_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1658,7 +2149,13 @@ namespace UnitTest
         [Test]
         public void test_subusers__subuser_name__stats_monthly_get()
         {
-            var params = @"{'date': 'test_string', 'sort_by_direction': 'asc', 'limit': 0, 'sort_by_metric': 'test_string', 'offset': 1}";
+            string params = @"{
+  'date': 'test_string',
+  'limit': 0,
+  'offset': 1,
+  'sort_by_direction': 'asc',
+  'sort_by_metric': 'test_string'
+}";
             subuser_name = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1670,7 +2167,12 @@ namespace UnitTest
         [Test]
         public void test_suppression_blocks_get()
         {
-            var params = @"{'start_time': 1, 'limit': 1, 'end_time': 1, 'offset': 1}";
+            string params = @"{
+  'end_time': 1,
+  'limit': 1,
+  'offset': 1,
+  'start_time': 1
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1681,7 +2183,13 @@ namespace UnitTest
         [Test]
         public void test_suppression_blocks_delete()
         {
-            var data = @"{u'emails': [u'example1@example.com', u'example2@example.com'], u'delete_all': False}";
+            string data = @"{
+  'delete_all': false,
+  'emails': [
+    'example1@example.com',
+    'example2@example.com'
+  ]
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
@@ -1714,7 +2222,10 @@ namespace UnitTest
         [Test]
         public void test_suppression_bounces_get()
         {
-            var params = @"{'start_time': 0, 'end_time': 0}";
+            string params = @"{
+  'end_time': 0,
+  'start_time': 0
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1725,7 +2236,13 @@ namespace UnitTest
         [Test]
         public void test_suppression_bounces_delete()
         {
-            var data = @"{u'emails': [u'example@example.com', u'example2@example.com'], u'delete_all': True}";
+            string data = @"{
+  'delete_all': true,
+  'emails': [
+    'example@example.com',
+    'example2@example.com'
+  ]
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
@@ -1747,7 +2264,9 @@ namespace UnitTest
         [Test]
         public void test_suppression_bounces__email__delete()
         {
-            var params = @"{'email_address': 'example@example.com'}";
+            string params = @"{
+  'email_address': 'example@example.com'
+}";
             email = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1759,7 +2278,12 @@ namespace UnitTest
         [Test]
         public void test_suppression_invalid_emails_get()
         {
-            var params = @"{'start_time': 1, 'limit': 1, 'end_time': 1, 'offset': 1}";
+            string params = @"{
+  'end_time': 1,
+  'limit': 1,
+  'offset': 1,
+  'start_time': 1
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1770,7 +2294,13 @@ namespace UnitTest
         [Test]
         public void test_suppression_invalid_emails_delete()
         {
-            var data = @"{u'emails': [u'example1@example.com', u'example2@example.com'], u'delete_all': False}";
+            string data = @"{
+  'delete_all': false,
+  'emails': [
+    'example1@example.com',
+    'example2@example.com'
+  ]
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
@@ -1825,7 +2355,12 @@ namespace UnitTest
         [Test]
         public void test_suppression_spam_reports_get()
         {
-            var params = @"{'start_time': 1, 'limit': 1, 'end_time': 1, 'offset': 1}";
+            string params = @"{
+  'end_time': 1,
+  'limit': 1,
+  'offset': 1,
+  'start_time': 1
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1836,7 +2371,13 @@ namespace UnitTest
         [Test]
         public void test_suppression_spam_reports_delete()
         {
-            var data = @"{u'emails': [u'example1@example.com', u'example2@example.com'], u'delete_all': False}";
+            string data = @"{
+  'delete_all': false,
+  'emails': [
+    'example1@example.com',
+    'example2@example.com'
+  ]
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
@@ -1847,7 +2388,12 @@ namespace UnitTest
         [Test]
         public void test_suppression_unsubscribes_get()
         {
-            var params = @"{'start_time': 1, 'limit': 1, 'end_time': 1, 'offset': 1}";
+            string params = @"{
+  'end_time': 1,
+  'limit': 1,
+  'offset': 1,
+  'start_time': 1
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1858,7 +2404,9 @@ namespace UnitTest
         [Test]
         public void test_templates_post()
         {
-            var data = @"{u'name': u'example_name'}";
+            string data = @"{
+  'name': 'example_name'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
@@ -1879,7 +2427,9 @@ namespace UnitTest
         [Test]
         public void test_templates__template_id__patch()
         {
-            var data = @"{u'name': u'new_example_name'}";
+            string data = @"{
+  'name': 'new_example_name'
+}";
             template_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1913,7 +2463,14 @@ namespace UnitTest
         [Test]
         public void test_templates__template_id__versions_post()
         {
-            var data = @"{u'name': u'example_version_name', u'html_content': u'<%body%>', u'plain_content': u'<%body%>', u'active': 1, u'template_id': u'ddb96bbc-9b92-425e-8979-99464621b543', u'subject': u'<%subject%>'}";
+            string data = @"{
+  'active': 1,
+  'html_content': '<%body%>',
+  'name': 'example_version_name',
+  'plain_content': '<%body%>',
+  'subject': '<%subject%>',
+  'template_id': 'ddb96bbc-9b92-425e-8979-99464621b543'
+}";
             template_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -1925,7 +2482,13 @@ namespace UnitTest
         [Test]
         public void test_templates__template_id__versions__version_id__patch()
         {
-            var data = @"{u'active': 1, u'html_content': u'<%body%>', u'subject': u'<%subject%>', u'name': u'updated_example_name', u'plain_content': u'<%body%>'}";
+            string data = @"{
+  'active': 1,
+  'html_content': '<%body%>',
+  'name': 'updated_example_name',
+  'plain_content': '<%body%>',
+  'subject': '<%subject%>'
+}";
             template_id = "test_url_param";
         version_id = "test_url_param"
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -1974,7 +2537,10 @@ namespace UnitTest
         [Test]
         public void test_tracking_settings_get()
         {
-            var params = @"{'limit': 1, 'offset': 1}";
+            string params = @"{
+  'limit': 1,
+  'offset': 1
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -1985,7 +2551,9 @@ namespace UnitTest
         [Test]
         public void test_tracking_settings_click_patch()
         {
-            var data = @"{u'enabled': True}";
+            string data = @"{
+  'enabled': true
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -2006,7 +2574,14 @@ namespace UnitTest
         [Test]
         public void test_tracking_settings_google_analytics_patch()
         {
-            var data = @"{u'utm_campaign': u'website', u'utm_term': u'', u'utm_content': u'', u'enabled': True, u'utm_source': u'sendgrid.com', u'utm_medium': u'email'}";
+            string data = @"{
+  'enabled': true,
+  'utm_campaign': 'website',
+  'utm_content': '',
+  'utm_medium': 'email',
+  'utm_source': 'sendgrid.com',
+  'utm_term': ''
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -2027,7 +2602,9 @@ namespace UnitTest
         [Test]
         public void test_tracking_settings_open_patch()
         {
-            var data = @"{u'enabled': True}";
+            string data = @"{
+  'enabled': true
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -2048,7 +2625,14 @@ namespace UnitTest
         [Test]
         public void test_tracking_settings_subscription_patch()
         {
-            var data = @"{u'url': u'url', u'html_content': u'html content', u'enabled': True, u'landing': u'landing page html', u'replace': u'replacement tag', u'plain_content': u'text content'}";
+            string data = @"{
+  'enabled': true,
+  'html_content': 'html content',
+  'landing': 'landing page html',
+  'plain_content': 'text content',
+  'replace': 'replacement tag',
+  'url': 'url'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -2089,7 +2673,9 @@ namespace UnitTest
         [Test]
         public void test_user_email_put()
         {
-            var data = @"{u'email': u'example@example.com'}";
+            string data = @"{
+  'email': 'example@example.com'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -2110,7 +2696,10 @@ namespace UnitTest
         [Test]
         public void test_user_password_put()
         {
-            var data = @"{u'new_password': u'new_password', u'old_password': u'old_password'}";
+            string data = @"{
+  'new_password': 'new_password',
+  'old_password': 'old_password'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -2121,7 +2710,11 @@ namespace UnitTest
         [Test]
         public void test_user_profile_patch()
         {
-            var data = @"{u'city': u'Orange', u'first_name': u'Example', u'last_name': u'User'}";
+            string data = @"{
+  'city': 'Orange',
+  'first_name': 'Example',
+  'last_name': 'User'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -2142,7 +2735,10 @@ namespace UnitTest
         [Test]
         public void test_user_scheduled_sends_post()
         {
-            var data = @"{u'batch_id': u'YOUR_BATCH_ID', u'status': u'pause'}";
+            string data = @"{
+  'batch_id': 'YOUR_BATCH_ID',
+  'status': 'pause'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
@@ -2163,7 +2759,9 @@ namespace UnitTest
         [Test]
         public void test_user_scheduled_sends__batch_id__patch()
         {
-            var data = @"{u'status': u'pause'}";
+            string data = @"{
+  'status': 'pause'
+}";
             batch_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -2197,7 +2795,10 @@ namespace UnitTest
         [Test]
         public void test_user_settings_enforced_tls_patch()
         {
-            var data = @"{u'require_tls': True, u'require_valid_cert': False}";
+            string data = @"{
+  'require_tls': true,
+  'require_valid_cert': false
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -2218,7 +2819,9 @@ namespace UnitTest
         [Test]
         public void test_user_username_put()
         {
-            var data = @"{u'username': u'test_username'}";
+            string data = @"{
+  'username': 'test_username'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -2239,7 +2842,21 @@ namespace UnitTest
         [Test]
         public void test_user_webhooks_event_settings_patch()
         {
-            var data = @"{u'group_resubscribe': True, u'delivered': True, u'group_unsubscribe': True, u'spam_report': True, u'url': u'url', u'enabled': True, u'bounce': True, u'deferred': True, u'unsubscribe': True, u'dropped': True, u'open': True, u'click': True, u'processed': True}";
+            string data = @"{
+  'bounce': true,
+  'click': true,
+  'deferred': true,
+  'delivered': true,
+  'dropped': true,
+  'enabled': true,
+  'group_resubscribe': true,
+  'group_unsubscribe': true,
+  'open': true,
+  'processed': true,
+  'spam_report': true,
+  'unsubscribe': true,
+  'url': 'url'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -2260,7 +2877,9 @@ namespace UnitTest
         [Test]
         public void test_user_webhooks_event_test_post()
         {
-            var data = @"{u'url': u'url'}";
+            string data = @"{
+  'url': 'url'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
@@ -2281,7 +2900,13 @@ namespace UnitTest
         [Test]
         public void test_user_webhooks_parse_stats_get()
         {
-            var params = @"{'aggregated_by': 'day', 'limit': 'test_string', 'start_date': '2016-01-01', 'end_date': '2016-04-01', 'offset': 'test_string'}";
+            string params = @"{
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'limit': 'test_string',
+  'offset': 'test_string',
+  'start_date': '2016-01-01'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -2292,7 +2917,18 @@ namespace UnitTest
         [Test]
         public void test_whitelabel_domains_post()
         {
-            var data = @"{u'automatic_security': False, u'username': u'john@example.com', u'domain': u'example.com', u'default': True, u'custom_spf': True, u'ips': [u'192.168.1.1', u'192.168.1.2'], u'subdomain': u'news'}";
+            string data = @"{
+  'automatic_security': false,
+  'custom_spf': true,
+  'default': true,
+  'domain': 'example.com',
+  'ips': [
+    '192.168.1.1',
+    '192.168.1.2'
+  ],
+  'subdomain': 'news',
+  'username': 'john@example.com'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
@@ -2303,7 +2939,13 @@ namespace UnitTest
         [Test]
         public void test_whitelabel_domains_get()
         {
-            var params = @"{'username': 'test_string', 'domain': 'test_string', 'exclude_subusers': 'true', 'limit': 1, 'offset': 1}";
+            string params = @"{
+  'domain': 'test_string',
+  'exclude_subusers': 'true',
+  'limit': 1,
+  'offset': 1,
+  'username': 'test_string'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -2344,7 +2986,10 @@ namespace UnitTest
         [Test]
         public void test_whitelabel_domains__domain_id__patch()
         {
-            var data = @"{u'default': False, u'custom_spf': True}";
+            string data = @"{
+  'custom_spf': true,
+  'default': false
+}";
             domain_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -2378,7 +3023,9 @@ namespace UnitTest
         [Test]
         public void test_whitelabel_domains__domain_id__subuser_post()
         {
-            var data = @"{u'username': u'jane@example.com'}";
+            string data = @"{
+  'username': 'jane@example.com'
+}";
             domain_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -2390,7 +3037,9 @@ namespace UnitTest
         [Test]
         public void test_whitelabel_domains__id__ips_post()
         {
-            var data = @"{u'ip': u'192.168.0.1'}";
+            string data = @"{
+  'ip': '192.168.0.1'
+}";
             id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -2425,7 +3074,11 @@ namespace UnitTest
         [Test]
         public void test_whitelabel_ips_post()
         {
-            var data = @"{u'ip': u'192.168.1.1', u'domain': u'example.com', u'subdomain': u'email'}";
+            string data = @"{
+  'domain': 'example.com',
+  'ip': '192.168.1.1',
+  'subdomain': 'email'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
@@ -2436,7 +3089,11 @@ namespace UnitTest
         [Test]
         public void test_whitelabel_ips_get()
         {
-            var params = @"{'ip': 'test_string', 'limit': 1, 'offset': 1}";
+            string params = @"{
+  'ip': 'test_string',
+  'limit': 1,
+  'offset': 1
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -2480,8 +3137,15 @@ namespace UnitTest
         [Test]
         public void test_whitelabel_links_post()
         {
-            var data = @"{u'default': True, u'domain': u'example.com', u'subdomain': u'mail'}";
-            var params = @"{'limit': 1, 'offset': 1}";
+            string data = @"{
+  'default': true,
+  'domain': 'example.com',
+  'subdomain': 'mail'
+}";
+            string params = @"{
+  'limit': 1,
+  'offset': 1
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 201);
@@ -2492,7 +3156,9 @@ namespace UnitTest
         [Test]
         public void test_whitelabel_links_get()
         {
-            var params = @"{'limit': 1}";
+            string params = @"{
+  'limit': 1
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -2503,7 +3169,9 @@ namespace UnitTest
         [Test]
         public void test_whitelabel_links_default_get()
         {
-            var params = @"{'domain': 'test_string'}";
+            string params = @"{
+  'domain': 'test_string'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -2514,7 +3182,9 @@ namespace UnitTest
         [Test]
         public void test_whitelabel_links_subuser_get()
         {
-            var params = @"{'username': 'test_string'}";
+            string params = @"{
+  'username': 'test_string'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 200);
@@ -2525,7 +3195,9 @@ namespace UnitTest
         [Test]
         public void test_whitelabel_links_subuser_delete()
         {
-            var params = @"{'username': 'test_string'}";
+            string params = @"{
+  'username': 'test_string'
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", 204);
@@ -2536,7 +3208,9 @@ namespace UnitTest
         [Test]
         public void test_whitelabel_links__id__patch()
         {
-            var data = @"{u'default': True}";
+            string data = @"{
+  'default': true
+}";
             id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
@@ -2581,7 +3255,9 @@ namespace UnitTest
         [Test]
         public void test_whitelabel_links__link_id__subuser_post()
         {
-            var data = @"{u'username': u'jane@example.com'}";
+            string data = @"{
+  'username': 'jane@example.com'
+}";
             link_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
