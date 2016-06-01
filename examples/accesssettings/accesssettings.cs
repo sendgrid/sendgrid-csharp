@@ -1,7 +1,6 @@
 using System;
 using SendGrid.Helpers.Mail;
 using System.Collections.Generic;
-using System.Net;
 
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
@@ -17,6 +16,7 @@ dynamic response = sg.client.access_settings.activity.get(queryParams: queryPara
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Add one or more IPs to the whitelist #
@@ -39,6 +39,7 @@ dynamic response = sg.client.access_settings.whitelist.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve a list of currently whitelisted IPs #
@@ -48,6 +49,7 @@ dynamic response = sg.client.access_settings.whitelist.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Remove one or more IPs from the whitelist #
@@ -64,6 +66,7 @@ dynamic response = sg.client.access_settings.whitelist.delete(requestBody: data)
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve a specific whitelisted IP #
@@ -74,6 +77,7 @@ dynamic response = sg.client.access_settings.whitelist._(rule_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Remove a specific IP from the whitelist #
@@ -84,4 +88,5 @@ dynamic response = sg.client.access_settings.whitelist._(rule_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 

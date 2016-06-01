@@ -1,7 +1,6 @@
 using System;
 using SendGrid.Helpers.Mail;
 using System.Collections.Generic;
-using System.Net;
 
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
@@ -17,6 +16,7 @@ dynamic response = sg.client.templates.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve all transactional templates. #
@@ -26,6 +26,7 @@ dynamic response = sg.client.templates.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Edit a transactional template. #
@@ -39,6 +40,7 @@ dynamic response = sg.client.templates._(template_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve a single transactional template. #
@@ -49,6 +51,7 @@ dynamic response = sg.client.templates._(template_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Delete a template. #
@@ -59,6 +62,7 @@ dynamic response = sg.client.templates._(template_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Create a new transactional template version. #
@@ -77,6 +81,7 @@ dynamic response = sg.client.templates._(template_id).versions.post(requestBody:
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Edit a transactional template version. #
@@ -95,6 +100,7 @@ dynamic response = sg.client.templates._(template_id).versions._(version_id).pat
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve a specific transactional template version. #
@@ -106,6 +112,7 @@ dynamic response = sg.client.templates._(template_id).versions._(version_id).get
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Delete a transactional template version. #
@@ -117,6 +124,7 @@ dynamic response = sg.client.templates._(template_id).versions._(version_id).del
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Activate a transactional template version. #
@@ -128,4 +136,5 @@ dynamic response = sg.client.templates._(template_id).versions._(version_id).act
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 

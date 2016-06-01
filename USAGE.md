@@ -6,7 +6,6 @@ This documentation is based on our [OAI specification](https://github.com/sendgr
 using System;
 using SendGrid.Helpers.Mail;
 using System.Collections.Generic;
-using System.Net;
 
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
@@ -60,6 +59,7 @@ dynamic response = sg.client.access_settings.activity.get(queryParams: queryPara
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Add one or more IPs to the whitelist
@@ -92,6 +92,7 @@ dynamic response = sg.client.access_settings.whitelist.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a list of currently whitelisted IPs
@@ -109,6 +110,7 @@ dynamic response = sg.client.access_settings.whitelist.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Remove one or more IPs from the whitelist
@@ -135,6 +137,7 @@ dynamic response = sg.client.access_settings.whitelist.delete(requestBody: data)
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a specific whitelisted IP
@@ -155,6 +158,7 @@ dynamic response = sg.client.access_settings.whitelist._(rule_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Remove a specific IP from the whitelist
@@ -175,6 +179,7 @@ dynamic response = sg.client.access_settings.whitelist._(rule_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="api_keys"></a>
@@ -207,6 +212,7 @@ dynamic response = sg.client.api_keys.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all API Keys belonging to the authenticated user
@@ -222,6 +228,7 @@ dynamic response = sg.client.api_keys.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update the name & scopes of an API Key
@@ -249,6 +256,7 @@ dynamic response = sg.client.api_keys._(api_key_id).put(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update API keys
@@ -276,6 +284,7 @@ dynamic response = sg.client.api_keys._(api_key_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve an existing API Key
@@ -292,6 +301,7 @@ dynamic response = sg.client.api_keys._(api_key_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete API keys
@@ -316,6 +326,7 @@ dynamic response = sg.client.api_keys._(api_key_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="asm"></a>
@@ -343,6 +354,7 @@ dynamic response = sg.client.asm.groups.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all suppression groups associated with the user.
@@ -362,6 +374,7 @@ dynamic response = sg.client.asm.groups.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update a suppression group.
@@ -387,6 +400,7 @@ dynamic response = sg.client.asm.groups._(group_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Get information on a single suppression group.
@@ -407,6 +421,7 @@ dynamic response = sg.client.asm.groups._(group_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a suppression group.
@@ -429,6 +444,7 @@ dynamic response = sg.client.asm.groups._(group_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Add suppressions to a suppression group
@@ -453,6 +469,7 @@ dynamic response = sg.client.asm.groups._(group_id).suppressions.post(requestBod
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all suppressions for a suppression group
@@ -469,6 +486,7 @@ dynamic response = sg.client.asm.groups._(group_id).suppressions.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a suppression from a suppression group
@@ -486,6 +504,7 @@ dynamic response = sg.client.asm.groups._(group_id).suppressions._(email).delete
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Add recipient addresses to the global suppression group.
@@ -507,6 +526,7 @@ dynamic response = sg.client.asm.suppressions.global.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a Global Suppression
@@ -525,6 +545,7 @@ dynamic response = sg.client.asm.suppressions.global._(email).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a Global Suppression
@@ -541,6 +562,7 @@ dynamic response = sg.client.asm.suppressions.global._(email).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="browsers"></a>
@@ -569,6 +591,7 @@ dynamic response = sg.client.browsers.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="campaigns"></a>
@@ -613,6 +636,7 @@ dynamic response = sg.client.campaigns.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all Campaigns
@@ -638,6 +662,7 @@ dynamic response = sg.client.campaigns.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update a Campaign
@@ -665,6 +690,7 @@ dynamic response = sg.client.campaigns._(campaign_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a single campaign
@@ -685,6 +711,7 @@ dynamic response = sg.client.campaigns._(campaign_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a Campaign
@@ -705,6 +732,7 @@ dynamic response = sg.client.campaigns._(campaign_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update a Scheduled Campaign
@@ -726,6 +754,7 @@ dynamic response = sg.client.campaigns._(campaign_id).schedules.patch(requestBod
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Schedule a Campaign
@@ -747,6 +776,7 @@ dynamic response = sg.client.campaigns._(campaign_id).schedules.post(requestBody
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## View Scheduled Time of a Campaign
@@ -765,6 +795,7 @@ dynamic response = sg.client.campaigns._(campaign_id).schedules.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Unschedule a Scheduled Campaign
@@ -786,6 +817,7 @@ dynamic response = sg.client.campaigns._(campaign_id).schedules.delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Send a Campaign
@@ -806,6 +838,7 @@ dynamic response = sg.client.campaigns._(campaign_id).schedules.now.post();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Send a Test Campaign
@@ -829,6 +862,7 @@ dynamic response = sg.client.campaigns._(campaign_id).schedules.test.post(reques
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="categories"></a>
@@ -852,6 +886,7 @@ dynamic response = sg.client.categories.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve Email Statistics for Categories
@@ -877,6 +912,7 @@ dynamic response = sg.client.categories.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve sums of email stats for each category [Needs: Stats object defined, has category ID?]
@@ -903,6 +939,7 @@ dynamic response = sg.client.categories.stats.sums.get(queryParams: queryParams)
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="clients"></a>
@@ -928,6 +965,7 @@ dynamic response = sg.client.clients.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve stats by a specific client type.
@@ -957,6 +995,7 @@ dynamic response = sg.client.clients._(client_type).stats.get(queryParams: query
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="contactdb"></a>
@@ -979,6 +1018,7 @@ dynamic response = sg.client.contactdb.custom_fields.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all custom fields
@@ -994,6 +1034,7 @@ dynamic response = sg.client.contactdb.custom_fields.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a Custom Field
@@ -1010,6 +1051,7 @@ dynamic response = sg.client.contactdb.custom_fields._(custom_field_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a Custom Field
@@ -1026,6 +1068,7 @@ dynamic response = sg.client.contactdb.custom_fields._(custom_field_id).delete()
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Create a List
@@ -1044,6 +1087,7 @@ dynamic response = sg.client.contactdb.lists.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all lists
@@ -1059,6 +1103,7 @@ dynamic response = sg.client.contactdb.lists.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete Multiple lists
@@ -1080,6 +1125,7 @@ dynamic response = sg.client.contactdb.lists.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update a List
@@ -1103,6 +1149,7 @@ dynamic response = sg.client.contactdb.lists._(list_id).patch(requestBody: data,
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a single list
@@ -1122,6 +1169,7 @@ dynamic response = sg.client.contactdb.lists._(list_id).get(queryParams: queryPa
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a List
@@ -1141,6 +1189,7 @@ dynamic response = sg.client.contactdb.lists._(list_id).delete(queryParams: quer
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Add Multiple Recipients to a List
@@ -1163,6 +1212,7 @@ dynamic response = sg.client.contactdb.lists._(list_id).recipients.post(requestB
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all recipients on a List
@@ -1184,6 +1234,7 @@ dynamic response = sg.client.contactdb.lists._(list_id).recipients.get(queryPara
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Add a Single Recipient to a List
@@ -1201,6 +1252,7 @@ dynamic response = sg.client.contactdb.lists._(list_id).recipients._(recipient_i
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a Single Recipient from a Single List
@@ -1222,6 +1274,7 @@ dynamic response = sg.client.contactdb.lists._(list_id).recipients._(recipient_i
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update Recipient
@@ -1248,6 +1301,7 @@ dynamic response = sg.client.contactdb.recipients.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Add recipients
@@ -1279,6 +1333,7 @@ dynamic response = sg.client.contactdb.recipients.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve recipients
@@ -1301,6 +1356,7 @@ dynamic response = sg.client.contactdb.recipients.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete Recipient
@@ -1322,6 +1378,7 @@ dynamic response = sg.client.contactdb.recipients.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve the count of billable recipients
@@ -1339,6 +1396,7 @@ dynamic response = sg.client.contactdb.recipients.billable_count.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a Count of Recipients
@@ -1354,6 +1412,7 @@ dynamic response = sg.client.contactdb.recipients.count.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve recipients matching search criteria
@@ -1381,6 +1440,7 @@ dynamic response = sg.client.contactdb.recipients.search.get(queryParams: queryP
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a single recipient
@@ -1397,6 +1457,7 @@ dynamic response = sg.client.contactdb.recipients._(recipient_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a Recipient
@@ -1413,6 +1474,7 @@ dynamic response = sg.client.contactdb.recipients._(recipient_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve the lists that a recipient is on
@@ -1431,6 +1493,7 @@ dynamic response = sg.client.contactdb.recipients._(recipient_id).lists.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve reserved fields
@@ -1446,6 +1509,7 @@ dynamic response = sg.client.contactdb.reserved_fields.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Create a Segment
@@ -1505,6 +1569,7 @@ dynamic response = sg.client.contactdb.segments.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all segments
@@ -1522,6 +1587,7 @@ dynamic response = sg.client.contactdb.segments.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update a segment
@@ -1555,6 +1621,7 @@ dynamic response = sg.client.contactdb.segments._(segment_id).patch(requestBody:
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a segment
@@ -1576,6 +1643,7 @@ dynamic response = sg.client.contactdb.segments._(segment_id).get(queryParams: q
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a segment
@@ -1599,6 +1667,7 @@ dynamic response = sg.client.contactdb.segments._(segment_id).delete(queryParams
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve recipients on a segment
@@ -1621,6 +1690,7 @@ dynamic response = sg.client.contactdb.segments._(segment_id).recipients.get(que
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="devices"></a>
@@ -1657,6 +1727,7 @@ dynamic response = sg.client.devices.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="geo"></a>
@@ -1685,6 +1756,7 @@ dynamic response = sg.client.geo.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="ips"></a>
@@ -1712,6 +1784,7 @@ dynamic response = sg.client.ips.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all assigned IPs
@@ -1727,6 +1800,7 @@ dynamic response = sg.client.ips.assigned.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Create an IP pool.
@@ -1751,6 +1825,7 @@ dynamic response = sg.client.ips.pools.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all IP pools.
@@ -1770,6 +1845,7 @@ dynamic response = sg.client.ips.pools.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update an IP pools name.
@@ -1793,6 +1869,7 @@ dynamic response = sg.client.ips.pools._(pool_name).put(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all IPs in a specified pool.
@@ -1813,6 +1890,7 @@ dynamic response = sg.client.ips.pools._(pool_name).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete an IP pool.
@@ -1833,6 +1911,7 @@ dynamic response = sg.client.ips.pools._(pool_name).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Add an IP address to a pool
@@ -1854,6 +1933,7 @@ dynamic response = sg.client.ips.pools._(pool_name).ips.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Remove an IP address from a pool.
@@ -1873,6 +1953,7 @@ dynamic response = sg.client.ips.pools._(pool_name).ips._(ip).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Add an IP to warmup
@@ -1893,6 +1974,7 @@ dynamic response = sg.client.ips.warmup.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all IPs currently in warmup
@@ -1910,6 +1992,7 @@ dynamic response = sg.client.ips.warmup.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve warmup status for a specific IP address
@@ -1928,6 +2011,7 @@ dynamic response = sg.client.ips.warmup._(ip_address).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Remove an IP from warmup
@@ -1946,6 +2030,7 @@ dynamic response = sg.client.ips.warmup._(ip_address).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all IP pools an IP address belongs to
@@ -1964,6 +2049,7 @@ dynamic response = sg.client.ips._(ip_address).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="mail"></a>
@@ -1986,6 +2072,7 @@ dynamic response = sg.client.mail.batch.post();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Validate batch ID
@@ -2006,6 +2093,7 @@ dynamic response = sg.client.mail.batch._(batch_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## v3 Mail Send Beta
@@ -2169,6 +2257,7 @@ dynamic response = sg.client.mail.send.beta.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="mail_settings"></a>
@@ -2191,6 +2280,7 @@ dynamic response = sg.client.mail_settings.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update address whitelist mail settings
@@ -2215,6 +2305,7 @@ dynamic response = sg.client.mail_settings.address_whitelist.patch(requestBody: 
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve address whitelist mail settings
@@ -2232,6 +2323,7 @@ dynamic response = sg.client.mail_settings.address_whitelist.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update BCC mail settings
@@ -2253,6 +2345,7 @@ dynamic response = sg.client.mail_settings.bcc.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all BCC mail settings
@@ -2270,6 +2363,7 @@ dynamic response = sg.client.mail_settings.bcc.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update bounce purge mail settings
@@ -2292,6 +2386,7 @@ dynamic response = sg.client.mail_settings.bounce_purge.patch(requestBody: data)
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve bounce purge mail settings
@@ -2309,6 +2404,7 @@ dynamic response = sg.client.mail_settings.bounce_purge.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update footer mail settings
@@ -2331,6 +2427,7 @@ dynamic response = sg.client.mail_settings.footer.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve footer mail settings
@@ -2348,6 +2445,7 @@ dynamic response = sg.client.mail_settings.footer.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update forward bounce mail settings
@@ -2369,6 +2467,7 @@ dynamic response = sg.client.mail_settings.forward_bounce.patch(requestBody: dat
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve forward bounce mail settings
@@ -2386,6 +2485,7 @@ dynamic response = sg.client.mail_settings.forward_bounce.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update forward spam mail settings
@@ -2407,6 +2507,7 @@ dynamic response = sg.client.mail_settings.forward_spam.patch(requestBody: data)
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve forward spam mail settings
@@ -2424,6 +2525,7 @@ dynamic response = sg.client.mail_settings.forward_spam.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update plain content mail settings
@@ -2444,6 +2546,7 @@ dynamic response = sg.client.mail_settings.plain_content.patch(requestBody: data
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve plain content mail settings
@@ -2461,6 +2564,7 @@ dynamic response = sg.client.mail_settings.plain_content.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update spam check mail settings
@@ -2483,6 +2587,7 @@ dynamic response = sg.client.mail_settings.spam_check.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve spam check mail settings
@@ -2500,6 +2605,7 @@ dynamic response = sg.client.mail_settings.spam_check.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update template mail settings
@@ -2523,6 +2629,7 @@ dynamic response = sg.client.mail_settings.template.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve legacy template mail settings
@@ -2542,6 +2649,7 @@ dynamic response = sg.client.mail_settings.template.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="mailbox_providers"></a>
@@ -2570,6 +2678,7 @@ dynamic response = sg.client.mailbox_providers.stats.get(queryParams: queryParam
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="partner_settings"></a>
@@ -2592,6 +2701,7 @@ dynamic response = sg.client.partner_settings.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Updates New Relic partner settings.
@@ -2614,6 +2724,7 @@ dynamic response = sg.client.partner_settings.new_relic.patch(requestBody: data)
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Returns all New Relic partner settings.
@@ -2631,6 +2742,7 @@ dynamic response = sg.client.partner_settings.new_relic.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="scopes"></a>
@@ -2649,6 +2761,7 @@ dynamic response = sg.client.scopes.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="stats"></a>
@@ -2674,6 +2787,7 @@ dynamic response = sg.client.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="subusers"></a>
@@ -2704,6 +2818,7 @@ dynamic response = sg.client.subusers.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## List all Subusers
@@ -2727,6 +2842,7 @@ dynamic response = sg.client.subusers.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve Subuser Reputations
@@ -2745,6 +2861,7 @@ dynamic response = sg.client.subusers.reputations.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve email statistics for your subusers.
@@ -2772,6 +2889,7 @@ dynamic response = sg.client.subusers.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve monthly stats for all subusers
@@ -2800,6 +2918,7 @@ dynamic response = sg.client.subusers.stats.monthly.get(queryParams: queryParams
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ##  Retrieve the totals for each email statistic metric for all subusers.
@@ -2827,6 +2946,7 @@ dynamic response = sg.client.subusers.stats.sums.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Enable/disable a subuser
@@ -2849,6 +2969,7 @@ dynamic response = sg.client.subusers._(subuser_name).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a subuser
@@ -2868,6 +2989,7 @@ dynamic response = sg.client.subusers._(subuser_name).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update IPs assigned to a subuser
@@ -2890,6 +3012,7 @@ dynamic response = sg.client.subusers._(subuser_name).ips.put(requestBody: data)
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update Monitor Settings for a subuser
@@ -2908,6 +3031,7 @@ dynamic response = sg.client.subusers._(subuser_name).monitor.put(requestBody: d
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Create monitor settings
@@ -2926,6 +3050,7 @@ dynamic response = sg.client.subusers._(subuser_name).monitor.post(requestBody: 
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve monitor settings for a subuser
@@ -2940,6 +3065,7 @@ dynamic response = sg.client.subusers._(subuser_name).monitor.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete monitor settings
@@ -2954,6 +3080,7 @@ dynamic response = sg.client.subusers._(subuser_name).monitor.delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve the monthly email statistics for a single subuser
@@ -2982,6 +3109,7 @@ dynamic response = sg.client.subusers._(subuser_name).stats.monthly.get(queryPar
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="suppression"></a>
@@ -3008,6 +3136,7 @@ dynamic response = sg.client.suppression.blocks.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete blocks
@@ -3037,6 +3166,7 @@ dynamic response = sg.client.suppression.blocks.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a specific block
@@ -3055,6 +3185,7 @@ dynamic response = sg.client.suppression.blocks._(email).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a specific block
@@ -3073,6 +3204,7 @@ dynamic response = sg.client.suppression.blocks._(email).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all bounces
@@ -3097,6 +3229,7 @@ dynamic response = sg.client.suppression.bounces.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete bounces
@@ -3127,6 +3260,7 @@ dynamic response = sg.client.suppression.bounces.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a Bounce
@@ -3149,6 +3283,7 @@ dynamic response = sg.client.suppression.bounces._(email).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a bounce
@@ -3174,6 +3309,7 @@ dynamic response = sg.client.suppression.bounces._(email).delete(queryParams: qu
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all invalid emails
@@ -3199,6 +3335,7 @@ dynamic response = sg.client.suppression.invalid_emails.get(queryParams: queryPa
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete invalid emails
@@ -3230,6 +3367,7 @@ dynamic response = sg.client.suppression.invalid_emails.delete(requestBody: data
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a specific invalid email
@@ -3250,6 +3388,7 @@ dynamic response = sg.client.suppression.invalid_emails._(email).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a specific invalid email
@@ -3270,6 +3409,7 @@ dynamic response = sg.client.suppression.invalid_emails._(email).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a specific spam report
@@ -3288,6 +3428,7 @@ dynamic response = sg.client.suppression.spam_report._(email).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a specific spam report
@@ -3306,6 +3447,7 @@ dynamic response = sg.client.suppression.spam_report._(email).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all spam reports
@@ -3329,6 +3471,7 @@ dynamic response = sg.client.suppression.spam_reports.get(queryParams: queryPara
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete spam reports
@@ -3358,6 +3501,7 @@ dynamic response = sg.client.suppression.spam_reports.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all global suppressions
@@ -3379,6 +3523,7 @@ dynamic response = sg.client.suppression.unsubscribes.get(queryParams: queryPara
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="templates"></a>
@@ -3402,6 +3547,7 @@ dynamic response = sg.client.templates.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all transactional templates.
@@ -3419,6 +3565,7 @@ dynamic response = sg.client.templates.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Edit a transactional template.
@@ -3441,6 +3588,7 @@ dynamic response = sg.client.templates._(template_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a single transactional template.
@@ -3460,6 +3608,7 @@ dynamic response = sg.client.templates._(template_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a template.
@@ -3479,6 +3628,7 @@ dynamic response = sg.client.templates._(template_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Create a new transactional template version.
@@ -3506,6 +3656,7 @@ dynamic response = sg.client.templates._(template_id).versions.post(requestBody:
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Edit a transactional template version.
@@ -3538,6 +3689,7 @@ dynamic response = sg.client.templates._(template_id).versions._(version_id).pat
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a specific transactional template version.
@@ -3563,6 +3715,7 @@ dynamic response = sg.client.templates._(template_id).versions._(version_id).get
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a transactional template version.
@@ -3588,6 +3741,7 @@ dynamic response = sg.client.templates._(template_id).versions._(version_id).del
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Activate a transactional template version.
@@ -3614,6 +3768,7 @@ dynamic response = sg.client.templates._(template_id).versions._(version_id).act
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="tracking_settings"></a>
@@ -3638,6 +3793,7 @@ dynamic response = sg.client.tracking_settings.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update Click Tracking Settings
@@ -3658,6 +3814,7 @@ dynamic response = sg.client.tracking_settings.click.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve Click Track Settings
@@ -3675,6 +3832,7 @@ dynamic response = sg.client.tracking_settings.click.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update Google Analytics Settings
@@ -3704,6 +3862,7 @@ dynamic response = sg.client.tracking_settings.google_analytics.patch(requestBod
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve Google Analytics Settings
@@ -3725,6 +3884,7 @@ dynamic response = sg.client.tracking_settings.google_analytics.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update Open Tracking Settings
@@ -3747,6 +3907,7 @@ dynamic response = sg.client.tracking_settings.open.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Get Open Tracking Settings
@@ -3766,6 +3927,7 @@ dynamic response = sg.client.tracking_settings.open.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update Subscription Tracking Settings
@@ -3793,6 +3955,7 @@ dynamic response = sg.client.tracking_settings.subscription.patch(requestBody: d
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve Subscription Tracking Settings
@@ -3812,6 +3975,7 @@ dynamic response = sg.client.tracking_settings.subscription.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="user"></a>
@@ -3836,6 +4000,7 @@ dynamic response = sg.client.user.account.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve your credit balance
@@ -3851,6 +4016,7 @@ dynamic response = sg.client.user.credits.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update your account email address
@@ -3873,6 +4039,7 @@ dynamic response = sg.client.user.email.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve your account email address
@@ -3892,6 +4059,7 @@ dynamic response = sg.client.user.email.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update your password
@@ -3915,6 +4083,7 @@ dynamic response = sg.client.user.password.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update a user's profile
@@ -3941,6 +4110,7 @@ dynamic response = sg.client.user.profile.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Get a user's profile
@@ -3958,6 +4128,7 @@ dynamic response = sg.client.user.profile.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Cancel or pause a scheduled send
@@ -3980,6 +4151,7 @@ dynamic response = sg.client.user.scheduled_sends.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all scheduled sends
@@ -3995,6 +4167,7 @@ dynamic response = sg.client.user.scheduled_sends.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update user scheduled send information
@@ -4014,6 +4187,7 @@ dynamic response = sg.client.user.scheduled_sends._(batch_id).patch(requestBody:
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve scheduled send
@@ -4030,6 +4204,7 @@ dynamic response = sg.client.user.scheduled_sends._(batch_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a cancellation or pause of a scheduled send
@@ -4046,6 +4221,7 @@ dynamic response = sg.client.user.scheduled_sends._(batch_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update Enforced TLS settings
@@ -4067,6 +4243,7 @@ dynamic response = sg.client.user.settings.enforced_tls.patch(requestBody: data)
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve current Enforced TLS settings.
@@ -4084,6 +4261,7 @@ dynamic response = sg.client.user.settings.enforced_tls.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update your username
@@ -4106,6 +4284,7 @@ dynamic response = sg.client.user.username.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve your username
@@ -4125,6 +4304,7 @@ dynamic response = sg.client.user.username.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update Event Notification Settings
@@ -4159,6 +4339,7 @@ dynamic response = sg.client.user.webhooks._("event").settings.patch(requestBody
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve Event Webhook settings
@@ -4178,6 +4359,7 @@ dynamic response = sg.client.user.webhooks._("event").settings.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Test Event Notification Settings
@@ -4198,6 +4380,7 @@ dynamic response = sg.client.user.webhooks._("event").test.post(requestBody: dat
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve Parse Webhook settings
@@ -4213,6 +4396,7 @@ dynamic response = sg.client.user.webhooks.parse.settings.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieves Inbound Parse Webhook statistics.
@@ -4237,6 +4421,7 @@ dynamic response = sg.client.user.webhooks.parse.stats.get(queryParams: queryPar
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 <a name="whitelabel"></a>
@@ -4273,6 +4458,7 @@ dynamic response = sg.client.whitelabel.domains.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## List all domain whitelabels.
@@ -4298,6 +4484,7 @@ dynamic response = sg.client.whitelabel.domains.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Get the default domain whitelabel.
@@ -4320,6 +4507,7 @@ dynamic response = sg.client.whitelabel.domains._("default").get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## List the domain whitelabel associated with the given user.
@@ -4344,6 +4532,7 @@ dynamic response = sg.client.whitelabel.domains.subuser.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Disassociate a domain whitelabel from a given user.
@@ -4368,6 +4557,7 @@ dynamic response = sg.client.whitelabel.domains.subuser.delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update a domain whitelabel.
@@ -4390,6 +4580,7 @@ dynamic response = sg.client.whitelabel.domains._(domain_id).patch(requestBody: 
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a domain whitelabel.
@@ -4409,6 +4600,7 @@ dynamic response = sg.client.whitelabel.domains._(domain_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a domain whitelabel.
@@ -4427,6 +4619,7 @@ dynamic response = sg.client.whitelabel.domains._(domain_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Associate a domain whitelabel with a given user.
@@ -4455,6 +4648,7 @@ dynamic response = sg.client.whitelabel.domains._(domain_id).subuser.post(reques
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Add an IP to a domain whitelabel.
@@ -4481,6 +4675,7 @@ dynamic response = sg.client.whitelabel.domains._(id).ips.post(requestBody: data
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Remove an IP from a domain whitelabel.
@@ -4506,6 +4701,7 @@ dynamic response = sg.client.whitelabel.domains._(id).ips._(ip).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Validate a domain whitelabel.
@@ -4529,6 +4725,7 @@ dynamic response = sg.client.whitelabel.domains._(id).validate.post();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Create an IP whitelabel
@@ -4553,6 +4750,7 @@ dynamic response = sg.client.whitelabel.ips.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all IP whitelabels
@@ -4577,6 +4775,7 @@ dynamic response = sg.client.whitelabel.ips.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve an IP whitelabel
@@ -4595,6 +4794,7 @@ dynamic response = sg.client.whitelabel.ips._(id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete an IP whitelabel
@@ -4613,6 +4813,7 @@ dynamic response = sg.client.whitelabel.ips._(id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Validate an IP whitelabel
@@ -4631,6 +4832,7 @@ dynamic response = sg.client.whitelabel.ips._(id).validate.post();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Create a Link Whitelabel
@@ -4657,6 +4859,7 @@ dynamic response = sg.client.whitelabel.links.post(requestBody: data, queryParam
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve all link whitelabels
@@ -4677,6 +4880,7 @@ dynamic response = sg.client.whitelabel.links.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a Default Link Whitelabel
@@ -4704,6 +4908,7 @@ dynamic response = sg.client.whitelabel.links._("default").get(queryParams: quer
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve Associated Link Whitelabel
@@ -4728,6 +4933,7 @@ dynamic response = sg.client.whitelabel.links.subuser.get(queryParams: queryPara
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Disassociate a Link Whitelabel
@@ -4752,6 +4958,7 @@ dynamic response = sg.client.whitelabel.links.subuser.delete(queryParams: queryP
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Update a Link Whitelabel
@@ -4773,6 +4980,7 @@ dynamic response = sg.client.whitelabel.links._(id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Retrieve a Link Whitelabel
@@ -4791,6 +4999,7 @@ dynamic response = sg.client.whitelabel.links._(id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Delete a Link Whitelabel
@@ -4809,6 +5018,7 @@ dynamic response = sg.client.whitelabel.links._(id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Validate a Link Whitelabel
@@ -4827,6 +5037,7 @@ dynamic response = sg.client.whitelabel.links._(id).validate.post();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
 
 ## Associate a Link Whitelabel
@@ -4852,5 +5063,7 @@ dynamic response = sg.client.whitelabel.links._(link_id).subuser.post(requestBod
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 ```
+
 

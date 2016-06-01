@@ -1,7 +1,6 @@
 using System;
 using SendGrid.Helpers.Mail;
 using System.Collections.Generic;
-using System.Net;
 
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
@@ -18,6 +17,7 @@ dynamic response = sg.client.tracking_settings.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Update Click Tracking Settings #
@@ -30,6 +30,7 @@ dynamic response = sg.client.tracking_settings.click.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve Click Track Settings #
@@ -39,6 +40,7 @@ dynamic response = sg.client.tracking_settings.click.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Update Google Analytics Settings #
@@ -56,6 +58,7 @@ dynamic response = sg.client.tracking_settings.google_analytics.patch(requestBod
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve Google Analytics Settings #
@@ -65,6 +68,7 @@ dynamic response = sg.client.tracking_settings.google_analytics.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Update Open Tracking Settings #
@@ -77,6 +81,7 @@ dynamic response = sg.client.tracking_settings.open.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Get Open Tracking Settings #
@@ -86,6 +91,7 @@ dynamic response = sg.client.tracking_settings.open.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Update Subscription Tracking Settings #
@@ -103,6 +109,7 @@ dynamic response = sg.client.tracking_settings.subscription.patch(requestBody: d
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve Subscription Tracking Settings #
@@ -112,4 +119,5 @@ dynamic response = sg.client.tracking_settings.subscription.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 

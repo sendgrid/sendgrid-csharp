@@ -1,7 +1,6 @@
 using System;
 using SendGrid.Helpers.Mail;
 using System.Collections.Generic;
-using System.Net;
 
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
@@ -22,6 +21,7 @@ dynamic response = sg.client.api_keys.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve all API Keys belonging to the authenticated user #
@@ -31,6 +31,7 @@ dynamic response = sg.client.api_keys.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Update the name & scopes of an API Key #
@@ -48,6 +49,7 @@ dynamic response = sg.client.api_keys._(api_key_id).put(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Update API keys #
@@ -61,6 +63,7 @@ dynamic response = sg.client.api_keys._(api_key_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve an existing API Key #
@@ -71,6 +74,7 @@ dynamic response = sg.client.api_keys._(api_key_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Delete API keys #
@@ -81,4 +85,5 @@ dynamic response = sg.client.api_keys._(api_key_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 

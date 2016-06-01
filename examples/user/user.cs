@@ -1,7 +1,6 @@
 using System;
 using SendGrid.Helpers.Mail;
 using System.Collections.Generic;
-using System.Net;
 
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
@@ -14,6 +13,7 @@ dynamic response = sg.client.user.account.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve your credit balance #
@@ -23,6 +23,7 @@ dynamic response = sg.client.user.credits.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Update your account email address #
@@ -35,6 +36,7 @@ dynamic response = sg.client.user.email.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve your account email address #
@@ -44,6 +46,7 @@ dynamic response = sg.client.user.email.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Update your password #
@@ -57,6 +60,7 @@ dynamic response = sg.client.user.password.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Update a user's profile #
@@ -71,6 +75,7 @@ dynamic response = sg.client.user.profile.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Get a user's profile #
@@ -80,6 +85,7 @@ dynamic response = sg.client.user.profile.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Cancel or pause a scheduled send #
@@ -93,6 +99,7 @@ dynamic response = sg.client.user.scheduled_sends.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve all scheduled sends #
@@ -102,6 +109,7 @@ dynamic response = sg.client.user.scheduled_sends.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Update user scheduled send information #
@@ -115,6 +123,7 @@ dynamic response = sg.client.user.scheduled_sends._(batch_id).patch(requestBody:
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve scheduled send #
@@ -125,6 +134,7 @@ dynamic response = sg.client.user.scheduled_sends._(batch_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Delete a cancellation or pause of a scheduled send #
@@ -135,6 +145,7 @@ dynamic response = sg.client.user.scheduled_sends._(batch_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Update Enforced TLS settings #
@@ -148,6 +159,7 @@ dynamic response = sg.client.user.settings.enforced_tls.patch(requestBody: data)
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve current Enforced TLS settings. #
@@ -157,6 +169,7 @@ dynamic response = sg.client.user.settings.enforced_tls.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Update your username #
@@ -169,6 +182,7 @@ dynamic response = sg.client.user.username.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve your username #
@@ -178,6 +192,7 @@ dynamic response = sg.client.user.username.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Update Event Notification Settings #
@@ -202,6 +217,7 @@ dynamic response = sg.client.user.webhooks._("event").settings.patch(requestBody
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve Event Webhook settings #
@@ -211,6 +227,7 @@ dynamic response = sg.client.user.webhooks._("event").settings.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Test Event Notification Settings  #
@@ -223,6 +240,7 @@ dynamic response = sg.client.user.webhooks._("event").test.post(requestBody: dat
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieve Parse Webhook settings #
@@ -232,6 +250,7 @@ dynamic response = sg.client.user.webhooks.parse.settings.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 
 ##################################################
 # Retrieves Inbound Parse Webhook statistics. #
@@ -248,4 +267,5 @@ dynamic response = sg.client.user.webhooks.parse.stats.get(queryParams: queryPar
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
 Console.WriteLine(response.ResponseHeaders.ToString());
+Console.ReadLine();
 

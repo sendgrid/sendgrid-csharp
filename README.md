@@ -52,8 +52,8 @@ Next, update your Environment (user space) with your [SENDGRID_API_KEY](https://
 * Check out the v3beta branch from `https://github.com/sendgrid/sendgrid-csharp.git` using your favorite Git client.
 * Open the [solution](https://github.com/sendgrid/sendgrid-csharp/blob/v3beta/SendGrid/SendGrid.sln) in Visual Studio (we have tested with the Community Edition).
 * Check out the documentation for [Web API v3 endpoints](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html).
-* Review the corresponding [examples](https://github.com/sendgrid/sendgrid-python/blob/v3beta/examples).
-* From the root directory of this repo, use `from sendgrid import *`
+* Review the corresponding [examples](https://github.com/sendgrid/sendgrid-csharp/blob/v3beta/examples).
+* You can add your test code to our [Example project](https://github.com/sendgrid/sendgrid-csharp/blob/v3beta/SendGrid/Example/Example.cs).
 
 ## Once we are out of v3 BETA, the following will apply
 
@@ -130,6 +130,7 @@ namespace Example
 # Usage
 
 - [SendGrid Docs](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html)
+- [Usage Docs](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/USAGE.md)
 - [Example Code](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/SendGrid/Example)
 - [v3 Web API Mail Send Helper](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/SendGrid/SendGrid/Helpers/Mail)
 
