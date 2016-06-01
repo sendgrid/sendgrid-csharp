@@ -561,7 +561,7 @@ namespace UnitTest
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var group_id = "test_url_param";
-            var email = "test_url_param"
+            var email = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
@@ -1133,7 +1133,7 @@ namespace UnitTest
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var list_id = "test_url_param";
-            var recipient_id = "test_url_param"
+            var recipient_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
@@ -1152,7 +1152,7 @@ namespace UnitTest
   'recipient_id': 0
 }";
             var list_id = "test_url_param";
-            var recipient_id = "test_url_param"
+            var recipient_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
@@ -1641,7 +1641,7 @@ namespace UnitTest
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var pool_name = "test_url_param";
-            var ip = "test_url_param"
+            var ip = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
@@ -2948,7 +2948,7 @@ namespace UnitTest
   'subject': '<%subject%>'
 }";
             var template_id = "test_url_param";
-            var version_id = "test_url_param"
+            var version_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
@@ -2963,7 +2963,7 @@ namespace UnitTest
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var template_id = "test_url_param";
-            var version_id = "test_url_param"
+            var version_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
@@ -2978,7 +2978,7 @@ namespace UnitTest
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var template_id = "test_url_param";
-            var version_id = "test_url_param"
+            var version_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
@@ -2993,7 +2993,7 @@ namespace UnitTest
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var template_id = "test_url_param";
-            var version_id = "test_url_param"
+            var version_id = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
@@ -3642,7 +3642,7 @@ namespace UnitTest
             var host = "https://e9sk3d3bfaikbpdq7.stoplight-proxy.io";
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             var id = "test_url_param";
-            var ip = "test_url_param"
+            var ip = "test_url_param";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
