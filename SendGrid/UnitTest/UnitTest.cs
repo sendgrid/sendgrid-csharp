@@ -984,7 +984,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "202");
             dynamic response = sg.client.contactdb.custom_fields._(custom_field_id).delete(requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, );
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Accepted);
         }
 
         [Test]
@@ -1086,7 +1086,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "202");
             dynamic response = sg.client.contactdb.lists._(list_id).delete(queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, );
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Accepted);
         }
 
         [Test]
@@ -1900,7 +1900,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "202");
             dynamic response = sg.client.mail.send.beta.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, );
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Accepted);
         }
 
         [Test]
