@@ -36,8 +36,8 @@ namespace Example
             string requestBody = ret;
             dynamic response = sg.client.mail.send.beta.post(requestBody: requestBody);
             Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-            Console.WriteLine(response.ResponseHeaders.ToString());
+            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+            Console.WriteLine(response.Headers.ToString());
 
             Console.WriteLine(ret);
             Console.ReadLine();
@@ -236,8 +236,8 @@ namespace Example
             string requestBody = ret;
             dynamic response = sg.client.mail.send.beta.post(requestBody: requestBody);
             Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-            Console.WriteLine(response.ResponseHeaders.ToString());
+            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+            Console.WriteLine(response.Headers.ToString());
 
             Console.WriteLine(ret);
             Console.ReadLine();
@@ -253,8 +253,8 @@ namespace Example
             }";
             dynamic response = sg.client.api_keys.get(queryParams: queryParams);
             Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-            Console.WriteLine(response.ResponseHeaders.ToString());
+            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+            Console.WriteLine(response.Headers.ToString());
 
             Console.WriteLine("\n\nPress any key to continue to POST.");
             Console.ReadLine();
@@ -270,10 +270,10 @@ namespace Example
             }";
             response = sg.client.api_keys.post(requestBody: requestBody);
             Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-            Console.WriteLine(response.ResponseHeaders.ToString());
+            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+            Console.WriteLine(response.Headers.ToString());
             JavaScriptSerializer jss = new JavaScriptSerializer();
-            var ds_response = jss.Deserialize<Dictionary<string, dynamic>>(response.ResponseBody.ReadAsStringAsync().Result);
+            var ds_response = jss.Deserialize<Dictionary<string, dynamic>>(response.Body.ReadAsStringAsync().Result);
             string api_key_id = ds_response["api_key_id"];
 
             Console.WriteLine("\n\nPress any key to continue to GET single.");
@@ -282,8 +282,8 @@ namespace Example
             // GET Single
             response = sg.client.api_keys._(api_key_id).get();
             Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-            Console.WriteLine(response.ResponseHeaders.ToString());
+            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+            Console.WriteLine(response.Headers.ToString());
 
             Console.WriteLine("\n\nPress any key to continue to PATCH.");
             Console.ReadLine();
@@ -294,8 +294,8 @@ namespace Example
             }";
             response = sg.client.api_keys._(api_key_id).patch(requestBody: requestBody);
             Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-            Console.WriteLine(response.ResponseHeaders.ToString());
+            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+            Console.WriteLine(response.Headers.ToString());
 
             Console.WriteLine("\n\nPress any key to continue to PUT.");
             Console.ReadLine();
@@ -310,8 +310,8 @@ namespace Example
             }";
             response = sg.client.api_keys._(api_key_id).put(requestBody: requestBody);
             Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-            Console.WriteLine(response.ResponseHeaders.ToString());
+            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+            Console.WriteLine(response.Headers.ToString());
 
             Console.WriteLine("\n\nPress any key to continue to DELETE.");
             Console.ReadLine();
@@ -319,7 +319,7 @@ namespace Example
             // DELETE
             response = sg.client.api_keys._(api_key_id).delete();
             Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.ResponseHeaders.ToString());
+            Console.WriteLine(response.Headers.ToString());
 
             Console.WriteLine("\n\nPress any key to exit.");
             Console.ReadLine();

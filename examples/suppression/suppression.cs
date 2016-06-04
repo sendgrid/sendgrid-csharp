@@ -17,8 +17,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.suppression.blocks.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -34,8 +34,8 @@ string data = @"{
 }";
 dynamic response = sg.client.suppression.blocks.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -45,8 +45,8 @@ Console.ReadLine();
 var email = "test_url_param";
 dynamic response = sg.client.suppression.blocks._(email).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -56,8 +56,8 @@ Console.ReadLine();
 var email = "test_url_param";
 dynamic response = sg.client.suppression.blocks._(email).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -70,8 +70,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.suppression.bounces.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -87,8 +87,8 @@ string data = @"{
 }";
 dynamic response = sg.client.suppression.bounces.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -98,8 +98,8 @@ Console.ReadLine();
 var email = "test_url_param";
 dynamic response = sg.client.suppression.bounces._(email).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -112,8 +112,8 @@ string queryParams = @"{
 var email = "test_url_param";
 dynamic response = sg.client.suppression.bounces._(email).delete(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -128,8 +128,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.suppression.invalid_emails.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -145,8 +145,8 @@ string data = @"{
 }";
 dynamic response = sg.client.suppression.invalid_emails.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -156,8 +156,8 @@ Console.ReadLine();
 var email = "test_url_param";
 dynamic response = sg.client.suppression.invalid_emails._(email).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -167,8 +167,8 @@ Console.ReadLine();
 var email = "test_url_param";
 dynamic response = sg.client.suppression.invalid_emails._(email).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -178,8 +178,8 @@ Console.ReadLine();
 var email = "test_url_param";
 dynamic response = sg.client.suppression.spam_report._(email).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -189,8 +189,8 @@ Console.ReadLine();
 var email = "test_url_param";
 dynamic response = sg.client.suppression.spam_report._(email).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -205,8 +205,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.suppression.spam_reports.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -222,8 +222,8 @@ string data = @"{
 }";
 dynamic response = sg.client.suppression.spam_reports.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -238,7 +238,7 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.suppression.unsubscribes.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 

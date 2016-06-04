@@ -23,8 +23,8 @@ string data = @"{
 }";
 dynamic response = sg.client.whitelabel.domains.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -40,8 +40,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.whitelabel.domains.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -50,8 +50,8 @@ Console.ReadLine();
 
 dynamic response = sg.client.whitelabel.domains._("default").get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -60,8 +60,8 @@ Console.ReadLine();
 
 dynamic response = sg.client.whitelabel.domains.subuser.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -70,8 +70,8 @@ Console.ReadLine();
 
 dynamic response = sg.client.whitelabel.domains.subuser.delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -85,8 +85,8 @@ string data = @"{
 var domain_id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(domain_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -96,8 +96,8 @@ Console.ReadLine();
 var domain_id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(domain_id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -107,8 +107,8 @@ Console.ReadLine();
 var domain_id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(domain_id).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -121,8 +121,8 @@ string data = @"{
 var domain_id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(domain_id).subuser.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -135,8 +135,8 @@ string data = @"{
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(id).ips.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -147,8 +147,8 @@ var id = "test_url_param";
 var ip = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(id).ips._(ip).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -158,8 +158,8 @@ Console.ReadLine();
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(id).validate.post();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -173,8 +173,8 @@ string data = @"{
 }";
 dynamic response = sg.client.whitelabel.ips.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -188,8 +188,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.whitelabel.ips.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -199,8 +199,8 @@ Console.ReadLine();
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.ips._(id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -210,8 +210,8 @@ Console.ReadLine();
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.ips._(id).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -221,8 +221,8 @@ Console.ReadLine();
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.ips._(id).validate.post();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -240,8 +240,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.whitelabel.links.post(requestBody: data, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -253,8 +253,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.whitelabel.links.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -266,8 +266,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.whitelabel.links._("default").get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -279,8 +279,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.whitelabel.links.subuser.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -292,8 +292,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.whitelabel.links.subuser.delete(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -306,8 +306,8 @@ string data = @"{
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -317,8 +317,8 @@ Console.ReadLine();
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -328,8 +328,8 @@ Console.ReadLine();
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(id).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -339,8 +339,8 @@ Console.ReadLine();
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(id).validate.post();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -353,7 +353,7 @@ string data = @"{
 var link_id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(link_id).subuser.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 

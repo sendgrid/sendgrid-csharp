@@ -15,8 +15,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.partner_settings.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -30,8 +30,8 @@ string data = @"{
 }";
 dynamic response = sg.client.partner_settings.new_relic.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -40,7 +40,7 @@ Console.ReadLine();
 
 dynamic response = sg.client.partner_settings.new_relic.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 

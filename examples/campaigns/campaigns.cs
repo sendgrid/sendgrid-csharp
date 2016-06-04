@@ -31,8 +31,8 @@ string data = @"{
 }";
 dynamic response = sg.client.campaigns.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -45,8 +45,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.campaigns.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -65,8 +65,8 @@ string data = @"{
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -76,8 +76,8 @@ Console.ReadLine();
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -87,8 +87,8 @@ Console.ReadLine();
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -101,8 +101,8 @@ string data = @"{
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -115,8 +115,8 @@ string data = @"{
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -126,8 +126,8 @@ Console.ReadLine();
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -137,8 +137,8 @@ Console.ReadLine();
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -148,8 +148,8 @@ Console.ReadLine();
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.now.post();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -162,7 +162,7 @@ string data = @"{
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.test.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 

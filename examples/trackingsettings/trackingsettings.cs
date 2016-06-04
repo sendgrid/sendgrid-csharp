@@ -15,8 +15,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.tracking_settings.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -28,8 +28,8 @@ string data = @"{
 }";
 dynamic response = sg.client.tracking_settings.click.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -38,8 +38,8 @@ Console.ReadLine();
 
 dynamic response = sg.client.tracking_settings.click.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -56,8 +56,8 @@ string data = @"{
 }";
 dynamic response = sg.client.tracking_settings.google_analytics.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -66,8 +66,8 @@ Console.ReadLine();
 
 dynamic response = sg.client.tracking_settings.google_analytics.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -79,8 +79,8 @@ string data = @"{
 }";
 dynamic response = sg.client.tracking_settings.open.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -89,8 +89,8 @@ Console.ReadLine();
 
 dynamic response = sg.client.tracking_settings.open.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -107,8 +107,8 @@ string data = @"{
 }";
 dynamic response = sg.client.tracking_settings.subscription.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -117,7 +117,7 @@ Console.ReadLine();
 
 dynamic response = sg.client.tracking_settings.subscription.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 

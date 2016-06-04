@@ -57,8 +57,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.access_settings.activity.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -90,8 +90,8 @@ string data = @"{
 }";
 dynamic response = sg.client.access_settings.whitelist.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -108,8 +108,8 @@ For more information, please see our [User Guide](http://sendgrid.com/docs/User_
 ```csharp
 dynamic response = sg.client.access_settings.whitelist.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -135,8 +135,8 @@ string data = @"{
 }";
 dynamic response = sg.client.access_settings.whitelist.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -156,8 +156,8 @@ For more information, please see our [User Guide](http://sendgrid.com/docs/User_
 var rule_id = "test_url_param";
 dynamic response = sg.client.access_settings.whitelist._(rule_id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -177,8 +177,8 @@ For more information, please see our [User Guide](http://sendgrid.com/docs/User_
 var rule_id = "test_url_param";
 dynamic response = sg.client.access_settings.whitelist._(rule_id).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -210,8 +210,8 @@ string data = @"{
 }";
 dynamic response = sg.client.api_keys.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -226,8 +226,8 @@ The API Keys feature allows customers to be able to generate an API Key credenti
 ```csharp
 dynamic response = sg.client.api_keys.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -254,8 +254,8 @@ string data = @"{
 var api_key_id = "test_url_param";
 dynamic response = sg.client.api_keys._(api_key_id).put(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -282,8 +282,8 @@ string data = @"{
 var api_key_id = "test_url_param";
 dynamic response = sg.client.api_keys._(api_key_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -299,8 +299,8 @@ If the API Key ID does not exist an HTTP 404 will be returned.
 var api_key_id = "test_url_param";
 dynamic response = sg.client.api_keys._(api_key_id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -324,8 +324,8 @@ The API Keys feature allows customers to be able to generate an API Key credenti
 var api_key_id = "test_url_param";
 dynamic response = sg.client.api_keys._(api_key_id).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -352,8 +352,8 @@ string data = @"{
 }";
 dynamic response = sg.client.asm.groups.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -372,8 +372,8 @@ Each user can create up to 25 different suppression groups.
 ```csharp
 dynamic response = sg.client.asm.groups.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -398,8 +398,8 @@ string data = @"{
 var group_id = "test_url_param";
 dynamic response = sg.client.asm.groups._(group_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -419,8 +419,8 @@ Each user can create up to 25 different suppression groups.
 var group_id = "test_url_param";
 dynamic response = sg.client.asm.groups._(group_id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -442,8 +442,8 @@ Each user can create up to 25 different suppression groups.
 var group_id = "test_url_param";
 dynamic response = sg.client.asm.groups._(group_id).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -467,8 +467,8 @@ string data = @"{
 var group_id = "test_url_param";
 dynamic response = sg.client.asm.groups._(group_id).suppressions.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -484,8 +484,8 @@ Suppressions are recipient email addresses that are added to [unsubscribe groups
 var group_id = "test_url_param";
 dynamic response = sg.client.asm.groups._(group_id).suppressions.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -502,8 +502,8 @@ var group_id = "test_url_param";
 var email = "test_url_param";
 dynamic response = sg.client.asm.groups._(group_id).suppressions._(email).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -524,8 +524,8 @@ string data = @"{
 }";
 dynamic response = sg.client.asm.suppressions.global.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -543,8 +543,8 @@ A global suppression (or global unsubscribe) is an email address of a recipient 
 var email = "test_url_param";
 dynamic response = sg.client.asm.suppressions.global._(email).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -560,8 +560,8 @@ A global suppression (or global unsubscribe) is an email address of a recipient 
 var email = "test_url_param";
 dynamic response = sg.client.asm.suppressions.global._(email).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -589,8 +589,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.browsers.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -634,8 +634,8 @@ string data = @"{
 }";
 dynamic response = sg.client.campaigns.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -660,8 +660,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.campaigns.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -688,8 +688,8 @@ string data = @"{
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -709,8 +709,8 @@ For more information:
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -730,8 +730,8 @@ For more information:
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -752,8 +752,8 @@ string data = @"{
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -774,8 +774,8 @@ string data = @"{
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -793,8 +793,8 @@ For more information:
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -815,8 +815,8 @@ For more information:
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -836,8 +836,8 @@ For more information:
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.now.post();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -860,8 +860,8 @@ string data = @"{
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.test.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -884,8 +884,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.categories.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -910,8 +910,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.categories.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -937,8 +937,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.categories.stats.sums.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -963,8 +963,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.clients.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -993,8 +993,8 @@ string queryParams = @"{
 var client_type = "test_url_param";
 dynamic response = sg.client.clients._(client_type).stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1016,8 +1016,8 @@ string data = @"{
 }";
 dynamic response = sg.client.contactdb.custom_fields.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1032,8 +1032,8 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 ```csharp
 dynamic response = sg.client.contactdb.custom_fields.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1049,8 +1049,8 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 var custom_field_id = "test_url_param";
 dynamic response = sg.client.contactdb.custom_fields._(custom_field_id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1066,8 +1066,8 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 var custom_field_id = "test_url_param";
 dynamic response = sg.client.contactdb.custom_fields._(custom_field_id).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1085,8 +1085,8 @@ string data = @"{
 }";
 dynamic response = sg.client.contactdb.lists.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1101,8 +1101,8 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 ```csharp
 dynamic response = sg.client.contactdb.lists.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1123,8 +1123,8 @@ string data = @"[
 ]";
 dynamic response = sg.client.contactdb.lists.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1147,8 +1147,8 @@ string queryParams = @"{
 var list_id = "test_url_param";
 dynamic response = sg.client.contactdb.lists._(list_id).patch(requestBody: data, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1167,8 +1167,8 @@ string queryParams = @"{
 var list_id = "test_url_param";
 dynamic response = sg.client.contactdb.lists._(list_id).get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1187,8 +1187,8 @@ string queryParams = @"{
 var list_id = "test_url_param";
 dynamic response = sg.client.contactdb.lists._(list_id).delete(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1210,8 +1210,8 @@ string data = @"[
 var list_id = "test_url_param";
 dynamic response = sg.client.contactdb.lists._(list_id).recipients.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1232,8 +1232,8 @@ string queryParams = @"{
 var list_id = "test_url_param";
 dynamic response = sg.client.contactdb.lists._(list_id).recipients.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1250,8 +1250,8 @@ var list_id = "test_url_param";
 var recipient_id = "test_url_param";
 dynamic response = sg.client.contactdb.lists._(list_id).recipients._(recipient_id).post();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1272,8 +1272,8 @@ var list_id = "test_url_param";
 var recipient_id = "test_url_param";
 dynamic response = sg.client.contactdb.lists._(list_id).recipients._(recipient_id).delete(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1299,8 +1299,8 @@ string data = @"[
 ]";
 dynamic response = sg.client.contactdb.recipients.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1331,8 +1331,8 @@ string data = @"[
 ]";
 dynamic response = sg.client.contactdb.recipients.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1354,8 +1354,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.contactdb.recipients.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1376,8 +1376,8 @@ string data = @"[
 ]";
 dynamic response = sg.client.contactdb.recipients.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1394,8 +1394,8 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 ```csharp
 dynamic response = sg.client.contactdb.recipients.billable_count.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1410,8 +1410,8 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 ```csharp
 dynamic response = sg.client.contactdb.recipients.count.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1438,8 +1438,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.contactdb.recipients.search.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1455,8 +1455,8 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 var recipient_id = "test_url_param";
 dynamic response = sg.client.contactdb.recipients._(recipient_id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1472,8 +1472,8 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 var recipient_id = "test_url_param";
 dynamic response = sg.client.contactdb.recipients._(recipient_id).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1491,8 +1491,8 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 var recipient_id = "test_url_param";
 dynamic response = sg.client.contactdb.recipients._(recipient_id).lists.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1507,8 +1507,8 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 ```csharp
 dynamic response = sg.client.contactdb.reserved_fields.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1567,8 +1567,8 @@ string data = @"{
 }";
 dynamic response = sg.client.contactdb.segments.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1585,8 +1585,8 @@ For more information about segments in Marketing Campaigns, please see our [User
 ```csharp
 dynamic response = sg.client.contactdb.segments.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1619,8 +1619,8 @@ string queryParams = @"{
 var segment_id = "test_url_param";
 dynamic response = sg.client.contactdb.segments._(segment_id).patch(requestBody: data, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1641,8 +1641,8 @@ string queryParams = @"{
 var segment_id = "test_url_param";
 dynamic response = sg.client.contactdb.segments._(segment_id).get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1665,8 +1665,8 @@ string queryParams = @"{
 var segment_id = "test_url_param";
 dynamic response = sg.client.contactdb.segments._(segment_id).delete(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1688,8 +1688,8 @@ string queryParams = @"{
 var segment_id = "test_url_param";
 dynamic response = sg.client.contactdb.segments._(segment_id).recipients.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1725,8 +1725,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.devices.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1754,8 +1754,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.geo.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1782,8 +1782,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.ips.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1798,8 +1798,8 @@ A single IP address or a range of IP addresses may be dedicated to an account in
 ```csharp
 dynamic response = sg.client.ips.assigned.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1823,8 +1823,8 @@ string data = @"{
 }";
 dynamic response = sg.client.ips.pools.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1843,8 +1843,8 @@ If an IP pool is NOT specified for an email, it will use any IP available, inclu
 ```csharp
 dynamic response = sg.client.ips.pools.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1867,8 +1867,8 @@ string data = @"{
 var pool_name = "test_url_param";
 dynamic response = sg.client.ips.pools._(pool_name).put(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1888,8 +1888,8 @@ If an IP pool is NOT specified for an email, it will use any IP available, inclu
 var pool_name = "test_url_param";
 dynamic response = sg.client.ips.pools._(pool_name).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1909,8 +1909,8 @@ If an IP pool is NOT specified for an email, it will use any IP available, inclu
 var pool_name = "test_url_param";
 dynamic response = sg.client.ips.pools._(pool_name).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1931,8 +1931,8 @@ string data = @"{
 var pool_name = "test_url_param";
 dynamic response = sg.client.ips.pools._(pool_name).ips.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1951,8 +1951,8 @@ var pool_name = "test_url_param";
 var ip = "test_url_param";
 dynamic response = sg.client.ips.pools._(pool_name).ips._(ip).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1972,8 +1972,8 @@ string data = @"{
 }";
 dynamic response = sg.client.ips.warmup.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -1990,8 +1990,8 @@ For more general information about warming up IPs, please see our [Classroom](ht
 ```csharp
 dynamic response = sg.client.ips.warmup.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2009,8 +2009,8 @@ For more general information about warming up IPs, please see our [Classroom](ht
 var ip_address = "test_url_param";
 dynamic response = sg.client.ips.warmup._(ip_address).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2028,8 +2028,8 @@ For more general information about warming up IPs, please see our [Classroom](ht
 var ip_address = "test_url_param";
 dynamic response = sg.client.ips.warmup._(ip_address).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2047,8 +2047,8 @@ A single IP address or a range of IP addresses may be dedicated to an account in
 var ip_address = "test_url_param";
 dynamic response = sg.client.ips._(ip_address).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2070,8 +2070,8 @@ More Information:
 ```csharp
 dynamic response = sg.client.mail.batch.post();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2091,8 +2091,8 @@ More Information:
 var batch_id = "test_url_param";
 dynamic response = sg.client.mail.batch._(batch_id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2137,7 +2137,7 @@ string data = @"{
   'content': [
     {
       'type': 'text/html',
-      'value': '<html><p>Hello, world!</p><img src='cid:ii_139db99fdb5c3704'></img></html>'
+      'value': '<html><p>Hello, world!</p><img src=[CID GOES HERE]></img></html>'
     }
   ],
   'custom_args': {
@@ -2255,8 +2255,8 @@ string data = @"{
 }";
 dynamic response = sg.client.mail.send.beta.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2278,8 +2278,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.mail_settings.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2303,8 +2303,8 @@ string data = @"{
 }";
 dynamic response = sg.client.mail_settings.address_whitelist.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2321,8 +2321,8 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 ```csharp
 dynamic response = sg.client.mail_settings.address_whitelist.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2343,8 +2343,8 @@ string data = @"{
 }";
 dynamic response = sg.client.mail_settings.bcc.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2361,8 +2361,8 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 ```csharp
 dynamic response = sg.client.mail_settings.bcc.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2384,8 +2384,8 @@ string data = @"{
 }";
 dynamic response = sg.client.mail_settings.bounce_purge.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2402,8 +2402,8 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 ```csharp
 dynamic response = sg.client.mail_settings.bounce_purge.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2425,8 +2425,8 @@ string data = @"{
 }";
 dynamic response = sg.client.mail_settings.footer.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2443,8 +2443,8 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 ```csharp
 dynamic response = sg.client.mail_settings.footer.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2465,8 +2465,8 @@ string data = @"{
 }";
 dynamic response = sg.client.mail_settings.forward_bounce.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2483,8 +2483,8 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 ```csharp
 dynamic response = sg.client.mail_settings.forward_bounce.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2505,8 +2505,8 @@ string data = @"{
 }";
 dynamic response = sg.client.mail_settings.forward_spam.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2523,8 +2523,8 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 ```csharp
 dynamic response = sg.client.mail_settings.forward_spam.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2544,8 +2544,8 @@ string data = @"{
 }";
 dynamic response = sg.client.mail_settings.plain_content.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2562,8 +2562,8 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 ```csharp
 dynamic response = sg.client.mail_settings.plain_content.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2585,8 +2585,8 @@ string data = @"{
 }";
 dynamic response = sg.client.mail_settings.spam_check.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2603,8 +2603,8 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 ```csharp
 dynamic response = sg.client.mail_settings.spam_check.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2627,8 +2627,8 @@ string data = @"{
 }";
 dynamic response = sg.client.mail_settings.template.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2647,8 +2647,8 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 ```csharp
 dynamic response = sg.client.mail_settings.template.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2676,8 +2676,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.mailbox_providers.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2699,8 +2699,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.partner_settings.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2722,8 +2722,8 @@ string data = @"{
 }";
 dynamic response = sg.client.partner_settings.new_relic.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2740,8 +2740,8 @@ By integrating with New Relic, you can send your SendGrid email statistics to yo
 ```csharp
 dynamic response = sg.client.partner_settings.new_relic.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2759,8 +2759,8 @@ API Keys can be used to authenticate the use of [SendGrids v3 Web API](https://s
 ```csharp
 dynamic response = sg.client.scopes.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2785,8 +2785,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2816,8 +2816,8 @@ string data = @"{
 }";
 dynamic response = sg.client.subusers.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2840,8 +2840,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.subusers.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2859,8 +2859,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.subusers.reputations.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2887,8 +2887,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.subusers.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2916,8 +2916,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.subusers.stats.monthly.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2944,8 +2944,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.subusers.stats.sums.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2967,8 +2967,8 @@ string data = @"{
 var subuser_name = "test_url_param";
 dynamic response = sg.client.subusers._(subuser_name).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -2987,8 +2987,8 @@ For more information about Subusers:
 var subuser_name = "test_url_param";
 dynamic response = sg.client.subusers._(subuser_name).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3010,8 +3010,8 @@ string data = @"[
 var subuser_name = "test_url_param";
 dynamic response = sg.client.subusers._(subuser_name).ips.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3029,8 +3029,8 @@ string data = @"{
 var subuser_name = "test_url_param";
 dynamic response = sg.client.subusers._(subuser_name).monitor.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3048,8 +3048,8 @@ string data = @"{
 var subuser_name = "test_url_param";
 dynamic response = sg.client.subusers._(subuser_name).monitor.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3063,8 +3063,8 @@ Subuser monitor settings allow you to receive a sample of an outgoing message by
 var subuser_name = "test_url_param";
 dynamic response = sg.client.subusers._(subuser_name).monitor.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3078,8 +3078,8 @@ Subuser monitor settings allow you to receive a sample of an outgoing message by
 var subuser_name = "test_url_param";
 dynamic response = sg.client.subusers._(subuser_name).monitor.delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3107,8 +3107,8 @@ string queryParams = @"{
 var subuser_name = "test_url_param";
 dynamic response = sg.client.subusers._(subuser_name).stats.monthly.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3134,8 +3134,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.suppression.blocks.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3164,8 +3164,8 @@ string data = @"{
 }";
 dynamic response = sg.client.suppression.blocks.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3183,8 +3183,8 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 var email = "test_url_param";
 dynamic response = sg.client.suppression.blocks._(email).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3202,8 +3202,8 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 var email = "test_url_param";
 dynamic response = sg.client.suppression.blocks._(email).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3227,8 +3227,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.suppression.bounces.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3258,8 +3258,8 @@ string data = @"{
 }";
 dynamic response = sg.client.suppression.bounces.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3281,8 +3281,8 @@ For more information see:
 var email = "test_url_param";
 dynamic response = sg.client.suppression.bounces._(email).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3307,8 +3307,8 @@ string queryParams = @"{
 var email = "test_url_param";
 dynamic response = sg.client.suppression.bounces._(email).delete(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3333,8 +3333,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.suppression.invalid_emails.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3365,8 +3365,8 @@ string data = @"{
 }";
 dynamic response = sg.client.suppression.invalid_emails.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3386,8 +3386,8 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 var email = "test_url_param";
 dynamic response = sg.client.suppression.invalid_emails._(email).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3407,8 +3407,8 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 var email = "test_url_param";
 dynamic response = sg.client.suppression.invalid_emails._(email).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3426,8 +3426,8 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 var email = "test_url_param";
 dynamic response = sg.client.suppression.spam_report._(email).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3445,8 +3445,8 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 var email = "test_url_param";
 dynamic response = sg.client.suppression.spam_report._(email).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3469,8 +3469,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.suppression.spam_reports.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3499,8 +3499,8 @@ string data = @"{
 }";
 dynamic response = sg.client.suppression.spam_reports.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3521,8 +3521,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.suppression.unsubscribes.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3545,8 +3545,8 @@ string data = @"{
 }";
 dynamic response = sg.client.templates.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3563,8 +3563,8 @@ Transactional templates are templates created specifically for transactional ema
 ```csharp
 dynamic response = sg.client.templates.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3586,8 +3586,8 @@ string data = @"{
 var template_id = "test_url_param";
 dynamic response = sg.client.templates._(template_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3606,8 +3606,8 @@ Transactional templates are templates created specifically for transactional ema
 var template_id = "test_url_param";
 dynamic response = sg.client.templates._(template_id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3626,8 +3626,8 @@ Transactional templates are templates created specifically for transactional ema
 var template_id = "test_url_param";
 dynamic response = sg.client.templates._(template_id).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3654,8 +3654,8 @@ string data = @"{
 var template_id = "test_url_param";
 dynamic response = sg.client.templates._(template_id).versions.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3687,8 +3687,8 @@ var template_id = "test_url_param";
 var version_id = "test_url_param";
 dynamic response = sg.client.templates._(template_id).versions._(version_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3713,8 +3713,8 @@ var template_id = "test_url_param";
 var version_id = "test_url_param";
 dynamic response = sg.client.templates._(template_id).versions._(version_id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3739,8 +3739,8 @@ var template_id = "test_url_param";
 var version_id = "test_url_param";
 dynamic response = sg.client.templates._(template_id).versions._(version_id).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3766,8 +3766,8 @@ var template_id = "test_url_param";
 var version_id = "test_url_param";
 dynamic response = sg.client.templates._(template_id).versions._(version_id).activate.post();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3791,8 +3791,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.tracking_settings.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3812,8 +3812,8 @@ string data = @"{
 }";
 dynamic response = sg.client.tracking_settings.click.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3830,8 +3830,8 @@ For more information about tracking, please see our [User Guide](https://sendgri
 ```csharp
 dynamic response = sg.client.tracking_settings.click.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3860,8 +3860,8 @@ string data = @"{
 }";
 dynamic response = sg.client.tracking_settings.google_analytics.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3882,8 +3882,8 @@ For more information about tracking, please see our [User Guide](https://sendgri
 ```csharp
 dynamic response = sg.client.tracking_settings.google_analytics.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3905,8 +3905,8 @@ string data = @"{
 }";
 dynamic response = sg.client.tracking_settings.open.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3925,8 +3925,8 @@ For more information about tracking, please see our [User Guide](https://sendgri
 ```csharp
 dynamic response = sg.client.tracking_settings.open.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3953,8 +3953,8 @@ string data = @"{
 }";
 dynamic response = sg.client.tracking_settings.subscription.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3973,8 +3973,8 @@ For more information about tracking, please see our [User Guide](https://sendgri
 ```csharp
 dynamic response = sg.client.tracking_settings.subscription.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -3998,8 +3998,8 @@ For more information about your user profile:
 ```csharp
 dynamic response = sg.client.user.account.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4014,8 +4014,8 @@ Your monthly credit allotment limits the number of emails you may send before in
 ```csharp
 dynamic response = sg.client.user.credits.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4037,8 +4037,8 @@ string data = @"{
 }";
 dynamic response = sg.client.user.email.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4057,8 +4057,8 @@ For more information about your user profile:
 ```csharp
 dynamic response = sg.client.user.email.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4081,8 +4081,8 @@ string data = @"{
 }";
 dynamic response = sg.client.user.password.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4108,8 +4108,8 @@ string data = @"{
 }";
 dynamic response = sg.client.user.profile.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4126,8 +4126,8 @@ For more information about your user profile:
 ```csharp
 dynamic response = sg.client.user.profile.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4149,8 +4149,8 @@ string data = @"{
 }";
 dynamic response = sg.client.user.scheduled_sends.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4165,8 +4165,8 @@ The Cancel Scheduled Sends feature allows the customer to cancel a scheduled sen
 ```csharp
 dynamic response = sg.client.user.scheduled_sends.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4185,8 +4185,8 @@ string data = @"{
 var batch_id = "test_url_param";
 dynamic response = sg.client.user.scheduled_sends._(batch_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4202,8 +4202,8 @@ The Cancel Scheduled Sends feature allows the customer to cancel a scheduled sen
 var batch_id = "test_url_param";
 dynamic response = sg.client.user.scheduled_sends._(batch_id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4219,8 +4219,8 @@ The Cancel Scheduled Sends feature allows the customer to cancel a scheduled sen
 var batch_id = "test_url_param";
 dynamic response = sg.client.user.scheduled_sends._(batch_id).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4241,8 +4241,8 @@ string data = @"{
 }";
 dynamic response = sg.client.user.settings.enforced_tls.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4259,8 +4259,8 @@ The Enforced TLS settings specify whether or not the recipient is required to su
 ```csharp
 dynamic response = sg.client.user.settings.enforced_tls.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4282,8 +4282,8 @@ string data = @"{
 }";
 dynamic response = sg.client.user.username.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4302,8 +4302,8 @@ For more information about your user profile:
 ```csharp
 dynamic response = sg.client.user.username.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4337,8 +4337,8 @@ string data = @"{
 }";
 dynamic response = sg.client.user.webhooks._("event").settings.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4357,8 +4357,8 @@ Common uses of this data are to remove unsubscribes, react to spam reports, dete
 ```csharp
 dynamic response = sg.client.user.webhooks._("event").settings.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4378,8 +4378,8 @@ string data = @"{
 }";
 dynamic response = sg.client.user.webhooks._("event").test.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4394,8 +4394,8 @@ SendGrid can parse the attachments and contents of incoming emails. The Parse AP
 ```csharp
 dynamic response = sg.client.user.webhooks.parse.settings.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4419,8 +4419,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.user.webhooks.parse.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4456,8 +4456,8 @@ string data = @"{
 }";
 dynamic response = sg.client.whitelabel.domains.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4482,8 +4482,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.whitelabel.domains.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4505,8 +4505,8 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 ```csharp
 dynamic response = sg.client.whitelabel.domains._("default").get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4530,8 +4530,8 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 ```csharp
 dynamic response = sg.client.whitelabel.domains.subuser.get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4555,8 +4555,8 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 ```csharp
 dynamic response = sg.client.whitelabel.domains.subuser.delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4578,8 +4578,8 @@ string data = @"{
 var domain_id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(domain_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4598,8 +4598,8 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 var domain_id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(domain_id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4617,8 +4617,8 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 var domain_id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(domain_id).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4646,8 +4646,8 @@ string data = @"{
 var domain_id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(domain_id).subuser.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4673,8 +4673,8 @@ string data = @"{
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(id).ips.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4699,8 +4699,8 @@ var id = "test_url_param";
 var ip = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(id).ips._(ip).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4723,8 +4723,8 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(id).validate.post();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4748,8 +4748,8 @@ string data = @"{
 }";
 dynamic response = sg.client.whitelabel.ips.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4773,8 +4773,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.whitelabel.ips.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4792,8 +4792,8 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.ips._(id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4811,8 +4811,8 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.ips._(id).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4830,8 +4830,8 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.ips._(id).validate.post();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4857,8 +4857,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.whitelabel.links.post(requestBody: data, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4878,8 +4878,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.whitelabel.links.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4906,8 +4906,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.whitelabel.links._("default").get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4931,8 +4931,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.whitelabel.links.subuser.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4956,8 +4956,8 @@ string queryParams = @"{
 }";
 dynamic response = sg.client.whitelabel.links.subuser.delete(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4978,8 +4978,8 @@ string data = @"{
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -4997,8 +4997,8 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -5016,8 +5016,8 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(id).delete();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -5035,8 +5035,8 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(id).validate.post();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
@@ -5061,8 +5061,8 @@ string data = @"{
 var link_id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(link_id).subuser.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 

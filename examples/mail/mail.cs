@@ -11,8 +11,8 @@ dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 
 dynamic response = sg.client.mail.batch.post();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -22,8 +22,8 @@ Console.ReadLine();
 var batch_id = "test_url_param";
 dynamic response = sg.client.mail.batch._(batch_id).get();
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ##################################################
@@ -57,7 +57,7 @@ string data = @"{
   'content': [
     {
       'type': 'text/html', 
-      'value': '<html><p>Hello, world!</p><img src='cid:ii_139db99fdb5c3704'></img></html>'
+      'value': '<html><p>Hello, world!</p><img src=[CID GOES HERE]></img></html>'
     }
   ], 
   'custom_args': {
@@ -175,7 +175,7 @@ string data = @"{
 }";
 dynamic response = sg.client.mail.send.beta.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.ResponseBody.ReadAsStringAsync().Result);
-Console.WriteLine(response.ResponseHeaders.ToString());
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
