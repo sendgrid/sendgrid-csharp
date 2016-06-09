@@ -30,7 +30,7 @@ namespace SendGrid
             requestHeaders.Add("Authorization", "Bearer " + apiKey);
             requestHeaders.Add("Content-Type", "application/json");
             requestHeaders.Add("User-Agent", "sendgrid/" + Version + " csharp");
-            client = new Client(baseUri, requestHeaders, version);
+            client = new Client(host: baseUri, requestHeaders: requestHeaders, version: version);
         }
     }
 }
