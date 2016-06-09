@@ -23,7 +23,7 @@ namespace SendGrid
         /// <param name="baseUri">Base SendGrid API Uri</param>
         public SendGridAPIClient(string apiKey, string baseUri = "https://api.sendgrid.com")
         {
-            baseUri = baseUri + "/v3";
+            baseUri = baseUri + "v3";
             _baseUri = new Uri(baseUri);
             _apiKey = apiKey;
             Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
