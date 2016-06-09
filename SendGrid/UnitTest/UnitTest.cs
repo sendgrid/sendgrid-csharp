@@ -2230,7 +2230,7 @@ namespace UnitTest
   'content': [
     {
       'type': 'text/html',
-      'value': '<html><p>Hello, world!</p><img src=\\'cid:ii_139db99fdb5c3704\\'></img></html>'
+      'value': '<html><p>Hello, world!</p><img src=\'cid:ii_139db99fdb5c3704\'></img></html>'
     }
   ],
   'custom_args': {
