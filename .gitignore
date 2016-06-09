@@ -20,3 +20,4 @@ SendGrid/TestResult.xml
 SendGrid/SendGrid.sln.VisualState.xml
 *.pfx
 *.PublicKey
+SendGrid/.vs/config/applicationhost.config

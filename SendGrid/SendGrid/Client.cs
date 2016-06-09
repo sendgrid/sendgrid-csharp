@@ -21,9 +21,8 @@ namespace SendGrid
         /// </summary>
         /// <param name="apiKey">Your SendGrid API Key</param>
         /// <param name="baseUri">Base SendGrid API Uri</param>
-        public SendGridAPIClient(string apiKey, string baseUri = "https://api.sendgrid.com")
+        public SendGridAPIClient(string apiKey, String baseUri = "https://api.sendgrid.com", String version = "v3")
         {
-            baseUri = baseUri + "v3";
             _baseUri = new Uri(baseUri);
             _apiKey = apiKey;
             Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
@@ -31,7 +30,7 @@ namespace SendGrid
             requestHeaders.Add("Authorization", "Bearer " + apiKey);
             requestHeaders.Add("Content-Type", "application/json");
             requestHeaders.Add("User-Agent", "sendgrid/" + Version + " csharp");
-            client = new Client(host: baseUri, requestHeaders: requestHeaders);
+            client = new Client(host: baseUri, requestHeaders: requestHeaders, version: version);
         }
     }
 }
