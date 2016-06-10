@@ -4355,7 +4355,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.user.webhooks.event.settings.patch(requestBody: data, requestHeaders: headers);
+            dynamic response = sg.client.user.webhooks._("event").settings.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -4373,7 +4373,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.user.webhooks.event.settings.get(requestHeaders: headers);
+            dynamic response = sg.client.user.webhooks._("event").settings.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -4394,7 +4394,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = sg.client.user.webhooks.event.test.post(requestBody: data, requestHeaders: headers);
+            dynamic response = sg.client.user.webhooks._("event").test.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
