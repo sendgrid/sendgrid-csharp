@@ -5,9 +5,9 @@ using System.Collections.Generic;
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 
-##################################################
-# Retrieve all IP addresses #
-# GET /ips #
+////////////////////////////////////////////////////////
+// Retrieve all IP addresses
+// GET /ips
 
 string queryParams = @"{
   'exclude_whitelabels': 'true', 
@@ -22,9 +22,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve all assigned IPs #
-# GET /ips/assigned #
+////////////////////////////////////////////////////////
+// Retrieve all assigned IPs
+// GET /ips/assigned
 
 dynamic response = sg.client.ips.assigned.get();
 Console.WriteLine(response.StatusCode);
@@ -32,9 +32,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Create an IP pool. #
-# POST /ips/pools #
+////////////////////////////////////////////////////////
+// Create an IP pool.
+// POST /ips/pools
 
 string data = @"{
   'name': 'marketing'
@@ -45,9 +45,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve all IP pools. #
-# GET /ips/pools #
+////////////////////////////////////////////////////////
+// Retrieve all IP pools.
+// GET /ips/pools
 
 dynamic response = sg.client.ips.pools.get();
 Console.WriteLine(response.StatusCode);
@@ -55,9 +55,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update an IP pools name. #
-# PUT /ips/pools/{pool_name} #
+////////////////////////////////////////////////////////
+// Update an IP pools name.
+// PUT /ips/pools/{pool_name}
 
 string data = @"{
   'name': 'new_pool_name'
@@ -69,9 +69,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve all IPs in a specified pool. #
-# GET /ips/pools/{pool_name} #
+////////////////////////////////////////////////////////
+// Retrieve all IPs in a specified pool.
+// GET /ips/pools/{pool_name}
 
 var pool_name = "test_url_param";
 dynamic response = sg.client.ips.pools._(pool_name).get();
@@ -80,9 +80,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Delete an IP pool. #
-# DELETE /ips/pools/{pool_name} #
+////////////////////////////////////////////////////////
+// Delete an IP pool.
+// DELETE /ips/pools/{pool_name}
 
 var pool_name = "test_url_param";
 dynamic response = sg.client.ips.pools._(pool_name).delete();
@@ -91,9 +91,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Add an IP address to a pool #
-# POST /ips/pools/{pool_name}/ips #
+////////////////////////////////////////////////////////
+// Add an IP address to a pool
+// POST /ips/pools/{pool_name}/ips
 
 string data = @"{
   'ip': '0.0.0.0'
@@ -105,9 +105,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Remove an IP address from a pool. #
-# DELETE /ips/pools/{pool_name}/ips/{ip} #
+////////////////////////////////////////////////////////
+// Remove an IP address from a pool.
+// DELETE /ips/pools/{pool_name}/ips/{ip}
 
 var pool_name = "test_url_param";
 var ip = "test_url_param";
@@ -117,9 +117,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Add an IP to warmup #
-# POST /ips/warmup #
+////////////////////////////////////////////////////////
+// Add an IP to warmup
+// POST /ips/warmup
 
 string data = @"{
   'ip': '0.0.0.0'
@@ -130,9 +130,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve all IPs currently in warmup #
-# GET /ips/warmup #
+////////////////////////////////////////////////////////
+// Retrieve all IPs currently in warmup
+// GET /ips/warmup
 
 dynamic response = sg.client.ips.warmup.get();
 Console.WriteLine(response.StatusCode);
@@ -140,9 +140,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve warmup status for a specific IP address #
-# GET /ips/warmup/{ip_address} #
+////////////////////////////////////////////////////////
+// Retrieve warmup status for a specific IP address
+// GET /ips/warmup/{ip_address}
 
 var ip_address = "test_url_param";
 dynamic response = sg.client.ips.warmup._(ip_address).get();
@@ -151,9 +151,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Remove an IP from warmup #
-# DELETE /ips/warmup/{ip_address} #
+////////////////////////////////////////////////////////
+// Remove an IP from warmup
+// DELETE /ips/warmup/{ip_address}
 
 var ip_address = "test_url_param";
 dynamic response = sg.client.ips.warmup._(ip_address).delete();
@@ -162,9 +162,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve all IP pools an IP address belongs to #
-# GET /ips/{ip_address} #
+////////////////////////////////////////////////////////
+// Retrieve all IP pools an IP address belongs to
+// GET /ips/{ip_address}
 
 var ip_address = "test_url_param";
 dynamic response = sg.client.ips._(ip_address).get();

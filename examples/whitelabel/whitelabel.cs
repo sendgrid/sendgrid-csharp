@@ -5,9 +5,9 @@ using System.Collections.Generic;
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 
-##################################################
-# Create a domain whitelabel. #
-# POST /whitelabel/domains #
+////////////////////////////////////////////////////////
+// Create a domain whitelabel.
+// POST /whitelabel/domains
 
 string data = @"{
   'automatic_security': false, 
@@ -27,9 +27,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# List all domain whitelabels. #
-# GET /whitelabel/domains #
+////////////////////////////////////////////////////////
+// List all domain whitelabels.
+// GET /whitelabel/domains
 
 string queryParams = @"{
   'domain': 'test_string', 
@@ -44,9 +44,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Get the default domain whitelabel. #
-# GET /whitelabel/domains/default #
+////////////////////////////////////////////////////////
+// Get the default domain whitelabel.
+// GET /whitelabel/domains/default
 
 dynamic response = sg.client.whitelabel.domains._("default").get();
 Console.WriteLine(response.StatusCode);
@@ -54,9 +54,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# List the domain whitelabel associated with the given user. #
-# GET /whitelabel/domains/subuser #
+////////////////////////////////////////////////////////
+// List the domain whitelabel associated with the given user.
+// GET /whitelabel/domains/subuser
 
 dynamic response = sg.client.whitelabel.domains.subuser.get();
 Console.WriteLine(response.StatusCode);
@@ -64,9 +64,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Disassociate a domain whitelabel from a given user. #
-# DELETE /whitelabel/domains/subuser #
+////////////////////////////////////////////////////////
+// Disassociate a domain whitelabel from a given user.
+// DELETE /whitelabel/domains/subuser
 
 dynamic response = sg.client.whitelabel.domains.subuser.delete();
 Console.WriteLine(response.StatusCode);
@@ -74,9 +74,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update a domain whitelabel. #
-# PATCH /whitelabel/domains/{domain_id} #
+////////////////////////////////////////////////////////
+// Update a domain whitelabel.
+// PATCH /whitelabel/domains/{domain_id}
 
 string data = @"{
   'custom_spf': true, 
@@ -89,9 +89,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve a domain whitelabel. #
-# GET /whitelabel/domains/{domain_id} #
+////////////////////////////////////////////////////////
+// Retrieve a domain whitelabel.
+// GET /whitelabel/domains/{domain_id}
 
 var domain_id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(domain_id).get();
@@ -100,9 +100,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Delete a domain whitelabel. #
-# DELETE /whitelabel/domains/{domain_id} #
+////////////////////////////////////////////////////////
+// Delete a domain whitelabel.
+// DELETE /whitelabel/domains/{domain_id}
 
 var domain_id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(domain_id).delete();
@@ -111,9 +111,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Associate a domain whitelabel with a given user. #
-# POST /whitelabel/domains/{domain_id}/subuser #
+////////////////////////////////////////////////////////
+// Associate a domain whitelabel with a given user.
+// POST /whitelabel/domains/{domain_id}/subuser
 
 string data = @"{
   'username': 'jane@example.com'
@@ -125,9 +125,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Add an IP to a domain whitelabel. #
-# POST /whitelabel/domains/{id}/ips #
+////////////////////////////////////////////////////////
+// Add an IP to a domain whitelabel.
+// POST /whitelabel/domains/{id}/ips
 
 string data = @"{
   'ip': '192.168.0.1'
@@ -139,9 +139,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Remove an IP from a domain whitelabel. #
-# DELETE /whitelabel/domains/{id}/ips/{ip} #
+////////////////////////////////////////////////////////
+// Remove an IP from a domain whitelabel.
+// DELETE /whitelabel/domains/{id}/ips/{ip}
 
 var id = "test_url_param";
 var ip = "test_url_param";
@@ -151,9 +151,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Validate a domain whitelabel. #
-# POST /whitelabel/domains/{id}/validate #
+////////////////////////////////////////////////////////
+// Validate a domain whitelabel.
+// POST /whitelabel/domains/{id}/validate
 
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(id).validate.post();
@@ -162,9 +162,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Create an IP whitelabel #
-# POST /whitelabel/ips #
+////////////////////////////////////////////////////////
+// Create an IP whitelabel
+// POST /whitelabel/ips
 
 string data = @"{
   'domain': 'example.com', 
@@ -177,9 +177,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve all IP whitelabels #
-# GET /whitelabel/ips #
+////////////////////////////////////////////////////////
+// Retrieve all IP whitelabels
+// GET /whitelabel/ips
 
 string queryParams = @"{
   'ip': 'test_string', 
@@ -192,9 +192,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve an IP whitelabel #
-# GET /whitelabel/ips/{id} #
+////////////////////////////////////////////////////////
+// Retrieve an IP whitelabel
+// GET /whitelabel/ips/{id}
 
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.ips._(id).get();
@@ -203,9 +203,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Delete an IP whitelabel #
-# DELETE /whitelabel/ips/{id} #
+////////////////////////////////////////////////////////
+// Delete an IP whitelabel
+// DELETE /whitelabel/ips/{id}
 
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.ips._(id).delete();
@@ -214,9 +214,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Validate an IP whitelabel #
-# POST /whitelabel/ips/{id}/validate #
+////////////////////////////////////////////////////////
+// Validate an IP whitelabel
+// POST /whitelabel/ips/{id}/validate
 
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.ips._(id).validate.post();
@@ -225,9 +225,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Create a Link Whitelabel #
-# POST /whitelabel/links #
+////////////////////////////////////////////////////////
+// Create a Link Whitelabel
+// POST /whitelabel/links
 
 string data = @"{
   'default': true, 
@@ -244,9 +244,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve all link whitelabels #
-# GET /whitelabel/links #
+////////////////////////////////////////////////////////
+// Retrieve all link whitelabels
+// GET /whitelabel/links
 
 string queryParams = @"{
   'limit': 1
@@ -257,9 +257,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve a Default Link Whitelabel #
-# GET /whitelabel/links/default #
+////////////////////////////////////////////////////////
+// Retrieve a Default Link Whitelabel
+// GET /whitelabel/links/default
 
 string queryParams = @"{
   'domain': 'test_string'
@@ -270,9 +270,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve Associated Link Whitelabel #
-# GET /whitelabel/links/subuser #
+////////////////////////////////////////////////////////
+// Retrieve Associated Link Whitelabel
+// GET /whitelabel/links/subuser
 
 string queryParams = @"{
   'username': 'test_string'
@@ -283,9 +283,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Disassociate a Link Whitelabel #
-# DELETE /whitelabel/links/subuser #
+////////////////////////////////////////////////////////
+// Disassociate a Link Whitelabel
+// DELETE /whitelabel/links/subuser
 
 string queryParams = @"{
   'username': 'test_string'
@@ -296,9 +296,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update a Link Whitelabel #
-# PATCH /whitelabel/links/{id} #
+////////////////////////////////////////////////////////
+// Update a Link Whitelabel
+// PATCH /whitelabel/links/{id}
 
 string data = @"{
   'default': true
@@ -310,9 +310,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve a Link Whitelabel #
-# GET /whitelabel/links/{id} #
+////////////////////////////////////////////////////////
+// Retrieve a Link Whitelabel
+// GET /whitelabel/links/{id}
 
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(id).get();
@@ -321,9 +321,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Delete a Link Whitelabel #
-# DELETE /whitelabel/links/{id} #
+////////////////////////////////////////////////////////
+// Delete a Link Whitelabel
+// DELETE /whitelabel/links/{id}
 
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(id).delete();
@@ -332,9 +332,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Validate a Link Whitelabel #
-# POST /whitelabel/links/{id}/validate #
+////////////////////////////////////////////////////////
+// Validate a Link Whitelabel
+// POST /whitelabel/links/{id}/validate
 
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(id).validate.post();
@@ -343,9 +343,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Associate a Link Whitelabel #
-# POST /whitelabel/links/{link_id}/subuser #
+////////////////////////////////////////////////////////
+// Associate a Link Whitelabel
+// POST /whitelabel/links/{link_id}/subuser
 
 string data = @"{
   'username': 'jane@example.com'

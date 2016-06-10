@@ -5,9 +5,9 @@ using System.Collections.Generic;
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 
-##################################################
-# Get a user's account information. #
-# GET /user/account #
+////////////////////////////////////////////////////////
+// Get a user's account information.
+// GET /user/account
 
 dynamic response = sg.client.user.account.get();
 Console.WriteLine(response.StatusCode);
@@ -15,9 +15,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve your credit balance #
-# GET /user/credits #
+////////////////////////////////////////////////////////
+// Retrieve your credit balance
+// GET /user/credits
 
 dynamic response = sg.client.user.credits.get();
 Console.WriteLine(response.StatusCode);
@@ -25,9 +25,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update your account email address #
-# PUT /user/email #
+////////////////////////////////////////////////////////
+// Update your account email address
+// PUT /user/email
 
 string data = @"{
   'email': 'example@example.com'
@@ -38,9 +38,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve your account email address #
-# GET /user/email #
+////////////////////////////////////////////////////////
+// Retrieve your account email address
+// GET /user/email
 
 dynamic response = sg.client.user.email.get();
 Console.WriteLine(response.StatusCode);
@@ -48,9 +48,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update your password #
-# PUT /user/password #
+////////////////////////////////////////////////////////
+// Update your password
+// PUT /user/password
 
 string data = @"{
   'new_password': 'new_password', 
@@ -62,9 +62,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update a user's profile #
-# PATCH /user/profile #
+////////////////////////////////////////////////////////
+// Update a user's profile
+// PATCH /user/profile
 
 string data = @"{
   'city': 'Orange', 
@@ -77,9 +77,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Get a user's profile #
-# GET /user/profile #
+////////////////////////////////////////////////////////
+// Get a user's profile
+// GET /user/profile
 
 dynamic response = sg.client.user.profile.get();
 Console.WriteLine(response.StatusCode);
@@ -87,9 +87,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Cancel or pause a scheduled send #
-# POST /user/scheduled_sends #
+////////////////////////////////////////////////////////
+// Cancel or pause a scheduled send
+// POST /user/scheduled_sends
 
 string data = @"{
   'batch_id': 'YOUR_BATCH_ID', 
@@ -101,9 +101,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve all scheduled sends #
-# GET /user/scheduled_sends #
+////////////////////////////////////////////////////////
+// Retrieve all scheduled sends
+// GET /user/scheduled_sends
 
 dynamic response = sg.client.user.scheduled_sends.get();
 Console.WriteLine(response.StatusCode);
@@ -111,9 +111,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update user scheduled send information #
-# PATCH /user/scheduled_sends/{batch_id} #
+////////////////////////////////////////////////////////
+// Update user scheduled send information
+// PATCH /user/scheduled_sends/{batch_id}
 
 string data = @"{
   'status': 'pause'
@@ -125,9 +125,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve scheduled send #
-# GET /user/scheduled_sends/{batch_id} #
+////////////////////////////////////////////////////////
+// Retrieve scheduled send
+// GET /user/scheduled_sends/{batch_id}
 
 var batch_id = "test_url_param";
 dynamic response = sg.client.user.scheduled_sends._(batch_id).get();
@@ -136,9 +136,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Delete a cancellation or pause of a scheduled send #
-# DELETE /user/scheduled_sends/{batch_id} #
+////////////////////////////////////////////////////////
+// Delete a cancellation or pause of a scheduled send
+// DELETE /user/scheduled_sends/{batch_id}
 
 var batch_id = "test_url_param";
 dynamic response = sg.client.user.scheduled_sends._(batch_id).delete();
@@ -147,9 +147,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update Enforced TLS settings #
-# PATCH /user/settings/enforced_tls #
+////////////////////////////////////////////////////////
+// Update Enforced TLS settings
+// PATCH /user/settings/enforced_tls
 
 string data = @"{
   'require_tls': true, 
@@ -161,9 +161,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve current Enforced TLS settings. #
-# GET /user/settings/enforced_tls #
+////////////////////////////////////////////////////////
+// Retrieve current Enforced TLS settings.
+// GET /user/settings/enforced_tls
 
 dynamic response = sg.client.user.settings.enforced_tls.get();
 Console.WriteLine(response.StatusCode);
@@ -171,9 +171,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update your username #
-# PUT /user/username #
+////////////////////////////////////////////////////////
+// Update your username
+// PUT /user/username
 
 string data = @"{
   'username': 'test_username'
@@ -184,9 +184,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve your username #
-# GET /user/username #
+////////////////////////////////////////////////////////
+// Retrieve your username
+// GET /user/username
 
 dynamic response = sg.client.user.username.get();
 Console.WriteLine(response.StatusCode);
@@ -194,9 +194,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update Event Notification Settings #
-# PATCH /user/webhooks/event/settings #
+////////////////////////////////////////////////////////
+// Update Event Notification Settings
+// PATCH /user/webhooks/event/settings
 
 string data = @"{
   'bounce': true, 
@@ -219,9 +219,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve Event Webhook settings #
-# GET /user/webhooks/event/settings #
+////////////////////////////////////////////////////////
+// Retrieve Event Webhook settings
+// GET /user/webhooks/event/settings
 
 dynamic response = sg.client.user.webhooks._("event").settings.get();
 Console.WriteLine(response.StatusCode);
@@ -229,9 +229,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Test Event Notification Settings  #
-# POST /user/webhooks/event/test #
+////////////////////////////////////////////////////////
+// Test Event Notification Settings 
+// POST /user/webhooks/event/test
 
 string data = @"{
   'url': 'url'
@@ -242,9 +242,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve Parse Webhook settings #
-# GET /user/webhooks/parse/settings #
+////////////////////////////////////////////////////////
+// Retrieve Parse Webhook settings
+// GET /user/webhooks/parse/settings
 
 dynamic response = sg.client.user.webhooks.parse.settings.get();
 Console.WriteLine(response.StatusCode);
@@ -252,9 +252,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieves Inbound Parse Webhook statistics. #
-# GET /user/webhooks/parse/stats #
+////////////////////////////////////////////////////////
+// Retrieves Inbound Parse Webhook statistics.
+// GET /user/webhooks/parse/stats
 
 string queryParams = @"{
   'aggregated_by': 'day', 

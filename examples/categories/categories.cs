@@ -5,9 +5,9 @@ using System.Collections.Generic;
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 
-##################################################
-# Retrieve all categories #
-# GET /categories #
+////////////////////////////////////////////////////////
+// Retrieve all categories
+// GET /categories
 
 string queryParams = @"{
   'category': 'test_string', 
@@ -20,9 +20,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve Email Statistics for Categories #
-# GET /categories/stats #
+////////////////////////////////////////////////////////
+// Retrieve Email Statistics for Categories
+// GET /categories/stats
 
 string queryParams = @"{
   'aggregated_by': 'day', 
@@ -38,9 +38,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve sums of email stats for each category [Needs: Stats object defined, has category ID?] #
-# GET /categories/stats/sums #
+////////////////////////////////////////////////////////
+// Retrieve sums of email stats for each category [Needs: Stats object defined, has category ID?]
+// GET /categories/stats/sums
 
 string queryParams = @"{
   'aggregated_by': 'day', 

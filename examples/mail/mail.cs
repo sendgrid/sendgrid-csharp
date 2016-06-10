@@ -5,9 +5,9 @@ using System.Collections.Generic;
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 
-##################################################
-# Create a batch ID #
-# POST /mail/batch #
+////////////////////////////////////////////////////////
+// Create a batch ID
+// POST /mail/batch
 
 dynamic response = sg.client.mail.batch.post();
 Console.WriteLine(response.StatusCode);
@@ -15,9 +15,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Validate batch ID #
-# GET /mail/batch/{batch_id} #
+////////////////////////////////////////////////////////
+// Validate batch ID
+// GET /mail/batch/{batch_id}
 
 var batch_id = "test_url_param";
 dynamic response = sg.client.mail.batch._(batch_id).get();
@@ -26,9 +26,10 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# v3 Mail Send Beta #
-# POST /mail/send/beta #
+////////////////////////////////////////////////////////
+// v3 Mail Send Beta
+// POST /mail/send/beta
+# This endpoint has a helper, check it out [here](https://github.com/sendgrid/sendgrid-csharp/blob/v3beta/SendGrid/SendGrid/Helpers/Mail/README.md).
 
 string data = @"{
   'asm': {

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 
-##################################################
-# Create API keys #
-# POST /api_keys #
+////////////////////////////////////////////////////////
+// Create API keys
+// POST /api_keys
 
 string data = @"{
   'name': 'My API Key', 
@@ -23,9 +23,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve all API Keys belonging to the authenticated user #
-# GET /api_keys #
+////////////////////////////////////////////////////////
+// Retrieve all API Keys belonging to the authenticated user
+// GET /api_keys
 
 dynamic response = sg.client.api_keys.get();
 Console.WriteLine(response.StatusCode);
@@ -33,9 +33,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update the name & scopes of an API Key #
-# PUT /api_keys/{api_key_id} #
+////////////////////////////////////////////////////////
+// Update the name & scopes of an API Key
+// PUT /api_keys/{api_key_id}
 
 string data = @"{
   'name': 'A New Hope', 
@@ -51,9 +51,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update API keys #
-# PATCH /api_keys/{api_key_id} #
+////////////////////////////////////////////////////////
+// Update API keys
+// PATCH /api_keys/{api_key_id}
 
 string data = @"{
   'name': 'A New Hope'
@@ -65,9 +65,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve an existing API Key #
-# GET /api_keys/{api_key_id} #
+////////////////////////////////////////////////////////
+// Retrieve an existing API Key
+// GET /api_keys/{api_key_id}
 
 var api_key_id = "test_url_param";
 dynamic response = sg.client.api_keys._(api_key_id).get();
@@ -76,9 +76,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Delete API keys #
-# DELETE /api_keys/{api_key_id} #
+////////////////////////////////////////////////////////
+// Delete API keys
+// DELETE /api_keys/{api_key_id}
 
 var api_key_id = "test_url_param";
 dynamic response = sg.client.api_keys._(api_key_id).delete();

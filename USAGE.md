@@ -51,6 +51,7 @@ For more information, please see our [User Guide](http://sendgrid.com/docs/User_
 
 ### GET /access_settings/activity
 
+
 ```csharp
 string queryParams = @"{
   'limit': 1
@@ -73,6 +74,7 @@ IP Access Management allows you to control which IP addresses can be used to acc
 For more information, please see our [User Guide](http://sendgrid.com/docs/User_Guide/Settings/ip_access_management.html).
 
 ### POST /access_settings/whitelist
+
 
 ```csharp
 string data = @"{
@@ -105,6 +107,7 @@ For more information, please see our [User Guide](http://sendgrid.com/docs/User_
 
 ### GET /access_settings/whitelist
 
+
 ```csharp
 dynamic response = sg.client.access_settings.whitelist.get();
 Console.WriteLine(response.StatusCode);
@@ -124,6 +127,7 @@ IP Access Management allows you to control which IP addresses can be used to acc
 For more information, please see our [User Guide](http://sendgrid.com/docs/User_Guide/Settings/ip_access_management.html).
 
 ### DELETE /access_settings/whitelist
+
 
 ```csharp
 string data = @"{
@@ -152,6 +156,7 @@ For more information, please see our [User Guide](http://sendgrid.com/docs/User_
 
 ### GET /access_settings/whitelist/{rule_id}
 
+
 ```csharp
 var rule_id = "test_url_param";
 dynamic response = sg.client.access_settings.whitelist._(rule_id).get();
@@ -172,6 +177,7 @@ IP Access Management allows you to control which IP addresses can be used to acc
 For more information, please see our [User Guide](http://sendgrid.com/docs/User_Guide/Settings/ip_access_management.html).
 
 ### DELETE /access_settings/whitelist/{rule_id}
+
 
 ```csharp
 var rule_id = "test_url_param";
@@ -199,6 +205,7 @@ See the [API Key Permissions List](https://sendgrid.com/docs/API_Reference/Web_A
 
 ### POST /api_keys
 
+
 ```csharp
 string data = @"{
   'name': 'My API Key',
@@ -223,6 +230,7 @@ The API Keys feature allows customers to be able to generate an API Key credenti
 
 ### GET /api_keys
 
+
 ```csharp
 dynamic response = sg.client.api_keys.get();
 Console.WriteLine(response.StatusCode);
@@ -242,6 +250,7 @@ The API Keys feature allows customers to be able to generate an API Key credenti
 
 
 ### PUT /api_keys/{api_key_id}
+
 
 ```csharp
 string data = @"{
@@ -275,6 +284,7 @@ The API Keys feature allows customers to be able to generate an API Key credenti
 
 ### PATCH /api_keys/{api_key_id}
 
+
 ```csharp
 string data = @"{
   'name': 'A New Hope'
@@ -294,6 +304,7 @@ Console.ReadLine();
 If the API Key ID does not exist an HTTP 404 will be returned.
 
 ### GET /api_keys/{api_key_id}
+
 
 ```csharp
 var api_key_id = "test_url_param";
@@ -320,6 +331,7 @@ The API Keys feature allows customers to be able to generate an API Key credenti
 
 ### DELETE /api_keys/{api_key_id}
 
+
 ```csharp
 var api_key_id = "test_url_param";
 dynamic response = sg.client.api_keys._(api_key_id).delete();
@@ -332,9 +344,9 @@ Console.ReadLine();
 <a name="asm"></a>
 # ASM
 
-## Create a Group
+## Create a new suppression group
 
-**This endoint allows you to create a new suppression group.**
+**This endpoint allows you to create a new suppression group.**
 
 Suppression groups, or unsubscribe groups, are specific types or categories of email that you would like your recipients to be able to unsubscribe from. For example: Daily Newsletters, Invoices, System Alerts.
 
@@ -344,11 +356,12 @@ Each user can create up to 25 different suppression groups.
 
 ### POST /asm/groups
 
+
 ```csharp
 string data = @"{
-  'description': 'A group description',
-  'is_default': false,
-  'name': 'A group name'
+  'description': 'Suggestions for products our users might like.',
+  'is_default': true,
+  'name': 'Product Suggestions'
 }";
 dynamic response = sg.client.asm.groups.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -357,20 +370,20 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
-## Retrieve all suppression groups associated with the user.
+## Retrieve information about multiple suppression groups
 
-**This endpoint allows you to retrieve a list of all suppression groups created by this user.**
+**This endpoint allows you to retrieve information about multiple suppression groups.**
 
-Suppression groups, or unsubscribe groups, are specific types or categories of email that you would like your recipients to be able to unsubscribe from. For example: Daily Newsletters, Invoices, System Alerts.
-
-The **name** and **description** of the unsubscribe group will be visible by recipients when they are managing their subscriptions.
-
-Each user can create up to 25 different suppression groups.
+This endpoint will return information for each group ID that you include in your request. To add a group ID to your request, simply append `&id=` followed by the group ID.
 
 ### GET /asm/groups
 
+
 ```csharp
-dynamic response = sg.client.asm.groups.get();
+string queryParams = @"{
+  'id': 1
+}";
+dynamic response = sg.client.asm.groups.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -388,6 +401,7 @@ The **name** and **description** of the unsubscribe group will be visible by rec
 Each user can create up to 25 different suppression groups.
 
 ### PATCH /asm/groups/{group_id}
+
 
 ```csharp
 string data = @"{
@@ -415,6 +429,7 @@ Each user can create up to 25 different suppression groups.
 
 ### GET /asm/groups/{group_id}
 
+
 ```csharp
 var group_id = "test_url_param";
 dynamic response = sg.client.asm.groups._(group_id).get();
@@ -438,6 +453,7 @@ Each user can create up to 25 different suppression groups.
 
 ### DELETE /asm/groups/{group_id}
 
+
 ```csharp
 var group_id = "test_url_param";
 dynamic response = sg.client.asm.groups._(group_id).delete();
@@ -456,6 +472,7 @@ If you attempt to add suppressions to a group that has been deleted or does not 
 Suppressions are recipient email addresses that are added to [unsubscribe groups](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html). Once a recipient's address is on the suppressions list for an unsubscribe group, they will not receive any emails that are tagged with that unsubscribe group.
 
 ### POST /asm/groups/{group_id}/suppressions
+
 
 ```csharp
 string data = @"{
@@ -480,6 +497,7 @@ Suppressions are recipient email addresses that are added to [unsubscribe groups
 
 ### GET /asm/groups/{group_id}/suppressions
 
+
 ```csharp
 var group_id = "test_url_param";
 dynamic response = sg.client.asm.groups._(group_id).suppressions.get();
@@ -497,10 +515,28 @@ Suppressions are recipient email addresses that are added to [unsubscribe groups
 
 ### DELETE /asm/groups/{group_id}/suppressions/{email}
 
+
 ```csharp
 var group_id = "test_url_param";
 var email = "test_url_param";
 dynamic response = sg.client.asm.groups._(group_id).suppressions._(email).delete();
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
+## Retrieve all suppressions
+
+**This endpoint allows you to retrieve a list of all suppressions.**
+
+Suppressions are email addresses that can be added to [groups](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html) to prevent certain types of emails from being delivered to those addresses.
+
+### GET /asm/suppressions
+
+
+```csharp
+dynamic response = sg.client.asm.suppressions.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -514,6 +550,7 @@ Console.ReadLine();
 A global suppression (or global unsubscribe) is an email address of a recipient who does not want to receive any of your messages. A globally suppressed recipient will be removed from any email you send. For more information, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Suppressions/global_unsubscribes.html).
 
 ### POST /asm/suppressions/global
+
 
 ```csharp
 string data = @"{
@@ -539,6 +576,7 @@ A global suppression (or global unsubscribe) is an email address of a recipient 
 
 ### GET /asm/suppressions/global/{email}
 
+
 ```csharp
 var email = "test_url_param";
 dynamic response = sg.client.asm.suppressions.global._(email).get();
@@ -556,9 +594,28 @@ A global suppression (or global unsubscribe) is an email address of a recipient 
 
 ### DELETE /asm/suppressions/global/{email}
 
+
 ```csharp
 var email = "test_url_param";
 dynamic response = sg.client.asm.suppressions.global._(email).delete();
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
+## Retrieve all suppression groups for an email address
+
+**This endpoint will return a list of all suppression groups, indicating if the given email address is suppressed for each group.**
+
+Suppressions are email addresses that can be added to [groups](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html) to prevent certain types of emails from being delivered to those addresses.
+
+### GET /asm/suppressions/{email}
+
+
+```csharp
+var email = "test_url_param";
+dynamic response = sg.client.asm.suppressions._(email).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -577,6 +634,7 @@ Console.ReadLine();
 Advanced Stats provide a more in-depth view of your email statistics and the actions taken by your recipients. You can segment these statistics by geographic location, device type, client type, browser, and mailbox provider. For more information about statistics, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Statistics/index.html).
 
 ### GET /browsers/stats
+
 
 ```csharp
 string queryParams = @"{
@@ -610,6 +668,7 @@ For more information:
 * [User Guide > Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html)
 
 ### POST /campaigns
+
 
 ```csharp
 string data = @"{
@@ -653,6 +712,7 @@ For more information:
 
 ### GET /campaigns
 
+
 ```csharp
 string queryParams = @"{
   'limit': 0,
@@ -674,6 +734,7 @@ For more information:
 * [User Guide > Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html)
 
 ### PATCH /campaigns/{campaign_id}
+
 
 ```csharp
 string data = @"{
@@ -705,6 +766,7 @@ For more information:
 
 ### GET /campaigns/{campaign_id}
 
+
 ```csharp
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).get();
@@ -726,6 +788,7 @@ For more information:
 
 ### DELETE /campaigns/{campaign_id}
 
+
 ```csharp
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).delete();
@@ -744,6 +807,7 @@ For more information:
 * [User Guide > Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html)
 
 ### PATCH /campaigns/{campaign_id}/schedules
+
 
 ```csharp
 string data = @"{
@@ -767,6 +831,7 @@ For more information:
 
 ### POST /campaigns/{campaign_id}/schedules
 
+
 ```csharp
 string data = @"{
   'send_at': 1489771528
@@ -788,6 +853,7 @@ For more information:
 * [User Guide > Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html)
 
 ### GET /campaigns/{campaign_id}/schedules
+
 
 ```csharp
 var campaign_id = "test_url_param";
@@ -811,6 +877,7 @@ For more information:
 
 ### DELETE /campaigns/{campaign_id}/schedules
 
+
 ```csharp
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.delete();
@@ -832,6 +899,7 @@ For more information:
 
 ### POST /campaigns/{campaign_id}/schedules/now
 
+
 ```csharp
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.now.post();
@@ -852,6 +920,7 @@ For more information:
 * [User Guide > Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html)
 
 ### POST /campaigns/{campaign_id}/schedules/test
+
 
 ```csharp
 string data = @"{
@@ -876,6 +945,7 @@ Categories can help organize your email analytics by enabling you to tag emails 
 
 ### GET /categories
 
+
 ```csharp
 string queryParams = @"{
   'category': 'test_string',
@@ -898,6 +968,7 @@ If you do not define any query parameters, this endpoint will return a sum for e
 Categories allow you to group your emails together according to broad topics that you define. For more information, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Statistics/categories.html).
 
 ### GET /categories/stats
+
 
 ```csharp
 string queryParams = @"{
@@ -924,6 +995,7 @@ If you do not define any query parameters, this endpoint will return a sum for e
 Categories allow you to group your emails together according to broad topics that you define. For more information, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Statistics/categories.html).
 
 ### GET /categories/stats/sums
+
 
 ```csharp
 string queryParams = @"{
@@ -955,6 +1027,7 @@ Advanced Stats provide a more in-depth view of your email statistics and the act
 
 ### GET /clients/stats
 
+
 ```csharp
 string queryParams = @"{
   'aggregated_by': 'day',
@@ -984,6 +1057,7 @@ Advanced Stats provide a more in-depth view of your email statistics and the act
 
 ### GET /clients/{client_type}/stats
 
+
 ```csharp
 string queryParams = @"{
   'aggregated_by': 'day',
@@ -1009,6 +1083,7 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 
 ### POST /contactdb/custom_fields
 
+
 ```csharp
 string data = @"{
   'name': 'pet',
@@ -1029,6 +1104,7 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 
 ### GET /contactdb/custom_fields
 
+
 ```csharp
 dynamic response = sg.client.contactdb.custom_fields.get();
 Console.WriteLine(response.StatusCode);
@@ -1044,6 +1120,7 @@ Console.ReadLine();
 The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
 
 ### GET /contactdb/custom_fields/{custom_field_id}
+
 
 ```csharp
 var custom_field_id = "test_url_param";
@@ -1062,6 +1139,7 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 
 ### DELETE /contactdb/custom_fields/{custom_field_id}
 
+
 ```csharp
 var custom_field_id = "test_url_param";
 dynamic response = sg.client.contactdb.custom_fields._(custom_field_id).delete();
@@ -1078,6 +1156,7 @@ Console.ReadLine();
 The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html) recipients.
 
 ### POST /contactdb/lists
+
 
 ```csharp
 string data = @"{
@@ -1098,6 +1177,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ### GET /contactdb/lists
 
+
 ```csharp
 dynamic response = sg.client.contactdb.lists.get();
 Console.WriteLine(response.StatusCode);
@@ -1113,6 +1193,7 @@ Console.ReadLine();
 The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html) recipients.
 
 ### DELETE /contactdb/lists
+
 
 ```csharp
 string data = @"[
@@ -1137,6 +1218,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ### PATCH /contactdb/lists/{list_id}
 
+
 ```csharp
 string data = @"{
   'name': 'newlistname'
@@ -1160,6 +1242,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ### GET /contactdb/lists/{list_id}
 
+
 ```csharp
 string queryParams = @"{
   'list_id': 0
@@ -1179,6 +1262,7 @@ Console.ReadLine();
 The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html) recipients.
 
 ### DELETE /contactdb/lists/{list_id}
+
 
 ```csharp
 string queryParams = @"{
@@ -1202,6 +1286,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ### POST /contactdb/lists/{list_id}/recipients
 
+
 ```csharp
 string data = @"[
   'recipient_id1',
@@ -1222,6 +1307,7 @@ Console.ReadLine();
 The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html) recipients.
 
 ### GET /contactdb/lists/{list_id}/recipients
+
 
 ```csharp
 string queryParams = @"{
@@ -1245,6 +1331,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ### POST /contactdb/lists/{list_id}/recipients/{recipient_id}
 
+
 ```csharp
 var list_id = "test_url_param";
 var recipient_id = "test_url_param";
@@ -1262,6 +1349,7 @@ Console.ReadLine();
 The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html) recipients.
 
 ### DELETE /contactdb/lists/{list_id}/recipients/{recipient_id}
+
 
 ```csharp
 string queryParams = @"{
@@ -1289,6 +1377,7 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 
 ### PATCH /contactdb/recipients
 
+
 ```csharp
 string data = @"[
   {
@@ -1313,6 +1402,7 @@ It is of note that you can add custom field data as a parameter on this endpoint
 The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html) recipients.
 
 ### POST /contactdb/recipients
+
 
 ```csharp
 string data = @"[
@@ -1347,6 +1437,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ### GET /contactdb/recipients
 
+
 ```csharp
 string queryParams = @"{
   'page': 1,
@@ -1368,6 +1459,7 @@ The body of an API call to this endpoint must include an array of recipient IDs 
 The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
 
 ### DELETE /contactdb/recipients
+
 
 ```csharp
 string data = @"[
@@ -1391,6 +1483,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ### GET /contactdb/recipients/billable_count
 
+
 ```csharp
 dynamic response = sg.client.contactdb.recipients.billable_count.get();
 Console.WriteLine(response.StatusCode);
@@ -1406,6 +1499,7 @@ Console.ReadLine();
 The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
 
 ### GET /contactdb/recipients/count
+
 
 ```csharp
 dynamic response = sg.client.contactdb.recipients.count.get();
@@ -1432,6 +1526,7 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 
 ### GET /contactdb/recipients/search
 
+
 ```csharp
 string queryParams = @"{
   '{field_name}': 'test_string'
@@ -1451,6 +1546,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ### GET /contactdb/recipients/{recipient_id}
 
+
 ```csharp
 var recipient_id = "test_url_param";
 dynamic response = sg.client.contactdb.recipients._(recipient_id).get();
@@ -1467,6 +1563,7 @@ Console.ReadLine();
 The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html) recipients.
 
 ### DELETE /contactdb/recipients/{recipient_id}
+
 
 ```csharp
 var recipient_id = "test_url_param";
@@ -1487,6 +1584,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ### GET /contactdb/recipients/{recipient_id}/lists
 
+
 ```csharp
 var recipient_id = "test_url_param";
 dynamic response = sg.client.contactdb.recipients._(recipient_id).lists.get();
@@ -1503,6 +1601,7 @@ Console.ReadLine();
 The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
 
 ### GET /contactdb/reserved_fields
+
 
 ```csharp
 dynamic response = sg.client.contactdb.reserved_fields.get();
@@ -1539,6 +1638,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 For more information about segments in Marketing Campaigns, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/lists.html#-Create-a-Segment).
 
 ### POST /contactdb/segments
+
 
 ```csharp
 string data = @"{
@@ -1582,6 +1682,7 @@ For more information about segments in Marketing Campaigns, please see our [User
 
 ### GET /contactdb/segments
 
+
 ```csharp
 dynamic response = sg.client.contactdb.segments.get();
 Console.WriteLine(response.StatusCode);
@@ -1599,6 +1700,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 For more information about segments in Marketing Campaigns, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/lists.html#-Create-a-Segment).
 
 ### PATCH /contactdb/segments/{segment_id}
+
 
 ```csharp
 string data = @"{
@@ -1634,6 +1736,7 @@ For more information about segments in Marketing Campaigns, please see our [User
 
 ### GET /contactdb/segments/{segment_id}
 
+
 ```csharp
 string queryParams = @"{
   'segment_id': 0
@@ -1658,6 +1761,7 @@ For more information about segments in Marketing Campaigns, please see our [User
 
 ### DELETE /contactdb/segments/{segment_id}
 
+
 ```csharp
 string queryParams = @"{
   'delete_contacts': 'true'
@@ -1679,6 +1783,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 For more information about segments in Marketing Campaigns, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/lists.html#-Create-a-Segment).
 
 ### GET /contactdb/segments/{segment_id}/recipients
+
 
 ```csharp
 string queryParams = @"{
@@ -1715,6 +1820,7 @@ Advanced Stats provide a more in-depth view of your email statistics and the act
 
 ### GET /devices/stats
 
+
 ```csharp
 string queryParams = @"{
   'aggregated_by': 'day',
@@ -1742,6 +1848,7 @@ Console.ReadLine();
 Advanced Stats provide a more in-depth view of your email statistics and the actions taken by your recipients. You can segment these statistics by geographic location, device type, client type, browser, and mailbox provider. For more information about statistics, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Statistics/index.html).
 
 ### GET /geo/stats
+
 
 ```csharp
 string queryParams = @"{
@@ -1772,6 +1879,7 @@ A single IP address or a range of IP addresses may be dedicated to an account in
 
 ### GET /ips
 
+
 ```csharp
 string queryParams = @"{
   'exclude_whitelabels': 'true',
@@ -1795,6 +1903,7 @@ A single IP address or a range of IP addresses may be dedicated to an account in
 
 ### GET /ips/assigned
 
+
 ```csharp
 dynamic response = sg.client.ips.assigned.get();
 Console.WriteLine(response.StatusCode);
@@ -1816,6 +1925,7 @@ IP pools can only be used with whitelabeled IP addresses.
 If an IP pool is NOT specified for an email, it will use any IP available, including ones in pools.
 
 ### POST /ips/pools
+
 
 ```csharp
 string data = @"{
@@ -1840,6 +1950,7 @@ If an IP pool is NOT specified for an email, it will use any IP available, inclu
 
 ### GET /ips/pools
 
+
 ```csharp
 dynamic response = sg.client.ips.pools.get();
 Console.WriteLine(response.StatusCode);
@@ -1859,6 +1970,7 @@ IP pools can only be used with whitelabeled IP addresses.
 If an IP pool is NOT specified for an email, it will use any IP available, including ones in pools.
 
 ### PUT /ips/pools/{pool_name}
+
 
 ```csharp
 string data = @"{
@@ -1884,6 +1996,7 @@ If an IP pool is NOT specified for an email, it will use any IP available, inclu
 
 ### GET /ips/pools/{pool_name}
 
+
 ```csharp
 var pool_name = "test_url_param";
 dynamic response = sg.client.ips.pools._(pool_name).get();
@@ -1905,6 +2018,7 @@ If an IP pool is NOT specified for an email, it will use any IP available, inclu
 
 ### DELETE /ips/pools/{pool_name}
 
+
 ```csharp
 var pool_name = "test_url_param";
 dynamic response = sg.client.ips.pools._(pool_name).delete();
@@ -1923,6 +2037,7 @@ You can add the same IP address to multiple pools. It may take up to 60 seconds 
 A single IP address or a range of IP addresses may be dedicated to an account in order to send email for multiple domains. The reputation of this IP is based on the aggregate performance of all the senders who use it.
 
 ### POST /ips/pools/{pool_name}/ips
+
 
 ```csharp
 string data = @"{
@@ -1946,6 +2061,7 @@ A single IP address or a range of IP addresses may be dedicated to an account in
 
 ### DELETE /ips/pools/{pool_name}/ips/{ip}
 
+
 ```csharp
 var pool_name = "test_url_param";
 var ip = "test_url_param";
@@ -1965,6 +2081,7 @@ SendGrid can automatically warm up dedicated IP addresses by limiting the amount
 For more general information about warming up IPs, please see our [Classroom](https://sendgrid.com/docs/Classroom/Deliver/Delivery_Introduction/warming_up_ips.html).
 
 ### POST /ips/warmup
+
 
 ```csharp
 string data = @"{
@@ -1987,6 +2104,7 @@ For more general information about warming up IPs, please see our [Classroom](ht
 
 ### GET /ips/warmup
 
+
 ```csharp
 dynamic response = sg.client.ips.warmup.get();
 Console.WriteLine(response.StatusCode);
@@ -2004,6 +2122,7 @@ SendGrid can automatically warm up dedicated IP addresses by limiting the amount
 For more general information about warming up IPs, please see our [Classroom](https://sendgrid.com/docs/Classroom/Deliver/Delivery_Introduction/warming_up_ips.html).
 
 ### GET /ips/warmup/{ip_address}
+
 
 ```csharp
 var ip_address = "test_url_param";
@@ -2024,6 +2143,7 @@ For more general information about warming up IPs, please see our [Classroom](ht
 
 ### DELETE /ips/warmup/{ip_address}
 
+
 ```csharp
 var ip_address = "test_url_param";
 dynamic response = sg.client.ips.warmup._(ip_address).delete();
@@ -2042,6 +2162,7 @@ The same IP address can be added to multiple IP pools.
 A single IP address or a range of IP addresses may be dedicated to an account in order to send email for multiple domains. The reputation of this IP is based on the aggregate performance of all the senders who use it.
 
 ### GET /ips/{ip_address}
+
 
 ```csharp
 var ip_address = "test_url_param";
@@ -2067,6 +2188,7 @@ More Information:
 
 ### POST /mail/batch
 
+
 ```csharp
 dynamic response = sg.client.mail.batch.post();
 Console.WriteLine(response.StatusCode);
@@ -2086,6 +2208,7 @@ More Information:
 * [Scheduling Parameters > Batch ID](https://sendgrid.com/docs/API_Reference/SMTP_API/scheduling_parameters.html)
 
 ### GET /mail/batch/{batch_id}
+
 
 ```csharp
 var batch_id = "test_url_param";
@@ -2108,6 +2231,8 @@ For an overview of the v3 Mail Send endpoint, please visit our [v3 API Reference
 For more detailed information about how to use the v3 Mail Send endpoint, please visit our [Classroom](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/index.html).
 
 ### POST /mail/send/beta
+
+This endpoint has a helper, check it out [here](https://github.com/sendgrid/sendgrid-csharp/blob/v3beta/SendGrid/SendGrid/Helpers/Mail/README.md).
 
 ```csharp
 string data = @"{
@@ -2271,6 +2396,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 ### GET /mail_settings
 
+
 ```csharp
 string queryParams = @"{
   'limit': 1,
@@ -2292,6 +2418,7 @@ The address whitelist setting whitelists a specified email address or domain for
 Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/address_whitelist
+
 
 ```csharp
 string data = @"{
@@ -2318,6 +2445,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 ### GET /mail_settings/address_whitelist
 
+
 ```csharp
 dynamic response = sg.client.mail_settings.address_whitelist.get();
 Console.WriteLine(response.StatusCode);
@@ -2335,6 +2463,7 @@ When the BCC mail setting is enabled, SendGrid will automatically send a blind c
 Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/bcc
+
 
 ```csharp
 string data = @"{
@@ -2358,6 +2487,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 ### GET /mail_settings/bcc
 
+
 ```csharp
 dynamic response = sg.client.mail_settings.bcc.get();
 Console.WriteLine(response.StatusCode);
@@ -2375,6 +2505,7 @@ This setting allows you to set a schedule for SendGrid to automatically delete c
 Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/bounce_purge
+
 
 ```csharp
 string data = @"{
@@ -2399,6 +2530,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 ### GET /mail_settings/bounce_purge
 
+
 ```csharp
 dynamic response = sg.client.mail_settings.bounce_purge.get();
 Console.WriteLine(response.StatusCode);
@@ -2416,6 +2548,7 @@ The footer setting will insert a custom footer at the bottom of the text and HTM
 Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/footer
+
 
 ```csharp
 string data = @"{
@@ -2440,6 +2573,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 ### GET /mail_settings/footer
 
+
 ```csharp
 dynamic response = sg.client.mail_settings.footer.get();
 Console.WriteLine(response.StatusCode);
@@ -2457,6 +2591,7 @@ Activating this setting allows you to specify an email address to which bounce r
 Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/forward_bounce
+
 
 ```csharp
 string data = @"{
@@ -2480,6 +2615,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 ### GET /mail_settings/forward_bounce
 
+
 ```csharp
 dynamic response = sg.client.mail_settings.forward_bounce.get();
 Console.WriteLine(response.StatusCode);
@@ -2497,6 +2633,7 @@ Enabling the forward spam setting allows you to specify an email address to whic
 Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/forward_spam
+
 
 ```csharp
 string data = @"{
@@ -2520,6 +2657,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 ### GET /mail_settings/forward_spam
 
+
 ```csharp
 dynamic response = sg.client.mail_settings.forward_spam.get();
 Console.WriteLine(response.StatusCode);
@@ -2537,6 +2675,7 @@ The plain content setting will automatically convert any plain text emails that 
 Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/plain_content
+
 
 ```csharp
 string data = @"{
@@ -2559,6 +2698,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 ### GET /mail_settings/plain_content
 
+
 ```csharp
 dynamic response = sg.client.mail_settings.plain_content.get();
 Console.WriteLine(response.StatusCode);
@@ -2576,6 +2716,7 @@ The spam checker filter notifies you when emails are detected that exceed a pred
 Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/spam_check
+
 
 ```csharp
 string data = @"{
@@ -2600,6 +2741,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 ### GET /mail_settings/spam_check
 
+
 ```csharp
 dynamic response = sg.client.mail_settings.spam_check.get();
 Console.WriteLine(response.StatusCode);
@@ -2619,6 +2761,7 @@ The legacy email template setting wraps an HTML template around your email conte
 Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/template
+
 
 ```csharp
 string data = @"{
@@ -2644,6 +2787,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 ### GET /mail_settings/template
 
+
 ```csharp
 dynamic response = sg.client.mail_settings.template.get();
 Console.WriteLine(response.StatusCode);
@@ -2664,6 +2808,7 @@ Console.ReadLine();
 Advanced Stats provide a more in-depth view of your email statistics and the actions taken by your recipients. You can segment these statistics by geographic location, device type, client type, browser, and mailbox provider. For more information about statistics, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Statistics/index.html).
 
 ### GET /mailbox_providers/stats
+
 
 ```csharp
 string queryParams = @"{
@@ -2692,6 +2837,7 @@ Our partner settings allow you to integrate your SendGrid account with our partn
 
 ### GET /partner_settings
 
+
 ```csharp
 string queryParams = @"{
   'limit': 1,
@@ -2713,6 +2859,7 @@ Our partner settings allow you to integrate your SendGrid account with our partn
 By integrating with New Relic, you can send your SendGrid email statistics to your New Relic Dashboard. If you enable this setting, your stats will be sent to New Relic every 5 minutes. You will need your New Relic License Key to enable this setting. For more information, please see our [Classroom](https://sendgrid.com/docs/Classroom/Track/Collecting_Data/new_relic.html).
 
 ### PATCH /partner_settings/new_relic
+
 
 ```csharp
 string data = @"{
@@ -2737,6 +2884,7 @@ By integrating with New Relic, you can send your SendGrid email statistics to yo
 
 ### GET /partner_settings/new_relic
 
+
 ```csharp
 dynamic response = sg.client.partner_settings.new_relic.get();
 Console.WriteLine(response.StatusCode);
@@ -2756,6 +2904,7 @@ API Keys can be used to authenticate the use of [SendGrids v3 Web API](https://s
 
 ### GET /scopes
 
+
 ```csharp
 dynamic response = sg.client.scopes.get();
 Console.WriteLine(response.StatusCode);
@@ -2774,6 +2923,7 @@ Console.ReadLine();
 Parent accounts will see aggregated stats for their account and all subuser accounts. Subuser accounts will only see their own stats.
 
 ### GET /stats
+
 
 ```csharp
 string queryParams = @"{
@@ -2804,6 +2954,7 @@ For more information about Subusers:
 
 ### POST /subusers
 
+
 ```csharp
 string data = @"{
   'email': 'John@example.com',
@@ -2832,6 +2983,7 @@ For more information about Subusers:
 
 ### GET /subusers
 
+
 ```csharp
 string queryParams = @"{
   'limit': 0,
@@ -2852,6 +3004,7 @@ Subuser sender reputations give a good idea how well a sender is doing with rega
 This endpoint allows you to request the reputations for your subusers.
 
 ### GET /subusers/reputations
+
 
 ```csharp
 string queryParams = @"{
@@ -2875,6 +3028,7 @@ While you can always view the statistics for all email activity on your account,
 For more information, see our [User Guide](https://sendgrid.com/docs/User_Guide/Statistics/subuser.html).
 
 ### GET /subusers/stats
+
 
 ```csharp
 string queryParams = @"{
@@ -2905,6 +3059,7 @@ For more information, see our [User Guide](https://sendgrid.com/docs/User_Guide/
 
 ### GET /subusers/stats/monthly
 
+
 ```csharp
 string queryParams = @"{
   'date': 'test_string',
@@ -2931,6 +3086,7 @@ While you can always view the statistics for all email activity on your account,
 For more information, see our [User Guide](https://sendgrid.com/docs/User_Guide/Statistics/subuser.html).
 
 ### GET /subusers/stats/sums
+
 
 ```csharp
 string queryParams = @"{
@@ -2960,6 +3116,7 @@ For more information about Subusers:
 
 ### PATCH /subusers/{subuser_name}
 
+
 ```csharp
 string data = @"{
   'disabled': false
@@ -2983,6 +3140,7 @@ For more information about Subusers:
 
 ### DELETE /subusers/{subuser_name}
 
+
 ```csharp
 var subuser_name = "test_url_param";
 dynamic response = sg.client.subusers._(subuser_name).delete();
@@ -3003,6 +3161,7 @@ More information:
 
 ### PUT /subusers/{subuser_name}/ips
 
+
 ```csharp
 string data = @"[
   '127.0.0.1'
@@ -3020,6 +3179,7 @@ Console.ReadLine();
 Subuser monitor settings allow you to receive a sample of an outgoing message by a specific customer at a specific frequency of emails.
 
 ### PUT /subusers/{subuser_name}/monitor
+
 
 ```csharp
 string data = @"{
@@ -3040,6 +3200,7 @@ Subuser monitor settings allow you to receive a sample of an outgoing message by
 
 ### POST /subusers/{subuser_name}/monitor
 
+
 ```csharp
 string data = @"{
   'email': 'example@example.com',
@@ -3059,6 +3220,7 @@ Subuser monitor settings allow you to receive a sample of an outgoing message by
 
 ### GET /subusers/{subuser_name}/monitor
 
+
 ```csharp
 var subuser_name = "test_url_param";
 dynamic response = sg.client.subusers._(subuser_name).monitor.get();
@@ -3073,6 +3235,7 @@ Console.ReadLine();
 Subuser monitor settings allow you to receive a sample of an outgoing message by a specific customer at a specific frequency of emails.
 
 ### DELETE /subusers/{subuser_name}/monitor
+
 
 ```csharp
 var subuser_name = "test_url_param";
@@ -3095,6 +3258,7 @@ When using the `sort_by_metric` to sort your stats by a specific metric, you can
 For more information, see our [User Guide](https://sendgrid.com/docs/User_Guide/Statistics/subuser.html).
 
 ### GET /subusers/{subuser_name}/stats/monthly
+
 
 ```csharp
 string queryParams = @"{
@@ -3125,6 +3289,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ### GET /suppression/blocks
 
+
 ```csharp
 string queryParams = @"{
   'end_time': 1,
@@ -3154,6 +3319,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ### DELETE /suppression/blocks
 
+
 ```csharp
 string data = @"{
   'delete_all': false,
@@ -3179,6 +3345,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ### GET /suppression/blocks/{email}
 
+
 ```csharp
 var email = "test_url_param";
 dynamic response = sg.client.suppression.blocks._(email).get();
@@ -3197,6 +3364,7 @@ Console.ReadLine();
 For more information, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Suppressions/blocks.html).
 
 ### DELETE /suppression/blocks/{email}
+
 
 ```csharp
 var email = "test_url_param";
@@ -3219,6 +3387,7 @@ For more information see:
 * [Glossary > Bounces](https://sendgrid.com/docs/Glossary/Bounces.html)
 
 ### GET /suppression/bounces
+
 
 ```csharp
 string queryParams = @"{
@@ -3247,6 +3416,7 @@ For more information see:
 Note: the `delete_all` and `emails` parameters should be used independently of each other as they have different purposes.
 
 ### DELETE /suppression/bounces
+
 
 ```csharp
 string data = @"{
@@ -3277,6 +3447,7 @@ For more information see:
 
 ### GET /suppression/bounces/{email}
 
+
 ```csharp
 var email = "test_url_param";
 dynamic response = sg.client.suppression.bounces._(email).get();
@@ -3299,6 +3470,7 @@ For more information see:
 * [Classroom > List Scrubbing Guide](https://sendgrid.com/docs/Classroom/Deliver/list_scrubbing.html)
 
 ### DELETE /suppression/bounces/{email}
+
 
 ```csharp
 string queryParams = @"{
@@ -3323,6 +3495,7 @@ Examples include addresses without the @ sign or addresses that include certain 
 For more information, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Suppressions/invalid_emails.html).
 
 ### GET /suppression/invalid_emails
+
 
 ```csharp
 string queryParams = @"{
@@ -3355,6 +3528,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ### DELETE /suppression/invalid_emails
 
+
 ```csharp
 string data = @"{
   'delete_all': false,
@@ -3382,6 +3556,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ### GET /suppression/invalid_emails/{email}
 
+
 ```csharp
 var email = "test_url_param";
 dynamic response = sg.client.suppression.invalid_emails._(email).get();
@@ -3403,6 +3578,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ### DELETE /suppression/invalid_emails/{email}
 
+
 ```csharp
 var email = "test_url_param";
 dynamic response = sg.client.suppression.invalid_emails._(email).delete();
@@ -3421,6 +3597,7 @@ Console.ReadLine();
 For more information, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Suppressions/spam_reports.html).
 
 ### GET /suppression/spam_report/{email}
+
 
 ```csharp
 var email = "test_url_param";
@@ -3441,6 +3618,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ### DELETE /suppression/spam_report/{email}
 
+
 ```csharp
 var email = "test_url_param";
 dynamic response = sg.client.suppression.spam_report._(email).delete();
@@ -3459,6 +3637,7 @@ Console.ReadLine();
 For more information, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Suppressions/spam_reports.html).
 
 ### GET /suppression/spam_reports
+
 
 ```csharp
 string queryParams = @"{
@@ -3489,6 +3668,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ### DELETE /suppression/spam_reports
 
+
 ```csharp
 string data = @"{
   'delete_all': false,
@@ -3511,6 +3691,7 @@ Console.ReadLine();
 A global suppression (or global unsubscribe) is an email address of a recipient who does not want to receive any of your messages. A globally suppressed recipient will be removed from any email you send. For more information, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Suppressions/global_unsubscribes.html).
 
 ### GET /suppression/unsubscribes
+
 
 ```csharp
 string queryParams = @"{
@@ -3539,6 +3720,7 @@ Transactional templates are templates created specifically for transactional ema
 
 ### POST /templates
 
+
 ```csharp
 string data = @"{
   'name': 'example_name'
@@ -3560,6 +3742,7 @@ Transactional templates are templates created specifically for transactional ema
 
 ### GET /templates
 
+
 ```csharp
 dynamic response = sg.client.templates.get();
 Console.WriteLine(response.StatusCode);
@@ -3578,6 +3761,7 @@ Transactional templates are templates created specifically for transactional ema
 
 
 ### PATCH /templates/{template_id}
+
 
 ```csharp
 string data = @"{
@@ -3602,6 +3786,7 @@ Transactional templates are templates created specifically for transactional ema
 
 ### GET /templates/{template_id}
 
+
 ```csharp
 var template_id = "test_url_param";
 dynamic response = sg.client.templates._(template_id).get();
@@ -3622,6 +3807,7 @@ Transactional templates are templates created specifically for transactional ema
 
 ### DELETE /templates/{template_id}
 
+
 ```csharp
 var template_id = "test_url_param";
 dynamic response = sg.client.templates._(template_id).delete();
@@ -3641,6 +3827,7 @@ For more information about transactional templates, please see our [User Guide](
 
 
 ### POST /templates/{template_id}/versions
+
 
 ```csharp
 string data = @"{
@@ -3675,6 +3862,7 @@ For more information about transactional templates, please see our [User Guide](
 
 ### PATCH /templates/{template_id}/versions/{version_id}
 
+
 ```csharp
 string data = @"{
   'active': 1,
@@ -3708,6 +3896,7 @@ For more information about transactional templates, please see our [User Guide](
 
 ### GET /templates/{template_id}/versions/{version_id}
 
+
 ```csharp
 var template_id = "test_url_param";
 var version_id = "test_url_param";
@@ -3733,6 +3922,7 @@ For more information about transactional templates, please see our [User Guide](
 | version_id | string | The ID of the template version |
 
 ### DELETE /templates/{template_id}/versions/{version_id}
+
 
 ```csharp
 var template_id = "test_url_param";
@@ -3761,6 +3951,7 @@ For more information about transactional templates, please see our [User Guide](
 
 ### POST /templates/{template_id}/versions/{version_id}/activate
 
+
 ```csharp
 var template_id = "test_url_param";
 var version_id = "test_url_param";
@@ -3784,6 +3975,7 @@ For more information about tracking, please see our [User Guide](https://sendgri
 
 ### GET /tracking_settings
 
+
 ```csharp
 string queryParams = @"{
   'limit': 1,
@@ -3806,6 +3998,7 @@ For more information about tracking, please see our [User Guide](https://sendgri
 
 ### PATCH /tracking_settings/click
 
+
 ```csharp
 string data = @"{
   'enabled': true
@@ -3826,6 +4019,7 @@ You can track a variety of the actions your recipients may take when interacting
 For more information about tracking, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/tracking.html).
 
 ### GET /tracking_settings/click
+
 
 ```csharp
 dynamic response = sg.client.tracking_settings.click.get();
@@ -3848,6 +4042,7 @@ You can track a variety of the actions your recipients may take when interacting
 For more information about tracking, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/tracking.html).
 
 ### PATCH /tracking_settings/google_analytics
+
 
 ```csharp
 string data = @"{
@@ -3879,6 +4074,7 @@ For more information about tracking, please see our [User Guide](https://sendgri
 
 ### GET /tracking_settings/google_analytics
 
+
 ```csharp
 dynamic response = sg.client.tracking_settings.google_analytics.get();
 Console.WriteLine(response.StatusCode);
@@ -3898,6 +4094,7 @@ You can track a variety of the actions your recipients may take when interacting
 For more information about tracking, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/tracking.html).
 
 ### PATCH /tracking_settings/open
+
 
 ```csharp
 string data = @"{
@@ -3922,6 +4119,7 @@ For more information about tracking, please see our [User Guide](https://sendgri
 
 ### GET /tracking_settings/open
 
+
 ```csharp
 dynamic response = sg.client.tracking_settings.open.get();
 Console.WriteLine(response.StatusCode);
@@ -3941,6 +4139,7 @@ You can track a variety of the actions your recipients may take when interacting
 For more information about tracking, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/tracking.html).
 
 ### PATCH /tracking_settings/subscription
+
 
 ```csharp
 string data = @"{
@@ -3970,6 +4169,7 @@ For more information about tracking, please see our [User Guide](https://sendgri
 
 ### GET /tracking_settings/subscription
 
+
 ```csharp
 dynamic response = sg.client.tracking_settings.subscription.get();
 Console.WriteLine(response.StatusCode);
@@ -3995,6 +4195,7 @@ For more information about your user profile:
 
 ### GET /user/account
 
+
 ```csharp
 dynamic response = sg.client.user.account.get();
 Console.WriteLine(response.StatusCode);
@@ -4010,6 +4211,7 @@ Console.ReadLine();
 Your monthly credit allotment limits the number of emails you may send before incurring overage charges. For more information about credits and billing, please visit our [Clssroom](https://sendgrid.com/docs/Classroom/Basics/Billing/billing_info_and_faqs.html).
 
 ### GET /user/credits
+
 
 ```csharp
 dynamic response = sg.client.user.credits.get();
@@ -4030,6 +4232,7 @@ For more information about your user profile:
 * [SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
 
 ### PUT /user/email
+
 
 ```csharp
 string data = @"{
@@ -4054,6 +4257,7 @@ For more information about your user profile:
 
 ### GET /user/email
 
+
 ```csharp
 dynamic response = sg.client.user.email.get();
 Console.WriteLine(response.StatusCode);
@@ -4073,6 +4277,7 @@ For more information about your user profile:
 * [SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
 
 ### PUT /user/password
+
 
 ```csharp
 string data = @"{
@@ -4100,6 +4305,7 @@ It should be noted that any one or more of the parameters can be updated via the
 
 ### PATCH /user/profile
 
+
 ```csharp
 string data = @"{
   'city': 'Orange',
@@ -4123,6 +4329,7 @@ For more information about your user profile:
 
 ### GET /user/profile
 
+
 ```csharp
 dynamic response = sg.client.user.profile.get();
 Console.WriteLine(response.StatusCode);
@@ -4141,6 +4348,7 @@ be returned.
 The Cancel Scheduled Sends feature allows the customer to cancel a scheduled send based on a Batch ID included in the SMTPAPI header.Scheduled sends cancelled less than 10 minutes before the scheduled time are not guaranteed to be cancelled.
 
 ### POST /user/scheduled_sends
+
 
 ```csharp
 string data = @"{
@@ -4162,6 +4370,7 @@ The Cancel Scheduled Sends feature allows the customer to cancel a scheduled sen
 
 ### GET /user/scheduled_sends
 
+
 ```csharp
 dynamic response = sg.client.user.scheduled_sends.get();
 Console.WriteLine(response.StatusCode);
@@ -4177,6 +4386,7 @@ Console.ReadLine();
 The Cancel Scheduled Sends feature allows the customer to cancel a scheduled send based on a Batch ID included in the SMTPAPI header.Scheduled sends cancelled less than 10 minutes before the scheduled time are not guaranteed to be cancelled.
 
 ### PATCH /user/scheduled_sends/{batch_id}
+
 
 ```csharp
 string data = @"{
@@ -4198,6 +4408,7 @@ The Cancel Scheduled Sends feature allows the customer to cancel a scheduled sen
 
 ### GET /user/scheduled_sends/{batch_id}
 
+
 ```csharp
 var batch_id = "test_url_param";
 dynamic response = sg.client.user.scheduled_sends._(batch_id).get();
@@ -4214,6 +4425,7 @@ Console.ReadLine();
 The Cancel Scheduled Sends feature allows the customer to cancel a scheduled send based on a Batch ID included in the SMTPAPI header.Scheduled sends cancelled less than 10 minutes before the scheduled time are not guaranteed to be cancelled.
 
 ### DELETE /user/scheduled_sends/{batch_id}
+
 
 ```csharp
 var batch_id = "test_url_param";
@@ -4233,6 +4445,7 @@ The Enforced TLS settings specify whether or not the recipient is required to su
 **Note:** If either setting is enabled and the recipient does not support TLS or have a valid certificate, we drop the message and send a block event with TLS required but not supported as the description.
 
 ### PATCH /user/settings/enforced_tls
+
 
 ```csharp
 string data = @"{
@@ -4256,6 +4469,7 @@ The Enforced TLS settings specify whether or not the recipient is required to su
 
 ### GET /user/settings/enforced_tls
 
+
 ```csharp
 dynamic response = sg.client.user.settings.enforced_tls.get();
 Console.WriteLine(response.StatusCode);
@@ -4275,6 +4489,7 @@ For more information about your user profile:
 * [SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
 
 ### PUT /user/username
+
 
 ```csharp
 string data = @"{
@@ -4299,6 +4514,7 @@ For more information about your user profile:
 
 ### GET /user/username
 
+
 ```csharp
 dynamic response = sg.client.user.username.get();
 Console.WriteLine(response.StatusCode);
@@ -4318,6 +4534,7 @@ SendGrids Event Webhook will notify a URL of your choice via HTTP POST with info
 Common uses of this data are to remove unsubscribes, react to spam reports, determine unengaged recipients, identify bounced email addresses, or create advanced analytics of your email program.
 
 ### PATCH /user/webhooks/event/settings
+
 
 ```csharp
 string data = @"{
@@ -4354,6 +4571,7 @@ Common uses of this data are to remove unsubscribes, react to spam reports, dete
 
 ### GET /user/webhooks/event/settings
 
+
 ```csharp
 dynamic response = sg.client.user.webhooks._("event").settings.get();
 Console.WriteLine(response.StatusCode);
@@ -4371,6 +4589,7 @@ SendGrids Event Webhook will notify a URL of your choice via HTTP POST with info
 Common uses of this data are to remove unsubscribes, react to spam reports, determine unengaged recipients, identify bounced email addresses, or create advanced analytics of your email program.
 
 ### POST /user/webhooks/event/test
+
 
 ```csharp
 string data = @"{
@@ -4391,6 +4610,7 @@ SendGrid can parse the attachments and contents of incoming emails. The Parse AP
 
 ### GET /user/webhooks/parse/settings
 
+
 ```csharp
 dynamic response = sg.client.user.webhooks.parse.settings.get();
 Console.WriteLine(response.StatusCode);
@@ -4408,6 +4628,7 @@ SendGrid's Inbound Parse Webhook allows you to parse the contents and attachment
 There are a number of pre-made integrations for the SendGrid Parse Webhook which make processing events easy. You can find these integrations in the [Library Index](https://sendgrid.com/docs/Integrate/libraries.html#-Webhook-Libraries).
 
 ### GET /user/webhooks/parse/stats
+
 
 ```csharp
 string queryParams = @"{
@@ -4441,6 +4662,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 
 ### POST /whitelabel/domains
 
+
 ```csharp
 string data = @"{
   'automatic_security': false,
@@ -4472,6 +4694,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 
 ### GET /whitelabel/domains
 
+
 ```csharp
 string queryParams = @"{
   'domain': 'test_string',
@@ -4502,6 +4725,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 
 ### GET /whitelabel/domains/default
 
+
 ```csharp
 dynamic response = sg.client.whitelabel.domains._("default").get();
 Console.WriteLine(response.StatusCode);
@@ -4526,6 +4750,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 | username | string  | Username of the subuser to find associated whitelabels for. |
 
 ### GET /whitelabel/domains/subuser
+
 
 ```csharp
 dynamic response = sg.client.whitelabel.domains.subuser.get();
@@ -4552,6 +4777,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 
 ### DELETE /whitelabel/domains/subuser
 
+
 ```csharp
 dynamic response = sg.client.whitelabel.domains.subuser.delete();
 Console.WriteLine(response.StatusCode);
@@ -4569,6 +4795,7 @@ A domain whitelabel allows you to remove the via or sent on behalf of message th
 For more information on whitelabeling, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/Whitelabel/index.html)
 
 ### PATCH /whitelabel/domains/{domain_id}
+
 
 ```csharp
 string data = @"{
@@ -4594,6 +4821,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 
 ### GET /whitelabel/domains/{domain_id}
 
+
 ```csharp
 var domain_id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(domain_id).get();
@@ -4612,6 +4840,7 @@ A domain whitelabel allows you to remove the via or sent on behalf of message th
 For more information on whitelabeling, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/Whitelabel/index.html)
 
 ### DELETE /whitelabel/domains/{domain_id}
+
 
 ```csharp
 var domain_id = "test_url_param";
@@ -4639,6 +4868,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 
 ### POST /whitelabel/domains/{domain_id}/subuser
 
+
 ```csharp
 string data = @"{
   'username': 'jane@example.com'
@@ -4665,6 +4895,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 | id | integer  | ID of the domain to which you are adding an IP |
 
 ### POST /whitelabel/domains/{id}/ips
+
 
 ```csharp
 string data = @"{
@@ -4694,6 +4925,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 
 ### DELETE /whitelabel/domains/{id}/ips/{ip}
 
+
 ```csharp
 var id = "test_url_param";
 var ip = "test_url_param";
@@ -4719,6 +4951,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 
 ### POST /whitelabel/domains/{id}/validate
 
+
 ```csharp
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(id).validate.post();
@@ -4739,6 +4972,7 @@ A IP whitelabel consists of a subdomain and domain that will be used to generate
 For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Web_API_v3/Whitelabel/ips.html).
 
 ### POST /whitelabel/ips
+
 
 ```csharp
 string data = @"{
@@ -4765,6 +4999,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 
 ### GET /whitelabel/ips
 
+
 ```csharp
 string queryParams = @"{
   'ip': 'test_string',
@@ -4788,6 +5023,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 
 ### GET /whitelabel/ips/{id}
 
+
 ```csharp
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.ips._(id).get();
@@ -4806,6 +5042,7 @@ A IP whitelabel consists of a subdomain and domain that will be used to generate
 For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Web_API_v3/Whitelabel/ips.html).
 
 ### DELETE /whitelabel/ips/{id}
+
 
 ```csharp
 var id = "test_url_param";
@@ -4826,6 +5063,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 
 ### POST /whitelabel/ips/{id}/validate
 
+
 ```csharp
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.ips._(id).validate.post();
@@ -4844,6 +5082,7 @@ Email link whitelabels allow all of the click-tracked links you send in your ema
 For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Web_API_v3/Whitelabel/links.html).
 
 ### POST /whitelabel/links
+
 
 ```csharp
 string data = @"{
@@ -4871,6 +5110,7 @@ Email link whitelabels allow all of the click-tracked links you send in your ema
 For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Web_API_v3/Whitelabel/links.html).
 
 ### GET /whitelabel/links
+
 
 ```csharp
 string queryParams = @"{
@@ -4900,6 +5140,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 
 ### GET /whitelabel/links/default
 
+
 ```csharp
 string queryParams = @"{
   'domain': 'test_string'
@@ -4924,6 +5165,7 @@ Email link whitelabels allow all of the click-tracked links you send in your ema
 For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Web_API_v3/Whitelabel/links.html).
 
 ### GET /whitelabel/links/subuser
+
 
 ```csharp
 string queryParams = @"{
@@ -4950,6 +5192,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 
 ### DELETE /whitelabel/links/subuser
 
+
 ```csharp
 string queryParams = @"{
   'username': 'test_string'
@@ -4970,6 +5213,7 @@ Email link whitelabels allow all of the click-tracked links you send in your ema
 For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Web_API_v3/Whitelabel/links.html).
 
 ### PATCH /whitelabel/links/{id}
+
 
 ```csharp
 string data = @"{
@@ -4993,6 +5237,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 
 ### GET /whitelabel/links/{id}
 
+
 ```csharp
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(id).get();
@@ -5012,6 +5257,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 
 ### DELETE /whitelabel/links/{id}
 
+
 ```csharp
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(id).delete();
@@ -5030,6 +5276,7 @@ Email link whitelabels allow all of the click-tracked links you send in your ema
 For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Web_API_v3/Whitelabel/links.html).
 
 ### POST /whitelabel/links/{id}/validate
+
 
 ```csharp
 var id = "test_url_param";
@@ -5053,6 +5300,7 @@ Email link whitelabels allow all of the click-tracked links you send in your ema
 For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Web_API_v3/Whitelabel/links.html).
 
 ### POST /whitelabel/links/{link_id}/subuser
+
 
 ```csharp
 string data = @"{

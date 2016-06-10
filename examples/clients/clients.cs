@@ -5,9 +5,9 @@ using System.Collections.Generic;
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 
-##################################################
-# Retrieve email statistics by client type. #
-# GET /clients/stats #
+////////////////////////////////////////////////////////
+// Retrieve email statistics by client type.
+// GET /clients/stats
 
 string queryParams = @"{
   'aggregated_by': 'day', 
@@ -20,9 +20,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve stats by a specific client type. #
-# GET /clients/{client_type}/stats #
+////////////////////////////////////////////////////////
+// Retrieve stats by a specific client type.
+// GET /clients/{client_type}/stats
 
 string queryParams = @"{
   'aggregated_by': 'day', 

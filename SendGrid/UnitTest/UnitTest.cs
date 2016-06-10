@@ -514,15 +514,15 @@ namespace UnitTest
             }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
             string data = @"{
-  'description': 'A group description',
-  'is_default': false,
-  'name': 'A group name'
+  'description': 'Suggestions for products our users might like.',
+  'is_default': true,
+  'name': 'Product Suggestions'
 }";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
-            headers.Add("X-Mock", "200");
+            headers.Add("X-Mock", "201");
             dynamic response = sg.client.asm.groups.post(requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
         [Test]
@@ -536,10 +536,13 @@ namespace UnitTest
                 host = "http://localhost:4010";
             }
             dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
+            string queryParams = @"{
+  'id': 1
+}";
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.asm.groups.get(requestHeaders: headers);
+            dynamic response = sg.client.asm.groups.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -670,6 +673,24 @@ namespace UnitTest
         }
 
         [Test]
+        public void test_asm_suppressions_get()
+        {
+            string _apiKey = "SendGrid API Key";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
+            dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
+            Dictionary<String, String> headers = new Dictionary<String, String>();
+            headers.Clear();
+            headers.Add("X-Mock", "200");
+            dynamic response = sg.client.asm.suppressions.get(requestHeaders: headers);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+        }
+
+        [Test]
         public void test_asm_suppressions_global_post()
         {
             string _apiKey = "SendGrid API Key";
@@ -729,6 +750,25 @@ namespace UnitTest
             headers.Add("X-Mock", "204");
             dynamic response = sg.client.asm.suppressions.global._(email).delete(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+        }
+
+        [Test]
+        public void test_asm_suppressions__email__get()
+        {
+            string _apiKey = "SendGrid API Key";
+            string host = "";
+            if( Environment.GetEnvironmentVariable("TRAVIS") == "true" ) {
+                host = Environment.GetEnvironmentVariable("MOCK_HOST");
+            } else {
+                host = "http://localhost:4010";
+            }
+            dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
+            var email = "test_url_param";
+            Dictionary<String, String> headers = new Dictionary<String, String>();
+            headers.Clear();
+            headers.Add("X-Mock", "200");
+            dynamic response = sg.client.asm.suppressions._(email).get(requestHeaders: headers);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -2230,7 +2270,7 @@ namespace UnitTest
   'content': [
     {
       'type': 'text/html',
-      'value': '<html><p>Hello, world!</p><img src=\'cid:ii_139db99fdb5c3704\'></img></html>'
+      'value': '<html><p>Hello, world!</p><img src=[CID GOES HERE]></img></html>'
     }
   ],
   'custom_args': {
@@ -4315,7 +4355,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.user.webhooks._("event").settings.patch(requestBody: data, requestHeaders: headers);
+            dynamic response = sg.client.user.webhooks.event.settings.patch(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -4333,7 +4373,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.user.webhooks._("event").settings.get(requestHeaders: headers);
+            dynamic response = sg.client.user.webhooks.event.settings.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -4354,7 +4394,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = sg.client.user.webhooks._("event").test.post(requestBody: data, requestHeaders: headers);
+            dynamic response = sg.client.user.webhooks.event.test.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -4470,7 +4510,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.whitelabel.domains._("default").get(requestHeaders: headers);
+            dynamic response = sg.client.whitelabel.domains.default.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -4822,7 +4862,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.whitelabel.links._("default").get(queryParams: queryParams, requestHeaders: headers);
+            dynamic response = sg.client.whitelabel.links.default.get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 

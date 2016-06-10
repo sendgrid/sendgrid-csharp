@@ -5,9 +5,9 @@ using System.Collections.Generic;
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 
-##################################################
-# Create a Campaign #
-# POST /campaigns #
+////////////////////////////////////////////////////////
+// Create a Campaign
+// POST /campaigns
 
 string data = @"{
   'categories': [
@@ -35,9 +35,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve all Campaigns #
-# GET /campaigns #
+////////////////////////////////////////////////////////
+// Retrieve all Campaigns
+// GET /campaigns
 
 string queryParams = @"{
   'limit': 0, 
@@ -49,9 +49,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update a Campaign #
-# PATCH /campaigns/{campaign_id} #
+////////////////////////////////////////////////////////
+// Update a Campaign
+// PATCH /campaigns/{campaign_id}
 
 string data = @"{
   'categories': [
@@ -69,9 +69,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve a single campaign #
-# GET /campaigns/{campaign_id} #
+////////////////////////////////////////////////////////
+// Retrieve a single campaign
+// GET /campaigns/{campaign_id}
 
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).get();
@@ -80,9 +80,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Delete a Campaign #
-# DELETE /campaigns/{campaign_id} #
+////////////////////////////////////////////////////////
+// Delete a Campaign
+// DELETE /campaigns/{campaign_id}
 
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).delete();
@@ -91,9 +91,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update a Scheduled Campaign #
-# PATCH /campaigns/{campaign_id}/schedules #
+////////////////////////////////////////////////////////
+// Update a Scheduled Campaign
+// PATCH /campaigns/{campaign_id}/schedules
 
 string data = @"{
   'send_at': 1489451436
@@ -105,9 +105,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Schedule a Campaign #
-# POST /campaigns/{campaign_id}/schedules #
+////////////////////////////////////////////////////////
+// Schedule a Campaign
+// POST /campaigns/{campaign_id}/schedules
 
 string data = @"{
   'send_at': 1489771528
@@ -119,9 +119,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# View Scheduled Time of a Campaign #
-# GET /campaigns/{campaign_id}/schedules #
+////////////////////////////////////////////////////////
+// View Scheduled Time of a Campaign
+// GET /campaigns/{campaign_id}/schedules
 
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.get();
@@ -130,9 +130,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Unschedule a Scheduled Campaign #
-# DELETE /campaigns/{campaign_id}/schedules #
+////////////////////////////////////////////////////////
+// Unschedule a Scheduled Campaign
+// DELETE /campaigns/{campaign_id}/schedules
 
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.delete();
@@ -141,9 +141,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Send a Campaign #
-# POST /campaigns/{campaign_id}/schedules/now #
+////////////////////////////////////////////////////////
+// Send a Campaign
+// POST /campaigns/{campaign_id}/schedules/now
 
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.now.post();
@@ -152,9 +152,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Send a Test Campaign #
-# POST /campaigns/{campaign_id}/schedules/test #
+////////////////////////////////////////////////////////
+// Send a Test Campaign
+// POST /campaigns/{campaign_id}/schedules/test
 
 string data = @"{
   'to': 'your.email@example.com'

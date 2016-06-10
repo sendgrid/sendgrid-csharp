@@ -5,9 +5,9 @@ using System.Collections.Generic;
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 
-##################################################
-# Retrieve all mail settings #
-# GET /mail_settings #
+////////////////////////////////////////////////////////
+// Retrieve all mail settings
+// GET /mail_settings
 
 string queryParams = @"{
   'limit': 1, 
@@ -19,9 +19,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update address whitelist mail settings #
-# PATCH /mail_settings/address_whitelist #
+////////////////////////////////////////////////////////
+// Update address whitelist mail settings
+// PATCH /mail_settings/address_whitelist
 
 string data = @"{
   'enabled': true, 
@@ -36,9 +36,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve address whitelist mail settings #
-# GET /mail_settings/address_whitelist #
+////////////////////////////////////////////////////////
+// Retrieve address whitelist mail settings
+// GET /mail_settings/address_whitelist
 
 dynamic response = sg.client.mail_settings.address_whitelist.get();
 Console.WriteLine(response.StatusCode);
@@ -46,9 +46,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update BCC mail settings #
-# PATCH /mail_settings/bcc #
+////////////////////////////////////////////////////////
+// Update BCC mail settings
+// PATCH /mail_settings/bcc
 
 string data = @"{
   'email': 'email@example.com', 
@@ -60,9 +60,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve all BCC mail settings #
-# GET /mail_settings/bcc #
+////////////////////////////////////////////////////////
+// Retrieve all BCC mail settings
+// GET /mail_settings/bcc
 
 dynamic response = sg.client.mail_settings.bcc.get();
 Console.WriteLine(response.StatusCode);
@@ -70,9 +70,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update bounce purge mail settings #
-# PATCH /mail_settings/bounce_purge #
+////////////////////////////////////////////////////////
+// Update bounce purge mail settings
+// PATCH /mail_settings/bounce_purge
 
 string data = @"{
   'enabled': true, 
@@ -85,9 +85,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve bounce purge mail settings #
-# GET /mail_settings/bounce_purge #
+////////////////////////////////////////////////////////
+// Retrieve bounce purge mail settings
+// GET /mail_settings/bounce_purge
 
 dynamic response = sg.client.mail_settings.bounce_purge.get();
 Console.WriteLine(response.StatusCode);
@@ -95,9 +95,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update footer mail settings #
-# PATCH /mail_settings/footer #
+////////////////////////////////////////////////////////
+// Update footer mail settings
+// PATCH /mail_settings/footer
 
 string data = @"{
   'enabled': true, 
@@ -110,9 +110,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve footer mail settings #
-# GET /mail_settings/footer #
+////////////////////////////////////////////////////////
+// Retrieve footer mail settings
+// GET /mail_settings/footer
 
 dynamic response = sg.client.mail_settings.footer.get();
 Console.WriteLine(response.StatusCode);
@@ -120,9 +120,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update forward bounce mail settings #
-# PATCH /mail_settings/forward_bounce #
+////////////////////////////////////////////////////////
+// Update forward bounce mail settings
+// PATCH /mail_settings/forward_bounce
 
 string data = @"{
   'email': 'example@example.com', 
@@ -134,9 +134,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve forward bounce mail settings #
-# GET /mail_settings/forward_bounce #
+////////////////////////////////////////////////////////
+// Retrieve forward bounce mail settings
+// GET /mail_settings/forward_bounce
 
 dynamic response = sg.client.mail_settings.forward_bounce.get();
 Console.WriteLine(response.StatusCode);
@@ -144,9 +144,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update forward spam mail settings #
-# PATCH /mail_settings/forward_spam #
+////////////////////////////////////////////////////////
+// Update forward spam mail settings
+// PATCH /mail_settings/forward_spam
 
 string data = @"{
   'email': '', 
@@ -158,9 +158,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve forward spam mail settings #
-# GET /mail_settings/forward_spam #
+////////////////////////////////////////////////////////
+// Retrieve forward spam mail settings
+// GET /mail_settings/forward_spam
 
 dynamic response = sg.client.mail_settings.forward_spam.get();
 Console.WriteLine(response.StatusCode);
@@ -168,9 +168,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update plain content mail settings #
-# PATCH /mail_settings/plain_content #
+////////////////////////////////////////////////////////
+// Update plain content mail settings
+// PATCH /mail_settings/plain_content
 
 string data = @"{
   'enabled': false
@@ -181,9 +181,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve plain content mail settings #
-# GET /mail_settings/plain_content #
+////////////////////////////////////////////////////////
+// Retrieve plain content mail settings
+// GET /mail_settings/plain_content
 
 dynamic response = sg.client.mail_settings.plain_content.get();
 Console.WriteLine(response.StatusCode);
@@ -191,9 +191,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update spam check mail settings #
-# PATCH /mail_settings/spam_check #
+////////////////////////////////////////////////////////
+// Update spam check mail settings
+// PATCH /mail_settings/spam_check
 
 string data = @"{
   'enabled': true, 
@@ -206,9 +206,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve spam check mail settings #
-# GET /mail_settings/spam_check #
+////////////////////////////////////////////////////////
+// Retrieve spam check mail settings
+// GET /mail_settings/spam_check
 
 dynamic response = sg.client.mail_settings.spam_check.get();
 Console.WriteLine(response.StatusCode);
@@ -216,9 +216,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update template mail settings #
-# PATCH /mail_settings/template #
+////////////////////////////////////////////////////////
+// Update template mail settings
+// PATCH /mail_settings/template
 
 string data = @"{
   'enabled': true, 
@@ -230,9 +230,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve legacy template mail settings #
-# GET /mail_settings/template #
+////////////////////////////////////////////////////////
+// Retrieve legacy template mail settings
+// GET /mail_settings/template
 
 dynamic response = sg.client.mail_settings.template.get();
 Console.WriteLine(response.StatusCode);

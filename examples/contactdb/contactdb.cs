@@ -5,9 +5,9 @@ using System.Collections.Generic;
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 
-##################################################
-# Create a Custom Field #
-# POST /contactdb/custom_fields #
+////////////////////////////////////////////////////////
+// Create a Custom Field
+// POST /contactdb/custom_fields
 
 string data = @"{
   'name': 'pet', 
@@ -19,9 +19,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve all custom fields #
-# GET /contactdb/custom_fields #
+////////////////////////////////////////////////////////
+// Retrieve all custom fields
+// GET /contactdb/custom_fields
 
 dynamic response = sg.client.contactdb.custom_fields.get();
 Console.WriteLine(response.StatusCode);
@@ -29,9 +29,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve a Custom Field #
-# GET /contactdb/custom_fields/{custom_field_id} #
+////////////////////////////////////////////////////////
+// Retrieve a Custom Field
+// GET /contactdb/custom_fields/{custom_field_id}
 
 var custom_field_id = "test_url_param";
 dynamic response = sg.client.contactdb.custom_fields._(custom_field_id).get();
@@ -40,9 +40,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Delete a Custom Field #
-# DELETE /contactdb/custom_fields/{custom_field_id} #
+////////////////////////////////////////////////////////
+// Delete a Custom Field
+// DELETE /contactdb/custom_fields/{custom_field_id}
 
 var custom_field_id = "test_url_param";
 dynamic response = sg.client.contactdb.custom_fields._(custom_field_id).delete();
@@ -51,9 +51,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Create a List #
-# POST /contactdb/lists #
+////////////////////////////////////////////////////////
+// Create a List
+// POST /contactdb/lists
 
 string data = @"{
   'name': 'your list name'
@@ -64,9 +64,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve all lists #
-# GET /contactdb/lists #
+////////////////////////////////////////////////////////
+// Retrieve all lists
+// GET /contactdb/lists
 
 dynamic response = sg.client.contactdb.lists.get();
 Console.WriteLine(response.StatusCode);
@@ -74,9 +74,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Delete Multiple lists #
-# DELETE /contactdb/lists #
+////////////////////////////////////////////////////////
+// Delete Multiple lists
+// DELETE /contactdb/lists
 
 string data = @"[
   1, 
@@ -90,9 +90,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update a List #
-# PATCH /contactdb/lists/{list_id} #
+////////////////////////////////////////////////////////
+// Update a List
+// PATCH /contactdb/lists/{list_id}
 
 string data = @"{
   'name': 'newlistname'
@@ -107,9 +107,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve a single list #
-# GET /contactdb/lists/{list_id} #
+////////////////////////////////////////////////////////
+// Retrieve a single list
+// GET /contactdb/lists/{list_id}
 
 string queryParams = @"{
   'list_id': 0
@@ -121,9 +121,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Delete a List #
-# DELETE /contactdb/lists/{list_id} #
+////////////////////////////////////////////////////////
+// Delete a List
+// DELETE /contactdb/lists/{list_id}
 
 string queryParams = @"{
   'delete_contacts': 'true'
@@ -135,9 +135,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Add Multiple Recipients to a List #
-# POST /contactdb/lists/{list_id}/recipients #
+////////////////////////////////////////////////////////
+// Add Multiple Recipients to a List
+// POST /contactdb/lists/{list_id}/recipients
 
 string data = @"[
   'recipient_id1', 
@@ -150,9 +150,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve all recipients on a List #
-# GET /contactdb/lists/{list_id}/recipients #
+////////////////////////////////////////////////////////
+// Retrieve all recipients on a List
+// GET /contactdb/lists/{list_id}/recipients
 
 string queryParams = @"{
   'list_id': 0, 
@@ -166,9 +166,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Add a Single Recipient to a List #
-# POST /contactdb/lists/{list_id}/recipients/{recipient_id} #
+////////////////////////////////////////////////////////
+// Add a Single Recipient to a List
+// POST /contactdb/lists/{list_id}/recipients/{recipient_id}
 
 var list_id = "test_url_param";
 var recipient_id = "test_url_param";
@@ -178,9 +178,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Delete a Single Recipient from a Single List #
-# DELETE /contactdb/lists/{list_id}/recipients/{recipient_id} #
+////////////////////////////////////////////////////////
+// Delete a Single Recipient from a Single List
+// DELETE /contactdb/lists/{list_id}/recipients/{recipient_id}
 
 string queryParams = @"{
   'list_id': 0, 
@@ -194,9 +194,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update Recipient #
-# PATCH /contactdb/recipients #
+////////////////////////////////////////////////////////
+// Update Recipient
+// PATCH /contactdb/recipients
 
 string data = @"[
   {
@@ -211,9 +211,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Add recipients #
-# POST /contactdb/recipients #
+////////////////////////////////////////////////////////
+// Add recipients
+// POST /contactdb/recipients
 
 string data = @"[
   {
@@ -235,9 +235,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve recipients #
-# GET /contactdb/recipients #
+////////////////////////////////////////////////////////
+// Retrieve recipients
+// GET /contactdb/recipients
 
 string queryParams = @"{
   'page': 1, 
@@ -249,9 +249,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Delete Recipient #
-# DELETE /contactdb/recipients #
+////////////////////////////////////////////////////////
+// Delete Recipient
+// DELETE /contactdb/recipients
 
 string data = @"[
   'recipient_id1', 
@@ -263,9 +263,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve the count of billable recipients #
-# GET /contactdb/recipients/billable_count #
+////////////////////////////////////////////////////////
+// Retrieve the count of billable recipients
+// GET /contactdb/recipients/billable_count
 
 dynamic response = sg.client.contactdb.recipients.billable_count.get();
 Console.WriteLine(response.StatusCode);
@@ -273,9 +273,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve a Count of Recipients #
-# GET /contactdb/recipients/count #
+////////////////////////////////////////////////////////
+// Retrieve a Count of Recipients
+// GET /contactdb/recipients/count
 
 dynamic response = sg.client.contactdb.recipients.count.get();
 Console.WriteLine(response.StatusCode);
@@ -283,9 +283,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve recipients matching search criteria #
-# GET /contactdb/recipients/search #
+////////////////////////////////////////////////////////
+// Retrieve recipients matching search criteria
+// GET /contactdb/recipients/search
 
 string queryParams = @"{
   '{field_name}': 'test_string'
@@ -296,9 +296,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve a single recipient #
-# GET /contactdb/recipients/{recipient_id} #
+////////////////////////////////////////////////////////
+// Retrieve a single recipient
+// GET /contactdb/recipients/{recipient_id}
 
 var recipient_id = "test_url_param";
 dynamic response = sg.client.contactdb.recipients._(recipient_id).get();
@@ -307,9 +307,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Delete a Recipient #
-# DELETE /contactdb/recipients/{recipient_id} #
+////////////////////////////////////////////////////////
+// Delete a Recipient
+// DELETE /contactdb/recipients/{recipient_id}
 
 var recipient_id = "test_url_param";
 dynamic response = sg.client.contactdb.recipients._(recipient_id).delete();
@@ -318,9 +318,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve the lists that a recipient is on #
-# GET /contactdb/recipients/{recipient_id}/lists #
+////////////////////////////////////////////////////////
+// Retrieve the lists that a recipient is on
+// GET /contactdb/recipients/{recipient_id}/lists
 
 var recipient_id = "test_url_param";
 dynamic response = sg.client.contactdb.recipients._(recipient_id).lists.get();
@@ -329,9 +329,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve reserved fields #
-# GET /contactdb/reserved_fields #
+////////////////////////////////////////////////////////
+// Retrieve reserved fields
+// GET /contactdb/reserved_fields
 
 dynamic response = sg.client.contactdb.reserved_fields.get();
 Console.WriteLine(response.StatusCode);
@@ -339,9 +339,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Create a Segment #
-# POST /contactdb/segments #
+////////////////////////////////////////////////////////
+// Create a Segment
+// POST /contactdb/segments
 
 string data = @"{
   'conditions': [
@@ -373,9 +373,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve all segments #
-# GET /contactdb/segments #
+////////////////////////////////////////////////////////
+// Retrieve all segments
+// GET /contactdb/segments
 
 dynamic response = sg.client.contactdb.segments.get();
 Console.WriteLine(response.StatusCode);
@@ -383,9 +383,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Update a segment #
-# PATCH /contactdb/segments/{segment_id} #
+////////////////////////////////////////////////////////
+// Update a segment
+// PATCH /contactdb/segments/{segment_id}
 
 string data = @"{
   'conditions': [
@@ -409,9 +409,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve a segment #
-# GET /contactdb/segments/{segment_id} #
+////////////////////////////////////////////////////////
+// Retrieve a segment
+// GET /contactdb/segments/{segment_id}
 
 string queryParams = @"{
   'segment_id': 0
@@ -423,9 +423,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Delete a segment #
-# DELETE /contactdb/segments/{segment_id} #
+////////////////////////////////////////////////////////
+// Delete a segment
+// DELETE /contactdb/segments/{segment_id}
 
 string queryParams = @"{
   'delete_contacts': 'true'
@@ -437,9 +437,9 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
-##################################################
-# Retrieve recipients on a segment #
-# GET /contactdb/segments/{segment_id}/recipients #
+////////////////////////////////////////////////////////
+// Retrieve recipients on a segment
+// GET /contactdb/segments/{segment_id}/recipients
 
 string queryParams = @"{
   'page': 1, 
