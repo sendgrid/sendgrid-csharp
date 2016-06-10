@@ -4510,7 +4510,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.whitelabel.domains.default.get(requestHeaders: headers);
+            dynamic response = sg.client.whitelabel.domains._("default").get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -4862,7 +4862,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = sg.client.whitelabel.links.default.get(queryParams: queryParams, requestHeaders: headers);
+            dynamic response = sg.client.whitelabel.links._("default").get(queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
