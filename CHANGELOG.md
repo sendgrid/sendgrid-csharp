@@ -1,7 +1,7 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
-## [7.0.0] - XXXX-XX-XX
+## [7.0.0] - 2016-06-13
 ### Added
 - Breaking change to support the v3 Web API
 - New HTTP client

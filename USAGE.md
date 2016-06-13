@@ -2219,7 +2219,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
-## v3 Mail Send Beta
+## v3 Mail Send
 
 This endpoint allows you to send email over SendGrids v3 Web API, the most recent version of our API. If you are looking for documentation about the v2 Mail Send endpoint, please see our [v2 API Reference](https://sendgrid.com/docs/API_Reference/Web_API/mail.html).
 
@@ -2230,9 +2230,9 @@ For an overview of the v3 Mail Send endpoint, please visit our [v3 API Reference
 
 For more detailed information about how to use the v3 Mail Send endpoint, please visit our [Classroom](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/index.html).
 
-### POST /mail/send/beta
+### POST /mail/send
 
-This endpoint has a helper, check it out [here](https://github.com/sendgrid/sendgrid-csharp/blob/v3beta/SendGrid/SendGrid/Helpers/Mail/README.md).
+This endpoint has a helper, check it out [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/SendGrid/SendGrid/Helpers/Mail/README.md).
 
 ```csharp
 string data = @"{
@@ -2378,7 +2378,7 @@ string data = @"{
     }
   }
 }";
-dynamic response = sg.client.mail.send.beta.post(requestBody: data);
+dynamic response = sg.client.mail.send.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

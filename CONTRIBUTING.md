@@ -86,7 +86,7 @@ Next, update your Environment (user space) with your [SENDGRID_API_KEY](https://
 
 - Check out the documentation for [Web API v3 endpoints](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html).
 - Review the corresponding [examples](https://github.com/sendgrid/sendgrid-csharp/blob/v3beta/examples).
-- You can add your test code to our [Example project](https://github.com/sendgrid/sendgrid-csharp/blob/v3beta/SendGrid/Example/Example.cs).
+- You can add your test code to our [Example Project](https://github.com/sendgrid/sendgrid-csharp/blob/v3beta/SendGrid/Example/Example.cs).
 
 <a name="understanding_the_codebase"></a>
 ## Understanding the Code Base
