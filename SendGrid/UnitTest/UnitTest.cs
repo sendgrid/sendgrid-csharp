@@ -2233,7 +2233,7 @@ namespace UnitTest
         }
 
         [Test]
-        public void test_mail_send_beta_post()
+        public void test_mail_send_post()
         {
             string _apiKey = "SendGrid API Key";
             string host = "";
@@ -2389,7 +2389,7 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "202");
-            dynamic response = sg.client.mail.send.beta.post(requestBody: data, requestHeaders: headers);
+            dynamic response = sg.client.mail.send.post(requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Accepted);
         }
 
