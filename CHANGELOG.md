@@ -1,37 +1,43 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [7.0.0] - 2016-06-13
+### Added
+- Breaking change to support the v3 Web API
+- New HTTP client
+- v3 Mail Send helper
+
 ## [6.3.4] - 2015-12-15
-###Added
+### Added
 - Implemented the global stats /asm/stats endpoint [GET]
 
 ## [6.3.3] - 2015-12-14
-###Added
+### Added
 - Implemented the global suppressions /asm/suppressions/global endpoint [GET, POST, DELETE]
 
 ## [6.3.2] - 2015-12-11
-###Added
+### Added
 - Implemented the suppressions /asm/groups/:group_id/suppressions endpoint [GET, POST, DELETE]
 
 ## [6.3.1] - 2015-12-10
-###Added
+### Added
 - Implemented the unsubscribe groups /asm/groups endpoint [GET, POST, DELETE]
 
 ## [6.3.0] - 2015-11-24
-###Added
+### Added
 - Send emails using API Key
 
 ## [6.2.0] - 2015-11-18
-###Added
+### Added
 - Added support for using the Web API v3 endpoints
 - Implemented the api_keys endpoint [GET, POST, PATCH, DELETE]
 
 ## [6.1.0] - 2015-4-27
-###Added
+### Added
 - Added support for sending via API keys in addition to credentials. Pass an API Key string to the Web transport constructor
 
 ## [6.0.1] - 2015-4-24
-###Fixed
+### Fixed
 - Fixed the endpoint URL. (⌒_⌒;)
 
 ## [6.0.0] - 2015-4-22
@@ -56,7 +62,6 @@ Deliver method. All other changes are backwards compatible.
 ### Fixed
 - Invalid Protocol Exception in Mono due to the way the endpoint URL was
   being assigned (thanks @mdymel, @rbarinov)
-
 - Connections were not being reused. This was causing degraded
   performance with multiple threads open. Performance should be much
 better. (with help from @gatesvp)
