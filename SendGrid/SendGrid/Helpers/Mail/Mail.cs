@@ -38,7 +38,7 @@ namespace SendGrid.Helpers.Mail
             Personalization personalization = new Personalization();
             personalization.AddTo(to);
             this.AddPersonalization(personalization);
-            this.Subject = "Hello World from the SendGrid CSharp Library";
+            this.Subject = subject;
             this.AddContent(content);
         }
 
