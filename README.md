@@ -46,6 +46,7 @@ Add the following namespaces to use the library:
 using System;
 using System.Web.Script.Serialization;
 using SendGrid;
+using SendGrid.Helpers.Mail; // Include if you want to use the Mail Helper
 ```
 
 ## Dependencies
@@ -60,6 +61,7 @@ using SendGrid;
 ```csharp
 using System;
 using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace Example
 {
@@ -68,7 +70,7 @@ namespace Example
         private static void Main()
         {
 	    String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGrid.SendGridAPIClient(apiKey);
+            dynamic sg = new SendGridAPIClient(apiKey);
 
             Email from = new Email("test@example.com");
             String subject = "Hello World from the SendGrid CSharp Library";
@@ -86,7 +88,6 @@ namespace Example
 
 ```csharp
 using System;
-using SendGrid;
 
 namespace Example
 {
@@ -96,7 +97,7 @@ namespace Example
         {
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             dynamic sg = new SendGrid.SendGridAPIClient(apiKey);
-            dynamic response = sg.client.api_keys.get(queryParams: queryParams);
+            dynamic response = sg.client.api_keys.get();
         }
     }
 }

@@ -4,8 +4,7 @@ This documentation is based on our [OAI specification](https://github.com/sendgr
 
 ```csharp
 using System;
-using SendGrid.Helpers.Mail;
-using System.Collections.Generic;
+using SendGrid.Helpers.Mail; // If you are using the Mail Helper
 
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);

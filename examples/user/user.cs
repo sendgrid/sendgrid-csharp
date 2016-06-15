@@ -1,6 +1,5 @@
 using System;
-using SendGrid.Helpers.Mail;
-using System.Collections.Generic;
+using SendGrid.Helpers.Mail; // If you are using the Mail Helper
 
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
@@ -53,7 +52,7 @@ Console.ReadLine();
 // PUT /user/password
 
 string data = @"{
-  'new_password': 'new_password', 
+  'new_password': 'new_password',
   'old_password': 'old_password'
 }";
 dynamic response = sg.client.user.password.put(requestBody: data);
@@ -67,8 +66,8 @@ Console.ReadLine();
 // PATCH /user/profile
 
 string data = @"{
-  'city': 'Orange', 
-  'first_name': 'Example', 
+  'city': 'Orange',
+  'first_name': 'Example',
   'last_name': 'User'
 }";
 dynamic response = sg.client.user.profile.patch(requestBody: data);
@@ -92,7 +91,7 @@ Console.ReadLine();
 // POST /user/scheduled_sends
 
 string data = @"{
-  'batch_id': 'YOUR_BATCH_ID', 
+  'batch_id': 'YOUR_BATCH_ID',
   'status': 'pause'
 }";
 dynamic response = sg.client.user.scheduled_sends.post(requestBody: data);
@@ -152,7 +151,7 @@ Console.ReadLine();
 // PATCH /user/settings/enforced_tls
 
 string data = @"{
-  'require_tls': true, 
+  'require_tls': true,
   'require_valid_cert': false
 }";
 dynamic response = sg.client.user.settings.enforced_tls.patch(requestBody: data);
@@ -199,18 +198,18 @@ Console.ReadLine();
 // PATCH /user/webhooks/event/settings
 
 string data = @"{
-  'bounce': true, 
-  'click': true, 
-  'deferred': true, 
-  'delivered': true, 
-  'dropped': true, 
-  'enabled': true, 
-  'group_resubscribe': true, 
-  'group_unsubscribe': true, 
-  'open': true, 
-  'processed': true, 
-  'spam_report': true, 
-  'unsubscribe': true, 
+  'bounce': true,
+  'click': true,
+  'deferred': true,
+  'delivered': true,
+  'dropped': true,
+  'enabled': true,
+  'group_resubscribe': true,
+  'group_unsubscribe': true,
+  'open': true,
+  'processed': true,
+  'spam_report': true,
+  'unsubscribe': true,
   'url': 'url'
 }";
 dynamic response = sg.client.user.webhooks._("event").settings.patch(requestBody: data);
@@ -230,7 +229,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Test Event Notification Settings 
+// Test Event Notification Settings
 // POST /user/webhooks/event/test
 
 string data = @"{
@@ -257,10 +256,10 @@ Console.ReadLine();
 // GET /user/webhooks/parse/stats
 
 string queryParams = @"{
-  'aggregated_by': 'day', 
-  'end_date': '2016-04-01', 
-  'limit': 'test_string', 
-  'offset': 'test_string', 
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'limit': 'test_string',
+  'offset': 'test_string',
   'start_date': '2016-01-01'
 }";
 dynamic response = sg.client.user.webhooks.parse.stats.get(queryParams: queryParams);
