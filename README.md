@@ -69,7 +69,7 @@ namespace Example
     {
         private static void Main()
         {
-	    String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            String apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
             dynamic sg = new SendGridAPIClient(apiKey);
 
             Email from = new Email("test@example.com");
