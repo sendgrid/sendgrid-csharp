@@ -1,6 +1,10 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [7.0.2] - 2016-06-16
+### Fixed
+- Async broken in library, causing deadlocks and responses not returning in non-console apps: https://github.com/sendgrid/sendgrid-csharp/issues/235
+
 ## [7.0.1] - 2016-06-15
 ### Fixed
 - Hard-coded subject in mail helper: https://github.com/sendgrid/sendgrid-csharp/issues/234 
