@@ -16,7 +16,8 @@ have the following resources to get you started quickly:
 -   [Usage
     Documentation](https://github.com/sendgrid/sendgrid-csharp/tree/master/USAGE.md)
 -   [Example
-    Code](https://github.com/sendgrid/sendgrid-csharp/tree/master/Example)
+    Code](https://github.com/sendgrid/sendgrid-csharp/tree/master/examples)
+
 
 Thank you for your continued support!
 
