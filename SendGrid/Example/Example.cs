@@ -34,7 +34,7 @@ namespace Example
             String ret = mail.Get();
 
             string requestBody = ret;
-            dynamic response = sg.client.mail.send.beta.post(requestBody: requestBody);
+            dynamic response = sg.client.mail.send.post(requestBody: requestBody);
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
@@ -234,7 +234,7 @@ namespace Example
             String ret = mail.Get();
 
             string requestBody = ret;
-            dynamic response = sg.client.mail.send.beta.post(requestBody: requestBody);
+            dynamic response = sg.client.mail.send.post(requestBody: requestBody);
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
