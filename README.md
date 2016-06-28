@@ -15,8 +15,9 @@ have the following resources to get you started quickly:
     Documentation](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html)
 -   [Usage
     Documentation](https://github.com/sendgrid/sendgrid-csharp/tree/master/USAGE.md)
+-   [Example Code](https://github.com/sendgrid/sendgrid-csharp/tree/master/examples)
 -   [Example
-    Code](https://github.com/sendgrid/sendgrid-csharp/tree/master/Example)
+    Project](https://github.com/sendgrid/sendgrid-csharp/tree/master/Example)
 
 Thank you for your continued support!
 
