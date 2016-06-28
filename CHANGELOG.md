@@ -1,6 +1,10 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [7.0.3] - 2016-06-28
+### Fixed
+- Send mail fails with BadRequest when apostrophe used in sender name: https://github.com/sendgrid/sendgrid-csharp/issues/232
+
 ## [7.0.2] - 2016-06-16
 ### Fixed
 - Async broken in library, causing deadlocks and responses not returning in non-console apps: https://github.com/sendgrid/sendgrid-csharp/issues/235
