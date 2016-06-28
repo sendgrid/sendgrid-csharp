@@ -347,7 +347,7 @@ namespace SendGrid.Helpers.Mail
         {
             return JsonConvert.SerializeObject(this,
                                 Formatting.None,
-                                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore });
+                                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore, StringEscapeHandling = StringEscapeHandling.EscapeHtml });
         }
     }
 
