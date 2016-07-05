@@ -52,7 +52,7 @@ Console.ReadLine();
 // PUT /user/password
 
 string data = @"{
-  'new_password': 'new_password',
+  'new_password': 'new_password', 
   'old_password': 'old_password'
 }";
 dynamic response = sg.client.user.password.put(requestBody: data);
@@ -66,8 +66,8 @@ Console.ReadLine();
 // PATCH /user/profile
 
 string data = @"{
-  'city': 'Orange',
-  'first_name': 'Example',
+  'city': 'Orange', 
+  'first_name': 'Example', 
   'last_name': 'User'
 }";
 dynamic response = sg.client.user.profile.patch(requestBody: data);
@@ -91,7 +91,7 @@ Console.ReadLine();
 // POST /user/scheduled_sends
 
 string data = @"{
-  'batch_id': 'YOUR_BATCH_ID',
+  'batch_id': 'YOUR_BATCH_ID', 
   'status': 'pause'
 }";
 dynamic response = sg.client.user.scheduled_sends.post(requestBody: data);
@@ -151,7 +151,7 @@ Console.ReadLine();
 // PATCH /user/settings/enforced_tls
 
 string data = @"{
-  'require_tls': true,
+  'require_tls': true, 
   'require_valid_cert': false
 }";
 dynamic response = sg.client.user.settings.enforced_tls.patch(requestBody: data);
@@ -198,21 +198,21 @@ Console.ReadLine();
 // PATCH /user/webhooks/event/settings
 
 string data = @"{
-  'bounce': true,
-  'click': true,
-  'deferred': true,
-  'delivered': true,
-  'dropped': true,
-  'enabled': true,
-  'group_resubscribe': true,
-  'group_unsubscribe': true,
-  'open': true,
-  'processed': true,
-  'spam_report': true,
-  'unsubscribe': true,
+  'bounce': true, 
+  'click': true, 
+  'deferred': true, 
+  'delivered': true, 
+  'dropped': true, 
+  'enabled': true, 
+  'group_resubscribe': true, 
+  'group_unsubscribe': true, 
+  'open': true, 
+  'processed': true, 
+  'spam_report': true, 
+  'unsubscribe': true, 
   'url': 'url'
 }";
-dynamic response = sg.client.user.webhooks._("event").settings.patch(requestBody: data);
+dynamic response = sg.client.user.webhooks._("_("event")").settings.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -222,30 +222,84 @@ Console.ReadLine();
 // Retrieve Event Webhook settings
 // GET /user/webhooks/event/settings
 
-dynamic response = sg.client.user.webhooks._("event").settings.get();
+dynamic response = sg.client.user.webhooks._("_("event")").settings.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Test Event Notification Settings
+// Test Event Notification Settings 
 // POST /user/webhooks/event/test
 
 string data = @"{
   'url': 'url'
 }";
-dynamic response = sg.client.user.webhooks._("event").test.post(requestBody: data);
+dynamic response = sg.client.user.webhooks._("_("event")").test.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Retrieve Parse Webhook settings
+// Create a parse setting
+// POST /user/webhooks/parse/settings
+
+string data = @"{
+  'hostname': 'myhostname.com', 
+  'send_raw': false, 
+  'spam_check': true, 
+  'url': 'http://email.myhosthame.com'
+}";
+dynamic response = sg.client.user.webhooks.parse.settings.post(requestBody: data);
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+
+////////////////////////////////////////////////////////
+// Retrieve all parse settings
 // GET /user/webhooks/parse/settings
 
 dynamic response = sg.client.user.webhooks.parse.settings.get();
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+
+////////////////////////////////////////////////////////
+// Update a parse setting
+// PATCH /user/webhooks/parse/settings/{hostname}
+
+string data = @"{
+  'send_raw': true, 
+  'spam_check': false, 
+  'url': 'http://newdomain.com/parse'
+}";
+var hostname = "test_url_param";
+dynamic response = sg.client.user.webhooks.parse.settings._(hostname).patch(requestBody: data);
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+
+////////////////////////////////////////////////////////
+// Retrieve a specific parse setting
+// GET /user/webhooks/parse/settings/{hostname}
+
+var hostname = "test_url_param";
+dynamic response = sg.client.user.webhooks.parse.settings._(hostname).get();
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+
+////////////////////////////////////////////////////////
+// Delete a parse setting
+// DELETE /user/webhooks/parse/settings/{hostname}
+
+var hostname = "test_url_param";
+dynamic response = sg.client.user.webhooks.parse.settings._(hostname).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -256,10 +310,10 @@ Console.ReadLine();
 // GET /user/webhooks/parse/stats
 
 string queryParams = @"{
-  'aggregated_by': 'day',
-  'end_date': '2016-04-01',
-  'limit': 'test_string',
-  'offset': 'test_string',
+  'aggregated_by': 'day', 
+  'end_date': '2016-04-01', 
+  'limit': 'test_string', 
+  'offset': 'test_string', 
   'start_date': '2016-01-01'
 }";
 dynamic response = sg.client.user.webhooks.parse.stats.get(queryParams: queryParams);

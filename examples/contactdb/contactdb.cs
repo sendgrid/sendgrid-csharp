@@ -97,7 +97,7 @@ string data = @"{
   'name': 'newlistname'
 }";
 string queryParams = @"{
-  'list_id': 0
+  'list_id': 1
 }";
 var list_id = "test_url_param";
 dynamic response = sg.client.contactdb.lists._(list_id).patch(requestBody: data, queryParams: queryParams);
@@ -111,7 +111,7 @@ Console.ReadLine();
 // GET /contactdb/lists/{list_id}
 
 string queryParams = @"{
-  'list_id': 0
+  'list_id': 1
 }";
 var list_id = "test_url_param";
 dynamic response = sg.client.contactdb.lists._(list_id).get(queryParams: queryParams);
@@ -154,7 +154,7 @@ Console.ReadLine();
 // GET /contactdb/lists/{list_id}/recipients
 
 string queryParams = @"{
-  'list_id': 0, 
+  'list_id': 1, 
   'page': 1, 
   'page_size': 1
 }";
@@ -182,8 +182,8 @@ Console.ReadLine();
 // DELETE /contactdb/lists/{list_id}/recipients/{recipient_id}
 
 string queryParams = @"{
-  'list_id': 0, 
-  'recipient_id': 0
+  'list_id': 1, 
+  'recipient_id': 1
 }";
 var list_id = "test_url_param";
 var recipient_id = "test_url_param";
@@ -287,6 +287,7 @@ Console.ReadLine();
 // GET /contactdb/recipients/search
 
 string queryParams = @"{
+  '%7Bfield_name%7D': 'test_string', 
   '{field_name}': 'test_string'
 }";
 dynamic response = sg.client.contactdb.recipients.search.get(queryParams: queryParams);
@@ -413,7 +414,7 @@ Console.ReadLine();
 // GET /contactdb/segments/{segment_id}
 
 string queryParams = @"{
-  'segment_id': 0
+  'segment_id': 1
 }";
 var segment_id = "test_url_param";
 dynamic response = sg.client.contactdb.segments._(segment_id).get(queryParams: queryParams);

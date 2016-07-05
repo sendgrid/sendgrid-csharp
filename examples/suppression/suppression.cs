@@ -64,8 +64,8 @@ Console.ReadLine();
 // GET /suppression/bounces
 
 string queryParams = @"{
-  'end_time': 0, 
-  'start_time': 0
+  'end_time': 1, 
+  'start_time': 1
 }";
 dynamic response = sg.client.suppression.bounces.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);

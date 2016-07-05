@@ -39,8 +39,8 @@ Console.ReadLine();
 // GET /campaigns
 
 string queryParams = @"{
-  'limit': 0, 
-  'offset': 0
+  'limit': 1, 
+  'offset': 1
 }";
 dynamic response = sg.client.campaigns.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);

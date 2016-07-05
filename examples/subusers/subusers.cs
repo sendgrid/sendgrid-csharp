@@ -28,8 +28,8 @@ Console.ReadLine();
 // GET /subusers
 
 string queryParams = @"{
-  'limit': 0, 
-  'offset': 0, 
+  'limit': 1, 
+  'offset': 1, 
   'username': 'test_string'
 }";
 dynamic response = sg.client.subusers.get(queryParams: queryParams);
@@ -203,7 +203,7 @@ Console.ReadLine();
 
 string queryParams = @"{
   'date': 'test_string', 
-  'limit': 0, 
+  'limit': 1, 
   'offset': 1, 
   'sort_by_direction': 'asc', 
   'sort_by_metric': 'test_string'
