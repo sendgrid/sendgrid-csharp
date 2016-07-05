@@ -99,6 +99,24 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
+// Search for suppressions within a group
+// POST /asm/groups/{group_id}/suppressions/search
+
+string data = @"{
+  'recipient_emails': [
+    'exists1@example.com', 
+    'exists2@example.com', 
+    'doesnotexists@example.com'
+  ]
+}";
+var group_id = "test_url_param";
+dynamic response = sg.client.asm.groups._(group_id).suppressions.search.post(requestBody: data);
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+
+////////////////////////////////////////////////////////
 // Delete a suppression from a suppression group
 // DELETE /asm/groups/{group_id}/suppressions/{email}
 

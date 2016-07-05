@@ -10,6 +10,7 @@ dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 
 string data = @"{
   'name': 'My API Key', 
+  'sample': 'data', 
   'scopes': [
     'mail.send', 
     'alerts.create', 
@@ -26,7 +27,10 @@ Console.ReadLine();
 // Retrieve all API Keys belonging to the authenticated user
 // GET /api_keys
 
-dynamic response = sg.client.api_keys.get();
+string queryParams = @"{
+  'limit': 1
+}";
+dynamic response = sg.client.api_keys.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

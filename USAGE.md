@@ -13,6 +13,7 @@ dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 # Table of Contents
 
 * [ACCESS SETTINGS](#access_settings)
+* [ALERTS](#alerts)
 * [API KEYS](#api_keys)
 * [ASM](#asm)
 * [BROWSERS](#browsers)
@@ -187,6 +188,125 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
+<a name="alerts"></a>
+# ALERTS
+
+## Create a new Alert
+
+**This endpoint allows you to create a new alert.**
+
+Alerts allow you to specify an email address to receive notifications regarding your email usage or statistics.
+* Usage alerts allow you to set the threshold at which an alert will be sent.
+* Stats notifications allow you to set how frequently you would like to receive email statistics reports. For example, "daily", "weekly", or "monthly".
+
+For more information about alerts, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/alerts.html).
+
+### POST /alerts
+
+
+```csharp
+string data = @"{
+  'email_to': 'example@example.com',
+  'frequency': 'daily',
+  'type': 'stats_notification'
+}";
+dynamic response = sg.client.alerts.post(requestBody: data);
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
+## Retrieve all alerts
+
+**This endpoint allows you to retieve all of your alerts.**
+
+Alerts allow you to specify an email address to receive notifications regarding your email usage or statistics.
+* Usage alerts allow you to set the threshold at which an alert will be sent.
+* Stats notifications allow you to set how frequently you would like to receive email statistics reports. For example, "daily", "weekly", or "monthly".
+
+For more information about alerts, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/alerts.html).
+
+### GET /alerts
+
+
+```csharp
+dynamic response = sg.client.alerts.get();
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
+## Update an alert
+
+**This endpoint allows you to update an alert.**
+
+Alerts allow you to specify an email address to receive notifications regarding your email usage or statistics.
+* Usage alerts allow you to set the threshold at which an alert will be sent.
+* Stats notifications allow you to set how frequently you would like to receive email statistics reports. For example, "daily", "weekly", or "monthly".
+
+For more information about alerts, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/alerts.html).
+
+### PATCH /alerts/{alert_id}
+
+
+```csharp
+string data = @"{
+  'email_to': 'example@example.com'
+}";
+var alert_id = "test_url_param";
+dynamic response = sg.client.alerts._(alert_id).patch(requestBody: data);
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
+## Retrieve a specific alert
+
+**This endpoint allows you to retrieve a specific alert.**
+
+Alerts allow you to specify an email address to receive notifications regarding your email usage or statistics.
+* Usage alerts allow you to set the threshold at which an alert will be sent.
+* Stats notifications allow you to set how frequently you would like to receive email statistics reports. For example, "daily", "weekly", or "monthly".
+
+For more information about alerts, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/alerts.html).
+
+### GET /alerts/{alert_id}
+
+
+```csharp
+var alert_id = "test_url_param";
+dynamic response = sg.client.alerts._(alert_id).get();
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
+## Delete an alert
+
+**This endpoint allows you to delete an alert.**
+
+Alerts allow you to specify an email address to receive notifications regarding your email usage or statistics.
+* Usage alerts allow you to set the threshold at which an alert will be sent.
+* Stats notifications allow you to set how frequently you would like to receive email statistics reports. For example, "daily", "weekly", or "monthly".
+
+For more information about alerts, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/alerts.html).
+
+### DELETE /alerts/{alert_id}
+
+
+```csharp
+var alert_id = "test_url_param";
+dynamic response = sg.client.alerts._(alert_id).delete();
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
 <a name="api_keys"></a>
 # API KEYS
 
@@ -208,6 +328,7 @@ See the [API Key Permissions List](https://sendgrid.com/docs/API_Reference/Web_A
 ```csharp
 string data = @"{
   'name': 'My API Key',
+  'sample': 'data',
   'scopes': [
     'mail.send',
     'alerts.create',
@@ -231,7 +352,10 @@ The API Keys feature allows customers to be able to generate an API Key credenti
 
 
 ```csharp
-dynamic response = sg.client.api_keys.get();
+string queryParams = @"{
+  'limit': 1
+}";
+dynamic response = sg.client.api_keys.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -375,6 +499,10 @@ Console.ReadLine();
 
 This endpoint will return information for each group ID that you include in your request. To add a group ID to your request, simply append `&id=` followed by the group ID.
 
+Suppressions are a list of email addresses that will not receive content sent under a given [group](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html).
+
+Suppression groups, or [unsubscribe groups](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html), allow you to label a category of content that you regularly send. This gives your recipients the ability to opt out of a specific set of your email. For example, you might define a group for your transactional email, and one for your marketing email so that your users can continue recieving your transactional email witout having to receive your marketing content.
+
 ### GET /asm/groups
 
 
@@ -506,6 +634,33 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
+## Search for suppressions within a group
+
+**This endpoint allows you to search a suppression group for multiple suppressions.**
+
+When given a list of email addresses and a group ID, this endpoint will return only the email addresses that have been unsubscribed from the given group.
+
+Suppressions are a list of email addresses that will not receive content sent under a given [group](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html).
+
+### POST /asm/groups/{group_id}/suppressions/search
+
+
+```csharp
+string data = @"{
+  'recipient_emails': [
+    'exists1@example.com',
+    'exists2@example.com',
+    'doesnotexists@example.com'
+  ]
+}";
+var group_id = "test_url_param";
+dynamic response = sg.client.asm.groups._(group_id).suppressions.search.post(requestBody: data);
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
 ## Delete a suppression from a suppression group
 
 **This endpoint allows you to remove a suppressed email address from the given suppression group.**
@@ -529,7 +684,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve a list of all suppressions.**
 
-Suppressions are email addresses that can be added to [groups](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html) to prevent certain types of emails from being delivered to those addresses.
+Suppressions are a list of email addresses that will not receive content sent under a given [group](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html).
 
 ### GET /asm/suppressions
 
@@ -605,9 +760,9 @@ Console.ReadLine();
 
 ## Retrieve all suppression groups for an email address
 
-**This endpoint will return a list of all suppression groups, indicating if the given email address is suppressed for each group.**
+**This endpoint returns the list of all groups that the given email address has been unsubscribed from.**
 
-Suppressions are email addresses that can be added to [groups](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html) to prevent certain types of emails from being delivered to those addresses.
+Suppressions are a list of email addresses that will not receive content sent under a given [group](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html).
 
 ### GET /asm/suppressions/{email}
 
@@ -714,8 +869,8 @@ For more information:
 
 ```csharp
 string queryParams = @"{
-  'limit': 0,
-  'offset': 0
+  'limit': 1,
+  'offset': 1
 }";
 dynamic response = sg.client.campaigns.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
@@ -1223,7 +1378,7 @@ string data = @"{
   'name': 'newlistname'
 }";
 string queryParams = @"{
-  'list_id': 0
+  'list_id': 1
 }";
 var list_id = "test_url_param";
 dynamic response = sg.client.contactdb.lists._(list_id).patch(requestBody: data, queryParams: queryParams);
@@ -1244,7 +1399,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ```csharp
 string queryParams = @"{
-  'list_id': 0
+  'list_id': 1
 }";
 var list_id = "test_url_param";
 dynamic response = sg.client.contactdb.lists._(list_id).get(queryParams: queryParams);
@@ -1310,7 +1465,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ```csharp
 string queryParams = @"{
-  'list_id': 0,
+  'list_id': 1,
   'page': 1,
   'page_size': 1
 }";
@@ -1352,8 +1507,8 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ```csharp
 string queryParams = @"{
-  'list_id': 0,
-  'recipient_id': 0
+  'list_id': 1,
+  'recipient_id': 1
 }";
 var list_id = "test_url_param";
 var recipient_id = "test_url_param";
@@ -1528,6 +1683,7 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 
 ```csharp
 string queryParams = @"{
+  '%7Bfield_name%7D': 'test_string',
   '{field_name}': 'test_string'
 }";
 dynamic response = sg.client.contactdb.recipients.search.get(queryParams: queryParams);
@@ -1738,7 +1894,7 @@ For more information about segments in Marketing Campaigns, please see our [User
 
 ```csharp
 string queryParams = @"{
-  'segment_id': 0
+  'segment_id': 1
 }";
 var segment_id = "test_url_param";
 dynamic response = sg.client.contactdb.segments._(segment_id).get(queryParams: queryParams);
@@ -2323,13 +2479,8 @@ string data = @"{
       'send_at': 1409348513,
       'subject': 'Hello, World!',
       'substitutions': {
-        'sub': {
-          '%name%': [
-            'John',
-            'Jane',
-            'Sam'
-          ]
-        }
+        'id': 'substitutions',
+        'type': 'object'
       },
       'to': [
         {
@@ -2985,8 +3136,8 @@ For more information about Subusers:
 
 ```csharp
 string queryParams = @"{
-  'limit': 0,
-  'offset': 0,
+  'limit': 1,
+  'offset': 1,
   'username': 'test_string'
 }";
 dynamic response = sg.client.subusers.get(queryParams: queryParams);
@@ -3262,7 +3413,7 @@ For more information, see our [User Guide](https://sendgrid.com/docs/User_Guide/
 ```csharp
 string queryParams = @"{
   'date': 'test_string',
-  'limit': 0,
+  'limit': 1,
   'offset': 1,
   'sort_by_direction': 'asc',
   'sort_by_metric': 'test_string'
@@ -3390,8 +3541,8 @@ For more information see:
 
 ```csharp
 string queryParams = @"{
-  'end_time': 0,
-  'start_time': 0
+  'end_time': 1,
+  'start_time': 1
 }";
 dynamic response = sg.client.suppression.bounces.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
@@ -4551,7 +4702,7 @@ string data = @"{
   'unsubscribe': true,
   'url': 'url'
 }";
-dynamic response = sg.client.user.webhooks._("event").settings.patch(requestBody: data);
+dynamic response = sg.client.user.webhooks._("_("event")").settings.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4572,7 +4723,7 @@ Common uses of this data are to remove unsubscribes, react to spam reports, dete
 
 
 ```csharp
-dynamic response = sg.client.user.webhooks._("event").settings.get();
+dynamic response = sg.client.user.webhooks._("_("event")").settings.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4594,24 +4745,106 @@ Common uses of this data are to remove unsubscribes, react to spam reports, dete
 string data = @"{
   'url': 'url'
 }";
-dynamic response = sg.client.user.webhooks._("event").test.post(requestBody: data);
+dynamic response = sg.client.user.webhooks._("_("event")").test.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
-## Retrieve Parse Webhook settings
+## Create a parse setting
 
-**This endpoint allows you to retrieve your current inbound parse webhook settings.**
+**This endpoint allows you to create a new inbound parse setting.**
 
-SendGrid can parse the attachments and contents of incoming emails. The Parse API will POST the parsed email to a URL that you specify. For more information, see our Inbound [Parse Webhook documentation](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
+The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the content, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
+
+### POST /user/webhooks/parse/settings
+
+
+```csharp
+string data = @"{
+  'hostname': 'myhostname.com',
+  'send_raw': false,
+  'spam_check': true,
+  'url': 'http://email.myhosthame.com'
+}";
+dynamic response = sg.client.user.webhooks.parse.settings.post(requestBody: data);
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
+## Retrieve all parse settings
+
+**This endpoint allows you to retrieve all of your current inbound parse settings.**
+
+The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the contnet, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
 
 ### GET /user/webhooks/parse/settings
 
 
 ```csharp
 dynamic response = sg.client.user.webhooks.parse.settings.get();
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
+## Update a parse setting
+
+**This endpoint allows you to update a specific inbound parse setting.**
+
+The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the contnet, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
+
+### PATCH /user/webhooks/parse/settings/{hostname}
+
+
+```csharp
+string data = @"{
+  'send_raw': true,
+  'spam_check': false,
+  'url': 'http://newdomain.com/parse'
+}";
+var hostname = "test_url_param";
+dynamic response = sg.client.user.webhooks.parse.settings._(hostname).patch(requestBody: data);
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
+## Retrieve a specific parse setting
+
+**This endpoint allows you to retrieve a specific inbound parse setting.**
+
+The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the contnet, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
+
+### GET /user/webhooks/parse/settings/{hostname}
+
+
+```csharp
+var hostname = "test_url_param";
+dynamic response = sg.client.user.webhooks.parse.settings._(hostname).get();
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
+## Delete a parse setting
+
+**This endpoint allows you to delete a specific inbound parse setting.**
+
+The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the contnet, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
+
+### DELETE /user/webhooks/parse/settings/{hostname}
+
+
+```csharp
+var hostname = "test_url_param";
+dynamic response = sg.client.user.webhooks.parse.settings._(hostname).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4726,7 +4959,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 
 
 ```csharp
-dynamic response = sg.client.whitelabel.domains._("default").get();
+dynamic response = sg.client.whitelabel.domains._("_("default")").get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5144,7 +5377,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 string queryParams = @"{
   'domain': 'test_string'
 }";
-dynamic response = sg.client.whitelabel.links._("default").get(queryParams: queryParams);
+dynamic response = sg.client.whitelabel.links._("_("default")").get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
