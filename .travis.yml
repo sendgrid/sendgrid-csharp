@@ -7,6 +7,9 @@ install:
 - nuget restore SendGrid/SendGrid.sln
 - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 before_script:
+- mkdir prism/bin
+- export PATH=$PATH:$PWD/prism/bin/
+- ./test/prism.sh
 - prism run -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json
 script:
 - xbuild /p:Configuration=Release /p:DebugSymbols=False /p:TargetFrameworkVersion="v4.5" SendGrid/SendGrid.sln
