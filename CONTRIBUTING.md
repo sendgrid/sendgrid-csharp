@@ -74,7 +74,7 @@ We welcome direct contributions to the sendgrid-csharp code base. Thank you!
 git clone https://github.com/sendgrid/sendgrid-csharp.git
 ```
 
-Open `sendgrid-csharp/SendGrid/SendGrid.sln`
+- Open `sendgrid-csharp/SendGrid/SendGrid.sln`
 
 ## Environment Variables
 
@@ -116,7 +116,9 @@ All test files are in the [`UnitTest`](https://github.com/sendgrid/sendgrid-csha
 
 For the purposes of contributing to this repo, please update the [`UnitTest.cs`](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/test/SendGrid/UnitTest/UnitTest.cs) file with unit tests as you modify the code.
 
-<!--- describe how to run the tests --->
+Downloaded [Prism](https://github.com/stoplightio/prism/releases) and rename the executable to be prism.exe and place the renamed executable in your PATH.
+
+When you run the tests for the first time, you will need to allow Prism.exe to run, but you don't need to allow outside connections.
 
 <a name="style_guidelines_and_naming_conventions"></a>
 ## Style Guidelines & Naming Conventions
