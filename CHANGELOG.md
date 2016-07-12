@@ -1,16 +1,20 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [7.0.6] - 2016-07-12
+### Added
+- Update docs, unit tests and examples to include Sender ID
+
 ## [7.0.5] - 2016-07-08
 ### Added
 - Tests now mocked automatically against [prism](https://stoplight.io/prism/)
 
 ## [7.0.4] - 2016-07-05
-### Added 
-- Accept: application/json header per https://sendgrid.com/docs/API_Reference/Web_API_v3/How_To_Use_The_Web_API_v3/requests.html 
+### Added
+- Accept: application/json header per https://sendgrid.com/docs/API_Reference/Web_API_v3/How_To_Use_The_Web_API_v3/requests.html
 
-### Updated 
-- Content based on our updated [Swagger/OAI doc](https://github.com/sendgrid/sendgrid-oai) 
+### Updated
+- Content based on our updated [Swagger/OAI doc](https://github.com/sendgrid/sendgrid-oai)
 
 ## [7.0.3] - 2016-06-28
 ### Fixed
@@ -22,7 +26,7 @@ All notable changes to this project will be documented in this file.
 
 ## [7.0.1] - 2016-06-15
 ### Fixed
-- Hard-coded subject in mail helper: https://github.com/sendgrid/sendgrid-csharp/issues/234 
+- Hard-coded subject in mail helper: https://github.com/sendgrid/sendgrid-csharp/issues/234
 - Thanks [digime99](https://github.com/digime99)!
 
 ## [7.0.0] - 2016-06-13

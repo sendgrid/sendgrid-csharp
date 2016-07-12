@@ -287,7 +287,6 @@ Console.ReadLine();
 // GET /contactdb/recipients/search
 
 string queryParams = @"{
-  '%7Bfield_name%7D': 'test_string', 
   '{field_name}': 'test_string'
 }";
 dynamic response = sg.client.contactdb.recipients.search.get(queryParams: queryParams);
