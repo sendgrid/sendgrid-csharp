@@ -1222,7 +1222,6 @@ namespace UnitTest
         public void test_contactdb_recipients_search_get()
         {
             string queryParams = @"{
-  '%7Bfield_name%7D': 'test_string',
   '{field_name}': 'test_string'
 }";
             Dictionary<String, String> headers = new Dictionary<String, String>();
@@ -2060,6 +2059,104 @@ namespace UnitTest
             headers.Add("X-Mock", "200");
             dynamic response = sg.client.scopes.get(requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+        }
+
+        [Test]
+        public void test_senders_post()
+        {
+            string data = @"{
+  'address': '123 Elm St.',
+  'address_2': 'Apt. 456',
+  'city': 'Denver',
+  'country': 'United States',
+  'from': {
+    'email': 'from@example.com',
+    'name': 'Example INC'
+  },
+  'nickname': 'My Sender ID',
+  'reply_to': {
+    'email': 'replyto@example.com',
+    'name': 'Example INC'
+  },
+  'state': 'Colorado',
+  'zip': '80202'
+}";
+            Dictionary<String, String> headers = new Dictionary<String, String>();
+            headers.Clear();
+            headers.Add("X-Mock", "201");
+            dynamic response = sg.client.senders.post(requestBody: data, requestHeaders: headers);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+        }
+
+        [Test]
+        public void test_senders_get()
+        {
+            Dictionary<String, String> headers = new Dictionary<String, String>();
+            headers.Clear();
+            headers.Add("X-Mock", "200");
+            dynamic response = sg.client.senders.get(requestHeaders: headers);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+        }
+
+        [Test]
+        public void test_senders__sender_id__patch()
+        {
+            string data = @"{
+  'address': '123 Elm St.',
+  'address_2': 'Apt. 456',
+  'city': 'Denver',
+  'country': 'United States',
+  'from': {
+    'email': 'from@example.com',
+    'name': 'Example INC'
+  },
+  'nickname': 'My Sender ID',
+  'reply_to': {
+    'email': 'replyto@example.com',
+    'name': 'Example INC'
+  },
+  'state': 'Colorado',
+  'zip': '80202'
+}";
+            var sender_id = "test_url_param";
+            Dictionary<String, String> headers = new Dictionary<String, String>();
+            headers.Clear();
+            headers.Add("X-Mock", "200");
+            dynamic response = sg.client.senders._(sender_id).patch(requestBody: data, requestHeaders: headers);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+        }
+
+        [Test]
+        public void test_senders__sender_id__get()
+        {
+            var sender_id = "test_url_param";
+            Dictionary<String, String> headers = new Dictionary<String, String>();
+            headers.Clear();
+            headers.Add("X-Mock", "200");
+            dynamic response = sg.client.senders._(sender_id).get(requestHeaders: headers);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+        }
+
+        [Test]
+        public void test_senders__sender_id__delete()
+        {
+            var sender_id = "test_url_param";
+            Dictionary<String, String> headers = new Dictionary<String, String>();
+            headers.Clear();
+            headers.Add("X-Mock", "204");
+            dynamic response = sg.client.senders._(sender_id).delete(requestHeaders: headers);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+        }
+
+        [Test]
+        public void test_senders__sender_id__resend_verification_post()
+        {
+            var sender_id = "test_url_param";
+            Dictionary<String, String> headers = new Dictionary<String, String>();
+            headers.Clear();
+            headers.Add("X-Mock", "204");
+            dynamic response = sg.client.senders._(sender_id).resend_verification.post(requestHeaders: headers);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
         [Test]

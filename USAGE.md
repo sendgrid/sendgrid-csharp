@@ -29,6 +29,7 @@ dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 * [MAILBOX PROVIDERS](#mailbox_providers)
 * [PARTNER SETTINGS](#partner_settings)
 * [SCOPES](#scopes)
+* [SENDERS](#senders)
 * [STATS](#stats)
 * [SUBUSERS](#subusers)
 * [SUPPRESSION](#suppression)
@@ -1683,7 +1684,6 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 
 ```csharp
 string queryParams = @"{
-  '%7Bfield_name%7D': 'test_string',
   '{field_name}': 'test_string'
 }";
 dynamic response = sg.client.contactdb.recipients.search.get(queryParams: queryParams);
@@ -3057,6 +3057,153 @@ API Keys can be used to authenticate the use of [SendGrids v3 Web API](https://s
 
 ```csharp
 dynamic response = sg.client.scopes.get();
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
+<a name="senders"></a>
+# SENDERS
+
+## Create a Sender Identity
+
+**This endpoint allows you to create a new sender identity.**
+
+*You may create up to 100 unique sender identities.*
+
+Sender Identities are required to be verified before use. If your domain has been whitelabeled it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
+
+### POST /senders
+
+
+```csharp
+string data = @"{
+  'address': '123 Elm St.',
+  'address_2': 'Apt. 456',
+  'city': 'Denver',
+  'country': 'United States',
+  'from': {
+    'email': 'from@example.com',
+    'name': 'Example INC'
+  },
+  'nickname': 'My Sender ID',
+  'reply_to': {
+    'email': 'replyto@example.com',
+    'name': 'Example INC'
+  },
+  'state': 'Colorado',
+  'zip': '80202'
+}";
+dynamic response = sg.client.senders.post(requestBody: data);
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
+## Get all Sender Identities
+
+**This endpoint allows you to retrieve a list of all sender identities that have been created for your account.**
+
+Sender Identities are required to be verified before use. If your domain has been whitelabeled it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
+
+### GET /senders
+
+
+```csharp
+dynamic response = sg.client.senders.get();
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
+## Update a Sender Identity
+
+**This endpoint allows you to update a sender identity.**
+
+Updates to `from.email` require re-verification. If your domain has been whitelabeled it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
+
+Partial updates are allowed, but fields that are marked as "required" in the POST (create) endpoint must not be nil if that field is included in the PATCH request.
+
+### PATCH /senders/{sender_id}
+
+
+```csharp
+string data = @"{
+  'address': '123 Elm St.',
+  'address_2': 'Apt. 456',
+  'city': 'Denver',
+  'country': 'United States',
+  'from': {
+    'email': 'from@example.com',
+    'name': 'Example INC'
+  },
+  'nickname': 'My Sender ID',
+  'reply_to': {
+    'email': 'replyto@example.com',
+    'name': 'Example INC'
+  },
+  'state': 'Colorado',
+  'zip': '80202'
+}";
+var sender_id = "test_url_param";
+dynamic response = sg.client.senders._(sender_id).patch(requestBody: data);
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
+## View a Sender Identity
+
+**This endpoint allows you to retrieve a specific sender identity.**
+
+Sender Identities are required to be verified before use. If your domain has been whitelabeled it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
+
+### GET /senders/{sender_id}
+
+
+```csharp
+var sender_id = "test_url_param";
+dynamic response = sg.client.senders._(sender_id).get();
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
+## Delete a Sender Identity
+
+**This endoint allows you to delete one of your sender identities.**
+
+Sender Identities are required to be verified before use. If your domain has been whitelabeled it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
+
+### DELETE /senders/{sender_id}
+
+
+```csharp
+var sender_id = "test_url_param";
+dynamic response = sg.client.senders._(sender_id).delete();
+Console.WriteLine(response.StatusCode);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Headers.ToString());
+Console.ReadLine();
+```
+
+## Resend Sender Identity Verification
+
+**This enpdoint allows you to resend a sender identity verification email.**
+
+Sender Identities are required to be verified before use. If your domain has been whitelabeled it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
+
+### POST /senders/{sender_id}/resend_verification
+
+
+```csharp
+var sender_id = "test_url_param";
+dynamic response = sg.client.senders._(sender_id).resend_verification.post();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
