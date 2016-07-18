@@ -1,5 +1,6 @@
 using System;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
+using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
@@ -20,6 +21,8 @@ string data = @"{
   'subdomain': 'news', 
   'username': 'john@example.com'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.whitelabel.domains.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -81,6 +84,8 @@ string data = @"{
   'custom_spf': true, 
   'default': false
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var domain_id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(domain_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -117,6 +122,8 @@ Console.ReadLine();
 string data = @"{
   'username': 'jane@example.com'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var domain_id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(domain_id).subuser.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -131,6 +138,8 @@ Console.ReadLine();
 string data = @"{
   'ip': '192.168.0.1'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.domains._(id).ips.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -170,6 +179,8 @@ string data = @"{
   'ip': '192.168.1.1', 
   'subdomain': 'email'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.whitelabel.ips.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -233,6 +244,8 @@ string data = @"{
   'domain': 'example.com', 
   'subdomain': 'mail'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 string queryParams = @"{
   'limit': 1, 
   'offset': 1
@@ -302,6 +315,8 @@ Console.ReadLine();
 string data = @"{
   'default': true
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -349,6 +364,8 @@ Console.ReadLine();
 string data = @"{
   'username': 'jane@example.com'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var link_id = "test_url_param";
 dynamic response = sg.client.whitelabel.links._(link_id).subuser.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
