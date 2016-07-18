@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Script.Serialization;
 using SendGrid.Helpers.Mail;
+using Newtonsoft.Json;
 
 namespace Example
 {
@@ -32,9 +33,8 @@ namespace Example
             mail.Personalization[0].AddTo(email);
 
             String ret = mail.Get();
-
-            string requestBody = ret;
-            dynamic response = sg.client.mail.send.post(requestBody: requestBody);
+            Object requestBody = JsonConvert.DeserializeObject<Object>(ret);
+            dynamic response = sg.client.mail.send.post(requestBody: requestBody.ToString());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
@@ -232,9 +232,8 @@ namespace Example
             mail.ReplyTo = email;
 
             String ret = mail.Get();
-
-            string requestBody = ret;
-            dynamic response = sg.client.mail.send.post(requestBody: requestBody);
+            Object requestBody = JsonConvert.DeserializeObject<Object>(ret);
+            dynamic response = sg.client.mail.send.post(requestBody: requestBody.ToString());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
@@ -268,7 +267,8 @@ namespace Example
                     'alerts.read'
                 ]
             }";
-            response = sg.client.api_keys.post(requestBody: requestBody);
+            Object json = JsonConvert.DeserializeObject<Object>(requestBody);
+            response = sg.client.api_keys.post(requestBody: json.ToString());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
@@ -292,7 +292,8 @@ namespace Example
             requestBody = @"{
                 'name': 'A New Hope'
             }";
-            response = sg.client.api_keys._(api_key_id).patch(requestBody: requestBody);
+            json = JsonConvert.DeserializeObject<Object>(requestBody);
+            response = sg.client.api_keys._(api_key_id).patch(requestBody: json.ToString());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
@@ -308,7 +309,8 @@ namespace Example
                 '   user.profile.update'
                 ]
             }";
-            response = sg.client.api_keys._(api_key_id).put(requestBody: requestBody);
+            json = JsonConvert.DeserializeObject<Object>(requestBody);
+            response = sg.client.api_keys._(api_key_id).put(requestBody: json.ToString());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
