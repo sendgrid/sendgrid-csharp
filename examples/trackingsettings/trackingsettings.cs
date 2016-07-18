@@ -1,5 +1,6 @@
 using System;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
+using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
@@ -25,6 +26,8 @@ Console.ReadLine();
 string data = @"{
   'enabled': true
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.tracking_settings.click.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -53,6 +56,8 @@ string data = @"{
   'utm_source': 'sendgrid.com', 
   'utm_term': ''
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.tracking_settings.google_analytics.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -76,6 +81,8 @@ Console.ReadLine();
 string data = @"{
   'enabled': true
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.tracking_settings.open.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -104,6 +111,8 @@ string data = @"{
   'replace': 'replacement tag', 
   'url': 'url'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.tracking_settings.subscription.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);

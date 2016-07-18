@@ -1,5 +1,6 @@
 using System;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
+using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
@@ -13,6 +14,8 @@ string data = @"{
   'is_default': true, 
   'name': 'Product Suggestions'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.asm.groups.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -41,6 +44,8 @@ string data = @"{
   'id': 103, 
   'name': 'Item Suggestions'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var group_id = "test_url_param";
 dynamic response = sg.client.asm.groups._(group_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -80,6 +85,8 @@ string data = @"{
     'test2@example.com'
   ]
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var group_id = "test_url_param";
 dynamic response = sg.client.asm.groups._(group_id).suppressions.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -109,6 +116,8 @@ string data = @"{
     'doesnotexists@example.com'
   ]
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var group_id = "test_url_param";
 dynamic response = sg.client.asm.groups._(group_id).suppressions.search.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -148,6 +157,8 @@ string data = @"{
     'test2@example.com'
   ]
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.asm.suppressions.global.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);

@@ -1,5 +1,6 @@
 using System;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
+using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
@@ -12,6 +13,8 @@ string data = @"{
   'name': 'pet', 
   'type': 'text'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.contactdb.custom_fields.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -57,6 +60,8 @@ Console.ReadLine();
 string data = @"{
   'name': 'your list name'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.contactdb.lists.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -83,6 +88,8 @@ string data = @"[
   3, 
   4
 ]";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.contactdb.lists.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -96,6 +103,8 @@ Console.ReadLine();
 string data = @"{
   'name': 'newlistname'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 string queryParams = @"{
   'list_id': 1
 }";
@@ -142,6 +151,8 @@ string data = @"[
   'recipient_id1', 
   'recipient_id2'
 ]";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var list_id = "test_url_param";
 dynamic response = sg.client.contactdb.lists._(list_id).recipients.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -204,6 +215,8 @@ string data = @"[
     'last_name': 'Jones'
   }
 ]";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.contactdb.recipients.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -228,6 +241,8 @@ string data = @"[
     'last_name': 'User'
   }
 ]";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.contactdb.recipients.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -256,6 +271,8 @@ string data = @"[
   'recipient_id1', 
   'recipient_id2'
 ]";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.contactdb.recipients.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -366,6 +383,8 @@ string data = @"{
   'list_id': 4, 
   'name': 'Last Name Miller'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.contactdb.segments.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -398,6 +417,8 @@ string data = @"{
   'list_id': 5, 
   'name': 'The Millers'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 string queryParams = @"{
   'segment_id': 'test_string'
 }";

@@ -1,5 +1,6 @@
 using System;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
+using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
@@ -17,6 +18,8 @@ string data = @"{
     'alerts.read'
   ]
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.api_keys.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -47,6 +50,8 @@ string data = @"{
     'user.profile.update'
   ]
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var api_key_id = "test_url_param";
 dynamic response = sg.client.api_keys._(api_key_id).put(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -61,6 +66,8 @@ Console.ReadLine();
 string data = @"{
   'name': 'A New Hope'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var api_key_id = "test_url_param";
 dynamic response = sg.client.api_keys._(api_key_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
