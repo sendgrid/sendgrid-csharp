@@ -1,5 +1,6 @@
 using System;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
+using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
@@ -17,6 +18,8 @@ string data = @"{
   'password': 'johns_password', 
   'username': 'John@example.com'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.subusers.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -113,6 +116,8 @@ Console.ReadLine();
 string data = @"{
   'disabled': false
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var subuser_name = "test_url_param";
 dynamic response = sg.client.subusers._(subuser_name).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -138,6 +143,8 @@ Console.ReadLine();
 string data = @"[
   '127.0.0.1'
 ]";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var subuser_name = "test_url_param";
 dynamic response = sg.client.subusers._(subuser_name).ips.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -153,6 +160,8 @@ string data = @"{
   'email': 'example@example.com', 
   'frequency': 500
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var subuser_name = "test_url_param";
 dynamic response = sg.client.subusers._(subuser_name).monitor.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -168,6 +177,8 @@ string data = @"{
   'email': 'example@example.com', 
   'frequency': 50000
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var subuser_name = "test_url_param";
 dynamic response = sg.client.subusers._(subuser_name).monitor.post(requestBody: data);
 Console.WriteLine(response.StatusCode);

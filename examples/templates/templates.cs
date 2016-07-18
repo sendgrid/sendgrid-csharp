@@ -1,5 +1,6 @@
 using System;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
+using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
@@ -11,6 +12,8 @@ dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 string data = @"{
   'name': 'example_name'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.templates.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -34,6 +37,8 @@ Console.ReadLine();
 string data = @"{
   'name': 'new_example_name'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var template_id = "test_url_param";
 dynamic response = sg.client.templates._(template_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -75,6 +80,8 @@ string data = @"{
   'subject': '<%subject%>', 
   'template_id': 'ddb96bbc-9b92-425e-8979-99464621b543'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var template_id = "test_url_param";
 dynamic response = sg.client.templates._(template_id).versions.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -93,6 +100,8 @@ string data = @"{
   'plain_content': '<%body%>', 
   'subject': '<%subject%>'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var template_id = "test_url_param";
 var version_id = "test_url_param";
 dynamic response = sg.client.templates._(template_id).versions._(version_id).patch(requestBody: data);
