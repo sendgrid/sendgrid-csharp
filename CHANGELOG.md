@@ -1,6 +1,14 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [7.0.7] - 2016-07-18
+- Fix for [issue #256](https://github.com/sendgrid/sendgrid-csharp/issues/256): SendGrid v3 and HTML emails - Creates bad Json 
+- Updated dependency to SendGrid.Csharp.HTTP.Client to 2.0.6
+- Updated dependency to JSON.NET to 9.0.1 in the Example and SendGrid projects
+- Removed dependencies to SendGrid.CSharp.HTTP.Client and SendGrid.SmtpApi from the Example and UnitTests projects as they are not needed
+- Update examples, unit tests and USAGE.md to pass in valid JSON
+- Thanks to [Gunnar Liljas](https://github.com/gliljas) for helping find the root cause quickly! 
+
 ## [7.0.6] - 2016-07-12
 ### Added
 - Update docs, unit tests and examples to include Sender ID

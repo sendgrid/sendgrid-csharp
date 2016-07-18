@@ -32,14 +32,12 @@ namespace Example
             Email email = new Email("test2@example.com");
             mail.Personalization[0].AddTo(email);
 
-            String ret = mail.Get();
-            Object requestBody = JsonConvert.DeserializeObject<Object>(ret);
-            dynamic response = sg.client.mail.send.post(requestBody: requestBody.ToString());
+            dynamic response = sg.client.mail.send.post(requestBody: mail.Get());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
 
-            Console.WriteLine(ret);
+            Console.WriteLine(mail.Get());
             Console.ReadLine();
 
         }
@@ -231,14 +229,12 @@ namespace Example
             email.Address = "test@example.com";
             mail.ReplyTo = email;
 
-            String ret = mail.Get();
-            Object requestBody = JsonConvert.DeserializeObject<Object>(ret);
-            dynamic response = sg.client.mail.send.post(requestBody: requestBody.ToString());
+            dynamic response = sg.client.mail.send.post(requestBody: mail.Get());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
 
-            Console.WriteLine(ret);
+            Console.WriteLine(mail.Get());
             Console.ReadLine();
         }
 
