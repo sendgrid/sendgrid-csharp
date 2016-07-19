@@ -1,7 +1,13 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+
+## [7.1.0] - 2016-07-19
+### Added
+- Update [csharp-http-client](https://github.com/sendgrid/csharp-http-client) dependency to [support setting a WebProxy](https://github.com/sendgrid/csharp-http-client/releases/tag/v2.0.7)
+
 ## [7.0.7] - 2016-07-18
+### Fixed
 - Fix for [issue #256](https://github.com/sendgrid/sendgrid-csharp/issues/256): SendGrid v3 and HTML emails - Creates bad Json 
 - Updated dependency to SendGrid.Csharp.HTTP.Client to 2.0.6
 - Updated dependency to JSON.NET to 9.0.1 in the Example and SendGrid projects
