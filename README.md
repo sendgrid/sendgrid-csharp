@@ -26,11 +26,14 @@ All updates to this library is documented in our [CHANGELOG](https://github.com/
 
 # Installation
 
+## Prerequisites
+
+- .NET version 4.5.2
+- The SendGrid service, starting at the [free level](https://sendgrid.com/free?source=sendgrid-csharp)
+
 ## Setup Environment Variables
 
-First, get your free SendGrid account [here](https://sendgrid.com/free?source=sendgrid-csharp).
-
-Next, update your Environment (user space) with your [SENDGRID_API_KEY](https://app.sendgrid.com/settings/api_keys).
+Update your Environment (user space) with your [SENDGRID_API_KEY](https://app.sendgrid.com/settings/api_keys).
 
 ## Install Package
 
@@ -53,8 +56,8 @@ using SendGrid.Helpers.Mail; // Include if you want to use the Mail Helper
 
 ## Dependencies
 
-- The SendGrid Service, starting at the [free level](https://sendgrid.com/free?source=sendgrid-csharp))
 - [SendGrid.CSharp.HTTP.Client](https://github.com/sendgrid/csharp-http-client)
+- [Newtonsoft.Json](http://www.newtonsoft.com/json)
 
 # Quick Start
 
