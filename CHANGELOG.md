@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [7.1.1] - 2016-07-20 ## 
+### Added 
+- README updates 
+- Update introduction blurb to include information regarding our forward path 
+- Update the v3 /mail/send example to include non-helper usage 
+- Update the generic v3 example to include non-fluent interface usage 
 
 ## [7.1.0] - 2016-07-19
 ### Added
