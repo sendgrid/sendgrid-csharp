@@ -1118,7 +1118,7 @@ namespace SendGrid.Helpers.Mail
         private Dictionary<String, String> headers;
         private Dictionary<String, String> substitutions;
         private Dictionary<String, String> customArgs;
-        private long sendAt;
+        private long? sendAt;
 
         [JsonProperty(PropertyName = "to")]
         public List<Email> Tos
@@ -1219,7 +1219,7 @@ namespace SendGrid.Helpers.Mail
         }
 
         [JsonProperty(PropertyName = "send_at")]
-        public long SendAt
+        public long? SendAt
         {
             get
             {
