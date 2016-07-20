@@ -1,28 +1,14 @@
 [![BuildStatus](https://travis-ci.org/sendgrid/sendgrid-csharp.png?branch=master)](https://travis-ci.org/sendgrid/sendgrid-csharp)
 
-**This library allows you to quickly and easily use the SendGrid Web API via C Sharp with .NET.**
+**This library allows you to quickly and easily use the SendGrid Web API v3 via C# with .NET.**
 
-# Announcements
+Version 7.X.X of this library provides full support for all SendGrid [Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html) endpoints, including the new [v3 /mail/send](https://sendgrid.com/blog/introducing-v3mailsend-sendgrids-new-mail-endpoint).
 
-**BREAKING CHANGE as of 2016.06.14**
+This library represents the beginning of a new path for SendGrid. We want this library to be community driven and SendGrid led. We need your help to realize this goal. To help make sure we are building the right things in the right order, we ask that you create [issues](https://github.com/sendgrid/sendgrid-csharp/issues) and [pull requests](https://github.com/sendgrid/sendgrid-csharp/blob/master/CONTRIBUTING.md) or simply upvote or comment on existing issues or pull requests.
 
-Version `7.X.X` is a breaking change for the entire library.
+Please browse the rest of this README for further detail.
 
-Version 7.X.X brings you full support for all Web API v3 endpoints. We
-have the following resources to get you started quickly:
-
--   [SendGrid
-    Documentation](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html)
--   [Usage
-    Documentation](https://github.com/sendgrid/sendgrid-csharp/tree/master/USAGE.md)
--   [Example Code](https://github.com/sendgrid/sendgrid-csharp/tree/master/examples)
--   [Example
-    Project](https://github.com/sendgrid/sendgrid-csharp/tree/master/Example)
--   [Migration from v2 to v3](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/how_to_migrate_from_v2_to_v3_mail_send.html)
-
-Thank you for your continued support!
-
-All updates to this library is documented in our [CHANGELOG](https://github.com/sendgrid/sendgrid-csharp/blob/master/CHANGELOG.md).
+We appreciate your continued support, thank you!
 
 # Installation
 
@@ -33,7 +19,7 @@ All updates to this library is documented in our [CHANGELOG](https://github.com/
 
 ## Setup Environment Variables
 
-Update your Environment (user space) with your [SENDGRID_API_KEY](https://app.sendgrid.com/settings/api_keys).
+Update the development Environment (user space) with your [SENDGRID_API_KEY](https://app.sendgrid.com/settings/api_keys). For example, in Windows 10, please review [this thread](http://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10).
 
 ## Install Package
 
@@ -63,6 +49,10 @@ using SendGrid.Helpers.Mail; // Include if you want to use the Mail Helper
 
 ## Hello Email
 
+The following is the minimum needed code to send an email with the [/mail/send Helper](https://github.com/sendgrid/sendgrid-csharp/tree/master/SendGrid/SendGrid/Helpers/Mail) ([here](https://github.com/sendgrid/sendgrid-csharp/blob/master/SendGrid/Example/Example.cs#L45) is a full example):
+
+### With Mail Helper Class
+
 ```csharp
 using System;
 using SendGrid;
@@ -78,9 +68,9 @@ namespace Example
             dynamic sg = new SendGridAPIClient(apiKey);
 
             Email from = new Email("test@example.com");
-            String subject = "Hello World from the SendGrid CSharp Library";
+            String subject = "Hello World from the SendGrid CSharp Library!";
             Email to = new Email("test@example.com");
-            Content content = new Content("text/plain", "Textual content");
+            Content content = new Content("text/plain", "Hello, Email!");
             Mail mail = new Mail(from, subject, to, content);
 
             dynamic response = sg.client.mail.send.post(requestBody: mail.Get());
@@ -89,10 +79,16 @@ namespace Example
 }
 ```
 
-## General v3 Web API Usage
+The `Mail` constructor creates a [personalization object](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html) for you. [Here](https://github.com/sendgrid/sendgrid-csharp/blob/master/SendGrid/Example/Example.cs#L33) is an example of how to add to it.
+
+### Without Mail Helper Class
+
+The following is the minimum needed code to send an email without the /mail/send Helper ([here](https://github.com/sendgrid/sendgrid-csharp/blob/master/examples/mail/mail.cs#L29) is a full example):
 
 ```csharp
 using System;
+using SendGrid;
+using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
 namespace Example
 {
@@ -101,8 +97,71 @@ namespace Example
         private static void Main()
         {
             String apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
+            dynamic sg = new SendGridAPIClient(apiKey);
+
+            string data = @"{
+              'personalizations': [
+                {
+                  'to': [
+                    {
+                      'email': 'test@example.com'
+                    }
+                  ],
+                  'subject': 'Hello World from the SendGrid C# Library!'
+                }
+              ],
+              'from': {
+                'email': 'test@example.com'
+              },
+              'content': [
+                {
+                  'type': 'text/plain',
+                  'value': 'Hello, Email!'
+                }
+              ]
+            }";
+            Object json = JsonConvert.DeserializeObject<Object>(data);
+            dynamic response = sg.client.mail.send.post(requestBody: json.ToString());
+        }
+    }
+}
+```
+
+## General v3 Web API Usage (With Fluent Interface)
+
+```csharp
+using System;
+using SendGrid;
+
+namespace Example
+{
+    internal class Example
+    {
+        private static void Main()
+        {
+            string apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
             dynamic sg = new SendGrid.SendGridAPIClient(apiKey);
-            dynamic response = sg.client.api_keys.get();
+            dynamic response = sg.client.suppression.bounces.get();
+        }
+    }
+}
+```
+
+## General v3 Web API Usage (Without Fluent Interface)
+
+```csharp
+using System;
+using SendGrid;
+
+namespace Example
+{
+    internal class Example
+    {
+        private static void Main()
+        {
+            string apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
+            dynamic sg = new SendGrid.SendGridAPIClient(apiKey);
+            dynamic response = sg.client._("suppression/bounces").get();
         }
     }
 }
@@ -111,17 +170,22 @@ namespace Example
 # Usage
 
 - [SendGrid Docs](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html)
-- [Usage Docs](https://github.com/sendgrid/sendgrid-csharp/tree/master/USAGE.md)
+- [Library Usage Docs](https://github.com/sendgrid/sendgrid-csharp/tree/master/USAGE.md)
 - [Example Code](https://github.com/sendgrid/sendgrid-csharp/tree/master/SendGrid/Example)
+- [How-to: Migration from v2 to v3](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/how_to_migrate_from_v2_to_v3_mail_send.html)
 - [v3 Web API Mail Send Helper](https://github.com/sendgrid/sendgrid-csharp/tree/master/SendGrid/SendGrid/Helpers/Mail)
 
-## Roadmap
+# Announcements
 
-If you are intersted in the future direction of this project, please take a look at our [milestones](https://github.com/sendgrid/sendgrid-csharp/milestones). We would love to hear your feedback.
+All updates to this library is documented in our [CHANGELOG](https://github.com/sendgrid/sendgrid-csharp/blob/master/CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-csharp/releases).
 
-## How to Contribute
+# Roadmap
 
-We encourage contribution to our library, please see our [CONTRIBUTING](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md) guide for details.
+If you are interested in the future direction of this project, please take a look at our open [issues](https://github.com/sendgrid/sendgrid-csharp/issues) and [pull requests](https://github.com/sendgrid/sendgrid-csharp/pulls). We would love to hear your feedback.
+
+# How to Contribute
+
+We encourage contribution to our library (you might even score some nifty swag), please see our [CONTRIBUTING](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md) guide for details.
 
 Quick links:
 
