@@ -19,7 +19,7 @@ namespace SendGrid.Helpers.Mail
         private Dictionary<String, String> sections;
         private List<String> categories;
         private Dictionary<String, String> customArgs;
-        private long sendAt;
+        private long? sendAt;
         private ASM asm;
         private String batchId;
         private String setIpPoolId;
@@ -183,7 +183,7 @@ namespace SendGrid.Helpers.Mail
         }
 
         [JsonProperty(PropertyName = "send_at")]
-        public long SendAt
+        public long? SendAt
         {
             get
             {
