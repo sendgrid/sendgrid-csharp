@@ -31,7 +31,16 @@ namespace Example
             Mail mail = new Mail(from, subject, to, content);
             Email email = new Email("test2@example.com");
             mail.Personalization[0].AddTo(email);
-
+            
+            //If you want to use a tempalte
+            //Adding this will replace the above added subject and content
+            mail.TemplateId = "TEMPLATE_ID";
+            mail.Personalization[0].AddSubstitution("[KEY_1]", "VALUE_1");
+            mail.Personalization[0].AddSubstitution("[KEY_2]", "VALUE_1");
+            
+            
+            
+            
             dynamic response = sg.client.mail.send.post(requestBody: mail.Get());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
