@@ -38,9 +38,6 @@ namespace Example
             mail.Personalization[0].AddSubstitution("[KEY_1]", "VALUE_1");
             mail.Personalization[0].AddSubstitution("[KEY_2]", "VALUE_1");
             
-            
-            
-            
             dynamic response = sg.client.mail.send.post(requestBody: mail.Get());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
