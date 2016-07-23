@@ -57,6 +57,7 @@ The following is the minimum needed code to send an email with the [/mail/send H
 using System;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System.Threading.Tasks;
 
 namespace Example
 {
@@ -94,6 +95,7 @@ The following is the minimum needed code to send an email without the /mail/send
 using System;
 using SendGrid;
 using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using System.Threading.Tasks;
 
 namespace Example
 {
@@ -142,6 +144,7 @@ namespace Example
 ```csharp
 using System;
 using SendGrid;
+using System.Threading.Tasks;
 
 namespace Example
 {
@@ -167,6 +170,7 @@ namespace Example
 ```csharp
 using System;
 using SendGrid;
+using System.Threading.Tasks;
 
 namespace Example
 {
