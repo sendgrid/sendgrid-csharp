@@ -14,7 +14,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-dynamic response = sg.client.categories.get(queryParams: queryParams);
+dynamic response = await sg.client.categories.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -32,7 +32,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_date': '2016-01-01'
 }";
-dynamic response = sg.client.categories.stats.get(queryParams: queryParams);
+dynamic response = await sg.client.categories.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -51,7 +51,7 @@ string queryParams = @"{
   'sort_by_metric': 'test_string', 
   'start_date': '2016-01-01'
 }";
-dynamic response = sg.client.categories.stats.sums.get(queryParams: queryParams);
+dynamic response = await sg.client.categories.stats.sums.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

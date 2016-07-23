@@ -12,7 +12,7 @@ dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 string queryParams = @"{
   'limit': 1
 }";
-dynamic response = sg.client.access_settings.activity.get(queryParams: queryParams);
+dynamic response = await sg.client.access_settings.activity.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -37,7 +37,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.access_settings.whitelist.post(requestBody: data);
+dynamic response = await sg.client.access_settings.whitelist.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -47,7 +47,7 @@ Console.ReadLine();
 // Retrieve a list of currently whitelisted IPs
 // GET /access_settings/whitelist
 
-dynamic response = sg.client.access_settings.whitelist.get();
+dynamic response = await sg.client.access_settings.whitelist.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -66,7 +66,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.access_settings.whitelist.delete(requestBody: data);
+dynamic response = await sg.client.access_settings.whitelist.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -77,7 +77,7 @@ Console.ReadLine();
 // GET /access_settings/whitelist/{rule_id}
 
 var rule_id = "test_url_param";
-dynamic response = sg.client.access_settings.whitelist._(rule_id).get();
+dynamic response = await sg.client.access_settings.whitelist._(rule_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -88,7 +88,7 @@ Console.ReadLine();
 // DELETE /access_settings/whitelist/{rule_id}
 
 var rule_id = "test_url_param";
-dynamic response = sg.client.access_settings.whitelist._(rule_id).delete();
+dynamic response = await sg.client.access_settings.whitelist._(rule_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

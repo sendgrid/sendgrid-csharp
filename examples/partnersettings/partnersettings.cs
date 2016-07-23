@@ -13,7 +13,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-dynamic response = sg.client.partner_settings.get(queryParams: queryParams);
+dynamic response = await sg.client.partner_settings.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -30,7 +30,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.partner_settings.new_relic.patch(requestBody: data);
+dynamic response = await sg.client.partner_settings.new_relic.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -40,7 +40,7 @@ Console.ReadLine();
 // Returns all New Relic partner settings.
 // GET /partner_settings/new_relic
 
-dynamic response = sg.client.partner_settings.new_relic.get();
+dynamic response = await sg.client.partner_settings.new_relic.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
