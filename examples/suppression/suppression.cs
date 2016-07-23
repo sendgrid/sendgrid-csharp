@@ -15,7 +15,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_time': 1
 }";
-dynamic response = sg.client.suppression.blocks.get(queryParams: queryParams);
+dynamic response = await sg.client.suppression.blocks.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -34,7 +34,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.suppression.blocks.delete(requestBody: data);
+dynamic response = await sg.client.suppression.blocks.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -45,7 +45,7 @@ Console.ReadLine();
 // GET /suppression/blocks/{email}
 
 var email = "test_url_param";
-dynamic response = sg.client.suppression.blocks._(email).get();
+dynamic response = await sg.client.suppression.blocks._(email).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -56,7 +56,7 @@ Console.ReadLine();
 // DELETE /suppression/blocks/{email}
 
 var email = "test_url_param";
-dynamic response = sg.client.suppression.blocks._(email).delete();
+dynamic response = await sg.client.suppression.blocks._(email).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -70,7 +70,7 @@ string queryParams = @"{
   'end_time': 1, 
   'start_time': 1
 }";
-dynamic response = sg.client.suppression.bounces.get(queryParams: queryParams);
+dynamic response = await sg.client.suppression.bounces.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -89,7 +89,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.suppression.bounces.delete(requestBody: data);
+dynamic response = await sg.client.suppression.bounces.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -100,7 +100,7 @@ Console.ReadLine();
 // GET /suppression/bounces/{email}
 
 var email = "test_url_param";
-dynamic response = sg.client.suppression.bounces._(email).get();
+dynamic response = await sg.client.suppression.bounces._(email).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -114,7 +114,7 @@ string queryParams = @"{
   'email_address': 'example@example.com'
 }";
 var email = "test_url_param";
-dynamic response = sg.client.suppression.bounces._(email).delete(queryParams: queryParams);
+dynamic response = await sg.client.suppression.bounces._(email).delete(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -130,7 +130,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_time': 1
 }";
-dynamic response = sg.client.suppression.invalid_emails.get(queryParams: queryParams);
+dynamic response = await sg.client.suppression.invalid_emails.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -149,7 +149,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.suppression.invalid_emails.delete(requestBody: data);
+dynamic response = await sg.client.suppression.invalid_emails.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -160,7 +160,7 @@ Console.ReadLine();
 // GET /suppression/invalid_emails/{email}
 
 var email = "test_url_param";
-dynamic response = sg.client.suppression.invalid_emails._(email).get();
+dynamic response = await sg.client.suppression.invalid_emails._(email).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -171,7 +171,7 @@ Console.ReadLine();
 // DELETE /suppression/invalid_emails/{email}
 
 var email = "test_url_param";
-dynamic response = sg.client.suppression.invalid_emails._(email).delete();
+dynamic response = await sg.client.suppression.invalid_emails._(email).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -182,7 +182,7 @@ Console.ReadLine();
 // GET /suppression/spam_report/{email}
 
 var email = "test_url_param";
-dynamic response = sg.client.suppression.spam_report._(email).get();
+dynamic response = await sg.client.suppression.spam_report._(email).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -193,7 +193,7 @@ Console.ReadLine();
 // DELETE /suppression/spam_report/{email}
 
 var email = "test_url_param";
-dynamic response = sg.client.suppression.spam_report._(email).delete();
+dynamic response = await sg.client.suppression.spam_report._(email).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -209,7 +209,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_time': 1
 }";
-dynamic response = sg.client.suppression.spam_reports.get(queryParams: queryParams);
+dynamic response = await sg.client.suppression.spam_reports.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -228,7 +228,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.suppression.spam_reports.delete(requestBody: data);
+dynamic response = await sg.client.suppression.spam_reports.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -244,7 +244,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_time': 1
 }";
-dynamic response = sg.client.suppression.unsubscribes.get(queryParams: queryParams);
+dynamic response = await sg.client.suppression.unsubscribes.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

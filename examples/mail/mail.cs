@@ -9,7 +9,7 @@ dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 // Create a batch ID
 // POST /mail/batch
 
-dynamic response = sg.client.mail.batch.post();
+dynamic response = await sg.client.mail.batch.post();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -20,7 +20,7 @@ Console.ReadLine();
 // GET /mail/batch/{batch_id}
 
 var batch_id = "test_url_param";
-dynamic response = sg.client.mail.batch._(batch_id).get();
+dynamic response = await sg.client.mail.batch._(batch_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -171,7 +171,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.mail.send.post(requestBody: data);
+dynamic response = await sg.client.mail.send.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

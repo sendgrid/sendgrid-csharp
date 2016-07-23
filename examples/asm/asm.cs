@@ -16,7 +16,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.asm.groups.post(requestBody: data);
+dynamic response = await sg.client.asm.groups.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -29,7 +29,7 @@ Console.ReadLine();
 string queryParams = @"{
   'id': 1
 }";
-dynamic response = sg.client.asm.groups.get(queryParams: queryParams);
+dynamic response = await sg.client.asm.groups.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -47,7 +47,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var group_id = "test_url_param";
-dynamic response = sg.client.asm.groups._(group_id).patch(requestBody: data);
+dynamic response = await sg.client.asm.groups._(group_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -58,7 +58,7 @@ Console.ReadLine();
 // GET /asm/groups/{group_id}
 
 var group_id = "test_url_param";
-dynamic response = sg.client.asm.groups._(group_id).get();
+dynamic response = await sg.client.asm.groups._(group_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -69,7 +69,7 @@ Console.ReadLine();
 // DELETE /asm/groups/{group_id}
 
 var group_id = "test_url_param";
-dynamic response = sg.client.asm.groups._(group_id).delete();
+dynamic response = await sg.client.asm.groups._(group_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -88,7 +88,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var group_id = "test_url_param";
-dynamic response = sg.client.asm.groups._(group_id).suppressions.post(requestBody: data);
+dynamic response = await sg.client.asm.groups._(group_id).suppressions.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -99,7 +99,7 @@ Console.ReadLine();
 // GET /asm/groups/{group_id}/suppressions
 
 var group_id = "test_url_param";
-dynamic response = sg.client.asm.groups._(group_id).suppressions.get();
+dynamic response = await sg.client.asm.groups._(group_id).suppressions.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -119,7 +119,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var group_id = "test_url_param";
-dynamic response = sg.client.asm.groups._(group_id).suppressions.search.post(requestBody: data);
+dynamic response = await sg.client.asm.groups._(group_id).suppressions.search.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -131,7 +131,7 @@ Console.ReadLine();
 
 var group_id = "test_url_param";
 var email = "test_url_param";
-dynamic response = sg.client.asm.groups._(group_id).suppressions._(email).delete();
+dynamic response = await sg.client.asm.groups._(group_id).suppressions._(email).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -141,7 +141,7 @@ Console.ReadLine();
 // Retrieve all suppressions
 // GET /asm/suppressions
 
-dynamic response = sg.client.asm.suppressions.get();
+dynamic response = await sg.client.asm.suppressions.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -159,7 +159,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.asm.suppressions.global.post(requestBody: data);
+dynamic response = await sg.client.asm.suppressions.global.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -170,7 +170,7 @@ Console.ReadLine();
 // GET /asm/suppressions/global/{email}
 
 var email = "test_url_param";
-dynamic response = sg.client.asm.suppressions.global._(email).get();
+dynamic response = await sg.client.asm.suppressions.global._(email).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -181,7 +181,7 @@ Console.ReadLine();
 // DELETE /asm/suppressions/global/{email}
 
 var email = "test_url_param";
-dynamic response = sg.client.asm.suppressions.global._(email).delete();
+dynamic response = await sg.client.asm.suppressions.global._(email).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -192,7 +192,7 @@ Console.ReadLine();
 // GET /asm/suppressions/{email}
 
 var email = "test_url_param";
-dynamic response = sg.client.asm.suppressions._(email).get();
+dynamic response = await sg.client.asm.suppressions._(email).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

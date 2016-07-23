@@ -17,7 +17,7 @@ string queryParams = @"{
   'offset': 'test_string', 
   'start_date': '2016-01-01'
 }";
-dynamic response = sg.client.browsers.stats.get(queryParams: queryParams);
+dynamic response = await sg.client.browsers.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

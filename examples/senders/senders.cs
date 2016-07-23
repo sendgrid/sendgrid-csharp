@@ -28,7 +28,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.senders.post(requestBody: data);
+dynamic response = await sg.client.senders.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -38,7 +38,7 @@ Console.ReadLine();
 // Get all Sender Identities
 // GET /senders
 
-dynamic response = sg.client.senders.get();
+dynamic response = await sg.client.senders.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -68,7 +68,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var sender_id = "test_url_param";
-dynamic response = sg.client.senders._(sender_id).patch(requestBody: data);
+dynamic response = await sg.client.senders._(sender_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -79,7 +79,7 @@ Console.ReadLine();
 // GET /senders/{sender_id}
 
 var sender_id = "test_url_param";
-dynamic response = sg.client.senders._(sender_id).get();
+dynamic response = await sg.client.senders._(sender_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -90,7 +90,7 @@ Console.ReadLine();
 // DELETE /senders/{sender_id}
 
 var sender_id = "test_url_param";
-dynamic response = sg.client.senders._(sender_id).delete();
+dynamic response = await sg.client.senders._(sender_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -101,7 +101,7 @@ Console.ReadLine();
 // POST /senders/{sender_id}/resend_verification
 
 var sender_id = "test_url_param";
-dynamic response = sg.client.senders._(sender_id).resend_verification.post();
+dynamic response = await sg.client.senders._(sender_id).resend_verification.post();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

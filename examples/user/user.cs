@@ -9,7 +9,7 @@ dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 // Get a user's account information.
 // GET /user/account
 
-dynamic response = sg.client.user.account.get();
+dynamic response = await sg.client.user.account.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -19,7 +19,7 @@ Console.ReadLine();
 // Retrieve your credit balance
 // GET /user/credits
 
-dynamic response = sg.client.user.credits.get();
+dynamic response = await sg.client.user.credits.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -34,7 +34,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.user.email.put(requestBody: data);
+dynamic response = await sg.client.user.email.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -44,7 +44,7 @@ Console.ReadLine();
 // Retrieve your account email address
 // GET /user/email
 
-dynamic response = sg.client.user.email.get();
+dynamic response = await sg.client.user.email.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -60,7 +60,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.user.password.put(requestBody: data);
+dynamic response = await sg.client.user.password.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -77,7 +77,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.user.profile.patch(requestBody: data);
+dynamic response = await sg.client.user.profile.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -87,7 +87,7 @@ Console.ReadLine();
 // Get a user's profile
 // GET /user/profile
 
-dynamic response = sg.client.user.profile.get();
+dynamic response = await sg.client.user.profile.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -103,7 +103,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.user.scheduled_sends.post(requestBody: data);
+dynamic response = await sg.client.user.scheduled_sends.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -113,7 +113,7 @@ Console.ReadLine();
 // Retrieve all scheduled sends
 // GET /user/scheduled_sends
 
-dynamic response = sg.client.user.scheduled_sends.get();
+dynamic response = await sg.client.user.scheduled_sends.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -129,7 +129,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var batch_id = "test_url_param";
-dynamic response = sg.client.user.scheduled_sends._(batch_id).patch(requestBody: data);
+dynamic response = await sg.client.user.scheduled_sends._(batch_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -140,7 +140,7 @@ Console.ReadLine();
 // GET /user/scheduled_sends/{batch_id}
 
 var batch_id = "test_url_param";
-dynamic response = sg.client.user.scheduled_sends._(batch_id).get();
+dynamic response = await sg.client.user.scheduled_sends._(batch_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -151,7 +151,7 @@ Console.ReadLine();
 // DELETE /user/scheduled_sends/{batch_id}
 
 var batch_id = "test_url_param";
-dynamic response = sg.client.user.scheduled_sends._(batch_id).delete();
+dynamic response = await sg.client.user.scheduled_sends._(batch_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -167,7 +167,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.user.settings.enforced_tls.patch(requestBody: data);
+dynamic response = await sg.client.user.settings.enforced_tls.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -177,7 +177,7 @@ Console.ReadLine();
 // Retrieve current Enforced TLS settings.
 // GET /user/settings/enforced_tls
 
-dynamic response = sg.client.user.settings.enforced_tls.get();
+dynamic response = await sg.client.user.settings.enforced_tls.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -192,7 +192,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.user.username.put(requestBody: data);
+dynamic response = await sg.client.user.username.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -202,7 +202,7 @@ Console.ReadLine();
 // Retrieve your username
 // GET /user/username
 
-dynamic response = sg.client.user.username.get();
+dynamic response = await sg.client.user.username.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -229,7 +229,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.user.webhooks._("_("event")").settings.patch(requestBody: data);
+dynamic response = await sg.client.user.webhooks._("_("event")").settings.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -239,7 +239,7 @@ Console.ReadLine();
 // Retrieve Event Webhook settings
 // GET /user/webhooks/event/settings
 
-dynamic response = sg.client.user.webhooks._("_("event")").settings.get();
+dynamic response = await sg.client.user.webhooks._("_("event")").settings.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -254,7 +254,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.user.webhooks._("_("event")").test.post(requestBody: data);
+dynamic response = await sg.client.user.webhooks._("_("event")").test.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -272,7 +272,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.user.webhooks.parse.settings.post(requestBody: data);
+dynamic response = await sg.client.user.webhooks.parse.settings.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -282,7 +282,7 @@ Console.ReadLine();
 // Retrieve all parse settings
 // GET /user/webhooks/parse/settings
 
-dynamic response = sg.client.user.webhooks.parse.settings.get();
+dynamic response = await sg.client.user.webhooks.parse.settings.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -300,7 +300,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var hostname = "test_url_param";
-dynamic response = sg.client.user.webhooks.parse.settings._(hostname).patch(requestBody: data);
+dynamic response = await sg.client.user.webhooks.parse.settings._(hostname).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -311,7 +311,7 @@ Console.ReadLine();
 // GET /user/webhooks/parse/settings/{hostname}
 
 var hostname = "test_url_param";
-dynamic response = sg.client.user.webhooks.parse.settings._(hostname).get();
+dynamic response = await sg.client.user.webhooks.parse.settings._(hostname).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -322,7 +322,7 @@ Console.ReadLine();
 // DELETE /user/webhooks/parse/settings/{hostname}
 
 var hostname = "test_url_param";
-dynamic response = sg.client.user.webhooks.parse.settings._(hostname).delete();
+dynamic response = await sg.client.user.webhooks.parse.settings._(hostname).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -339,7 +339,7 @@ string queryParams = @"{
   'offset': 'test_string', 
   'start_date': '2016-01-01'
 }";
-dynamic response = sg.client.user.webhooks.parse.stats.get(queryParams: queryParams);
+dynamic response = await sg.client.user.webhooks.parse.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

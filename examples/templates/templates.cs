@@ -14,7 +14,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.templates.post(requestBody: data);
+dynamic response = await sg.client.templates.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -24,7 +24,7 @@ Console.ReadLine();
 // Retrieve all transactional templates.
 // GET /templates
 
-dynamic response = sg.client.templates.get();
+dynamic response = await sg.client.templates.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -40,7 +40,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var template_id = "test_url_param";
-dynamic response = sg.client.templates._(template_id).patch(requestBody: data);
+dynamic response = await sg.client.templates._(template_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -51,7 +51,7 @@ Console.ReadLine();
 // GET /templates/{template_id}
 
 var template_id = "test_url_param";
-dynamic response = sg.client.templates._(template_id).get();
+dynamic response = await sg.client.templates._(template_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -62,7 +62,7 @@ Console.ReadLine();
 // DELETE /templates/{template_id}
 
 var template_id = "test_url_param";
-dynamic response = sg.client.templates._(template_id).delete();
+dynamic response = await sg.client.templates._(template_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -83,7 +83,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var template_id = "test_url_param";
-dynamic response = sg.client.templates._(template_id).versions.post(requestBody: data);
+dynamic response = await sg.client.templates._(template_id).versions.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -104,7 +104,7 @@ Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var template_id = "test_url_param";
 var version_id = "test_url_param";
-dynamic response = sg.client.templates._(template_id).versions._(version_id).patch(requestBody: data);
+dynamic response = await sg.client.templates._(template_id).versions._(version_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -116,7 +116,7 @@ Console.ReadLine();
 
 var template_id = "test_url_param";
 var version_id = "test_url_param";
-dynamic response = sg.client.templates._(template_id).versions._(version_id).get();
+dynamic response = await sg.client.templates._(template_id).versions._(version_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -128,7 +128,7 @@ Console.ReadLine();
 
 var template_id = "test_url_param";
 var version_id = "test_url_param";
-dynamic response = sg.client.templates._(template_id).versions._(version_id).delete();
+dynamic response = await sg.client.templates._(template_id).versions._(version_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -140,7 +140,7 @@ Console.ReadLine();
 
 var template_id = "test_url_param";
 var version_id = "test_url_param";
-dynamic response = sg.client.templates._(template_id).versions._(version_id).activate.post();
+dynamic response = await sg.client.templates._(template_id).versions._(version_id).activate.post();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

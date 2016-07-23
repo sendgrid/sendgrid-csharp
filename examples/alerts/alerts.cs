@@ -16,7 +16,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.alerts.post(requestBody: data);
+dynamic response = await sg.client.alerts.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -26,7 +26,7 @@ Console.ReadLine();
 // Retrieve all alerts
 // GET /alerts
 
-dynamic response = sg.client.alerts.get();
+dynamic response = await sg.client.alerts.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -42,7 +42,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var alert_id = "test_url_param";
-dynamic response = sg.client.alerts._(alert_id).patch(requestBody: data);
+dynamic response = await sg.client.alerts._(alert_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -53,7 +53,7 @@ Console.ReadLine();
 // GET /alerts/{alert_id}
 
 var alert_id = "test_url_param";
-dynamic response = sg.client.alerts._(alert_id).get();
+dynamic response = await sg.client.alerts._(alert_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -64,7 +64,7 @@ Console.ReadLine();
 // DELETE /alerts/{alert_id}
 
 var alert_id = "test_url_param";
-dynamic response = sg.client.alerts._(alert_id).delete();
+dynamic response = await sg.client.alerts._(alert_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

@@ -20,7 +20,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.subusers.post(requestBody: data);
+dynamic response = await sg.client.subusers.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -35,7 +35,7 @@ string queryParams = @"{
   'offset': 1, 
   'username': 'test_string'
 }";
-dynamic response = sg.client.subusers.get(queryParams: queryParams);
+dynamic response = await sg.client.subusers.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -48,7 +48,7 @@ Console.ReadLine();
 string queryParams = @"{
   'usernames': 'test_string'
 }";
-dynamic response = sg.client.subusers.reputations.get(queryParams: queryParams);
+dynamic response = await sg.client.subusers.reputations.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -66,7 +66,7 @@ string queryParams = @"{
   'start_date': '2016-01-01', 
   'subusers': 'test_string'
 }";
-dynamic response = sg.client.subusers.stats.get(queryParams: queryParams);
+dynamic response = await sg.client.subusers.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -84,7 +84,7 @@ string queryParams = @"{
   'sort_by_metric': 'test_string', 
   'subuser': 'test_string'
 }";
-dynamic response = sg.client.subusers.stats.monthly.get(queryParams: queryParams);
+dynamic response = await sg.client.subusers.stats.monthly.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -103,7 +103,7 @@ string queryParams = @"{
   'sort_by_metric': 'test_string', 
   'start_date': '2016-01-01'
 }";
-dynamic response = sg.client.subusers.stats.sums.get(queryParams: queryParams);
+dynamic response = await sg.client.subusers.stats.sums.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -119,7 +119,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var subuser_name = "test_url_param";
-dynamic response = sg.client.subusers._(subuser_name).patch(requestBody: data);
+dynamic response = await sg.client.subusers._(subuser_name).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -130,7 +130,7 @@ Console.ReadLine();
 // DELETE /subusers/{subuser_name}
 
 var subuser_name = "test_url_param";
-dynamic response = sg.client.subusers._(subuser_name).delete();
+dynamic response = await sg.client.subusers._(subuser_name).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -146,7 +146,7 @@ string data = @"[
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var subuser_name = "test_url_param";
-dynamic response = sg.client.subusers._(subuser_name).ips.put(requestBody: data);
+dynamic response = await sg.client.subusers._(subuser_name).ips.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -163,7 +163,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var subuser_name = "test_url_param";
-dynamic response = sg.client.subusers._(subuser_name).monitor.put(requestBody: data);
+dynamic response = await sg.client.subusers._(subuser_name).monitor.put(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -180,7 +180,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var subuser_name = "test_url_param";
-dynamic response = sg.client.subusers._(subuser_name).monitor.post(requestBody: data);
+dynamic response = await sg.client.subusers._(subuser_name).monitor.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -191,7 +191,7 @@ Console.ReadLine();
 // GET /subusers/{subuser_name}/monitor
 
 var subuser_name = "test_url_param";
-dynamic response = sg.client.subusers._(subuser_name).monitor.get();
+dynamic response = await sg.client.subusers._(subuser_name).monitor.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -202,7 +202,7 @@ Console.ReadLine();
 // DELETE /subusers/{subuser_name}/monitor
 
 var subuser_name = "test_url_param";
-dynamic response = sg.client.subusers._(subuser_name).monitor.delete();
+dynamic response = await sg.client.subusers._(subuser_name).monitor.delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -220,7 +220,7 @@ string queryParams = @"{
   'sort_by_metric': 'test_string'
 }";
 var subuser_name = "test_url_param";
-dynamic response = sg.client.subusers._(subuser_name).stats.monthly.get(queryParams: queryParams);
+dynamic response = await sg.client.subusers._(subuser_name).stats.monthly.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

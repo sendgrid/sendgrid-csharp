@@ -17,7 +17,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_date': '2016-01-01'
 }";
-dynamic response = sg.client.geo.stats.get(queryParams: queryParams);
+dynamic response = await sg.client.geo.stats.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
