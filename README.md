@@ -64,7 +64,7 @@ namespace Example
     {
         private static void Main()
         {
-	    Execute.Wait();
+	        Execute.Wait();
         }
 
         static async Task Execute()
@@ -101,10 +101,10 @@ namespace Example
     {
         private static void Main()
         {
-	    Execute.Wait();
+	        Execute.Wait();
         }
 
-	static async Task Execute()
+	    static async Task Execute()
         {
             String apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
             dynamic sg = new SendGridAPIClient(apiKey);
@@ -149,15 +149,15 @@ namespace Example
     {
         private static void Main()
         {
-	    Execute.Wait();
+	        Execute.Wait();
         }
 
         static async Task Execute()
         {
             string apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
             dynamic sg = new SendGrid.SendGridAPIClient(apiKey);
-            dynamic response = await sg.client.suppression.bounces.get();  
-	}
+            dynamic response = await sg.client.suppression.bounces.get();
+	    }
     }
 }
 ```
