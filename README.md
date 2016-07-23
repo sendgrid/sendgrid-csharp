@@ -177,12 +177,12 @@ namespace Example
             Execute.Wait();
         }
 
-	static async Task Execute()
-	{
-            string apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGrid.SendGridAPIClient(apiKey);
-            dynamic response = await sg.client._("suppression/bounces").get();
-	}
+        static async Task Execute()
+        {
+                string apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
+                dynamic sg = new SendGrid.SendGridAPIClient(apiKey);
+                dynamic response = await sg.client._("suppression/bounces").get();
+        }
     }
 }
 ```
