@@ -65,7 +65,7 @@ namespace Example
     {
         private static void Main()
         {
-	        Execute.Wait();
+	        Execute().Wait();
         }
 
         static async Task Execute()
@@ -103,7 +103,7 @@ namespace Example
     {
         private static void Main()
         {
-	        Execute.Wait();
+	        Execute().Wait();
         }
 
 	    static async Task Execute()
@@ -152,7 +152,7 @@ namespace Example
     {
         private static void Main()
         {
-	        Execute.Wait();
+	        Execute().Wait();
         }
 
         static async Task Execute()
@@ -178,7 +178,7 @@ namespace Example
     {
         private static void Main()
         {
-            Execute.Wait();
+            Execute().Wait();
         }
 
         static async Task Execute()
