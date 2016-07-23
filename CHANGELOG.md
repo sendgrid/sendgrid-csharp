@@ -1,6 +1,13 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [8.0.0] - 2016-07-22 ## 
+## BREAKING CHANGE 
+- updated dependency on [SendGrid.CSharp.HTTP.Client](https://github.com/sendgrid/csharp-http-client/releases/tag/v3.0.0), which had a breaking change 
+- Fixes [issue #259](https://github.com/sendgrid/sendgrid-csharp/issues/259) 
+- the async behavior in the HTTP client has changed, as we don’t block on .Result anymore  
+- Updated USAGE, examples and README to demonstrate await usage 
+
 ## [7.1.1] - 2016-07-20 ## 
 ### Added 
 - README updates 
