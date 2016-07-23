@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.Script.Serialization;
 using SendGrid.Helpers.Mail;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace Example
 {
@@ -11,15 +12,15 @@ namespace Example
         private static void Main()
         {
             // v3 Mail Helper
-            HelloEmail(); // this will actually send an email
-            KitchenSink(); // this will only send an email if you set SandBox Mode to false
+            HelloEmail().Wait(); // this will actually send an email
+            KitchenSink().Wait(); // this will only send an email if you set SandBox Mode to false
 
             // v3 Web API
-            ApiKeys();
+            ApiKeys().Wait();
 
         }
 
-        private static void HelloEmail()
+        private static async Task HelloEmail()
         {
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
@@ -32,7 +33,7 @@ namespace Example
             Email email = new Email("test2@example.com");
             mail.Personalization[0].AddTo(email);
 
-            dynamic response = sg.client.mail.send.post(requestBody: mail.Get());
+            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
@@ -42,7 +43,7 @@ namespace Example
 
         }
 
-        private static void KitchenSink()
+        private static async Task KitchenSink()
         {
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
@@ -229,7 +230,7 @@ namespace Example
             email.Address = "test@example.com";
             mail.ReplyTo = email;
 
-            dynamic response = sg.client.mail.send.post(requestBody: mail.Get());
+            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
@@ -238,7 +239,7 @@ namespace Example
             Console.ReadLine();
         }
 
-        private static void ApiKeys()
+        private static async Task ApiKeys()
         {
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
@@ -246,7 +247,7 @@ namespace Example
             string queryParams = @"{
                 'limit': 100
             }";
-            dynamic response = sg.client.api_keys.get(queryParams: queryParams);
+            dynamic response = await sg.client.api_keys.get(queryParams: queryParams);
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
@@ -264,7 +265,7 @@ namespace Example
                 ]
             }";
             Object json = JsonConvert.DeserializeObject<Object>(requestBody);
-            response = sg.client.api_keys.post(requestBody: json.ToString());
+            response = await sg.client.api_keys.post(requestBody: json.ToString());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
@@ -276,7 +277,7 @@ namespace Example
             Console.ReadLine();
 
             // GET Single
-            response = sg.client.api_keys._(api_key_id).get();
+            response = await sg.client.api_keys._(api_key_id).get();
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
@@ -289,7 +290,7 @@ namespace Example
                 'name': 'A New Hope'
             }";
             json = JsonConvert.DeserializeObject<Object>(requestBody);
-            response = sg.client.api_keys._(api_key_id).patch(requestBody: json.ToString());
+            response = await sg.client.api_keys._(api_key_id).patch(requestBody: json.ToString());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
@@ -306,7 +307,7 @@ namespace Example
                 ]
             }";
             json = JsonConvert.DeserializeObject<Object>(requestBody);
-            response = sg.client.api_keys._(api_key_id).put(requestBody: json.ToString());
+            response = await sg.client.api_keys._(api_key_id).put(requestBody: json.ToString());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
@@ -315,7 +316,7 @@ namespace Example
             Console.ReadLine();
 
             // DELETE
-            response = sg.client.api_keys._(api_key_id).delete();
+            response = await sg.client.api_keys._(api_key_id).delete();
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers.ToString());
 

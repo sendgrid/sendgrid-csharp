@@ -20,7 +20,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.api_keys.post(requestBody: data);
+dynamic response = await sg.client.api_keys.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -33,7 +33,7 @@ Console.ReadLine();
 string queryParams = @"{
   'limit': 1
 }";
-dynamic response = sg.client.api_keys.get(queryParams: queryParams);
+dynamic response = await sg.client.api_keys.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -53,7 +53,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var api_key_id = "test_url_param";
-dynamic response = sg.client.api_keys._(api_key_id).put(requestBody: data);
+dynamic response = await sg.client.api_keys._(api_key_id).put(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -69,7 +69,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var api_key_id = "test_url_param";
-dynamic response = sg.client.api_keys._(api_key_id).patch(requestBody: data);
+dynamic response = await sg.client.api_keys._(api_key_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -80,7 +80,7 @@ Console.ReadLine();
 // GET /api_keys/{api_key_id}
 
 var api_key_id = "test_url_param";
-dynamic response = sg.client.api_keys._(api_key_id).get();
+dynamic response = await sg.client.api_keys._(api_key_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -91,7 +91,7 @@ Console.ReadLine();
 // DELETE /api_keys/{api_key_id}
 
 var api_key_id = "test_url_param";
-dynamic response = sg.client.api_keys._(api_key_id).delete();
+dynamic response = await sg.client.api_keys._(api_key_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

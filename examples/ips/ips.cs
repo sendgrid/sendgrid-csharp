@@ -16,7 +16,7 @@ string queryParams = @"{
   'offset': 1, 
   'subuser': 'test_string'
 }";
-dynamic response = sg.client.ips.get(queryParams: queryParams);
+dynamic response = await sg.client.ips.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -26,7 +26,7 @@ Console.ReadLine();
 // Retrieve all assigned IPs
 // GET /ips/assigned
 
-dynamic response = sg.client.ips.assigned.get();
+dynamic response = await sg.client.ips.assigned.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -41,7 +41,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.ips.pools.post(requestBody: data);
+dynamic response = await sg.client.ips.pools.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -51,7 +51,7 @@ Console.ReadLine();
 // Retrieve all IP pools.
 // GET /ips/pools
 
-dynamic response = sg.client.ips.pools.get();
+dynamic response = await sg.client.ips.pools.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -67,7 +67,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var pool_name = "test_url_param";
-dynamic response = sg.client.ips.pools._(pool_name).put(requestBody: data);
+dynamic response = await sg.client.ips.pools._(pool_name).put(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -78,7 +78,7 @@ Console.ReadLine();
 // GET /ips/pools/{pool_name}
 
 var pool_name = "test_url_param";
-dynamic response = sg.client.ips.pools._(pool_name).get();
+dynamic response = await sg.client.ips.pools._(pool_name).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -89,7 +89,7 @@ Console.ReadLine();
 // DELETE /ips/pools/{pool_name}
 
 var pool_name = "test_url_param";
-dynamic response = sg.client.ips.pools._(pool_name).delete();
+dynamic response = await sg.client.ips.pools._(pool_name).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -105,7 +105,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var pool_name = "test_url_param";
-dynamic response = sg.client.ips.pools._(pool_name).ips.post(requestBody: data);
+dynamic response = await sg.client.ips.pools._(pool_name).ips.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -117,7 +117,7 @@ Console.ReadLine();
 
 var pool_name = "test_url_param";
 var ip = "test_url_param";
-dynamic response = sg.client.ips.pools._(pool_name).ips._(ip).delete();
+dynamic response = await sg.client.ips.pools._(pool_name).ips._(ip).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -132,7 +132,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.ips.warmup.post(requestBody: data);
+dynamic response = await sg.client.ips.warmup.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -142,7 +142,7 @@ Console.ReadLine();
 // Retrieve all IPs currently in warmup
 // GET /ips/warmup
 
-dynamic response = sg.client.ips.warmup.get();
+dynamic response = await sg.client.ips.warmup.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -153,7 +153,7 @@ Console.ReadLine();
 // GET /ips/warmup/{ip_address}
 
 var ip_address = "test_url_param";
-dynamic response = sg.client.ips.warmup._(ip_address).get();
+dynamic response = await sg.client.ips.warmup._(ip_address).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -164,7 +164,7 @@ Console.ReadLine();
 // DELETE /ips/warmup/{ip_address}
 
 var ip_address = "test_url_param";
-dynamic response = sg.client.ips.warmup._(ip_address).delete();
+dynamic response = await sg.client.ips.warmup._(ip_address).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -175,7 +175,7 @@ Console.ReadLine();
 // GET /ips/{ip_address}
 
 var ip_address = "test_url_param";
-dynamic response = sg.client.ips._(ip_address).get();
+dynamic response = await sg.client.ips._(ip_address).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

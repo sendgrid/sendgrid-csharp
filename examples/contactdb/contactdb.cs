@@ -15,7 +15,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.contactdb.custom_fields.post(requestBody: data);
+dynamic response = await sg.client.contactdb.custom_fields.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -25,7 +25,7 @@ Console.ReadLine();
 // Retrieve all custom fields
 // GET /contactdb/custom_fields
 
-dynamic response = sg.client.contactdb.custom_fields.get();
+dynamic response = await sg.client.contactdb.custom_fields.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -36,7 +36,7 @@ Console.ReadLine();
 // GET /contactdb/custom_fields/{custom_field_id}
 
 var custom_field_id = "test_url_param";
-dynamic response = sg.client.contactdb.custom_fields._(custom_field_id).get();
+dynamic response = await sg.client.contactdb.custom_fields._(custom_field_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -47,7 +47,7 @@ Console.ReadLine();
 // DELETE /contactdb/custom_fields/{custom_field_id}
 
 var custom_field_id = "test_url_param";
-dynamic response = sg.client.contactdb.custom_fields._(custom_field_id).delete();
+dynamic response = await sg.client.contactdb.custom_fields._(custom_field_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -62,7 +62,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.contactdb.lists.post(requestBody: data);
+dynamic response = await sg.client.contactdb.lists.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -72,7 +72,7 @@ Console.ReadLine();
 // Retrieve all lists
 // GET /contactdb/lists
 
-dynamic response = sg.client.contactdb.lists.get();
+dynamic response = await sg.client.contactdb.lists.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -90,7 +90,7 @@ string data = @"[
 ]";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.contactdb.lists.delete(requestBody: data);
+dynamic response = await sg.client.contactdb.lists.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -109,7 +109,7 @@ string queryParams = @"{
   'list_id': 1
 }";
 var list_id = "test_url_param";
-dynamic response = sg.client.contactdb.lists._(list_id).patch(requestBody: data, queryParams: queryParams);
+dynamic response = await sg.client.contactdb.lists._(list_id).patch(requestBody: data, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -123,7 +123,7 @@ string queryParams = @"{
   'list_id': 1
 }";
 var list_id = "test_url_param";
-dynamic response = sg.client.contactdb.lists._(list_id).get(queryParams: queryParams);
+dynamic response = await sg.client.contactdb.lists._(list_id).get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -137,7 +137,7 @@ string queryParams = @"{
   'delete_contacts': 'true'
 }";
 var list_id = "test_url_param";
-dynamic response = sg.client.contactdb.lists._(list_id).delete(queryParams: queryParams);
+dynamic response = await sg.client.contactdb.lists._(list_id).delete(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -154,7 +154,7 @@ string data = @"[
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var list_id = "test_url_param";
-dynamic response = sg.client.contactdb.lists._(list_id).recipients.post(requestBody: data);
+dynamic response = await sg.client.contactdb.lists._(list_id).recipients.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -170,7 +170,7 @@ string queryParams = @"{
   'page_size': 1
 }";
 var list_id = "test_url_param";
-dynamic response = sg.client.contactdb.lists._(list_id).recipients.get(queryParams: queryParams);
+dynamic response = await sg.client.contactdb.lists._(list_id).recipients.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -182,7 +182,7 @@ Console.ReadLine();
 
 var list_id = "test_url_param";
 var recipient_id = "test_url_param";
-dynamic response = sg.client.contactdb.lists._(list_id).recipients._(recipient_id).post();
+dynamic response = await sg.client.contactdb.lists._(list_id).recipients._(recipient_id).post();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -198,7 +198,7 @@ string queryParams = @"{
 }";
 var list_id = "test_url_param";
 var recipient_id = "test_url_param";
-dynamic response = sg.client.contactdb.lists._(list_id).recipients._(recipient_id).delete(queryParams: queryParams);
+dynamic response = await sg.client.contactdb.lists._(list_id).recipients._(recipient_id).delete(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -217,7 +217,7 @@ string data = @"[
 ]";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.contactdb.recipients.patch(requestBody: data);
+dynamic response = await sg.client.contactdb.recipients.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -243,7 +243,7 @@ string data = @"[
 ]";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.contactdb.recipients.post(requestBody: data);
+dynamic response = await sg.client.contactdb.recipients.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -257,7 +257,7 @@ string queryParams = @"{
   'page': 1, 
   'page_size': 1
 }";
-dynamic response = sg.client.contactdb.recipients.get(queryParams: queryParams);
+dynamic response = await sg.client.contactdb.recipients.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -273,7 +273,7 @@ string data = @"[
 ]";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.contactdb.recipients.delete(requestBody: data);
+dynamic response = await sg.client.contactdb.recipients.delete(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -283,7 +283,7 @@ Console.ReadLine();
 // Retrieve the count of billable recipients
 // GET /contactdb/recipients/billable_count
 
-dynamic response = sg.client.contactdb.recipients.billable_count.get();
+dynamic response = await sg.client.contactdb.recipients.billable_count.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -293,7 +293,7 @@ Console.ReadLine();
 // Retrieve a Count of Recipients
 // GET /contactdb/recipients/count
 
-dynamic response = sg.client.contactdb.recipients.count.get();
+dynamic response = await sg.client.contactdb.recipients.count.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -306,7 +306,7 @@ Console.ReadLine();
 string queryParams = @"{
   '{field_name}': 'test_string'
 }";
-dynamic response = sg.client.contactdb.recipients.search.get(queryParams: queryParams);
+dynamic response = await sg.client.contactdb.recipients.search.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -317,7 +317,7 @@ Console.ReadLine();
 // GET /contactdb/recipients/{recipient_id}
 
 var recipient_id = "test_url_param";
-dynamic response = sg.client.contactdb.recipients._(recipient_id).get();
+dynamic response = await sg.client.contactdb.recipients._(recipient_id).get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -328,7 +328,7 @@ Console.ReadLine();
 // DELETE /contactdb/recipients/{recipient_id}
 
 var recipient_id = "test_url_param";
-dynamic response = sg.client.contactdb.recipients._(recipient_id).delete();
+dynamic response = await sg.client.contactdb.recipients._(recipient_id).delete();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -339,7 +339,7 @@ Console.ReadLine();
 // GET /contactdb/recipients/{recipient_id}/lists
 
 var recipient_id = "test_url_param";
-dynamic response = sg.client.contactdb.recipients._(recipient_id).lists.get();
+dynamic response = await sg.client.contactdb.recipients._(recipient_id).lists.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -349,7 +349,7 @@ Console.ReadLine();
 // Retrieve reserved fields
 // GET /contactdb/reserved_fields
 
-dynamic response = sg.client.contactdb.reserved_fields.get();
+dynamic response = await sg.client.contactdb.reserved_fields.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -385,7 +385,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.contactdb.segments.post(requestBody: data);
+dynamic response = await sg.client.contactdb.segments.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -395,7 +395,7 @@ Console.ReadLine();
 // Retrieve all segments
 // GET /contactdb/segments
 
-dynamic response = sg.client.contactdb.segments.get();
+dynamic response = await sg.client.contactdb.segments.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -423,7 +423,7 @@ string queryParams = @"{
   'segment_id': 'test_string'
 }";
 var segment_id = "test_url_param";
-dynamic response = sg.client.contactdb.segments._(segment_id).patch(requestBody: data, queryParams: queryParams);
+dynamic response = await sg.client.contactdb.segments._(segment_id).patch(requestBody: data, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -437,7 +437,7 @@ string queryParams = @"{
   'segment_id': 1
 }";
 var segment_id = "test_url_param";
-dynamic response = sg.client.contactdb.segments._(segment_id).get(queryParams: queryParams);
+dynamic response = await sg.client.contactdb.segments._(segment_id).get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -451,7 +451,7 @@ string queryParams = @"{
   'delete_contacts': 'true'
 }";
 var segment_id = "test_url_param";
-dynamic response = sg.client.contactdb.segments._(segment_id).delete(queryParams: queryParams);
+dynamic response = await sg.client.contactdb.segments._(segment_id).delete(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -466,7 +466,7 @@ string queryParams = @"{
   'page_size': 1
 }";
 var segment_id = "test_url_param";
-dynamic response = sg.client.contactdb.segments._(segment_id).recipients.get(queryParams: queryParams);
+dynamic response = await sg.client.contactdb.segments._(segment_id).recipients.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
