@@ -33,6 +33,13 @@ namespace Example
             Email email = new Email("test2@example.com");
             mail.Personalization[0].AddTo(email);
 
+            // If you want to use a transactional [template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html),
+            // the following code will replace the above subject and content. The sample code assumes you have defined
+            // substitution variables [KEY_1] and [KEY_2], to be replaced by VALUE_1 and VALUE_2 respectively, in your template.
+            //mail.TemplateId = "TEMPLATE_ID";
+            //mail.Personalization[0].AddSubstitution("[KEY_1]", "VALUE_1");
+            //mail.Personalization[0].AddSubstitution("[KEY_2]", "VALUE_2");
+
             dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
