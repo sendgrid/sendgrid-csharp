@@ -1,6 +1,10 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [8.0.1] - 2016-07-25 ## 
+### Added 
+- [Troubleshooting](https://github.com/sendgrid/sendgrid-csharp/blob/master/TROUBLESHOOTING.md) section 
+
 ## [8.0.0] - 2016-07-22 ## 
 ## BREAKING CHANGE 
 - updated dependency on [SendGrid.CSharp.HTTP.Client](https://github.com/sendgrid/csharp-http-client/releases/tag/v3.0.0), which had a breaking change 
