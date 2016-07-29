@@ -1,5 +1,6 @@
 using System;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
+using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
 string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
 dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
@@ -28,6 +29,8 @@ string data = @"{
   'suppression_group_id': 42, 
   'title': 'March Newsletter'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 dynamic response = sg.client.campaigns.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -61,6 +64,8 @@ string data = @"{
   'subject': 'New Products for Summer!', 
   'title': 'May Newsletter'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -97,6 +102,8 @@ Console.ReadLine();
 string data = @"{
   'send_at': 1489451436
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -111,6 +118,8 @@ Console.ReadLine();
 string data = @"{
   'send_at': 1489771528
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.post(requestBody: data);
 Console.WriteLine(response.StatusCode);
@@ -158,6 +167,8 @@ Console.ReadLine();
 string data = @"{
   'to': 'your.email@example.com'
 }";
+Object json = JsonConvert.DeserializeObject<Object>(data);
+data = json.ToString();
 var campaign_id = "test_url_param";
 dynamic response = sg.client.campaigns._(campaign_id).schedules.test.post(requestBody: data);
 Console.WriteLine(response.StatusCode);

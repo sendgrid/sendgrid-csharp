@@ -2,7 +2,7 @@
 
 # Quick Start
 
-Run the [Example Project](https://github.com/sendgrid/sendgrid-csharp/tree/master/SendGrid/SendGrid.sln) (make sure you have set your environment variable to include your SENDGRID_API_KEY).
+Run the [Example Project](https://github.com/sendgrid/sendgrid-csharp/tree/master/SendGrid/SendGrid/Helpers/Mail) (make sure you have set your Environment variable to include your SENDGRID_API_KEY).
 
 Click on the Example project, then click the `Start` button in the menu.
 
