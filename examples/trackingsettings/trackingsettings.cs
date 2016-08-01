@@ -13,7 +13,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-dynamic response = sg.client.tracking_settings.get(queryParams: queryParams);
+dynamic response = await sg.client.tracking_settings.get(queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -28,7 +28,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.tracking_settings.click.patch(requestBody: data);
+dynamic response = await sg.client.tracking_settings.click.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -38,7 +38,7 @@ Console.ReadLine();
 // Retrieve Click Track Settings
 // GET /tracking_settings/click
 
-dynamic response = sg.client.tracking_settings.click.get();
+dynamic response = await sg.client.tracking_settings.click.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -58,7 +58,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.tracking_settings.google_analytics.patch(requestBody: data);
+dynamic response = await sg.client.tracking_settings.google_analytics.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -68,7 +68,7 @@ Console.ReadLine();
 // Retrieve Google Analytics Settings
 // GET /tracking_settings/google_analytics
 
-dynamic response = sg.client.tracking_settings.google_analytics.get();
+dynamic response = await sg.client.tracking_settings.google_analytics.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -83,7 +83,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.tracking_settings.open.patch(requestBody: data);
+dynamic response = await sg.client.tracking_settings.open.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -93,7 +93,7 @@ Console.ReadLine();
 // Get Open Tracking Settings
 // GET /tracking_settings/open
 
-dynamic response = sg.client.tracking_settings.open.get();
+dynamic response = await sg.client.tracking_settings.open.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -113,7 +113,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = sg.client.tracking_settings.subscription.patch(requestBody: data);
+dynamic response = await sg.client.tracking_settings.subscription.patch(requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -123,7 +123,7 @@ Console.ReadLine();
 // Retrieve Subscription Tracking Settings
 // GET /tracking_settings/subscription
 
-dynamic response = sg.client.tracking_settings.subscription.get();
+dynamic response = await sg.client.tracking_settings.subscription.get();
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
