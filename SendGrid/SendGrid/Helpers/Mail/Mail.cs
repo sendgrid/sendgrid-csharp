@@ -19,7 +19,7 @@ namespace SendGrid.Helpers.Mail
         private Dictionary<String, String> sections;
         private List<String> categories;
         private Dictionary<String, String> customArgs;
-        private long sendAt;
+        private long? sendAt;
         private ASM asm;
         private String batchId;
         private String setIpPoolId;
@@ -183,7 +183,7 @@ namespace SendGrid.Helpers.Mail
         }
 
         [JsonProperty(PropertyName = "send_at")]
-        public long SendAt
+        public long? SendAt
         {
             get
             {
@@ -347,18 +347,18 @@ namespace SendGrid.Helpers.Mail
         {
             return JsonConvert.SerializeObject(this,
                                 Formatting.None,
-                                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore, StringEscapeHandling = StringEscapeHandling.EscapeHtml });
+                                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Include, StringEscapeHandling = StringEscapeHandling.EscapeHtml });
         }
     }
 
 
     public class ClickTracking
     {
-        private bool enable;
-        private bool enableText;
+        private bool? enable;
+        private bool? enableText;
 
         [JsonProperty(PropertyName = "enable")]
-        public bool Enable
+        public bool? Enable
         {
             get
             {
@@ -372,7 +372,7 @@ namespace SendGrid.Helpers.Mail
         }
 
         [JsonProperty(PropertyName = "enable_text")]
-        public bool EnableText
+        public bool? EnableText
         {
             get
             {
@@ -389,11 +389,11 @@ namespace SendGrid.Helpers.Mail
 
     public class OpenTracking
     {
-        private bool enable;
+        private bool? enable;
         private String substitutionTag;
 
         [JsonProperty(PropertyName = "enable")]
-        public bool Enable
+        public bool? Enable
         {
             get
             {
@@ -424,13 +424,13 @@ namespace SendGrid.Helpers.Mail
 
     public class SubscriptionTracking
     {
-        private bool enable;
+        private bool? enable;
         private String text;
         private String html;
         private String substitutionTag;
 
         [JsonProperty(PropertyName = "enable")]
-        public bool Enable
+        public bool? Enable
         {
             get
             {
@@ -489,7 +489,7 @@ namespace SendGrid.Helpers.Mail
 
     public class Ganalytics
     {
-        private bool enable;
+        private bool? enable;
         private String utmSource;
         private String utmMedium;
         private String utmTerm;
@@ -497,7 +497,7 @@ namespace SendGrid.Helpers.Mail
         private String utmCampaign;
 
         [JsonProperty(PropertyName = "enable")]
-        public bool Enable
+        public bool? Enable
         {
             get
             {
@@ -649,11 +649,11 @@ namespace SendGrid.Helpers.Mail
 
     public class BCCSettings
     {
-        private bool enable;
+        private bool? enable;
         private String email;
 
         [JsonProperty(PropertyName = "enable")]
-        public bool Enable
+        public bool? Enable
         {
             get
             {
@@ -684,10 +684,10 @@ namespace SendGrid.Helpers.Mail
 
     public class BypassListManagement
     {
-        private bool enable;
+        private bool? enable;
 
         [JsonProperty(PropertyName = "enable")]
-        public bool Enable
+        public bool? Enable
         {
             get
             {
@@ -704,12 +704,12 @@ namespace SendGrid.Helpers.Mail
 
     public class FooterSettings
     {
-        private bool enable;
+        private bool? enable;
         private String text;
         private String html;
 
         [JsonProperty(PropertyName = "enable")]
-        public bool Enable
+        public bool? Enable
         {
             get
             {
@@ -754,10 +754,10 @@ namespace SendGrid.Helpers.Mail
 
     public class SandboxMode
     {
-        private bool enable;
+        private bool? enable;
 
         [JsonProperty(PropertyName = "enable")]
-        public bool Enable
+        public bool? Enable
         {
             get
             {
@@ -774,12 +774,12 @@ namespace SendGrid.Helpers.Mail
 
     public class SpamCheck
     {
-        private bool enable;
-        private int threshold;
+        private bool? enable;
+        private int? threshold;
         private String postToUrl;
 
         [JsonProperty(PropertyName = "enable")]
-        public bool Enable
+        public bool? Enable
         {
             get
             {
@@ -793,7 +793,7 @@ namespace SendGrid.Helpers.Mail
         }
 
         [JsonProperty(PropertyName = "threshold")]
-        public int Threshold
+        public int? Threshold
         {
             get
             {
@@ -904,11 +904,11 @@ namespace SendGrid.Helpers.Mail
 
     public class ASM
     {
-        private int groupId;
+        private int? groupId;
         private List<int> groupsToDisplay;
 
         [JsonProperty(PropertyName = "group_id")]
-        public int GroupId
+        public int? GroupId
         {
             get
             {
@@ -1118,7 +1118,7 @@ namespace SendGrid.Helpers.Mail
         private Dictionary<String, String> headers;
         private Dictionary<String, String> substitutions;
         private Dictionary<String, String> customArgs;
-        private long sendAt;
+        private long? sendAt;
 
         [JsonProperty(PropertyName = "to")]
         public List<Email> Tos
@@ -1219,7 +1219,7 @@ namespace SendGrid.Helpers.Mail
         }
 
         [JsonProperty(PropertyName = "send_at")]
-        public long SendAt
+        public long? SendAt
         {
             get
             {
