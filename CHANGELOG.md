@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [8.0.2] - 2016-08-01 ##
+## Fixed
+- [Issue #273](https://github.com/sendgrid/sendgrid-csharp/issues/273): Disable (or set) tracking
+- Now, settings set to false will generate the correct JSON
+- Big thanks to [Pontus Öwre](https://github.com/owre) for the pull!
+
 ## [8.0.1] - 2016-07-25 ## 
 ### Added 
 - [Troubleshooting](https://github.com/sendgrid/sendgrid-csharp/blob/master/TROUBLESHOOTING.md) section 
