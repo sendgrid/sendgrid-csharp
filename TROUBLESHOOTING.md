@@ -8,6 +8,7 @@ If you can't find a solution below, please open an [issue](https://github.com/se
 * [Migrating from v2 to v3](#migrating)
 * [Continue Using v2](#v2)
 * [Testing v3 /mail/send Calls Directly](#testing)
+* [Missing Classes](#missing)
 * [Error Messages](#error)
 * [Versions](#versions)
 * [Environment Variables and Your SendGrid API Key](#environment)
@@ -32,6 +33,20 @@ PM> Install-Package Sendgrid -Version 6.3.4
 Download:
 
 Click the "Clone or download" green button in [GitHub](https://github.com/sendgrid/sendgrid-csharp/tree/b27983a8f3d84a9d28972f2720cca0315ad9fe32) and choose download.
+
+<a name="missing"></a>
+## Missing Classes
+
+If you receive one of the following errors, or something similar:
+
+* ‘Helpers’ does not exist in the namespace ‘SengrGrid’
+* The type or namespace name ‘Mail’ could not be found
+
+it means that you are probably not compiling your application to .NET 4.5.2. Currently, this is the only supported version of .NET by SendGrid.
+
+The current solution is to download the code directly into your project and change the compile target to the desired version.
+
+If you are using ASP.NET Core, please [upvote this issue](https://github.com/sendgrid/sendgrid-csharp/issues/221).
 
 <a name="testing"></a>
 ## Testing v3 /mail/send Calls Directly
