@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SendGrid.Helpers.Mail
 {
@@ -1120,6 +1121,15 @@ namespace SendGrid.Helpers.Mail
         private Dictionary<String, String> customArgs;
         private long? sendAt;
 
+        public bool ShouldSerializeTos()
+        {
+            if (this.tos != null)
+            {
+                return this.tos.Any();
+            }
+            return false;
+        }
+
         [JsonProperty(PropertyName = "to")]
         public List<Email> Tos
         {
@@ -1134,6 +1144,16 @@ namespace SendGrid.Helpers.Mail
             }
         }
 
+
+        public bool ShouldSerializeCcs()
+        {
+            if (this.ccs != null)
+            {
+                return this.ccs.Any();
+            }
+            return false;
+        }
+
         [JsonProperty(PropertyName = "cc")]
         public List<Email> Ccs
         {
@@ -1146,6 +1166,15 @@ namespace SendGrid.Helpers.Mail
             {
                 ccs = value;
             }
+        }
+
+        public bool ShouldSerializeBccs()
+        {
+            if (this.bccs != null)
+            {
+                return this.bccs.Any();
+            }
+            return false;
         }
 
         [JsonProperty(PropertyName = "bcc")]

@@ -1,6 +1,11 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [8.0.3] - 2016-08-17 ##
+## Fixed
+- [Issue #297](https://github.com/sendgrid/sendgrid-csharp/issues/297): Don't Include Empty Objects in JSON Request Body
+- If you clear out the values of the to, bcc or cc lists in the personalization objects, they will no longer be included in the JSON request body
+
 ## [8.0.2] - 2016-08-01 ##
 ## Fixed
 - [Issue #273](https://github.com/sendgrid/sendgrid-csharp/issues/273): Disable (or set) tracking
