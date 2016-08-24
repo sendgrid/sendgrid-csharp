@@ -1,6 +1,11 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [8.0.4] - 2016-08-24 ##
+### Added
+- Table of Contents in the README
+- Added a [USE_CASES.md](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md) section, with the first use case example for transactional templates
+
 ## [8.0.3] - 2016-08-17 ##
 ## Fixed
 - [Issue #297](https://github.com/sendgrid/sendgrid-csharp/issues/297): Don't Include Empty Objects in JSON Request Body
