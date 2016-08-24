@@ -43,7 +43,7 @@ I hope you are having a great day in -city- :)
 
 ## With Mail Helper Class
 
-```charp
+```csharp
 using System;
 using SendGrid;
 using SendGrid.Helpers.Mail;
