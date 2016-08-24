@@ -15,8 +15,81 @@ namespace Example
             HelloEmail().Wait(); // this will actually send an email
             KitchenSink().Wait(); // this will only send an email if you set SandBox Mode to false
 
+            // v3 Template Example with Mail Helper
+            TemplateWithHelper().Wait();
+
+            // v3 Template Example without Mail Helper
+            TemplateWithoutHelper().Wait();
+
             // v3 Web API
             ApiKeys().Wait();
+
+        }
+
+        private static async Task TemplateWithHelper()
+        {
+            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
+
+            Email from = new Email("dx@sendgrid.com");
+            String subject = "I'm replacing the subject tag";
+            Email to = new Email("elmer@sendgrid.com");
+            Content content = new Content("text/html", "I'm replacing the <strong>body tag</strong>");
+            Mail mail = new Mail(from, subject, to, content);
+
+            mail.TemplateId = "13b8f94f-bcae-4ec6-b752-70d6cb59f932";
+            mail.Personalization[0].AddSubstitution("-name-", "Example User");
+            mail.Personalization[0].AddSubstitution("-city-", "Denver");
+
+            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+            Console.WriteLine(response.Headers.ToString());
+
+            Console.ReadLine();
+
+        }
+
+        private static async Task TemplateWithoutHelper()
+        {
+            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
+
+            string data = @"{
+              'personalizations': [
+                {
+                  'to': [
+                    {
+                      'email': 'elmer@sendgrid.com'
+                    }
+                  ],
+                  'substitutions': {
+                    '-name-': 'Example User',
+                    '-city-': 'Denver'
+                  },
+                  'subject': 'I\'m replacing the subject tag'
+                }
+              ],
+              'from': {
+                'email': 'dx@sendgrid.com'
+              },
+              'content': [
+                {
+                  'type': 'text/html',
+                  'value': 'I\'m replacing the <strong>body tag</strong>'
+                }
+              ],
+              'template_id': '13b8f94f-bcae-4ec6-b752-70d6cb59f932'
+            }";
+            //test @example.com
+            Object json = JsonConvert.DeserializeObject<Object>(data);
+            dynamic response = await sg.client.mail.send.post(requestBody: json.ToString());
+
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+            Console.WriteLine(response.Headers.ToString());
+
+            Console.ReadLine();
 
         }
 
@@ -32,13 +105,6 @@ namespace Example
             Mail mail = new Mail(from, subject, to, content);
             Email email = new Email("test2@example.com");
             mail.Personalization[0].AddTo(email);
-
-            // If you want to use a transactional [template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html),
-            // the following code will replace the above subject and content. The sample code assumes you have defined
-            // substitution variables [KEY_1] and [KEY_2], to be replaced by VALUE_1 and VALUE_2 respectively, in your template.
-            //mail.TemplateId = "TEMPLATE_ID";
-            //mail.Personalization[0].AddSubstitution("[KEY_1]", "VALUE_1");
-            //mail.Personalization[0].AddSubstitution("[KEY_2]", "VALUE_2");
 
             dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
             Console.WriteLine(response.StatusCode);
