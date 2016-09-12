@@ -1,5 +1,7 @@
 [![BuildStatus](https://travis-ci.org/sendgrid/sendgrid-csharp.png?branch=master)](https://travis-ci.org/sendgrid/sendgrid-csharp)
 
+Please see our announcement regarding [breaking changes](https://github.com/sendgrid/sendgrid-csharp/issues/317). Your support is appreciated!
+
 **This library allows you to quickly and easily use the SendGrid Web API v3 via C# with .NET.**
 
 Version 7.X.X+ of this library provides full support for all SendGrid [Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html) endpoints, including the new [v3 /mail/send](https://sendgrid.com/blog/introducing-v3mailsend-sendgrids-new-mail-endpoint).
@@ -222,6 +224,8 @@ namespace Example
 
 <a name="announcements"></a>
 # Announcements
+
+Please see our announcement regarding [breaking changes](https://github.com/sendgrid/sendgrid-csharp/issues/317). Your support is appreciated!
 
 All updates to this library is documented in our [CHANGELOG](https://github.com/sendgrid/sendgrid-csharp/blob/master/CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-csharp/releases).
 
