@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0-beta-*",
+
+  "dependencies": {
+    "NETStandard.Library": "1.6.0",
+    "Newtonsoft.Json": "9.0.1",
+    "System.Collections.Specialized": "4.0.1",
+    "System.Dynamic.Runtime": "4.0.11"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}

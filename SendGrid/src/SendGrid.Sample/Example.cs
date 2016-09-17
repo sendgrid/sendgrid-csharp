@@ -22,7 +22,7 @@ namespace Example
 
         private static async Task HelloEmail()
         {
-            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
             dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
 
             Email from = new Email("test@example.com");
@@ -52,7 +52,7 @@ namespace Example
 
         private static async Task KitchenSink()
         {
-            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
             dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
 
             Mail mail = new Mail();
@@ -248,7 +248,7 @@ namespace Example
 
         private static async Task ApiKeys()
         {
-            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
             dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
 
             string queryParams = @"{

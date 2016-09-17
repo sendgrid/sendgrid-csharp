@@ -25,7 +25,7 @@ namespace SendGrid
         {
             _baseUri = new Uri(baseUri);
             _apiKey = apiKey;
-            Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            Version = this.GetType().GetTypeInfo().Assembly.GetName().Version.ToString();
             Dictionary<String, String> requestHeaders = new Dictionary<String, String>();
             requestHeaders.Add("Authorization", "Bearer " + apiKey);
             requestHeaders.Add("Content-Type", "application/json");
