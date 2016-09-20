@@ -68,23 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
-    <Compile Include="Helpers\Mail\ASM.cs" />
-    <Compile Include="Helpers\Mail\Attachment.cs" />
-    <Compile Include="Helpers\Mail\BCCSettings.cs" />
-    <Compile Include="Helpers\Mail\BypassListManagement.cs" />
-    <Compile Include="Helpers\Mail\ClickTracking.cs" />
-    <Compile Include="Helpers\Mail\Content.cs" />
-    <Compile Include="Helpers\Mail\Email.cs" />
-    <Compile Include="Helpers\Mail\FooterSettings.cs" />
-    <Compile Include="Helpers\Mail\Ganalytics.cs" />
     <Compile Include="Helpers\Mail\Mail.cs" />
-    <Compile Include="Helpers\Mail\MailSettings.cs" />
-    <Compile Include="Helpers\Mail\OpenTracking.cs" />
-    <Compile Include="Helpers\Mail\Personalization.cs" />
-    <Compile Include="Helpers\Mail\SandboxMode.cs" />
-    <Compile Include="Helpers\Mail\SpamCheck.cs" />
-    <Compile Include="Helpers\Mail\SubscriptionTracking.cs" />
-    <Compile Include="Helpers\Mail\TrackingSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
