@@ -27,7 +27,7 @@ namespace SendGrid.Helpers.Mail
         public Dictionary<string, string> CustomArgs { get; set; }
 
         [JsonProperty(PropertyName = "send_at")]
-        public long SendAt { get; set; }
+        public long? SendAt { get; set; }
 
         public void AddTo(Email email)
         {
