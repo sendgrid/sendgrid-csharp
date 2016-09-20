@@ -5,7 +5,7 @@ namespace SendGrid.Helpers.Mail
     public class Ganalytics
     {
         [JsonProperty(PropertyName = "enable")]
-        public bool Enable { get; set; }
+        public bool? Enable { get; set; }
 
         [JsonProperty(PropertyName = "utm_source")]
         public string UtmSource { get; set; }
