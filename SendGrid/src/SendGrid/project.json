@@ -1,16 +1,48 @@
 {
-  "version": "1.0.0-beta-*",
-
-  "dependencies": {
-    "NETStandard.Library": "1.6.0",
-    "Newtonsoft.Json": "9.0.1",
-    "System.Collections.Specialized": "4.0.1",
-    "System.Dynamic.Runtime": "4.0.11"
+  "version": "1.0.1-beta-*",
+  "authors": [ "SendGrid" ],
+  "description": "C# client library and examples for using SendGrid API's to send mail and access Web API v3 endpoints.",
+  "packOptions": {
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/sendgrid/sendgrid-csharp"
+    },
+    "tags": [
+      "sendgrid",
+      "email",
+      "microsoft",
+      "azure"
+    ]
   },
-
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/sendgrid-csharp.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": false
+  },
+  "dependencies": {
+    "Newtonsoft.Json": "9.0.1"
+  },
   "frameworks": {
+    "net452": {
+      "dependencies": {
+        "Microsoft.Net.Http": "2.2.29"
+      }
+    },
     "netstandard1.6": {
-      "imports": "dnxcore50"
+      "imports": "dnxcore50",
+      "dependencies": {
+        "NETStandard.Library": "1.6.0",
+        "System.Collections.Specialized": "4.0.1",
+        "System.Dynamic.Runtime": "4.0.11"
+      }
     }
+  },
+  "scripts": {
+    "postcompile": [
+      "dotnet pack --no-build --configuration %compile:Configuration%"
+    ]
   }
 }

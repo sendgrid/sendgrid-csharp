@@ -14,7 +14,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SendGrid.Test", "src\SendGr
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SendGrid", "src\SendGrid\SendGrid.xproj", "{FA7D07F4-1D9F-45DA-9616-60FF15AEABBB}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SendGrid.Sample", "src\SendGrid.Sample\SendGrid.Sample.xproj", "{8E3A5ABD-A398-49FA-A91A-FEC6C592E1D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendGrid.Sample", "src\SendGrid.Sample\SendGrid.Sample.csproj", "{FEE53629-ECCC-4041-B50A-A6EE61B55D20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,10 +30,10 @@ Global
 		{FA7D07F4-1D9F-45DA-9616-60FF15AEABBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA7D07F4-1D9F-45DA-9616-60FF15AEABBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA7D07F4-1D9F-45DA-9616-60FF15AEABBB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E3A5ABD-A398-49FA-A91A-FEC6C592E1D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E3A5ABD-A398-49FA-A91A-FEC6C592E1D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E3A5ABD-A398-49FA-A91A-FEC6C592E1D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E3A5ABD-A398-49FA-A91A-FEC6C592E1D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEE53629-ECCC-4041-B50A-A6EE61B55D20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEE53629-ECCC-4041-B50A-A6EE61B55D20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEE53629-ECCC-4041-B50A-A6EE61B55D20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEE53629-ECCC-4041-B50A-A6EE61B55D20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +41,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B0A2442E-9DA7-4519-AD2D-0890DD0DAAB1} = {76DACB24-C2A4-4C99-8EA6-1813D22572A1}
 		{FA7D07F4-1D9F-45DA-9616-60FF15AEABBB} = {76DACB24-C2A4-4C99-8EA6-1813D22572A1}
-		{8E3A5ABD-A398-49FA-A91A-FEC6C592E1D2} = {76DACB24-C2A4-4C99-8EA6-1813D22572A1}
+		{FEE53629-ECCC-4041-B50A-A6EE61B55D20} = {76DACB24-C2A4-4C99-8EA6-1813D22572A1}
 	EndGlobalSection
 EndGlobal

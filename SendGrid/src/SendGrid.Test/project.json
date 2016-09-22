@@ -7,7 +7,7 @@
     "System.Runtime.Serialization.Primitives": "4.1.1",
     "xunit": "2.1.0",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "SendGrid": "1.0.0-*"
+    "SendGrid": "1.0.1-beta"
   },
   "testRunner": "xunit",
   "frameworks": {
