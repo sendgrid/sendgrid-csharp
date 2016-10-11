@@ -80,7 +80,7 @@ git clone https://github.com/sendgrid/sendgrid-csharp.git
 
 First, get your free SendGrid account [here](https://sendgrid.com/free?source=sendgrid-csharp).
 
-Next, update your Environment (user space) with your [SENDGRID_API_KEY](https://app.sendgrid.com/settings/api_keys).
+Next, update your Environment (user space) with your [SENDGRID_APIKEY](https://app.sendgrid.com/settings/api_keys).
 
 ##### Execute: #####
 
