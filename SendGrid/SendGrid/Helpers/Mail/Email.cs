@@ -14,8 +14,16 @@ namespace SendGrid.Helpers.Mail
             this.Name = name;
         }
 
+        private string _name;
+        private static readonly char[] Quote = {'\"'};
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name {
+            get { return _name; }
+            set
+            {
+                _name = value?.Trim(Quote);
+            }
+        }
 
         [JsonProperty(PropertyName = "email")]
         public string Address { get; set; }
