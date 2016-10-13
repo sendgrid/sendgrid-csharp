@@ -4,6 +4,7 @@ using System.Web.Script.Serialization;
 using SendGrid.Helpers.Mail;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using SendGrid;
 
 namespace Example
 {
@@ -12,24 +13,27 @@ namespace Example
         private static void Main()
         {
             // v3 Mail Helper
-            HelloEmail().Wait(); // this will actually send an email
-            KitchenSink().Wait(); // this will only send an email if you set SandBox Mode to false
+            //HelloEmail().Wait(); // this will actually send an email
+            //KitchenSink().Wait(); // this will only send an email if you set SandBox Mode to false
 
             // v3 Template Example with Mail Helper
             TemplateWithHelper().Wait();
 
             // v3 Template Example without Mail Helper
-            TemplateWithoutHelper().Wait();
+            //TemplateWithoutHelper().Wait();
 
             // v3 Web API
-            ApiKeys().Wait();
+            //ApiKeys().Wait();
 
         }
 
         private static async Task TemplateWithHelper()
         {
-            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
+            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY",
+                                                               EnvironmentVariableTarget.User);
+            SendGridAPIClient sg = new SendGridAPIClient(apiKey: apiKey,
+                                                         baseUri: "https://api.sendgrid.com",
+                                                         urlPath: "mail/send");
 
             Email from = new Email("dx@sendgrid.com");
             String subject = "I'm replacing the subject tag";
@@ -41,7 +45,10 @@ namespace Example
             mail.Personalization[0].AddSubstitution("-name-", "Example User");
             mail.Personalization[0].AddSubstitution("-city-", "Denver");
 
-            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
+            Console.WriteLine(mail.Get());
+            Response response = await sg.Client.RequestAsync(method: SendGridAPIClient.Methods.POST,
+                                                             requestBody: mail.Get(),
+                                                             urlPath: "mail/send");
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
