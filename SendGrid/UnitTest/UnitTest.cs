@@ -79,9 +79,8 @@ namespace UnitTest
         {
             Mail mail = new Mail();
 
-            Email email = new Email();
+            Email email = new Email("test@example.com");
             email.Name = "Example User";
-            email.Address = "test@example.com";
             mail.From = email;
 
             mail.Subject = "Hello World from the SendGrid CSharp Library";
