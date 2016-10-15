@@ -48,14 +48,28 @@ namespace SendGrid
             _baseUri = new Uri(baseUri);
             _apiKey = apiKey;
 
+            InitializeServices();
+
             Client = new Client(host: baseUri, requestHeaders: GetRequestHeaders(), version: version);
+        }
+
+        public SendGridAPIClient(string apiKey, string baseUri)
+        {
+            _baseUri = new Uri(BaseUri);
+            _apiKey = apiKey;
+
+            InitializeServices();
+
+            Client = new Client(host: baseUri, requestHeaders: GetRequestHeaders(), version: ApiVersion);
         }
 
         public SendGridAPIClient(string apiKey)
         {
             _baseUri = new Uri(BaseUri);
             _apiKey = apiKey;
-           
+
+            InitializeServices();
+
             Client = new Client(host: BaseUri, requestHeaders: GetRequestHeaders(), version: ApiVersion);
         }
 
@@ -63,6 +77,10 @@ namespace SendGrid
 
         #region Private Methods
 
+        /// <summary>
+        /// Request Headers to add
+        /// </summary>
+        /// <returns>Request Headers to add to the http call</returns>
         private Dictionary<string, string> GetRequestHeaders()
         {
             var requestHeaders = new Dictionary<String, String>();
@@ -74,11 +92,18 @@ namespace SendGrid
             return requestHeaders;
         }
 
+        /// <summary>
+        /// Get version of the api
+        /// </summary>
+        /// <returns>Version number of the api</returns>
         private string GetVersion()
         {
             return Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
+        /// <summary>
+        /// Initialize component api services
+        /// </summary>
         private void InitializeServices()
         {
             this.Mail = new MailService(Client);
@@ -86,6 +111,9 @@ namespace SendGrid
 
         #endregion
 
+        /// <summary>
+        /// Dispose elements
+        /// </summary>
         public void Dispose()
         {
             Client = null;
