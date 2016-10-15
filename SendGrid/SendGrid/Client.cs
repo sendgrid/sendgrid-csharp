@@ -10,36 +10,86 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Web;
 using System.Reflection;
+using SendGrid.Interfaces;
+using SendGrid.Concrete;
+using SendGrid.Enums;
 
 namespace SendGrid
 {
-    public class SendGridAPIClient
+    public class SendGridAPIClient : IDisposable
     {
-        private string _apiKey;
-        public string Version;
-        public dynamic client;
-        private Uri _baseUri;
-        private enum Methods
-        {
-            GET, POST, PATCH, DELETE
-        }
+        private const string ApiVersion = "v3";
+        private const string BaseUri = "https://api.sendgrid.com";
 
+        private string _apiKey;
+        private Uri _baseUri;
+
+        public string Version { get
+            {
+                return GetVersion();
+            }
+        }
+        public Client Client { get; private set; }
+
+        #region Services list
+
+        public IMailService Mail { get; private set; }
+
+        #endregion
+
+        #region Constructors
         /// <summary>
         ///     Create a client that connects to the SendGrid Web API
         /// </summary>
         /// <param name="apiKey">Your SendGrid API Key</param>
         /// <param name="baseUri">Base SendGrid API Uri</param>
-        public SendGridAPIClient(string apiKey, String baseUri = "https://api.sendgrid.com", String version = "v3")
+        public SendGridAPIClient(string apiKey, string baseUri, string version)
         {
             _baseUri = new Uri(baseUri);
             _apiKey = apiKey;
-            Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Dictionary<String, String> requestHeaders = new Dictionary<String, String>();
-            requestHeaders.Add("Authorization", "Bearer " + apiKey);
+
+            Client = new Client(host: baseUri, requestHeaders: GetRequestHeaders(), version: version);
+        }
+
+        public SendGridAPIClient(string apiKey)
+        {
+            _baseUri = new Uri(BaseUri);
+            _apiKey = apiKey;
+           
+            Client = new Client(host: BaseUri, requestHeaders: GetRequestHeaders(), version: ApiVersion);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private Dictionary<string, string> GetRequestHeaders()
+        {
+            var requestHeaders = new Dictionary<String, String>();
+            requestHeaders.Add("Authorization", "Bearer " + _apiKey);
             requestHeaders.Add("Content-Type", "application/json");
             requestHeaders.Add("User-Agent", "sendgrid/" + Version + " csharp");
             requestHeaders.Add("Accept", "application/json");
-            client = new Client(host: baseUri, requestHeaders: requestHeaders, version: version);
+
+            return requestHeaders;
+        }
+
+        private string GetVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        }
+
+        private void InitializeServices()
+        {
+            this.Mail = new MailService(Client);
+        }
+
+        #endregion
+
+        public void Dispose()
+        {
+            Client = null;
+            Mail = null;
         }
     }
 
@@ -98,10 +148,7 @@ namespace SendGrid
         public string UrlPath;
         public string MediaType;
         public WebProxy WebProxy;
-        public enum Methods
-        {
-            DELETE, GET, PATCH, POST, PUT
-        }
+
 
 
         /// <summary>
@@ -285,7 +332,7 @@ namespace SendGrid
                 return true;
             }
 
-            if (Enum.IsDefined(typeof(Methods), binder.Name.ToUpper()))
+            if (Enum.IsDefined(typeof(HttpVerbs), binder.Name.ToUpper()))
             {
                 string queryParams = null;
                 string requestBody = null;
@@ -400,4 +447,5 @@ namespace SendGrid
             }
         }
     }
+
 }

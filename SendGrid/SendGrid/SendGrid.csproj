@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="Concrete\MailService.cs" />
+    <Compile Include="Enums\HttpVerbs.cs" />
     <Compile Include="Helpers\Mail\ASM.cs" />
     <Compile Include="Helpers\Mail\Attachment.cs" />
     <Compile Include="Helpers\Mail\BCCSettings.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="Helpers\Mail\SpamCheck.cs" />
     <Compile Include="Helpers\Mail\SubscriptionTracking.cs" />
     <Compile Include="Helpers\Mail\TrackingSettings.cs" />
+    <Compile Include="Interfaces\IMailService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -88,7 +91,9 @@
     <None Include="packages.config" />
     <None Include="sendgrid-csharp.snk" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
