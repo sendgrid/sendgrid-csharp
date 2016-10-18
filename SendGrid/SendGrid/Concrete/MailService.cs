@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SendGrid.Concrete
 {
-    internal class MailService : IMailService
+    internal class MailService : IMailService, IDisposable
     {
         private const string Resource = @"/mail/send";
 
@@ -46,6 +46,12 @@ namespace SendGrid.Concrete
             }
             
             return result;
+        }
+
+        public void Dispose()
+        {
+            _client = null;
+            _mailRequestBody = null;
         }
     }
 }
