@@ -35,13 +35,13 @@ namespace Example
             String subject = "I'm replacing the subject tag";
             Email to = new Email("elmer@sendgrid.com");
             Content content = new Content("text/html", "I'm replacing the <strong>body tag</strong>");
-            Mail mail = new Mail(from, subject, to, content);
+            SendGrid.Models.Mail mail = new SendGrid.Models.Mail(from, subject, to, content);
 
             mail.TemplateId = "13b8f94f-bcae-4ec6-b752-70d6cb59f932";
             mail.Personalization[0].AddSubstitution("-name-", "Example User");
             mail.Personalization[0].AddSubstitution("-city-", "Denver");
 
-            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
+            dynamic response = await sg.client.mail.send.post(requestBody: mail.Serialize());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
@@ -102,16 +102,16 @@ namespace Example
             String subject = "Hello World from the SendGrid CSharp Library";
             Email to = new Email("test@example.com");
             Content content = new Content("text/plain", "Textual content");
-            Mail mail = new Mail(from, subject, to, content);
+            SendGrid.Models.Mail mail = new SendGrid.Models.Mail(from, subject, to, content);
             Email email = new Email("test2@example.com");
             mail.Personalization[0].AddTo(email);
 
-            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
+            dynamic response = await sg.client.mail.send.post(requestBody: mail.Serialize());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
 
-            Console.WriteLine(mail.Get());
+            Console.WriteLine(mail.Serialize());
             Console.ReadLine();
 
         }
@@ -121,7 +121,7 @@ namespace Example
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
 
-            Mail mail = new Mail();
+            SendGrid.Models.Mail mail = new SendGrid.Models.Mail();
 
             Email email = new Email();
             email.Name = "Example User";
@@ -303,12 +303,12 @@ namespace Example
             email.Address = "test@example.com";
             mail.ReplyTo = email;
 
-            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
+            dynamic response = await sg.client.mail.send.post(requestBody: mail.Serialize());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
 
-            Console.WriteLine(mail.Get());
+            Console.WriteLine(mail.Serialize());
             Console.ReadLine();
         }
 

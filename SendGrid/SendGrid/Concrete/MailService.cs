@@ -1,5 +1,4 @@
 ﻿using System;
-using SendGrid.Helpers.Mail;
 using SendGrid.Interfaces;
 using SendGrid.Models;
 using System.Threading.Tasks;
@@ -8,10 +7,12 @@ namespace SendGrid.Concrete
 {
     internal class MailService : IMailService
     {
-        private Client _client;
-        private Mail _mailRequest;
+        private const string Resource = @"/mail/send";
 
-        public MailService(Client client)
+        private SendGridHttpClient _client;
+        private Mail _mailRequestBody;
+
+        public MailService(SendGridHttpClient client)
         {
             _client = client;
         }
@@ -20,12 +21,12 @@ namespace SendGrid.Concrete
         {
             get
             {
-                return _mailRequest;
+                return _mailRequestBody;
             }
 
             set
             {
-                _mailRequest = value;
+                _mailRequestBody = value;
             }
         }
 
@@ -33,10 +34,17 @@ namespace SendGrid.Concrete
         {
             var result = new MailServiceResponse();
 
-            var response = await _client.MakeRequest(null, null);
+            try
+            {
+                var response = await _client.PostAsync<Mail>(Resource, _mailRequestBody);
+                result.Success = response.StatusCode == System.Net.HttpStatusCode.OK;
 
-            //TODO: Handle the response and return right data
-
+            } catch (Exception e)
+            {
+                result.Success = false;
+                result.Message = e.Message;
+            }
+            
             return result;
         }
     }

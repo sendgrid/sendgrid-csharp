@@ -20,15 +20,12 @@ namespace SendGrid.IntegrationTests
         [TestMethod]
         public async Task SendMailToSingleRecipientTest_Success()
         {
-
             //Arrange
             Email from = new Email("test@example.com");
             String subject = "Hello World from the SendGrid CSharp Library";
-            Email to = new Email("test@example.com");
+            Email to = new Email("rogercalaf@gmail.com");
             Content content = new Content("text/plain", "Textual content");
-            Mail mail = new Mail(from, subject, to, content);
-            Email email = new Email("test2@example.com");
-            mail.Personalization[0].AddTo(email);
+            SendGrid.Models.Mail mail = new SendGrid.Models.Mail(from, subject, to, content);
             _client.Mail.MailRequest = mail;
 
             //Act
