@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SendGrid.Enums;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -7,90 +9,12 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 using System.Web;
-using System.Reflection;
+using System.Web.Script.Serialization;
 
 namespace SendGrid
 {
-    public class SendGridAPIClient
-    {
-        private string _apiKey;
-        public string Version;
-        public dynamic client;
-        private Uri _baseUri;
-        private enum Methods
-        {
-            GET, POST, PATCH, DELETE
-        }
-
-        /// <summary>
-        ///     Create a client that connects to the SendGrid Web API
-        /// </summary>
-        /// <param name="apiKey">Your SendGrid API Key</param>
-        /// <param name="baseUri">Base SendGrid API Uri</param>
-        public SendGridAPIClient(string apiKey, String baseUri = "https://api.sendgrid.com", String version = "v3")
-        {
-            _baseUri = new Uri(baseUri);
-            _apiKey = apiKey;
-            Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Dictionary<String, String> requestHeaders = new Dictionary<String, String>();
-            requestHeaders.Add("Authorization", "Bearer " + apiKey);
-            requestHeaders.Add("Content-Type", "application/json");
-            requestHeaders.Add("User-Agent", "sendgrid/" + Version + " csharp");
-            requestHeaders.Add("Accept", "application/json");
-            client = new Client(host: baseUri, requestHeaders: requestHeaders, version: version);
-        }
-    }
-
-    public class Response
-    {
-        public HttpStatusCode StatusCode;
-        public HttpContent Body;
-        public HttpResponseHeaders Headers;
-
-        /// <summary>
-        ///     Holds the response from an API call.
-        /// </summary>
-        /// <param name="statusCode">https://msdn.microsoft.com/en-us/library/system.net.httpstatuscode(v=vs.110).aspx</param>
-        /// <param name="responseBody">https://msdn.microsoft.com/en-us/library/system.net.http.httpcontent(v=vs.118).aspx</param>
-        /// <param name="responseHeaders">https://msdn.microsoft.com/en-us/library/system.net.http.headers.httpresponseheaders(v=vs.118).aspx</param>
-        public Response(HttpStatusCode statusCode, HttpContent responseBody, HttpResponseHeaders responseHeaders)
-        {
-            StatusCode = statusCode;
-            Body = responseBody;
-            Headers = responseHeaders;
-        }
-
-        /// <summary>
-        ///     Converts string formatted response body to a Dictionary.
-        /// </summary>
-        /// <param name="content">https://msdn.microsoft.com/en-us/library/system.net.http.httpcontent(v=vs.118).aspx</param>
-        /// <returns>Dictionary object representation of HttpContent</returns>
-        public virtual Dictionary<string, dynamic> DeserializeResponseBody(HttpContent content)
-        {
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            var dsContent = jss.Deserialize<Dictionary<string, dynamic>>(content.ReadAsStringAsync().Result);
-            return dsContent;
-        }
-
-        /// <summary>
-        ///     Converts string formatted response headers to a Dictionary.
-        /// </summary>
-        /// <param name="content">https://msdn.microsoft.com/en-us/library/system.net.http.headers.httpresponseheaders(v=vs.118).aspx</param>
-        /// <returns>Dictionary object representation of  HttpRepsonseHeaders</returns>
-        public virtual Dictionary<string, string> DeserializeResponseHeaders(HttpResponseHeaders content)
-        {
-            var dsContent = new Dictionary<string, string>();
-            foreach (var pair in content)
-            {
-                dsContent.Add(pair.Key, pair.Value.First());
-            }
-            return dsContent;
-        }
-    }
-
-    public class Client : DynamicObject
+    public class SendGridHttpClient : DynamicObject
     {
         public string Host;
         public Dictionary<string, string> RequestHeaders;
@@ -98,12 +22,9 @@ namespace SendGrid
         public string UrlPath;
         public string MediaType;
         public WebProxy WebProxy;
-        public enum Methods
-        {
-            DELETE, GET, PATCH, POST, PUT
-        }
 
 
+        #region Constructors
         /// <summary>
         ///     REST API client.
         /// </summary>
@@ -112,7 +33,7 @@ namespace SendGrid
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
         /// <returns>Fluent interface to a REST API</returns>
-        public Client(WebProxy webProxy, string host, Dictionary<string, string> requestHeaders = null, string version = null, string urlPath = null)
+        public SendGridHttpClient(WebProxy webProxy, string host, Dictionary<string, string> requestHeaders = null, string version = null, string urlPath = null)
             : this(host, requestHeaders, version, urlPath)
         {
             WebProxy = webProxy;
@@ -126,7 +47,7 @@ namespace SendGrid
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
         /// <returns>Fluent interface to a REST API</returns>
-        public Client(string host, Dictionary<string, string> requestHeaders = null, string version = null, string urlPath = null)
+        public SendGridHttpClient(string host, Dictionary<string, string> requestHeaders = null, string version = null, string urlPath = null)
         {
             Host = host;
             if (requestHeaders != null)
@@ -137,6 +58,8 @@ namespace SendGrid
             UrlPath = (urlPath != null) ? urlPath : null;
         }
 
+        #endregion
+
         /// <summary>
         ///     Add requestHeaders to the API call
         /// </summary>
@@ -145,6 +68,26 @@ namespace SendGrid
         {
             RequestHeaders = (RequestHeaders != null)
                     ? RequestHeaders.Union(requestHeaders).ToDictionary(pair => pair.Key, pair => pair.Value) : requestHeaders;
+        }
+
+        /// <summary>
+        ///     Add the authorization header, override to customize
+        /// </summary>
+        /// <param name="header">Authorization header</param>
+        /// <returns>Authorization value to add to the header</returns>
+        public virtual AuthenticationHeaderValue AddAuthorization(KeyValuePair<string, string> header)
+        {
+            string[] split = header.Value.Split(new char[0]);
+            return new AuthenticationHeaderValue(split[0], split[1]);
+        }
+
+        /// <summary>
+        ///     Add the version of the API, override to customize
+        /// </summary>
+        /// <param name="version">Version string to add to the URL</param>
+        public virtual void AddVersion(string version)
+        {
+            Version = version;
         }
 
         /// <summary>
@@ -186,7 +129,7 @@ namespace SendGrid
         /// </summary>
         /// <param name="name">Name of url segment to add to the URL</param>
         /// <returns>A new client object with "name" added to the URL</returns>
-        private Client BuildClient(string name = null)
+        private SendGridHttpClient BuildClient(string name = null)
         {
             string endpoint;
 
@@ -200,7 +143,7 @@ namespace SendGrid
             }
 
             UrlPath = null; // Reset the current object's state before we return a new one
-            return new Client(Host, RequestHeaders, Version, endpoint);
+            return new SendGridHttpClient(Host, RequestHeaders, Version, endpoint);
 
         }
 
@@ -226,32 +169,13 @@ namespace SendGrid
             return new HttpClient();
         }
 
-        /// <summary>
-        ///     Add the authorization header, override to customize
-        /// </summary>
-        /// <param name="header">Authorization header</param>
-        /// <returns>Authorization value to add to the header</returns>
-        public virtual AuthenticationHeaderValue AddAuthorization(KeyValuePair<string, string> header)
-        {
-            string[] split = header.Value.Split(new char[0]);
-            return new AuthenticationHeaderValue(split[0], split[1]);
-        }
-
-        /// <summary>
-        ///     Add the version of the API, override to customize
-        /// </summary>
-        /// <param name="version">Version string to add to the URL</param>
-        public virtual void AddVersion(string version)
-        {
-            Version = version;
-        }
 
         /// <summary>
         ///     Deal with special cases and URL parameters
         /// </summary>
         /// <param name="name">Name of URL segment</param>
         /// <returns>A new client object with "name" added to the URL</returns>
-        public Client _(string name)
+        public SendGridHttpClient _(string name)
         {
             return BuildClient(name);
         }
@@ -285,7 +209,7 @@ namespace SendGrid
                 return true;
             }
 
-            if (Enum.IsDefined(typeof(Methods), binder.Name.ToUpper()))
+            if (Enum.IsDefined(typeof(HttpVerbs), binder.Name.ToUpper()))
             {
                 string queryParams = null;
                 string requestBody = null;
@@ -399,5 +323,124 @@ namespace SendGrid
                 }
             }
         }
+
+        public async Task<Response> PostAsync<T>(string resource, T content)
+        {
+            using (var client = BuildHttpClient())
+            {
+                try
+                {
+                    // Build the URL
+                    client.BaseAddress = new Uri(Host);
+
+                    // Build the request headers
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    if (RequestHeaders != null)
+                    {
+                        foreach (KeyValuePair<string, string> header in RequestHeaders)
+                        {
+                            if (header.Key == "Authorization")
+                            {
+                                client.DefaultRequestHeaders.Authorization = AddAuthorization(header);
+                            }
+                            else if (header.Key == "Content-Type")
+                            {
+                                MediaType = header.Value;
+                                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaType));
+                            }
+                            else
+                            {
+                                client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                            }
+                        }
+                    }
+
+                    // Build the request body
+                    StringContent requestContent = null;
+                    if (content != null)
+                    {
+                        //TODO: Implement an ISerializer
+                        string stringContent = JsonConvert.SerializeObject(content, Formatting.None,
+                                new JsonSerializerSettings
+                                {
+                                    NullValueHandling = NullValueHandling.Ignore,
+                                    DefaultValueHandling = DefaultValueHandling.Include,
+                                    StringEscapeHandling = StringEscapeHandling.EscapeHtml
+                                });
+
+                        requestContent = new StringContent(stringContent, Encoding.UTF8, MediaType);
+                    }
+
+                    // Build the final request
+                    HttpRequestMessage request = new HttpRequestMessage
+                    {
+                        Method = HttpMethod.Post,
+                        RequestUri = new Uri(resource),
+                        Content = requestContent
+                    };
+
+                    return await MakeRequest(client, request).ConfigureAwait(false);
+
+                }
+                catch (Exception ex)
+                {
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    string message;
+                    message = (ex is HttpRequestException) ? ".NET HttpRequestException" : ".NET Exception";
+                    message = message + ", raw message: \n\n";
+                    response.Content = new StringContent(message + ex.Message);
+                    return new Response(response.StatusCode, response.Content, response.Headers);
+                }
+            }
+        }
     }
+
+    public class Response
+    {
+        public HttpStatusCode StatusCode;
+        public HttpContent Body;
+        public HttpResponseHeaders Headers;
+
+        /// <summary>
+        ///     Holds the response from an API call.
+        /// </summary>
+        /// <param name="statusCode">https://msdn.microsoft.com/en-us/library/system.net.httpstatuscode(v=vs.110).aspx</param>
+        /// <param name="responseBody">https://msdn.microsoft.com/en-us/library/system.net.http.httpcontent(v=vs.118).aspx</param>
+        /// <param name="responseHeaders">https://msdn.microsoft.com/en-us/library/system.net.http.headers.httpresponseheaders(v=vs.118).aspx</param>
+        public Response(HttpStatusCode statusCode, HttpContent responseBody, HttpResponseHeaders responseHeaders)
+        {
+            StatusCode = statusCode;
+            Body = responseBody;
+            Headers = responseHeaders;
+        }
+
+        /// <summary>
+        ///     Converts string formatted response body to a Dictionary.
+        /// </summary>
+        /// <param name="content">https://msdn.microsoft.com/en-us/library/system.net.http.httpcontent(v=vs.118).aspx</param>
+        /// <returns>Dictionary object representation of HttpContent</returns>
+        public virtual Dictionary<string, dynamic> DeserializeResponseBody(HttpContent content)
+        {
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            var dsContent = jss.Deserialize<Dictionary<string, dynamic>>(content.ReadAsStringAsync().Result);
+            return dsContent;
+        }
+
+        /// <summary>
+        ///     Converts string formatted response headers to a Dictionary.
+        /// </summary>
+        /// <param name="content">https://msdn.microsoft.com/en-us/library/system.net.http.headers.httpresponseheaders(v=vs.118).aspx</param>
+        /// <returns>Dictionary object representation of  HttpRepsonseHeaders</returns>
+        public virtual Dictionary<string, string> DeserializeResponseHeaders(HttpResponseHeaders content)
+        {
+            var dsContent = new Dictionary<string, string>();
+            foreach (var pair in content)
+            {
+                dsContent.Add(pair.Key, pair.Value.First());
+            }
+            return dsContent;
+        }
+    }
+
+    
 }

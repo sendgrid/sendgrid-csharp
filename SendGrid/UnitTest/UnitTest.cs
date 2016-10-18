@@ -43,7 +43,7 @@ namespace UnitTest
         [Test]
         public void TestHelloEmail()
         {
-            Mail mail = new Mail();
+            SendGrid.Models.Mail mail = new SendGrid.Models.Mail();
 
             Email email = new Email();
             email.Address = "test@example.com";
@@ -66,7 +66,7 @@ namespace UnitTest
             content.Value = "<html><body>HTML content</body></html>";
             mail.AddContent(content);
 
-            String ret = mail.Get();
+            String ret = mail.Serialize();
             String final = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(ret),
                                 Formatting.None,
                                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Include });
@@ -77,7 +77,7 @@ namespace UnitTest
         [Test]
         public void TestKitchenSink()
         {
-            Mail mail = new Mail();
+            SendGrid.Models.Mail mail = new SendGrid.Models.Mail();
 
             Email email = new Email();
             email.Name = "Example User";
@@ -259,7 +259,7 @@ namespace UnitTest
             email.Address = "test@example.com";
             mail.ReplyTo = email;
 
-            String ret = mail.Get();
+            String ret = mail.Serialize();
             String final = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(ret),
                                 Formatting.None,
                                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Include });
@@ -270,7 +270,7 @@ namespace UnitTest
         [Test]
         public void TestKitchenSinkInverse()
         {
-            Mail mail = new Mail();
+            SendGrid.Models.Mail mail = new SendGrid.Models.Mail();
 
             Email email = new Email();
             email.Name = "Example User";
@@ -437,7 +437,7 @@ namespace UnitTest
             email.Address = "test@example.com";
             mail.ReplyTo = email;
 
-            String ret = mail.Get();
+            String ret = mail.Serialize();
             String final = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(ret),
                                 Formatting.None,
                                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore });
