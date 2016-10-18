@@ -23,7 +23,7 @@ namespace SendGrid.IntegrationTests
             //Arrange
             Email from = new Email("test@example.com");
             String subject = "Hello World from the SendGrid CSharp Library";
-            Email to = new Email("rogercalaf@gmail.com");
+            Email to = new Email("test@example.com");
             Content content = new Content("text/plain", "Textual content");
             SendGrid.Models.Mail mail = new SendGrid.Models.Mail(from, subject, to, content);
             _client.Mail.MailRequest = mail;
