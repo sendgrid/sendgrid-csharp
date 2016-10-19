@@ -31,9 +31,7 @@ namespace Example
         {
             String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY",
                                                                EnvironmentVariableTarget.User);
-            SendGridAPIClient sg = new SendGridAPIClient(apiKey: apiKey,
-                                                         baseUri: "https://api.sendgrid.com",
-                                                         urlPath: "mail/send");
+            Client client = new Client(apiKey: apiKey);
 
             Email from = new Email("dx@sendgrid.com");
             String subject = "I'm replacing the subject tag";
@@ -46,9 +44,9 @@ namespace Example
             mail.Personalization[0].AddSubstitution("-city-", "Denver");
 
             Console.WriteLine(mail.Get());
-            Response response = await sg.Client.RequestAsync(method: SendGridAPIClient.Methods.POST,
-                                                             requestBody: mail.Get(),
-                                                             urlPath: "mail/send");
+            Response response = await client.RequestAsync(method: SendGridAPIClient.Methods.POST,
+                                                          requestBody: mail.Get(),
+                                                          urlPath: "mail/send");
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());

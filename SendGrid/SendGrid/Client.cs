@@ -12,36 +12,6 @@ using System.Reflection;
 
 namespace SendGrid
 {
-    public class SendGridAPIClient
-    {
-        private string _apiKey;
-        public string Version;
-        public Client Client;
-        private Uri _baseUri;
-        public enum Methods
-        {
-            GET, POST, PATCH, DELETE
-        }
-
-        /// <summary>
-        ///     Create a client that connects to the SendGrid Web API
-        /// </summary>
-        /// <param name="apiKey">Your SendGrid API Key</param>
-        /// <param name="baseUri">Base SendGrid API Uri</param>
-        public SendGridAPIClient(string apiKey, String baseUri = "https://api.sendgrid.com", String version = "v3", String urlPath = null)
-        {
-            _baseUri = new Uri(baseUri);
-            _apiKey = apiKey;
-            Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Dictionary<String, String> requestHeaders = new Dictionary<String, String>();
-            requestHeaders.Add("Authorization", "Bearer " + apiKey);
-            requestHeaders.Add("Content-Type", "application/json");
-            requestHeaders.Add("User-Agent", "sendgrid/" + Version + " csharp");
-            requestHeaders.Add("Accept", "application/json");
-            Client = new Client(host: baseUri, requestHeaders: requestHeaders, version: version, urlPath: urlPath);
-        }
-    }
-
     public class Response
     {
         public HttpStatusCode StatusCode;
@@ -111,8 +81,8 @@ namespace SendGrid
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
         /// <returns>Interface to the SendGrid REST API</returns>
-        public Client(WebProxy webProxy, string host, Dictionary<string, string> requestHeaders = null, string version = null, string urlPath = null)
-            : this(host, requestHeaders, version, urlPath)
+        public Client(WebProxy webProxy, string apiKey, string host = "https://api.sendgrid.com", Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
+            : this(apiKey, host, requestHeaders, version, urlPath)
         {
             WebProxy = webProxy;
         }
@@ -125,9 +95,16 @@ namespace SendGrid
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
         /// <returns>Interface to the SendGrid REST API</returns>
-        public Client(string host, Dictionary<string, string> requestHeaders = null, string version = null, string urlPath = null)
+        public Client(string apiKey, string host = "https://api.sendgrid.com", Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
         {
             Host = host;
+            Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            Dictionary<String, String> defaultHeaders = new Dictionary<String, String>();
+            defaultHeaders.Add("Authorization", "Bearer " + apiKey);
+            defaultHeaders.Add("Content-Type", "application/json");
+            defaultHeaders.Add("User-Agent", "sendgrid/" + Version + " csharp");
+            defaultHeaders.Add("Accept", "application/json");
+            AddRequestHeader(defaultHeaders);
             if (requestHeaders != null)
             {
                 AddRequestHeader(requestHeaders);
