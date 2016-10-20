@@ -245,7 +245,7 @@ namespace SendGrid
         /// <param name="requestBody">JSON formatted string</param>
         /// <param name="queryParams">JSON formatted queary paramaters</param>
         /// <returns>Response object</returns>
-        public async Task<Response> RequestAsync(SendGridAPIClient.Methods method,
+        public async Task<Response> RequestAsync(Client.Methods method,
                                                  string requestBody = null,
                                                  string queryParams = null,
                                                  string urlPath = null)
