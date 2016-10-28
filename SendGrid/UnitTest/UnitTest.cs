@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Collections.Generic;
 using System.Net;
@@ -12,9 +13,8 @@ namespace UnitTest
     [TestFixture]
     public class UnitTests
     {
-        static string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
+        static string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
         static string host = "http://localhost:4010";
-        public dynamic sg = new SendGrid.SendGridAPIClient(_apiKey, host);
         Process process = new Process();
 
         [TestFixtureSetUp]
@@ -69,7 +69,7 @@ namespace UnitTest
             String ret = mail.Get();
             String final = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(ret),
                                 Formatting.None,
-                                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Include });
+                                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore });
             Assert.AreEqual(final, "{\"from\":{\"email\":\"test@example.com\"},\"subject\":\"Hello World from the SendGrid CSharp Library\",\"personalizations\":[{\"to\":[{\"email\":\"test@example.com\"}]}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Textual content\"},{\"type\":\"text/html\",\"value\":\"<html><body>HTML content</body></html>\"}]}");
         }
 
@@ -262,186 +262,8 @@ namespace UnitTest
             String ret = mail.Get();
             String final = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(ret),
                                 Formatting.None,
-                                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Include });
-            Assert.AreEqual(final, "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"subject\":\"Hello World from the SendGrid CSharp Library\",\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"cc\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"},{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"},{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"subject\":\"Thank you for signing up, %name%\",\"headers\":{\"X-Test\":\"True\",\"X-Mock\":\"True\"},\"substitutions\":{\"%name%\":\"Example User\",\"%city%\":\"Denver\"},\"custom_args\":{\"marketing\":\"false\",\"transactional\":\"true\"},\"send_at\":1461775051},{\"to\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"cc\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"},{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"},{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"subject\":\"Thank you for signing up, %name%\",\"headers\":{\"X-Test\":\"True\",\"X-Mock\":\"True\"},\"substitutions\":{\"%name%\":\"Example User\",\"%city%\":\"Denver\"},\"custom_args\":{\"marketing\":\"false\",\"transactional\":\"true\"},\"send_at\":1461775051}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Textual content\"},{\"type\":\"text/html\",\"value\":\"<html><body>HTML content</body></html>\"},{\"type\":\"text/calendar\",\"value\":\"Party Time!!\"}],\"attachments\":[{\"content\":\"TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gQ3JhcyBwdW12\",\"type\":\"application/pdf\",\"filename\":\"balance_001.pdf\",\"disposition\":\"attachment\",\"content_id\":\"Balance Sheet\"},{\"content\":\"BwdW\",\"type\":\"image/png\",\"filename\":\"banner.png\",\"disposition\":\"inline\",\"content_id\":\"Banner\"}],\"template_id\":\"13b8f94f-bcae-4ec6-b752-70d6cb59f932\",\"headers\":{\"X-Day\":\"Monday\",\"X-Month\":\"January\"},\"sections\":{\"%section1\":\"Substitution for Section 1 Tag\",\"%section2\":\"Substitution for Section 2 Tag\"},\"categories\":[\"customer\",\"vip\"],\"custom_args\":{\"campaign\":\"welcome\",\"sequence\":\"2\"},\"send_at\":1461775051,\"asm\":{\"group_id\":3,\"groups_to_display\":[1,4,5]},\"ip_pool_name\":\"23\",\"mail_settings\":{\"bcc\":{\"enable\":true,\"email\":\"test@example.com\"},\"bypass_list_management\":{\"enable\":true},\"footer\":{\"enable\":true,\"text\":\"Some Footer Text\",\"html\":\"<bold>Some HTML Here</bold>\"},\"sandbox_mode\":{\"enable\":true},\"spam_check\":{\"enable\":true,\"threshold\":1,\"post_to_url\":\"https://gotchya.example.com\"}},\"tracking_settings\":{\"click_tracking\":{\"enable\":true,\"enable_text\":false},\"open_tracking\":{\"enable\":true,\"substitution_tag\":\"Optional tag to replace with the open image in the body of the message\"},\"subscription_tracking\":{\"enable\":true,\"text\":\"text to insert into the text/plain portion of the message\",\"html\":\"<bold>HTML to insert into the text/html portion of the message</bold>\",\"substitution_tag\":\"text to insert into the text/plain portion of the message\"},\"ganalytics\":{\"enable\":true,\"utm_source\":\"some source\",\"utm_medium\":\"some medium\",\"utm_term\":\"some term\",\"utm_content\":\"some content\",\"utm_campaign\":\"some campaign\"}},\"reply_to\":{\"email\":\"test@example.com\"}}");
-        }
-
-        // All paramaters available for sending an email
-        [Test]
-        public void TestKitchenSinkInverse()
-        {
-            Mail mail = new Mail();
-
-            Email email = new Email();
-            email.Name = "Example User";
-            email.Address = "test@example.com";
-            mail.From = email;
-
-            mail.Subject = "Hello World from the SendGrid CSharp Library";
-
-            Personalization personalization = new Personalization();
-            email = new Email();
-            email.Name = "Example User";
-            email.Address = "test@example.com";
-            personalization.AddTo(email);
-            email = new Email();
-            email.Name = "Example User";
-            email.Address = "test@example.com";
-            personalization.AddCc(email);
-            email = new Email();
-            email.Name = "Example User";
-            email.Address = "test@example.com";
-            personalization.AddCc(email);
-            email = new Email();
-            email.Name = "Example User";
-            email.Address = "test@example.com";
-            personalization.AddBcc(email);
-            email = new Email();
-            email.Name = "Example User";
-            email.Address = "test@example.com";
-            personalization.AddBcc(email);
-            personalization.Subject = "Thank you for signing up, %name%";
-            personalization.AddHeader("X-Test", "True");
-            personalization.AddHeader("X-Mock", "True");
-            personalization.AddSubstitution("%name%", "Example User");
-            personalization.AddSubstitution("%city%", "Denver");
-            personalization.AddCustomArgs("marketing", "false");
-            personalization.AddCustomArgs("transactional", "true");
-            personalization.SendAt = 1461775051;
-            mail.AddPersonalization(personalization);
-
-            personalization = new Personalization();
-            email = new Email();
-            email.Name = "Example User";
-            email.Address = "test@example.com";
-            personalization.AddTo(email);
-            email = new Email();
-            email.Name = "Example User";
-            email.Address = "test@example.com";
-            personalization.AddCc(email);
-            email = new Email();
-            email.Name = "Example User";
-            email.Address = "test@example.com";
-            personalization.AddCc(email);
-            email = new Email();
-            email.Name = "Example User";
-            email.Address = "test@example.com";
-            personalization.AddBcc(email);
-            email = new Email();
-            email.Name = "Example User";
-            email.Address = "test@example.com";
-            personalization.AddBcc(email);
-            personalization.Subject = "Thank you for signing up, %name%";
-            personalization.AddHeader("X-Test", "True");
-            personalization.AddHeader("X-Mock", "True");
-            personalization.AddSubstitution("%name%", "Example User");
-            personalization.AddSubstitution("%city%", "Denver");
-            personalization.AddCustomArgs("marketing", "false");
-            personalization.AddCustomArgs("transactional", "true");
-            personalization.SendAt = 1461775051;
-            mail.AddPersonalization(personalization);
-
-            Content content = new Content();
-            content.Type = "text/plain";
-            content.Value = "Textual content";
-            mail.AddContent(content);
-            content = new Content();
-            content.Type = "text/html";
-            content.Value = "<html><body>HTML content</body></html>";
-            mail.AddContent(content);
-            content = new Content();
-            content.Type = "text/calendar";
-            content.Value = "Party Time!!";
-            mail.AddContent(content);
-
-            Attachment attachment = new Attachment();
-            attachment.Content = "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gQ3JhcyBwdW12";
-            attachment.Type = "application/pdf";
-            attachment.Filename = "balance_001.pdf";
-            attachment.Disposition = "attachment";
-            attachment.ContentId = "Balance Sheet";
-            mail.AddAttachment(attachment);
-
-            attachment = new Attachment();
-            attachment.Content = "BwdW";
-            attachment.Type = "image/png";
-            attachment.Filename = "banner.png";
-            attachment.Disposition = "inline";
-            attachment.ContentId = "Banner";
-            mail.AddAttachment(attachment);
-
-            mail.TemplateId = "13b8f94f-bcae-4ec6-b752-70d6cb59f932";
-
-            mail.AddHeader("X-Day", "Monday");
-            mail.AddHeader("X-Month", "January");
-
-            mail.AddSection("%section1", "Substitution for Section 1 Tag");
-            mail.AddSection("%section2", "Substitution for Section 2 Tag");
-
-            mail.AddCategory("customer");
-            mail.AddCategory("vip");
-
-            mail.AddCustomArgs("campaign", "welcome");
-            mail.AddCustomArgs("sequence", "2");
-
-            ASM asm = new ASM();
-            asm.GroupId = 3;
-            List<int> groups_to_display = new List<int>()
-            {
-                1, 4, 5
-            };
-            asm.GroupsToDisplay = groups_to_display;
-            mail.Asm = asm;
-
-            mail.SendAt = 1461775051;
-
-            mail.SetIpPoolId = "23";
-
-            // This must be a valid [batch ID](https://sendgrid.com/docs/API_Reference/SMTP_API/scheduling_parameters.html)
-            // mail.BatchId = "some_batch_id";
-
-            MailSettings mailSettings = new MailSettings();
-            BCCSettings bccSettings = new BCCSettings();
-            bccSettings.Enable = false;
-            mailSettings.BccSettings = bccSettings;
-            BypassListManagement bypassListManagement = new BypassListManagement();
-            bypassListManagement.Enable = false;
-            mailSettings.BypassListManagement = bypassListManagement;
-            FooterSettings footerSettings = new FooterSettings();
-            footerSettings.Enable = false;
-            mailSettings.FooterSettings = footerSettings;
-            SandboxMode sandboxMode = new SandboxMode();
-            sandboxMode.Enable = false;
-            mailSettings.SandboxMode = sandboxMode;
-            SpamCheck spamCheck = new SpamCheck();
-            spamCheck.Enable = false;
-            mailSettings.SpamCheck = spamCheck;
-            mail.MailSettings = mailSettings;
-
-            TrackingSettings trackingSettings = new TrackingSettings();
-            ClickTracking clickTracking = new ClickTracking();
-            clickTracking.Enable = false;
-            trackingSettings.ClickTracking = clickTracking;
-            OpenTracking openTracking = new OpenTracking();
-            openTracking.Enable = false;
-            trackingSettings.OpenTracking = openTracking;
-            SubscriptionTracking subscriptionTracking = new SubscriptionTracking();
-            subscriptionTracking.Enable = false;
-            trackingSettings.SubscriptionTracking = subscriptionTracking;
-            Ganalytics ganalytics = new Ganalytics();
-            ganalytics.Enable = false;
-            trackingSettings.Ganalytics = ganalytics;
-            mail.TrackingSettings = trackingSettings;
-
-            email = new Email();
-            email.Address = "test@example.com";
-            mail.ReplyTo = email;
-
-            String ret = mail.Get();
-            String final = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(ret),
-                                Formatting.None,
                                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore });
-            Assert.AreEqual(final, "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"subject\":\"Hello World from the SendGrid CSharp Library\",\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"cc\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"},{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"},{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"subject\":\"Thank you for signing up, %name%\",\"headers\":{\"X-Test\":\"True\",\"X-Mock\":\"True\"},\"substitutions\":{\"%name%\":\"Example User\",\"%city%\":\"Denver\"},\"custom_args\":{\"marketing\":\"false\",\"transactional\":\"true\"},\"send_at\":1461775051},{\"to\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"cc\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"},{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"},{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"subject\":\"Thank you for signing up, %name%\",\"headers\":{\"X-Test\":\"True\",\"X-Mock\":\"True\"},\"substitutions\":{\"%name%\":\"Example User\",\"%city%\":\"Denver\"},\"custom_args\":{\"marketing\":\"false\",\"transactional\":\"true\"},\"send_at\":1461775051}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Textual content\"},{\"type\":\"text/html\",\"value\":\"<html><body>HTML content</body></html>\"},{\"type\":\"text/calendar\",\"value\":\"Party Time!!\"}],\"attachments\":[{\"content\":\"TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gQ3JhcyBwdW12\",\"type\":\"application/pdf\",\"filename\":\"balance_001.pdf\",\"disposition\":\"attachment\",\"content_id\":\"Balance Sheet\"},{\"content\":\"BwdW\",\"type\":\"image/png\",\"filename\":\"banner.png\",\"disposition\":\"inline\",\"content_id\":\"Banner\"}],\"template_id\":\"13b8f94f-bcae-4ec6-b752-70d6cb59f932\",\"headers\":{\"X-Day\":\"Monday\",\"X-Month\":\"January\"},\"sections\":{\"%section1\":\"Substitution for Section 1 Tag\",\"%section2\":\"Substitution for Section 2 Tag\"},\"categories\":[\"customer\",\"vip\"],\"custom_args\":{\"campaign\":\"welcome\",\"sequence\":\"2\"},\"send_at\":1461775051,\"asm\":{\"group_id\":3,\"groups_to_display\":[1,4,5]},\"ip_pool_name\":\"23\",\"mail_settings\":{\"bcc\":{\"enable\":false},\"bypass_list_management\":{\"enable\":false},\"footer\":{\"enable\":false},\"sandbox_mode\":{\"enable\":false},\"spam_check\":{\"enable\":false}},\"tracking_settings\":{\"click_tracking\":{\"enable\":false},\"open_tracking\":{\"enable\":false},\"subscription_tracking\":{\"enable\":false},\"ganalytics\":{\"enable\":false}},\"reply_to\":{\"email\":\"test@example.com\"}}");
+            Assert.AreEqual(final, "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"subject\":\"Hello World from the SendGrid CSharp Library\",\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"cc\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"},{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"},{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"subject\":\"Thank you for signing up, %name%\",\"headers\":{\"X-Test\":\"True\",\"X-Mock\":\"True\"},\"substitutions\":{\"%name%\":\"Example User\",\"%city%\":\"Denver\"},\"custom_args\":{\"marketing\":\"false\",\"transactional\":\"true\"},\"send_at\":1461775051},{\"to\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"cc\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"},{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"},{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"subject\":\"Thank you for signing up, %name%\",\"headers\":{\"X-Test\":\"True\",\"X-Mock\":\"True\"},\"substitutions\":{\"%name%\":\"Example User\",\"%city%\":\"Denver\"},\"custom_args\":{\"marketing\":\"false\",\"transactional\":\"true\"},\"send_at\":1461775051}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Textual content\"},{\"type\":\"text/html\",\"value\":\"<html><body>HTML content</body></html>\"},{\"type\":\"text/calendar\",\"value\":\"Party Time!!\"}],\"attachments\":[{\"content\":\"TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gQ3JhcyBwdW12\",\"type\":\"application/pdf\",\"filename\":\"balance_001.pdf\",\"disposition\":\"attachment\",\"content_id\":\"Balance Sheet\"},{\"content\":\"BwdW\",\"type\":\"image/png\",\"filename\":\"banner.png\",\"disposition\":\"inline\",\"content_id\":\"Banner\"}],\"template_id\":\"13b8f94f-bcae-4ec6-b752-70d6cb59f932\",\"headers\":{\"X-Day\":\"Monday\",\"X-Month\":\"January\"},\"sections\":{\"%section1\":\"Substitution for Section 1 Tag\",\"%section2\":\"Substitution for Section 2 Tag\"},\"categories\":[\"customer\",\"vip\"],\"custom_args\":{\"campaign\":\"welcome\",\"sequence\":\"2\"},\"send_at\":1461775051,\"asm\":{\"group_id\":3,\"groups_to_display\":[1,4,5]},\"ip_pool_name\":\"23\",\"mail_settings\":{\"bcc\":{\"enable\":true,\"email\":\"test@example.com\"},\"bypass_list_management\":{\"enable\":true},\"footer\":{\"enable\":true,\"text\":\"Some Footer Text\",\"html\":\"<bold>Some HTML Here</bold>\"},\"sandbox_mode\":{\"enable\":true},\"spam_check\":{\"enable\":true,\"threshold\":1,\"post_to_url\":\"https://gotchya.example.com\"}},\"tracking_settings\":{\"click_tracking\":{\"enable\":true,\"enable_text\":false},\"open_tracking\":{\"enable\":true,\"substitution_tag\":\"Optional tag to replace with the open image in the body of the message\"},\"subscription_tracking\":{\"enable\":true,\"text\":\"text to insert into the text/plain portion of the message\",\"html\":\"<bold>HTML to insert into the text/html portion of the message</bold>\",\"substitution_tag\":\"text to insert into the text/plain portion of the message\"},\"ganalytics\":{\"enable\":true,\"utm_source\":\"some source\",\"utm_medium\":\"some medium\",\"utm_term\":\"some term\",\"utm_content\":\"some content\",\"utm_campaign\":\"some campaign\"}},\"reply_to\":{\"email\":\"test@example.com\"}}");
         }
 
         [Test]
@@ -453,7 +275,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.access_settings.activity.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "access_settings/activity", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -478,7 +301,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.access_settings.whitelist.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "access_settings/whitelist", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -488,7 +312,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.access_settings.whitelist.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "access_settings/whitelist", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -507,7 +332,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.access_settings.whitelist.delete(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "access_settings/whitelist", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -518,7 +344,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.access_settings.whitelist._(rule_id).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "access_settings/whitelist/" + rule_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -529,7 +356,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.access_settings.whitelist._(rule_id).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "access_settings/whitelist/" + rule_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -546,7 +374,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.alerts.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "alerts", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -556,7 +385,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.alerts.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "alerts", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -572,7 +402,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.alerts._(alert_id).patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "alerts/" + alert_id, requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -583,7 +414,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.alerts._(alert_id).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "alerts/" + alert_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -594,7 +426,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.alerts._(alert_id).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "alerts/" + alert_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -615,7 +448,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.api_keys.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "api_keys", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -628,7 +462,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.api_keys.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "api_keys", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -648,7 +483,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.api_keys._(api_key_id).put(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "api_keys/" + api_key_id, requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -664,7 +500,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.api_keys._(api_key_id).patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "api_keys/" + api_key_id, requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -675,7 +512,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.api_keys._(api_key_id).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "api_keys/" + api_key_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -686,7 +524,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.api_keys._(api_key_id).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "api_keys/" + api_key_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -703,7 +542,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.asm.groups.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "asm/groups", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -716,7 +556,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.asm.groups.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "asm/groups", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -734,7 +575,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.asm.groups._(group_id).patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "asm/groups/" + group_id, requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -745,7 +587,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.asm.groups._(group_id).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "asm/groups/" + group_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -756,7 +599,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.asm.groups._(group_id).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "asm/groups/" + group_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -775,7 +619,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.asm.groups._(group_id).suppressions.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "asm/groups/" + group_id + "/suppressions", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -786,7 +631,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.asm.groups._(group_id).suppressions.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "asm/groups/" + group_id + "/suppressions", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -806,7 +652,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.asm.groups._(group_id).suppressions.search.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "asm/groups/" + group_id + "/suppressions/search", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -818,7 +665,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.asm.groups._(group_id).suppressions._(email).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "asm/groups/" + group_id + "/suppressions/" + email, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -828,7 +676,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.asm.suppressions.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "asm/suppressions", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -846,7 +695,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.asm.suppressions.global.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "asm/suppressions/global", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -857,7 +707,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.asm.suppressions.global._(email).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "asm/suppressions/global/" + email, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -868,7 +719,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.asm.suppressions.global._(email).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "asm/suppressions/global/" + email, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -879,7 +731,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.asm.suppressions._(email).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "asm/suppressions/" + email, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -897,7 +750,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.browsers.stats.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "browsers/stats", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -929,7 +783,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.campaigns.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -943,7 +798,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.campaigns.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "campaigns", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -965,7 +821,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.campaigns._(campaign_id).patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "campaigns/" + campaign_id, requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -976,7 +833,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.campaigns._(campaign_id).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "campaigns/" + campaign_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -987,7 +845,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.campaigns._(campaign_id).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "campaigns/" + campaign_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -1003,7 +862,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.campaigns._(campaign_id).schedules.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "campaigns/" + campaign_id + "/schedules", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1019,7 +879,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.campaigns._(campaign_id).schedules.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns/" + campaign_id + "/schedules", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -1030,7 +891,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.campaigns._(campaign_id).schedules.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "campaigns/" + campaign_id + "/schedules", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1041,7 +903,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.campaigns._(campaign_id).schedules.delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "campaigns/" + campaign_id + "/schedules", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -1052,7 +915,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.campaigns._(campaign_id).schedules.now.post(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns/" + campaign_id + "/schedules/now", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -1068,7 +932,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.campaigns._(campaign_id).schedules.test.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns/" + campaign_id + "/schedules/test", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -1083,7 +948,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.categories.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "categories", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1101,7 +967,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.categories.stats.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "categories/stats", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1120,7 +987,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.categories.stats.sums.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "categories/stats/sums", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1135,7 +1003,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.clients.stats.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "clients/stats", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1151,7 +1020,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.clients._(client_type).stats.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "clients/" + client_type + "/stats", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1167,7 +1037,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.contactdb.custom_fields.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/custom_fields", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -1177,7 +1048,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.custom_fields.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/custom_fields", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1188,7 +1060,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.custom_fields._(custom_field_id).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/custom_fields/" + custom_field_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1199,7 +1072,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "202");
-            dynamic response = await sg.client.contactdb.custom_fields._(custom_field_id).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/custom_fields/" + custom_field_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Accepted);
         }
 
@@ -1214,7 +1088,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.contactdb.lists.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/lists", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -1224,7 +1099,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.lists.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/lists", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1242,7 +1118,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.contactdb.lists.delete(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/lists", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -1261,7 +1138,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.lists._(list_id).patch(requestBody: data, queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "contactdb/lists/" + list_id, requestBody: data, queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1275,7 +1153,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.lists._(list_id).get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/lists/" + list_id, queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1289,7 +1168,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "202");
-            dynamic response = await sg.client.contactdb.lists._(list_id).delete(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/lists/" + list_id, queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Accepted);
         }
 
@@ -1306,7 +1186,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.contactdb.lists._(list_id).recipients.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/lists/" + list_id + "/recipients", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -1322,7 +1203,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.lists._(list_id).recipients.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/lists/" + list_id + "/recipients", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1334,7 +1216,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.contactdb.lists._(list_id).recipients._(recipient_id).post(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/lists/" + list_id + "/recipients/" + recipient_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -1350,7 +1233,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.contactdb.lists._(list_id).recipients._(recipient_id).delete(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/lists/" + list_id + "/recipients/" + recipient_id, queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -1369,7 +1253,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.contactdb.recipients.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "contactdb/recipients", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -1395,7 +1280,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.contactdb.recipients.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/recipients", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -1409,7 +1295,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.recipients.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1425,7 +1312,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.recipients.delete(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/recipients", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1435,7 +1323,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.recipients.billable_count.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients/billable_count", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1445,7 +1334,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.recipients.count.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients/count", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1458,7 +1348,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.recipients.search.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients/search", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1469,7 +1360,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.recipients._(recipient_id).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients/" + recipient_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1480,7 +1372,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.contactdb.recipients._(recipient_id).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/recipients/" + recipient_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -1491,7 +1384,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.recipients._(recipient_id).lists.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients/" + recipient_id + "/lists", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1501,7 +1395,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.reserved_fields.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/reserved_fields", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1537,7 +1432,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.segments.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/segments", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1547,7 +1443,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.segments.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/segments", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1575,7 +1472,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.segments._(segment_id).patch(requestBody: data, queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "contactdb/segments/" + segment_id, requestBody: data, queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1589,7 +1487,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.segments._(segment_id).get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/segments/" + segment_id, queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1603,7 +1502,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.contactdb.segments._(segment_id).delete(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/segments/" + segment_id, queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -1618,7 +1518,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.contactdb.segments._(segment_id).recipients.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/segments/" + segment_id + "/recipients", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1635,7 +1536,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.devices.stats.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "devices/stats", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1653,7 +1555,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.geo.stats.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "geo/stats", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1670,7 +1573,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.ips.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "ips", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1680,7 +1584,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.ips.assigned.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "ips/assigned", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1695,7 +1600,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.ips.pools.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "ips/pools", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1705,7 +1611,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.ips.pools.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "ips/pools", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1721,7 +1628,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.ips.pools._(pool_name).put(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "ips/pools/" + pool_name, requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1732,7 +1640,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.ips.pools._(pool_name).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "ips/pools/" + pool_name, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1743,7 +1652,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.ips.pools._(pool_name).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "ips/pools/" + pool_name, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -1759,7 +1669,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.ips.pools._(pool_name).ips.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "ips/pools/" + pool_name + "/ips", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -1771,7 +1682,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.ips.pools._(pool_name).ips._(ip).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "ips/pools/" + pool_name + "/ips/" + ip, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -1786,7 +1698,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.ips.warmup.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "ips/warmup", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1796,7 +1709,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.ips.warmup.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "ips/warmup", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1807,7 +1721,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.ips.warmup._(ip_address).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "ips/warmup/" + ip_address, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1818,7 +1733,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.ips.warmup._(ip_address).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "ips/warmup/" + ip_address, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -1829,7 +1745,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.ips._(ip_address).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "ips/" + ip_address, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -1839,7 +1756,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.mail.batch.post(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "mail/batch", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -1850,7 +1768,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail.batch._(batch_id).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail/batch/" + batch_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2000,7 +1919,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "202");
-            dynamic response = await sg.client.mail.send.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "mail/send", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Accepted);
         }
 
@@ -2014,7 +1934,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2033,7 +1954,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.address_whitelist.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/address_whitelist", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2043,7 +1965,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.address_whitelist.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/address_whitelist", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2059,7 +1982,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.bcc.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/bcc", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2069,7 +1993,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.bcc.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/bcc", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2086,7 +2011,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.bounce_purge.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/bounce_purge", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2096,7 +2022,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.bounce_purge.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/bounce_purge", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2113,7 +2040,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.footer.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/footer", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2123,7 +2051,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.footer.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/footer", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2139,7 +2068,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.forward_bounce.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/forward_bounce", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2149,7 +2079,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.forward_bounce.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/forward_bounce", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2165,7 +2096,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.forward_spam.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/forward_spam", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2175,7 +2107,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.forward_spam.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/forward_spam", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2190,7 +2123,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.plain_content.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/plain_content", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2200,7 +2134,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.plain_content.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/plain_content", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2217,7 +2152,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.spam_check.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/spam_check", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2227,7 +2163,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.spam_check.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/spam_check", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2243,7 +2180,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.template.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/template", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2253,7 +2191,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mail_settings.template.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/template", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2271,7 +2210,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.mailbox_providers.stats.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mailbox_providers/stats", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2285,7 +2225,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.partner_settings.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "partner_settings", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2302,7 +2243,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.partner_settings.new_relic.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "partner_settings/new_relic", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2312,7 +2254,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.partner_settings.new_relic.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "partner_settings/new_relic", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2322,7 +2265,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.scopes.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "scopes", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2351,7 +2295,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.senders.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "senders", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -2361,7 +2306,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.senders.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "senders", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2391,7 +2337,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.senders._(sender_id).patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "senders/" + sender_id, requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2402,7 +2349,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.senders._(sender_id).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "senders/" + sender_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2413,7 +2361,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.senders._(sender_id).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "senders/" + sender_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -2424,7 +2373,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.senders._(sender_id).resend_verification.post(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "senders/" + sender_id + "/resend_verification", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -2441,7 +2391,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.stats.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "stats", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2462,7 +2413,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.subusers.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "subusers", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2477,7 +2429,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.subusers.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2490,7 +2443,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.subusers.reputations.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/reputations", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2508,7 +2462,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.subusers.stats.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/stats", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2526,7 +2481,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.subusers.stats.monthly.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/stats/monthly", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2545,7 +2501,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.subusers.stats.sums.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/stats/sums", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2561,7 +2518,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.subusers._(subuser_name).patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "subusers/" + subuser_name, requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -2572,7 +2530,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.subusers._(subuser_name).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "subusers/" + subuser_name, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -2588,7 +2547,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.subusers._(subuser_name).ips.put(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "subusers/" + subuser_name + "/ips", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2605,7 +2565,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.subusers._(subuser_name).monitor.put(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "subusers/" + subuser_name + "/monitor", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2622,7 +2583,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.subusers._(subuser_name).monitor.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "subusers/" + subuser_name + "/monitor", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2633,7 +2595,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.subusers._(subuser_name).monitor.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/" + subuser_name + "/monitor", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2644,7 +2607,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.subusers._(subuser_name).monitor.delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "subusers/" + subuser_name + "/monitor", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -2662,7 +2626,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.subusers._(subuser_name).stats.monthly.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/" + subuser_name + "/stats/monthly", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2678,7 +2643,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.suppression.blocks.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/blocks", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2697,7 +2663,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.suppression.blocks.delete(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/blocks", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -2708,7 +2675,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.suppression.blocks._(email).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/blocks/" + email, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2719,7 +2687,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.suppression.blocks._(email).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/blocks/" + email, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -2733,7 +2702,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.suppression.bounces.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/bounces", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2752,7 +2722,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.suppression.bounces.delete(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/bounces", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -2763,7 +2734,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.suppression.bounces._(email).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/bounces/" + email, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2777,7 +2749,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.suppression.bounces._(email).delete(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/bounces/" + email, queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -2793,7 +2766,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.suppression.invalid_emails.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/invalid_emails", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2812,7 +2786,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.suppression.invalid_emails.delete(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/invalid_emails", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -2823,7 +2798,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.suppression.invalid_emails._(email).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/invalid_emails/" + email, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2834,7 +2810,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.suppression.invalid_emails._(email).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/invalid_emails/" + email, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -2845,7 +2822,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.suppression.spam_report._(email).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/spam_report/" + email, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2856,7 +2834,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.suppression.spam_report._(email).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/spam_report/" + email, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -2872,7 +2851,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.suppression.spam_reports.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/spam_reports", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2891,7 +2871,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.suppression.spam_reports.delete(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/spam_reports", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -2907,7 +2888,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.suppression.unsubscribes.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/unsubscribes", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2922,7 +2904,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.templates.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "templates", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -2932,7 +2915,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.templates.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "templates", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2948,7 +2932,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.templates._(template_id).patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "templates/" + template_id, requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2959,7 +2944,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.templates._(template_id).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "templates/" + template_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -2970,7 +2956,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.templates._(template_id).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "templates/" + template_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -2991,7 +2978,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.templates._(template_id).versions.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "templates/" + template_id + "/versions", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -3012,7 +3000,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.templates._(template_id).versions._(version_id).patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "templates/" + template_id + "/versions/" + version_id, requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3024,7 +3013,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.templates._(template_id).versions._(version_id).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "templates/" + template_id + "/versions/" + version_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3036,7 +3026,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.templates._(template_id).versions._(version_id).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "templates/" + template_id + "/versions/" + version_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -3048,7 +3039,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.templates._(template_id).versions._(version_id).activate.post(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "templates/" + template_id + "/versions/" + version_id + "/activate", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3062,7 +3054,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.tracking_settings.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3077,7 +3070,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.tracking_settings.click.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "tracking_settings/click", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3087,7 +3081,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.tracking_settings.click.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings/click", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3107,7 +3102,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.tracking_settings.google_analytics.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "tracking_settings/google_analytics", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3117,7 +3113,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.tracking_settings.google_analytics.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings/google_analytics", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3132,7 +3129,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.tracking_settings.open.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "tracking_settings/open", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3142,7 +3140,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.tracking_settings.open.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings/open", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3162,7 +3161,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.tracking_settings.subscription.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "tracking_settings/subscription", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3172,7 +3172,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.tracking_settings.subscription.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings/subscription", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3182,7 +3183,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.account.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/account", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3192,7 +3194,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.credits.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/credits", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3207,7 +3210,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.email.put(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "user/email", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3217,7 +3221,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.email.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/email", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3233,7 +3238,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.password.put(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "user/password", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3250,7 +3256,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.profile.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/profile", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3260,7 +3267,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.profile.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/profile", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3276,7 +3284,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.user.scheduled_sends.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "user/scheduled_sends", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -3286,7 +3295,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.scheduled_sends.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/scheduled_sends", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3302,7 +3312,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.user.scheduled_sends._(batch_id).patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/scheduled_sends/" + batch_id, requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -3313,7 +3324,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.scheduled_sends._(batch_id).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/scheduled_sends/" + batch_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3324,7 +3336,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.user.scheduled_sends._(batch_id).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "user/scheduled_sends/" + batch_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -3340,7 +3353,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.settings.enforced_tls.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/settings/enforced_tls", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3350,7 +3364,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.settings.enforced_tls.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/settings/enforced_tls", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3365,7 +3380,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.username.put(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "user/username", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3375,7 +3391,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.username.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/username", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3402,7 +3419,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.webhooks._("event").settings.patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/webhooks/event/settings", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3412,7 +3430,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.webhooks._("event").settings.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/event/settings", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3427,7 +3446,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.user.webhooks._("event").test.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "user/webhooks/event/test", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -3445,7 +3465,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.user.webhooks.parse.settings.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "user/webhooks/parse/settings", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -3455,7 +3476,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.webhooks.parse.settings.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/parse/settings", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3473,7 +3495,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.webhooks.parse.settings._(hostname).patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/webhooks/parse/settings/" + hostname, requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3484,7 +3507,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.webhooks.parse.settings._(hostname).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/parse/settings/" + hostname, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3495,7 +3519,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.user.webhooks.parse.settings._(hostname).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "user/webhooks/parse/settings/" + hostname, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -3512,7 +3537,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.user.webhooks.parse.stats.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/parse/stats", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3536,7 +3562,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.whitelabel.domains.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/domains", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -3553,7 +3580,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.domains.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/domains", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3563,7 +3591,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.domains._("default").get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/domains/default", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3573,7 +3602,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.domains.subuser.get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/domains/subuser", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3583,7 +3613,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.whitelabel.domains.subuser.delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/domains/subuser", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -3600,7 +3631,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.domains._(domain_id).patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "whitelabel/domains/" + domain_id, requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3611,7 +3643,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.domains._(domain_id).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/domains/" + domain_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3622,7 +3655,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.whitelabel.domains._(domain_id).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/domains/" + domain_id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -3638,7 +3672,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.whitelabel.domains._(domain_id).subuser.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/domains/" + domain_id + "/subuser", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -3654,7 +3689,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.domains._(id).ips.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/domains/" + id + "/ips", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3666,7 +3702,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.domains._(id).ips._(ip).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/domains/" + id + "/ips/" + ip, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3677,7 +3714,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.domains._(id).validate.post(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/domains/" + id + "/validate", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3694,7 +3732,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.whitelabel.ips.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/ips", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -3709,7 +3748,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.ips.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/ips", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3720,7 +3760,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.ips._(id).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/ips/" + id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3731,7 +3772,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.whitelabel.ips._(id).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/ips/" + id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -3742,7 +3784,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.ips._(id).validate.post(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/ips/" + id + "/validate", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3763,7 +3806,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "201");
-            dynamic response = await sg.client.whitelabel.links.post(requestBody: data, queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/links", requestBody: data, queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
         }
 
@@ -3776,7 +3820,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.links.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/links", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3789,7 +3834,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.links._("default").get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/links/default", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3802,7 +3848,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.links.subuser.get(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/links/subuser", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3815,7 +3862,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.whitelabel.links.subuser.delete(queryParams: queryParams, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/links/subuser", queryParams: queryParams, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -3831,7 +3879,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.links._(id).patch(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "whitelabel/links/" + id, requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3842,7 +3891,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.links._(id).get(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/links/" + id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3853,7 +3903,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
-            dynamic response = await sg.client.whitelabel.links._(id).delete(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/links/" + id, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
         }
 
@@ -3864,7 +3915,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.links._(id).validate.post(requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/links/" + id + "/validate", requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -3880,7 +3932,8 @@ namespace UnitTest
             Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "200");
-            dynamic response = await sg.client.whitelabel.links._(link_id).subuser.post(requestBody: data, requestHeaders: headers);
+            Client client = new Client(apiKey, host);
+            Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/links/" + link_id + "/subuser", requestBody: data, requestHeaders: headers);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 

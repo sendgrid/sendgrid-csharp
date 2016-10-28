@@ -247,6 +247,7 @@ namespace SendGrid
         /// <returns>Response object</returns>
         public async Task<Response> RequestAsync(Client.Methods method,
                                                  string requestBody = null,
+                                                 Dictionary<string, string> requestHeaders = null,
                                                  string queryParams = null,
                                                  string urlPath = null)
         {
@@ -263,6 +264,10 @@ namespace SendGrid
                     string endpoint = BuildUrl(queryParams);
 
                     // Build the request headers
+                    if (requestHeaders != null)
+                    {
+                        AddRequestHeader(requestHeaders);
+                    }
                     client.DefaultRequestHeaders.Accept.Clear();
                     if (RequestHeaders != null)
                     {
