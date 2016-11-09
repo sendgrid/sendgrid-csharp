@@ -1,4 +1,4 @@
-namespace SendGrid.Helpers.Mail
+﻿namespace SendGrid.Helpers.Mail
 {
     using Newtonsoft.Json;
 

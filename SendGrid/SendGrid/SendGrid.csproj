@@ -76,6 +76,7 @@
     <Compile Include="Helpers\Mail\Content.cs" />
     <Compile Include="Helpers\Mail\Email.cs" />
     <Compile Include="Helpers\Mail\FooterSettings.cs" />
+    <Compile Include="Helpers\Mail\ForwardBounce.cs" />
     <Compile Include="Helpers\Mail\Ganalytics.cs" />
     <Compile Include="Helpers\Mail\Mail.cs" />
     <Compile Include="Helpers\Mail\MailSettings.cs" />
