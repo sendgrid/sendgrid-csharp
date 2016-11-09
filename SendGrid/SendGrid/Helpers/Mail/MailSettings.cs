@@ -18,5 +18,8 @@ namespace SendGrid.Helpers.Mail
 
         [JsonProperty(PropertyName = "spam_check")]
         public SpamCheck SpamCheck { get; set; }
+        
+        [JsonProperty(PropertyName = "forward_bounce")]
+        public ForwardBounce ForwardBounce { get; set; }
     }
 }
