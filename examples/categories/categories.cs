@@ -1,9 +1,10 @@
 using System;
+using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
 using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
-string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
+string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+Client client = new Client(apiKey);
 
 ////////////////////////////////////////////////////////
 // Retrieve all categories
@@ -14,7 +15,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-dynamic response = await sg.client.categories.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "categories", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -32,7 +33,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_date': '2016-01-01'
 }";
-dynamic response = await sg.client.categories.stats.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "categories/stats", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -51,7 +52,7 @@ string queryParams = @"{
   'sort_by_metric': 'test_string', 
   'start_date': '2016-01-01'
 }";
-dynamic response = await sg.client.categories.stats.sums.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "categories/stats/sums", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

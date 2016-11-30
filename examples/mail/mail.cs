@@ -1,15 +1,16 @@
 using System;
+using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
 using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
-string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
+string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+Client client = new Client(apiKey);
 
 ////////////////////////////////////////////////////////
 // Create a batch ID
 // POST /mail/batch
 
-dynamic response = await sg.client.mail.batch.post();
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "mail/batch");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -20,7 +21,7 @@ Console.ReadLine();
 // GET /mail/batch/{batch_id}
 
 var batch_id = "test_url_param";
-dynamic response = await sg.client.mail.batch._(batch_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail/batch/" + batch_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -171,7 +172,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail.send.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "mail/send", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

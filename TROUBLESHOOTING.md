@@ -1,4 +1,4 @@
-If you have a non-library SendGrid issue, please contact our [support team](https://support.sendgrid.com).
+﻿If you have a non-library SendGrid issue, please contact our [support team](https://support.sendgrid.com).
 
 If you can't find a solution below, please open an [issue](https://github.com/sendgrid/sendgrid-csharp/issues).
 
@@ -59,9 +59,11 @@ If you are using ASP.NET Core, please [upvote this issue](https://github.com/sen
 To read the error message returned by SendGrid's API:
 
 ```csharp
-dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
+Response response = await client.RequestAsync(method: Client.Methods.POST,
+                                              requestBody: mail.Get(),
+                                              urlPath: "mail/send");
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result); // The message will be here
 Console.WriteLine(response.Headers.ToString());
 ```
 

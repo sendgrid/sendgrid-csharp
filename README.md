@@ -51,14 +51,13 @@ For a sample implementation, check the [Example](https://github.com/sendgrid/sen
 Add the following namespaces to use the library:
 ```csharp
 using System;
-using System.Web.Script.Serialization;
 using SendGrid;
-using SendGrid.Helpers.Mail; // Include if you want to use the Mail Helper
+using SendGrid.Helpers.Mail; // If you are using the Mail Helper
+using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 ```
 
 ## Dependencies
 
-- [SendGrid.CSharp.HTTP.Client](https://github.com/sendgrid/csharp-http-client)
 - [Newtonsoft.Json](http://www.newtonsoft.com/json)
 
 <a name="quick_start"></a>
@@ -72,9 +71,11 @@ The following is the minimum needed code to send an email with the [/mail/send H
 
 ```csharp
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System.Threading.Tasks;
 
 namespace Example
 {
@@ -112,9 +113,10 @@ The following is the minimum needed code to send an email without the /mail/send
 
 ```csharp
 using System;
-using SendGrid;
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using SendGrid;
 
 namespace Example
 {

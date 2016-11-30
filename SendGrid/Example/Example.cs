@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Script.Serialization;
-using SendGrid.Helpers.Mail;
-using Newtonsoft.Json;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace Example
 {
@@ -23,7 +22,7 @@ namespace Example
             //TemplateWithoutHelperAsync().Wait();
 
             // v3 Web API
-            ApiKeysAsync().Wait();
+            ASMGroupsAsync().Wait();
         }
 
         private static async Task TemplateWithHelperAsync()
@@ -118,7 +117,7 @@ namespace Example
 
         private static async Task KitchenSinkAsync()
         {
-            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             Client client = new Client(apiKey);
 
             Mail mail = new Mail();
@@ -312,7 +311,7 @@ namespace Example
             Console.ReadLine();
         }
 
-        private static async Task ApiKeysAsync()
+        private static async Task ASMGroupsAsync()
         {
             string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
             Client client = new Client(apiKey);
@@ -340,8 +339,7 @@ namespace Example
             response = await client.RequestAsync(method: Client.Methods.POST,
                                                  urlPath: "asm/groups",
                                                  requestBody: json.ToString());
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            var ds_response = jss.Deserialize<Dictionary<string, dynamic>>(response.Body.ReadAsStringAsync().Result);
+            var ds_response = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(response.Body.ReadAsStringAsync().Result);
             string group_id = ds_response["id"].ToString();
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);

@@ -1,9 +1,10 @@
 using System;
+using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
 using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
-string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
+string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+Client client = new Client(apiKey);
 
 ////////////////////////////////////////////////////////
 // Create API keys
@@ -20,7 +21,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.api_keys.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "api_keys", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -33,7 +34,7 @@ Console.ReadLine();
 string queryParams = @"{
   'limit': 1
 }";
-dynamic response = await sg.client.api_keys.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "api_keys", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -53,7 +54,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var api_key_id = "test_url_param";
-dynamic response = await sg.client.api_keys._(api_key_id).put(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "api_keys/" + api_key_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -69,7 +70,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var api_key_id = "test_url_param";
-dynamic response = await sg.client.api_keys._(api_key_id).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "api_keys/" + api_key_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -80,7 +81,7 @@ Console.ReadLine();
 // GET /api_keys/{api_key_id}
 
 var api_key_id = "test_url_param";
-dynamic response = await sg.client.api_keys._(api_key_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "api_keys/" + api_key_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -91,7 +92,7 @@ Console.ReadLine();
 // DELETE /api_keys/{api_key_id}
 
 var api_key_id = "test_url_param";
-dynamic response = await sg.client.api_keys._(api_key_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "api_keys/" + api_key_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
-using System.Web;
-using System.Reflection;
 
 namespace SendGrid
 {
@@ -38,8 +37,7 @@ namespace SendGrid
         /// <returns>Dictionary object representation of HttpContent</returns>
         public virtual Dictionary<string, dynamic> DeserializeResponseBody(HttpContent content)
         {
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            var dsContent = jss.Deserialize<Dictionary<string, dynamic>>(content.ReadAsStringAsync().Result);
+            var dsContent = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(content.ReadAsStringAsync().Result);
             return dsContent;
         }
 
@@ -99,7 +97,7 @@ namespace SendGrid
         {
             Host = host;
             Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Dictionary<String, String> defaultHeaders = new Dictionary<String, String>();
+            Dictionary<string, string> defaultHeaders = new Dictionary<string, string>();
             defaultHeaders.Add("Authorization", "Bearer " + apiKey);
             defaultHeaders.Add("Content-Type", "application/json");
             defaultHeaders.Add("User-Agent", "sendgrid/" + Version + " csharp");
@@ -161,9 +159,8 @@ namespace SendGrid
 
             if (queryParams != null)
             {
-                JavaScriptSerializer jss = new JavaScriptSerializer();
-                var ds_query_params = jss.Deserialize<Dictionary<string, dynamic>>(queryParams);
-                var query = HttpUtility.ParseQueryString(string.Empty);
+                var ds_query_params = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(queryParams);
+                var query = new Uri(endpoint + "?" + string.Empty).ParseQueryString();
                 foreach (var pair in ds_query_params)
                 {
                     query[pair.Key] = pair.Value.ToString();
@@ -243,7 +240,7 @@ namespace SendGrid
         /// </summary>
         /// <param name="method">HTTP verb</param>
         /// <param name="requestBody">JSON formatted string</param>
-        /// <param name="queryParams">JSON formatted queary paramaters</param>
+        /// <param name="queryParams">JSON formatted query paramaters</param>
         /// <returns>Response object</returns>
         public async Task<Response> RequestAsync(Client.Methods method,
                                                  string requestBody = null,

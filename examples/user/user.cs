@@ -1,15 +1,16 @@
 using System;
+using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
 using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
-string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
+string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+Client client = new Client(apiKey);
 
 ////////////////////////////////////////////////////////
 // Get a user's account information.
 // GET /user/account
 
-dynamic response = await sg.client.user.account.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/account");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -19,7 +20,7 @@ Console.ReadLine();
 // Retrieve your credit balance
 // GET /user/credits
 
-dynamic response = await sg.client.user.credits.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/credits");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -34,7 +35,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.email.put(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "user/email", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -44,7 +45,7 @@ Console.ReadLine();
 // Retrieve your account email address
 // GET /user/email
 
-dynamic response = await sg.client.user.email.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/email");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -60,7 +61,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.password.put(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "user/password", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -77,7 +78,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.profile.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/profile", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -87,7 +88,7 @@ Console.ReadLine();
 // Get a user's profile
 // GET /user/profile
 
-dynamic response = await sg.client.user.profile.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/profile");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -103,7 +104,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.scheduled_sends.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "user/scheduled_sends", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -113,7 +114,7 @@ Console.ReadLine();
 // Retrieve all scheduled sends
 // GET /user/scheduled_sends
 
-dynamic response = await sg.client.user.scheduled_sends.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/scheduled_sends");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -129,7 +130,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var batch_id = "test_url_param";
-dynamic response = await sg.client.user.scheduled_sends._(batch_id).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/scheduled_sends/" + batch_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -140,7 +141,7 @@ Console.ReadLine();
 // GET /user/scheduled_sends/{batch_id}
 
 var batch_id = "test_url_param";
-dynamic response = await sg.client.user.scheduled_sends._(batch_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/scheduled_sends/" + batch_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -151,7 +152,7 @@ Console.ReadLine();
 // DELETE /user/scheduled_sends/{batch_id}
 
 var batch_id = "test_url_param";
-dynamic response = await sg.client.user.scheduled_sends._(batch_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "user/scheduled_sends/" + batch_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -167,7 +168,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.settings.enforced_tls.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/settings/enforced_tls", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -177,7 +178,7 @@ Console.ReadLine();
 // Retrieve current Enforced TLS settings.
 // GET /user/settings/enforced_tls
 
-dynamic response = await sg.client.user.settings.enforced_tls.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/settings/enforced_tls");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -192,7 +193,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.username.put(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "user/username", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -202,7 +203,7 @@ Console.ReadLine();
 // Retrieve your username
 // GET /user/username
 
-dynamic response = await sg.client.user.username.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/username");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -229,7 +230,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.webhooks._("_("event")").settings.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/webhooks/_("event")/settings", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -239,7 +240,7 @@ Console.ReadLine();
 // Retrieve Event Webhook settings
 // GET /user/webhooks/event/settings
 
-dynamic response = await sg.client.user.webhooks._("_("event")").settings.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/_("event")/settings");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -254,7 +255,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.webhooks._("_("event")").test.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "user/webhooks/_("event")/test", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -272,7 +273,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.webhooks.parse.settings.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "user/webhooks/parse/settings", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -282,7 +283,7 @@ Console.ReadLine();
 // Retrieve all parse settings
 // GET /user/webhooks/parse/settings
 
-dynamic response = await sg.client.user.webhooks.parse.settings.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/parse/settings");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -300,7 +301,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var hostname = "test_url_param";
-dynamic response = await sg.client.user.webhooks.parse.settings._(hostname).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/webhooks/parse/settings/" + hostname, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -311,7 +312,7 @@ Console.ReadLine();
 // GET /user/webhooks/parse/settings/{hostname}
 
 var hostname = "test_url_param";
-dynamic response = await sg.client.user.webhooks.parse.settings._(hostname).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/parse/settings/" + hostname);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -322,7 +323,7 @@ Console.ReadLine();
 // DELETE /user/webhooks/parse/settings/{hostname}
 
 var hostname = "test_url_param";
-dynamic response = await sg.client.user.webhooks.parse.settings._(hostname).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "user/webhooks/parse/settings/" + hostname);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -339,7 +340,7 @@ string queryParams = @"{
   'offset': 'test_string', 
   'start_date': '2016-01-01'
 }";
-dynamic response = await sg.client.user.webhooks.parse.stats.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/parse/stats", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

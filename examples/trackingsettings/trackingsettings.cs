@@ -1,9 +1,10 @@
 using System;
+using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
 using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
-string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
+string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+Client client = new Client(apiKey);
 
 ////////////////////////////////////////////////////////
 // Retrieve Tracking Settings
@@ -13,7 +14,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-dynamic response = await sg.client.tracking_settings.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -28,7 +29,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.tracking_settings.click.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "tracking_settings/click", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -38,7 +39,7 @@ Console.ReadLine();
 // Retrieve Click Track Settings
 // GET /tracking_settings/click
 
-dynamic response = await sg.client.tracking_settings.click.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings/click");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -58,7 +59,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.tracking_settings.google_analytics.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "tracking_settings/google_analytics", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -68,7 +69,7 @@ Console.ReadLine();
 // Retrieve Google Analytics Settings
 // GET /tracking_settings/google_analytics
 
-dynamic response = await sg.client.tracking_settings.google_analytics.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings/google_analytics");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -83,7 +84,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.tracking_settings.open.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "tracking_settings/open", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -93,7 +94,7 @@ Console.ReadLine();
 // Get Open Tracking Settings
 // GET /tracking_settings/open
 
-dynamic response = await sg.client.tracking_settings.open.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings/open");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -113,7 +114,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.tracking_settings.subscription.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "tracking_settings/subscription", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -123,7 +124,7 @@ Console.ReadLine();
 // Retrieve Subscription Tracking Settings
 // GET /tracking_settings/subscription
 
-dynamic response = await sg.client.tracking_settings.subscription.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings/subscription");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

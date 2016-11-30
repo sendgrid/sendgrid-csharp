@@ -61,7 +61,7 @@ namespace Example
         static async Task Execute()
         {
             string apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGridAPIClient(apiKey);
+            Client = new Client(apiKey);
 
             Email from = new Email("test@example.com");
             String subject = "I'm replacing the subject tag";
@@ -73,7 +73,9 @@ namespace Example
             mail.Personalization[0].AddSubstitution("-name-", "Example User");
             mail.Personalization[0].AddSubstitution("-city-", "Denver");
 
-            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
+            Response response = await client.RequestAsync(method: Client.Methods.POST,
+                                                          requestBody: mail.Get(),
+                                                          urlPath: "mail/send");
         }
     }
 }
@@ -99,7 +101,7 @@ namespace Example
         static async Task Execute()
         {
             String apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGridAPIClient(apiKey);
+            Client client = new Client(apiKey);
 
             string data = @"{
               'personalizations': [
@@ -128,7 +130,9 @@ namespace Example
               'template_id': '13b8f94f-bcae-4ec6-b752-70d6cb59f932'
             }";
             Object json = JsonConvert.DeserializeObject<Object>(data);
-            dynamic response = await sg.client.mail.send.post(requestBody: json.ToString());
+            Response response = await client.RequestAsync(method: Client.Methods.POST,
+                                                          requestBody: json.ToString(),
+                                                          urlPath: "mail/send");
         }
     }
 }

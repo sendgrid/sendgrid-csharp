@@ -1,9 +1,10 @@
 using System;
+using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
 using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
-string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
+string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+Client client = new Client(apiKey);
 
 ////////////////////////////////////////////////////////
 // Create a domain whitelabel.
@@ -23,7 +24,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.whitelabel.domains.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/domains", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -40,7 +41,7 @@ string queryParams = @"{
   'offset': 1, 
   'username': 'test_string'
 }";
-dynamic response = await sg.client.whitelabel.domains.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/domains", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -50,7 +51,7 @@ Console.ReadLine();
 // Get the default domain whitelabel.
 // GET /whitelabel/domains/default
 
-dynamic response = await sg.client.whitelabel.domains._("_("default")").get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/domains/_("default")");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -60,7 +61,7 @@ Console.ReadLine();
 // List the domain whitelabel associated with the given user.
 // GET /whitelabel/domains/subuser
 
-dynamic response = await sg.client.whitelabel.domains.subuser.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/domains/subuser");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -70,7 +71,7 @@ Console.ReadLine();
 // Disassociate a domain whitelabel from a given user.
 // DELETE /whitelabel/domains/subuser
 
-dynamic response = await sg.client.whitelabel.domains.subuser.delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/domains/subuser");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -87,7 +88,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var domain_id = "test_url_param";
-dynamic response = await sg.client.whitelabel.domains._(domain_id).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "whitelabel/domains/" + domain_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -98,7 +99,7 @@ Console.ReadLine();
 // GET /whitelabel/domains/{domain_id}
 
 var domain_id = "test_url_param";
-dynamic response = await sg.client.whitelabel.domains._(domain_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/domains/" + domain_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -109,7 +110,7 @@ Console.ReadLine();
 // DELETE /whitelabel/domains/{domain_id}
 
 var domain_id = "test_url_param";
-dynamic response = await sg.client.whitelabel.domains._(domain_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/domains/" + domain_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -125,7 +126,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var domain_id = "test_url_param";
-dynamic response = await sg.client.whitelabel.domains._(domain_id).subuser.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/domains/" + domain_id + "/subuser", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -141,7 +142,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.domains._(id).ips.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/domains/" + id + "/ips", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -153,7 +154,7 @@ Console.ReadLine();
 
 var id = "test_url_param";
 var ip = "test_url_param";
-dynamic response = await sg.client.whitelabel.domains._(id).ips._(ip).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/domains/" + id + "/ips/" + ip);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -164,7 +165,7 @@ Console.ReadLine();
 // POST /whitelabel/domains/{id}/validate
 
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.domains._(id).validate.post();
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/domains/" + id + "/validate");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -181,7 +182,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.whitelabel.ips.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/ips", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -196,7 +197,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-dynamic response = await sg.client.whitelabel.ips.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/ips", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -207,7 +208,7 @@ Console.ReadLine();
 // GET /whitelabel/ips/{id}
 
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.ips._(id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/ips/" + id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -218,7 +219,7 @@ Console.ReadLine();
 // DELETE /whitelabel/ips/{id}
 
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.ips._(id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/ips/" + id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -229,7 +230,7 @@ Console.ReadLine();
 // POST /whitelabel/ips/{id}/validate
 
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.ips._(id).validate.post();
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/ips/" + id + "/validate");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -250,7 +251,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-dynamic response = await sg.client.whitelabel.links.post(requestBody: data, queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/links", requestBody: data, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -263,7 +264,7 @@ Console.ReadLine();
 string queryParams = @"{
   'limit': 1
 }";
-dynamic response = await sg.client.whitelabel.links.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/links", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -276,7 +277,7 @@ Console.ReadLine();
 string queryParams = @"{
   'domain': 'test_string'
 }";
-dynamic response = await sg.client.whitelabel.links._("_("default")").get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/links/_("default")", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -289,7 +290,7 @@ Console.ReadLine();
 string queryParams = @"{
   'username': 'test_string'
 }";
-dynamic response = await sg.client.whitelabel.links.subuser.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/links/subuser", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -302,7 +303,7 @@ Console.ReadLine();
 string queryParams = @"{
   'username': 'test_string'
 }";
-dynamic response = await sg.client.whitelabel.links.subuser.delete(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/links/subuser", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -318,7 +319,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.links._(id).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "whitelabel/links/" + id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -329,7 +330,7 @@ Console.ReadLine();
 // GET /whitelabel/links/{id}
 
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.links._(id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/links/" + id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -340,7 +341,7 @@ Console.ReadLine();
 // DELETE /whitelabel/links/{id}
 
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.links._(id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/links/" + id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -351,7 +352,7 @@ Console.ReadLine();
 // POST /whitelabel/links/{id}/validate
 
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.links._(id).validate.post();
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/links/" + id + "/validate");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -367,7 +368,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var link_id = "test_url_param";
-dynamic response = await sg.client.whitelabel.links._(link_id).subuser.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/links/" + link_id + "/subuser", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

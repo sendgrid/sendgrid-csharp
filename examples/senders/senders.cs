@@ -1,9 +1,10 @@
 using System;
+using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
 using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
-string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
+string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+Client client = new Client(apiKey);
 
 ////////////////////////////////////////////////////////
 // Create a Sender Identity
@@ -28,7 +29,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.senders.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "senders", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -38,7 +39,7 @@ Console.ReadLine();
 // Get all Sender Identities
 // GET /senders
 
-dynamic response = await sg.client.senders.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "senders");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -68,7 +69,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var sender_id = "test_url_param";
-dynamic response = await sg.client.senders._(sender_id).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "senders/" + sender_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -79,7 +80,7 @@ Console.ReadLine();
 // GET /senders/{sender_id}
 
 var sender_id = "test_url_param";
-dynamic response = await sg.client.senders._(sender_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "senders/" + sender_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -90,7 +91,7 @@ Console.ReadLine();
 // DELETE /senders/{sender_id}
 
 var sender_id = "test_url_param";
-dynamic response = await sg.client.senders._(sender_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "senders/" + sender_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -101,7 +102,7 @@ Console.ReadLine();
 // POST /senders/{sender_id}/resend_verification
 
 var sender_id = "test_url_param";
-dynamic response = await sg.client.senders._(sender_id).resend_verification.post();
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "senders/" + sender_id + "/resend_verification");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

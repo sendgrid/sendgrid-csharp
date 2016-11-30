@@ -1,9 +1,10 @@
 using System;
+using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
 using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
-string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
+string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+Client client = new Client(apiKey);
 
 ////////////////////////////////////////////////////////
 // Retrieve all recent access attempts
@@ -12,7 +13,7 @@ dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
 string queryParams = @"{
   'limit': 1
 }";
-dynamic response = await sg.client.access_settings.activity.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "access_settings/activity", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -37,7 +38,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.access_settings.whitelist.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "access_settings/whitelist", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -47,7 +48,7 @@ Console.ReadLine();
 // Retrieve a list of currently whitelisted IPs
 // GET /access_settings/whitelist
 
-dynamic response = await sg.client.access_settings.whitelist.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "access_settings/whitelist");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -66,7 +67,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.access_settings.whitelist.delete(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "access_settings/whitelist", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -77,7 +78,7 @@ Console.ReadLine();
 // GET /access_settings/whitelist/{rule_id}
 
 var rule_id = "test_url_param";
-dynamic response = await sg.client.access_settings.whitelist._(rule_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "access_settings/whitelist/" + rule_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -88,7 +89,7 @@ Console.ReadLine();
 // DELETE /access_settings/whitelist/{rule_id}
 
 var rule_id = "test_url_param";
-dynamic response = await sg.client.access_settings.whitelist._(rule_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "access_settings/whitelist/" + rule_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
