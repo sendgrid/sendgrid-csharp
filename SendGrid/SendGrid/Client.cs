@@ -1,48 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
-using System.Web;
-using System.Reflection;
 
 namespace SendGrid
 {
-    public class SendGridAPIClient
-    {
-        private string _apiKey;
-        public string Version;
-        public dynamic client;
-        private Uri _baseUri;
-        private enum Methods
-        {
-            GET, POST, PATCH, DELETE
-        }
-
-        /// <summary>
-        ///     Create a client that connects to the SendGrid Web API
-        /// </summary>
-        /// <param name="apiKey">Your SendGrid API Key</param>
-        /// <param name="baseUri">Base SendGrid API Uri</param>
-        public SendGridAPIClient(string apiKey, String baseUri = "https://api.sendgrid.com", String version = "v3")
-        {
-            _baseUri = new Uri(baseUri);
-            _apiKey = apiKey;
-            Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Dictionary<String, String> requestHeaders = new Dictionary<String, String>();
-            requestHeaders.Add("Authorization", "Bearer " + apiKey);
-            requestHeaders.Add("Content-Type", "application/json");
-            requestHeaders.Add("User-Agent", "sendgrid/" + Version + " csharp");
-            requestHeaders.Add("Accept", "application/json");
-            client = new Client(host: baseUri, requestHeaders: requestHeaders, version: version);
-        }
-    }
-
     public class Response
     {
         public HttpStatusCode StatusCode;
@@ -69,8 +37,7 @@ namespace SendGrid
         /// <returns>Dictionary object representation of HttpContent</returns>
         public virtual Dictionary<string, dynamic> DeserializeResponseBody(HttpContent content)
         {
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            var dsContent = jss.Deserialize<Dictionary<string, dynamic>>(content.ReadAsStringAsync().Result);
+            var dsContent = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(content.ReadAsStringAsync().Result);
             return dsContent;
         }
 
@@ -90,7 +57,7 @@ namespace SendGrid
         }
     }
 
-    public class Client : DynamicObject
+    public class Client
     {
         public string Host;
         public Dictionary<string, string> RequestHeaders;
@@ -111,9 +78,9 @@ namespace SendGrid
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
-        /// <returns>Fluent interface to a REST API</returns>
-        public Client(WebProxy webProxy, string host, Dictionary<string, string> requestHeaders = null, string version = null, string urlPath = null)
-            : this(host, requestHeaders, version, urlPath)
+        /// <returns>Interface to the SendGrid REST API</returns>
+        public Client(WebProxy webProxy, string apiKey, string host = "https://api.sendgrid.com", Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
+            : this(apiKey, host, requestHeaders, version, urlPath)
         {
             WebProxy = webProxy;
         }
@@ -125,16 +92,23 @@ namespace SendGrid
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
-        /// <returns>Fluent interface to a REST API</returns>
-        public Client(string host, Dictionary<string, string> requestHeaders = null, string version = null, string urlPath = null)
+        /// <returns>Interface to the SendGrid REST API</returns>
+        public Client(string apiKey, string host = "https://api.sendgrid.com", Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
         {
             Host = host;
+            Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            Dictionary<string, string> defaultHeaders = new Dictionary<string, string>();
+            defaultHeaders.Add("Authorization", "Bearer " + apiKey);
+            defaultHeaders.Add("Content-Type", "application/json");
+            defaultHeaders.Add("User-Agent", "sendgrid/" + Version + " csharp");
+            defaultHeaders.Add("Accept", "application/json");
+            AddRequestHeader(defaultHeaders);
             if (requestHeaders != null)
             {
                 AddRequestHeader(requestHeaders);
             }
-            Version = (version != null) ? version : null;
-            UrlPath = (urlPath != null) ? urlPath : null;
+            SetVersion(version);
+            SetUrlPath(urlPath);
         }
 
         /// <summary>
@@ -148,6 +122,24 @@ namespace SendGrid
         }
 
         /// <summary>
+        ///     Set or update the UrlPath
+        /// </summary>
+        /// <param name="urlPath">The endpoint without a leading or trailing slash</param>
+        public void SetUrlPath(string urlPath)
+        {
+            UrlPath = urlPath;
+        }
+
+        /// <summary>
+        ///     Get the urlPath to the API endpoint
+        /// </summary>
+        /// <returns>Url path to the API endpoint</returns>
+        public string GetUrlPath()
+        {
+            return UrlPath;
+        }
+
+        /// <summary>
         ///     Build the final URL
         /// </summary>
         /// <param name="queryParams">A string of JSON formatted query parameters (e.g {'param': 'param_value'})</param>
@@ -156,9 +148,9 @@ namespace SendGrid
         {
             string endpoint = null;
 
-            if (Version != null)
+            if (GetVersion() != null)
             {
-                endpoint = Host + "/" + Version + UrlPath;
+                endpoint = Host + "/" + GetVersion() + "/" + UrlPath;
             }
             else
             {
@@ -167,9 +159,8 @@ namespace SendGrid
 
             if (queryParams != null)
             {
-                JavaScriptSerializer jss = new JavaScriptSerializer();
-                var ds_query_params = jss.Deserialize<Dictionary<string, dynamic>>(queryParams);
-                var query = HttpUtility.ParseQueryString(string.Empty);
+                var ds_query_params = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(queryParams);
+                var query = new Uri(endpoint + "?" + string.Empty).ParseQueryString();
                 foreach (var pair in ds_query_params)
                 {
                     query[pair.Key] = pair.Value.ToString();
@@ -179,29 +170,6 @@ namespace SendGrid
             }
 
             return endpoint;
-        }
-
-        /// <summary>
-        ///     Create a new Client object for method chaining
-        /// </summary>
-        /// <param name="name">Name of url segment to add to the URL</param>
-        /// <returns>A new client object with "name" added to the URL</returns>
-        private Client BuildClient(string name = null)
-        {
-            string endpoint;
-
-            if (name != null)
-            {
-                endpoint = UrlPath + "/" + name;
-            }
-            else
-            {
-                endpoint = UrlPath;
-            }
-
-            UrlPath = null; // Reset the current object's state before we return a new one
-            return new Client(Host, RequestHeaders, Version, endpoint);
-
         }
 
         /// <summary>
@@ -241,83 +209,18 @@ namespace SendGrid
         ///     Add the version of the API, override to customize
         /// </summary>
         /// <param name="version">Version string to add to the URL</param>
-        public virtual void AddVersion(string version)
+        public void SetVersion(string version)
         {
             Version = version;
         }
 
         /// <summary>
-        ///     Deal with special cases and URL parameters
+        ///     Get the version of the API, override to customize
         /// </summary>
-        /// <param name="name">Name of URL segment</param>
-        /// <returns>A new client object with "name" added to the URL</returns>
-        public Client _(string name)
+        /// <returns>Version of the API</param>
+        public string GetVersion()
         {
-            return BuildClient(name);
-        }
-
-        /// <summary>
-        ///     Reflection. We capture undefined variable access here
-        /// </summary>
-        /// <param name="binder">The calling object properties</param>
-        /// <param name="result">The callback</param>
-        /// <returns>The callback returns a new client object with "name" added to the URL</returns>
-        public override bool TryGetMember(GetMemberBinder binder, out object result)
-        {
-            result = BuildClient(binder.Name);
-            return true;
-        }
-
-        /// <summary>
-        ///     Reflection. We capture the final method call here
-        /// </summary>
-        /// <param name="binder">The calling object properties</param>
-        /// <param name="args">The calling object's arguements</param>
-        /// <param name="result">If "version", returns new client with version attached
-        ///                      If "method", returns a Response object</param>
-        /// <returns>The callback is described in "result"</returns>
-        public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
-        {
-            if (binder.Name == "version")
-            {
-                AddVersion(args[0].ToString());
-                result = BuildClient();
-                return true;
-            }
-
-            if (Enum.IsDefined(typeof(Methods), binder.Name.ToUpper()))
-            {
-                string queryParams = null;
-                string requestBody = null;
-                int i = 0;
-
-                foreach (object obj in args)
-                {
-                    string name = binder.CallInfo.ArgumentNames.Count > i ?
-                       binder.CallInfo.ArgumentNames[i] : null;
-                    if (name == "queryParams")
-                    {
-                        queryParams = obj.ToString();
-                    }
-                    else if (name == "requestBody")
-                    {
-                        requestBody = obj.ToString();
-                    }
-                    else if (name == "requestHeaders")
-                    {
-                        AddRequestHeader((Dictionary<string, string>)obj);
-                    }
-                    i++;
-                }
-                result = RequestAsync(binder.Name.ToUpper(), requestBody: requestBody, queryParams: queryParams).ConfigureAwait(false);
-                return true;
-            }
-            else
-            {
-                result = null;
-                return false;
-            }
-
+            return Version;
         }
 
         /// <summary>
@@ -337,9 +240,13 @@ namespace SendGrid
         /// </summary>
         /// <param name="method">HTTP verb</param>
         /// <param name="requestBody">JSON formatted string</param>
-        /// <param name="queryParams">JSON formatted queary paramaters</param>
+        /// <param name="queryParams">JSON formatted query paramaters</param>
         /// <returns>Response object</returns>
-        private async Task<Response> RequestAsync(string method, string requestBody = null, string queryParams = null)
+        public async Task<Response> RequestAsync(Client.Methods method,
+                                                 string requestBody = null,
+                                                 Dictionary<string, string> requestHeaders = null,
+                                                 string queryParams = null,
+                                                 string urlPath = null)
         {
             using (var client = BuildHttpClient())
             {
@@ -347,9 +254,17 @@ namespace SendGrid
                 {
                     // Build the URL
                     client.BaseAddress = new Uri(Host);
+                    if (urlPath != null)
+                    {
+                        SetUrlPath(urlPath);
+                    }
                     string endpoint = BuildUrl(queryParams);
 
                     // Build the request headers
+                    if (requestHeaders != null)
+                    {
+                        AddRequestHeader(requestHeaders);
+                    }
                     client.DefaultRequestHeaders.Accept.Clear();
                     if (RequestHeaders != null)
                     {
@@ -381,7 +296,7 @@ namespace SendGrid
                     // Build the final request
                     HttpRequestMessage request = new HttpRequestMessage
                     {
-                        Method = new HttpMethod(method),
+                        Method = new HttpMethod(method.ToString()),
                         RequestUri = new Uri(endpoint),
                         Content = content
                     };

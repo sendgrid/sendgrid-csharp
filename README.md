@@ -30,7 +30,7 @@ We appreciate your continued support, thank you!
 
 ## Prerequisites
 
-- .NET version 4.5.2
+- .NET version 4.5 and above
 - The SendGrid service, starting at the [free level](https://sendgrid.com/free?source=sendgrid-csharp)
 
 ## Setup Environment Variables
@@ -51,14 +51,13 @@ For a sample implementation, check the [Example](https://github.com/sendgrid/sen
 Add the following namespaces to use the library:
 ```csharp
 using System;
-using System.Web.Script.Serialization;
 using SendGrid;
-using SendGrid.Helpers.Mail; // Include if you want to use the Mail Helper
+using SendGrid.Helpers.Mail; // If you are using the Mail Helper
+using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 ```
 
 ## Dependencies
 
-- [SendGrid.CSharp.HTTP.Client](https://github.com/sendgrid/csharp-http-client)
 - [Newtonsoft.Json](http://www.newtonsoft.com/json)
 
 <a name="quick_start"></a>
@@ -72,9 +71,11 @@ The following is the minimum needed code to send an email with the [/mail/send H
 
 ```csharp
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System.Threading.Tasks;
 
 namespace Example
 {
@@ -82,13 +83,13 @@ namespace Example
     {
         private static void Main()
         {
-	        Execute().Wait();
+            Execute().Wait();
         }
 
         static async Task Execute()
         {
             string apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGridAPIClient(apiKey);
+            Client client = new Client(apiKey);
 
             Email from = new Email("test@example.com");
             string subject = "Hello World from the SendGrid CSharp Library!";
@@ -96,7 +97,9 @@ namespace Example
             Content content = new Content("text/plain", "Hello, Email!");
             Mail mail = new Mail(from, subject, to, content);
 
-            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
+            Response response = await client.RequestAsync(method: Client.Methods.POST,
+                                                          requestBody: mail.Get(),
+                                                          urlPath: "mail/send");
         }
     }
 }
@@ -110,9 +113,10 @@ The following is the minimum needed code to send an email without the /mail/send
 
 ```csharp
 using System;
-using SendGrid;
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using SendGrid;
 
 namespace Example
 {
@@ -120,13 +124,13 @@ namespace Example
     {
         private static void Main()
         {
-	        Execute().Wait();
+            Execute().Wait();
         }
 
 	    static async Task Execute()
         {
-            String apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGridAPIClient(apiKey);
+            string apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
+            Client client = new Client(apiKey);
 
             string data = @"{
               'personalizations': [
@@ -150,39 +154,15 @@ namespace Example
               ]
             }";
             Object json = JsonConvert.DeserializeObject<Object>(data);
-            dynamic response = await sg.client.mail.send.post(requestBody: json.ToString());
+            Response response = await client.RequestAsync(method: Client.Methods.POST,
+                                                          requestBody: json.ToString(),
+                                                          urlPath: "mail/send");
         }
     }
 }
 ```
 
-## General v3 Web API Usage (With Fluent Interface)
-
-```csharp
-using System;
-using SendGrid;
-using System.Threading.Tasks;
-
-namespace Example
-{
-    internal class Example
-    {
-        private static void Main()
-        {
-	        Execute().Wait();
-        }
-
-        static async Task Execute()
-        {
-            string apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGrid.SendGridAPIClient(apiKey);
-            dynamic response = await sg.client.suppression.bounces.get();
-	    }
-    }
-}
-```
-
-## General v3 Web API Usage (Without Fluent Interface)
+## General v3 Web API Usage
 
 ```csharp
 using System;
@@ -200,10 +180,12 @@ namespace Example
 
         static async Task Execute()
         {
-                string apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
-                dynamic sg = new SendGrid.SendGridAPIClient(apiKey);
-                dynamic response = await sg.client._("suppression/bounces").get();
-        }
+            string apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
+            Client client = new Client(apiKey);
+            Response response = await client.RequestAsync(method: Client.Methods.GET,
+                                                          requestBody: json.ToString(),
+                                                          urlPath: "suppression/bounces");
+	}
     }
 }
 ```

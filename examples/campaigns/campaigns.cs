@@ -1,9 +1,10 @@
 using System;
+using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
 using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
-string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
+string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+Client client = new Client(apiKey);
 
 ////////////////////////////////////////////////////////
 // Create a Campaign
@@ -31,7 +32,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.campaigns.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -45,7 +46,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-dynamic response = await sg.client.campaigns.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "campaigns", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -67,7 +68,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "campaigns/" + campaign_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -78,7 +79,7 @@ Console.ReadLine();
 // GET /campaigns/{campaign_id}
 
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "campaigns/" + campaign_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -89,7 +90,7 @@ Console.ReadLine();
 // DELETE /campaigns/{campaign_id}
 
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "campaigns/" + campaign_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -105,7 +106,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).schedules.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "campaigns/" + campaign_id + "/schedules", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -121,7 +122,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).schedules.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns/" + campaign_id + "/schedules", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -132,7 +133,7 @@ Console.ReadLine();
 // GET /campaigns/{campaign_id}/schedules
 
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).schedules.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "campaigns/" + campaign_id + "/schedules");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -143,7 +144,7 @@ Console.ReadLine();
 // DELETE /campaigns/{campaign_id}/schedules
 
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).schedules.delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "campaigns/" + campaign_id + "/schedules");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -154,7 +155,7 @@ Console.ReadLine();
 // POST /campaigns/{campaign_id}/schedules/now
 
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).schedules.now.post();
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns/" + campaign_id + "/schedules/now");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -170,7 +171,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).schedules.test.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns/" + campaign_id + "/schedules/test", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

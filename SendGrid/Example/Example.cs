@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Script.Serialization;
-using SendGrid.Helpers.Mail;
-using Newtonsoft.Json;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace Example
 {
@@ -12,28 +12,28 @@ namespace Example
         private static void Main()
         {
             // v3 Mail Helper
-            HelloEmail().Wait(); // this will actually send an email
-            KitchenSink().Wait(); // this will only send an email if you set SandBox Mode to false
+            //HelloEmailAsync().Wait(); // this will actually send an email
+            //KitchenSinkAsync().Wait(); // this will only send an email if you set SandBox Mode to false
 
             // v3 Template Example with Mail Helper
-            TemplateWithHelper().Wait();
+            //TemplateWithHelperAsync().Wait();
 
             // v3 Template Example without Mail Helper
-            TemplateWithoutHelper().Wait();
+            //TemplateWithoutHelperAsync().Wait();
 
             // v3 Web API
-            ApiKeys().Wait();
-
+            ASMGroupsAsync().Wait();
         }
 
-        private static async Task TemplateWithHelper()
+        private static async Task TemplateWithHelperAsync()
         {
-            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
+            string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY",
+                                                               EnvironmentVariableTarget.User);
+            Client client = new Client(apiKey: apiKey);
 
-            Email from = new Email("dx@sendgrid.com");
-            String subject = "I'm replacing the subject tag";
-            Email to = new Email("elmer@sendgrid.com");
+            Email from = new Email("test@example.com");
+            string subject = "I'm replacing the subject tag";
+            Email to = new Email("test@example.com");
             Content content = new Content("text/html", "I'm replacing the <strong>body tag</strong>");
             Mail mail = new Mail(from, subject, to, content);
 
@@ -41,26 +41,26 @@ namespace Example
             mail.Personalization[0].AddSubstitution("-name-", "Example User");
             mail.Personalization[0].AddSubstitution("-city-", "Denver");
 
-            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
+            Response response = await client.RequestAsync(method: Client.Methods.POST,
+                                                          requestBody: mail.Get(),
+                                                          urlPath: "mail/send");
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
-
             Console.ReadLine();
-
         }
 
-        private static async Task TemplateWithoutHelper()
+        private static async Task TemplateWithoutHelperAsync()
         {
-            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
+            string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            Client client = new Client(apiKey);
 
             string data = @"{
               'personalizations': [
                 {
                   'to': [
                     {
-                      'email': 'elmer@sendgrid.com'
+                      'email': 'test@example.com'
                     }
                   ],
                   'substitutions': {
@@ -71,7 +71,7 @@ namespace Example
                 }
               ],
               'from': {
-                'email': 'dx@sendgrid.com'
+                'email': 'test@example.com'
               },
               'content': [
                 {
@@ -82,44 +82,43 @@ namespace Example
               'template_id': '13b8f94f-bcae-4ec6-b752-70d6cb59f932'
             }";
             //test @example.com
-            Object json = JsonConvert.DeserializeObject<Object>(data);
-            dynamic response = await sg.client.mail.send.post(requestBody: json.ToString());
+            object json = JsonConvert.DeserializeObject<object>(data);
+            Response response = await client.RequestAsync(method: Client.Methods.POST,
+                                                          requestBody: json.ToString(),
+                                                          urlPath: "mail/send");
 
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
-
             Console.ReadLine();
-
         }
 
-        private static async Task HelloEmail()
+        private static async Task HelloEmailAsync()
         {
-            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
+            string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            Client client = new Client(apiKey);
 
             Email from = new Email("test@example.com");
-            String subject = "Hello World from the SendGrid CSharp Library";
+            string subject = "Hello World from the SendGrid CSharp Library";
             Email to = new Email("test@example.com");
             Content content = new Content("text/plain", "Textual content");
             Mail mail = new Mail(from, subject, to, content);
             Email email = new Email("test2@example.com");
             mail.Personalization[0].AddTo(email);
 
-            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
+            Response response = await client.RequestAsync(method: Client.Methods.POST,
+                                                          requestBody: mail.Get(),
+                                                          urlPath: "mail/send");
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
-
-            Console.WriteLine(mail.Get());
             Console.ReadLine();
-
         }
 
-        private static async Task KitchenSink()
+        private static async Task KitchenSinkAsync()
         {
-            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
+            string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            Client client = new Client(apiKey);
 
             Mail mail = new Mail();
 
@@ -303,67 +302,69 @@ namespace Example
             email.Address = "test@example.com";
             mail.ReplyTo = email;
 
-            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
+            Response response = await client.RequestAsync(method: Client.Methods.POST,
+                                                          requestBody: mail.Get(),
+                                                          urlPath: "mail/send");
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
-
-            Console.WriteLine(mail.Get());
             Console.ReadLine();
         }
 
-        private static async Task ApiKeys()
+        private static async Task ASMGroupsAsync()
         {
-            String apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
+            string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            Client client = new Client(apiKey);
 
+            // GET Collection
             string queryParams = @"{
                 'limit': 100
             }";
-            dynamic response = await sg.client.api_keys.get(queryParams: queryParams);
+            Response response = await client.RequestAsync(method: Client.Methods.GET,
+                                                          urlPath: "asm/groups",
+                                                          queryParams: queryParams);
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
-
             Console.WriteLine("\n\nPress any key to continue to POST.");
             Console.ReadLine();
 
             // POST
             string requestBody = @"{
-                'name': 'My API Key 5',
-                'scopes': [
-                    'mail.send',
-                    'alerts.create',
-                    'alerts.read'
-                ]
+              'description': 'Suggestions for products our users might like.', 
+              'is_default': false, 
+              'name': 'Magic Products'
             }";
-            Object json = JsonConvert.DeserializeObject<Object>(requestBody);
-            response = await sg.client.api_keys.post(requestBody: json.ToString());
+            object json = JsonConvert.DeserializeObject<object>(requestBody);
+            response = await client.RequestAsync(method: Client.Methods.POST,
+                                                 urlPath: "asm/groups",
+                                                 requestBody: json.ToString());
+            var ds_response = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(response.Body.ReadAsStringAsync().Result);
+            string group_id = ds_response["id"].ToString();
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            var ds_response = jss.Deserialize<Dictionary<string, dynamic>>(response.Body.ReadAsStringAsync().Result);
-            string api_key_id = ds_response["api_key_id"];
-
             Console.WriteLine("\n\nPress any key to continue to GET single.");
             Console.ReadLine();
 
             // GET Single
-            response = await sg.client.api_keys._(api_key_id).get();
+            response = await client.RequestAsync(method: Client.Methods.GET,
+                                                 urlPath: string.Format("asm/groups/{0}", group_id));
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
-
             Console.WriteLine("\n\nPress any key to continue to PATCH.");
             Console.ReadLine();
 
             // PATCH
             requestBody = @"{
-                'name': 'A New Hope'
+                'name': 'Cool Magic Products'
             }";
-            json = JsonConvert.DeserializeObject<Object>(requestBody);
-            response = await sg.client.api_keys._(api_key_id).patch(requestBody: json.ToString());
+            json = JsonConvert.DeserializeObject<object>(requestBody);
+
+            response = await client.RequestAsync(method: Client.Methods.PATCH,
+                                                 urlPath: string.Format("asm/groups/{0}", group_id),
+                                                 requestBody: json.ToString());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers.ToString());
@@ -371,28 +372,11 @@ namespace Example
             Console.WriteLine("\n\nPress any key to continue to PUT.");
             Console.ReadLine();
 
-            // PUT
-            requestBody = @"{
-                'name': 'A New Hope',
-                'scopes': [
-                '   user.profile.read',
-                '   user.profile.update'
-                ]
-            }";
-            json = JsonConvert.DeserializeObject<Object>(requestBody);
-            response = await sg.client.api_keys._(api_key_id).put(requestBody: json.ToString());
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
-            Console.WriteLine(response.Headers.ToString());
-
-            Console.WriteLine("\n\nPress any key to continue to DELETE.");
-            Console.ReadLine();
-
             // DELETE
-            response = await sg.client.api_keys._(api_key_id).delete();
+            response = await client.RequestAsync(method: Client.Methods.DELETE,
+                                                 urlPath: string.Format("asm/groups/{0}", group_id));
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers.ToString());
-
             Console.WriteLine("\n\nPress any key to exit.");
             Console.ReadLine();
 

@@ -4,11 +4,12 @@ This documentation is based on our [OAI specification](https://github.com/sendgr
 
 ```csharp
 using System;
+using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
 using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
 
-string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
+string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+Client client = new Client(apiKey);
 ```
 
 # Table of Contents
@@ -58,7 +59,7 @@ For more information, please see our [User Guide](http://sendgrid.com/docs/User_
 string queryParams = @"{
   'limit': 1
 }";
-dynamic response = await sg.client.access_settings.activity.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "access_settings/activity", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -94,7 +95,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.access_settings.whitelist.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "access_settings/whitelist", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -113,7 +114,7 @@ For more information, please see our [User Guide](http://sendgrid.com/docs/User_
 
 
 ```csharp
-dynamic response = await sg.client.access_settings.whitelist.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "access_settings/whitelist");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -143,7 +144,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.access_settings.whitelist.delete(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "access_settings/whitelist", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -165,7 +166,7 @@ For more information, please see our [User Guide](http://sendgrid.com/docs/User_
 
 ```csharp
 var rule_id = "test_url_param";
-dynamic response = await sg.client.access_settings.whitelist._(rule_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "access_settings/whitelist/" + rule_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -187,7 +188,7 @@ For more information, please see our [User Guide](http://sendgrid.com/docs/User_
 
 ```csharp
 var rule_id = "test_url_param";
-dynamic response = await sg.client.access_settings.whitelist._(rule_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "access_settings/whitelist/" + rule_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -218,7 +219,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.alerts.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "alerts", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -239,7 +240,7 @@ For more information about alerts, please see our [User Guide](https://sendgrid.
 
 
 ```csharp
-dynamic response = await sg.client.alerts.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "alerts");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -266,7 +267,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var alert_id = "test_url_param";
-dynamic response = await sg.client.alerts._(alert_id).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "alerts/" + alert_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -288,7 +289,7 @@ For more information about alerts, please see our [User Guide](https://sendgrid.
 
 ```csharp
 var alert_id = "test_url_param";
-dynamic response = await sg.client.alerts._(alert_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "alerts/" + alert_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -310,7 +311,7 @@ For more information about alerts, please see our [User Guide](https://sendgrid.
 
 ```csharp
 var alert_id = "test_url_param";
-dynamic response = await sg.client.alerts._(alert_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "alerts/" + alert_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -347,7 +348,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.api_keys.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "api_keys", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -367,7 +368,7 @@ The API Keys feature allows customers to be able to generate an API Key credenti
 string queryParams = @"{
   'limit': 1
 }";
-dynamic response = await sg.client.api_keys.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "api_keys", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -398,7 +399,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var api_key_id = "test_url_param";
-dynamic response = await sg.client.api_keys._(api_key_id).put(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "api_keys/" + api_key_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -429,7 +430,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var api_key_id = "test_url_param";
-dynamic response = await sg.client.api_keys._(api_key_id).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "api_keys/" + api_key_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -447,7 +448,7 @@ If the API Key ID does not exist an HTTP 404 will be returned.
 
 ```csharp
 var api_key_id = "test_url_param";
-dynamic response = await sg.client.api_keys._(api_key_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "api_keys/" + api_key_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -473,7 +474,7 @@ The API Keys feature allows customers to be able to generate an API Key credenti
 
 ```csharp
 var api_key_id = "test_url_param";
-dynamic response = await sg.client.api_keys._(api_key_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "api_keys/" + api_key_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -504,7 +505,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.asm.groups.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "asm/groups", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -528,7 +529,7 @@ Suppression groups, or [unsubscribe groups](https://sendgrid.com/docs/API_Refere
 string queryParams = @"{
   'id': 1
 }";
-dynamic response = await sg.client.asm.groups.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "asm/groups", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -557,7 +558,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var group_id = "test_url_param";
-dynamic response = await sg.client.asm.groups._(group_id).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "asm/groups/" + group_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -579,7 +580,7 @@ Each user can create up to 25 different suppression groups.
 
 ```csharp
 var group_id = "test_url_param";
-dynamic response = await sg.client.asm.groups._(group_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "asm/groups/" + group_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -603,7 +604,7 @@ Each user can create up to 25 different suppression groups.
 
 ```csharp
 var group_id = "test_url_param";
-dynamic response = await sg.client.asm.groups._(group_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "asm/groups/" + group_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -631,7 +632,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var group_id = "test_url_param";
-dynamic response = await sg.client.asm.groups._(group_id).suppressions.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "asm/groups/" + group_id + "/suppressions", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -649,7 +650,7 @@ Suppressions are recipient email addresses that are added to [unsubscribe groups
 
 ```csharp
 var group_id = "test_url_param";
-dynamic response = await sg.client.asm.groups._(group_id).suppressions.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "asm/groups/" + group_id + "/suppressions");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -678,7 +679,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var group_id = "test_url_param";
-dynamic response = await sg.client.asm.groups._(group_id).suppressions.search.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "asm/groups/" + group_id + "/suppressions/search", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -697,7 +698,7 @@ Suppressions are recipient email addresses that are added to [unsubscribe groups
 ```csharp
 var group_id = "test_url_param";
 var email = "test_url_param";
-dynamic response = await sg.client.asm.groups._(group_id).suppressions._(email).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "asm/groups/" + group_id + "/suppressions/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -714,7 +715,7 @@ Suppressions are a list of email addresses that will not receive content sent un
 
 
 ```csharp
-dynamic response = await sg.client.asm.suppressions.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "asm/suppressions");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -739,7 +740,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.asm.suppressions.global.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "asm/suppressions/global", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -759,7 +760,7 @@ A global suppression (or global unsubscribe) is an email address of a recipient 
 
 ```csharp
 var email = "test_url_param";
-dynamic response = await sg.client.asm.suppressions.global._(email).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "asm/suppressions/global/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -777,7 +778,7 @@ A global suppression (or global unsubscribe) is an email address of a recipient 
 
 ```csharp
 var email = "test_url_param";
-dynamic response = await sg.client.asm.suppressions.global._(email).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "asm/suppressions/global/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -795,7 +796,7 @@ Suppressions are a list of email addresses that will not receive content sent un
 
 ```csharp
 var email = "test_url_param";
-dynamic response = await sg.client.asm.suppressions._(email).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "asm/suppressions/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -825,7 +826,7 @@ string queryParams = @"{
   'offset': 'test_string', 
   'start_date': '2016-01-01'
 }";
-dynamic response = await sg.client.browsers.stats.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "browsers/stats", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -873,7 +874,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.campaigns.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -900,7 +901,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-dynamic response = await sg.client.campaigns.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "campaigns", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -931,7 +932,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "campaigns/" + campaign_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -953,7 +954,7 @@ For more information:
 
 ```csharp
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "campaigns/" + campaign_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -975,7 +976,7 @@ For more information:
 
 ```csharp
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "campaigns/" + campaign_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1000,7 +1001,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).schedules.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "campaigns/" + campaign_id + "/schedules", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1025,7 +1026,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).schedules.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns/" + campaign_id + "/schedules", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1045,7 +1046,7 @@ For more information:
 
 ```csharp
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).schedules.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "campaigns/" + campaign_id + "/schedules");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1068,7 +1069,7 @@ For more information:
 
 ```csharp
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).schedules.delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "campaigns/" + campaign_id + "/schedules");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1090,7 +1091,7 @@ For more information:
 
 ```csharp
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).schedules.now.post();
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns/" + campaign_id + "/schedules/now");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1117,7 +1118,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var campaign_id = "test_url_param";
-dynamic response = await sg.client.campaigns._(campaign_id).schedules.test.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns/" + campaign_id + "/schedules/test", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1142,7 +1143,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-dynamic response = await sg.client.categories.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "categories", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1169,7 +1170,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_date': '2016-01-01'
 }";
-dynamic response = await sg.client.categories.stats.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "categories/stats", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1197,7 +1198,7 @@ string queryParams = @"{
   'sort_by_metric': 'test_string', 
   'start_date': '2016-01-01'
 }";
-dynamic response = await sg.client.categories.stats.sums.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "categories/stats/sums", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1224,7 +1225,7 @@ string queryParams = @"{
   'end_date': '2016-04-01', 
   'start_date': '2016-01-01'
 }";
-dynamic response = await sg.client.clients.stats.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "clients/stats", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1255,7 +1256,7 @@ string queryParams = @"{
   'start_date': '2016-01-01'
 }";
 var client_type = "test_url_param";
-dynamic response = await sg.client.clients._(client_type).stats.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "clients/" + client_type + "/stats", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1281,7 +1282,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.contactdb.custom_fields.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/custom_fields", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1298,7 +1299,7 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 
 
 ```csharp
-dynamic response = await sg.client.contactdb.custom_fields.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/custom_fields");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1316,7 +1317,7 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 
 ```csharp
 var custom_field_id = "test_url_param";
-dynamic response = await sg.client.contactdb.custom_fields._(custom_field_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/custom_fields/" + custom_field_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1334,7 +1335,7 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 
 ```csharp
 var custom_field_id = "test_url_param";
-dynamic response = await sg.client.contactdb.custom_fields._(custom_field_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/custom_fields/" + custom_field_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1356,7 +1357,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.contactdb.lists.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/lists", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1373,7 +1374,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 
 ```csharp
-dynamic response = await sg.client.contactdb.lists.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/lists");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1398,7 +1399,7 @@ string data = @"[
 ]";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.contactdb.lists.delete(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/lists", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1425,7 +1426,7 @@ string queryParams = @"{
   'list_id': 1
 }";
 var list_id = "test_url_param";
-dynamic response = await sg.client.contactdb.lists._(list_id).patch(requestBody: data, queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "contactdb/lists/" + list_id, requestBody: data, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1446,7 +1447,7 @@ string queryParams = @"{
   'list_id': 1
 }";
 var list_id = "test_url_param";
-dynamic response = await sg.client.contactdb.lists._(list_id).get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/lists/" + list_id, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1467,7 +1468,7 @@ string queryParams = @"{
   'delete_contacts': 'true'
 }";
 var list_id = "test_url_param";
-dynamic response = await sg.client.contactdb.lists._(list_id).delete(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/lists/" + list_id, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1493,7 +1494,7 @@ string data = @"[
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var list_id = "test_url_param";
-dynamic response = await sg.client.contactdb.lists._(list_id).recipients.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/lists/" + list_id + "/recipients", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1516,7 +1517,7 @@ string queryParams = @"{
   'page_size': 1
 }";
 var list_id = "test_url_param";
-dynamic response = await sg.client.contactdb.lists._(list_id).recipients.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/lists/" + list_id + "/recipients", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1535,7 +1536,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 ```csharp
 var list_id = "test_url_param";
 var recipient_id = "test_url_param";
-dynamic response = await sg.client.contactdb.lists._(list_id).recipients._(recipient_id).post();
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/lists/" + list_id + "/recipients/" + recipient_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1558,7 +1559,7 @@ string queryParams = @"{
 }";
 var list_id = "test_url_param";
 var recipient_id = "test_url_param";
-dynamic response = await sg.client.contactdb.lists._(list_id).recipients._(recipient_id).delete(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/lists/" + list_id + "/recipients/" + recipient_id, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1588,7 +1589,7 @@ string data = @"[
 ]";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.contactdb.recipients.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "contactdb/recipients", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1623,7 +1624,7 @@ string data = @"[
 ]";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.contactdb.recipients.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/recipients", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1647,7 +1648,7 @@ string queryParams = @"{
   'page': 1, 
   'page_size': 1
 }";
-dynamic response = await sg.client.contactdb.recipients.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1672,7 +1673,7 @@ string data = @"[
 ]";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.contactdb.recipients.delete(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/recipients", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1691,7 +1692,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 
 ```csharp
-dynamic response = await sg.client.contactdb.recipients.billable_count.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients/billable_count");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1708,7 +1709,7 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 
 
 ```csharp
-dynamic response = await sg.client.contactdb.recipients.count.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients/count");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1737,7 +1738,7 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 string queryParams = @"{
   '{field_name}': 'test_string'
 }";
-dynamic response = await sg.client.contactdb.recipients.search.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients/search", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1755,7 +1756,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ```csharp
 var recipient_id = "test_url_param";
-dynamic response = await sg.client.contactdb.recipients._(recipient_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients/" + recipient_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1773,7 +1774,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ```csharp
 var recipient_id = "test_url_param";
-dynamic response = await sg.client.contactdb.recipients._(recipient_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/recipients/" + recipient_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1793,7 +1794,7 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ```csharp
 var recipient_id = "test_url_param";
-dynamic response = await sg.client.contactdb.recipients._(recipient_id).lists.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients/" + recipient_id + "/lists");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1810,7 +1811,7 @@ The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](
 
 
 ```csharp
-dynamic response = await sg.client.contactdb.reserved_fields.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/reserved_fields");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1873,7 +1874,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.contactdb.segments.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/segments", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1892,7 +1893,7 @@ For more information about segments in Marketing Campaigns, please see our [User
 
 
 ```csharp
-dynamic response = await sg.client.contactdb.segments.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/segments");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1929,7 +1930,7 @@ string queryParams = @"{
   'segment_id': 'test_string'
 }";
 var segment_id = "test_url_param";
-dynamic response = await sg.client.contactdb.segments._(segment_id).patch(requestBody: data, queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "contactdb/segments/" + segment_id, requestBody: data, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1952,7 +1953,7 @@ string queryParams = @"{
   'segment_id': 1
 }";
 var segment_id = "test_url_param";
-dynamic response = await sg.client.contactdb.segments._(segment_id).get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/segments/" + segment_id, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -1977,7 +1978,7 @@ string queryParams = @"{
   'delete_contacts': 'true'
 }";
 var segment_id = "test_url_param";
-dynamic response = await sg.client.contactdb.segments._(segment_id).delete(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/segments/" + segment_id, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2001,7 +2002,7 @@ string queryParams = @"{
   'page_size': 1
 }";
 var segment_id = "test_url_param";
-dynamic response = await sg.client.contactdb.segments._(segment_id).recipients.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/segments/" + segment_id + "/recipients", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2039,7 +2040,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_date': '2016-01-01'
 }";
-dynamic response = await sg.client.devices.stats.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "devices/stats", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2069,7 +2070,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_date': '2016-01-01'
 }";
-dynamic response = await sg.client.geo.stats.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "geo/stats", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2098,7 +2099,7 @@ string queryParams = @"{
   'offset': 1, 
   'subuser': 'test_string'
 }";
-dynamic response = await sg.client.ips.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "ips", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2115,7 +2116,7 @@ A single IP address or a range of IP addresses may be dedicated to an account in
 
 
 ```csharp
-dynamic response = await sg.client.ips.assigned.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "ips/assigned");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2143,7 +2144,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.ips.pools.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "ips/pools", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2164,7 +2165,7 @@ If an IP pool is NOT specified for an email, it will use any IP available, inclu
 
 
 ```csharp
-dynamic response = await sg.client.ips.pools.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "ips/pools");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2191,7 +2192,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var pool_name = "test_url_param";
-dynamic response = await sg.client.ips.pools._(pool_name).put(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "ips/pools/" + pool_name, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2213,7 +2214,7 @@ If an IP pool is NOT specified for an email, it will use any IP available, inclu
 
 ```csharp
 var pool_name = "test_url_param";
-dynamic response = await sg.client.ips.pools._(pool_name).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "ips/pools/" + pool_name);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2235,7 +2236,7 @@ If an IP pool is NOT specified for an email, it will use any IP available, inclu
 
 ```csharp
 var pool_name = "test_url_param";
-dynamic response = await sg.client.ips.pools._(pool_name).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "ips/pools/" + pool_name);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2260,7 +2261,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var pool_name = "test_url_param";
-dynamic response = await sg.client.ips.pools._(pool_name).ips.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "ips/pools/" + pool_name + "/ips", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2281,7 +2282,7 @@ A single IP address or a range of IP addresses may be dedicated to an account in
 ```csharp
 var pool_name = "test_url_param";
 var ip = "test_url_param";
-dynamic response = await sg.client.ips.pools._(pool_name).ips._(ip).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "ips/pools/" + pool_name + "/ips/" + ip);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2305,7 +2306,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.ips.warmup.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "ips/warmup", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2324,7 +2325,7 @@ For more general information about warming up IPs, please see our [Classroom](ht
 
 
 ```csharp
-dynamic response = await sg.client.ips.warmup.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "ips/warmup");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2344,7 +2345,7 @@ For more general information about warming up IPs, please see our [Classroom](ht
 
 ```csharp
 var ip_address = "test_url_param";
-dynamic response = await sg.client.ips.warmup._(ip_address).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "ips/warmup/" + ip_address);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2364,7 +2365,7 @@ For more general information about warming up IPs, please see our [Classroom](ht
 
 ```csharp
 var ip_address = "test_url_param";
-dynamic response = await sg.client.ips.warmup._(ip_address).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "ips/warmup/" + ip_address);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2384,7 +2385,7 @@ A single IP address or a range of IP addresses may be dedicated to an account in
 
 ```csharp
 var ip_address = "test_url_param";
-dynamic response = await sg.client.ips._(ip_address).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "ips/" + ip_address);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2408,7 +2409,7 @@ More Information:
 
 
 ```csharp
-dynamic response = await sg.client.mail.batch.post();
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "mail/batch");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2430,7 +2431,7 @@ More Information:
 
 ```csharp
 var batch_id = "test_url_param";
-dynamic response = await sg.client.mail.batch._(batch_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail/batch/" + batch_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2593,7 +2594,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail.send.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "mail/send", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2617,7 +2618,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-dynamic response = await sg.client.mail_settings.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2645,7 +2646,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.address_whitelist.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/address_whitelist", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2664,7 +2665,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 
 ```csharp
-dynamic response = await sg.client.mail_settings.address_whitelist.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/address_whitelist");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2689,7 +2690,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.bcc.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/bcc", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2708,7 +2709,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 
 ```csharp
-dynamic response = await sg.client.mail_settings.bcc.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/bcc");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2734,7 +2735,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.bounce_purge.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/bounce_purge", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2753,7 +2754,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 
 ```csharp
-dynamic response = await sg.client.mail_settings.bounce_purge.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/bounce_purge");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2779,7 +2780,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.footer.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/footer", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2798,7 +2799,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 
 ```csharp
-dynamic response = await sg.client.mail_settings.footer.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/footer");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2823,7 +2824,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.forward_bounce.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/forward_bounce", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2842,7 +2843,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 
 ```csharp
-dynamic response = await sg.client.mail_settings.forward_bounce.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/forward_bounce");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2867,7 +2868,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.forward_spam.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/forward_spam", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2886,7 +2887,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 
 ```csharp
-dynamic response = await sg.client.mail_settings.forward_spam.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/forward_spam");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2910,7 +2911,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.plain_content.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/plain_content", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2929,7 +2930,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 
 ```csharp
-dynamic response = await sg.client.mail_settings.plain_content.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/plain_content");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2955,7 +2956,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.spam_check.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/spam_check", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -2974,7 +2975,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 
 ```csharp
-dynamic response = await sg.client.mail_settings.spam_check.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/spam_check");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3001,7 +3002,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.template.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/template", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3022,7 +3023,7 @@ Mail settings allow you to tell SendGrid specific things to do to every email th
 
 
 ```csharp
-dynamic response = await sg.client.mail_settings.template.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/template");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3052,7 +3053,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_date': '2016-01-01'
 }";
-dynamic response = await sg.client.mailbox_providers.stats.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mailbox_providers/stats", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3076,7 +3077,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-dynamic response = await sg.client.partner_settings.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "partner_settings", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3102,7 +3103,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.partner_settings.new_relic.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "partner_settings/new_relic", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3121,7 +3122,7 @@ By integrating with New Relic, you can send your SendGrid email statistics to yo
 
 
 ```csharp
-dynamic response = await sg.client.partner_settings.new_relic.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "partner_settings/new_relic");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3141,7 +3142,7 @@ API Keys can be used to authenticate the use of [SendGrids v3 Web API](https://s
 
 
 ```csharp
-dynamic response = await sg.client.scopes.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "scopes");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3182,7 +3183,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.senders.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "senders", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3199,7 +3200,7 @@ Sender Identities are required to be verified before use. If your domain has bee
 
 
 ```csharp
-dynamic response = await sg.client.senders.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "senders");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3238,7 +3239,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var sender_id = "test_url_param";
-dynamic response = await sg.client.senders._(sender_id).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "senders/" + sender_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3256,7 +3257,7 @@ Sender Identities are required to be verified before use. If your domain has bee
 
 ```csharp
 var sender_id = "test_url_param";
-dynamic response = await sg.client.senders._(sender_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "senders/" + sender_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3274,7 +3275,7 @@ Sender Identities are required to be verified before use. If your domain has bee
 
 ```csharp
 var sender_id = "test_url_param";
-dynamic response = await sg.client.senders._(sender_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "senders/" + sender_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3292,7 +3293,7 @@ Sender Identities are required to be verified before use. If your domain has bee
 
 ```csharp
 var sender_id = "test_url_param";
-dynamic response = await sg.client.senders._(sender_id).resend_verification.post();
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "senders/" + sender_id + "/resend_verification");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3319,7 +3320,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_date': '2016-01-01'
 }";
-dynamic response = await sg.client.stats.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "stats", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3353,7 +3354,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.subusers.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "subusers", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3378,7 +3379,7 @@ string queryParams = @"{
   'offset': 1, 
   'username': 'test_string'
 }";
-dynamic response = await sg.client.subusers.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3398,7 +3399,7 @@ This endpoint allows you to request the reputations for your subusers.
 string queryParams = @"{
   'usernames': 'test_string'
 }";
-dynamic response = await sg.client.subusers.reputations.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/reputations", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3427,7 +3428,7 @@ string queryParams = @"{
   'start_date': '2016-01-01', 
   'subusers': 'test_string'
 }";
-dynamic response = await sg.client.subusers.stats.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/stats", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3457,7 +3458,7 @@ string queryParams = @"{
   'sort_by_metric': 'test_string', 
   'subuser': 'test_string'
 }";
-dynamic response = await sg.client.subusers.stats.monthly.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/stats/monthly", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3486,7 +3487,7 @@ string queryParams = @"{
   'sort_by_metric': 'test_string', 
   'start_date': '2016-01-01'
 }";
-dynamic response = await sg.client.subusers.stats.sums.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/stats/sums", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3512,7 +3513,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var subuser_name = "test_url_param";
-dynamic response = await sg.client.subusers._(subuser_name).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "subusers/" + subuser_name, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3533,7 +3534,7 @@ For more information about Subusers:
 
 ```csharp
 var subuser_name = "test_url_param";
-dynamic response = await sg.client.subusers._(subuser_name).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "subusers/" + subuser_name);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3559,7 +3560,7 @@ string data = @"[
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var subuser_name = "test_url_param";
-dynamic response = await sg.client.subusers._(subuser_name).ips.put(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "subusers/" + subuser_name + "/ips", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3581,7 +3582,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var subuser_name = "test_url_param";
-dynamic response = await sg.client.subusers._(subuser_name).monitor.put(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "subusers/" + subuser_name + "/monitor", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3603,7 +3604,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var subuser_name = "test_url_param";
-dynamic response = await sg.client.subusers._(subuser_name).monitor.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "subusers/" + subuser_name + "/monitor", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3619,7 +3620,7 @@ Subuser monitor settings allow you to receive a sample of an outgoing message by
 
 ```csharp
 var subuser_name = "test_url_param";
-dynamic response = await sg.client.subusers._(subuser_name).monitor.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/" + subuser_name + "/monitor");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3635,7 +3636,7 @@ Subuser monitor settings allow you to receive a sample of an outgoing message by
 
 ```csharp
 var subuser_name = "test_url_param";
-dynamic response = await sg.client.subusers._(subuser_name).monitor.delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "subusers/" + subuser_name + "/monitor");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3665,7 +3666,7 @@ string queryParams = @"{
   'sort_by_metric': 'test_string'
 }";
 var subuser_name = "test_url_param";
-dynamic response = await sg.client.subusers._(subuser_name).stats.monthly.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/" + subuser_name + "/stats/monthly", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3693,7 +3694,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_time': 1
 }";
-dynamic response = await sg.client.suppression.blocks.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/blocks", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3726,7 +3727,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.suppression.blocks.delete(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/blocks", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3746,7 +3747,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ```csharp
 var email = "test_url_param";
-dynamic response = await sg.client.suppression.blocks._(email).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/blocks/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3766,7 +3767,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ```csharp
 var email = "test_url_param";
-dynamic response = await sg.client.suppression.blocks._(email).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/blocks/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3792,7 +3793,7 @@ string queryParams = @"{
   'end_time': 1, 
   'start_time': 1
 }";
-dynamic response = await sg.client.suppression.bounces.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/bounces", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3826,7 +3827,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.suppression.bounces.delete(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/bounces", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3850,7 +3851,7 @@ For more information see:
 
 ```csharp
 var email = "test_url_param";
-dynamic response = await sg.client.suppression.bounces._(email).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/bounces/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3877,7 +3878,7 @@ string queryParams = @"{
   'email_address': 'example@example.com'
 }";
 var email = "test_url_param";
-dynamic response = await sg.client.suppression.bounces._(email).delete(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/bounces/" + email, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3904,7 +3905,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_time': 1
 }";
-dynamic response = await sg.client.suppression.invalid_emails.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/invalid_emails", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3939,7 +3940,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.suppression.invalid_emails.delete(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/invalid_emails", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3961,7 +3962,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ```csharp
 var email = "test_url_param";
-dynamic response = await sg.client.suppression.invalid_emails._(email).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/invalid_emails/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -3983,7 +3984,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ```csharp
 var email = "test_url_param";
-dynamic response = await sg.client.suppression.invalid_emails._(email).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/invalid_emails/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4003,7 +4004,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ```csharp
 var email = "test_url_param";
-dynamic response = await sg.client.suppression.spam_report._(email).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/spam_report/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4023,7 +4024,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ```csharp
 var email = "test_url_param";
-dynamic response = await sg.client.suppression.spam_report._(email).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/spam_report/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4048,7 +4049,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_time': 1
 }";
-dynamic response = await sg.client.suppression.spam_reports.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/spam_reports", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4081,7 +4082,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.suppression.spam_reports.delete(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/spam_reports", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4104,7 +4105,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_time': 1
 }";
-dynamic response = await sg.client.suppression.unsubscribes.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/unsubscribes", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4131,7 +4132,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.templates.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "templates", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4150,7 +4151,7 @@ Transactional templates are templates created specifically for transactional ema
 
 
 ```csharp
-dynamic response = await sg.client.templates.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "templates");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4176,7 +4177,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var template_id = "test_url_param";
-dynamic response = await sg.client.templates._(template_id).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "templates/" + template_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4197,7 +4198,7 @@ Transactional templates are templates created specifically for transactional ema
 
 ```csharp
 var template_id = "test_url_param";
-dynamic response = await sg.client.templates._(template_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "templates/" + template_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4218,7 +4219,7 @@ Transactional templates are templates created specifically for transactional ema
 
 ```csharp
 var template_id = "test_url_param";
-dynamic response = await sg.client.templates._(template_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "templates/" + template_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4249,7 +4250,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var template_id = "test_url_param";
-dynamic response = await sg.client.templates._(template_id).versions.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "templates/" + template_id + "/versions", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4285,7 +4286,7 @@ Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var template_id = "test_url_param";
 var version_id = "test_url_param";
-dynamic response = await sg.client.templates._(template_id).versions._(version_id).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "templates/" + template_id + "/versions/" + version_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4312,7 +4313,7 @@ For more information about transactional templates, please see our [User Guide](
 ```csharp
 var template_id = "test_url_param";
 var version_id = "test_url_param";
-dynamic response = await sg.client.templates._(template_id).versions._(version_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "templates/" + template_id + "/versions/" + version_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4339,7 +4340,7 @@ For more information about transactional templates, please see our [User Guide](
 ```csharp
 var template_id = "test_url_param";
 var version_id = "test_url_param";
-dynamic response = await sg.client.templates._(template_id).versions._(version_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "templates/" + template_id + "/versions/" + version_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4367,7 +4368,7 @@ For more information about transactional templates, please see our [User Guide](
 ```csharp
 var template_id = "test_url_param";
 var version_id = "test_url_param";
-dynamic response = await sg.client.templates._(template_id).versions._(version_id).activate.post();
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "templates/" + template_id + "/versions/" + version_id + "/activate");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4393,7 +4394,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-dynamic response = await sg.client.tracking_settings.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4417,7 +4418,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.tracking_settings.click.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "tracking_settings/click", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4436,7 +4437,7 @@ For more information about tracking, please see our [User Guide](https://sendgri
 
 
 ```csharp
-dynamic response = await sg.client.tracking_settings.click.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings/click");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4469,7 +4470,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.tracking_settings.google_analytics.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "tracking_settings/google_analytics", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4492,7 +4493,7 @@ For more information about tracking, please see our [User Guide](https://sendgri
 
 
 ```csharp
-dynamic response = await sg.client.tracking_settings.google_analytics.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings/google_analytics");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4518,7 +4519,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.tracking_settings.open.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "tracking_settings/open", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4539,7 +4540,7 @@ For more information about tracking, please see our [User Guide](https://sendgri
 
 
 ```csharp
-dynamic response = await sg.client.tracking_settings.open.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings/open");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4570,7 +4571,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.tracking_settings.subscription.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "tracking_settings/subscription", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4591,7 +4592,7 @@ For more information about tracking, please see our [User Guide](https://sendgri
 
 
 ```csharp
-dynamic response = await sg.client.tracking_settings.subscription.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings/subscription");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4617,7 +4618,7 @@ For more information about your user profile:
 
 
 ```csharp
-dynamic response = await sg.client.user.account.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/account");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4634,7 +4635,7 @@ Your monthly credit allotment limits the number of emails you may send before in
 
 
 ```csharp
-dynamic response = await sg.client.user.credits.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/credits");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4660,7 +4661,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.email.put(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "user/email", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4681,7 +4682,7 @@ For more information about your user profile:
 
 
 ```csharp
-dynamic response = await sg.client.user.email.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/email");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4708,7 +4709,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.password.put(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "user/password", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4738,7 +4739,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.profile.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/profile", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4757,7 +4758,7 @@ For more information about your user profile:
 
 
 ```csharp
-dynamic response = await sg.client.user.profile.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/profile");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4783,7 +4784,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.scheduled_sends.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "user/scheduled_sends", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4800,7 +4801,7 @@ The Cancel Scheduled Sends feature allows the customer to cancel a scheduled sen
 
 
 ```csharp
-dynamic response = await sg.client.user.scheduled_sends.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/scheduled_sends");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4823,7 +4824,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var batch_id = "test_url_param";
-dynamic response = await sg.client.user.scheduled_sends._(batch_id).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/scheduled_sends/" + batch_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4841,7 +4842,7 @@ The Cancel Scheduled Sends feature allows the customer to cancel a scheduled sen
 
 ```csharp
 var batch_id = "test_url_param";
-dynamic response = await sg.client.user.scheduled_sends._(batch_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/scheduled_sends/" + batch_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4859,7 +4860,7 @@ The Cancel Scheduled Sends feature allows the customer to cancel a scheduled sen
 
 ```csharp
 var batch_id = "test_url_param";
-dynamic response = await sg.client.user.scheduled_sends._(batch_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "user/scheduled_sends/" + batch_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4884,7 +4885,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.settings.enforced_tls.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/settings/enforced_tls", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4903,7 +4904,7 @@ The Enforced TLS settings specify whether or not the recipient is required to su
 
 
 ```csharp
-dynamic response = await sg.client.user.settings.enforced_tls.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/settings/enforced_tls");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4929,7 +4930,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.username.put(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "user/username", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4950,7 +4951,7 @@ For more information about your user profile:
 
 
 ```csharp
-dynamic response = await sg.client.user.username.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/username");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -4988,7 +4989,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.webhooks._("_("event")").settings.patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/webhooks/event/settings", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5009,7 +5010,7 @@ Common uses of this data are to remove unsubscribes, react to spam reports, dete
 
 
 ```csharp
-dynamic response = await sg.client.user.webhooks._("_("event")").settings.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/event/settings");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5033,7 +5034,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.webhooks._("_("event")").test.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "user/webhooks/event/test", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5058,7 +5059,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.user.webhooks.parse.settings.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "user/webhooks/parse/settings", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5075,7 +5076,7 @@ The inbound parse webhook allows you to have incoming emails parsed, extracting 
 
 
 ```csharp
-dynamic response = await sg.client.user.webhooks.parse.settings.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/parse/settings");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5100,7 +5101,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var hostname = "test_url_param";
-dynamic response = await sg.client.user.webhooks.parse.settings._(hostname).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/webhooks/parse/settings/" + hostname, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5118,7 +5119,7 @@ The inbound parse webhook allows you to have incoming emails parsed, extracting 
 
 ```csharp
 var hostname = "test_url_param";
-dynamic response = await sg.client.user.webhooks.parse.settings._(hostname).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/parse/settings/" + hostname);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5136,7 +5137,7 @@ The inbound parse webhook allows you to have incoming emails parsed, extracting 
 
 ```csharp
 var hostname = "test_url_param";
-dynamic response = await sg.client.user.webhooks.parse.settings._(hostname).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "user/webhooks/parse/settings/" + hostname);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5162,7 +5163,7 @@ string queryParams = @"{
   'offset': 'test_string', 
   'start_date': '2016-01-01'
 }";
-dynamic response = await sg.client.user.webhooks.parse.stats.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/parse/stats", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5202,7 +5203,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.whitelabel.domains.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/domains", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5229,7 +5230,7 @@ string queryParams = @"{
   'offset': 1, 
   'username': 'test_string'
 }";
-dynamic response = await sg.client.whitelabel.domains.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/domains", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5253,7 +5254,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 
 
 ```csharp
-dynamic response = await sg.client.whitelabel.domains._("_("default")").get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/domains/default");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5279,7 +5280,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 
 
 ```csharp
-dynamic response = await sg.client.whitelabel.domains.subuser.get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/domains/subuser");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5305,7 +5306,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 
 
 ```csharp
-dynamic response = await sg.client.whitelabel.domains.subuser.delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/domains/subuser");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5331,7 +5332,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var domain_id = "test_url_param";
-dynamic response = await sg.client.whitelabel.domains._(domain_id).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "whitelabel/domains/" + domain_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5352,7 +5353,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 
 ```csharp
 var domain_id = "test_url_param";
-dynamic response = await sg.client.whitelabel.domains._(domain_id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/domains/" + domain_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5372,7 +5373,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 
 ```csharp
 var domain_id = "test_url_param";
-dynamic response = await sg.client.whitelabel.domains._(domain_id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/domains/" + domain_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5404,7 +5405,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var domain_id = "test_url_param";
-dynamic response = await sg.client.whitelabel.domains._(domain_id).subuser.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/domains/" + domain_id + "/subuser", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5434,7 +5435,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.domains._(id).ips.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/domains/" + id + "/ips", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5461,7 +5462,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 ```csharp
 var id = "test_url_param";
 var ip = "test_url_param";
-dynamic response = await sg.client.whitelabel.domains._(id).ips._(ip).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/domains/" + id + "/ips/" + ip);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5486,7 +5487,7 @@ For more information on whitelabeling, please see our [User Guide](https://sendg
 
 ```csharp
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.domains._(id).validate.post();
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/domains/" + id + "/validate");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5514,7 +5515,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.whitelabel.ips.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/ips", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5540,7 +5541,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-dynamic response = await sg.client.whitelabel.ips.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/ips", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5560,7 +5561,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 
 ```csharp
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.ips._(id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/ips/" + id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5580,7 +5581,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 
 ```csharp
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.ips._(id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/ips/" + id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5600,7 +5601,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 
 ```csharp
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.ips._(id).validate.post();
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/ips/" + id + "/validate");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5630,7 +5631,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-dynamic response = await sg.client.whitelabel.links.post(requestBody: data, queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/links", requestBody: data, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5652,7 +5653,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 string queryParams = @"{
   'limit': 1
 }";
-dynamic response = await sg.client.whitelabel.links.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/links", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5681,7 +5682,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 string queryParams = @"{
   'domain': 'test_string'
 }";
-dynamic response = await sg.client.whitelabel.links._("_("default")").get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/links/default", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5707,7 +5708,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 string queryParams = @"{
   'username': 'test_string'
 }";
-dynamic response = await sg.client.whitelabel.links.subuser.get(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/links/subuser", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5733,7 +5734,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 string queryParams = @"{
   'username': 'test_string'
 }";
-dynamic response = await sg.client.whitelabel.links.subuser.delete(queryParams: queryParams);
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/links/subuser", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5758,7 +5759,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.links._(id).patch(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "whitelabel/links/" + id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5778,7 +5779,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 
 ```csharp
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.links._(id).get();
+Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/links/" + id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5798,7 +5799,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 
 ```csharp
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.links._(id).delete();
+Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/links/" + id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5818,7 +5819,7 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/API_
 
 ```csharp
 var id = "test_url_param";
-dynamic response = await sg.client.whitelabel.links._(id).validate.post();
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/links/" + id + "/validate");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5847,7 +5848,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var link_id = "test_url_param";
-dynamic response = await sg.client.whitelabel.links._(link_id).subuser.post(requestBody: data);
+Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/links/" + link_id + "/subuser", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
