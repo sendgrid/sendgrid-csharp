@@ -13,8 +13,8 @@ before_script:
 - ./prism/prism.sh
 - nohup prism run -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json &
 script:
-- xbuild /p:Configuration=Release /p:DebugSymbols=False /p:TargetFrameworkVersion="v4.5" SendGrid/SendGrid.sln
-- mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe SendGrid/UnitTest/bin/Release/UnitTest.dll
+- xbuild /p:Configuration=Release /p:DebugSymbols=False /p:TargetFrameworkVersion="v4.5" SendGrid.sln
+- mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe UnitTest/bin/Release/UnitTest.dll
 notifications:
   hipchat:
     rooms:
