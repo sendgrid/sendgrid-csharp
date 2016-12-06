@@ -3,18 +3,21 @@ solution: SendGrid.sln
 env:
   matrix:
     secure: KJrQ+NfmzlgCSXRyqeAMDGZUG6GO4/+xk1T0wGy1BgVz8seo/fDWL8osWEljB4Sj05sfFj7CM+rociwL6sdVyqCiHbCAM7XuHs58D+4Tlh5pGHL+G1qOl65/pDl0ulq+M7PwDxHPZ60/oyH2a16t5jtD9e4W31y2fXzEbHGLHXg=
+
 install:
 - nuget restore SendGrid.sln
-- nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+- nuget install NUnit.Runners -Version 3.2.0 -OutputDirectory testrunner
+
 before_script:
 - mkdir prism/bin
 - export PATH=$PATH:$PWD/prism/bin/
 - ls -la
 - ./prism/prism.sh
 - nohup prism run -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json &
+
 script:
-- xbuild /p:Configuration=Release /p:DebugSymbols=False /p:TargetFrameworkVersion="v4.5" SendGrid.sln
-- mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe UnitTest/bin/Release/UnitTest.dll
+- mono ./testrunner/NUnit.ConsoleRunner.3.2.0/tools/nunit3-console.exe UnitTest/bin/Release/UnitTest.dll
+
 notifications:
   hipchat:
     rooms:
