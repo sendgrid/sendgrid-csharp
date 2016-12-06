@@ -4,8 +4,10 @@ solution: SendGrid.sln
 matrix:
   include:
     - dotnet: 1.0.0-preview2-003121
+      os: linux
       dist: trusty
-      mono: latest
+      mono: none
+      env: DOTNETCORE=1
     - mono: latest
 
 env:
@@ -13,8 +15,8 @@ env:
     secure: KJrQ+NfmzlgCSXRyqeAMDGZUG6GO4/+xk1T0wGy1BgVz8seo/fDWL8osWEljB4Sj05sfFj7CM+rociwL6sdVyqCiHbCAM7XuHs58D+4Tlh5pGHL+G1qOl65/pDl0ulq+M7PwDxHPZ60/oyH2a16t5jtD9e4W31y2fXzEbHGLHXg=
 
 install:
-  - nuget restore SendGrid.sln
-  - nuget install NUnit.Runners -Version 3.2.0 -OutputDirectory testrunner
+  - if [ -z "${DOTNETCORE}" ]; nuget restore SendGrid.sln; fi
+  - if [ -z "${DOTNETCORE}" ]; nuget install NUnit.Runners -Version 3.2.0 -OutputDirectory testrunner; fi
 
 before_script:
 - mkdir prism/bin
@@ -24,8 +26,9 @@ before_script:
 - nohup prism run -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json &
 
 script:
-  - xbuild /p:Configuration=Release SendGrid.sln
-  - mono ./testrunner/NUnit.Runners.3.2.0/tools/nunit-console.exe ./MyProject.Tests/bin/Release/MyProject.Tests.dll
+  - if [ -n "${DOTNETCORE}" ]; then mkdir bla && cd bla && dotnet new && time dotnet restore && dotnet run; fi
+  - if [ -z "${DOTNETCORE}" ]; then xbuild /p:Configuration=Release SendGrid.sln; fi
+  - if [ -z "${DOTNETCORE}" ]; then ./testrunner/NUnit.Runners.3.2.0/tools/nunit-console.exe ./UnitTest/bin/Release/UnitTest.dll; fi
 
 notifications:
   hipchat:
