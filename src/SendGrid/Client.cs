@@ -93,10 +93,10 @@ namespace SendGrid
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
         /// <returns>Interface to the SendGrid REST API</returns>
-        public Client(string apiKey, string host = "https://api.sendgrid.com", Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
+        public Client(string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
         {
-            Host = host;
-            this.GetType().GetTypeInfo().Assembly.GetName().Version.ToString();
+            Host = (host != null) ? host : "https://api.sendgrid.com";
+            Version = this.GetType().GetTypeInfo().Assembly.GetName().Version.ToString();
             Dictionary<string, string> defaultHeaders = new Dictionary<string, string>();
             defaultHeaders.Add("Authorization", "Bearer " + apiKey);
             defaultHeaders.Add("Content-Type", "application/json");
@@ -146,15 +146,15 @@ namespace SendGrid
         /// <returns>Final URL</returns>
         private string BuildUrl(string queryParams = null)
         {
-            string endpoint = null;
+            string url = null;
 
             if (GetVersion() != null)
             {
-                endpoint = Host + "/" + GetVersion() + "/" + UrlPath;
+                url = Host + "/" + GetVersion() + "/" + GetUrlPath();
             }
             else
             {
-                endpoint = Host + UrlPath;
+                url = Host + "/" + GetUrlPath();
             }
 
             if (queryParams != null)
@@ -169,10 +169,9 @@ namespace SendGrid
                     }
                     query = query + pair.Key + "=" + pair.Value.ToString();
                 }
-                endpoint = endpoint + query;
+                url = url + query;
             }
-
-            return endpoint;
+            return url;
         }
 
         /// <summary>

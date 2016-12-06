@@ -278,7 +278,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "access_settings/activity", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -303,7 +303,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "access_settings/whitelist", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -313,7 +313,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "access_settings/whitelist", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -332,7 +332,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "access_settings/whitelist", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -343,7 +343,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "access_settings/whitelist/" + rule_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -354,7 +354,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "access_settings/whitelist/" + rule_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -371,7 +371,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "alerts", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -381,7 +381,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "alerts", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -397,7 +397,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "alerts/" + alert_id, requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -408,7 +408,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "alerts/" + alert_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -419,7 +419,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "alerts/" + alert_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -440,7 +440,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "api_keys", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -453,7 +453,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "api_keys", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -473,7 +473,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PUT, urlPath: "api_keys/" + api_key_id, requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -489,7 +489,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "api_keys/" + api_key_id, requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -500,7 +500,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "api_keys/" + api_key_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -511,7 +511,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "api_keys/" + api_key_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -528,7 +528,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "asm/groups", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -541,7 +541,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "asm/groups", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -559,7 +559,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "asm/groups/" + group_id, requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -570,7 +570,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "asm/groups/" + group_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -581,7 +581,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "asm/groups/" + group_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -600,7 +600,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "asm/groups/" + group_id + "/suppressions", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -611,7 +611,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "asm/groups/" + group_id + "/suppressions", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -631,7 +631,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "asm/groups/" + group_id + "/suppressions/search", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -643,7 +643,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "asm/groups/" + group_id + "/suppressions/" + email, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -653,7 +653,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "asm/suppressions", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -671,7 +671,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "asm/suppressions/global", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -682,7 +682,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "asm/suppressions/global/" + email, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -693,7 +693,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "asm/suppressions/global/" + email, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -704,7 +704,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "asm/suppressions/" + email, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -722,7 +722,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "browsers/stats", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -754,7 +754,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -768,7 +768,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "campaigns", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -790,7 +790,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "campaigns/" + campaign_id, requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -801,7 +801,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "campaigns/" + campaign_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -812,7 +812,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "campaigns/" + campaign_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -828,7 +828,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "campaigns/" + campaign_id + "/schedules", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -844,7 +844,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns/" + campaign_id + "/schedules", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -855,7 +855,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "campaigns/" + campaign_id + "/schedules", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -866,7 +866,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "campaigns/" + campaign_id + "/schedules", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -877,7 +877,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns/" + campaign_id + "/schedules/now", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -893,7 +893,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns/" + campaign_id + "/schedules/test", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -908,7 +908,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "categories", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -926,7 +926,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "categories/stats", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -945,7 +945,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "categories/stats/sums", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -960,7 +960,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "clients/stats", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -976,7 +976,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "clients/" + client_type + "/stats", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -992,7 +992,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/custom_fields", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -1002,7 +1002,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/custom_fields", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1013,7 +1013,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/custom_fields/" + custom_field_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1024,7 +1024,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "202");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/custom_fields/" + custom_field_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Accepted);
+            Assert.AreEqual(HttpStatusCode.Accepted, response.StatusCode);
         }
 
         [Test]
@@ -1039,7 +1039,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/lists", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -1049,7 +1049,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/lists", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1067,7 +1067,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/lists", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -1086,7 +1086,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "contactdb/lists/" + list_id, requestBody: data, queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1100,7 +1100,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/lists/" + list_id, queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1114,7 +1114,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "202");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/lists/" + list_id, queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Accepted);
+            Assert.AreEqual(HttpStatusCode.Accepted, response.StatusCode);
         }
 
         [Test]
@@ -1131,7 +1131,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/lists/" + list_id + "/recipients", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -1147,7 +1147,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/lists/" + list_id + "/recipients", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1159,7 +1159,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/lists/" + list_id + "/recipients/" + recipient_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -1175,7 +1175,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/lists/" + list_id + "/recipients/" + recipient_id, queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -1194,7 +1194,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "contactdb/recipients", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -1220,7 +1220,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/recipients", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -1234,7 +1234,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1250,7 +1250,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/recipients", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1260,7 +1260,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients/billable_count", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1270,7 +1270,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients/count", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1283,7 +1283,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients/search", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1294,7 +1294,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients/" + recipient_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1305,7 +1305,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/recipients/" + recipient_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -1316,7 +1316,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/recipients/" + recipient_id + "/lists", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1326,7 +1326,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/reserved_fields", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1362,7 +1362,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "contactdb/segments", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1372,7 +1372,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/segments", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1400,7 +1400,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "contactdb/segments/" + segment_id, requestBody: data, queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1414,7 +1414,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/segments/" + segment_id, queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1428,7 +1428,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "contactdb/segments/" + segment_id, queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -1443,7 +1443,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "contactdb/segments/" + segment_id + "/recipients", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1460,7 +1460,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "devices/stats", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1478,7 +1478,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "geo/stats", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1495,7 +1495,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "ips", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1505,7 +1505,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "ips/assigned", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1520,7 +1520,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "ips/pools", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1530,7 +1530,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "ips/pools", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1546,7 +1546,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PUT, urlPath: "ips/pools/" + pool_name, requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1557,7 +1557,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "ips/pools/" + pool_name, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1568,7 +1568,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "ips/pools/" + pool_name, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -1584,7 +1584,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "ips/pools/" + pool_name + "/ips", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -1596,7 +1596,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "ips/pools/" + pool_name + "/ips/" + ip, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -1611,7 +1611,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "ips/warmup", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1621,7 +1621,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "ips/warmup", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1632,7 +1632,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "ips/warmup/" + ip_address, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1643,7 +1643,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "ips/warmup/" + ip_address, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -1654,7 +1654,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "ips/" + ip_address, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1664,7 +1664,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "mail/batch", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -1675,7 +1675,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "mail/batch/" + batch_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1825,7 +1825,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "202");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "mail/send", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Accepted);
+            Assert.AreEqual(HttpStatusCode.Accepted, response.StatusCode);
         }
 
         [Test]
@@ -1839,7 +1839,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1858,7 +1858,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/address_whitelist", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1868,7 +1868,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/address_whitelist", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1884,7 +1884,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/bcc", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1894,7 +1894,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/bcc", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1911,7 +1911,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/bounce_purge", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1921,7 +1921,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/bounce_purge", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1938,7 +1938,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/footer", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1948,7 +1948,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/footer", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1964,7 +1964,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/forward_bounce", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1974,7 +1974,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/forward_bounce", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -1990,7 +1990,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/forward_spam", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2000,7 +2000,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/forward_spam", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2015,7 +2015,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/plain_content", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2025,7 +2025,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/plain_content", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2042,7 +2042,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/spam_check", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2052,7 +2052,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/spam_check", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2068,7 +2068,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "mail_settings/template", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2078,7 +2078,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "mail_settings/template", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2096,7 +2096,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "mailbox_providers/stats", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2110,7 +2110,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "partner_settings", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2127,7 +2127,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "partner_settings/new_relic", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2137,7 +2137,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "partner_settings/new_relic", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2147,7 +2147,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "scopes", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2176,7 +2176,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "senders", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -2186,7 +2186,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "senders", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2216,7 +2216,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "senders/" + sender_id, requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2227,7 +2227,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "senders/" + sender_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2238,7 +2238,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "senders/" + sender_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -2249,7 +2249,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "senders/" + sender_id + "/resend_verification", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -2266,7 +2266,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "stats", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2287,7 +2287,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "subusers", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2302,7 +2302,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "subusers", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2315,7 +2315,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/reputations", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2333,7 +2333,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/stats", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2351,7 +2351,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/stats/monthly", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2370,7 +2370,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/stats/sums", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2386,7 +2386,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "subusers/" + subuser_name, requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -2397,7 +2397,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "subusers/" + subuser_name, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -2413,7 +2413,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PUT, urlPath: "subusers/" + subuser_name + "/ips", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2430,7 +2430,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PUT, urlPath: "subusers/" + subuser_name + "/monitor", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2447,7 +2447,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "subusers/" + subuser_name + "/monitor", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2458,7 +2458,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/" + subuser_name + "/monitor", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2469,7 +2469,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "subusers/" + subuser_name + "/monitor", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -2487,7 +2487,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/" + subuser_name + "/stats/monthly", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2503,7 +2503,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/blocks", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2522,7 +2522,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/blocks", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -2533,7 +2533,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/blocks/" + email, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2544,7 +2544,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/blocks/" + email, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -2558,7 +2558,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/bounces", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2577,7 +2577,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/bounces", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -2588,7 +2588,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/bounces/" + email, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2602,7 +2602,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/bounces/" + email, queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -2618,7 +2618,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/invalid_emails", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2637,7 +2637,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/invalid_emails", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -2648,7 +2648,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/invalid_emails/" + email, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2659,7 +2659,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/invalid_emails/" + email, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -2670,7 +2670,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/spam_report/" + email, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2681,7 +2681,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/spam_report/" + email, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -2697,7 +2697,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/spam_reports", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2716,7 +2716,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "suppression/spam_reports", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -2732,7 +2732,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "suppression/unsubscribes", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2747,7 +2747,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "templates", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -2757,7 +2757,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "templates", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2773,7 +2773,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "templates/" + template_id, requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2784,7 +2784,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "templates/" + template_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2795,7 +2795,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "templates/" + template_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -2816,7 +2816,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "templates/" + template_id + "/versions", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -2837,7 +2837,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "templates/" + template_id + "/versions/" + version_id, requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2849,7 +2849,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "templates/" + template_id + "/versions/" + version_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2861,7 +2861,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "templates/" + template_id + "/versions/" + version_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -2873,7 +2873,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "templates/" + template_id + "/versions/" + version_id + "/activate", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2887,7 +2887,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2902,7 +2902,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "tracking_settings/click", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2912,7 +2912,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings/click", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2932,7 +2932,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "tracking_settings/google_analytics", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2942,7 +2942,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings/google_analytics", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2957,7 +2957,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "tracking_settings/open", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2967,7 +2967,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings/open", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2987,7 +2987,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "tracking_settings/subscription", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -2997,7 +2997,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "tracking_settings/subscription", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3007,7 +3007,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "user/account", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3017,7 +3017,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "user/credits", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3032,7 +3032,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PUT, urlPath: "user/email", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3042,7 +3042,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "user/email", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3058,7 +3058,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PUT, urlPath: "user/password", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3075,7 +3075,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/profile", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3085,7 +3085,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "user/profile", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3101,7 +3101,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "user/scheduled_sends", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -3111,7 +3111,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "user/scheduled_sends", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3127,7 +3127,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/scheduled_sends/" + batch_id, requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -3138,7 +3138,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "user/scheduled_sends/" + batch_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3149,7 +3149,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "user/scheduled_sends/" + batch_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -3165,7 +3165,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/settings/enforced_tls", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3175,7 +3175,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "user/settings/enforced_tls", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3190,7 +3190,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PUT, urlPath: "user/username", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3200,7 +3200,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "user/username", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3227,7 +3227,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/webhooks/event/settings", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3237,7 +3237,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/event/settings", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3252,7 +3252,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "user/webhooks/event/test", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -3270,7 +3270,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "user/webhooks/parse/settings", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -3280,7 +3280,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/parse/settings", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3298,7 +3298,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/webhooks/parse/settings/" + hostname, requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3309,7 +3309,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/parse/settings/" + hostname, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3320,7 +3320,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "user/webhooks/parse/settings/" + hostname, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -3337,7 +3337,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/parse/stats", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3361,7 +3361,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/domains", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -3378,7 +3378,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/domains", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3388,7 +3388,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/domains/default", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3398,7 +3398,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/domains/subuser", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3408,7 +3408,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/domains/subuser", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -3425,7 +3425,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "whitelabel/domains/" + domain_id, requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3436,7 +3436,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/domains/" + domain_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3447,7 +3447,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/domains/" + domain_id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -3463,7 +3463,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/domains/" + domain_id + "/subuser", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -3479,7 +3479,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/domains/" + id + "/ips", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3491,7 +3491,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/domains/" + id + "/ips/" + ip, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3502,7 +3502,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/domains/" + id + "/validate", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3519,7 +3519,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/ips", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -3534,7 +3534,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/ips", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3545,7 +3545,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/ips/" + id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3556,7 +3556,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/ips/" + id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -3567,7 +3567,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/ips/" + id + "/validate", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3588,7 +3588,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "201");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/links", requestBody: data, queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
@@ -3601,7 +3601,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/links", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3614,7 +3614,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/links/default", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3627,7 +3627,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/links/subuser", queryParams: queryParams, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3636,7 +3636,7 @@ namespace UnitTest
             string queryParams = @"{
   'username': 'test_string'
 }";
-            Dictionary<string, string> headers = new Dictionary<string, string>();
+            Dictionary<String, String> headers = new Dictionary<String, String>();
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/links/subuser", queryParams: queryParams, requestHeaders: headers);
@@ -3656,7 +3656,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.PATCH, urlPath: "whitelabel/links/" + id, requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3667,7 +3667,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.GET, urlPath: "whitelabel/links/" + id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3678,7 +3678,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "204");
             Response response = await sg.RequestAsync(method: Client.Methods.DELETE, urlPath: "whitelabel/links/" + id, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Test]
@@ -3689,7 +3689,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/links/" + id + "/validate", requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -3705,7 +3705,7 @@ namespace UnitTest
             headers.Clear();
             headers.Add("X-Mock", "200");
             Response response = await sg.RequestAsync(method: Client.Methods.POST, urlPath: "whitelabel/links/" + link_id + "/subuser", requestBody: data, requestHeaders: headers);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [OneTimeTearDown]
