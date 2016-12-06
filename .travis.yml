@@ -3,12 +3,9 @@ solution: SendGrid.sln
 
 matrix:
   include:
-    - dotnet: 1.0.0-preview2-003121
-      mono: none
-      env: DOTNETCORE=1
-    - dotnet: 1.0.0-preview2-003131
-      mono: none
-      env: DOTNETCORE=1
+    - dotnet: 1.0.0-preview2-003177
+      dist: trusty
+      mono: latest
     - mono: latest
 
 env:
