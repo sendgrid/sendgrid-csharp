@@ -16,6 +16,7 @@ before_script:
 - nohup prism run -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json &
 
 script:
+- xbuild SendGrid.sln /p:Configuration=Release
 - mono ./testrunner/NUnit.ConsoleRunner.3.2.0/tools/nunit3-console.exe UnitTest/bin/Release/UnitTest.dll
 
 notifications:
