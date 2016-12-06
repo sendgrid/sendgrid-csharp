@@ -160,13 +160,16 @@ namespace SendGrid
             if (queryParams != null)
             {
                 var ds_query_params = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(queryParams);
-                var query = new Dictionary<string, string>();
+                string query = "?";
                 foreach (var pair in ds_query_params)
                 {
-                    query[pair.Key] = pair.Value.ToString();
+                    if (query != "?")
+                    {
+                        query = query + "&";
+                    }
+                    query = query + pair.Key + "=" + pair.Value.ToString();
                 }
-                string queryString = query.ToString();
-                endpoint = endpoint + "?" + queryString;
+                endpoint = endpoint + query;
             }
 
             return endpoint;

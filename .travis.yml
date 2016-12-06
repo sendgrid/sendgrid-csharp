@@ -26,7 +26,8 @@ before_script:
 - nohup prism run -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json &
 
 script:
-  - if [ -n "${DOTNETCORE}" ]; then mkdir bla && cd bla && dotnet new && time dotnet restore && dotnet run; fi
+  - if [ -n "${DOTNETCORE}" ]; then mkdir bla && cd bla && dotnet new && time dotnet restore && dotnet run && dotnet test; fi
+  - if [ -z "${DOTNETCORE}" ]; then mkdir bla && cd bla && dotnet new && time dotnet restore; fi
   - if [ -z "${DOTNETCORE}" ]; then xbuild /p:Configuration=Release SendGrid.sln; fi
   - if [ -z "${DOTNETCORE}" ]; then ./testrunner/NUnit.Runners.3.2.0/tools/nunit-console.exe ./UnitTest/bin/Release/UnitTest.dll; fi
 
