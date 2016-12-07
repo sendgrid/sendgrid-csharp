@@ -9,8 +9,13 @@ env:
   matrix:
     secure: KJrQ+NfmzlgCSXRyqeAMDGZUG6GO4/+xk1T0wGy1BgVz8seo/fDWL8osWEljB4Sj05sfFj7CM+rociwL6sdVyqCiHbCAM7XuHs58D+4Tlh5pGHL+G1qOl65/pDl0ulq+M7PwDxHPZ60/oyH2a16t5jtD9e4W31y2fXzEbHGLHXg=
 
+before_install:
+  - mkdir -p .nuget
+  - wget -O .nuget/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+  - mono .nuget/nuget.exe
+
 install:
-  - nuget install NUnit.Runners -Version 3.2.0 -OutputDirectory testrunner
+  - mono .nuget/nuget.exe install NUnit.Runners -Version 3.2.0 -OutputDirectory testrunner
 
 before_script:
   - mkdir prism/bin
@@ -22,10 +27,10 @@ before_script:
 script:
   - dotnet restore
   - dotnet build ./src/SendGrid -c Release
-  - nuget restore ./SendGrid.sln
-  - nuget restore ./UnitTest/UnitTest.csproj
+  - mono .nuget/nuget.exe restore ./SendGrid.sln
+  - mono .nuget/nuget.exe restore ./UnitTest/UnitTest.csproj
   - xbuild /p:Configuration=Release ./UnitTest/UnitTest.csproj
-  - ./testrunner/NUnit.Runners.3.2.0/tools/nunit-console.exe ./testrunner/NUnit.Runners.3.2.0/tools/nunit-console.exe
+  - ./testrunner/NUnit.ConsoleRunner.3.2.0/tools/nunit3-console.exe ./UnitTest/bin/Release/UnitTest.dll
 
 notifications:
   hipchat:
