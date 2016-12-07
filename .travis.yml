@@ -10,10 +10,7 @@ env:
     secure: KJrQ+NfmzlgCSXRyqeAMDGZUG6GO4/+xk1T0wGy1BgVz8seo/fDWL8osWEljB4Sj05sfFj7CM+rociwL6sdVyqCiHbCAM7XuHs58D+4Tlh5pGHL+G1qOl65/pDl0ulq+M7PwDxHPZ60/oyH2a16t5jtD9e4W31y2fXzEbHGLHXg=
 
 install:
-  - nuget install Newtonsoft.Json -Version 9.0.0
-  - nuget install NUnit -Version 3.5.0
-  - nuget install NUnit3TestAdapter -Version 3.6.0
-  - nuget install System.Net.Http -Version 4.0.0
+  - nuget install Newtonsoft.Json
   - nuget install NUnit.Runners -Version 3.2.0 -OutputDirectory testrunner
 
 before_script:
