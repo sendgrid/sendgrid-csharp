@@ -14,7 +14,7 @@ before_install:
   - wget -O .nuget/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
   - mono .nuget/nuget.exe
   - ls /usr/lib/mono/4.5
-  - /usr/lib/mono/4.5/MSBuild /version
+  - ls /usr/lib/mono/4.5/MSBuild
 
 install:
   - mono .nuget/nuget.exe restore ./SendGrid.sln -Verbosity detailed
