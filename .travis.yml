@@ -10,12 +10,10 @@ env:
     secure: KJrQ+NfmzlgCSXRyqeAMDGZUG6GO4/+xk1T0wGy1BgVz8seo/fDWL8osWEljB4Sj05sfFj7CM+rociwL6sdVyqCiHbCAM7XuHs58D+4Tlh5pGHL+G1qOl65/pDl0ulq+M7PwDxHPZ60/oyH2a16t5jtD9e4W31y2fXzEbHGLHXg=
 
 before_install:
-  - mkdir -p .nuget
-  - wget -O .nuget/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
-  - mono .nuget/nuget.exe help
+  - sudo nuget update -self
 
 install:
-  - mono .nuget/nuget.exe install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+  - mono nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 
 before_script:
   - mkdir prism/bin
@@ -27,9 +25,9 @@ before_script:
 script:
   - dotnet restore
   - dotnet build ./src/SendGrid -c Release
-  - mono --runtime=v4.0.30319 ".nuget/nuget.exe" restore ./SendGrid.sln
+  - mono nuget restore ./SendGrid.sln
   - xbuild /p:Configuration=Release ./UnitTest/UnitTest.csproj
-  - mono --debug --runtime=v4.0.30319 ./src/packages/NUnit.Runners.2.6.4/tools/nunit-console.exe ./UnitTest/bin/Release/net45/UnitTest.dll -exclude=NuGet,NoMono -nodots
+  - mono ./src/packages/NUnit.Runners.2.6.4/tools/nunit-console.exe ./UnitTest/bin/Release/net45/UnitTest.dll
 
 notifications:
   hipchat:
