@@ -1,43 +1,28 @@
 language: csharp
-solution: SendGrid.sln
-
-matrix:
-  include:
-    - dotnet: 1.0.0-preview2-003121
-      os: linux
-      dist: trusty
-      mono: none
-      env: DOTNETCORE=1
-    - dotnet: 1.0.0-preview2-003121
-      os: linux
-      dist: trusty
-      mono: latest
-    - dotnet: 1.0.0-preview2-003121
-      os: linux
-      dist: trusty
-      mono: latest
+dotnet: 1.0.0-preview2-003121
+os: linux
+dist: trusty
+mono: latest
 
 env:
   matrix:
     secure: KJrQ+NfmzlgCSXRyqeAMDGZUG6GO4/+xk1T0wGy1BgVz8seo/fDWL8osWEljB4Sj05sfFj7CM+rociwL6sdVyqCiHbCAM7XuHs58D+4Tlh5pGHL+G1qOl65/pDl0ulq+M7PwDxHPZ60/oyH2a16t5jtD9e4W31y2fXzEbHGLHXg=
 
 install:
-  - if [ -z "${DOTNETCORE}" ]; then curl -L -o nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe; fi
-  - if [ -z "${DOTNETCORE}" ]; then mono nuget.exe restore SendGrid.sln; fi
-  - if [ -z "${DOTNETCORE}" ]; then mono nuget.exe install NUnit.Runners -Version 3.2.0 -OutputDirectory testrunner; fi
+  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 
 before_script:
-- mkdir prism/bin
-- export PATH=$PATH:$PWD/prism/bin/
-- ls -la
-- ./prism/prism.sh
-- nohup prism run -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json &
+  - mkdir prism/bin
+  - export PATH=$PATH:$PWD/prism/bin/
+  - ls -la
+  - ./prism/prism.sh
+  - nohup prism run -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json &
 
 script:
-  - if [ -n "${DOTNETCORE}" ]; then dotnet restore && dotnet build ./src/SendGrid -c Release; fi
-  - if [ -z "${DOTNETCORE}" ]; then dotnet restore && dotnet build ./src/SendGrid -c Release -f netcoreapp1.0; fi
-  - if [ -z "${DOTNETCORE}" ]; then xbuild /p:Configuration=Release SendGrid.sln; fi
-  - if [ -z "${DOTNETCORE}" ]; then ./testrunner/NUnit.Runners.3.2.0/tools/nunit-console.exe ./UnitTest/bin/Release/UnitTest.dll; fi
+  - dotnet restore
+  - dotnet build ./src/SendGrid -c Release
+  - xbuild /p:Configuration=Release ./UnitTest/UnitTest.csproj
+  - ./testrunner/NUnit.Runners.3.2.0/tools/nunit-console.ex ./testrunner/NUnit.Runners.3.2.0/tools/nunit-console.ex
 
 notifications:
   hipchat:
