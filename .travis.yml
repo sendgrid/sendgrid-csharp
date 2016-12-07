@@ -3,6 +3,7 @@ dotnet: 1.0.0-preview2-003121
 os: linux
 dist: trusty
 mono: latest
+sudo: required
 
 env:
   matrix:
