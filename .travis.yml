@@ -22,8 +22,9 @@ env:
     secure: KJrQ+NfmzlgCSXRyqeAMDGZUG6GO4/+xk1T0wGy1BgVz8seo/fDWL8osWEljB4Sj05sfFj7CM+rociwL6sdVyqCiHbCAM7XuHs58D+4Tlh5pGHL+G1qOl65/pDl0ulq+M7PwDxHPZ60/oyH2a16t5jtD9e4W31y2fXzEbHGLHXg=
 
 install:
-  - if [ -z "${DOTNETCORE}" ]; then nuget restore SendGrid.sln; fi
-  - if [ -z "${DOTNETCORE}" ]; then nuget install NUnit.Runners -Version 3.2.0 -OutputDirectory testrunner; fi
+  - if [ -z "${DOTNETCORE}" ]; then curl -L -o nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe; fi
+  - if [ -z "${DOTNETCORE}" ]; then mono nuget.exe restore SendGrid.sln; fi
+  - if [ -z "${DOTNETCORE}" ]; then mono nuget.exe install NUnit.Runners -Version 3.2.0 -OutputDirectory testrunner; fi
 
 before_script:
 - mkdir prism/bin
@@ -33,8 +34,8 @@ before_script:
 - nohup prism run -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json &
 
 script:
-  - if [ -n "${DOTNETCORE}" ]; then dotnet restore && dotnet build ./src/SendGrid -c Release; fi
-  - if [ -z "${DOTNETCORE}" ]; then dotnet restore && dotnet build ./src/SendGrid -c Release; fi
+  - if [ -n "${DOTNETCORE}" ]; then dotnet restore && dotnet build ./src/SendGrid -c Release -f netcoreapp1.0; fi
+  - if [ -z "${DOTNETCORE}" ]; then dotnet restore && dotnet build ./src/SendGrid -c Release -f netcoreapp1.0; fi
   - if [ -z "${DOTNETCORE}" ]; then xbuild /p:Configuration=Release SendGrid.sln; fi
   - if [ -z "${DOTNETCORE}" ]; then ./testrunner/NUnit.Runners.3.2.0/tools/nunit-console.exe ./UnitTest/bin/Release/UnitTest.dll; fi
 
