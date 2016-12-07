@@ -11,7 +11,7 @@ matrix:
     - dotnet: 1.0.0-preview2-003121
       os: linux
       dist: trusty
-      mono: none
+      mono: latest
     - dotnet: 1.0.0-preview2-003121
       os: linux
       dist: trusty
@@ -34,7 +34,7 @@ before_script:
 - nohup prism run -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json &
 
 script:
-  - if [ -n "${DOTNETCORE}" ]; then dotnet restore && dotnet build ./src/SendGrid -c Release -f netcoreapp1.0; fi
+  - if [ -n "${DOTNETCORE}" ]; then dotnet restore && dotnet build ./src/SendGrid -c Release; fi
   - if [ -z "${DOTNETCORE}" ]; then dotnet restore && dotnet build ./src/SendGrid -c Release -f netcoreapp1.0; fi
   - if [ -z "${DOTNETCORE}" ]; then xbuild /p:Configuration=Release SendGrid.sln; fi
   - if [ -z "${DOTNETCORE}" ]; then ./testrunner/NUnit.Runners.3.2.0/tools/nunit-console.exe ./UnitTest/bin/Release/UnitTest.dll; fi
