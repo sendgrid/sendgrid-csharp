@@ -189,10 +189,8 @@ namespace SendGrid
                     PreAuthenticate = true,
                     UseDefaultCredentials = false,
                 };
-
                 return new HttpClient(httpClientHandler);
             }
-
             return new HttpClient();
         }
 
