@@ -273,9 +273,6 @@ paket-files/
 __pycache__/
 *.pyc
 
-# Cake
-tools/
-
 ### VisualStudio Patch ###
 build/
 
