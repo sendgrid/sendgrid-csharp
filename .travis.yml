@@ -15,7 +15,7 @@ before_install:
   - mono .nuget/nuget.exe help
 
 install:
-  - mono .nuget/nuget.exe install NUnit.Runners -Version 3.2.0 -OutputDirectory testrunner
+  - mono .nuget/nuget.exe install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 
 before_script:
   - mkdir prism/bin
@@ -27,9 +27,9 @@ before_script:
 script:
   - dotnet restore
   - dotnet build ./src/SendGrid -c Release
-  - mono --runtime=v4.0.30319 ".nuget/nuget.exe" Restore ./SendGrid.sln
+  - mono --runtime=v4.0.30319 ".nuget/nuget.exe" Restore "src"
   - xbuild /p:Configuration=Release ./UnitTest/UnitTest.csproj
-  - ./testrunner/NUnit.ConsoleRunner.3.2.0/tools/nunit3-console.exe ./UnitTest/bin/Release/UnitTest.dll
+  - mono --debug --runtime=v4.0.30319 ./src/packages/NUnit.Runners.2.6.4/tools/nunit-console.exe ./UnitTest/bin/Release/net45/UnitTest.dll -exclude=NuGet,NoMono -nodots
 
 notifications:
   hipchat:
