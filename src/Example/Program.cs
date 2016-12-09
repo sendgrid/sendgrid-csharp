@@ -19,6 +19,33 @@ namespace Example
             string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
             Client client = new Client(apiKey);
 
+            /* Send a Email using the Mail Helper
+            var msg = new SendGridMessage();
+            var from = new MailAddress("dx@sendgrid");
+            var subject = "Hello World from the SendGrid CSharp Library Helper!";
+            var to = new MailAddress("elmer@sendgrid.com");
+            var content = new Content("text/plain", "Hello, Email from the helper!");
+            Response response = await client.SendEmailAsync(msg);
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+            Console.WriteLine(response.Headers);
+            Console.ReadLine();
+            */
+
+            // Send a Single Email using the Mail Helper
+            var from = new MailAddress("dx@sendgrid", "DX Team");
+            var subject = "Hello World from the SendGrid CSharp Library Helper!";
+            var to = new MailAddress("elmer@sendgrid.com", "Elmer Thomas");
+            var contentText = "Hello, Email from the helper [SendSingleEmailAsync]!";
+            var contentHTML = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>";
+
+            Response response = await client.Mail.SendSingleEmailAsync(from, to, subject , contentText, contentHTML);
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+            Console.WriteLine(response.Headers);
+            Console.ReadLine();
+            
+            // Without the Mail Helper
             string data = @"{
               'personalizations': [
                 {
@@ -41,22 +68,8 @@ namespace Example
               ]
             }";
             Object json = JsonConvert.DeserializeObject<Object>(data);
-            Response response = await client.RequestAsync(Client.Methods.POST,
-                                                          json.ToString(),
-                                                          urlPath: "mail/send");
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
-            Console.WriteLine(response.Headers);
-            Console.ReadLine();
-
-            Email from = new Email("dx@sendgrid");
-            string subject = "Hello World from the SendGrid CSharp Library Helper!";
-            Email to = new Email("elmer@sendgrid.com");
-            Content content = new Content("text/plain", "Hello, Email from the helper!");
-            Mail mail = new Mail(from, subject, to, content);
-
             response = await client.RequestAsync(Client.Methods.POST,
-                                                 mail.Get(),
+                                                 json.ToString(),
                                                  urlPath: "mail/send");
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);

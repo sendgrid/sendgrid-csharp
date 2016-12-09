@@ -2,13 +2,13 @@
 
 namespace SendGrid.Helpers.Mail
 {
-    public class Email
+    public class MailAddress
     {
-        public Email()
+        public MailAddress()
         {
         }
 
-        public Email(string email, string name = null)
+        public MailAddress(string email, string name = null)
         {
             this.Address = email;
             this.Name = name;

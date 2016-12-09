@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,11 +66,8 @@ namespace SendGrid
         public string UrlPath;
         public string MediaType;
         public IWebProxy WebProxy;
-        public enum Methods
-        {
-            DELETE, GET, PATCH, POST, PUT
-        }
-
+        public enum Methods { DELETE, GET, PATCH, POST, PUT }
+        public Mail Mail { get; set; }
 
         /// <summary>
         ///     REST API client.
@@ -109,6 +107,7 @@ namespace SendGrid
             }
             SetVersion(version);
             SetUrlPath(urlPath);
+            Mail = new Mail(this);
         }
 
         /// <summary>

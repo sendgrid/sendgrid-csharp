@@ -6,13 +6,13 @@ namespace SendGrid.Helpers.Mail
     public class Personalization
     {
         [JsonProperty(PropertyName = "to")]
-        public List<Email> Tos { get; set; }
+        public List<MailAddress> Tos { get; set; }
 
         [JsonProperty(PropertyName = "cc")]
-        public List<Email> Ccs { get; set; }
+        public List<MailAddress> Ccs { get; set; }
 
         [JsonProperty(PropertyName = "bcc")]
-        public List<Email> Bccs { get; set; }
+        public List<MailAddress> Bccs { get; set; }
 
         [JsonProperty(PropertyName = "subject")]
         public string Subject { get; set; }
@@ -29,26 +29,26 @@ namespace SendGrid.Helpers.Mail
         [JsonProperty(PropertyName = "send_at")]
         public long? SendAt { get; set; }
 
-        public void AddTo(Email email)
+        public void AddTo(MailAddress email)
         {
             if (Tos == null)
-                Tos = new List<Email>();
+                Tos = new List<MailAddress>();
 
             Tos.Add(email);
         }
 
-        public void AddCc(Email email)
+        public void AddCc(MailAddress email)
         {
             if (Ccs == null)
-                Ccs = new List<Email>();
+                Ccs = new List<MailAddress>();
 
             Ccs.Add(email);
         }
 
-        public void AddBcc(Email email)
+        public void AddBcc(MailAddress email)
         {
             if (Bccs == null)
-                Bccs = new List<Email>();
+                Bccs = new List<MailAddress>();
 
             Bccs.Add(email);
         }
