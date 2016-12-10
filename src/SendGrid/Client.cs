@@ -58,6 +58,12 @@ namespace SendGrid
         }
     }
 
+    public static class MimeType
+    {
+        public static readonly string HTML = "text/html";
+        public static readonly string Text = "text/plain";
+    }
+
     public class Client
     {
         public string Host;
@@ -66,7 +72,7 @@ namespace SendGrid
         public string UrlPath;
         public string MediaType;
         public IWebProxy WebProxy;
-        public enum Methods { DELETE, GET, PATCH, POST, PUT }
+        public enum Method { DELETE, GET, PATCH, POST, PUT }
         public Mail Mail { get; set; }
 
         /// <summary>
@@ -228,7 +234,7 @@ namespace SendGrid
         /// <param name="client">Client object ready for communication with API</param>
         /// <param name="request">The parameters for the API call</param>
         /// <returns>Response object</returns>
-        public async virtual Task<Response> MakeRequest(HttpClient client, HttpRequestMessage request)
+        public async Task<Response> MakeRequest(HttpClient client, HttpRequestMessage request)
         {
             HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
             return new Response(response.StatusCode, response.Content, response.Headers);
@@ -241,7 +247,7 @@ namespace SendGrid
         /// <param name="requestBody">JSON formatted string</param>
         /// <param name="queryParams">JSON formatted query paramaters</param>
         /// <returns>Response object</returns>
-        public async Task<Response> RequestAsync(Client.Methods method,
+        public async Task<Response> RequestAsync(Client.Method method,
                                                  string requestBody = null,
                                                  Dictionary<string, string> requestHeaders = null,
                                                  string queryParams = null,
