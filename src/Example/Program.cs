@@ -16,26 +16,18 @@ namespace Example
 
         static async Task Execute()
         {
-            string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
-            Client client = new Client(apiKey);
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
+            var client = new SendGridClient(apiKey);
 
-            // Generic Hello World Send using the Mail Helper
+            // Generic Hello World Send using the Mail Helper with convenience methods
             var msg = new SendGridMessage()
             {
                 From = new EmailAddress("dx@sendgrid.com", "DX Team"),
-                Personalization = new List<Personalization>() {
-                    new Personalization() {
-                        Tos = new List<EmailAddress>() {
-                            new EmailAddress("elmer.thomas@sendgrid.com", "Elmer Thomas")
-                        }
-                    }
-                },
                 Subject = "Hello World from the SendGrid CSharp Library Helper!",
-                Contents = new List<Content>() {
-                    new PlainTextContent("Hello, Email from the helper [SendEmailAsync]!"),
-                    new HtmlContent("<strong>Hello, Email from the helper! [SendEmailAsync]</strong>")
-                }
+                PlainTextContent = "Hello, Email from the helper [SendSingleEmailAsync]!",
+                HtmlContent = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>"
             };
+            msg.AddTo(new EmailAddress("elmer.thomas+test001@sendgrid.com", "Elmer Thomas"));
 
             var response = await client.SendEmailAsync(msg);
             Console.WriteLine(response.StatusCode);
@@ -78,9 +70,32 @@ namespace Example
               ]
             }";
             Object json = JsonConvert.DeserializeObject<Object>(data);
-            response = await client.RequestAsync(Client.Method.POST,
+            response = await client.RequestAsync(SendGridClient.Method.POST,
                                                  json.ToString(),
                                                  urlPath: "mail/send");
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Headers);
+            Console.ReadLine();
+
+            // Generic, direct object access, Hello World Send using the Mail Helper
+            msg = new SendGridMessage()
+            {
+                From = new EmailAddress("dx@sendgrid.com", "DX Team"),
+                Personalization = new List<Personalization>() {
+                    new Personalization() {
+                        Tos = new List<EmailAddress>() {
+                            new EmailAddress("elmer.thomas@sendgrid.com", "Elmer Thomas")
+                        }
+                    }
+                },
+                Subject = "Hello World from the SendGrid CSharp Library Helper!",
+                Contents = new List<Content>() {
+                    new PlainTextContent("Hello, Email from the helper [SendEmailAsync]!"),
+                    new HtmlContent("<strong>Hello, Email from the helper! [SendEmailAsync]</strong>")
+                }
+            };
+
+            response = await client.SendEmailAsync(msg);
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers);
             Console.ReadLine();
@@ -89,7 +104,7 @@ namespace Example
             string queryParams = @"{
                 'limit': 100
             }";
-            response = await client.RequestAsync(method: Client.Method.GET,
+            response = await client.RequestAsync(method: SendGridClient.Method.GET,
                                                           urlPath: "asm/groups",
                                                           queryParams: queryParams);
             Console.WriteLine(response.StatusCode);
@@ -105,7 +120,7 @@ namespace Example
               'name': 'Magic Products'
             }";
             json = JsonConvert.DeserializeObject<object>(requestBody);
-            response = await client.RequestAsync(method: Client.Method.POST,
+            response = await client.RequestAsync(method: SendGridClient.Method.POST,
                                                  urlPath: "asm/groups",
                                                  requestBody: json.ToString());
             var ds_response = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(response.Body.ReadAsStringAsync().Result);
@@ -117,7 +132,7 @@ namespace Example
             Console.ReadLine();
 
             // GET Single
-            response = await client.RequestAsync(method: Client.Method.GET,
+            response = await client.RequestAsync(method: SendGridClient.Method.GET,
                                                  urlPath: string.Format("asm/groups/{0}", group_id));
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -131,7 +146,7 @@ namespace Example
             }";
             json = JsonConvert.DeserializeObject<object>(requestBody);
 
-            response = await client.RequestAsync(method: Client.Method.PATCH,
+            response = await client.RequestAsync(method: SendGridClient.Method.PATCH,
                                                  urlPath: string.Format("asm/groups/{0}", group_id),
                                                  requestBody: json.ToString());
             Console.WriteLine(response.StatusCode);
@@ -142,7 +157,7 @@ namespace Example
             Console.ReadLine();
 
             // DELETE
-            response = await client.RequestAsync(method: Client.Method.DELETE,
+            response = await client.RequestAsync(method: SendGridClient.Method.DELETE,
                                                  urlPath: string.Format("asm/groups/{0}", group_id));
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers.ToString());
