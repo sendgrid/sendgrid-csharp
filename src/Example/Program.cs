@@ -38,9 +38,9 @@ namespace Example
             var from = new EmailAddress("dx@sendgrid", "DX Team");
             var subject = "Hello World from the SendGrid CSharp Library Helper!";
             var to = new EmailAddress("elmer@sendgrid.com", "Elmer Thomas");
-            var contentText = "Hello, Email from the helper [SendSingleEmailAsync]!";
-            var contentHtml = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>";
-            msg = MailHelper.CreateSingleEmail(from, to, subject , contentText, contentHtml);
+            var plainTextContent = "Hello, Email from the helper [SendSingleEmailAsync]!";
+            var htmlContent = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>";
+            msg = MailHelper.CreateSingleEmail(from, to, subject , plainTextContent, htmlContent);
 
             response = await client.SendEmailAsync(msg);
             Console.WriteLine(response.StatusCode);

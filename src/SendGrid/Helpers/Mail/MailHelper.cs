@@ -8,8 +8,8 @@ namespace SendGrid.Helpers.Mail
         public static SendGridMessage CreateSingleEmail(EmailAddress from,
                                                         EmailAddress to,
                                                         string subject,
-                                                        string contentText,
-                                                        string contentHtml)
+                                                        string plainTextContent,
+                                                        string htmlContent)
         {
             var msg = new SendGridMessage()
             {
@@ -23,8 +23,8 @@ namespace SendGrid.Helpers.Mail
                 },
                 Subject = subject,
                 Contents = new List<Content>() {
-                    new PlainTextContent(contentText),
-                    new HtmlContent(contentHtml)
+                    new PlainTextContent(plainTextContent),
+                    new HtmlContent(htmlContent)
                 }
             };
             return msg;
