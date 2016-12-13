@@ -65,7 +65,7 @@ namespace SendGrid
         public static readonly string Text = "text/plain";
     }
 
-    public class Client
+    public class SendGridClient
     {
         public string Host;
         public Dictionary<string, string> RequestHeaders;
@@ -83,7 +83,7 @@ namespace SendGrid
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
         /// <returns>Interface to the SendGrid REST API</returns>
-        public Client(IWebProxy webProxy, string apiKey, string host = "https://api.sendgrid.com", Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
+        public SendGridClient(IWebProxy webProxy, string apiKey, string host = "https://api.sendgrid.com", Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
             : this(apiKey, host, requestHeaders, version, urlPath)
         {
             WebProxy = webProxy;
@@ -97,7 +97,7 @@ namespace SendGrid
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
         /// <returns>Interface to the SendGrid REST API</returns>
-        public Client(string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
+        public SendGridClient(string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
         {
             Host = (host != null) ? host : "https://api.sendgrid.com";
             Version = this.GetType().GetTypeInfo().Assembly.GetName().Version.ToString();
@@ -246,7 +246,7 @@ namespace SendGrid
         /// <param name="requestBody">JSON formatted string</param>
         /// <param name="queryParams">JSON formatted query paramaters</param>
         /// <returns>Response object</returns>
-        public async Task<Response> RequestAsync(Client.Method method,
+        public async Task<Response> RequestAsync(SendGridClient.Method method,
                                                  string requestBody = null,
                                                  Dictionary<string, string> requestHeaders = null,
                                                  string queryParams = null,
@@ -322,7 +322,7 @@ namespace SendGrid
 
         public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(Client.Method.POST,
+            return await RequestAsync(SendGridClient.Method.POST,
                                       msg.Serialize(),
                                       urlPath: "mail/send",
                                       cancellationToken: cancellationToken).ConfigureAwait(false);

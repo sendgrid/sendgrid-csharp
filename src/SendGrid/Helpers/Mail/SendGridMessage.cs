@@ -21,6 +21,12 @@ namespace SendGrid.Helpers.Mail
         [JsonProperty(PropertyName = "content")]
         public List<Content> Contents { get; set; }
 
+        [JsonIgnore]
+        public string PlainTextContent { get; set; }
+
+        [JsonIgnore]
+        public string HtmlContent { get; set; }
+
         [JsonProperty(PropertyName = "attachments")]
         public List<Attachment> Attachments { get; set; }
 
@@ -60,8 +66,32 @@ namespace SendGrid.Helpers.Mail
         [JsonProperty(PropertyName = "reply_to")]
         public EmailAddress ReplyTo { get; set; }
 
+        public void AddTo(EmailAddress email, Personalization personalization = null)
+        {
+            if(personalization == null && Personalization == null)
+            {
+                Personalization = new List<Personalization>() {
+                    new Personalization() {
+                        Tos = new List<EmailAddress>() {
+                            email
+                        }
+                    }
+                };
+            }
+            // TODO: if personalization is passed in, add the To to that particular personalization
+            // TODO: if Personalization is not null, add to the first one by default
+        }
+
+        // TODO: implement the rest of the Personalization properties (e.g. AddTos, AddBcc, AddBccs, etc.)
+
         public string Serialize()
         {
+            // TODO: account for the case when only HTML is provided
+            // Plain text, if provided must always come first
+            Contents = new List<Content>() {
+                    new PlainTextContent(PlainTextContent),
+                    new HtmlContent(HtmlContent)
+            };
             return JsonConvert.SerializeObject(this,
                 Formatting.None,
                 new JsonSerializerSettings
