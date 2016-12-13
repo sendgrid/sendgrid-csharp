@@ -19,14 +19,38 @@ namespace Example
             string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
             Client client = new Client(apiKey);
 
-            // Send a Single Email using the Mail Helper
-            var from = new MailAddress("dx@sendgrid", "DX Team");
-            var subject = "Hello World from the SendGrid CSharp Library Helper!";
-            var to = new MailAddress("elmer@sendgrid.com", "Elmer Thomas");
-            var contentText = "Hello, Email from the helper [SendSingleEmailAsync]!";
-            var contentHTML = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>";
+            // Generic Hello World Send using the Mail Helper
+            var msg = new SendGridMessage()
+            {
+                From = new EmailAddress("dx@sendgrid.com", "DX Team"),
+                Personalization = new List<Personalization>() {
+                    new Personalization() {
+                        Tos = new List<EmailAddress>() {
+                            new EmailAddress("elmer.thomas@sendgrid.com", "Elmer Thomas")
+                        }
+                    }
+                },
+                Subject = "Hello World from the SendGrid CSharp Library Helper!",
+                Contents = new List<Content>() {
+                    new PlainTextContent("Hello, Email from the helper [SendEmailAsync]!"),
+                    new HtmlContent("<strong>Hello, Email from the helper! [SendEmailAsync]</strong>")
+                }
+            };
 
-            Response response = await client.Mail.SendSingleEmailAsync(from, to, subject , contentText, contentHTML);
+            var response = await client.SendEmailAsync(msg);
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Headers);
+            Console.ReadLine();
+
+            // Send a Single Email using the Mail Helper
+            var from = new EmailAddress("dx@sendgrid", "DX Team");
+            var subject = "Hello World from the SendGrid CSharp Library Helper!";
+            var to = new EmailAddress("elmer@sendgrid.com", "Elmer Thomas");
+            var contentText = "Hello, Email from the helper [SendSingleEmailAsync]!";
+            var contentHtml = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>";
+            msg = MailHelper.CreateSingleEmail(from, to, subject , contentText, contentHtml);
+
+            response = await client.SendEmailAsync(msg);
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers);
             Console.ReadLine();

@@ -2,15 +2,15 @@
 
 namespace SendGrid.Helpers.Mail
 {
-    public class MailAddress
+    public class EmailAddress
     {
-        public MailAddress()
+        public EmailAddress()
         {
         }
 
-        public MailAddress(string email, string name = null)
+        public EmailAddress(string email, string name = null)
         {
-            this.Address = email;
+            this.Email = email;
             this.Name = name;
         }
 
@@ -18,6 +18,6 @@ namespace SendGrid.Helpers.Mail
         public string Name { get; set; }
 
         [JsonProperty(PropertyName = "email")]
-        public string Address { get; set; }
+        public string Email { get; set; }
     }
 }

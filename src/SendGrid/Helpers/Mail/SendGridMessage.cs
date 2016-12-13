@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace SendGrid.Helpers.Mail
@@ -8,24 +9,8 @@ namespace SendGrid.Helpers.Mail
     /// </summary>
     public class SendGridMessage
     {
-        public SendGridMessage()
-        {
-        }
-
-        public SendGridMessage(MailAddress from, string subject, MailAddress to, Content content)
-        {
-            this.From = from;
-
-            var personalization = new Personalization();
-            personalization.AddTo(to);
-            this.AddPersonalization(personalization);
-
-            this.Subject = subject;
-            this.AddContent(content);
-        }
-
         [JsonProperty(PropertyName = "from")]
-        public MailAddress From { get; set; }
+        public EmailAddress From { get; set; }
 
         [JsonProperty(PropertyName = "subject")]
         public string Subject { get; set; }
@@ -73,72 +58,9 @@ namespace SendGrid.Helpers.Mail
         public TrackingSettings TrackingSettings { get; set; }
 
         [JsonProperty(PropertyName = "reply_to")]
-        public MailAddress ReplyTo { get; set; }
+        public EmailAddress ReplyTo { get; set; }
 
-        public void AddPersonalization(Personalization personalization)
-        {
-            if (Personalization == null)
-            {
-                Personalization = new List<Personalization>();
-            }
-            Personalization.Add(personalization);
-        }
-
-        public void AddContent(Content content)
-        {
-            if (Contents == null)
-            {
-                Contents = new List<Content>();
-            }
-            Contents.Add(content);
-        }
-
-        public void AddAttachment(Attachment attachment)
-        {
-            if (Attachments == null)
-            {
-                Attachments = new List<Attachment>();
-            }
-            Attachments.Add(attachment);
-        }
-
-        public void AddHeader(string key, string value)
-        {
-            if (Headers == null)
-            {
-                Headers = new Dictionary<string, string>();
-            }
-            Headers.Add(key, value);
-        }
-
-        public void AddSection(string key, string value)
-        {
-            if (Sections == null)
-            {
-                Sections = new Dictionary<string, string>();
-            }
-            Sections.Add(key, value);
-        }
-
-        public void AddCategory(string category)
-        {
-            if (Categories == null)
-            {
-                Categories = new List<string>();
-            }
-            Categories.Add(category);
-        }
-
-        public void AddCustomArgs(string key, string value)
-        {
-            if (CustomArgs == null)
-            {
-                CustomArgs = new Dictionary<string, string>();
-            }
-            CustomArgs.Add(key, value);
-        }
-
-        public string Get()
+        public string Serialize()
         {
             return JsonConvert.SerializeObject(this,
                 Formatting.None,

@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SendGrid
@@ -60,7 +61,7 @@ namespace SendGrid
 
     public static class MimeType
     {
-        public static readonly string HTML = "text/html";
+        public static readonly string Html = "text/html";
         public static readonly string Text = "text/plain";
     }
 
@@ -73,7 +74,6 @@ namespace SendGrid
         public string MediaType;
         public IWebProxy WebProxy;
         public enum Method { DELETE, GET, PATCH, POST, PUT }
-        public Mail Mail { get; set; }
 
         /// <summary>
         ///     REST API client.
@@ -113,7 +113,6 @@ namespace SendGrid
             }
             SetVersion(version);
             SetUrlPath(urlPath);
-            Mail = new Mail(this);
         }
 
         /// <summary>
@@ -222,7 +221,7 @@ namespace SendGrid
         /// <summary>
         ///     Get the version of the API, override to customize
         /// </summary>
-        /// <returns>Version of the API</param>
+        /// <returns>Version of the API</returns>
         public string GetVersion()
         {
             return Version;
@@ -234,9 +233,9 @@ namespace SendGrid
         /// <param name="client">Client object ready for communication with API</param>
         /// <param name="request">The parameters for the API call</param>
         /// <returns>Response object</returns>
-        public async Task<Response> MakeRequest(HttpClient client, HttpRequestMessage request)
+        public async Task<Response> MakeRequest(HttpClient client, HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
         {
-            HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+            HttpResponseMessage response = await client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return new Response(response.StatusCode, response.Content, response.Headers);
         }
 
@@ -251,7 +250,8 @@ namespace SendGrid
                                                  string requestBody = null,
                                                  Dictionary<string, string> requestHeaders = null,
                                                  string queryParams = null,
-                                                 string urlPath = null)
+                                                 string urlPath = null,
+                                                 CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var client = BuildHttpClient())
             {
@@ -305,7 +305,7 @@ namespace SendGrid
                         RequestUri = new Uri(endpoint),
                         Content = content
                     };
-                    return await MakeRequest(client, request).ConfigureAwait(false);
+                    return await MakeRequest(client, request, cancellationToken).ConfigureAwait(false);
 
                 }
                 catch (Exception ex)
@@ -318,6 +318,14 @@ namespace SendGrid
                     return new Response(response.StatusCode, response.Content, response.Headers);
                 }
             }
+        }
+
+        public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await RequestAsync(Client.Method.POST,
+                                      msg.Serialize(),
+                                      urlPath: "mail/send",
+                                      cancellationToken: cancellationToken).ConfigureAwait(false);
         }
     }
 }

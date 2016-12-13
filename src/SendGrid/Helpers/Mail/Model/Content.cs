@@ -20,4 +20,22 @@ namespace SendGrid.Helpers.Mail
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
     }
+
+    public class PlainTextContent : Content
+    {
+        public PlainTextContent(string value)
+        {
+            this.Type = MimeType.Text;
+            this.Value = value;
+        }
+    }
+
+    public class HtmlContent : Content
+    {
+        public HtmlContent(string value)
+        {
+            this.Type = MimeType.Html;
+            this.Value = value;
+        }
+    }
 }
