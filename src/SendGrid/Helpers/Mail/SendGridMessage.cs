@@ -1,5 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace SendGrid.Helpers.Mail
@@ -16,7 +15,7 @@ namespace SendGrid.Helpers.Mail
         public string Subject { get; set; }
 
         [JsonProperty(PropertyName = "personalizations")]
-        public List<Personalization> Personalization { get; set; }
+        public List<Personalization> Personalizations { get; set; }
 
         [JsonProperty(PropertyName = "content")]
         public List<Content> Contents { get; set; }
@@ -68,9 +67,9 @@ namespace SendGrid.Helpers.Mail
 
         public void AddTo(EmailAddress email, Personalization personalization = null)
         {
-            if(personalization == null && Personalization == null)
+            if(personalization == null && Personalizations == null)
             {
-                Personalization = new List<Personalization>() {
+                Personalizations = new List<Personalization>() {
                     new Personalization() {
                         Tos = new List<EmailAddress>() {
                             email

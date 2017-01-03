@@ -30,12 +30,13 @@ namespace Example
             msg.AddTo(new EmailAddress("elmer.thomas+test001@sendgrid.com", "Elmer Thomas"));
 
             var response = await client.SendEmailAsync(msg);
+            Console.WriteLine(msg.Serialize());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers);
             Console.ReadLine();
 
             // Send a Single Email using the Mail Helper
-            var from = new EmailAddress("dx@sendgrid", "DX Team");
+            var from = new EmailAddress("dx@sendgrid.com", "DX Team");
             var subject = "Hello World from the SendGrid CSharp Library Helper!";
             var to = new EmailAddress("elmer@sendgrid.com", "Elmer Thomas");
             var plainTextContent = "Hello, Email from the helper [SendSingleEmailAsync]!";
@@ -43,6 +44,7 @@ namespace Example
             msg = MailHelper.CreateSingleEmail(from, to, subject , plainTextContent, htmlContent);
 
             response = await client.SendEmailAsync(msg);
+            Console.WriteLine(msg.Serialize());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers);
             Console.ReadLine();
@@ -81,7 +83,7 @@ namespace Example
             msg = new SendGridMessage()
             {
                 From = new EmailAddress("dx@sendgrid.com", "DX Team"),
-                Personalization = new List<Personalization>() {
+                Personalizations = new List<Personalization>() {
                     new Personalization() {
                         Tos = new List<EmailAddress>() {
                             new EmailAddress("elmer.thomas@sendgrid.com", "Elmer Thomas")

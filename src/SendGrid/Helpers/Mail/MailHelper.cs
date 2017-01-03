@@ -14,7 +14,7 @@ namespace SendGrid.Helpers.Mail
             var msg = new SendGridMessage()
             {
                 From = from,
-                Personalization = new List<Personalization>() {
+                Personalizations = new List<Personalization>() {
                     new Personalization() {
                         Tos = new List<EmailAddress>() {
                             to
@@ -22,10 +22,8 @@ namespace SendGrid.Helpers.Mail
                     }
                 },
                 Subject = subject,
-                Contents = new List<Content>() {
-                    new PlainTextContent(plainTextContent),
-                    new HtmlContent(htmlContent)
-                }
+                PlainTextContent = plainTextContent,
+                HtmlContent = htmlContent
             };
             return msg;
         }
