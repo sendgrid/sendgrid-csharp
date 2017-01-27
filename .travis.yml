@@ -17,7 +17,7 @@ before_install:
   - ls /usr/lib/mono/4.5/MSBuild
 
 install:
-  - mono .nuget/nuget.exe restore ./SendGrid.sln -Verbosity detailed
+  - mono .nuget/nuget.exe restore ./SendGrid.sln
   - mono .nuget/nuget.exe install NUnit.Runners -Version 3.2.1 -OutputDirectory ./src/packages
 
 before_script:
