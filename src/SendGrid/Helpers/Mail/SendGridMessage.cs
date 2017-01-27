@@ -67,18 +67,25 @@ namespace SendGrid.Helpers.Mail
 
         public void AddTo(EmailAddress email, Personalization personalization = null)
         {
-            if(personalization == null && Personalizations == null)
+            if (personalization != null)
             {
-                Personalizations = new List<Personalization>() {
-                    new Personalization() {
-                        Tos = new List<EmailAddress>() {
-                            email
-                        }
-                    }
-                };
+                personalization.Tos.Add(email);
+                return;
             }
-            // TODO: if personalization is passed in, add the To to that particular personalization
-            // TODO: if Personalization is not null, add to the first one by default
+            else if (Personalizations != null)
+            {
+                Personalizations[0].Tos.Add(email);
+                return;
+            }
+
+            Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Tos = new List<EmailAddress>() {
+                        email
+                    }
+                }
+            };
+            return;
         }
 
         // TODO: implement the rest of the Personalization properties (e.g. AddTos, AddBcc, AddBccs, etc.)
@@ -87,10 +94,14 @@ namespace SendGrid.Helpers.Mail
         {
             // TODO: account for the case when only HTML is provided
             // Plain text, if provided must always come first
-            Contents = new List<Content>() {
+            if (PlainTextContent != null || HtmlContent != null )
+            {
+                Contents = new List<Content>() {
                     new PlainTextContent(PlainTextContent),
                     new HtmlContent(HtmlContent)
-            };
+                };
+            }
+
             return JsonConvert.SerializeObject(this,
                 Formatting.None,
                 new JsonSerializerSettings
