@@ -132,6 +132,73 @@ namespace SendGrid.Helpers.Mail
             return;
         }
 
+        public void AddCc(EmailAddress email, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.Ccs.Add(email);
+                if (Personalizations == null)
+                {
+                    Personalizations = new List<Personalization>();
+                    Personalizations.Add(personalization);
+                }
+                else
+                {
+                    Personalizations.Add(personalization);
+                }
+                return;
+            }
+
+            if (Personalizations != null)
+            {
+                Personalizations[personalizationIndex].Ccs.Add(email);
+                return;
+            }
+
+            Personalizations = new List<Personalization>() {
+                new Personalization()
+                {
+                    Ccs = new List<EmailAddress>()
+                    {
+                        email
+                    }
+                }
+            };
+            return;
+        }
+
+        public void AddCcs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.Ccs.AddRange(emails);
+                if (Personalizations == null)
+                {
+                    Personalizations = new List<Personalization>();
+                    Personalizations.Add(personalization);
+                }
+                else
+                {
+                    Personalizations.Add(personalization);
+                }
+                return;
+            }
+
+            if (Personalizations != null)
+            {
+                Personalizations[personalizationIndex].Ccs.AddRange(emails);
+                return;
+            }
+
+            Personalizations = new List<Personalization>() {
+                new Personalization()
+                {
+                    Ccs = emails
+                }
+            };
+            return;
+        }
+
         // TODO: implement the rest of the Personalization properties (e.g. AddTos, AddBcc, AddBccs, etc.)
 
         public string Serialize()
