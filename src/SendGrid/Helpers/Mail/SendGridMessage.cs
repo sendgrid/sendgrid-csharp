@@ -65,24 +65,68 @@ namespace SendGrid.Helpers.Mail
         [JsonProperty(PropertyName = "reply_to")]
         public EmailAddress ReplyTo { get; set; }
 
-        public void AddTo(EmailAddress email, Personalization personalization = null)
+        public void AddTo(EmailAddress email, int personalizationIndex = 0, Personalization personalization = null)
         {
             if (personalization != null)
             {
                 personalization.Tos.Add(email);
+                if (Personalizations == null )
+                {
+                    Personalizations = new List<Personalization>();
+                    Personalizations.Add(personalization);
+                }
+                else
+                {
+                    Personalizations.Add(personalization);
+                }
                 return;
             }
-            else if (Personalizations != null)
+
+            if (Personalizations != null)
             {
-                Personalizations[0].Tos.Add(email);
+                Personalizations[personalizationIndex].Tos.Add(email);
                 return;
             }
 
             Personalizations = new List<Personalization>() {
-                new Personalization() {
-                    Tos = new List<EmailAddress>() {
+                new Personalization()
+                {
+                    Tos = new List<EmailAddress>()
+                    {
                         email
                     }
+                }
+            };
+            return;
+        }
+
+        public void AddTos(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.Tos.AddRange(emails);
+                if (Personalizations == null)
+                {
+                    Personalizations = new List<Personalization>();
+                    Personalizations.Add(personalization);
+                }
+                else
+                {
+                    Personalizations.Add(personalization);
+                }
+                return;
+            }
+
+            if (Personalizations != null)
+            {
+                Personalizations[personalizationIndex].Tos.AddRange(emails);
+                return;
+            }
+
+            Personalizations = new List<Personalization>() {
+                new Personalization()
+                {
+                    Tos = emails
                 }
             };
             return;
@@ -96,7 +140,8 @@ namespace SendGrid.Helpers.Mail
             // Plain text, if provided must always come first
             if (PlainTextContent != null || HtmlContent != null )
             {
-                Contents = new List<Content>() {
+                Contents = new List<Content>()
+                {
                     new PlainTextContent(PlainTextContent),
                     new HtmlContent(HtmlContent)
                 };
