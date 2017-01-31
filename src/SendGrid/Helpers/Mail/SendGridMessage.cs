@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace SendGrid.Helpers.Mail
 {
     /// <summary>
-    ///     Class Mail builds an object that sends an email through SendGrid.
+    ///     Class SendGridMessage builds an object that sends an email through SendGrid.
     /// </summary>
     public class SendGridMessage
     {
@@ -199,7 +199,110 @@ namespace SendGrid.Helpers.Mail
             return;
         }
 
+        public void AddBcc(EmailAddress email, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.Bccs.Add(email);
+                if (Personalizations == null)
+                {
+                    Personalizations = new List<Personalization>();
+                    Personalizations.Add(personalization);
+                }
+                else
+                {
+                    Personalizations.Add(personalization);
+                }
+                return;
+            }
+
+            if (Personalizations != null)
+            {
+                Personalizations[personalizationIndex].Bccs.Add(email);
+                return;
+            }
+
+            Personalizations = new List<Personalization>() {
+                new Personalization()
+                {
+                    Bccs = new List<EmailAddress>()
+                    {
+                        email
+                    }
+                }
+            };
+            return;
+        }
+
+        public void AddBccs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.Bccs.AddRange(emails);
+                if (Personalizations == null)
+                {
+                    Personalizations = new List<Personalization>();
+                    Personalizations.Add(personalization);
+                }
+                else
+                {
+                    Personalizations.Add(personalization);
+                }
+                return;
+            }
+
+            if (Personalizations != null)
+            {
+                Personalizations[personalizationIndex].Bccs.AddRange(emails);
+                return;
+            }
+
+            Personalizations = new List<Personalization>() {
+                new Personalization()
+                {
+                    Bccs = emails
+                }
+            };
+            return;
+        }
+
+        public void AddHeader(string headerKey, string headerValue, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.Headers.Add(headerKey, headerValue);
+                if (Personalizations == null)
+                {
+                    Personalizations = new List<Personalization>();
+                    Personalizations.Add(personalization);
+                }
+                else
+                {
+                    Personalizations.Add(personalization);
+                }
+                return;
+            }
+
+            if (Personalizations != null)
+            {
+                Personalizations[personalizationIndex].Headers.Add(headerKey, headerValue);
+                return;
+            }
+
+            Personalizations = new List<Personalization>() {
+                new Personalization()
+                {
+                    Headers = new Dictionary<string, string>()
+                    {
+                        { headerKey, headerValue }
+                    }
+                }
+            };
+            return;
+        }
+
         // TODO: implement the rest of the Personalization properties (e.g. AddTos, AddBcc, AddBccs, etc.)
+        // TODO: implement the reamining properties (e.g. see the Model directory)
 
         public string Serialize()
         {

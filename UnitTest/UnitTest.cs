@@ -617,6 +617,254 @@ namespace UnitTest
         }
 
         [Test]
+        public void TestAddBcc()
+        {
+            // Personalization not passed in, Personalization does not exist
+            var msg = new SendGridMessage();
+            msg.AddBcc(new EmailAddress("dx+test001@sendgrid.com", "DX Team"));
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"DX Team\",\"email\":\"dx+test001@sendgrid.com\"}]}]}");
+
+            // Personalization passed in, no Personalizations
+            msg = new SendGridMessage();
+            var email = new EmailAddress("dx+test002@sendgrid.com", "DX Team");
+            var personalization = new Personalization()
+            {
+                Bccs = new List<EmailAddress>()
+                {
+                    email
+                }
+            };
+            msg.AddBcc(new EmailAddress("dx+test003@sendgrid.com", "DX Team"), 0, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"DX Team\",\"email\":\"dx+test002@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test003@sendgrid.com\"}]}]}");
+
+            // Personalization passed in, Personalization exists
+            msg = new SendGridMessage();
+            email = new EmailAddress("dx+test004@sendgrid.com", "DX Team");
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Bccs = new List<EmailAddress>()
+                    {
+                        email
+                    }
+                }
+            };
+            email = new EmailAddress("dx+test005@sendgrid.com", "DX Team");
+            personalization = new Personalization()
+            {
+                Bccs = new List<EmailAddress>()
+                {
+                    email
+                }
+            };
+            msg.AddBcc(new EmailAddress("dx+test006@sendgrid.com", "DX Team"), 1, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"DX Team\",\"email\":\"dx+test004@sendgrid.com\"}]},{\"bcc\":[{\"name\":\"DX Team\",\"email\":\"dx+test005@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test006@sendgrid.com\"}]}]}");
+
+            // Personalization not passed in Personalization exists
+            msg = new SendGridMessage();
+            email = new EmailAddress("dx+test007@sendgrid.com", "DX Team");
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Bccs = new List<EmailAddress>()
+                    {
+                        email
+                    }
+                }
+            };
+            msg.AddBcc(new EmailAddress("dx+test008@sendgrid.com", "DX Team"));
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"DX Team\",\"email\":\"dx+test007@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test008@sendgrid.com\"}]}]}");
+
+
+            // Personalization not passed in Personalizations exists
+            msg = new SendGridMessage();
+            email = new EmailAddress("dx+test009@sendgrid.com", "DX Team");
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Bccs = new List<EmailAddress>()
+                    {
+                        email
+                    }
+                }
+            };
+            email = new EmailAddress("dx+test010@sendgrid.com", "DX Team");
+            personalization = new Personalization()
+            {
+                Bccs = new List<EmailAddress>()
+                {
+                    email
+                }
+            };
+            msg.Personalizations.Add(personalization);
+            msg.AddBcc(new EmailAddress("dx+test011@sendgrid.com", "DX Team"));
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"DX Team\",\"email\":\"dx+test009@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test011@sendgrid.com\"}]},{\"bcc\":[{\"name\":\"DX Team\",\"email\":\"dx+test010@sendgrid.com\"}]}]}");
+        }
+
+        [Test]
+        public void TestAddBccs()
+        {
+            // Personalization not passed in, Personalization does not exist
+            var msg = new SendGridMessage();
+            var emails = new List<EmailAddress>();
+            emails.Add(new EmailAddress("dx+test012@sendgrid.com", "DX Team"));
+            emails.Add(new EmailAddress("dx+test013@sendgrid.com", "DX Team"));
+            msg.AddBccs(emails);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"DX Team\",\"email\":\"dx+test012@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test013@sendgrid.com\"}]}]}");
+
+            // Personalization passed in, no Personalizations
+            msg = new SendGridMessage();
+            emails = new List<EmailAddress>();
+            emails.Add(new EmailAddress("dx+test014@sendgrid.com", "DX Team"));
+            emails.Add(new EmailAddress("dx+test015@sendgrid.com", "DX Team"));
+            var personalization = new Personalization()
+            {
+                Bccs = emails
+            };
+            emails = new List<EmailAddress>();
+            emails.Add(new EmailAddress("dx+test016@sendgrid.com", "DX Team"));
+            emails.Add(new EmailAddress("dx+test017@sendgrid.com", "DX Team"));
+            msg.AddBccs(emails, 0, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"DX Team\",\"email\":\"dx+test014@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test015@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test016@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test017@sendgrid.com\"}]}]}");
+
+            // Personalization passed in, Personalization exists
+            msg = new SendGridMessage();
+            emails = new List<EmailAddress>();
+            emails.Add(new EmailAddress("dx+test018@sendgrid.com", "DX Team"));
+            emails.Add(new EmailAddress("dx+test019@sendgrid.com", "DX Team"));
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Bccs = emails
+                }
+            };
+            emails = new List<EmailAddress>();
+            emails.Add(new EmailAddress("dx+test020@sendgrid.com", "DX Team"));
+            emails.Add(new EmailAddress("dx+test021@sendgrid.com", "DX Team"));
+            personalization = new Personalization()
+            {
+                Bccs = emails
+            };
+            emails = new List<EmailAddress>();
+            emails.Add(new EmailAddress("dx+test022@sendgrid.com", "DX Team"));
+            emails.Add(new EmailAddress("dx+test023@sendgrid.com", "DX Team"));
+            msg.AddBccs(emails, 1, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"DX Team\",\"email\":\"dx+test018@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test019@sendgrid.com\"}]},{\"bcc\":[{\"name\":\"DX Team\",\"email\":\"dx+test020@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test021@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test022@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test023@sendgrid.com\"}]}]}");
+
+            // Personalization not passed in Personalization exists
+            msg = new SendGridMessage();
+            emails = new List<EmailAddress>();
+            emails.Add(new EmailAddress("dx+test024@sendgrid.com", "DX Team"));
+            emails.Add(new EmailAddress("dx+test025@sendgrid.com", "DX Team"));
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Bccs = emails
+                }
+            };
+            emails = new List<EmailAddress>();
+            emails.Add(new EmailAddress("dx+test026@sendgrid.com", "DX Team"));
+            emails.Add(new EmailAddress("dx+test027@sendgrid.com", "DX Team"));
+            msg.AddBccs(emails);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"DX Team\",\"email\":\"dx+test024@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test025@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test026@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test027@sendgrid.com\"}]}]}");
+
+            // Personalization not passed in Personalizations exists
+            msg = new SendGridMessage();
+            emails = new List<EmailAddress>();
+            emails.Add(new EmailAddress("dx+test028@sendgrid.com", "DX Team"));
+            emails.Add(new EmailAddress("dx+test029@sendgrid.com", "DX Team"));
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Bccs = emails
+                }
+            };
+            emails = new List<EmailAddress>();
+            emails.Add(new EmailAddress("dx+test030@sendgrid.com", "DX Team"));
+            emails.Add(new EmailAddress("dx+test031@sendgrid.com", "DX Team"));
+            personalization = new Personalization()
+            {
+                Bccs = emails
+            };
+            msg.Personalizations.Add(personalization);
+            emails = new List<EmailAddress>();
+            emails.Add(new EmailAddress("dx+test032@sendgrid.com", "DX Team"));
+            emails.Add(new EmailAddress("dx+test033@sendgrid.com", "DX Team"));
+            msg.AddBccs(emails);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"DX Team\",\"email\":\"dx+test028@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test029@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test032@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test033@sendgrid.com\"}]},{\"bcc\":[{\"name\":\"DX Team\",\"email\":\"dx+test030@sendgrid.com\"},{\"name\":\"DX Team\",\"email\":\"dx+test031@sendgrid.com\"}]}]}");
+        }
+
+        [Test]
+        public void TestAddHeader()
+        {
+            // Personalization not passed in, Personalization does not exist
+            var msg = new SendGridMessage();
+            msg.AddHeader("X-Test", "Test Value");            
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"headers\":{\"X-Test\":\"Test Value\"}}]}");
+            
+            // Personalization passed in, no Personalizations
+            msg = new SendGridMessage();
+            var personalization = new Personalization()
+            {
+                Headers = new Dictionary<string, string>()
+                {
+                    { "X-Test", "Test Value" }
+                }
+            };
+            msg.AddHeader("X-Test2", "Test Value 2", 0, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"headers\":{\"X-Test\":\"Test Value\",\"X-Test2\":\"Test Value 2\"}}]}");
+
+            // Personalization passed in, Personalization exists
+            msg = new SendGridMessage();
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Headers = new Dictionary<string, string>()
+                    {
+                        { "X-Test3", "Test Value 3" }
+                    }
+                }
+            };
+            personalization = new Personalization()
+            {
+                Headers = new Dictionary<string, string>()
+                {
+                    { "X-Test4", "Test Value 4" }
+                }
+            };
+            msg.AddHeader("X-Test5", "Test Value 5", 1, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"headers\":{\"X-Test3\":\"Test Value 3\"}},{\"headers\":{\"X-Test4\":\"Test Value 4\",\"X-Test5\":\"Test Value 5\"}}]}");
+            
+            // Personalization not passed in Personalization exists
+            msg = new SendGridMessage();
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Headers = new Dictionary<string, string>()
+                    {
+                        { "X-Test6", "Test Value 6" }
+                    }
+                }
+            };
+            msg.AddHeader("X-Test7", "Test Value 7");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"headers\":{\"X-Test6\":\"Test Value 6\",\"X-Test7\":\"Test Value 7\"}}]}");
+
+            // Personalization not passed in Personalizations exists
+            msg = new SendGridMessage();
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Headers = new Dictionary<string, string>()
+                    {
+                        { "X-Test8", "Test Value 8" }
+                    }
+                }
+            };
+            personalization = new Personalization()
+            {
+                Headers = new Dictionary<string, string>()
+                {
+                    { "X-Test9", "Test Value 9" }
+                }
+            };
+            msg.Personalizations.Add(personalization);
+            msg.AddHeader("X-Test10", "Test Value 10");
+            Console.WriteLine(msg.Serialize());
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"headers\":{\"X-Test8\":\"Test Value 8\",\"X-Test10\":\"Test Value 10\"}},{\"headers\":{\"X-Test9\":\"Test Value 9\"}}]}");
+        }
+
+        [Test]
         public async Task test_access_settings_activity_get()
         {
             string host = "http://localhost:4010";
