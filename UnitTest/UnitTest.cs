@@ -793,7 +793,7 @@ namespace UnitTest
         {
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
-            msg.AddHeader("X-Test", "Test Value");            
+            msg.AddHeader("X-Test", "Test Value");
             Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"headers\":{\"X-Test\":\"Test Value\"}}]}");
             
             // Personalization passed in, no Personalizations
@@ -862,6 +862,96 @@ namespace UnitTest
             msg.AddHeader("X-Test10", "Test Value 10");
             Console.WriteLine(msg.Serialize());
             Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"headers\":{\"X-Test8\":\"Test Value 8\",\"X-Test10\":\"Test Value 10\"}},{\"headers\":{\"X-Test9\":\"Test Value 9\"}}]}");
+        }
+
+        [Test]
+        public void TestAddHeaders()
+        {
+            // Personalization not passed in, Personalization does not exist
+            var msg = new SendGridMessage();
+            var headers = new Dictionary<string, string>();
+            headers.Add("X-Test1", "Test Value 1");
+            headers.Add("X-Test2", "Test Value 2");
+            msg.AddHeaders(headers);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"headers\":{\"X-Test1\":\"Test Value 1\",\"X-Test2\":\"Test Value 2\"}}]}");
+
+            // Personalization passed in, no Personalizations
+            msg = new SendGridMessage();
+            headers = new Dictionary<string, string>();
+            headers.Add("X-Test3", "Test Value 3");
+            headers.Add("X-Test4", "Test Value 4");
+            var personalization = new Personalization()
+            {
+                Headers = headers
+            };
+            headers = new Dictionary<string, string>();
+            headers.Add("X-Test5", "Test Value 5");
+            headers.Add("X-Test6", "Test Value 6");
+            msg.AddHeaders(headers, 0, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"headers\":{\"X-Test3\":\"Test Value 3\",\"X-Test4\":\"Test Value 4\",\"X-Test5\":\"Test Value 5\",\"X-Test6\":\"Test Value 6\"}}]}");
+
+            // Personalization passed in, Personalization exists
+            msg = new SendGridMessage();
+            headers = new Dictionary<string, string>();
+            headers.Add("X-Test7", "Test Value 7");
+            headers.Add("X-Test8", "Test Value 8");
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Headers = headers
+                }
+            };
+            headers = new Dictionary<string, string>();
+            headers.Add("X-Test9", "Test Value 9");
+            headers.Add("X-Test10", "Test Value 10");
+            personalization = new Personalization()
+            {
+                Headers = headers
+            };
+            headers = new Dictionary<string, string>();
+            headers.Add("X-Test11", "Test Value 11");
+            headers.Add("X-Test12", "Test Value 12");
+            msg.AddHeaders(headers, 1, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"headers\":{\"X-Test7\":\"Test Value 7\",\"X-Test8\":\"Test Value 8\"}},{\"headers\":{\"X-Test9\":\"Test Value 9\",\"X-Test10\":\"Test Value 10\",\"X-Test11\":\"Test Value 11\",\"X-Test12\":\"Test Value 12\"}}]}");
+
+            // Personalization not passed in Personalization exists
+            msg = new SendGridMessage();
+            headers = new Dictionary<string, string>();
+            headers.Add("X-Test13", "Test Value 13");
+            headers.Add("X-Test14", "Test Value 14");
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Headers = headers
+                }
+            };
+            headers = new Dictionary<string, string>();
+            headers.Add("X-Test15", "Test Value 15");
+            headers.Add("X-Test16", "Test Value 16");
+            msg.AddHeaders(headers);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"headers\":{\"X-Test13\":\"Test Value 13\",\"X-Test14\":\"Test Value 14\",\"X-Test15\":\"Test Value 15\",\"X-Test16\":\"Test Value 16\"}}]}");
+
+            // Personalization not passed in Personalizations exists
+            msg = new SendGridMessage();
+            headers = new Dictionary<string, string>();
+            headers.Add("X-Test17", "Test Value 17");
+            headers.Add("X-Test18", "Test Value 18");
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Headers = headers
+                }
+            };
+            headers = new Dictionary<string, string>();
+            headers.Add("X-Test19", "Test Value 19");
+            headers.Add("X-Test20", "Test Value 20");
+            personalization = new Personalization()
+            {
+                Headers = headers
+            };
+            msg.Personalizations.Add(personalization);
+            headers = new Dictionary<string, string>();
+            headers.Add("X-Test21", "Test Value 21");
+            headers.Add("X-Test22", "Test Value 22");
+            msg.AddHeaders(headers);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"headers\":{\"X-Test17\":\"Test Value 17\",\"X-Test18\":\"Test Value 18\",\"X-Test21\":\"Test Value 21\",\"X-Test22\":\"Test Value 22\"}},{\"headers\":{\"X-Test19\":\"Test Value 19\",\"X-Test20\":\"Test Value 20\"}}]}");
         }
 
         [Test]

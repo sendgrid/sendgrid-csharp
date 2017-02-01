@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SendGrid.Helpers.Mail
 {
@@ -296,6 +297,40 @@ namespace SendGrid.Helpers.Mail
                     {
                         { headerKey, headerValue }
                     }
+                }
+            };
+            return;
+        }
+
+        public void AddHeaders(Dictionary<string, string> headers, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.Headers = (personalization.Headers != null)
+                    ? personalization.Headers.Union(headers).ToDictionary(pair => pair.Key, pair => pair.Value) : headers;
+                if (Personalizations == null)
+                {
+                    Personalizations = new List<Personalization>();
+                    Personalizations.Add(personalization);
+                }
+                else
+                {
+                    Personalizations.Add(personalization);
+                }
+                return;
+            }
+
+            if (Personalizations != null)
+            {
+                Personalizations[personalizationIndex].Headers = (Personalizations[personalizationIndex].Headers != null)
+                    ? Personalizations[personalizationIndex].Headers.Union(headers).ToDictionary(pair => pair.Key, pair => pair.Value) : headers;
+                return;
+            }
+
+            Personalizations = new List<Personalization>() {
+                new Personalization()
+                {
+                    Headers = headers
                 }
             };
             return;
