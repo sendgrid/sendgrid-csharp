@@ -336,6 +336,208 @@ namespace SendGrid.Helpers.Mail
             return;
         }
 
+        public void AddSubstitution(string substitutionKey, string substitutionValue, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.Substitutions.Add(substitutionKey, substitutionValue);
+                if (Personalizations == null)
+                {
+                    Personalizations = new List<Personalization>();
+                    Personalizations.Add(personalization);
+                }
+                else
+                {
+                    Personalizations.Add(personalization);
+                }
+                return;
+            }
+
+            if (Personalizations != null)
+            {
+                Personalizations[personalizationIndex].Substitutions.Add(substitutionKey, substitutionValue);
+                return;
+            }
+
+            Personalizations = new List<Personalization>() {
+                new Personalization()
+                {
+                    Substitutions = new Dictionary<string, string>()
+                    {
+                        { substitutionKey, substitutionValue }
+                    }
+                }
+            };
+            return;
+        }
+
+        public void AddSubstitutions(Dictionary<string, string> substitutions, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.Substitutions = (personalization.Substitutions != null)
+                    ? personalization.Substitutions.Union(substitutions).ToDictionary(pair => pair.Key, pair => pair.Value) : substitutions;
+                if (Personalizations == null)
+                {
+                    Personalizations = new List<Personalization>();
+                    Personalizations.Add(personalization);
+                }
+                else
+                {
+                    Personalizations.Add(personalization);
+                }
+                return;
+            }
+
+            if (Personalizations != null)
+            {
+                Personalizations[personalizationIndex].Substitutions = (Personalizations[personalizationIndex].Substitutions != null)
+                    ? Personalizations[personalizationIndex].Substitutions.Union(substitutions).ToDictionary(pair => pair.Key, pair => pair.Value) : substitutions;
+                return;
+            }
+
+            Personalizations = new List<Personalization>() {
+                new Personalization()
+                {
+                    Substitutions = substitutions
+                }
+            };
+            return;
+        }
+
+        public void AddCustomArg(string customArgKey, string customArgValue, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.CustomArgs.Add(customArgKey, customArgValue);
+                if (Personalizations == null)
+                {
+                    Personalizations = new List<Personalization>();
+                    Personalizations.Add(personalization);
+                }
+                else
+                {
+                    Personalizations.Add(personalization);
+                }
+                return;
+            }
+
+            if (Personalizations != null)
+            {
+                Personalizations[personalizationIndex].CustomArgs.Add(customArgKey, customArgValue);
+                return;
+            }
+
+            Personalizations = new List<Personalization>() {
+                new Personalization()
+                {
+                    CustomArgs = new Dictionary<string, string>()
+                    {
+                        { customArgKey, customArgValue }
+                    }
+                }
+            };
+            return;
+        }
+
+        public void AddCustomArgs(Dictionary<string, string> customArgs, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.CustomArgs = (personalization.CustomArgs != null)
+                    ? personalization.CustomArgs.Union(customArgs).ToDictionary(pair => pair.Key, pair => pair.Value) : customArgs;
+                if (Personalizations == null)
+                {
+                    Personalizations = new List<Personalization>();
+                    Personalizations.Add(personalization);
+                }
+                else
+                {
+                    Personalizations.Add(personalization);
+                }
+                return;
+            }
+
+            if (Personalizations != null)
+            {
+                Personalizations[personalizationIndex].CustomArgs = (Personalizations[personalizationIndex].CustomArgs != null)
+                    ? Personalizations[personalizationIndex].CustomArgs.Union(customArgs).ToDictionary(pair => pair.Key, pair => pair.Value) : customArgs;
+                return;
+            }
+
+            Personalizations = new List<Personalization>() {
+                new Personalization()
+                {
+                    CustomArgs = customArgs
+                }
+            };
+            return;
+        }
+
+        public void SetSubject(string subject, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.Subject = subject;
+                if (Personalizations == null)
+                {
+                    Personalizations = new List<Personalization>();
+                    Personalizations.Add(personalization);
+                }
+                else
+                {
+                    Personalizations.Add(personalization);
+                }
+                return;
+            }
+
+            if (Personalizations != null)
+            {
+                Personalizations[personalizationIndex].Subject = subject;
+                return;
+            }
+
+            Personalizations = new List<Personalization>() {
+                new Personalization()
+                {
+                    Subject = subject
+                }
+            };
+            return;
+        }
+
+        public void SetSendAt(int sendAt, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.SendAt = sendAt;
+                if (Personalizations == null)
+                {
+                    Personalizations = new List<Personalization>();
+                    Personalizations.Add(personalization);
+                }
+                else
+                {
+                    Personalizations.Add(personalization);
+                }
+                return;
+            }
+
+            if (Personalizations != null)
+            {
+                Personalizations[personalizationIndex].SendAt = sendAt;
+                return;
+            }
+
+            Personalizations = new List<Personalization>() {
+                new Personalization()
+                {
+                    SendAt = sendAt
+                }
+            };
+            return;
+        }
+
         // TODO: implement the rest of the Personalization properties (e.g. AddTos, AddBcc, AddBccs, etc.)
         // TODO: implement the reamining properties (e.g. see the Model directory)
 

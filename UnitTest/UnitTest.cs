@@ -860,7 +860,6 @@ namespace UnitTest
             };
             msg.Personalizations.Add(personalization);
             msg.AddHeader("X-Test10", "Test Value 10");
-            Console.WriteLine(msg.Serialize());
             Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"headers\":{\"X-Test8\":\"Test Value 8\",\"X-Test10\":\"Test Value 10\"}},{\"headers\":{\"X-Test9\":\"Test Value 9\"}}]}");
         }
 
@@ -952,6 +951,462 @@ namespace UnitTest
             headers.Add("X-Test22", "Test Value 22");
             msg.AddHeaders(headers);
             Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"headers\":{\"X-Test17\":\"Test Value 17\",\"X-Test18\":\"Test Value 18\",\"X-Test21\":\"Test Value 21\",\"X-Test22\":\"Test Value 22\"}},{\"headers\":{\"X-Test19\":\"Test Value 19\",\"X-Test20\":\"Test Value 20\"}}]}");
+        }
+
+        [Test]
+        public void TestAddSubstitution()
+        {
+            // Personalization not passed in, Personalization does not exist
+            var msg = new SendGridMessage();
+            msg.AddSubstitution("-sub1-", "Substituted Value 1");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"substitutions\":{\"-sub1-\":\"Substituted Value 1\"}}]}");
+
+            // Personalization passed in, no Personalizations
+            msg = new SendGridMessage();
+            var personalization = new Personalization()
+            {
+                Substitutions = new Dictionary<string, string>()
+                {
+                    { "-sub2-", "Substituted Value 2" }
+                }
+            };
+            msg.AddSubstitution("-sub3-", "Substituted Value 3", 0, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"substitutions\":{\"-sub2-\":\"Substituted Value 2\",\"-sub3-\":\"Substituted Value 3\"}}]}");
+
+            // Personalization passed in, Personalization exists
+            msg = new SendGridMessage();
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Substitutions = new Dictionary<string, string>()
+                    {
+                        { "-sub4-", "Substituted Value 4" }
+                    }
+                }
+            };
+            personalization = new Personalization()
+            {
+                Substitutions = new Dictionary<string, string>()
+                {
+                    { "-sub5-", "Substituted Value 5" }
+                }
+            };
+            msg.AddSubstitution("-sub6-", "Substituted Value 6", 1, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"substitutions\":{\"-sub4-\":\"Substituted Value 4\"}},{\"substitutions\":{\"-sub5-\":\"Substituted Value 5\",\"-sub6-\":\"Substituted Value 6\"}}]}");
+
+            // Personalization not passed in Personalization exists
+            msg = new SendGridMessage();
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Substitutions = new Dictionary<string, string>()
+                    {
+                        { "-sub7-", "Substituted Value 7" }
+                    }
+                }
+            };
+            msg.AddSubstitution("-sub8-", "Substituted Value 8");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"substitutions\":{\"-sub7-\":\"Substituted Value 7\",\"-sub8-\":\"Substituted Value 8\"}}]}");
+
+            // Personalization not passed in Personalizations exists
+            msg = new SendGridMessage();
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Substitutions = new Dictionary<string, string>()
+                    {
+                        { "-sub9-", "Substituted Value 9" }
+                    }
+                }
+            };
+            personalization = new Personalization()
+            {
+                Substitutions = new Dictionary<string, string>()
+                {
+                    { "-sub10-", "Substituted Value 10" }
+                }
+            };
+            msg.Personalizations.Add(personalization);
+            msg.AddSubstitution("-sub11-", "Substituted Value 11");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"substitutions\":{\"-sub9-\":\"Substituted Value 9\",\"-sub11-\":\"Substituted Value 11\"}},{\"substitutions\":{\"-sub10-\":\"Substituted Value 10\"}}]}");
+        }
+
+        [Test]
+        public void TestAddSubstitutions()
+        {
+            // Personalization not passed in, Personalization does not exist
+            var msg = new SendGridMessage();
+            var substitutions = new Dictionary<string, string>();
+            substitutions.Add("-sub12-", "Substituted Value 12");
+            substitutions.Add("-sub13-", "Substituted Value 13");
+            msg.AddSubstitutions(substitutions);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"substitutions\":{\"-sub12-\":\"Substituted Value 12\",\"-sub13-\":\"Substituted Value 13\"}}]}");
+
+            // Personalization passed in, no Personalizations
+            msg = new SendGridMessage();
+            substitutions = new Dictionary<string, string>();
+            substitutions.Add("-sub14-", "Substituted Value 14");
+            substitutions.Add("-sub15-", "Substituted Value 15");
+            var personalization = new Personalization()
+            {
+                Substitutions = substitutions
+            };
+            substitutions = new Dictionary<string, string>();
+            substitutions.Add("-sub16-", "Substituted Value 16");
+            substitutions.Add("-sub17-", "Substituted Value 17");
+            msg.AddSubstitutions(substitutions, 0, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"substitutions\":{\"-sub14-\":\"Substituted Value 14\",\"-sub15-\":\"Substituted Value 15\",\"-sub16-\":\"Substituted Value 16\",\"-sub17-\":\"Substituted Value 17\"}}]}");
+
+            // Personalization passed in, Personalization exists
+            msg = new SendGridMessage();
+            substitutions = new Dictionary<string, string>();
+            substitutions.Add("-sub18-", "Substituted Value 18");
+            substitutions.Add("-sub19-", "Substituted Value 19");
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Substitutions = substitutions
+                }
+            };
+            substitutions = new Dictionary<string, string>();
+            substitutions.Add("-sub20-", "Substituted Value 20");
+            substitutions.Add("-sub21-", "Substituted Value 21");
+            personalization = new Personalization()
+            {
+                Substitutions = substitutions
+            };
+            substitutions = new Dictionary<string, string>();
+            substitutions.Add("-sub22-", "Substituted Value 22");
+            substitutions.Add("-sub23-", "Substituted Value 23");
+            msg.AddSubstitutions(substitutions, 1, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"substitutions\":{\"-sub18-\":\"Substituted Value 18\",\"-sub19-\":\"Substituted Value 19\"}},{\"substitutions\":{\"-sub20-\":\"Substituted Value 20\",\"-sub21-\":\"Substituted Value 21\",\"-sub22-\":\"Substituted Value 22\",\"-sub23-\":\"Substituted Value 23\"}}]}");
+
+            // Personalization not passed in Personalization exists
+            msg = new SendGridMessage();
+            substitutions = new Dictionary<string, string>();
+            substitutions.Add("-sub24-", "Substituted Value 24");
+            substitutions.Add("-sub25-", "Substituted Value 25");
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Substitutions = substitutions
+                }
+            };
+            substitutions = new Dictionary<string, string>();
+            substitutions.Add("-sub26-", "Substituted Value 26");
+            substitutions.Add("-sub27-", "Substituted Value 27");
+            msg.AddSubstitutions(substitutions);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"substitutions\":{\"-sub24-\":\"Substituted Value 24\",\"-sub25-\":\"Substituted Value 25\",\"-sub26-\":\"Substituted Value 26\",\"-sub27-\":\"Substituted Value 27\"}}]}");
+
+            // Personalization not passed in Personalizations exists
+            msg = new SendGridMessage();
+            substitutions = new Dictionary<string, string>();
+            substitutions.Add("-sub28-", "Substituted Value 28");
+            substitutions.Add("-sub29-", "Substituted Value 29");
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Substitutions = substitutions
+                }
+            };
+            substitutions = new Dictionary<string, string>();
+            substitutions.Add("-sub30-", "Substituted Value 30");
+            substitutions.Add("-sub31-", "Substituted Value 31");
+            personalization = new Personalization()
+            {
+                Substitutions = substitutions
+            };
+            msg.Personalizations.Add(personalization);
+            substitutions = new Dictionary<string, string>();
+            substitutions.Add("-sub32-", "Substituted Value 32");
+            substitutions.Add("-sub33-", "Substituted Value 33");
+            msg.AddSubstitutions(substitutions);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"substitutions\":{\"-sub28-\":\"Substituted Value 28\",\"-sub29-\":\"Substituted Value 29\",\"-sub32-\":\"Substituted Value 32\",\"-sub33-\":\"Substituted Value 33\"}},{\"substitutions\":{\"-sub30-\":\"Substituted Value 30\",\"-sub31-\":\"Substituted Value 31\"}}]}");
+        }
+
+        [Test]
+        public void TestAddCustomArg()
+        {
+            // Personalization not passed in, Personalization does not exist
+            var msg = new SendGridMessage();
+            msg.AddCustomArg("arg1", "Arguement Value 1");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"custom_args\":{\"arg1\":\"Arguement Value 1\"}}]}");
+
+            // Personalization passed in, no Personalizations
+            msg = new SendGridMessage();
+            var personalization = new Personalization()
+            {
+                CustomArgs = new Dictionary<string, string>()
+                {
+                    { "arg2", "Arguement Value 2" }
+                }
+            };
+            msg.AddCustomArg("arg3", "Arguement Value 3", 0, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"custom_args\":{\"arg2\":\"Arguement Value 2\",\"arg3\":\"Arguement Value 3\"}}]}");
+
+            // Personalization passed in, Personalization exists
+            msg = new SendGridMessage();
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    CustomArgs = new Dictionary<string, string>()
+                    {
+                        { "arg4", "Arguement Value 4" }
+                    }
+                }
+            };
+            personalization = new Personalization()
+            {
+                CustomArgs = new Dictionary<string, string>()
+                {
+                    { "arg5", "Arguement Value 5" }
+                }
+            };
+            msg.AddCustomArg("arg6", "Arguement Value 6", 1, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"custom_args\":{\"arg4\":\"Arguement Value 4\"}},{\"custom_args\":{\"arg5\":\"Arguement Value 5\",\"arg6\":\"Arguement Value 6\"}}]}");
+
+            // Personalization not passed in Personalization exists
+            msg = new SendGridMessage();
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    CustomArgs = new Dictionary<string, string>()
+                    {
+                        { "arg7", "Arguement Value 7" }
+                    }
+                }
+            };
+            msg.AddCustomArg("arg8", "Arguement Value 8");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"custom_args\":{\"arg7\":\"Arguement Value 7\",\"arg8\":\"Arguement Value 8\"}}]}");
+
+            // Personalization not passed in Personalizations exists
+            msg = new SendGridMessage();
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    CustomArgs = new Dictionary<string, string>()
+                    {
+                        { "arg9", "Arguement Value 9" }
+                    }
+                }
+            };
+            personalization = new Personalization()
+            {
+                CustomArgs = new Dictionary<string, string>()
+                {
+                    { "arg10", "Arguement Value 10" }
+                }
+            };
+            msg.Personalizations.Add(personalization);
+            msg.AddCustomArg("arg11", "Arguement Value 11");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"custom_args\":{\"arg9\":\"Arguement Value 9\",\"arg11\":\"Arguement Value 11\"}},{\"custom_args\":{\"arg10\":\"Arguement Value 10\"}}]}");
+        }
+
+        [Test]
+        public void TestAddCustomArgs()
+        {
+            // Personalization not passed in, Personalization does not exist
+            var msg = new SendGridMessage();
+            var customArgs = new Dictionary<string, string>();
+            customArgs.Add("arg12", "Arguement Value 12");
+            customArgs.Add("arg13", "Arguement Value 13");
+            msg.AddCustomArgs(customArgs);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"custom_args\":{\"arg12\":\"Arguement Value 12\",\"arg13\":\"Arguement Value 13\"}}]}");
+
+            // Personalization passed in, no Personalizations
+            msg = new SendGridMessage();
+            customArgs = new Dictionary<string, string>();
+            customArgs.Add("arg14", "Arguement Value 14");
+            customArgs.Add("arg15", "Arguement Value 15");
+            var personalization = new Personalization()
+            {
+                CustomArgs = customArgs
+            };
+            customArgs = new Dictionary<string, string>();
+            customArgs.Add("arg16", "Arguement Value 16");
+            customArgs.Add("arg17", "Arguement Value 17");
+            msg.AddCustomArgs(customArgs, 0, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"custom_args\":{\"arg14\":\"Arguement Value 14\",\"arg15\":\"Arguement Value 15\",\"arg16\":\"Arguement Value 16\",\"arg17\":\"Arguement Value 17\"}}]}");
+
+            // Personalization passed in, Personalization exists
+            msg = new SendGridMessage();
+            customArgs = new Dictionary<string, string>();
+            customArgs.Add("arg18", "Arguement Value 18");
+            customArgs.Add("arg19", "Arguement Value 19");
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    CustomArgs = customArgs
+                }
+            };
+            customArgs = new Dictionary<string, string>();
+            customArgs.Add("arg20", "Arguement Value 20");
+            customArgs.Add("arg21", "Arguement Value 21");
+            personalization = new Personalization()
+            {
+                CustomArgs = customArgs
+            };
+            customArgs = new Dictionary<string, string>();
+            customArgs.Add("arg22", "Arguement Value 22");
+            customArgs.Add("arg23", "Arguement Value 23");
+            msg.AddCustomArgs(customArgs, 1, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"custom_args\":{\"arg18\":\"Arguement Value 18\",\"arg19\":\"Arguement Value 19\"}},{\"custom_args\":{\"arg20\":\"Arguement Value 20\",\"arg21\":\"Arguement Value 21\",\"arg22\":\"Arguement Value 22\",\"arg23\":\"Arguement Value 23\"}}]}");
+
+            // Personalization not passed in Personalization exists
+            msg = new SendGridMessage();
+            customArgs = new Dictionary<string, string>();
+            customArgs.Add("arg24", "Arguement Value 24");
+            customArgs.Add("arg25", "Arguement Value 25");
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    CustomArgs = customArgs
+                }
+            };
+            customArgs = new Dictionary<string, string>();
+            customArgs.Add("arg26", "Arguement Value 26");
+            customArgs.Add("arg27", "Arguement Value 27");
+            msg.AddCustomArgs(customArgs);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"custom_args\":{\"arg24\":\"Arguement Value 24\",\"arg25\":\"Arguement Value 25\",\"arg26\":\"Arguement Value 26\",\"arg27\":\"Arguement Value 27\"}}]}");
+
+            // Personalization not passed in Personalizations exists
+            msg = new SendGridMessage();
+            customArgs = new Dictionary<string, string>();
+            customArgs.Add("arg28", "Arguement Value 28");
+            customArgs.Add("arg29", "Arguement Value 29");
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    CustomArgs = customArgs
+                }
+            };
+            customArgs = new Dictionary<string, string>();
+            customArgs.Add("arg30", "Arguement Value 30");
+            customArgs.Add("arg31", "Arguement Value 31");
+            personalization = new Personalization()
+            {
+                CustomArgs = customArgs
+            };
+            msg.Personalizations.Add(personalization);
+            customArgs = new Dictionary<string, string>();
+            customArgs.Add("arg32", "Arguement Value 32");
+            customArgs.Add("arg33", "Arguement Value 33");
+            msg.AddCustomArgs(customArgs);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"custom_args\":{\"arg28\":\"Arguement Value 28\",\"arg29\":\"Arguement Value 29\",\"arg32\":\"Arguement Value 32\",\"arg33\":\"Arguement Value 33\"}},{\"custom_args\":{\"arg30\":\"Arguement Value 30\",\"arg31\":\"Arguement Value 31\"}}]}");
+        }
+
+        [Test]
+        public void TestSetSubject()
+        {
+            // Personalization not passed in, Personalization does not exist
+            var msg = new SendGridMessage();
+            msg.SetSubject("subject1");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"subject\":\"subject1\"}]}");
+
+            // Personalization passed in, no Personalizations
+            msg = new SendGridMessage();
+            var subject = "subject2";
+            var personalization = new Personalization()
+            {
+                Subject = subject
+            };
+            msg.SetSubject("subject3", 0, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"subject\":\"subject3\"}]}");
+
+            // Personalization passed in, Personalization exists
+            msg = new SendGridMessage();
+            subject = "subject4";
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Subject = subject
+                }
+            };
+            subject = "subject5";
+            personalization = new Personalization()
+            {
+                Subject = subject
+            };
+            msg.SetSubject("subject6", 1, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"subject\":\"subject4\"},{\"subject\":\"subject6\"}]}");
+
+            // Personalization not passed in Personalization exists
+            msg = new SendGridMessage();
+            subject = "subject7";
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Subject = subject
+                }
+            };
+            msg.SetSubject("subject8");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"subject\":\"subject8\"}]}");
+
+            // Personalization not passed in Personalizations exists
+            msg = new SendGridMessage();
+            subject = "subject9";
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Subject = subject
+                }
+            };
+            subject = "subject10";
+            personalization = new Personalization()
+            {
+                Subject = subject
+            };
+            msg.Personalizations.Add(personalization);
+            msg.SetSubject("subject11");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"subject\":\"subject11\"},{\"subject\":\"subject10\"}]}");
+        }
+
+        [Test]
+        public void TestSendAt()
+        {
+            // Personalization not passed in, Personalization does not exist
+            var msg = new SendGridMessage();
+            msg.SetSendAt(1409348513);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"send_at\":1409348513}]}");
+
+            // Personalization passed in, no Personalizations
+            msg = new SendGridMessage();
+            var sendAt = 1409348513;
+            var personalization = new Personalization()
+            {
+                SendAt = sendAt
+            };
+            msg.SetSendAt(1409348513, 0, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"send_at\":1409348513}]}");
+
+            // Personalization passed in, Personalization exists
+            msg = new SendGridMessage();
+            sendAt = 1409348513;
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    SendAt = sendAt
+                }
+            };
+            sendAt = 1409348513;
+            personalization = new Personalization()
+            {
+                SendAt = sendAt
+            };
+            msg.SetSendAt(1409348513, 1, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"send_at\":1409348513},{\"send_at\":1409348513}]}");
+
+            // Personalization not passed in Personalization exists
+            msg = new SendGridMessage();
+            sendAt = 1409348513;
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    SendAt = sendAt
+                }
+            };
+            msg.SetSendAt(1409348513);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"send_at\":1409348513}]}");
+
+            // Personalization not passed in Personalizations exists
+            msg = new SendGridMessage();
+            sendAt = 1409348513;
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    SendAt = sendAt
+                }
+            };
+            sendAt = 1409348513;
+            personalization = new Personalization()
+            {
+                SendAt = sendAt
+            };
+            msg.Personalizations.Add(personalization);
+            msg.SetSendAt(1409348513);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"send_at\":1409348513},{\"send_at\":1409348513}]}");
         }
 
         [Test]
