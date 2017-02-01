@@ -795,7 +795,7 @@ namespace UnitTest
             var msg = new SendGridMessage();
             msg.AddHeader("X-Test", "Test Value");
             Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"headers\":{\"X-Test\":\"Test Value\"}}]}");
-            
+
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
             var personalization = new Personalization()
@@ -827,7 +827,7 @@ namespace UnitTest
             };
             msg.AddHeader("X-Test5", "Test Value 5", 1, personalization);
             Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"headers\":{\"X-Test3\":\"Test Value 3\"}},{\"headers\":{\"X-Test4\":\"Test Value 4\",\"X-Test5\":\"Test Value 5\"}}]}");
-            
+
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
             msg.Personalizations = new List<Personalization>() {
@@ -1407,6 +1407,41 @@ namespace UnitTest
             msg.Personalizations.Add(personalization);
             msg.SetSendAt(1409348513);
             Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"send_at\":1409348513},{\"send_at\":1409348513}]}");
+        }
+
+        [Test]
+        public void TestSetASM()
+        {
+            var msg = new SendGridMessage();
+            var groupsToDisplay = new List<int>()
+            {
+                1, 2, 3, 4, 5
+            };
+            msg.SetASM(1, groupsToDisplay);
+            Assert.AreEqual(msg.Serialize(), "{\"asm\":{\"group_id\":1,\"groups_to_display\":[1,2,3,4,5]}}");
+        }
+
+        [Test]
+        public void TestSetBccSetting()
+        {
+            //MailSettings object does not exist
+            var msg = new SendGridMessage();
+            msg.SetBCCSetting(true, "test@example.com");
+            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"bcc\":{\"enable\":true,\"email\":\"test@example.com\"}}}");
+
+            //MailSettings object exists
+            msg = new SendGridMessage();
+            var bccSetting = new BCCSettings()
+            {
+                Enable = false,
+                Email = "test2@example.com"
+            };
+            msg.MailSettings = new MailSettings()
+            {
+                BccSettings = bccSetting
+            };
+            msg.SetBCCSetting(true, "test3@example.com");
+            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"bcc\":{\"enable\":true,\"email\":\"test3@example.com\"}}}");
         }
 
         [Test]

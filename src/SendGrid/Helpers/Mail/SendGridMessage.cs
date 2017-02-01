@@ -538,7 +538,25 @@ namespace SendGrid.Helpers.Mail
             return;
         }
 
-        // TODO: implement the rest of the Personalization properties (e.g. AddTos, AddBcc, AddBccs, etc.)
+        public void SetASM(int groupID, List<int> groupsToDisplay)
+        {
+            Asm = new ASM();
+            Asm.GroupId = groupID;
+            Asm.GroupsToDisplay = groupsToDisplay;
+            return;
+        }
+
+        public void SetBCCSetting(bool enable, string email)
+        {
+            if( MailSettings == null)
+            {
+                MailSettings = new MailSettings();
+            }
+            MailSettings.BccSettings = new BCCSettings();
+            MailSettings.BccSettings.Enable = enable;
+            MailSettings.BccSettings.Email = email;
+            return;
+        }
         // TODO: implement the reamining properties (e.g. see the Model directory)
 
         public string Serialize()
