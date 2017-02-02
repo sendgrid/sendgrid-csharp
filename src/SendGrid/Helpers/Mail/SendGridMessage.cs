@@ -557,6 +557,17 @@ namespace SendGrid.Helpers.Mail
             MailSettings.BccSettings.Email = email;
             return;
         }
+
+        public void SetBypassListManagement(bool enable)
+        {
+            if (MailSettings == null)
+            {
+                MailSettings = new MailSettings();
+            }
+            MailSettings.BypassListManagement = new BypassListManagement();
+            MailSettings.BypassListManagement.Enable = enable;
+            return;
+        }
         // TODO: implement the reamining properties (e.g. see the Model directory)
 
         public string Serialize()

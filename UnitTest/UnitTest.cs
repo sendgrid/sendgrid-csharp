@@ -1445,6 +1445,28 @@ namespace UnitTest
         }
 
         [Test]
+        public void TestBypassListManagement()
+        {
+            //MailSettings object does not exist
+            var msg = new SendGridMessage();
+            msg.SetBypassListManagement(false);
+            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"bypass_list_management\":{\"enable\":false}}}");
+
+            //MailSettings object exists
+            msg = new SendGridMessage();
+            var bypassListManagement = new BypassListManagement()
+            {
+                Enable = true
+            };
+            msg.MailSettings = new MailSettings()
+            {
+                BypassListManagement = bypassListManagement
+            };
+            msg.SetBypassListManagement(true);
+            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"bypass_list_management\":{\"enable\":true}}}");
+        }
+
+        [Test]
         public async Task test_access_settings_activity_get()
         {
             string host = "http://localhost:4010";
