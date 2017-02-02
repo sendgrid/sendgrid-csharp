@@ -1467,6 +1467,29 @@ namespace UnitTest
         }
 
         [Test]
+        public void TestClickTracking()
+        {
+            //TrackingSettings object does not exist
+            var msg = new SendGridMessage();
+            msg.SetClickTracking(false, false);
+            Assert.AreEqual(msg.Serialize(), "{\"tracking_settings\":{\"click_tracking\":{\"enable\":false,\"enable_text\":false}}}");
+
+            //MailSettings object exists
+            msg = new SendGridMessage();
+            var clickTrackingSetting = new ClickTracking()
+            {
+                Enable = false,
+                EnableText = false
+            };
+            msg.TrackingSettings = new TrackingSettings()
+            {
+                ClickTracking = clickTrackingSetting
+            };
+            msg.SetClickTracking(true, true);
+            Assert.AreEqual(msg.Serialize(), "{\"tracking_settings\":{\"click_tracking\":{\"enable\":true,\"enable_text\":true}}}");
+        }
+
+        [Test]
         public async Task test_access_settings_activity_get()
         {
             string host = "http://localhost:4010";

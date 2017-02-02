@@ -568,6 +568,18 @@ namespace SendGrid.Helpers.Mail
             MailSettings.BypassListManagement.Enable = enable;
             return;
         }
+
+        public void SetClickTracking(bool enable, bool enableText)
+        {
+            if (TrackingSettings == null)
+            {
+                TrackingSettings = new TrackingSettings();
+            }
+            TrackingSettings.ClickTracking = new ClickTracking();
+            TrackingSettings.ClickTracking.Enable = enable;
+            TrackingSettings.ClickTracking.EnableText = enableText;
+            return;
+        }
         // TODO: implement the reamining properties (e.g. see the Model directory)
 
         public string Serialize()
