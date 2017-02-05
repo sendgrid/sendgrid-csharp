@@ -59,7 +59,7 @@ namespace SendGrid
         }
     }
 
-    public static class MimeType
+    public class MimeType
     {
         public static readonly string Html = "text/html";
         public static readonly string Text = "text/plain";

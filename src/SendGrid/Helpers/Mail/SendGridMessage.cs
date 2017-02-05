@@ -580,12 +580,51 @@ namespace SendGrid.Helpers.Mail
             TrackingSettings.ClickTracking.EnableText = enableText;
             return;
         }
+
+        public void AddContent(string mimeType, string text)
+        {
+            var content = new Content()
+            {
+                Type = mimeType,
+                Value = text
+            };
+
+            if (Contents == null)
+            {
+
+                Contents = new List<Content>()
+                {
+                    content
+                };
+            }
+            else
+            {
+                Contents.Add(content);
+            }
+            return;
+        }
+
+        public void AddContents(List<Content> contents)
+        {
+            if (Contents == null)
+            {
+                Contents = new List<Content>();
+                Contents = contents;
+            }
+            else
+            {
+                Contents.AddRange(contents);
+            }
+            return;
+        }
+
         // TODO: implement the reamining properties (e.g. see the Model directory)
 
         public string Serialize()
         {
             // TODO: account for the case when only HTML is provided
             // Plain text, if provided must always come first
+            // Acount for custom mime types
             if (PlainTextContent != null || HtmlContent != null )
             {
                 Contents = new List<Content>()
@@ -593,6 +632,21 @@ namespace SendGrid.Helpers.Mail
                     new PlainTextContent(PlainTextContent),
                     new HtmlContent(HtmlContent)
                 };
+                PlainTextContent = null;
+                HtmlContent = null;
+            }
+            else if( Contents != null )
+            {
+                for (var i = 0; i < Contents.Count; i++)
+                {
+                    if(Contents[i].Type == MimeType.Text)
+                    {
+                        var tempContent = new Content();
+                        tempContent = Contents[i];
+                        Contents.RemoveAt(i);
+                        Contents.Insert(0, tempContent);
+                    }
+                }
             }
 
             return JsonConvert.SerializeObject(this,

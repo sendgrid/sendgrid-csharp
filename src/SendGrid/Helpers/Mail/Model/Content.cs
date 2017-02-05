@@ -38,4 +38,13 @@ namespace SendGrid.Helpers.Mail
             this.Value = value;
         }
     }
+
+    public class CustomContent : Content
+    {
+        public CustomContent(string type, string value)
+        {
+            this.Type = type;
+            this.Value = value;
+        }
+    }
 }

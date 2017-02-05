@@ -1490,6 +1490,78 @@ namespace UnitTest
         }
 
         [Test]
+        public void TestAddContent()
+        {
+            //Content object does not exist
+            var msg = new SendGridMessage();
+            msg.AddContent(MimeType.Html, "content1");
+            Assert.AreEqual(msg.Serialize(), "{\"content\":[{\"type\":\"text/html\",\"value\":\"content1\"}]}");
+            
+            msg.AddContent(MimeType.Text, "content2");
+            Assert.AreEqual(msg.Serialize(), "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
+
+
+            //Content object exists
+            msg = new SendGridMessage();
+            var content = new Content()
+            {
+                Type = MimeType.Html,
+                Value = "content3"
+            };
+            msg.Contents = new List<Content>();
+            msg.Contents.Add(content);
+            msg.AddContent(MimeType.Text, "content4");
+            Assert.AreEqual(msg.Serialize(), "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content4\"},{\"type\":\"text/html\",\"value\":\"content3\"}]}");
+        }
+
+        [Test]
+        public void TestAddContents()
+        {
+            //Content object does not exist
+            var msg = new SendGridMessage();
+            var contents = new List<Content>();
+            var content = new Content()
+            {
+                Type = MimeType.Html,
+                Value = "content5"
+            };
+            contents.Add(content);
+            content = new Content()
+            {
+                Type = MimeType.Text,
+                Value = "content6"
+            };
+            contents.Add(content);
+            msg.AddContents(contents);
+            Assert.AreEqual(msg.Serialize(), "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content6\"},{\"type\":\"text/html\",\"value\":\"content5\"}]}");
+
+            //Content object exists
+            msg = new SendGridMessage();
+            content = new Content()
+            {
+                Type = MimeType.Html,
+                Value = "content7"
+            };
+            msg.Contents = new List<Content>();
+            msg.Contents.Add(content);
+            contents = new List<Content>();
+            content = new Content()
+            {
+                Type = "fake/mimetype",
+                Value = "content8"
+            };
+            contents.Add(content);
+            content = new Content()
+            {
+                Type = MimeType.Text,
+                Value = "content9"
+            };
+            contents.Add(content);
+            msg.AddContents(contents);
+            Assert.AreEqual(msg.Serialize(), "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content9\"},{\"type\":\"text/html\",\"value\":\"content7\"},{\"type\":\"fake/mimetype\",\"value\":\"content8\"}]}");
+        }
+
+        [Test]
         public async Task test_access_settings_activity_get()
         {
             string host = "http://localhost:4010";
