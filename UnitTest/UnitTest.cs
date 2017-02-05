@@ -789,6 +789,69 @@ namespace UnitTest
         }
 
         [Test]
+        public void TestSetSubject()
+        {
+            // Personalization not passed in, Personalization does not exist
+            var msg = new SendGridMessage();
+            msg.SetSubject("subject1");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"subject\":\"subject1\"}]}");
+
+            // Personalization passed in, no Personalizations
+            msg = new SendGridMessage();
+            var subject = "subject2";
+            var personalization = new Personalization()
+            {
+                Subject = subject
+            };
+            msg.SetSubject("subject3", 0, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"subject\":\"subject3\"}]}");
+
+            // Personalization passed in, Personalization exists
+            msg = new SendGridMessage();
+            subject = "subject4";
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Subject = subject
+                }
+            };
+            subject = "subject5";
+            personalization = new Personalization()
+            {
+                Subject = subject
+            };
+            msg.SetSubject("subject6", 1, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"subject\":\"subject4\"},{\"subject\":\"subject6\"}]}");
+
+            // Personalization not passed in Personalization exists
+            msg = new SendGridMessage();
+            subject = "subject7";
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Subject = subject
+                }
+            };
+            msg.SetSubject("subject8");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"subject\":\"subject8\"}]}");
+
+            // Personalization not passed in Personalizations exists
+            msg = new SendGridMessage();
+            subject = "subject9";
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Subject = subject
+                }
+            };
+            subject = "subject10";
+            personalization = new Personalization()
+            {
+                Subject = subject
+            };
+            msg.Personalizations.Add(personalization);
+            msg.SetSubject("subject11");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"subject\":\"subject11\"},{\"subject\":\"subject10\"}]}");
+        }
+
+        [Test]
         public void TestAddHeader()
         {
             // Personalization not passed in, Personalization does not exist
@@ -1284,69 +1347,6 @@ namespace UnitTest
         }
 
         [Test]
-        public void TestSetSubject()
-        {
-            // Personalization not passed in, Personalization does not exist
-            var msg = new SendGridMessage();
-            msg.SetSubject("subject1");
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"subject\":\"subject1\"}]}");
-
-            // Personalization passed in, no Personalizations
-            msg = new SendGridMessage();
-            var subject = "subject2";
-            var personalization = new Personalization()
-            {
-                Subject = subject
-            };
-            msg.SetSubject("subject3", 0, personalization);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"subject\":\"subject3\"}]}");
-
-            // Personalization passed in, Personalization exists
-            msg = new SendGridMessage();
-            subject = "subject4";
-            msg.Personalizations = new List<Personalization>() {
-                new Personalization() {
-                    Subject = subject
-                }
-            };
-            subject = "subject5";
-            personalization = new Personalization()
-            {
-                Subject = subject
-            };
-            msg.SetSubject("subject6", 1, personalization);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"subject\":\"subject4\"},{\"subject\":\"subject6\"}]}");
-
-            // Personalization not passed in Personalization exists
-            msg = new SendGridMessage();
-            subject = "subject7";
-            msg.Personalizations = new List<Personalization>() {
-                new Personalization() {
-                    Subject = subject
-                }
-            };
-            msg.SetSubject("subject8");
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"subject\":\"subject8\"}]}");
-
-            // Personalization not passed in Personalizations exists
-            msg = new SendGridMessage();
-            subject = "subject9";
-            msg.Personalizations = new List<Personalization>() {
-                new Personalization() {
-                    Subject = subject
-                }
-            };
-            subject = "subject10";
-            personalization = new Personalization()
-            {
-                Subject = subject
-            };
-            msg.Personalizations.Add(personalization);
-            msg.SetSubject("subject11");
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"subject\":\"subject11\"},{\"subject\":\"subject10\"}]}");
-        }
-
-        [Test]
         public void TestSendAt()
         {
             // Personalization not passed in, Personalization does not exist
@@ -1410,83 +1410,38 @@ namespace UnitTest
         }
 
         [Test]
-        public void TestSetASM()
+        public void TestSetFrom()
         {
             var msg = new SendGridMessage();
-            var groupsToDisplay = new List<int>()
+            var fromEmail = new EmailAddress()
             {
-                1, 2, 3, 4, 5
+                Email = "test1@example.com",
+                Name = "Test User1"
             };
-            msg.SetASM(1, groupsToDisplay);
-            Assert.AreEqual(msg.Serialize(), "{\"asm\":{\"group_id\":1,\"groups_to_display\":[1,2,3,4,5]}}");
+            msg.SetFrom(fromEmail);
+            Assert.AreEqual(msg.Serialize(), "{\"from\":{\"name\":\"Test User1\",\"email\":\"test1@example.com\"}}");
         }
 
         [Test]
-        public void TestSetBccSetting()
+        public void TestSetReplyTo()
         {
-            //MailSettings object does not exist
             var msg = new SendGridMessage();
-            msg.SetBCCSetting(true, "test@example.com");
-            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"bcc\":{\"enable\":true,\"email\":\"test@example.com\"}}}");
-
-            //MailSettings object exists
-            msg = new SendGridMessage();
-            var bccSetting = new BCCSettings()
+            var replyToEmail = new EmailAddress()
             {
-                Enable = false,
-                Email = "test2@example.com"
+                Email = "test2@example.com",
+                Name = "Test User2"
             };
-            msg.MailSettings = new MailSettings()
-            {
-                BccSettings = bccSetting
-            };
-            msg.SetBCCSetting(true, "test3@example.com");
-            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"bcc\":{\"enable\":true,\"email\":\"test3@example.com\"}}}");
+            msg.SetReplyTo(replyToEmail);
+            Assert.AreEqual(msg.Serialize(), "{\"reply_to\":{\"name\":\"Test User2\",\"email\":\"test2@example.com\"}}");
         }
 
         [Test]
-        public void TestBypassListManagement()
+        public void TestSetGlobalSubject()
         {
-            //MailSettings object does not exist
             var msg = new SendGridMessage();
-            msg.SetBypassListManagement(false);
-            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"bypass_list_management\":{\"enable\":false}}}");
-
-            //MailSettings object exists
-            msg = new SendGridMessage();
-            var bypassListManagement = new BypassListManagement()
-            {
-                Enable = true
-            };
-            msg.MailSettings = new MailSettings()
-            {
-                BypassListManagement = bypassListManagement
-            };
-            msg.SetBypassListManagement(true);
-            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"bypass_list_management\":{\"enable\":true}}}");
-        }
-
-        [Test]
-        public void TestClickTracking()
-        {
-            //TrackingSettings object does not exist
-            var msg = new SendGridMessage();
-            msg.SetClickTracking(false, false);
-            Assert.AreEqual(msg.Serialize(), "{\"tracking_settings\":{\"click_tracking\":{\"enable\":false,\"enable_text\":false}}}");
-
-            //MailSettings object exists
-            msg = new SendGridMessage();
-            var clickTrackingSetting = new ClickTracking()
-            {
-                Enable = false,
-                EnableText = false
-            };
-            msg.TrackingSettings = new TrackingSettings()
-            {
-                ClickTracking = clickTrackingSetting
-            };
-            msg.SetClickTracking(true, true);
-            Assert.AreEqual(msg.Serialize(), "{\"tracking_settings\":{\"click_tracking\":{\"enable\":true,\"enable_text\":true}}}");
+            var globalSubject = "subject1";
+            msg.SetGlobalSubject(globalSubject);
+            Assert.AreEqual(msg.Serialize(), "{\"subject\":\"subject1\"}");
         }
 
         [Test]
@@ -1496,7 +1451,7 @@ namespace UnitTest
             var msg = new SendGridMessage();
             msg.AddContent(MimeType.Html, "content1");
             Assert.AreEqual(msg.Serialize(), "{\"content\":[{\"type\":\"text/html\",\"value\":\"content1\"}]}");
-            
+
             msg.AddContent(MimeType.Text, "content2");
             Assert.AreEqual(msg.Serialize(), "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
 
@@ -1559,6 +1514,500 @@ namespace UnitTest
             contents.Add(content);
             msg.AddContents(contents);
             Assert.AreEqual(msg.Serialize(), "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content9\"},{\"type\":\"text/html\",\"value\":\"content7\"},{\"type\":\"fake/mimetype\",\"value\":\"content8\"}]}");
+        }
+
+        [Test]
+        public void TestAddAttachment()
+        {
+            //Attachment object does not exist
+            var msg = new SendGridMessage();
+            msg.AddAttachment("filename1", "base64content1", "jpg", "inline", "id1");
+            Assert.AreEqual(msg.Serialize(), "{\"attachments\":[{\"content\":\"base64content1\",\"type\":\"jpg\",\"filename\":\"filename1\",\"disposition\":\"inline\",\"content_id\":\"id1\"}]}");
+
+            //Attachment object exists
+            msg = new SendGridMessage();
+            var attachment = new Attachment()
+            {
+                Filename = "filename2",
+                Content = "base64content2",
+                Type = "jpg",
+                Disposition = "inline",
+                ContentId = "id2"
+            };
+            msg.Attachments = new List<Attachment>();
+            msg.Attachments.Add(attachment);
+            msg.AddAttachment("filename3", "base64content3", "jpg", "inline", "id3");
+            Assert.AreEqual(msg.Serialize(), "{\"attachments\":[{\"content\":\"base64content2\",\"type\":\"jpg\",\"filename\":\"filename2\",\"disposition\":\"inline\",\"content_id\":\"id2\"},{\"content\":\"base64content3\",\"type\":\"jpg\",\"filename\":\"filename3\",\"disposition\":\"inline\",\"content_id\":\"id3\"}]}");
+        }
+
+        [Test]
+        public void TestAddAttachments()
+        {
+            //Attachment object does not exist
+            var msg = new SendGridMessage();
+            var attachments = new List<Attachment>();
+            var attachment = new Attachment()
+            {
+                Filename = "filename4",
+                Content = "base64content4",
+                Type = "jpg",
+                Disposition = "inline",
+                ContentId = "id4"
+            };
+            attachments.Add(attachment);
+            attachment = new Attachment()
+            {
+                Filename = "filename5",
+                Content = "base64content5",
+                Type = "jpg",
+                Disposition = "inline",
+                ContentId = "id5"
+            };
+            attachments.Add(attachment);
+            msg.AddAttachments(attachments);
+            Assert.AreEqual(msg.Serialize(), "{\"attachments\":[{\"content\":\"base64content4\",\"type\":\"jpg\",\"filename\":\"filename4\",\"disposition\":\"inline\",\"content_id\":\"id4\"},{\"content\":\"base64content5\",\"type\":\"jpg\",\"filename\":\"filename5\",\"disposition\":\"inline\",\"content_id\":\"id5\"}]}");
+
+            //Attachment object exists
+            msg = new SendGridMessage();
+            attachment = new Attachment()
+            {
+                Filename = "filename6",
+                Content = "base64content6",
+                Type = "jpg",
+                Disposition = "inline",
+                ContentId = "id6"
+            };
+            msg.Attachments = new List<Attachment>();
+            msg.Attachments.Add(attachment);
+            attachments = new List<Attachment>();
+            attachment = new Attachment()
+            {
+                Filename = "filename7",
+                Content = "base64content7",
+                Type = "jpg",
+                Disposition = "inline",
+                ContentId = "id7"
+            };
+            attachments.Add(attachment);
+            attachment = new Attachment()
+            {
+                Filename = "filename8",
+                Content = "base64content8",
+                Type = "jpg",
+                Disposition = "inline",
+                ContentId = "id8"
+            };
+            attachments.Add(attachment);
+            msg.AddAttachments(attachments);
+            Assert.AreEqual(msg.Serialize(), "{\"attachments\":[{\"content\":\"base64content6\",\"type\":\"jpg\",\"filename\":\"filename6\",\"disposition\":\"inline\",\"content_id\":\"id6\"},{\"content\":\"base64content7\",\"type\":\"jpg\",\"filename\":\"filename7\",\"disposition\":\"inline\",\"content_id\":\"id7\"},{\"content\":\"base64content8\",\"type\":\"jpg\",\"filename\":\"filename8\",\"disposition\":\"inline\",\"content_id\":\"id8\"}]}");
+        }
+
+        [Test]
+        public void TestSetTemplateId()
+        {
+            var msg = new SendGridMessage(); 
+            msg.SetTemplateId("template_id1");
+            Assert.AreEqual(msg.Serialize(), "{\"template_id\":\"template_id1\"}");
+        }
+
+        [Test]
+        public void TestAddSection()
+        {
+            // Section object does not exist
+            var msg = new SendGridMessage();
+            msg.AddSection("section_key1", "section_value1");
+            Assert.AreEqual(msg.Serialize(), "{\"sections\":{\"section_key1\":\"section_value1\"}}");
+
+            // Section object exists
+            msg.AddSection("section_key2", "section_value2");
+            Assert.AreEqual(msg.Serialize(), "{\"sections\":{\"section_key1\":\"section_value1\",\"section_key2\":\"section_value2\"}}");
+        }
+
+        [Test]
+        public void TestAddSections()
+        {
+            // Section object does not exist
+            var msg = new SendGridMessage();
+            var sections = new Dictionary<string, string>()
+            {
+                { "section_key3", "section_value3" },
+                { "section_key4", "section_value4" }
+            };
+            msg.AddSections(sections);
+            Assert.AreEqual(msg.Serialize(), "{\"sections\":{\"section_key3\":\"section_value3\",\"section_key4\":\"section_value4\"}}");
+
+            // Section object exists
+            sections = new Dictionary<string, string>()
+            {
+                { "section_key5", "section_value5" },
+                { "section_key6", "section_value6" }
+            };
+            msg.AddSections(sections);
+            Assert.AreEqual(msg.Serialize(), "{\"sections\":{\"section_key3\":\"section_value3\",\"section_key4\":\"section_value4\",\"section_key5\":\"section_value5\",\"section_key6\":\"section_value6\"}}");
+        }
+
+        [Test]
+        public void TestAddGlobalHeader()
+        {
+            // Header object does not exist
+            var msg = new SendGridMessage();
+            msg.AddGlobalHeader("X-Header1", "Value1");
+            Assert.AreEqual(msg.Serialize(), "{\"headers\":{\"X-Header1\":\"Value1\"}}");
+
+            // Header object exists
+            msg.AddGlobalHeader("X-Header2", "Value2");
+            Assert.AreEqual(msg.Serialize(), "{\"headers\":{\"X-Header1\":\"Value1\",\"X-Header2\":\"Value2\"}}");
+        }
+
+        [Test]
+        public void TestAddGlobalHeaders()
+        {
+            // Header object does not exist
+            var msg = new SendGridMessage();
+            var headers = new Dictionary<string, string>()
+            {
+                { "X-Header3", "Value3" },
+                { "X-Header4", "Value4" }
+            };
+            msg.AddGlobalHeaders(headers);
+            Assert.AreEqual(msg.Serialize(), "{\"headers\":{\"X-Header3\":\"Value3\",\"X-Header4\":\"Value4\"}}");
+
+            // Header object exists
+            headers = new Dictionary<string, string>()
+            {
+                { "X-Header5", "Value5" },
+                { "X-Header6", "Value6" }
+            };
+            msg.AddGlobalHeaders(headers);
+            Assert.AreEqual(msg.Serialize(), "{\"headers\":{\"X-Header3\":\"Value3\",\"X-Header4\":\"Value4\",\"X-Header5\":\"Value5\",\"X-Header6\":\"Value6\"}}");
+        }
+
+        [Test]
+        public void TestAddCategory()
+        {
+            //Categories object does not exist
+            var msg = new SendGridMessage();
+            msg.AddCategory("category1");
+            Assert.AreEqual(msg.Serialize(), "{\"categories\":[\"category1\"]}");
+
+            msg.AddCategory("category2");
+            Assert.AreEqual(msg.Serialize(), "{\"categories\":[\"category1\",\"category2\"]}");
+
+            //Categories object exists
+            msg = new SendGridMessage();
+            msg.Categories = new List<string>();
+            msg.Categories.Add("category3");
+            msg.AddCategory("category4");
+            Assert.AreEqual(msg.Serialize(), "{\"categories\":[\"category3\",\"category4\"]}");
+        }
+
+        [Test]
+        public void TestAddCategories()
+        {
+            //Categories object does not exist
+            var msg = new SendGridMessage();
+            var categories = new List<string>();
+            categories.Add("category5");
+            categories.Add("category6");
+            msg.AddCategories(categories);
+            Assert.AreEqual(msg.Serialize(), "{\"categories\":[\"category5\",\"category6\"]}");
+
+            //Categories object exists
+            msg = new SendGridMessage();
+            msg = new SendGridMessage();
+            msg.Categories = new List<string>();
+            msg.Categories.Add("category7");
+            msg.Categories.Add("category8");
+            categories = new List<string>();
+            categories.Add("category9");
+            categories.Add("category10");
+            msg.AddCategories(categories);
+            Assert.AreEqual(msg.Serialize(), "{\"categories\":[\"category7\",\"category8\",\"category9\",\"category10\"]}");
+        }
+
+        [Test]
+        public void TestAddGlobalCustomArg()
+        {
+            // CustomArgs object does not exist
+            var msg = new SendGridMessage();
+            msg.AddGlobalCustomArg("Key1", "Value1");
+            Assert.AreEqual(msg.Serialize(), "{\"custom_args\":{\"Key1\":\"Value1\"}}");
+
+            // CustomArgs object exists
+            msg.AddGlobalCustomArg("Key2", "Value2");
+            Assert.AreEqual(msg.Serialize(), "{\"custom_args\":{\"Key1\":\"Value1\",\"Key2\":\"Value2\"}}");
+        }
+
+        [Test]
+        public void TestAddGlobalCustomArgs()
+        {
+            // CustomArgs object does not exist
+            var msg = new SendGridMessage();
+            var customArgs = new Dictionary<string, string>()
+            {
+                { "Key3", "Value3" },
+                { "Key4", "Value4" }
+            };
+            msg.AddGlobalCustomArgs(customArgs);
+            Assert.AreEqual(msg.Serialize(), "{\"custom_args\":{\"Key3\":\"Value3\",\"Key4\":\"Value4\"}}");
+
+            // CustomArgs object exists
+            customArgs = new Dictionary<string, string>()
+            {
+                { "Key5", "Value5" },
+                { "Key6", "Value6" }
+            };
+            msg.AddGlobalCustomArgs(customArgs);
+            Assert.AreEqual(msg.Serialize(), "{\"custom_args\":{\"Key3\":\"Value3\",\"Key4\":\"Value4\",\"Key5\":\"Value5\",\"Key6\":\"Value6\"}}");
+        }
+
+        [Test]
+        public void TestSetGlobalSendAt()
+        {
+            var msg = new SendGridMessage();
+            msg.SetGlobalSendAt(1409348513);
+            Assert.AreEqual(msg.Serialize(), "{\"send_at\":1409348513}");
+        }
+
+        [Test]
+        public void TestSetBatchId()
+        {
+            var msg = new SendGridMessage();
+            msg.SetBatchId("batch_id");
+            Assert.AreEqual(msg.Serialize(), "{\"batch_id\":\"batch_id\"}");
+        }
+
+        [Test]
+        public void TestSetAsm()
+        {
+            var msg = new SendGridMessage();
+            var groupsToDisplay = new List<int>()
+            {
+                1, 2, 3, 4, 5
+            };
+            msg.SetAsm(1, groupsToDisplay);
+            Assert.AreEqual(msg.Serialize(), "{\"asm\":{\"group_id\":1,\"groups_to_display\":[1,2,3,4,5]}}");
+        }
+
+        [Test]
+        public void TestSetIpPoolName()
+        {
+            var msg = new SendGridMessage();
+            msg.SetIpPoolName("pool_name");
+            Assert.AreEqual(msg.Serialize(), "{\"ip_pool_name\":\"pool_name\"}");
+        }
+
+        [Test]
+        public void TestSetBccSetting()
+        {
+            //MailSettings object does not exist
+            var msg = new SendGridMessage();
+            msg.SetBccSetting(true, "test@example.com");
+            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"bcc\":{\"enable\":true,\"email\":\"test@example.com\"}}}");
+
+            //MailSettings object exists
+            msg = new SendGridMessage();
+            var bccSetting = new BCCSettings()
+            {
+                Enable = false,
+                Email = "test2@example.com"
+            };
+            msg.MailSettings = new MailSettings()
+            {
+                BccSettings = bccSetting
+            };
+            msg.SetBccSetting(true, "test3@example.com");
+            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"bcc\":{\"enable\":true,\"email\":\"test3@example.com\"}}}");
+        }
+
+        [Test]
+        public void TestSetBypassListManagement()
+        {
+            //MailSettings object does not exist
+            var msg = new SendGridMessage();
+            msg.SetBypassListManagement(false);
+            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"bypass_list_management\":{\"enable\":false}}}");
+
+            //MailSettings object exists
+            msg = new SendGridMessage();
+            var bypassListManagement = new BypassListManagement()
+            {
+                Enable = true
+            };
+            msg.MailSettings = new MailSettings()
+            {
+                BypassListManagement = bypassListManagement
+            };
+            msg.SetBypassListManagement(true);
+            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"bypass_list_management\":{\"enable\":true}}}");
+        }
+
+        [Test]
+        public void TestSetFooterSetting()
+        {
+            //MailSettings object does not exist
+            var msg = new SendGridMessage();
+            msg.SetFooterSetting(true, "html1", "text1");
+            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"footer\":{\"enable\":true,\"text\":\"text1\",\"html\":\"html1\"}}}");
+
+            //MailSettings object exists
+            msg = new SendGridMessage();
+            var footerSetting = new FooterSettings()
+            {
+                Enable = false,
+                Html = "<strong>html2</strong>",
+                Text = "text2"
+            };
+            msg.MailSettings = new MailSettings()
+            {
+                FooterSettings = footerSetting
+            };
+            msg.SetFooterSetting(true, "html3", "text3");
+            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"footer\":{\"enable\":true,\"text\":\"text3\",\"html\":\"html3\"}}}");
+        }
+
+        [Test]
+        public void TestSetSandBoxMode()
+        {
+            //MailSettings object does not exist
+            var msg = new SendGridMessage();
+            msg.SetSandBoxMode(true);
+            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"sandbox_mode\":{\"enable\":true}}}");
+
+            //MailSettings object exists
+            msg = new SendGridMessage();
+            var sandBoxMode = new SandboxMode()
+            {
+                Enable = false
+            };
+            msg.MailSettings = new MailSettings()
+            {
+                SandboxMode = sandBoxMode
+            };
+            msg.SetSandBoxMode(true);
+            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"sandbox_mode\":{\"enable\":true}}}");
+        }
+
+        [Test]
+        public void TestSetSpamCheck()
+        {
+            //MailSettings object does not exist
+            var msg = new SendGridMessage();
+            msg.SetSpamCheck(true, 1, "http://fakeurl.com");
+            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"spam_check\":{\"enable\":true,\"threshold\":1,\"post_to_url\":\"http://fakeurl.com\"}}}");
+
+            //MailSettings object exists
+            msg = new SendGridMessage();
+            var spamCheck = new SpamCheck()
+            {
+                Enable = false,
+                Threshold = 3,
+                PostToUrl = "http://fakeurl1.com"
+            };
+            msg.MailSettings = new MailSettings()
+            {
+                SpamCheck = spamCheck
+            };
+            msg.SetSpamCheck(true, 2, "http://fakeurl2.com");
+            Assert.AreEqual(msg.Serialize(), "{\"mail_settings\":{\"spam_check\":{\"enable\":true,\"threshold\":2,\"post_to_url\":\"http://fakeurl2.com\"}}}");
+        }
+
+        [Test]
+        public void TestSetClickTracking()
+        {
+            //TrackingSettings object does not exist
+            var msg = new SendGridMessage();
+            msg.SetClickTracking(false, false);
+            Assert.AreEqual(msg.Serialize(), "{\"tracking_settings\":{\"click_tracking\":{\"enable\":false,\"enable_text\":false}}}");
+
+            //TrackingSettings object exists
+            msg = new SendGridMessage();
+            var clickTrackingSetting = new ClickTracking()
+            {
+                Enable = false,
+                EnableText = false
+            };
+            msg.TrackingSettings = new TrackingSettings()
+            {
+                ClickTracking = clickTrackingSetting
+            };
+            msg.SetClickTracking(true, true);
+            Assert.AreEqual(msg.Serialize(), "{\"tracking_settings\":{\"click_tracking\":{\"enable\":true,\"enable_text\":true}}}");
+        }
+
+        [Test]
+        public void TestSetOpenTracking()
+        {
+            //TrackingSettings object does not exist
+            var msg = new SendGridMessage();
+            msg.SetOpenTracking(false, "subtag1");
+            Assert.AreEqual(msg.Serialize(), "{\"tracking_settings\":{\"open_tracking\":{\"enable\":false,\"substitution_tag\":\"subtag1\"}}}");
+
+            //TrackingSettings object exists
+            msg = new SendGridMessage();
+            var openTrackingSetting = new OpenTracking()
+            {
+                Enable = false,
+                SubstitutionTag = "subtag2"
+            };
+            msg.TrackingSettings = new TrackingSettings()
+            {
+                OpenTracking = openTrackingSetting
+            };
+            msg.SetOpenTracking(false, "subtag3");
+            Assert.AreEqual(msg.Serialize(), "{\"tracking_settings\":{\"open_tracking\":{\"enable\":false,\"substitution_tag\":\"subtag3\"}}}");
+        }
+
+        [Test]
+        public void TestSetSubscriptionTracking()
+        {
+            //TrackingSettings object does not exist
+            var msg = new SendGridMessage();
+            msg.SetSubscriptionTracking(true, "html1", "text1", "sub1");
+            Assert.AreEqual(msg.Serialize(), "{\"tracking_settings\":{\"subscription_tracking\":{\"enable\":true,\"text\":\"text1\",\"html\":\"html1\",\"substitution_tag\":\"sub1\"}}}");
+
+            //TrackingSettings object exists
+            msg = new SendGridMessage();
+            var subscriptionTracking = new SubscriptionTracking()
+            {
+                Enable = false,
+                Html = "html2",
+                Text = "text2",
+                SubstitutionTag = "sub2"
+            };
+            msg.TrackingSettings = new TrackingSettings()
+            {
+                SubscriptionTracking = subscriptionTracking
+            };
+            msg.SetSubscriptionTracking(true, "html3", "text3", "sub3");
+            Assert.AreEqual(msg.Serialize(), "{\"tracking_settings\":{\"subscription_tracking\":{\"enable\":true,\"text\":\"text3\",\"html\":\"html3\",\"substitution_tag\":\"sub3\"}}}");
+        }
+
+        [Test]
+        public void TestSetGoogleAnalytics()
+        {
+            //TrackingSettings object does not exist
+            var msg = new SendGridMessage();
+            msg.SetGoogleAnalytics(true, "campaign1", "content1", "medium1", "source1", "term1");
+            Assert.AreEqual(msg.Serialize(), "{\"tracking_settings\":{\"ganalytics\":{\"enable\":true,\"utm_source\":\"source1\",\"utm_medium\":\"medium1\",\"utm_term\":\"term1\",\"utm_content\":\"content1\",\"utm_campaign\":\"campaign1\"}}}");
+
+            //TrackingSettings object exists
+            msg = new SendGridMessage();
+            var googleAnalytics = new Ganalytics()
+            {
+                Enable = false,
+                UtmCampaign = "campaign2",
+                UtmContent = "content2",
+                UtmMedium = "medium2",
+                UtmSource = "source2",
+                UtmTerm = "term2"
+            };
+            msg.TrackingSettings = new TrackingSettings()
+            {
+                Ganalytics = googleAnalytics
+            };
+            msg.SetGoogleAnalytics(true, "campaign3", "content3", "medium3", "source3", "term3");
+            Assert.AreEqual(msg.Serialize(), "{\"tracking_settings\":{\"ganalytics\":{\"enable\":true,\"utm_source\":\"source3\",\"utm_medium\":\"medium3\",\"utm_term\":\"term3\",\"utm_content\":\"content3\",\"utm_campaign\":\"campaign3\"}}}");
         }
 
         [Test]

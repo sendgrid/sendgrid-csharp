@@ -55,7 +55,7 @@ namespace SendGrid.Helpers.Mail
         public string BatchId { get; set; }
 
         [JsonProperty(PropertyName = "ip_pool_name")]
-        public string SetIpPoolId { get; set; }
+        public string IpPoolName { get; set; }
 
         [JsonProperty(PropertyName = "mail_settings")]
         public MailSettings MailSettings { get; set; }
@@ -71,7 +71,7 @@ namespace SendGrid.Helpers.Mail
             if (personalization != null)
             {
                 personalization.Tos.Add(email);
-                if (Personalizations == null )
+                if (Personalizations == null)
                 {
                     Personalizations = new List<Personalization>();
                     Personalizations.Add(personalization);
@@ -262,6 +262,38 @@ namespace SendGrid.Helpers.Mail
                 new Personalization()
                 {
                     Bccs = emails
+                }
+            };
+            return;
+        }
+
+        public void SetSubject(string subject, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.Subject = subject;
+                if (Personalizations == null)
+                {
+                    Personalizations = new List<Personalization>();
+                    Personalizations.Add(personalization);
+                }
+                else
+                {
+                    Personalizations.Add(personalization);
+                }
+                return;
+            }
+
+            if (Personalizations != null)
+            {
+                Personalizations[personalizationIndex].Subject = subject;
+                return;
+            }
+
+            Personalizations = new List<Personalization>() {
+                new Personalization()
+                {
+                    Subject = subject
                 }
             };
             return;
@@ -474,38 +506,6 @@ namespace SendGrid.Helpers.Mail
             return;
         }
 
-        public void SetSubject(string subject, int personalizationIndex = 0, Personalization personalization = null)
-        {
-            if (personalization != null)
-            {
-                personalization.Subject = subject;
-                if (Personalizations == null)
-                {
-                    Personalizations = new List<Personalization>();
-                    Personalizations.Add(personalization);
-                }
-                else
-                {
-                    Personalizations.Add(personalization);
-                }
-                return;
-            }
-
-            if (Personalizations != null)
-            {
-                Personalizations[personalizationIndex].Subject = subject;
-                return;
-            }
-
-            Personalizations = new List<Personalization>() {
-                new Personalization()
-                {
-                    Subject = subject
-                }
-            };
-            return;
-        }
-
         public void SetSendAt(int sendAt, int personalizationIndex = 0, Personalization personalization = null)
         {
             if (personalization != null)
@@ -538,47 +538,19 @@ namespace SendGrid.Helpers.Mail
             return;
         }
 
-        public void SetASM(int groupID, List<int> groupsToDisplay)
+        public void SetFrom(EmailAddress email)
         {
-            Asm = new ASM();
-            Asm.GroupId = groupID;
-            Asm.GroupsToDisplay = groupsToDisplay;
-            return;
+            From = email;
         }
 
-        public void SetBCCSetting(bool enable, string email)
+        public void SetReplyTo(EmailAddress email)
         {
-            if( MailSettings == null)
-            {
-                MailSettings = new MailSettings();
-            }
-            MailSettings.BccSettings = new BCCSettings();
-            MailSettings.BccSettings.Enable = enable;
-            MailSettings.BccSettings.Email = email;
-            return;
+            ReplyTo = email;
         }
 
-        public void SetBypassListManagement(bool enable)
+        public void SetGlobalSubject(string subject)
         {
-            if (MailSettings == null)
-            {
-                MailSettings = new MailSettings();
-            }
-            MailSettings.BypassListManagement = new BypassListManagement();
-            MailSettings.BypassListManagement.Enable = enable;
-            return;
-        }
-
-        public void SetClickTracking(bool enable, bool enableText)
-        {
-            if (TrackingSettings == null)
-            {
-                TrackingSettings = new TrackingSettings();
-            }
-            TrackingSettings.ClickTracking = new ClickTracking();
-            TrackingSettings.ClickTracking.Enable = enable;
-            TrackingSettings.ClickTracking.EnableText = enableText;
-            return;
+            Subject = subject;
         }
 
         public void AddContent(string mimeType, string text)
@@ -618,13 +590,331 @@ namespace SendGrid.Helpers.Mail
             return;
         }
 
+        public void AddAttachment(string filename, string content, string type = null, string disposition = null, string content_id = null)
+        {
+            var attachment = new Attachment()
+            {
+                Filename = filename,
+                Content = content,
+                Type = type,
+                Disposition = disposition,
+                ContentId = content_id
+            };
+
+            if (Attachments == null)
+            {
+
+                Attachments = new List<Attachment>()
+                {
+                    attachment
+                };
+            }
+            else
+            {
+                Attachments.Add(attachment);
+            }
+            return;
+        }
+
+        public void AddAttachments(List<Attachment> attachments)
+        {
+            if (Attachments == null)
+            {
+                Attachments = new List<Attachment>();
+                Attachments = attachments;
+            }
+            else
+            {
+                Attachments.AddRange(attachments);
+            }
+            return;
+        }
+
+        public void SetTemplateId(string templateID)
+        {
+            TemplateId = templateID;
+        }
+
+        public void AddSection(string key, string value)
+        {
+            if (Sections == null)
+            {
+                Sections = new Dictionary<string, string>()
+                {
+                    {  key, value }
+                };
+            }
+            else
+            {
+                Sections.Add(key, value);
+            }
+            return;
+        }
+
+        public void AddSections(Dictionary<string, string> sections)
+        {
+            if (Sections == null)
+            {
+                Sections = sections;
+            }
+            else
+            {
+                Sections = (Sections != null)
+                    ? Sections.Union(sections).ToDictionary(pair => pair.Key, pair => pair.Value) : sections;
+            }
+            return;
+        }
+
+        public void AddGlobalHeader(string key, string value)
+        {
+            if (Headers == null)
+            {
+                Headers = new Dictionary<string, string>()
+                {
+                    {  key, value }
+                };
+            }
+            else
+            {
+                Headers.Add(key, value);
+            }
+            return;
+        }
+
+        public void AddGlobalHeaders(Dictionary<string,string> headers)
+        {
+            if (Headers == null)
+            {
+                Headers = headers;
+            }
+            else
+            {
+                Headers = (Headers != null)
+                    ? Headers.Union(headers).ToDictionary(pair => pair.Key, pair => pair.Value) : headers;
+            }
+            return;
+        }
+
+        public void AddCategory(string category)
+        {
+            if (Categories == null)
+            {
+
+                Categories = new List<string>()
+                {
+                    category
+                };
+            }
+            else
+            {
+                Categories.Add(category);
+            }
+            return;
+        }
+
+        public void AddCategories(List<string> categories)
+        {
+            if (Categories == null)
+            {
+                Categories = new List<string>();
+                Categories = categories;
+            }
+            else
+            {
+                Categories.AddRange(categories);
+            }
+            return;
+        }
+
+        public void AddGlobalCustomArg(string key, string value)
+        {
+            if (CustomArgs == null)
+            {
+                CustomArgs = new Dictionary<string, string>()
+                {
+                    {  key, value }
+                };
+            }
+            else
+            {
+                CustomArgs.Add(key, value);
+            }
+            return;
+        }
+
+        public void AddGlobalCustomArgs(Dictionary<string, string> customArgs)
+        {
+            if (CustomArgs == null)
+            {
+                CustomArgs = customArgs;
+            }
+            else
+            {
+                customArgs = (CustomArgs != null)
+                    ? Headers.Union(customArgs).ToDictionary(pair => pair.Key, pair => pair.Value) : customArgs;
+            }
+            return;
+        }
+
+        public void SetGlobalSendAt(int sendAt)
+        {
+            SendAt = sendAt;
+        }
+
+        public void SetBatchId(string batchId)
+        {
+            BatchId = batchId;
+        }
+
+        public void SetAsm(int groupID, List<int> groupsToDisplay)
+        {
+            Asm = new ASM();
+            Asm.GroupId = groupID;
+            Asm.GroupsToDisplay = groupsToDisplay;
+            return;
+        }
+
+        public void SetIpPoolName(string ipPoolName)
+        {
+            IpPoolName = ipPoolName;
+        }
+
+        public void SetBccSetting(bool enable, string email)
+        {
+            if( MailSettings == null)
+            {
+                MailSettings = new MailSettings();
+            }
+            MailSettings.BccSettings = new BCCSettings()
+            {
+                Enable = enable,
+                Email = email
+            };
+            return;
+        }
+
+        public void SetBypassListManagement(bool enable)
+        {
+            if (MailSettings == null)
+            {
+                MailSettings = new MailSettings();
+            }
+            MailSettings.BypassListManagement = new BypassListManagement()
+            {
+                Enable = enable
+            };
+            return;
+        }
+
+        public void SetFooterSetting(bool enable, string html = null, string text = null)
+        {
+            if (MailSettings == null)
+            {
+                MailSettings = new MailSettings();
+            }
+            MailSettings.FooterSettings = new FooterSettings()
+            {
+                Enable = enable,
+                Html = html,
+                Text = text
+            };
+            return;
+        }
+
+        public void SetSandBoxMode(bool enable)
+        {
+            if (MailSettings == null)
+            {
+                MailSettings = new MailSettings();
+            }
+            MailSettings.SandboxMode = new SandboxMode()
+            {
+                Enable = enable
+            };
+            return;
+        }
+
+        public void SetSpamCheck(bool enable, int threshold = 1, string postToUrl = null)
+        {
+            if (MailSettings == null)
+            {
+                MailSettings = new MailSettings();
+            }
+            MailSettings.SpamCheck = new SpamCheck()
+            {
+                Enable = enable,
+                Threshold = threshold,
+                PostToUrl = postToUrl
+            };
+            return;
+        }
+
+        public void SetClickTracking(bool enable, bool enableText)
+        {
+            if (TrackingSettings == null)
+            {
+                TrackingSettings = new TrackingSettings();
+            }
+            TrackingSettings.ClickTracking = new ClickTracking()
+            {
+                Enable = enable,
+                EnableText = enableText
+            };
+            return;
+        }
+
+        public void SetOpenTracking(bool enable, string substitutionTag)
+        {
+            if (TrackingSettings == null)
+            {
+                TrackingSettings = new TrackingSettings();
+            }
+            TrackingSettings.OpenTracking = new OpenTracking()
+            {
+                Enable = enable,
+                SubstitutionTag = substitutionTag
+            };
+            return;
+        }
+
+        public void SetSubscriptionTracking(bool enable, string html = null, string text = null, string substitutionTag = null)
+        {
+            if (TrackingSettings == null)
+            {
+                TrackingSettings = new TrackingSettings();
+            }
+            TrackingSettings.SubscriptionTracking = new SubscriptionTracking()
+            {
+                Enable = enable,
+                SubstitutionTag = substitutionTag,
+                Html = html,
+                Text = text
+            };
+            return;
+        }
+
+        public void SetGoogleAnalytics(bool enable, string utmCampaign = null, string utmContent = null, string utmMedium = null, string utmSource = null, string utmTerm = null)
+        {
+            if (TrackingSettings == null)
+            {
+                TrackingSettings = new TrackingSettings();
+            }
+            TrackingSettings.Ganalytics = new Ganalytics()
+            {
+                Enable = enable,
+                UtmCampaign = utmCampaign,
+                UtmContent = utmContent,
+                UtmMedium = utmMedium,
+                UtmSource = utmSource,
+                UtmTerm = utmTerm
+            };
+            return;
+        }
+
         // TODO: implement the reamining properties (e.g. see the Model directory)
 
         public string Serialize()
         {
-            // TODO: account for the case when only HTML is provided
-            // Plain text, if provided must always come first
-            // Acount for custom mime types
             if (PlainTextContent != null || HtmlContent != null )
             {
                 Contents = new List<Content>()
