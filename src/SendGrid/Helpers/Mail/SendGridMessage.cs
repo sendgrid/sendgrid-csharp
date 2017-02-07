@@ -85,6 +85,15 @@ namespace SendGrid.Helpers.Mail
 
             if (Personalizations != null)
             {
+                if((personalizationIndex != 0) && (Personalizations.Count() <= personalizationIndex))
+                {
+                    var p = new Personalization();
+                    Personalizations.Insert(personalizationIndex, p);
+                }
+                if (Personalizations[personalizationIndex].Tos == null)
+                {
+                    Personalizations[personalizationIndex].Tos = new List<EmailAddress>();
+                }
                 Personalizations[personalizationIndex].Tos.Add(email);
                 return;
             }
@@ -120,6 +129,15 @@ namespace SendGrid.Helpers.Mail
 
             if (Personalizations != null)
             {
+                if ((personalizationIndex != 0) && (Personalizations.Count() <= personalizationIndex))
+                {
+                    var p = new Personalization();
+                    Personalizations.Insert(personalizationIndex, p);
+                }
+                if (Personalizations[personalizationIndex].Tos == null)
+                {
+                    Personalizations[personalizationIndex].Tos = new List<EmailAddress>();
+                }
                 Personalizations[personalizationIndex].Tos.AddRange(emails);
                 return;
             }
@@ -152,6 +170,17 @@ namespace SendGrid.Helpers.Mail
 
             if (Personalizations != null)
             {
+                if (Personalizations[personalizationIndex] == null)
+                {
+                    var p = new Personalization();
+                    Personalizations.Insert(personalizationIndex, p);
+                }
+
+                if (Personalizations[personalizationIndex].Ccs == null)
+                {
+                    Personalizations[personalizationIndex].Ccs = new List<EmailAddress>();
+                }
+
                 Personalizations[personalizationIndex].Ccs.Add(email);
                 return;
             }
@@ -187,6 +216,15 @@ namespace SendGrid.Helpers.Mail
 
             if (Personalizations != null)
             {
+                if (Personalizations[personalizationIndex] == null)
+                {
+                    var p = new Personalization();
+                    Personalizations.Insert(personalizationIndex, p);
+                }
+                if (Personalizations[personalizationIndex].Ccs == null)
+                {
+                    Personalizations[personalizationIndex].Ccs = new List<EmailAddress>();
+                }
                 Personalizations[personalizationIndex].Ccs.AddRange(emails);
                 return;
             }
@@ -219,6 +257,15 @@ namespace SendGrid.Helpers.Mail
 
             if (Personalizations != null)
             {
+                if (Personalizations[personalizationIndex] == null)
+                {
+                    var p = new Personalization();
+                    Personalizations.Insert(personalizationIndex, p);
+                }
+                if (Personalizations[personalizationIndex].Bccs == null)
+                {
+                    Personalizations[personalizationIndex].Bccs = new List<EmailAddress>();
+                }
                 Personalizations[personalizationIndex].Bccs.Add(email);
                 return;
             }
@@ -254,6 +301,15 @@ namespace SendGrid.Helpers.Mail
 
             if (Personalizations != null)
             {
+                if (Personalizations[personalizationIndex] == null)
+                {
+                    var p = new Personalization();
+                    Personalizations.Insert(personalizationIndex, p);
+                }
+                if (Personalizations[personalizationIndex].Bccs == null)
+                {
+                    Personalizations[personalizationIndex].Bccs = new List<EmailAddress>();
+                }
                 Personalizations[personalizationIndex].Bccs.AddRange(emails);
                 return;
             }
@@ -318,6 +374,15 @@ namespace SendGrid.Helpers.Mail
 
             if (Personalizations != null)
             {
+                if (Personalizations[personalizationIndex] == null)
+                {
+                    var p = new Personalization();
+                    Personalizations.Insert(personalizationIndex, p);
+                }
+                if (Personalizations[personalizationIndex].Headers == null)
+                {
+                    Personalizations[personalizationIndex].Headers = new Dictionary<string, string>();
+                }
                 Personalizations[personalizationIndex].Headers.Add(headerKey, headerValue);
                 return;
             }
@@ -354,6 +419,15 @@ namespace SendGrid.Helpers.Mail
 
             if (Personalizations != null)
             {
+                if (Personalizations[personalizationIndex] == null)
+                {
+                    var p = new Personalization();
+                    Personalizations.Insert(personalizationIndex, p);
+                }
+                if (Personalizations[personalizationIndex].Headers == null)
+                {
+                    Personalizations[personalizationIndex].Headers = new Dictionary<string, string>();
+                }
                 Personalizations[personalizationIndex].Headers = (Personalizations[personalizationIndex].Headers != null)
                     ? Personalizations[personalizationIndex].Headers.Union(headers).ToDictionary(pair => pair.Key, pair => pair.Value) : headers;
                 return;
@@ -387,6 +461,15 @@ namespace SendGrid.Helpers.Mail
 
             if (Personalizations != null)
             {
+                if (Personalizations[personalizationIndex] == null)
+                {
+                    var p = new Personalization();
+                    Personalizations.Insert(personalizationIndex, p);
+                }
+                if (Personalizations[personalizationIndex].Substitutions == null)
+                {
+                    Personalizations[personalizationIndex].Substitutions = new Dictionary<string, string>();
+                }
                 Personalizations[personalizationIndex].Substitutions.Add(substitutionKey, substitutionValue);
                 return;
             }
@@ -423,6 +506,15 @@ namespace SendGrid.Helpers.Mail
 
             if (Personalizations != null)
             {
+                if (Personalizations[personalizationIndex] == null)
+                {
+                    var p = new Personalization();
+                    Personalizations.Insert(personalizationIndex, p);
+                }
+                if (Personalizations[personalizationIndex].Substitutions == null)
+                {
+                    Personalizations[personalizationIndex].Substitutions = new Dictionary<string, string>();
+                }
                 Personalizations[personalizationIndex].Substitutions = (Personalizations[personalizationIndex].Substitutions != null)
                     ? Personalizations[personalizationIndex].Substitutions.Union(substitutions).ToDictionary(pair => pair.Key, pair => pair.Value) : substitutions;
                 return;
@@ -456,6 +548,15 @@ namespace SendGrid.Helpers.Mail
 
             if (Personalizations != null)
             {
+                if (Personalizations[personalizationIndex] == null)
+                {
+                    var p = new Personalization();
+                    Personalizations.Insert(personalizationIndex, p);
+                }
+                if (Personalizations[personalizationIndex].CustomArgs == null)
+                {
+                    Personalizations[personalizationIndex].CustomArgs = new Dictionary<string, string>();
+                }
                 Personalizations[personalizationIndex].CustomArgs.Add(customArgKey, customArgValue);
                 return;
             }
@@ -492,6 +593,15 @@ namespace SendGrid.Helpers.Mail
 
             if (Personalizations != null)
             {
+                if (Personalizations[personalizationIndex] == null)
+                {
+                    var p = new Personalization();
+                    Personalizations.Insert(personalizationIndex, p);
+                }
+                if (Personalizations[personalizationIndex].CustomArgs == null)
+                {
+                    Personalizations[personalizationIndex].CustomArgs = new Dictionary<string, string>();
+                }
                 Personalizations[personalizationIndex].CustomArgs = (Personalizations[personalizationIndex].CustomArgs != null)
                     ? Personalizations[personalizationIndex].CustomArgs.Union(customArgs).ToDictionary(pair => pair.Key, pair => pair.Value) : customArgs;
                 return;
@@ -750,8 +860,8 @@ namespace SendGrid.Helpers.Mail
             }
             else
             {
-                customArgs = (CustomArgs != null)
-                    ? Headers.Union(customArgs).ToDictionary(pair => pair.Key, pair => pair.Value) : customArgs;
+                CustomArgs = (CustomArgs != null)
+                    ? CustomArgs.Union(customArgs).ToDictionary(pair => pair.Key, pair => pair.Value) : customArgs;
             }
             return;
         }
@@ -911,8 +1021,6 @@ namespace SendGrid.Helpers.Mail
             return;
         }
 
-        // TODO: implement the reamining properties (e.g. see the Model directory)
-
         public string Serialize()
         {
             if (PlainTextContent != null || HtmlContent != null )
@@ -927,9 +1035,17 @@ namespace SendGrid.Helpers.Mail
             }
             else if( Contents != null )
             {
+                // MimeType.Text > MimeType.Html > Everything Else
                 for (var i = 0; i < Contents.Count; i++)
                 {
-                    if(Contents[i].Type == MimeType.Text)
+                    if (Contents[i].Type == MimeType.Html)
+                    {
+                        var tempContent = new Content();
+                        tempContent = Contents[i];
+                        Contents.RemoveAt(i);
+                        Contents.Insert(0, tempContent);
+                    }
+                    if (Contents[i].Type == MimeType.Text)
                     {
                         var tempContent = new Content();
                         tempContent = Contents[i];

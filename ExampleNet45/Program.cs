@@ -19,8 +19,23 @@ namespace Example
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
             var client = new SendGridClient(apiKey);
 
-            // Generic Hello World Send using the Mail Helper with convenience methods
-            var msg = new SendGridMessage()
+            // Send a Single Email using the Mail Helper
+            var from = new EmailAddress("dx@sendgrid.com", "DX Team");
+            var subject = "Hello World from the SendGrid CSharp Library Helper!";
+            var to = new EmailAddress("elmer@sendgrid.com", "Elmer Thomas");
+            var plainTextContent = "Hello, Email from the helper [SendSingleEmailAsync]!";
+            var htmlContent = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+            var response = await client.SendEmailAsync(msg);
+            Console.WriteLine(msg.Serialize());
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Headers);
+            Console.WriteLine("\n\nPress any key to continue.");
+            Console.ReadLine();
+
+            // Send a Single Email using the Mail Helper with convenience methods
+            msg = new SendGridMessage()
             {
                 From = new EmailAddress("dx@sendgrid.com", "DX Team"),
                 Subject = "Hello World from the SendGrid CSharp Library Helper!",
@@ -29,27 +44,14 @@ namespace Example
             };
             msg.AddTo(new EmailAddress("elmer.thomas+test001@sendgrid.com", "Elmer Thomas"));
 
-            var response = await client.SendEmailAsync(msg);
-            Console.WriteLine(msg.Serialize());
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Headers);
-            Console.ReadLine();
-
-            // Send a Single Email using the Mail Helper
-            var from = new EmailAddress("dx@sendgrid.com", "DX Team");
-            var subject = "Hello World from the SendGrid CSharp Library Helper!";
-            var to = new EmailAddress("elmer@sendgrid.com", "Elmer Thomas");
-            var plainTextContent = "Hello, Email from the helper [SendSingleEmailAsync]!";
-            var htmlContent = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>";
-            msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-
             response = await client.SendEmailAsync(msg);
             Console.WriteLine(msg.Serialize());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers);
+            Console.WriteLine("\n\nPress any key to continue.");
             Console.ReadLine();
 
-            // Without the Mail Helper
+            // Send a Single Email Without the Mail Helper
             string data = @"{
               'personalizations': [
                 {
@@ -77,6 +79,7 @@ namespace Example
                                                  urlPath: "mail/send");
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers);
+            Console.WriteLine("\n\nPress any key to continue.");
             Console.ReadLine();
 
             // Generic, direct object access, Hello World Send using the Mail Helper
@@ -100,6 +103,7 @@ namespace Example
             response = await client.SendEmailAsync(msg);
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers);
+            Console.WriteLine("\n\nPress any key to continue.");
             Console.ReadLine();
 
             // GET Collection
