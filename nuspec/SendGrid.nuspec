@@ -3,11 +3,11 @@
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>SendGridv9beta</id>
     <title>SendGridv9beta</title>
-    <version>0.0.0</version>
+    <version>9.0.0-beta</version>
     <authors>Elmer Thomas</authors>
     <owners>SendGrid</owners>
-    <description>v9beta .NET Core and .NET 4.5.X and up support</description>
-    <summary>v9beta .NET Core and .NET 4.5.X and up support</summary>
+    <description>v9beta .NET Core and .NET 4.5.2 and up support</description>
+    <summary>v9beta .NET Core and .NET 4.5.2 and up support</summary>
     <licenseUrl>https://github.com/sendgrid/sendgrid-csharp/blob/master/LICENSE.txt</licenseUrl>
     <projectUrl>https://github.com/sendgrid/sendgrid-csharp</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

@@ -42,7 +42,7 @@ namespace Example
                 PlainTextContent = "Hello, Email from the helper [SendSingleEmailAsync]!",
                 HtmlContent = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>"
             };
-            msg.AddTo(new EmailAddress("elmer.thomas+test001@sendgrid.com", "Example User"));
+            msg.AddTo(new EmailAddress("test@example.com", "Example User"));
 
             response = await client.SendEmailAsync(msg);
             Console.WriteLine(msg.Serialize());
@@ -89,7 +89,7 @@ namespace Example
                 Personalizations = new List<Personalization>() {
                     new Personalization() {
                         Tos = new List<EmailAddress>() {
-                            new EmailAddress("elmer.thomas@sendgrid.com", "Example User")
+                            new EmailAddress("test@example.com", "Example User")
                         }
                     }
                 },
