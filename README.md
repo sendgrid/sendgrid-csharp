@@ -42,7 +42,7 @@ Update the development Environment (user space) with your [SENDGRID_API_KEY](htt
 To use SendGrid in your C# project, you can either <a href="https://github.com/sendgrid/sendgrid-csharp.git">download the SendGrid C# .NET libraries directly from our Github repository</a> or, if you have the NuGet package manager installed, you can grab them automatically.
 
 ```
-PM> Install-Package SendGrid
+PM> Install-Package SendGrid -Pre
 ```
 
 Once you have the SendGrid libraries properly referenced in your project, you can include calls to them in your code.
@@ -87,6 +87,7 @@ namespace Example
         static async Task Execute()
         {
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
+            var client = new SendGridClient(apiKey);
             var from = new EmailAddress("test@example.com", "Example User");
             var subject = "Hello World from the SendGrid CSharp SDK!";
             var to = new EmailAddress("test@example.com", "Example User");
@@ -121,6 +122,7 @@ namespace Example
 	    static async Task Execute()
         {
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
+            var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
                 From = new EmailAddress("test@example.com", "DX Team"),
