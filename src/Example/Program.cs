@@ -20,9 +20,9 @@ namespace Example
             var client = new SendGridClient(apiKey);
 
             // Send a Single Email using the Mail Helper
-            var from = new EmailAddress("dx@sendgrid.com", "DX Team");
+            var from = new EmailAddress("test@example.com", "Example User");
             var subject = "Hello World from the SendGrid CSharp Library Helper!";
-            var to = new EmailAddress("elmer@sendgrid.com", "Elmer Thomas");
+            var to = new EmailAddress("test@example.com", "Example User");
             var plainTextContent = "Hello, Email from the helper [SendSingleEmailAsync]!";
             var htmlContent = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
@@ -37,12 +37,12 @@ namespace Example
             // Send a Single Email using the Mail Helper with convenience methods
             msg = new SendGridMessage()
             {
-                From = new EmailAddress("dx@sendgrid.com", "DX Team"),
+                From = new EmailAddress("test@example.com", "Example User"),
                 Subject = "Hello World from the SendGrid CSharp Library Helper!",
                 PlainTextContent = "Hello, Email from the helper [SendSingleEmailAsync]!",
                 HtmlContent = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>"
             };
-            msg.AddTo(new EmailAddress("elmer.thomas+test001@sendgrid.com", "Elmer Thomas"));
+            msg.AddTo(new EmailAddress("elmer.thomas+test001@sendgrid.com", "Example User"));
 
             response = await client.SendEmailAsync(msg);
             Console.WriteLine(msg.Serialize());
@@ -57,14 +57,14 @@ namespace Example
                 {
                   'to': [
                     {
-                      'email': 'elmer@sendgrid.com'
+                      'email': 'test@example.com'
                     }
                   ],
                   'subject': 'Hello World from the SendGrid C# Library!'
                 }
               ],
               'from': {
-                'email': 'dx@sendgrid.com'
+                'email': 'test@example.com'
               },
               'content': [
                 {
@@ -85,11 +85,11 @@ namespace Example
             // Generic, direct object access, Hello World Send using the Mail Helper
             msg = new SendGridMessage()
             {
-                From = new EmailAddress("dx@sendgrid.com", "DX Team"),
+                From = new EmailAddress("test@example.com", "Example User"),
                 Personalizations = new List<Personalization>() {
                     new Personalization() {
                         Tos = new List<EmailAddress>() {
-                            new EmailAddress("elmer.thomas@sendgrid.com", "Elmer Thomas")
+                            new EmailAddress("elmer.thomas@sendgrid.com", "Example User")
                         }
                     }
                 },
