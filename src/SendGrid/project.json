@@ -25,8 +25,7 @@
 			"imports": "dnxcore50",
 			"dependencies": {
 				"NETStandard.Library": "1.6.1",
-				"Newtonsoft.Json": "9.0.1",
-				"System.Reflection.TypeExtensions": "4.1.0"
+				"Newtonsoft.Json": "9.0.1"
 			}
 		},
 		"net452": {

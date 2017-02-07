@@ -13,10 +13,22 @@ using System.Threading.Tasks;
 
 namespace SendGrid
 {
+    /// <summary>
+    /// The response received from an API call to SendGrid
+    /// </summary>
     public class Response
     {
+        /// <summary>
+        /// The status code returned from SendGrid.
+        /// </summary>
         public HttpStatusCode StatusCode;
+        /// <summary>
+        /// The response body returned from SendGrid.
+        /// </summary>
         public HttpContent Body;
+        /// <summary>
+        /// The response headers returned from SendGrid.
+        /// </summary>
         public HttpResponseHeaders Headers;
 
         /// <summary>
@@ -59,25 +71,81 @@ namespace SendGrid
         }
     }
 
+    /// <summary>
+    /// Helper for the common SendGrid email mime types.
+    /// </summary>
     public class MimeType
     {
+        /// <summary>
+        /// The mime type for HTML content.
+        /// </summary>
         public static readonly string Html = "text/html";
+        /// <summary>
+        /// The mime type for plain text content.
+        /// </summary>
         public static readonly string Text = "text/plain";
     }
 
+    /// <summary>
+    /// A HTTP client wrapper for interacting with SendGrid's API
+    /// </summary>
     public class SendGridClient
     {
+        /// <summary>
+        /// The base URL for the API call.
+        /// </summary>
         public string Host;
+        /// <summary>
+        /// The request headers.
+        /// </summary>
         public Dictionary<string, string> RequestHeaders;
+        /// <summary>
+        /// The API version.
+        /// </summary>
         public string Version;
+        /// <summary>
+        /// The path to the API resource.
+        /// </summary>
         public string UrlPath;
+        /// <summary>
+        /// The request media type.
+        /// </summary>
         public string MediaType;
+        /// <summary>
+        /// The web proxy.
+        /// </summary>
         public IWebProxy WebProxy;
-        public enum Method { DELETE, GET, PATCH, POST, PUT }
+        /// <summary>
+        /// The supported API methods.
+        /// </summary>
+        public enum Method {
+            /// <summary>
+            /// Remove a resource.
+            /// </summary>
+            DELETE,
+            /// <summary>
+            /// Get a resource.
+            /// </summary>
+            GET,
+            /// <summary>
+            /// Modify a portion of the resource.
+            /// </summary>
+            PATCH,
+            /// <summary>
+            /// Create a resource or execute a function. (e.g send an email)
+            /// </summary>
+            POST,
+            /// <summary>
+            /// Update an entire resource.s
+            /// </summary>
+            PUT
+        }
 
         /// <summary>
         ///     REST API client.
         /// </summary>
+        /// <param name="webProxy">Web proxy.</param>
+        /// <param name="apiKey">Your SendGrid API key.</param>
         /// <param name="host">Base url (e.g. https://api.sendgrid.com)</param>
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
@@ -92,6 +160,7 @@ namespace SendGrid
         /// <summary>
         ///     REST API client.
         /// </summary>
+        /// <param name="apiKey">Your SendGrid API key.</param>
         /// <param name="host">Base url (e.g. https://api.sendgrid.com)</param>
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
@@ -232,6 +301,7 @@ namespace SendGrid
         /// </summary>
         /// <param name="client">Client object ready for communication with API</param>
         /// <param name="request">The parameters for the API call</param>
+        /// <param name="cancellationToken">Cancel the asynchronous call</param>
         /// <returns>Response object</returns>
         public async Task<Response> MakeRequest(HttpClient client, HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -245,6 +315,9 @@ namespace SendGrid
         /// <param name="method">HTTP verb</param>
         /// <param name="requestBody">JSON formatted string</param>
         /// <param name="queryParams">JSON formatted query paramaters</param>
+        /// <param name="urlPath">The path to the API endpoint.</param>
+        /// <param name="requestHeaders">Custom request headers.</param>
+        /// <param name="cancellationToken">Cancel the asynchronous call.</param>
         /// <returns>Response object</returns>
         public async Task<Response> RequestAsync(SendGridClient.Method method,
                                                  string requestBody = null,
@@ -320,6 +393,12 @@ namespace SendGrid
             }
         }
 
+        /// <summary>
+        /// Make a request to send an email through SendGrid asychronously.
+        /// </summary>
+        /// <param name="msg">A SendGridMessage object with the details for the request.</param>
+        /// <param name="cancellationToken">Cancel the asychronous call.</param>
+        /// <returns></returns>
         public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await RequestAsync(SendGridClient.Method.POST,
