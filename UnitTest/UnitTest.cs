@@ -286,6 +286,61 @@ namespace UnitTest
         }
 
         [Test]
+        public void TestCreateSingleEmail()
+        {
+            var msg = MailHelper.CreateSingleEmail(new EmailAddress("test@example.com", "Example User"),
+                                                   new EmailAddress("test@example.com"),
+                                                   "Test Subject",
+                                                   "Plain Text Content",
+                                                   "HTML Content");
+            Assert.AreEqual(msg.Serialize(), "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"personalizations\":[{\"to\":[{\"email\":\"test@example.com\"}],\"subject\":\"Test Subject\"}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Plain Text Content\"},{\"type\":\"text/html\",\"value\":\"HTML Content\"}]}");
+        }
+
+        [Test]
+        public void TestCreateSingleEmailToMultipleRecipients()
+        {
+            var emails = new List<EmailAddress>();
+            emails.Add(new EmailAddress("test1@example.com"));
+            emails.Add(new EmailAddress("test2@example.com"));
+            emails.Add(new EmailAddress("test3@example.com"));
+            var msg = MailHelper.CreateSingleEmailToMultipleRecipients(new EmailAddress("test@example.com", "Example User"),
+                                                                       emails,
+                                                                       "Test Subject",
+                                                                       "Plain Text Content",
+                                                                       "HTML Content"
+                                                                       );
+            Assert.AreEqual(msg.Serialize(), "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"subject\":\"Test Subject\",\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"}]},{\"to\":[{\"email\":\"test2@example.com\"}]},{\"to\":[{\"email\":\"test3@example.com\"}]}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Plain Text Content\"},{\"type\":\"text/html\",\"value\":\"HTML Content\"}]}");
+        }
+
+        [Test]
+        public void TestCreateMultipleEmailsToMultipleRecipients()
+        {
+            var emails = new List<EmailAddress>();
+            emails.Add(new EmailAddress("test1@example.com"));
+            emails.Add(new EmailAddress("test2@example.com"));
+            emails.Add(new EmailAddress("test3@example.com"));
+            var subjects = new List<string>();
+            subjects.Add("Test Subject1");
+            subjects.Add("Test Subject2");
+            subjects.Add("Test Subject3");
+            var plainTextContent = "Hello -name-";
+            var htmlContent = "Goodbye -name-";
+            var substitutions = new List<Dictionary<string, string>>();
+            substitutions.Add(new Dictionary<string, string>() { { "-name-", "Name1" } });
+            substitutions.Add(new Dictionary<string, string>() { { "-name-", "Name1" } });
+            substitutions.Add(new Dictionary<string, string>() { { "-name-", "Name1" } });
+            var msg = MailHelper.CreateMultipleEmailsToMultipleRecipients(new EmailAddress("test@example.com", "Example User"),
+                                                                          emails,
+                                                                          subjects,
+                                                                          plainTextContent,
+                                                                          htmlContent,
+                                                                          substitutions
+                                                                          );
+            Console.WriteLine(msg.Serialize());
+            Assert.AreEqual(msg.Serialize(), "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"}],\"subject\":\"Test Subject1\",\"substitutions\":{\"-name-\":\"Name1\"}},{\"to\":[{\"email\":\"test2@example.com\"}],\"subject\":\"Test Subject2\",\"substitutions\":{\"-name-\":\"Name1\"}},{\"to\":[{\"email\":\"test3@example.com\"}],\"subject\":\"Test Subject3\",\"substitutions\":{\"-name-\":\"Name1\"}}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Hello -name-\"},{\"type\":\"text/html\",\"value\":\"Goodbye -name-\"}]}");
+        }
+
+        [Test]
         public void TestAddTo()
         {
             // Personalization not passed in, Personalization does not exist
