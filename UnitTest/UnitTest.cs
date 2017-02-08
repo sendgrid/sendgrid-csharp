@@ -345,12 +345,12 @@ namespace UnitTest
         {
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
-            msg.AddTo(new EmailAddress("dx+test001@sendgrid.com", "Example User"));
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"dx+test001@sendgrid.com\"}]}]}");
+            msg.AddTo(new EmailAddress("test001@example.com", "Example User"));
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test001@example.com\"}]}]}");
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
-            var email = new EmailAddress("dx+test002@sendgrid.com", "Example User");
+            var email = new EmailAddress("test002@example.com", "Example User");
             var personalization = new Personalization()
             {
                 Tos = new List<EmailAddress>()
@@ -358,12 +358,12 @@ namespace UnitTest
                     email
                 }
             };
-            msg.AddTo(new EmailAddress("dx+test003@sendgrid.com", "Example User"), 0, personalization);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"dx+test002@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test003@sendgrid.com\"}]}]}");
+            msg.AddTo(new EmailAddress("test003@example.com", "Example User"), 0, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test002@example.com\"},{\"name\":\"Example User\",\"email\":\"test003@example.com\"}]}]}");
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
-            email = new EmailAddress("dx+test004@sendgrid.com", "Example User");
+            email = new EmailAddress("test004@example.com", "Example User");
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Tos = new List<EmailAddress>()
@@ -372,7 +372,7 @@ namespace UnitTest
                     }
                 }
             };
-            email = new EmailAddress("dx+test005@sendgrid.com", "Example User");
+            email = new EmailAddress("test005@example.com", "Example User");
             personalization = new Personalization()
             {
                 Tos = new List<EmailAddress>()
@@ -380,12 +380,12 @@ namespace UnitTest
                     email
                 }
             };
-            msg.AddTo(new EmailAddress("dx+test006@sendgrid.com", "Example User"), 1, personalization);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"dx+test004@sendgrid.com\"}]},{\"to\":[{\"name\":\"Example User\",\"email\":\"dx+test005@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test006@sendgrid.com\"}]}]}");
+            msg.AddTo(new EmailAddress("test006@example.com", "Example User"), 1, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test004@example.com\"}]},{\"to\":[{\"name\":\"Example User\",\"email\":\"test005@example.com\"},{\"name\":\"Example User\",\"email\":\"test006@example.com\"}]}]}");
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
-            email = new EmailAddress("dx+test007@sendgrid.com", "Example User");
+            email = new EmailAddress("test007@example.com", "Example User");
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Tos = new List<EmailAddress>()
@@ -394,13 +394,13 @@ namespace UnitTest
                     }
                 }
             };
-            msg.AddTo(new EmailAddress("dx+test008@sendgrid.com", "Example User"));
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"dx+test007@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test008@sendgrid.com\"}]}]}");
+            msg.AddTo(new EmailAddress("test008@example.com", "Example User"));
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test007@example.com\"},{\"name\":\"Example User\",\"email\":\"test008@example.com\"}]}]}");
 
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
-            email = new EmailAddress("dx+test009@sendgrid.com", "Example User");
+            email = new EmailAddress("test009@example.com", "Example User");
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Tos = new List<EmailAddress>()
@@ -409,7 +409,7 @@ namespace UnitTest
                     }
                 }
             };
-            email = new EmailAddress("dx+test010@sendgrid.com", "Example User");
+            email = new EmailAddress("test010@example.com", "Example User");
             personalization = new Personalization()
             {
                 Tos = new List<EmailAddress>()
@@ -418,8 +418,8 @@ namespace UnitTest
                 }
             };
             msg.Personalizations.Add(personalization);
-            msg.AddTo(new EmailAddress("dx+test011@sendgrid.com", "Example User"));
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"dx+test009@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test011@sendgrid.com\"}]},{\"to\":[{\"name\":\"Example User\",\"email\":\"dx+test010@sendgrid.com\"}]}]}");
+            msg.AddTo(new EmailAddress("test011@example.com", "Example User"));
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test009@example.com\"},{\"name\":\"Example User\",\"email\":\"test011@example.com\"}]},{\"to\":[{\"name\":\"Example User\",\"email\":\"test010@example.com\"}]}]}");
         }
 
         [Test]
@@ -428,88 +428,88 @@ namespace UnitTest
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
             var emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test012@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test013@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test012@example.com", "Example User"));
+            emails.Add(new EmailAddress("test013@example.com", "Example User"));
             msg.AddTos(emails);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"dx+test012@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test013@sendgrid.com\"}]}]}");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test012@example.com\"},{\"name\":\"Example User\",\"email\":\"test013@example.com\"}]}]}");
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test014@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test015@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test014@example.com", "Example User"));
+            emails.Add(new EmailAddress("test015@example.com", "Example User"));
             var personalization = new Personalization()
             {
                 Tos = emails
             };
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test016@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test017@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test016@example.com", "Example User"));
+            emails.Add(new EmailAddress("test017@example.com", "Example User"));
             msg.AddTos(emails, 0, personalization);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"dx+test014@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test015@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test016@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test017@sendgrid.com\"}]}]}");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test014@example.com\"},{\"name\":\"Example User\",\"email\":\"test015@example.com\"},{\"name\":\"Example User\",\"email\":\"test016@example.com\"},{\"name\":\"Example User\",\"email\":\"test017@example.com\"}]}]}");
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test018@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test019@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test018@example.com", "Example User"));
+            emails.Add(new EmailAddress("test019@example.com", "Example User"));
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Tos = emails
                 }
             };
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test020@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test021@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test020@example.com", "Example User"));
+            emails.Add(new EmailAddress("test021@example.com", "Example User"));
             personalization = new Personalization()
             {
                 Tos = emails
             };
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test022@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test023@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test022@example.com", "Example User"));
+            emails.Add(new EmailAddress("test023@example.com", "Example User"));
             msg.AddTos(emails, 1, personalization);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"dx+test018@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test019@sendgrid.com\"}]},{\"to\":[{\"name\":\"Example User\",\"email\":\"dx+test020@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test021@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test022@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test023@sendgrid.com\"}]}]}");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test018@example.com\"},{\"name\":\"Example User\",\"email\":\"test019@example.com\"}]},{\"to\":[{\"name\":\"Example User\",\"email\":\"test020@example.com\"},{\"name\":\"Example User\",\"email\":\"test021@example.com\"},{\"name\":\"Example User\",\"email\":\"test022@example.com\"},{\"name\":\"Example User\",\"email\":\"test023@example.com\"}]}]}");
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test024@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test025@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test024@example.com", "Example User"));
+            emails.Add(new EmailAddress("test025@example.com", "Example User"));
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Tos = emails
                 }
             };
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test026@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test027@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test026@example.com", "Example User"));
+            emails.Add(new EmailAddress("test027@example.com", "Example User"));
             msg.AddTos(emails);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"dx+test024@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test025@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test026@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test027@sendgrid.com\"}]}]}");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test024@example.com\"},{\"name\":\"Example User\",\"email\":\"test025@example.com\"},{\"name\":\"Example User\",\"email\":\"test026@example.com\"},{\"name\":\"Example User\",\"email\":\"test027@example.com\"}]}]}");
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test028@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test029@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test028@example.com", "Example User"));
+            emails.Add(new EmailAddress("test029@example.com", "Example User"));
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Tos = emails
                 }
             };
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test030@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test031@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test030@example.com", "Example User"));
+            emails.Add(new EmailAddress("test031@example.com", "Example User"));
             personalization = new Personalization()
             {
                 Tos = emails
             };
             msg.Personalizations.Add(personalization);
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test032@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test033@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test032@example.com", "Example User"));
+            emails.Add(new EmailAddress("test033@example.com", "Example User"));
             msg.AddTos(emails);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"dx+test028@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test029@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test032@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test033@sendgrid.com\"}]},{\"to\":[{\"name\":\"Example User\",\"email\":\"dx+test030@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test031@sendgrid.com\"}]}]}");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test028@example.com\"},{\"name\":\"Example User\",\"email\":\"test029@example.com\"},{\"name\":\"Example User\",\"email\":\"test032@example.com\"},{\"name\":\"Example User\",\"email\":\"test033@example.com\"}]},{\"to\":[{\"name\":\"Example User\",\"email\":\"test030@example.com\"},{\"name\":\"Example User\",\"email\":\"test031@example.com\"}]}]}");
         }
 
         [Test]
@@ -517,12 +517,12 @@ namespace UnitTest
         {
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
-            msg.AddCc(new EmailAddress("dx+test001@sendgrid.com", "Example User"));
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"dx+test001@sendgrid.com\"}]}]}");
+            msg.AddCc(new EmailAddress("test001@example.com", "Example User"));
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test001@example.com\"}]}]}");
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
-            var email = new EmailAddress("dx+test002@sendgrid.com", "Example User");
+            var email = new EmailAddress("test002@example.com", "Example User");
             var personalization = new Personalization()
             {
                 Ccs = new List<EmailAddress>()
@@ -530,12 +530,12 @@ namespace UnitTest
                     email
                 }
             };
-            msg.AddCc(new EmailAddress("dx+test003@sendgrid.com", "Example User"), 0, personalization);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"dx+test002@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test003@sendgrid.com\"}]}]}");
+            msg.AddCc(new EmailAddress("test003@example.com", "Example User"), 0, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test002@example.com\"},{\"name\":\"Example User\",\"email\":\"test003@example.com\"}]}]}");
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
-            email = new EmailAddress("dx+test004@sendgrid.com", "Example User");
+            email = new EmailAddress("test004@example.com", "Example User");
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Ccs = new List<EmailAddress>()
@@ -544,7 +544,7 @@ namespace UnitTest
                     }
                 }
             };
-            email = new EmailAddress("dx+test005@sendgrid.com", "Example User");
+            email = new EmailAddress("test005@example.com", "Example User");
             personalization = new Personalization()
             {
                 Ccs = new List<EmailAddress>()
@@ -552,12 +552,12 @@ namespace UnitTest
                     email
                 }
             };
-            msg.AddCc(new EmailAddress("dx+test006@sendgrid.com", "Example User"), 1, personalization);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"dx+test004@sendgrid.com\"}]},{\"cc\":[{\"name\":\"Example User\",\"email\":\"dx+test005@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test006@sendgrid.com\"}]}]}");
+            msg.AddCc(new EmailAddress("test006@example.com", "Example User"), 1, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test004@example.com\"}]},{\"cc\":[{\"name\":\"Example User\",\"email\":\"test005@example.com\"},{\"name\":\"Example User\",\"email\":\"test006@example.com\"}]}]}");
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
-            email = new EmailAddress("dx+test007@sendgrid.com", "Example User");
+            email = new EmailAddress("test007@example.com", "Example User");
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Ccs = new List<EmailAddress>()
@@ -566,13 +566,13 @@ namespace UnitTest
                     }
                 }
             };
-            msg.AddCc(new EmailAddress("dx+test008@sendgrid.com", "Example User"));
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"dx+test007@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test008@sendgrid.com\"}]}]}");
+            msg.AddCc(new EmailAddress("test008@example.com", "Example User"));
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test007@example.com\"},{\"name\":\"Example User\",\"email\":\"test008@example.com\"}]}]}");
 
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
-            email = new EmailAddress("dx+test009@sendgrid.com", "Example User");
+            email = new EmailAddress("test009@example.com", "Example User");
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Ccs = new List<EmailAddress>()
@@ -581,7 +581,7 @@ namespace UnitTest
                     }
                 }
             };
-            email = new EmailAddress("dx+test010@sendgrid.com", "Example User");
+            email = new EmailAddress("test010@example.com", "Example User");
             personalization = new Personalization()
             {
                 Ccs = new List<EmailAddress>()
@@ -590,8 +590,8 @@ namespace UnitTest
                 }
             };
             msg.Personalizations.Add(personalization);
-            msg.AddCc(new EmailAddress("dx+test011@sendgrid.com", "Example User"));
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"dx+test009@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test011@sendgrid.com\"}]},{\"cc\":[{\"name\":\"Example User\",\"email\":\"dx+test010@sendgrid.com\"}]}]}");
+            msg.AddCc(new EmailAddress("test011@example.com", "Example User"));
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test009@example.com\"},{\"name\":\"Example User\",\"email\":\"test011@example.com\"}]},{\"cc\":[{\"name\":\"Example User\",\"email\":\"test010@example.com\"}]}]}");
         }
 
         [Test]
@@ -600,88 +600,88 @@ namespace UnitTest
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
             var emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test012@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test013@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test012@example.com", "Example User"));
+            emails.Add(new EmailAddress("test013@example.com", "Example User"));
             msg.AddCcs(emails);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"dx+test012@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test013@sendgrid.com\"}]}]}");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test012@example.com\"},{\"name\":\"Example User\",\"email\":\"test013@example.com\"}]}]}");
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test014@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test015@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test014@example.com", "Example User"));
+            emails.Add(new EmailAddress("test015@example.com", "Example User"));
             var personalization = new Personalization()
             {
                 Ccs = emails
             };
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test016@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test017@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test016@example.com", "Example User"));
+            emails.Add(new EmailAddress("test017@example.com", "Example User"));
             msg.AddCcs(emails, 0, personalization);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"dx+test014@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test015@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test016@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test017@sendgrid.com\"}]}]}");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test014@example.com\"},{\"name\":\"Example User\",\"email\":\"test015@example.com\"},{\"name\":\"Example User\",\"email\":\"test016@example.com\"},{\"name\":\"Example User\",\"email\":\"test017@example.com\"}]}]}");
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test018@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test019@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test018@example.com", "Example User"));
+            emails.Add(new EmailAddress("test019@example.com", "Example User"));
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Ccs = emails
                 }
             };
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test020@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test021@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test020@example.com", "Example User"));
+            emails.Add(new EmailAddress("test021@example.com", "Example User"));
             personalization = new Personalization()
             {
                 Ccs = emails
             };
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test022@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test023@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test022@example.com", "Example User"));
+            emails.Add(new EmailAddress("test023@example.com", "Example User"));
             msg.AddCcs(emails, 1, personalization);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"dx+test018@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test019@sendgrid.com\"}]},{\"cc\":[{\"name\":\"Example User\",\"email\":\"dx+test020@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test021@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test022@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test023@sendgrid.com\"}]}]}");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test018@example.com\"},{\"name\":\"Example User\",\"email\":\"test019@example.com\"}]},{\"cc\":[{\"name\":\"Example User\",\"email\":\"test020@example.com\"},{\"name\":\"Example User\",\"email\":\"test021@example.com\"},{\"name\":\"Example User\",\"email\":\"test022@example.com\"},{\"name\":\"Example User\",\"email\":\"test023@example.com\"}]}]}");
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test024@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test025@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test024@example.com", "Example User"));
+            emails.Add(new EmailAddress("test025@example.com", "Example User"));
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Ccs = emails
                 }
             };
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test026@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test027@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test026@example.com", "Example User"));
+            emails.Add(new EmailAddress("test027@example.com", "Example User"));
             msg.AddCcs(emails);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"dx+test024@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test025@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test026@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test027@sendgrid.com\"}]}]}");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test024@example.com\"},{\"name\":\"Example User\",\"email\":\"test025@example.com\"},{\"name\":\"Example User\",\"email\":\"test026@example.com\"},{\"name\":\"Example User\",\"email\":\"test027@example.com\"}]}]}");
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test028@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test029@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test028@example.com", "Example User"));
+            emails.Add(new EmailAddress("test029@example.com", "Example User"));
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Ccs = emails
                 }
             };
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test030@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test031@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test030@example.com", "Example User"));
+            emails.Add(new EmailAddress("test031@example.com", "Example User"));
             personalization = new Personalization()
             {
                 Ccs = emails
             };
             msg.Personalizations.Add(personalization);
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test032@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test033@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test032@example.com", "Example User"));
+            emails.Add(new EmailAddress("test033@example.com", "Example User"));
             msg.AddCcs(emails);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"dx+test028@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test029@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test032@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test033@sendgrid.com\"}]},{\"cc\":[{\"name\":\"Example User\",\"email\":\"dx+test030@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test031@sendgrid.com\"}]}]}");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test028@example.com\"},{\"name\":\"Example User\",\"email\":\"test029@example.com\"},{\"name\":\"Example User\",\"email\":\"test032@example.com\"},{\"name\":\"Example User\",\"email\":\"test033@example.com\"}]},{\"cc\":[{\"name\":\"Example User\",\"email\":\"test030@example.com\"},{\"name\":\"Example User\",\"email\":\"test031@example.com\"}]}]}");
         }
 
         [Test]
@@ -689,12 +689,12 @@ namespace UnitTest
         {
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
-            msg.AddBcc(new EmailAddress("dx+test001@sendgrid.com", "Example User"));
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"dx+test001@sendgrid.com\"}]}]}");
+            msg.AddBcc(new EmailAddress("test001@example.com", "Example User"));
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test001@example.com\"}]}]}");
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
-            var email = new EmailAddress("dx+test002@sendgrid.com", "Example User");
+            var email = new EmailAddress("test002@example.com", "Example User");
             var personalization = new Personalization()
             {
                 Bccs = new List<EmailAddress>()
@@ -702,12 +702,12 @@ namespace UnitTest
                     email
                 }
             };
-            msg.AddBcc(new EmailAddress("dx+test003@sendgrid.com", "Example User"), 0, personalization);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"dx+test002@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test003@sendgrid.com\"}]}]}");
+            msg.AddBcc(new EmailAddress("test003@example.com", "Example User"), 0, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test002@example.com\"},{\"name\":\"Example User\",\"email\":\"test003@example.com\"}]}]}");
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
-            email = new EmailAddress("dx+test004@sendgrid.com", "Example User");
+            email = new EmailAddress("test004@example.com", "Example User");
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Bccs = new List<EmailAddress>()
@@ -716,7 +716,7 @@ namespace UnitTest
                     }
                 }
             };
-            email = new EmailAddress("dx+test005@sendgrid.com", "Example User");
+            email = new EmailAddress("test005@example.com", "Example User");
             personalization = new Personalization()
             {
                 Bccs = new List<EmailAddress>()
@@ -724,12 +724,12 @@ namespace UnitTest
                     email
                 }
             };
-            msg.AddBcc(new EmailAddress("dx+test006@sendgrid.com", "Example User"), 1, personalization);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"dx+test004@sendgrid.com\"}]},{\"bcc\":[{\"name\":\"Example User\",\"email\":\"dx+test005@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test006@sendgrid.com\"}]}]}");
+            msg.AddBcc(new EmailAddress("test006@example.com", "Example User"), 1, personalization);
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test004@example.com\"}]},{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test005@example.com\"},{\"name\":\"Example User\",\"email\":\"test006@example.com\"}]}]}");
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
-            email = new EmailAddress("dx+test007@sendgrid.com", "Example User");
+            email = new EmailAddress("test007@example.com", "Example User");
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Bccs = new List<EmailAddress>()
@@ -738,13 +738,13 @@ namespace UnitTest
                     }
                 }
             };
-            msg.AddBcc(new EmailAddress("dx+test008@sendgrid.com", "Example User"));
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"dx+test007@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test008@sendgrid.com\"}]}]}");
+            msg.AddBcc(new EmailAddress("test008@example.com", "Example User"));
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test007@example.com\"},{\"name\":\"Example User\",\"email\":\"test008@example.com\"}]}]}");
 
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
-            email = new EmailAddress("dx+test009@sendgrid.com", "Example User");
+            email = new EmailAddress("test009@example.com", "Example User");
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Bccs = new List<EmailAddress>()
@@ -753,7 +753,7 @@ namespace UnitTest
                     }
                 }
             };
-            email = new EmailAddress("dx+test010@sendgrid.com", "Example User");
+            email = new EmailAddress("test010@example.com", "Example User");
             personalization = new Personalization()
             {
                 Bccs = new List<EmailAddress>()
@@ -762,8 +762,8 @@ namespace UnitTest
                 }
             };
             msg.Personalizations.Add(personalization);
-            msg.AddBcc(new EmailAddress("dx+test011@sendgrid.com", "Example User"));
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"dx+test009@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test011@sendgrid.com\"}]},{\"bcc\":[{\"name\":\"Example User\",\"email\":\"dx+test010@sendgrid.com\"}]}]}");
+            msg.AddBcc(new EmailAddress("test011@example.com", "Example User"));
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test009@example.com\"},{\"name\":\"Example User\",\"email\":\"test011@example.com\"}]},{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test010@example.com\"}]}]}");
         }
 
         [Test]
@@ -772,88 +772,88 @@ namespace UnitTest
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
             var emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test012@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test013@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test012@example.com", "Example User"));
+            emails.Add(new EmailAddress("test013@example.com", "Example User"));
             msg.AddBccs(emails);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"dx+test012@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test013@sendgrid.com\"}]}]}");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test012@example.com\"},{\"name\":\"Example User\",\"email\":\"test013@example.com\"}]}]}");
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test014@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test015@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test014@example.com", "Example User"));
+            emails.Add(new EmailAddress("test015@example.com", "Example User"));
             var personalization = new Personalization()
             {
                 Bccs = emails
             };
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test016@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test017@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test016@example.com", "Example User"));
+            emails.Add(new EmailAddress("test017@example.com", "Example User"));
             msg.AddBccs(emails, 0, personalization);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"dx+test014@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test015@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test016@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test017@sendgrid.com\"}]}]}");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test014@example.com\"},{\"name\":\"Example User\",\"email\":\"test015@example.com\"},{\"name\":\"Example User\",\"email\":\"test016@example.com\"},{\"name\":\"Example User\",\"email\":\"test017@example.com\"}]}]}");
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test018@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test019@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test018@example.com", "Example User"));
+            emails.Add(new EmailAddress("test019@example.com", "Example User"));
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Bccs = emails
                 }
             };
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test020@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test021@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test020@example.com", "Example User"));
+            emails.Add(new EmailAddress("test021@example.com", "Example User"));
             personalization = new Personalization()
             {
                 Bccs = emails
             };
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test022@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test023@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test022@example.com", "Example User"));
+            emails.Add(new EmailAddress("test023@example.com", "Example User"));
             msg.AddBccs(emails, 1, personalization);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"dx+test018@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test019@sendgrid.com\"}]},{\"bcc\":[{\"name\":\"Example User\",\"email\":\"dx+test020@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test021@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test022@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test023@sendgrid.com\"}]}]}");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test018@example.com\"},{\"name\":\"Example User\",\"email\":\"test019@example.com\"}]},{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test020@example.com\"},{\"name\":\"Example User\",\"email\":\"test021@example.com\"},{\"name\":\"Example User\",\"email\":\"test022@example.com\"},{\"name\":\"Example User\",\"email\":\"test023@example.com\"}]}]}");
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test024@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test025@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test024@example.com", "Example User"));
+            emails.Add(new EmailAddress("test025@example.com", "Example User"));
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Bccs = emails
                 }
             };
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test026@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test027@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test026@example.com", "Example User"));
+            emails.Add(new EmailAddress("test027@example.com", "Example User"));
             msg.AddBccs(emails);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"dx+test024@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test025@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test026@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test027@sendgrid.com\"}]}]}");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test024@example.com\"},{\"name\":\"Example User\",\"email\":\"test025@example.com\"},{\"name\":\"Example User\",\"email\":\"test026@example.com\"},{\"name\":\"Example User\",\"email\":\"test027@example.com\"}]}]}");
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test028@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test029@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test028@example.com", "Example User"));
+            emails.Add(new EmailAddress("test029@example.com", "Example User"));
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Bccs = emails
                 }
             };
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test030@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test031@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test030@example.com", "Example User"));
+            emails.Add(new EmailAddress("test031@example.com", "Example User"));
             personalization = new Personalization()
             {
                 Bccs = emails
             };
             msg.Personalizations.Add(personalization);
             emails = new List<EmailAddress>();
-            emails.Add(new EmailAddress("dx+test032@sendgrid.com", "Example User"));
-            emails.Add(new EmailAddress("dx+test033@sendgrid.com", "Example User"));
+            emails.Add(new EmailAddress("test032@example.com", "Example User"));
+            emails.Add(new EmailAddress("test033@example.com", "Example User"));
             msg.AddBccs(emails);
-            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"dx+test028@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test029@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test032@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test033@sendgrid.com\"}]},{\"bcc\":[{\"name\":\"Example User\",\"email\":\"dx+test030@sendgrid.com\"},{\"name\":\"Example User\",\"email\":\"dx+test031@sendgrid.com\"}]}]}");
+            Assert.AreEqual(msg.Serialize(), "{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test028@example.com\"},{\"name\":\"Example User\",\"email\":\"test029@example.com\"},{\"name\":\"Example User\",\"email\":\"test032@example.com\"},{\"name\":\"Example User\",\"email\":\"test033@example.com\"}]},{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test030@example.com\"},{\"name\":\"Example User\",\"email\":\"test031@example.com\"}]}]}");
         }
 
         [Test]
