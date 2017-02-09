@@ -48,14 +48,6 @@ PM> Install-Package SendGrid -Pre
 Once you have the SendGrid libraries properly referenced in your project, you can include calls to them in your code.
 For a sample implementation, check the [Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/SendGrid/Example) folder.
 
-Add the following namespaces to use the library:
-```csharp
-using System;
-using SendGrid;
-using SendGrid.Helpers.Mail; // If you are using the Mail Helper
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
-```
-
 ## Dependencies
 
 - [Newtonsoft.Json](http://www.newtonsoft.com/json)
@@ -71,7 +63,6 @@ The following is the minimum needed code to send an simple email:
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -106,7 +97,6 @@ For more advanced cases, you can build the SendGridMessage object yourself, foll
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -143,9 +133,7 @@ You can find an example of all of the email features [here](https://github.com/s
 
 ```csharp
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using SendGrid;
 
 namespace Example
@@ -164,8 +152,8 @@ namespace Example
             var queryParams = @"{
                 'limit': 100
             }";
-            var response = await client.RequestAsync(method: SendGridClient.Methods.GET,
-                                                     urlPath: "suppression/bounces"
+            var response = await client.RequestAsync(method: SendGridClient.Method.GET,
+                                                     urlPath: "suppression/bounces",
                                                      queryParams: queryParams);
 	    }
     }
