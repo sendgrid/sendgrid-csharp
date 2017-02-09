@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SendGrid")]
+[assembly: AssemblyProduct("SendGrid.Tests")]
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -16,6 +16,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("377c20e4-2297-488f-933b-fb635c56d8fc")]
-
-[assembly: AssemblyInformationalVersion("9.0.4-beta")]
+[assembly: Guid("d89adaea-2be8-49ac-b5bc-6eabbb2ae4e3")]
