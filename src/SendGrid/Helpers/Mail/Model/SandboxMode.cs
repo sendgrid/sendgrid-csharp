@@ -9,7 +9,7 @@ namespace SendGrid.Helpers.Mail
     public class SandboxMode
     {
         /// <summary>
-        /// 
+        /// Indicates if this setting is enabled.
         /// </summary>
         [JsonProperty(PropertyName = "enable")]
         public bool? Enable { get; set; }
