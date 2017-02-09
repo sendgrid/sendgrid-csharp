@@ -1,5 +1,5 @@
 language: csharp
-dotnet: 1.0.0-preview2-003121
+dotnet: 1.0.0-preview2-003131
 os: linux
 dist: trusty
 mono: latest
@@ -16,9 +16,9 @@ before_install:
   - ls /usr/lib/mono/4.5
   - ls /usr/lib/mono/4.5/MSBuild
 
-install:
-  - mono .nuget/nuget.exe restore ./SendGrid.sln
-  - mono .nuget/nuget.exe install NUnit.Runners -Version 3.2.1 -OutputDirectory ./src/packages
+#install:
+#  - mono .nuget/nuget.exe restore ./SendGrid.sln
+#  - mono .nuget/nuget.exe install NUnit.Runners -Version 3.2.1 -OutputDirectory ./src/packages
 
 before_script:
   - mkdir prism/bin
