@@ -1673,7 +1673,7 @@ namespace UnitTest
         [Test]
         public void TestSetTemplateId()
         {
-            var msg = new SendGridMessage(); 
+            var msg = new SendGridMessage();
             msg.SetTemplateId("template_id1");
             Assert.AreEqual(msg.Serialize(), "{\"template_id\":\"template_id1\"}");
         }
@@ -1830,7 +1830,7 @@ namespace UnitTest
             /*
             Assert.AreEqual(msg.Serialize(), "{\"custom_args\":{\"Key3\":\"Value3\",\"Key4\":\"Value4\",\"Key5\":\"Value5\",\"Key6\":\"Value6\"}}");
             */
-    }
+        }
 
         [Test]
         public void TestSetGlobalSendAt()
@@ -2080,9 +2080,8 @@ namespace UnitTest
             msg.SetGoogleAnalytics(true, "campaign3", "content3", "medium3", "source3", "term3");
             Assert.AreEqual(msg.Serialize(), "{\"tracking_settings\":{\"ganalytics\":{\"enable\":true,\"utm_source\":\"source3\",\"utm_medium\":\"medium3\",\"utm_term\":\"term3\",\"utm_content\":\"content3\",\"utm_campaign\":\"campaign3\"}}}");
         }
-
         [Test]
-        public async Task test_access_settings_activity_get()
+        public async Task TestAccessSettingsActivityGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2097,7 +2096,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_access_settings_whitelist_post()
+        public async Task TestAccessSettingsWhitelistPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2124,7 +2123,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_access_settings_whitelist_get()
+        public async Task TestAccessSettingsWhitelistGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2136,7 +2135,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_access_settings_whitelist_delete()
+        public async Task TestAccessSettingsWhitelistDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2157,7 +2156,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_access_settings_whitelist__rule_id__get()
+        public async Task TestAccessSettingsWhitelistRuleIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2170,7 +2169,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_access_settings_whitelist__rule_id__delete()
+        public async Task TestAccessSettingsWhitelistRuleIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2183,7 +2182,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_alerts_post()
+        public async Task TestAlertsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2202,7 +2201,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_alerts_get()
+        public async Task TestAlertsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2214,7 +2213,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_alerts__alert_id__patch()
+        public async Task TestAlertsAlertIdPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2232,7 +2231,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_alerts__alert_id__get()
+        public async Task TestAlertsAlertIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2245,7 +2244,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_alerts__alert_id__delete()
+        public async Task TestAlertsAlertIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2258,7 +2257,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_api_keys_post()
+        public async Task TestApiKeysPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2281,7 +2280,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_api_keys_get()
+        public async Task TestApiKeysGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2296,7 +2295,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_api_keys__api_key_id__put()
+        public async Task TestApiKeysApiKeyIdPut()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2318,7 +2317,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_api_keys__api_key_id__patch()
+        public async Task TestApiKeysApiKeyIdPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2336,7 +2335,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_api_keys__api_key_id__get()
+        public async Task TestApiKeysApiKeyIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2349,7 +2348,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_api_keys__api_key_id__delete()
+        public async Task TestApiKeysApiKeyIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2362,7 +2361,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_asm_groups_post()
+        public async Task TestAsmGroupsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2381,7 +2380,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_asm_groups_get()
+        public async Task TestAsmGroupsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2396,7 +2395,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_asm_groups__group_id__patch()
+        public async Task TestAsmGroupsGroupIdPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2416,7 +2415,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_asm_groups__group_id__get()
+        public async Task TestAsmGroupsGroupIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2429,7 +2428,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_asm_groups__group_id__delete()
+        public async Task TestAsmGroupsGroupIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2442,7 +2441,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_asm_groups__group_id__suppressions_post()
+        public async Task TestAsmGroupsGroupIdSuppressionsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2463,7 +2462,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_asm_groups__group_id__suppressions_get()
+        public async Task TestAsmGroupsGroupIdSuppressionsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2476,7 +2475,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_asm_groups__group_id__suppressions_search_post()
+        public async Task TestAsmGroupsGroupIdSuppressionsSearchPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2498,7 +2497,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_asm_groups__group_id__suppressions__email__delete()
+        public async Task TestAsmGroupsGroupIdSuppressionsEmailDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2512,7 +2511,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_asm_suppressions_get()
+        public async Task TestAsmSuppressionsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2524,7 +2523,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_asm_suppressions_global_post()
+        public async Task TestAsmSuppressionsGlobalPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2544,7 +2543,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_asm_suppressions_global__email__get()
+        public async Task TestAsmSuppressionsGlobalEmailGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2557,7 +2556,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_asm_suppressions_global__email__delete()
+        public async Task TestAsmSuppressionsGlobalEmailDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2570,7 +2569,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_asm_suppressions__email__get()
+        public async Task TestAsmSuppressionsEmailGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2583,7 +2582,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_browsers_stats_get()
+        public async Task TestBrowsersStatsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2603,7 +2602,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_campaigns_post()
+        public async Task TestCampaignsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2637,7 +2636,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_campaigns_get()
+        public async Task TestCampaignsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2653,7 +2652,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_campaigns__campaign_id__patch()
+        public async Task TestCampaignsCampaignIdPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2677,7 +2676,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_campaigns__campaign_id__get()
+        public async Task TestCampaignsCampaignIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2690,7 +2689,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_campaigns__campaign_id__delete()
+        public async Task TestCampaignsCampaignIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2703,7 +2702,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_campaigns__campaign_id__schedules_patch()
+        public async Task TestCampaignsCampaignIdSchedulesPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2721,7 +2720,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_campaigns__campaign_id__schedules_post()
+        public async Task TestCampaignsCampaignIdSchedulesPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2739,7 +2738,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_campaigns__campaign_id__schedules_get()
+        public async Task TestCampaignsCampaignIdSchedulesGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2752,7 +2751,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_campaigns__campaign_id__schedules_delete()
+        public async Task TestCampaignsCampaignIdSchedulesDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2765,7 +2764,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_campaigns__campaign_id__schedules_now_post()
+        public async Task TestCampaignsCampaignIdSchedulesNowPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2778,7 +2777,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_campaigns__campaign_id__schedules_test_post()
+        public async Task TestCampaignsCampaignIdSchedulesTestPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2796,7 +2795,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_categories_get()
+        public async Task TestCategoriesGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2813,7 +2812,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_categories_stats_get()
+        public async Task TestCategoriesStatsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2833,7 +2832,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_categories_stats_sums_get()
+        public async Task TestCategoriesStatsSumsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2854,7 +2853,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_clients_stats_get()
+        public async Task TestClientsStatsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2871,7 +2870,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_clients__client_type__stats_get()
+        public async Task TestClientsClientTypeStatsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2889,7 +2888,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_custom_fields_post()
+        public async Task TestContactdbCustomFieldsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2907,7 +2906,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_custom_fields_get()
+        public async Task TestContactdbCustomFieldsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2919,7 +2918,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_custom_fields__custom_field_id__get()
+        public async Task TestContactdbCustomFieldsCustomFieldIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2932,7 +2931,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_custom_fields__custom_field_id__delete()
+        public async Task TestContactdbCustomFieldsCustomFieldIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2945,7 +2944,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_lists_post()
+        public async Task TestContactdbListsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2962,7 +2961,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_lists_get()
+        public async Task TestContactdbListsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2974,7 +2973,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_lists_delete()
+        public async Task TestContactdbListsDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -2994,7 +2993,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_lists__list_id__patch()
+        public async Task TestContactdbListsListIdPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3015,7 +3014,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_lists__list_id__get()
+        public async Task TestContactdbListsListIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3031,7 +3030,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_lists__list_id__delete()
+        public async Task TestContactdbListsListIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3047,7 +3046,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_lists__list_id__recipients_post()
+        public async Task TestContactdbListsListIdRecipientsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3066,7 +3065,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_lists__list_id__recipients_get()
+        public async Task TestContactdbListsListIdRecipientsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3084,7 +3083,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_lists__list_id__recipients__recipient_id__post()
+        public async Task TestContactdbListsListIdRecipientsRecipientIdPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3098,7 +3097,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_lists__list_id__recipients__recipient_id__delete()
+        public async Task TestContactdbListsListIdRecipientsRecipientIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3116,7 +3115,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_recipients_patch()
+        public async Task TestContactdbRecipientsPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3137,7 +3136,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_recipients_post()
+        public async Task TestContactdbRecipientsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3165,7 +3164,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_recipients_get()
+        public async Task TestContactdbRecipientsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3181,7 +3180,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_recipients_delete()
+        public async Task TestContactdbRecipientsDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3199,7 +3198,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_recipients_billable_count_get()
+        public async Task TestContactdbRecipientsBillableCountGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3211,7 +3210,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_recipients_count_get()
+        public async Task TestContactdbRecipientsCountGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3223,7 +3222,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_recipients_search_get()
+        public async Task TestContactdbRecipientsSearchGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3238,7 +3237,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_recipients__recipient_id__get()
+        public async Task TestContactdbRecipientsRecipientIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3251,7 +3250,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_recipients__recipient_id__delete()
+        public async Task TestContactdbRecipientsRecipientIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3264,7 +3263,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_recipients__recipient_id__lists_get()
+        public async Task TestContactdbRecipientsRecipientIdListsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3277,7 +3276,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_reserved_fields_get()
+        public async Task TestContactdbReservedFieldsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3289,7 +3288,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_segments_post()
+        public async Task TestContactdbSegmentsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3327,7 +3326,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_segments_get()
+        public async Task TestContactdbSegmentsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3339,7 +3338,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_segments__segment_id__patch()
+        public async Task TestContactdbSegmentsSegmentIdPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3369,7 +3368,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_segments__segment_id__get()
+        public async Task TestContactdbSegmentsSegmentIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3385,7 +3384,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_segments__segment_id__delete()
+        public async Task TestContactdbSegmentsSegmentIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3401,7 +3400,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_contactdb_segments__segment_id__recipients_get()
+        public async Task TestContactdbSegmentsSegmentIdRecipientsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3418,7 +3417,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_devices_stats_get()
+        public async Task TestDevicesStatsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3437,7 +3436,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_geo_stats_get()
+        public async Task TestGeoStatsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3457,7 +3456,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_ips_get()
+        public async Task TestIpsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3476,7 +3475,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_ips_assigned_get()
+        public async Task TestIpsAssignedGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3488,7 +3487,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_ips_pools_post()
+        public async Task TestIpsPoolsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3505,7 +3504,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_ips_pools_get()
+        public async Task TestIpsPoolsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3517,7 +3516,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_ips_pools__pool_name__put()
+        public async Task TestIpsPoolsPoolNamePut()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3535,7 +3534,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_ips_pools__pool_name__get()
+        public async Task TestIpsPoolsPoolNameGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3548,7 +3547,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_ips_pools__pool_name__delete()
+        public async Task TestIpsPoolsPoolNameDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3561,7 +3560,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_ips_pools__pool_name__ips_post()
+        public async Task TestIpsPoolsPoolNameIpsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3579,7 +3578,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_ips_pools__pool_name__ips__ip__delete()
+        public async Task TestIpsPoolsPoolNameIpsIpDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3593,7 +3592,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_ips_warmup_post()
+        public async Task TestIpsWarmupPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3610,7 +3609,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_ips_warmup_get()
+        public async Task TestIpsWarmupGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3622,7 +3621,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_ips_warmup__ip_address__get()
+        public async Task TestIpsWarmupIpAddressGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3635,7 +3634,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_ips_warmup__ip_address__delete()
+        public async Task TestIpsWarmupIpAddressDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3648,7 +3647,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_ips__ip_address__get()
+        public async Task TestIpsIpAddressGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3661,7 +3660,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_batch_post()
+        public async Task TestMailBatchPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3673,7 +3672,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_batch__batch_id__get()
+        public async Task TestMailBatchBatchIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3686,7 +3685,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_send_post()
+        public async Task TestMailSendPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3838,7 +3837,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_get()
+        public async Task TestMailSettingsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3854,7 +3853,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_address_whitelist_patch()
+        public async Task TestMailSettingsAddressWhitelistPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3875,7 +3874,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_address_whitelist_get()
+        public async Task TestMailSettingsAddressWhitelistGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3887,7 +3886,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_bcc_patch()
+        public async Task TestMailSettingsBccPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3905,7 +3904,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_bcc_get()
+        public async Task TestMailSettingsBccGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3917,7 +3916,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_bounce_purge_patch()
+        public async Task TestMailSettingsBouncePurgePatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3936,7 +3935,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_bounce_purge_get()
+        public async Task TestMailSettingsBouncePurgeGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3948,7 +3947,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_footer_patch()
+        public async Task TestMailSettingsFooterPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3967,7 +3966,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_footer_get()
+        public async Task TestMailSettingsFooterGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3979,7 +3978,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_forward_bounce_patch()
+        public async Task TestMailSettingsForwardBouncePatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -3997,7 +3996,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_forward_bounce_get()
+        public async Task TestMailSettingsForwardBounceGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4009,7 +4008,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_forward_spam_patch()
+        public async Task TestMailSettingsForwardSpamPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4027,7 +4026,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_forward_spam_get()
+        public async Task TestMailSettingsForwardSpamGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4039,7 +4038,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_plain_content_patch()
+        public async Task TestMailSettingsPlainContentPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4056,7 +4055,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_plain_content_get()
+        public async Task TestMailSettingsPlainContentGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4068,7 +4067,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_spam_check_patch()
+        public async Task TestMailSettingsSpamCheckPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4087,7 +4086,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_spam_check_get()
+        public async Task TestMailSettingsSpamCheckGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4099,7 +4098,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_template_patch()
+        public async Task TestMailSettingsTemplatePatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4117,7 +4116,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mail_settings_template_get()
+        public async Task TestMailSettingsTemplateGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4129,7 +4128,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_mailbox_providers_stats_get()
+        public async Task TestMailboxProvidersStatsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4149,7 +4148,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_partner_settings_get()
+        public async Task TestPartnerSettingsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4165,7 +4164,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_partner_settings_new_relic_patch()
+        public async Task TestPartnerSettingsNewRelicPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4184,7 +4183,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_partner_settings_new_relic_get()
+        public async Task TestPartnerSettingsNewRelicGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4196,7 +4195,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_scopes_get()
+        public async Task TestScopesGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4208,7 +4207,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_senders_post()
+        public async Task TestSendersPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4239,7 +4238,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_senders_get()
+        public async Task TestSendersGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4251,7 +4250,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_senders__sender_id__patch()
+        public async Task TestSendersSenderIdPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4283,7 +4282,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_senders__sender_id__get()
+        public async Task TestSendersSenderIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4296,7 +4295,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_senders__sender_id__delete()
+        public async Task TestSendersSenderIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4309,7 +4308,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_senders__sender_id__resend_verification_post()
+        public async Task TestSendersSenderIdResendVerificationPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4322,7 +4321,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_stats_get()
+        public async Task TestStatsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4341,7 +4340,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_subusers_post()
+        public async Task TestSubusersPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4364,7 +4363,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_subusers_get()
+        public async Task TestSubusersGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4381,7 +4380,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_subusers_reputations_get()
+        public async Task TestSubusersReputationsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4396,7 +4395,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_subusers_stats_get()
+        public async Task TestSubusersStatsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4416,7 +4415,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_subusers_stats_monthly_get()
+        public async Task TestSubusersStatsMonthlyGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4436,7 +4435,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_subusers_stats_sums_get()
+        public async Task TestSubusersStatsSumsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4457,7 +4456,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_subusers__subuser_name__patch()
+        public async Task TestSubusersSubuserNamePatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4475,7 +4474,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_subusers__subuser_name__delete()
+        public async Task TestSubusersSubuserNameDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4488,7 +4487,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_subusers__subuser_name__ips_put()
+        public async Task TestSubusersSubuserNameIpsPut()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4506,7 +4505,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_subusers__subuser_name__monitor_put()
+        public async Task TestSubusersSubuserNameMonitorPut()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4525,7 +4524,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_subusers__subuser_name__monitor_post()
+        public async Task TestSubusersSubuserNameMonitorPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4544,7 +4543,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_subusers__subuser_name__monitor_get()
+        public async Task TestSubusersSubuserNameMonitorGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4557,7 +4556,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_subusers__subuser_name__monitor_delete()
+        public async Task TestSubusersSubuserNameMonitorDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4570,7 +4569,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_subusers__subuser_name__stats_monthly_get()
+        public async Task TestSubusersSubuserNameStatsMonthlyGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4590,7 +4589,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_blocks_get()
+        public async Task TestSuppressionBlocksGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4608,7 +4607,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_blocks_delete()
+        public async Task TestSuppressionBlocksDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4629,7 +4628,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_blocks__email__get()
+        public async Task TestSuppressionBlocksEmailGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4642,7 +4641,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_blocks__email__delete()
+        public async Task TestSuppressionBlocksEmailDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4655,7 +4654,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_bounces_get()
+        public async Task TestSuppressionBouncesGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4671,7 +4670,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_bounces_delete()
+        public async Task TestSuppressionBouncesDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4692,7 +4691,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_bounces__email__get()
+        public async Task TestSuppressionBouncesEmailGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4705,7 +4704,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_bounces__email__delete()
+        public async Task TestSuppressionBouncesEmailDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4721,7 +4720,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_invalid_emails_get()
+        public async Task TestSuppressionInvalidEmailsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4739,7 +4738,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_invalid_emails_delete()
+        public async Task TestSuppressionInvalidEmailsDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4760,7 +4759,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_invalid_emails__email__get()
+        public async Task TestSuppressionInvalidEmailsEmailGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4773,7 +4772,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_invalid_emails__email__delete()
+        public async Task TestSuppressionInvalidEmailsEmailDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4786,7 +4785,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_spam_report__email__get()
+        public async Task TestSuppressionSpamReportEmailGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4799,7 +4798,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_spam_report__email__delete()
+        public async Task TestSuppressionSpamReportEmailDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4812,7 +4811,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_spam_reports_get()
+        public async Task TestSuppressionSpamReportsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4830,7 +4829,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_spam_reports_delete()
+        public async Task TestSuppressionSpamReportsDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4851,7 +4850,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_suppression_unsubscribes_get()
+        public async Task TestSuppressionUnsubscribesGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4869,7 +4868,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_templates_post()
+        public async Task TestTemplatesPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4886,7 +4885,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_templates_get()
+        public async Task TestTemplatesGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4898,7 +4897,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_templates__template_id__patch()
+        public async Task TestTemplatesTemplateIdPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4916,7 +4915,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_templates__template_id__get()
+        public async Task TestTemplatesTemplateIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4929,7 +4928,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_templates__template_id__delete()
+        public async Task TestTemplatesTemplateIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4942,7 +4941,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_templates__template_id__versions_post()
+        public async Task TestTemplatesTemplateIdVersionsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4965,7 +4964,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_templates__template_id__versions__version_id__patch()
+        public async Task TestTemplatesTemplateIdVersionsVersionIdPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -4988,7 +4987,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_templates__template_id__versions__version_id__get()
+        public async Task TestTemplatesTemplateIdVersionsVersionIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5002,7 +5001,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_templates__template_id__versions__version_id__delete()
+        public async Task TestTemplatesTemplateIdVersionsVersionIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5016,7 +5015,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_templates__template_id__versions__version_id__activate_post()
+        public async Task TestTemplatesTemplateIdVersionsVersionIdActivatePost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5030,7 +5029,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_tracking_settings_get()
+        public async Task TestTrackingSettingsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5046,7 +5045,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_tracking_settings_click_patch()
+        public async Task TestTrackingSettingsClickPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5063,7 +5062,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_tracking_settings_click_get()
+        public async Task TestTrackingSettingsClickGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5075,7 +5074,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_tracking_settings_google_analytics_patch()
+        public async Task TestTrackingSettingsGoogleAnalyticsPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5097,7 +5096,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_tracking_settings_google_analytics_get()
+        public async Task TestTrackingSettingsGoogleAnalyticsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5109,7 +5108,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_tracking_settings_open_patch()
+        public async Task TestTrackingSettingsOpenPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5126,7 +5125,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_tracking_settings_open_get()
+        public async Task TestTrackingSettingsOpenGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5138,7 +5137,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_tracking_settings_subscription_patch()
+        public async Task TestTrackingSettingsSubscriptionPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5160,7 +5159,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_tracking_settings_subscription_get()
+        public async Task TestTrackingSettingsSubscriptionGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5172,7 +5171,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_account_get()
+        public async Task TestUserAccountGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5184,7 +5183,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_credits_get()
+        public async Task TestUserCreditsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5196,7 +5195,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_email_put()
+        public async Task TestUserEmailPut()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5213,7 +5212,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_email_get()
+        public async Task TestUserEmailGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5225,7 +5224,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_password_put()
+        public async Task TestUserPasswordPut()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5243,7 +5242,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_profile_patch()
+        public async Task TestUserProfilePatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5262,7 +5261,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_profile_get()
+        public async Task TestUserProfileGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5274,7 +5273,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_scheduled_sends_post()
+        public async Task TestUserScheduledSendsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5292,7 +5291,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_scheduled_sends_get()
+        public async Task TestUserScheduledSendsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5304,7 +5303,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_scheduled_sends__batch_id__patch()
+        public async Task TestUserScheduledSendsBatchIdPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5322,7 +5321,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_scheduled_sends__batch_id__get()
+        public async Task TestUserScheduledSendsBatchIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5335,7 +5334,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_scheduled_sends__batch_id__delete()
+        public async Task TestUserScheduledSendsBatchIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5348,7 +5347,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_settings_enforced_tls_patch()
+        public async Task TestUserSettingsEnforcedTlsPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5366,7 +5365,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_settings_enforced_tls_get()
+        public async Task TestUserSettingsEnforcedTlsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5378,7 +5377,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_username_put()
+        public async Task TestUserUsernamePut()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5395,7 +5394,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_username_get()
+        public async Task TestUserUsernameGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5407,7 +5406,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_webhooks_event_settings_patch()
+        public async Task TestUserWebhooksEventSettingsPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5436,7 +5435,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_webhooks_event_settings_get()
+        public async Task TestUserWebhooksEventSettingsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5448,7 +5447,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_webhooks_event_test_post()
+        public async Task TestUserWebhooksEventTestPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5465,7 +5464,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_webhooks_parse_settings_post()
+        public async Task TestUserWebhooksParseSettingsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5485,7 +5484,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_webhooks_parse_settings_get()
+        public async Task TestUserWebhooksParseSettingsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5497,7 +5496,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_webhooks_parse_settings__hostname__patch()
+        public async Task TestUserWebhooksParseSettingsHostnamePatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5517,7 +5516,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_webhooks_parse_settings__hostname__get()
+        public async Task TestUserWebhooksParseSettingsHostnameGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5530,7 +5529,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_webhooks_parse_settings__hostname__delete()
+        public async Task TestUserWebhooksParseSettingsHostnameDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5543,7 +5542,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_user_webhooks_parse_stats_get()
+        public async Task TestUserWebhooksParseStatsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5562,7 +5561,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_domains_post()
+        public async Task TestWhitelabelDomainsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5588,7 +5587,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_domains_get()
+        public async Task TestWhitelabelDomainsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5607,7 +5606,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_domains_default_get()
+        public async Task TestWhitelabelDomainsDefaultGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5619,7 +5618,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_domains_subuser_get()
+        public async Task TestWhitelabelDomainsSubuserGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5631,7 +5630,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_domains_subuser_delete()
+        public async Task TestWhitelabelDomainsSubuserDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5643,7 +5642,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_domains__domain_id__patch()
+        public async Task TestWhitelabelDomainsDomainIdPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5662,7 +5661,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_domains__domain_id__get()
+        public async Task TestWhitelabelDomainsDomainIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5675,7 +5674,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_domains__domain_id__delete()
+        public async Task TestWhitelabelDomainsDomainIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5688,7 +5687,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_domains__domain_id__subuser_post()
+        public async Task TestWhitelabelDomainsDomainIdSubuserPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5706,7 +5705,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_domains__id__ips_post()
+        public async Task TestWhitelabelDomainsIdIpsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5724,7 +5723,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_domains__id__ips__ip__delete()
+        public async Task TestWhitelabelDomainsIdIpsIpDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5738,7 +5737,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_domains__id__validate_post()
+        public async Task TestWhitelabelDomainsIdValidatePost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5751,7 +5750,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_ips_post()
+        public async Task TestWhitelabelIpsPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5770,7 +5769,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_ips_get()
+        public async Task TestWhitelabelIpsGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5787,7 +5786,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_ips__id__get()
+        public async Task TestWhitelabelIpsIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5800,7 +5799,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_ips__id__delete()
+        public async Task TestWhitelabelIpsIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5813,7 +5812,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_ips__id__validate_post()
+        public async Task TestWhitelabelIpsIdValidatePost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5826,7 +5825,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_links_post()
+        public async Task TestWhitelabelLinksPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5849,7 +5848,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_links_get()
+        public async Task TestWhitelabelLinksGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5864,7 +5863,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_links_default_get()
+        public async Task TestWhitelabelLinksDefaultGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5879,7 +5878,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_links_subuser_get()
+        public async Task TestWhitelabelLinksSubuserGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5894,7 +5893,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_links_subuser_delete()
+        public async Task TestWhitelabelLinksSubuserDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5909,7 +5908,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_links__id__patch()
+        public async Task TestWhitelabelLinksIdPatch()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5927,7 +5926,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_links__id__get()
+        public async Task TestWhitelabelLinksIdGet()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5940,7 +5939,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_links__id__delete()
+        public async Task TestWhitelabelLinksIdDelete()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5953,7 +5952,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_links__id__validate_post()
+        public async Task TestWhitelabelLinksIdValidatePost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
@@ -5966,7 +5965,7 @@ namespace UnitTest
         }
 
         [Test]
-        public async Task test_whitelabel_links__link_id__subuser_post()
+        public async Task TestWhitelabelLinksLinkIdSubuserPost()
         {
             string host = "http://localhost:4010";
             var sg = new SendGridClient(apiKey, host);
