@@ -352,7 +352,6 @@ namespace SendGrid.Tests
                                                                           htmlContent,
                                                                           substitutions
                                                                           );
-            Console.WriteLine(msg.Serialize());
             Assert.True(msg.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"}],\"subject\":\"Test Subject1\",\"substitutions\":{\"-name-\":\"Name1\"}},{\"to\":[{\"email\":\"test2@example.com\"}],\"subject\":\"Test Subject2\",\"substitutions\":{\"-name-\":\"Name1\"}},{\"to\":[{\"email\":\"test3@example.com\"}],\"subject\":\"Test Subject3\",\"substitutions\":{\"-name-\":\"Name1\"}}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Hello -name-\"},{\"type\":\"text/html\",\"value\":\"Goodbye -name-\"}]}");
         }
 
@@ -1842,10 +1841,7 @@ namespace SendGrid.Tests
                 { "Key6", "Value6" }
             };
             msg.AddGlobalCustomArgs(customArgs);
-            Console.WriteLine(msg.Serialize());
-            /*
             Assert.True(msg.Serialize() == "{\"custom_args\":{\"Key3\":\"Value3\",\"Key4\":\"Value4\",\"Key5\":\"Value5\",\"Key6\":\"Value6\"}}");
-            */
         }
 
         [Fact]
