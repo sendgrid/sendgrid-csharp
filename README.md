@@ -127,7 +127,7 @@ namespace Example
 }
 ```
 
-You can find an example of all of the email features [here](https://github.com/sendgrid/sendgrid-csharp/blob/v9beta/UnitTest/UnitTest.cs#L59).
+You can find an example of all of the email features [here](https://github.com/sendgrid/sendgrid-csharp/blob/v9beta/tests/SendGrid.Tests/Integration.cs#L73).
 
 ## General v3 Web API Usage
 
