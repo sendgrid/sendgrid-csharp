@@ -9,7 +9,7 @@
       "type": "platform",
       "version": "1.0.1"
     },
-    "SendGrid": "9.0.4-*"
+    "SendGrid": "9.0.5-*"
   },
 
   "frameworks": {
