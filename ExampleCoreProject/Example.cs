@@ -5,7 +5,6 @@
     using Newtonsoft.Json;
     using SendGrid;
     using SendGrid.Helpers.Mail;
-    using SendGrid.Helpers.Mail.Model;
     using System.Collections.Generic;
 
     internal class Example
@@ -35,7 +34,7 @@
             Console.WriteLine("\n\nPress any key to continue.");
             Console.ReadLine();
 
-            // Send a Single Email using the Mail Helper with convenience methods
+            // Send a Single Email using the Mail Helper with convenience methods and initialized SendGridMessage object
             msg = new SendGridMessage()
             {
                 From = new EmailAddress("test@example.com", "Example User"),
@@ -43,6 +42,21 @@
                 PlainTextContent = "Hello, Email from the helper [SendSingleEmailAsync]!",
                 HtmlContent = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>"
             };
+            msg.AddTo(new EmailAddress("test@example.com", "Example User"));
+
+            response = await client.SendEmailAsync(msg);
+            Console.WriteLine(msg.Serialize());
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Headers);
+            Console.WriteLine("\n\nPress any key to continue.");
+            Console.ReadLine();
+
+            // Send a Single Email using the Mail Helper, entirely with convenience methods
+            msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com", "Example User"));
+            msg.SetSubject("Hello World from the SendGrid CSharp Library Helper!");
+            msg.AddContent(MimeType.Text, "Hello, Email from the helper [SendSingleEmailAsync]!");
+            msg.AddContent(MimeType.Html, "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>");
             msg.AddTo(new EmailAddress("test@example.com", "Example User"));
 
             response = await client.SendEmailAsync(msg);
@@ -78,30 +92,6 @@
             response = await client.RequestAsync(SendGridClient.Method.POST,
                                                  json.ToString(),
                                                  urlPath: "mail/send");
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Headers);
-            Console.WriteLine("\n\nPress any key to continue.");
-            Console.ReadLine();
-
-            // Generic, direct object access, Hello World Send using the Mail Helper
-            msg = new SendGridMessage()
-            {
-                From = new EmailAddress("test@example.com", "Example User"),
-                Personalizations = new List<Personalization>() {
-                    new Personalization() {
-                        Tos = new List<EmailAddress>() {
-                            new EmailAddress("test@example.com", "Example User")
-                        }
-                    }
-                },
-                Subject = "Hello World from the SendGrid CSharp Library Helper!",
-                Contents = new List<Content>() {
-                    new PlainTextContent("Hello, Email from the helper [SendEmailAsync]!"),
-                    new HtmlContent("<strong>Hello, Email from the helper! [SendEmailAsync]</strong>")
-                }
-            };
-
-            response = await client.SendEmailAsync(msg);
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers);
             Console.WriteLine("\n\nPress any key to continue.");
