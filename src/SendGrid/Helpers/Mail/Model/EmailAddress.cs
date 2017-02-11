@@ -1,21 +1,26 @@
-﻿using Newtonsoft.Json;
+﻿// <copyright file="EmailAddress.cs" company="SendGrid">
+// Copyright (c) SendGrid. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
 
 namespace SendGrid.Helpers.Mail
 {
+    using Newtonsoft.Json;
+
     /// <summary>
     /// An email object containing the email address and name of the sender or recipient.
     /// </summary>
     public class EmailAddress
     {
         /// <summary>
-        /// Create an empty email object.
+        /// Initializes a new instance of the <see cref="EmailAddress"/> class.
         /// </summary>
         public EmailAddress()
         {
         }
-        
+
         /// <summary>
-        /// Create an email object containing the email of the sender or recipient and optionally include a name.
+        /// Initializes a new instance of the <see cref="EmailAddress"/> class.
         /// </summary>
         /// <param name="email">The email address of the sender or recipient.</param>
         /// <param name="name">The name of the sender or recipient.</param>
@@ -26,13 +31,13 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
-        /// The name of the sender or recipient.
+        /// Gets or sets the name of the sender or recipient.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// The email address of the sender or recipient.
+        /// Gets or sets the email address of the sender or recipient.
         /// </summary>
         [JsonProperty(PropertyName = "email")]
         public string Email { get; set; }

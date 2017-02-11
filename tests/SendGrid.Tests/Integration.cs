@@ -1,14 +1,13 @@
-﻿using Xunit;
-using System;
-using SendGrid.Helpers.Mail;
-using System.Collections.Generic;
-using System.Net;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-namespace SendGrid.Tests
+﻿namespace SendGrid.Tests
 {
+    using Helpers.Mail;
+    using Newtonsoft.Json;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Net;
+    using System.Threading.Tasks;
+    using Xunit;
 
     public class IntegrationFixture : IDisposable
     {

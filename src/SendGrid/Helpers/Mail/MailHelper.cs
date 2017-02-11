@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿// <copyright file="MailHelper.cs" company="SendGrid">
+// Copyright (c) SendGrid. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
 
 namespace SendGrid.Helpers.Mail
 {
+    using System.Collections.Generic;
 
     /// <summary>
     /// Simplified email sending for common use cases
@@ -17,7 +21,8 @@ namespace SendGrid.Helpers.Mail
         /// <param name="plainTextContent">The text/plain content of the email body.</param>
         /// <param name="htmlContent">The text/html content of the email body.</param>
         /// <returns>A SendGridMessage object.</returns>
-        public static SendGridMessage CreateSingleEmail(EmailAddress from,
+        public static SendGridMessage CreateSingleEmail(
+                                                        EmailAddress from,
                                                         EmailAddress to,
                                                         string subject,
                                                         string plainTextContent,
@@ -41,7 +46,8 @@ namespace SendGrid.Helpers.Mail
         /// <param name="plainTextContent">The text/plain content of the email body.</param>
         /// <param name="htmlContent">The text/html content of the email body.</param>
         /// <returns>A SendGridMessage object.</returns>
-        public static SendGridMessage CreateSingleEmailToMultipleRecipients(EmailAddress from,
+        public static SendGridMessage CreateSingleEmailToMultipleRecipients(
+                                                                            EmailAddress from,
                                                                             List<EmailAddress> tos,
                                                                             string subject,
                                                                             string plainTextContent,
@@ -56,6 +62,7 @@ namespace SendGrid.Helpers.Mail
             {
                 msg.AddTo(tos[i], i);
             }
+
             return msg;
         }
 
@@ -69,23 +76,25 @@ namespace SendGrid.Helpers.Mail
         /// <param name="htmlContent">The text/html content of the email body.</param>
         /// <param name="substitutions">Substitution key/values to customize the content for each email.</param>
         /// <returns>A SendGridMessage object.</returns>
-        public static SendGridMessage CreateMultipleEmailsToMultipleRecipients(EmailAddress from,
+        public static SendGridMessage CreateMultipleEmailsToMultipleRecipients(
+                                                                               EmailAddress from,
                                                                                List<EmailAddress> tos,
                                                                                List<string> subjects,
                                                                                string plainTextContent,
                                                                                string htmlContent,
-                                                                               List<Dictionary<string,string>> substitutions)
+                                                                               List<Dictionary<string, string>> substitutions)
         {
             var msg = new SendGridMessage();
             msg.SetFrom(from);
             msg.AddContent(MimeType.Text, plainTextContent);
             msg.AddContent(MimeType.Html, htmlContent);
-            for(var i = 0; i < tos.Count; i++)
+            for (var i = 0; i < tos.Count; i++)
             {
                 msg.AddTo(tos[i], i);
                 msg.SetSubject(subjects[i], i);
                 msg.AddSubstitutions(substitutions[i], i);
             }
+
             return msg;
         }
     }

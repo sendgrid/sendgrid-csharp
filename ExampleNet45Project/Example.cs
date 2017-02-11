@@ -1,12 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using SendGrid;
-using SendGrid.Helpers.Mail;
-using System.Collections.Generic;
-
-namespace Example
+﻿namespace Example
 {
+    using System;
+    using System.Threading.Tasks;
+    using Newtonsoft.Json;
+    using SendGrid;
+    using SendGrid.Helpers.Mail;
+    using System.Collections.Generic;
+
     internal class Example
     {
         private static void Main()
