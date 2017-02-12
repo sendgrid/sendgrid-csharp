@@ -44,10 +44,10 @@ I hope you are having a great day in -city- :)
 ## With Mail Helper Class
 
 ```csharp
-using System;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
+using System;
 
 namespace Example
 {
@@ -60,22 +60,24 @@ namespace Example
 
         static async Task Execute()
         {
-            string apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
-            Client = new Client(apiKey);
-
-            Email from = new Email("test@example.com");
-            String subject = "I'm replacing the subject tag";
-            Email to = new Email("test@example.com");
-            Content content = new Content("text/html", "I'm replacing the <strong>body tag</strong>");
-            Mail mail = new Mail(from, subject, to, content);
-
-            mail.TemplateId = "13b8f94f-bcae-4ec6-b752-70d6cb59f932";
-            mail.Personalization[0].AddSubstitution("-name-", "Example User");
-            mail.Personalization[0].AddSubstitution("-city-", "Denver");
-
-            Response response = await client.RequestAsync(method: Client.Methods.POST,
-                                                          requestBody: mail.Get(),
-                                                          urlPath: "mail/send");
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com", "Example User"));
+            msg.SetSubject("I'm replacing the subject tag");
+            msg.AddTo(new EmailAddress("test@example.com", "Example User"));
+            msg.AddContent(MimeType.Text, "I'm replacing the <strong>body tag</strong>");
+            msg.SetTemplateId("13b8f94f-bcae-4ec6-b752-70d6cb59f932");
+            msg.AddSubstitution("-name-", "Example User");
+            msg.AddSubstitution("-city-", "Denver");
+            var response = await client.RequestAsync(
+                                                     method: SendGridClient.Method.POST,
+                                                     requestBody: msg.Serialize(),
+                                                     urlPath: "mail/send");
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Headers.ToString());
+            Console.WriteLine("\n\nPress any key to exit.");
+            Console.ReadLine();
         }
     }
 }
@@ -84,10 +86,10 @@ namespace Example
 ## Without Mail Helper Class
 
 ```csharp
+using Newtonsoft.Json; 
+using System.Threading.Tasks;
 using System;
 using SendGrid;
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
-using System.Threading.Tasks;
 
 namespace Example
 {
@@ -100,8 +102,8 @@ namespace Example
 
         static async Task Execute()
         {
-            String apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
-            Client client = new Client(apiKey);
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
 
             string data = @"{
               'personalizations': [
@@ -130,7 +132,7 @@ namespace Example
               'template_id': '13b8f94f-bcae-4ec6-b752-70d6cb59f932'
             }";
             Object json = JsonConvert.DeserializeObject<Object>(data);
-            Response response = await client.RequestAsync(method: Client.Methods.POST,
+            Response response = await client.RequestAsync(method: SendGridClient.Method.POST,
                                                           requestBody: json.ToString(),
                                                           urlPath: "mail/send");
         }

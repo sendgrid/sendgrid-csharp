@@ -30,7 +30,7 @@ We appreciate your continued support, thank you!
 
 ## Prerequisites
 
-- .NET version 4.5.2 and above
+- .NET version 4.5.2 and above, including .NET Core (This library is build on .NET Standard 1.3)
 - The SendGrid service, starting at the [free level](https://sendgrid.com/free?source=sendgrid-csharp)
 
 ## Setup Environment Variables
@@ -60,11 +60,11 @@ For a sample implementation, check the [Example](https://github.com/sendgrid/sen
 The following is the minimum needed code to send an simple email:
 
 ```csharp
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SendGrid;
-using SendGrid.Helpers.Mail;
 
 namespace Example
 {
@@ -94,11 +94,11 @@ namespace Example
 For more advanced cases, you can build the SendGridMessage object yourself, following is the minimum required settings:
 
 ```csharp
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SendGrid;
-using SendGrid.Helpers.Mail;
 
 namespace Example
 {

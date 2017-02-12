@@ -158,7 +158,7 @@
                                                  urlPath: string.Format("asm/groups/{0}", group_id));
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers.ToString());
-            Console.WriteLine("\n\nPress any key to exit.");
+            Console.WriteLine("\n\nPress any key to DELETE and exit.");
             Console.ReadLine();
         }
     }
