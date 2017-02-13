@@ -39,8 +39,7 @@
                 "define": [ "NET452" ]
             },
             "dependencies": {
-                "Newtonsoft.Json": "9.0.1",
-                "System.Net.Http": "4.0.0"
+                "Newtonsoft.Json": "9.0.1"
             },
             "frameworkAssemblies": {
                 "System.Runtime.Serialization": "4.0.0"

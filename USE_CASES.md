@@ -131,10 +131,14 @@ namespace Example
               ],
               'template_id': '13b8f94f-bcae-4ec6-b752-70d6cb59f932'
             }";
-            Object json = JsonConvert.DeserializeObject<Object>(data);
-            Response response = await client.RequestAsync(method: SendGridClient.Method.POST,
-                                                          requestBody: json.ToString(),
-                                                          urlPath: "mail/send");
+            var json = JsonConvert.DeserializeObject<Object>(data);
+            var response = await client.RequestAsync(method: SendGridClient.Method.POST,
+                                                     requestBody: json.ToString(),
+                                                     urlPath: "mail/send");
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Headers.ToString());
+            Console.WriteLine("\n\nPress any key to exit.");
+            Console.ReadLine();
         }
     }
 }
