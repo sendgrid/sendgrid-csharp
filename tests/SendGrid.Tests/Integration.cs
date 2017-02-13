@@ -47,11 +47,11 @@
         public Process process = new Process();
     }
 
-    public class MyIntegrationTests : IClassFixture<IntegrationFixture>
+    public class Integration : IClassFixture<IntegrationFixture>
     {
         IntegrationFixture fixture;
 
-        public MyIntegrationTests(IntegrationFixture fixture)
+        public Integration(IntegrationFixture fixture)
         {
             this.fixture = fixture;
         }
@@ -67,6 +67,13 @@
             msg.AddContent(MimeType.Text, "Textual content");
             msg.AddContent(MimeType.Html, "HTML content");
             Assert.True(msg.Serialize() == "{\"from\":{\"email\":\"test@example.com\"},\"personalizations\":[{\"to\":[{\"email\":\"test@example.com\"}],\"subject\":\"Hello World from the SendGrid CSharp Library\"}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Textual content\"},{\"type\":\"text/html\",\"value\":\"HTML content\"}]}");
+
+            msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com"));
+            msg.AddTo(new EmailAddress("test@example.com"));
+            msg.SetSubject("Hello World from the SendGrid CSharp Library");
+            msg.AddContent(MimeType.Html, "HTML content");
+            Console.WriteLine(msg.Serialize());
         }
 
         // All paramaters available for sending an email

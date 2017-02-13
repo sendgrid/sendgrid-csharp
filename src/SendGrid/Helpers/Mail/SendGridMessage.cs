@@ -1405,33 +1405,43 @@ namespace SendGrid.Helpers.Mail
         {
             if (this.PlainTextContent != null || this.HtmlContent != null)
             {
-                this.Contents = new List<Content>()
+                this.Contents = new List<Content>();
+                if (this.PlainTextContent != null)
                 {
-                    new PlainTextContent(this.PlainTextContent),
-                    new HtmlContent(this.HtmlContent)
-                };
+                    this.Contents.Add(new PlainTextContent(this.PlainTextContent));
+                }
+
+                if (this.HtmlContent != null)
+                {
+                    this.Contents.Add(new HtmlContent(this.HtmlContent));
+                }
+
                 this.PlainTextContent = null;
                 this.HtmlContent = null;
             }
-            else if (this.Contents != null)
-            {
-                // MimeType.Text > MimeType.Html > Everything Else
-                for (var i = 0; i < this.Contents.Count; i++)
-                {
-                    if (this.Contents[i].Type == MimeType.Html)
-                    {
-                        var tempContent = new Content();
-                        tempContent = this.Contents[i];
-                        this.Contents.RemoveAt(i);
-                        this.Contents.Insert(0, tempContent);
-                    }
 
-                    if (this.Contents[i].Type == MimeType.Text)
+            if (this.Contents != null)
+            {
+                if (this.Contents.Count > 1)
+                {
+                    // MimeType.Text > MimeType.Html > Everything Else
+                    for (var i = 0; i < this.Contents.Count; i++)
                     {
-                        var tempContent = new Content();
-                        tempContent = this.Contents[i];
-                        this.Contents.RemoveAt(i);
-                        this.Contents.Insert(0, tempContent);
+                        if (this.Contents[i].Type == MimeType.Html)
+                        {
+                            var tempContent = new Content();
+                            tempContent = this.Contents[i];
+                            this.Contents.RemoveAt(i);
+                            this.Contents.Insert(0, tempContent);
+                        }
+
+                        if (this.Contents[i].Type == MimeType.Text)
+                        {
+                            var tempContent = new Content();
+                            tempContent = this.Contents[i];
+                            this.Contents.RemoveAt(i);
+                            this.Contents.Insert(0, tempContent);
+                        }
                     }
                 }
             }
