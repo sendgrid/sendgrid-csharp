@@ -1,7 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
-## [9.0.0] - 2017-02-14 ##
+## [9.0.8] - 2017-02-14 ##
+## Update
+- Issue #394: Make 'stylecop' a development dependency
+- Thanks to [@onionhammer](https://github.com/onionhammer) for the heads up!
+
+## [9.0.7] - 2017-02-14 ##
 ### BREAKING CHANGE
 - Support for .NET Standard 1.3
 - Removed dynamic dependencies
