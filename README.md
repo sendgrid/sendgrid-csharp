@@ -35,22 +35,22 @@ We appreciate your continued support, thank you!
 
 ## Setup Environment Variables
 
-Update the development Environment (user space) with your [SENDGRID_API_KEY](https://app.sendgrid.com/settings/api_keys). For example, in Windows 10, please review [this thread](http://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10).
+Update the development Environment with your [SENDGRID_API_KEY](https://app.sendgrid.com/settings/api_keys). For example, in Windows 10, please review [this thread](http://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10).
 
 ## Install Package
 
 To use SendGrid in your C# project, you can either <a href="https://github.com/sendgrid/sendgrid-csharp.git">download the SendGrid C# .NET libraries directly from our Github repository</a> or, if you have the NuGet package manager installed, you can grab them automatically.
 
 ```
-PM> Install-Package SendGrid -Pre
+PM> Install-Package SendGrid
 ```
 
 Once you have the SendGrid libraries properly referenced in your project, you can include calls to them in your code.
-For a sample implementation, check the [Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/SendGrid/Example) folder.
+For sample implementations, check the [.NET Core Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleCoreProject) and the [.NET 4.5.2 Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleNet45Project) folders.
 
 ## Dependencies
 
-- [Newtonsoft.Json](http://www.newtonsoft.com/json)
+- Please see the [.nuspec file](https://github.com/sendgrid/sendgrid-csharp/tree/master/nuspec).
 
 <a name="quick_start"></a>
 # Quick Start
@@ -127,7 +127,7 @@ namespace Example
 }
 ```
 
-You can find an example of all of the email features [here](https://github.com/sendgrid/sendgrid-csharp/blob/v9beta/tests/SendGrid.Tests/Integration.cs#L73).
+You can find an example of all of the email features [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs#L79).
 
 ## General v3 Web API Usage
 
@@ -158,6 +158,13 @@ namespace Example
 	    }
     }
 }
+```
+## Web Proxy
+
+```csharp
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var proxy = new WebProxy("http://proxy:1337");
+var client = new SendGridClient(proxy, apiKey);
 ```
 
 <a name="usage"></a>

@@ -1,10 +1,11 @@
-using System;
+using Newtonsoft.Json;
 using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using System;
 
-string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-Client client = new Client(apiKey);
+
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
 
 ////////////////////////////////////////////////////////
 // Create a Sender Identity
@@ -29,7 +30,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "senders", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "senders", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -39,7 +40,7 @@ Console.ReadLine();
 // Get all Sender Identities
 // GET /senders
 
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "senders");
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "senders");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -69,7 +70,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var sender_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "senders/" + sender_id, requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "senders/" + sender_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -80,7 +81,7 @@ Console.ReadLine();
 // GET /senders/{sender_id}
 
 var sender_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "senders/" + sender_id);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "senders/" + sender_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -91,7 +92,7 @@ Console.ReadLine();
 // DELETE /senders/{sender_id}
 
 var sender_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "senders/" + sender_id);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "senders/" + sender_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -102,7 +103,7 @@ Console.ReadLine();
 // POST /senders/{sender_id}/resend_verification
 
 var sender_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "senders/" + sender_id + "/resend_verification");
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "senders/" + sender_id + "/resend_verification");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

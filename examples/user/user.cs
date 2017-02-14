@@ -1,16 +1,17 @@
-using System;
+using Newtonsoft.Json;
 using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using System;
 
-string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-Client client = new Client(apiKey);
+
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
 
 ////////////////////////////////////////////////////////
 // Get a user's account information.
 // GET /user/account
 
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/account");
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/account");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -20,7 +21,7 @@ Console.ReadLine();
 // Retrieve your credit balance
 // GET /user/credits
 
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/credits");
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/credits");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -35,7 +36,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "user/email", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PUT, urlPath: "user/email", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -45,7 +46,7 @@ Console.ReadLine();
 // Retrieve your account email address
 // GET /user/email
 
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/email");
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/email");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -61,7 +62,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "user/password", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PUT, urlPath: "user/password", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -78,7 +79,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/profile", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "user/profile", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -88,7 +89,7 @@ Console.ReadLine();
 // Get a user's profile
 // GET /user/profile
 
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/profile");
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/profile");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -104,7 +105,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "user/scheduled_sends", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "user/scheduled_sends", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -114,7 +115,7 @@ Console.ReadLine();
 // Retrieve all scheduled sends
 // GET /user/scheduled_sends
 
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/scheduled_sends");
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/scheduled_sends");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -130,7 +131,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var batch_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/scheduled_sends/" + batch_id, requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "user/scheduled_sends/" + batch_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -141,7 +142,7 @@ Console.ReadLine();
 // GET /user/scheduled_sends/{batch_id}
 
 var batch_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/scheduled_sends/" + batch_id);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/scheduled_sends/" + batch_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -152,7 +153,7 @@ Console.ReadLine();
 // DELETE /user/scheduled_sends/{batch_id}
 
 var batch_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "user/scheduled_sends/" + batch_id);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "user/scheduled_sends/" + batch_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -168,7 +169,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/settings/enforced_tls", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "user/settings/enforced_tls", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -178,7 +179,7 @@ Console.ReadLine();
 // Retrieve current Enforced TLS settings.
 // GET /user/settings/enforced_tls
 
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/settings/enforced_tls");
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/settings/enforced_tls");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -193,7 +194,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "user/username", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PUT, urlPath: "user/username", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -203,7 +204,7 @@ Console.ReadLine();
 // Retrieve your username
 // GET /user/username
 
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/username");
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/username");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -230,7 +231,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/webhooks/_("event")/settings", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "user/webhooks/_("event")/settings", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -240,7 +241,7 @@ Console.ReadLine();
 // Retrieve Event Webhook settings
 // GET /user/webhooks/event/settings
 
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/_("event")/settings");
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/webhooks/_("event")/settings");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -255,7 +256,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "user/webhooks/_("event")/test", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "user/webhooks/_("event")/test", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -273,7 +274,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "user/webhooks/parse/settings", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "user/webhooks/parse/settings", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -283,7 +284,7 @@ Console.ReadLine();
 // Retrieve all parse settings
 // GET /user/webhooks/parse/settings
 
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/parse/settings");
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/webhooks/parse/settings");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -301,7 +302,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var hostname = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "user/webhooks/parse/settings/" + hostname, requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "user/webhooks/parse/settings/" + hostname, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -312,7 +313,7 @@ Console.ReadLine();
 // GET /user/webhooks/parse/settings/{hostname}
 
 var hostname = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/parse/settings/" + hostname);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/webhooks/parse/settings/" + hostname);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -323,7 +324,7 @@ Console.ReadLine();
 // DELETE /user/webhooks/parse/settings/{hostname}
 
 var hostname = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "user/webhooks/parse/settings/" + hostname);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "user/webhooks/parse/settings/" + hostname);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -340,7 +341,7 @@ string queryParams = @"{
   'offset': 'test_string', 
   'start_date': '2016-01-01'
 }";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "user/webhooks/parse/stats", queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/webhooks/parse/stats", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

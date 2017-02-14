@@ -1,10 +1,11 @@
-using System;
+using Newtonsoft.Json;
 using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using System;
 
-string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-Client client = new Client(apiKey);
+
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
 
 ////////////////////////////////////////////////////////
 // Create a Campaign
@@ -32,7 +33,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "campaigns", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -46,7 +47,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "campaigns", queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "campaigns", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -68,7 +69,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var campaign_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "campaigns/" + campaign_id, requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "campaigns/" + campaign_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -79,7 +80,7 @@ Console.ReadLine();
 // GET /campaigns/{campaign_id}
 
 var campaign_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "campaigns/" + campaign_id);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "campaigns/" + campaign_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -90,7 +91,7 @@ Console.ReadLine();
 // DELETE /campaigns/{campaign_id}
 
 var campaign_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "campaigns/" + campaign_id);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "campaigns/" + campaign_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -106,7 +107,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var campaign_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "campaigns/" + campaign_id + "/schedules", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "campaigns/" + campaign_id + "/schedules", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -122,7 +123,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var campaign_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns/" + campaign_id + "/schedules", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "campaigns/" + campaign_id + "/schedules", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -133,7 +134,7 @@ Console.ReadLine();
 // GET /campaigns/{campaign_id}/schedules
 
 var campaign_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "campaigns/" + campaign_id + "/schedules");
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "campaigns/" + campaign_id + "/schedules");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -144,7 +145,7 @@ Console.ReadLine();
 // DELETE /campaigns/{campaign_id}/schedules
 
 var campaign_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "campaigns/" + campaign_id + "/schedules");
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "campaigns/" + campaign_id + "/schedules");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -155,7 +156,7 @@ Console.ReadLine();
 // POST /campaigns/{campaign_id}/schedules/now
 
 var campaign_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns/" + campaign_id + "/schedules/now");
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "campaigns/" + campaign_id + "/schedules/now");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -171,7 +172,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var campaign_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "campaigns/" + campaign_id + "/schedules/test", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "campaigns/" + campaign_id + "/schedules/test", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

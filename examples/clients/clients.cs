@@ -1,10 +1,11 @@
-using System;
+using Newtonsoft.Json;
 using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using System;
 
-string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-Client client = new Client(apiKey);
+
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
 
 ////////////////////////////////////////////////////////
 // Retrieve email statistics by client type.
@@ -15,7 +16,7 @@ string queryParams = @"{
   'end_date': '2016-04-01', 
   'start_date': '2016-01-01'
 }";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "clients/stats", queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "clients/stats", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -31,7 +32,7 @@ string queryParams = @"{
   'start_date': '2016-01-01'
 }";
 var client_type = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "clients/" + client_type + "/stats", queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "clients/" + client_type + "/stats", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

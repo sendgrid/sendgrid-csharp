@@ -1,10 +1,11 @@
-using System;
+using Newtonsoft.Json;
 using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using System;
 
-string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-Client client = new Client(apiKey);
+
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
 
 ////////////////////////////////////////////////////////
 // Retrieve all recent access attempts
@@ -13,7 +14,7 @@ Client client = new Client(apiKey);
 string queryParams = @"{
   'limit': 1
 }";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "access_settings/activity", queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "access_settings/activity", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -38,7 +39,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "access_settings/whitelist", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "access_settings/whitelist", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -48,7 +49,7 @@ Console.ReadLine();
 // Retrieve a list of currently whitelisted IPs
 // GET /access_settings/whitelist
 
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "access_settings/whitelist");
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "access_settings/whitelist");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -67,7 +68,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "access_settings/whitelist", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "access_settings/whitelist", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -78,7 +79,7 @@ Console.ReadLine();
 // GET /access_settings/whitelist/{rule_id}
 
 var rule_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "access_settings/whitelist/" + rule_id);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "access_settings/whitelist/" + rule_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -89,7 +90,7 @@ Console.ReadLine();
 // DELETE /access_settings/whitelist/{rule_id}
 
 var rule_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "access_settings/whitelist/" + rule_id);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "access_settings/whitelist/" + rule_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

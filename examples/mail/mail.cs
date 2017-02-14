@@ -1,16 +1,17 @@
-using System;
+using Newtonsoft.Json;
 using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using System;
 
-string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-Client client = new Client(apiKey);
+
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
 
 ////////////////////////////////////////////////////////
 // Create a batch ID
 // POST /mail/batch
 
-Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "mail/batch");
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "mail/batch");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -21,7 +22,7 @@ Console.ReadLine();
 // GET /mail/batch/{batch_id}
 
 var batch_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "mail/batch/" + batch_id);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail/batch/" + batch_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -30,7 +31,7 @@ Console.ReadLine();
 ////////////////////////////////////////////////////////
 // v3 Mail Send
 // POST /mail/send
-// This endpoint has a helper, check it out [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/SendGrid/SendGrid/Helpers/Mail/README.md).
+// This endpoint has a helper, check it out [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/Helpers/Mail/README.md).
 
 string data = @"{
   'asm': {
@@ -172,7 +173,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "mail/send", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "mail/send", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

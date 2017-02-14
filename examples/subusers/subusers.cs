@@ -1,10 +1,11 @@
-using System;
+using Newtonsoft.Json;
 using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using System;
 
-string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-Client client = new Client(apiKey);
+
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
 
 ////////////////////////////////////////////////////////
 // Create Subuser
@@ -21,7 +22,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "subusers", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "subusers", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -36,7 +37,7 @@ string queryParams = @"{
   'offset': 1, 
   'username': 'test_string'
 }";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers", queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -49,7 +50,7 @@ Console.ReadLine();
 string queryParams = @"{
   'usernames': 'test_string'
 }";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/reputations", queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers/reputations", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -67,7 +68,7 @@ string queryParams = @"{
   'start_date': '2016-01-01', 
   'subusers': 'test_string'
 }";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/stats", queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers/stats", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -85,7 +86,7 @@ string queryParams = @"{
   'sort_by_metric': 'test_string', 
   'subuser': 'test_string'
 }";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/stats/monthly", queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers/stats/monthly", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -104,7 +105,7 @@ string queryParams = @"{
   'sort_by_metric': 'test_string', 
   'start_date': '2016-01-01'
 }";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/stats/sums", queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers/stats/sums", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -120,7 +121,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var subuser_name = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "subusers/" + subuser_name, requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "subusers/" + subuser_name, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -131,7 +132,7 @@ Console.ReadLine();
 // DELETE /subusers/{subuser_name}
 
 var subuser_name = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "subusers/" + subuser_name);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "subusers/" + subuser_name);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -147,7 +148,7 @@ string data = @"[
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var subuser_name = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "subusers/" + subuser_name + "/ips", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PUT, urlPath: "subusers/" + subuser_name + "/ips", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -164,7 +165,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var subuser_name = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "subusers/" + subuser_name + "/monitor", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PUT, urlPath: "subusers/" + subuser_name + "/monitor", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -181,7 +182,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var subuser_name = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "subusers/" + subuser_name + "/monitor", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "subusers/" + subuser_name + "/monitor", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -192,7 +193,7 @@ Console.ReadLine();
 // GET /subusers/{subuser_name}/monitor
 
 var subuser_name = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/" + subuser_name + "/monitor");
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers/" + subuser_name + "/monitor");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -203,7 +204,7 @@ Console.ReadLine();
 // DELETE /subusers/{subuser_name}/monitor
 
 var subuser_name = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "subusers/" + subuser_name + "/monitor");
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "subusers/" + subuser_name + "/monitor");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -221,7 +222,7 @@ string queryParams = @"{
   'sort_by_metric': 'test_string'
 }";
 var subuser_name = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "subusers/" + subuser_name + "/stats/monthly", queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers/" + subuser_name + "/stats/monthly", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

@@ -1,10 +1,11 @@
-using System;
+using Newtonsoft.Json;
 using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using System;
 
-string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-Client client = new Client(apiKey);
+
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
 
 ////////////////////////////////////////////////////////
 // Create API keys
@@ -21,7 +22,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-Response response = await client.RequestAsync(method: Client.Methods.POST, urlPath: "api_keys", requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "api_keys", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -34,7 +35,7 @@ Console.ReadLine();
 string queryParams = @"{
   'limit': 1
 }";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "api_keys", queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "api_keys", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -54,7 +55,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var api_key_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.PUT, urlPath: "api_keys/" + api_key_id, requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PUT, urlPath: "api_keys/" + api_key_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -70,7 +71,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var api_key_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.PATCH, urlPath: "api_keys/" + api_key_id, requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "api_keys/" + api_key_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -81,7 +82,7 @@ Console.ReadLine();
 // GET /api_keys/{api_key_id}
 
 var api_key_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.GET, urlPath: "api_keys/" + api_key_id);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "api_keys/" + api_key_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -92,7 +93,7 @@ Console.ReadLine();
 // DELETE /api_keys/{api_key_id}
 
 var api_key_id = "test_url_param";
-Response response = await client.RequestAsync(method: Client.Methods.DELETE, urlPath: "api_keys/" + api_key_id);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "api_keys/" + api_key_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

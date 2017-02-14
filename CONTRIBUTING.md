@@ -11,7 +11,7 @@ Hello! Thank you for choosing to help contribute to one of the SendGrid open sou
 - [Creating a Pull Request](#creating_a_pull_request)
 
 <a name="roadmap"></a>
-We use [Milestones](https://github.com/sendgrid/sendgrid-csharp/milestones) to help define current roadmaps, please feel free to grab an issue from the current milestone. Please indicate that you have begun work on it to avoid collisions. Once a PR is made, community review, comments, suggestions and additional PRs are welcomed and encouraged.
+We use [GitHub Projects](https://github.com/sendgrid/sendgrid-csharp/projects) to help define current roadmaps, please feel free to grab an issue from our [GitHub Issues](https://github.com/sendgrid/sendgrid-csharp/issues). Please indicate that you have begun work on it to avoid collisions. Once a PR is made, community review, comments, suggestions and additional PRs are welcomed and encouraged.
 
 <a name="cla"></a>
 ## CLAs and CCLAs
@@ -64,9 +64,7 @@ We welcome direct contributions to the sendgrid-csharp code base. Thank you!
 
 ##### Prerequisites #####
 
-- .NET 4.5.2
-- [SendGrid.CSharp.HTTP.Client](https://www.nuget.org/packages/SendGrid.CSharp.HTTP.Client/)
-- [Newtonsoft.Json](http://www.newtonsoft.com/json)
+- .NET 4.5.2+
 
 ##### Initial setup: #####
 
@@ -74,13 +72,13 @@ We welcome direct contributions to the sendgrid-csharp code base. Thank you!
 git clone https://github.com/sendgrid/sendgrid-csharp.git
 ```
 
-- Open `sendgrid-csharp/SendGrid/SendGrid.sln`
+- Open `sendgrid-csharp/SendGrid.sln`
 
 ## Environment Variables
 
 First, get your free SendGrid account [here](https://sendgrid.com/free?source=sendgrid-csharp).
 
-Next, update your Environment (user space) with your [SENDGRID_APIKEY](https://app.sendgrid.com/settings/api_keys).
+Next, update your Environment with your [SENDGRID_APIKEY](https://app.sendgrid.com/settings/api_keys).
 
 ##### Execute: #####
 
@@ -95,26 +93,30 @@ Next, update your Environment (user space) with your [SENDGRID_APIKEY](https://a
 
 Examples that demonstrate usage.
 
-**/Example/Example.cs**
+**/ExampleCoreProject/Example.cs**
 
-A working example project for testing.
+A working .NET Core example project for testing.
 
-**/SendGrid/SendGrid.cs**
+**/ExampleNet45Project/Example.cs**
 
-The main interface to the SendGrid API is the class `SendGridAPIClient`.
+A working .NET 4.5.2 example project for testing.
 
-**/UnitTest**
+**src/SendGrid/SendGridClient.cs**
 
-Unit tests
+The main interface to the SendGrid API is the class `SendGridClient`.
+
+**/tests/SendGrid.Tests/Integration.cs**
+
+Integration tests
 
 <a name="testing"></a>
 ## Testing
 
 All PRs require passing tests before the PR will be reviewed.
 
-All test files are in the [`UnitTest`](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/SendGrid/UnitTest) directory.
+All test files are in the [`UnitTest`](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests) directory.
 
-For the purposes of contributing to this repo, please update the [`UnitTest.cs`](https://github.com/sendgrid/sendgrid-csharp/tree/v3beta/test/SendGrid/UnitTest/UnitTest.cs) file with unit tests as you modify the code.
+For the purposes of contributing to this repo, please update the [`Integration.cs`](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs) file with unit tests as you modify the code.
 
 Downloaded [Prism](https://github.com/stoplightio/prism/releases) and rename the executable to be prism.exe and place the renamed executable in your PATH.
 
@@ -123,7 +125,7 @@ When you run the tests for the first time, you will need to allow Prism.exe to r
 <a name="style_guidelines_and_naming_conventions"></a>
 ## Style Guidelines & Naming Conventions
 
-Generally, we follow the style guidelines as suggested by the official language. However, we ask that you conform to the styles that already exist in the library. If you wish to deviate, please explain your reasoning. In this case, we generally follow the [C# Naming Conventions](https://msdn.microsoft.com/library/ms229045(v=vs.100).aspx) and the suggestions provided by the Visual Studio IDE.
+Generally, we follow the style guidelines as suggested by the official language. However, we ask that you conform to the styles that already exist in the library. If you wish to deviate, please explain your reasoning. In this case, we generally follow the [C# Naming Conventions](https://msdn.microsoft.com/library/ms229045(v=vs.100).aspx), the suggestions provided by the Visual Studio IDE and StyleCop (see the [stylecop.json](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/stylcop.json) and [SendGrid.ruleset](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/SendGrid.ruleset) configuration files.
 
 ## Creating a Pull Request<a name="creating_a_pull_request"></a>
 
