@@ -114,7 +114,7 @@ Integration tests
 
 All PRs require passing tests before the PR will be reviewed.
 
-All test files are in the [`UnitTest`](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests) directory.
+All test files are in the [`SendGrid.Tests`](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests) directory.
 
 For the purposes of contributing to this repo, please update the [`Integration.cs`](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs) file with unit tests as you modify the code.
 
@@ -125,7 +125,7 @@ When you run the tests for the first time, you will need to allow Prism.exe to r
 <a name="style_guidelines_and_naming_conventions"></a>
 ## Style Guidelines & Naming Conventions
 
-Generally, we follow the style guidelines as suggested by the official language. However, we ask that you conform to the styles that already exist in the library. If you wish to deviate, please explain your reasoning. In this case, we generally follow the [C# Naming Conventions](https://msdn.microsoft.com/library/ms229045(v=vs.100).aspx), the suggestions provided by the Visual Studio IDE and StyleCop (see the [stylecop.json](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/stylcop.json) and [SendGrid.ruleset](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/SendGrid.ruleset) configuration files.
+Generally, we follow the style guidelines as suggested by the official language. However, we ask that you conform to the styles that already exist in the library. If you wish to deviate, please explain your reasoning. In this case, we generally follow the [C# Naming Conventions](https://msdn.microsoft.com/library/ms229045(v=vs.100).aspx), the suggestions provided by the Visual Studio IDE and StyleCop (see the [stylecop.json](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/stylecop.json) and [SendGrid.ruleset](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/SendGrid.ruleset) configuration files.
 
 ## Creating a Pull Request<a name="creating_a_pull_request"></a>
 
