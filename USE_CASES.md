@@ -70,10 +70,7 @@ namespace Example
             msg.SetTemplateId("13b8f94f-bcae-4ec6-b752-70d6cb59f932");
             msg.AddSubstitution("-name-", "Example User");
             msg.AddSubstitution("-city-", "Denver");
-            var response = await client.RequestAsync(
-                                                     method: SendGridClient.Method.POST,
-                                                     requestBody: msg.Serialize(),
-                                                     urlPath: "mail/send");
+            var response = await client.SendEmailAsync(msg);
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers.ToString());
             Console.WriteLine("\n\nPress any key to exit.");
