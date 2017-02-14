@@ -1,20 +1,40 @@
 language: csharp
-solution: SendGrid/SendGrid.sln
+dotnet: 1.0.0-preview2-003131
+os: linux
+dist: trusty
+mono: latest
+sudo: required
+
 env:
   matrix:
     secure: KJrQ+NfmzlgCSXRyqeAMDGZUG6GO4/+xk1T0wGy1BgVz8seo/fDWL8osWEljB4Sj05sfFj7CM+rociwL6sdVyqCiHbCAM7XuHs58D+4Tlh5pGHL+G1qOl65/pDl0ulq+M7PwDxHPZ60/oyH2a16t5jtD9e4W31y2fXzEbHGLHXg=
-install:
-- nuget restore SendGrid/SendGrid.sln
-- nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+
+before_install:
+  - mkdir -p .nuget
+  - wget -O .nuget/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+  - mono .nuget/nuget.exe
+  - ls /usr/lib/mono/4.5
+  - ls /usr/lib/mono/4.5/MSBuild
+
+#install:
+#  - mono .nuget/nuget.exe restore ./SendGrid.sln
+#  - mono .nuget/nuget.exe install NUnit.Runners -Version 3.2.1 -OutputDirectory ./src/packages
+
 before_script:
-- mkdir prism/bin
-- export PATH=$PATH:$PWD/prism/bin/
-- ls -la
-- ./prism/prism.sh
-- nohup prism run -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json &
+  - mkdir prism/bin
+  - export PATH=$PATH:$PWD/prism/bin/
+  - ./prism/prism.sh
+  - nohup prism run -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json &
+
 script:
-- xbuild /p:Configuration=Release /p:DebugSymbols=False /p:TargetFrameworkVersion="v4.5" SendGrid/SendGrid.sln
-- mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe SendGrid/UnitTest/bin/Release/UnitTest.dll
+  - dotnet restore
+  - dotnet build ./src/SendGrid -c Release
+#  - mono .nuget/nuget.exe restore ./SendGrid.sln
+#  - xbuild /p:Configuration=Release /p:DebugSymbols=False /p:TargetFrameworkVersion="v4.5" SendGrid/SendGrid.sln
+#  - xbuild /p:Configuration=Release ./UnitTest/UnitTest.csproj
+#  - mono ./src/packages/NUnit.Runners.3.2.1/tools/nunit-console.exe ./UnitTest/bin/Release/net45/UnitTest.dll
+  - dotnet test ./tests/SendGrid.Tests -c Release -f netcoreapp1.0
+
 notifications:
   hipchat:
     rooms:

@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.0.0] - 2017-02-14 ##
+### BREAKING CHANGE
+- Support for .NET Standard 1.3
+- Removed dynamic dependencies
+- Updated Mail Helper
+
 ## [8.0.4] - 2016-08-24 ##
 ### Added
 - Table of Contents in the README

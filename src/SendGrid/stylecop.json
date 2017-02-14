@@ -1,0 +1,37 @@
+{
+    "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+    "settings": {
+        "indentation": {
+            "useTabs": false,
+            "indentationSize": 4,
+            "tabSize": 4
+        },
+        "documentationRules": {
+          "companyName": "SendGrid",
+          "copyrightText": "Copyright (c) {companyName}. All rights reserved. All rights reserved.\nLicensed under the {licenseName} license. See {licenseFile} file in the project root for full license information.",
+          "variables": {
+            "licenseName": "MIT",
+            "licenseFile": "LICENSE"
+          },
+          "documentExposedElements": true,
+          "documentInternalElements": false,
+          "documentPrivateElements": false,
+          "documentInterfaces": true,
+          "documentPrivateFields": false
+        },
+        "layoutRules": {
+            "newlineAtEndOfFile": "require"
+        },
+        "orderingRules": {
+            "usingDirectivesPlacement": "outsideNamespace",
+            "systemUsingDirectivesFirst": false,
+            "elementOrder": [
+                "kind",
+                "accessibility",
+                "constant",
+                "static",
+                "readonly"
+            ]
+        }
+    }
+}

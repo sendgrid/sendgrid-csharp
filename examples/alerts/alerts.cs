@@ -1,9 +1,11 @@
-using System;
+using Newtonsoft.Json;
+using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using System;
 
-string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
+
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
 
 ////////////////////////////////////////////////////////
 // Create a new Alert
@@ -16,7 +18,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.alerts.post(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "alerts", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -26,7 +28,7 @@ Console.ReadLine();
 // Retrieve all alerts
 // GET /alerts
 
-dynamic response = await sg.client.alerts.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "alerts");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -42,7 +44,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var alert_id = "test_url_param";
-dynamic response = await sg.client.alerts._(alert_id).patch(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "alerts/" + alert_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -53,7 +55,7 @@ Console.ReadLine();
 // GET /alerts/{alert_id}
 
 var alert_id = "test_url_param";
-dynamic response = await sg.client.alerts._(alert_id).get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "alerts/" + alert_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -64,7 +66,7 @@ Console.ReadLine();
 // DELETE /alerts/{alert_id}
 
 var alert_id = "test_url_param";
-dynamic response = await sg.client.alerts._(alert_id).delete();
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "alerts/" + alert_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

@@ -1,12 +1,13 @@
-If you have a non-library SendGrid issue, please contact our [support team](https://support.sendgrid.com).
+﻿If you have a non-library SendGrid issue, please contact our [support team](https://support.sendgrid.com).
 
 If you can't find a solution below, please open an [issue](https://github.com/sendgrid/sendgrid-csharp/issues).
 
 
 ## Table of Contents
 
-* [Migrating from v2 to v3](#migrating)
-* [Continue Using v2](#v2)
+* [Migrating from the v2 API to v3](#migrating)
+* [Continue Using the v2 API](#v2)
+* [Migrating from the v8 SDK to v9](#sdkmigration)
 * [Testing v3 /mail/send Calls Directly](#testing)
 * [Missing Classes](#missing)
 * [Error Messages](#error)
@@ -15,12 +16,12 @@ If you can't find a solution below, please open an [issue](https://github.com/se
 * [Using the Package Manager](#package-manager)
 
 <a name="migrating"></a>
-## Migrating from v2 to v3
+## MigratMigrating from the v2 API to v3
 
 Please review [our guide](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/how_to_migrate_from_v2_to_v3_mail_send.html) on how to migrate from v2 to v3.
 
 <a name="v2"></a>
-## Continue Using v2
+## Continue Using the v2 API
 
 [Here](https://github.com/sendgrid/sendgrid-csharp/tree/b27983a8f3d84a9d28972f2720cca0315ad9fe32) is the last working version with v2 support.
 
@@ -33,6 +34,13 @@ PM> Install-Package Sendgrid -Version 6.3.4
 Download:
 
 Click the "Clone or download" green button in [GitHub](https://github.com/sendgrid/sendgrid-csharp/tree/b27983a8f3d84a9d28972f2720cca0315ad9fe32) and choose download.
+
+<a name="sdkmigration"></a>
+## Migrating from the v8 SDK to v9
+
+v9 of this SDK is a complete rewrite that includes the removal of dynamic dependencies, a new Mail Helper and support for .NET Standard 1.3.
+
+Please begin at the [README](https://github.com/sendgrid/sendgrid-csharp) and if you need further assistance, please [create an issue on GitHub](https://github.com/sendgrid/sendgrid-csharp/issues).
 
 <a name="missing"></a>
 ## Missing Classes
@@ -59,9 +67,11 @@ If you are using ASP.NET Core, please [upvote this issue](https://github.com/sen
 To read the error message returned by SendGrid's API:
 
 ```csharp
-dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
+var response = await client.RequestAsync(method: SendGridClient.Method.POST,
+                                                 requestBody: msg.Serialize(),
+                                                 urlPath: "mail/send");
 Console.WriteLine(response.StatusCode);
-Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+Console.WriteLine(response.Body.ReadAsStringAsync().Result); // The message will be here
 Console.WriteLine(response.Headers.ToString());
 ```
 
@@ -77,7 +87,7 @@ All of our examples assume you are using [environment variables](https://github.
 
 If you choose to add your SendGrid API key directly (not recommended):
 
-`string apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY", EnvironmentVariableTarget.User);`
+`string apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");`
 
 becomes
 

@@ -1,9 +1,11 @@
-using System;
+using Newtonsoft.Json;
+using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using System;
 
-string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
+
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
 
 ////////////////////////////////////////////////////////
 // Create a Custom Field
@@ -15,7 +17,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.contactdb.custom_fields.post(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "contactdb/custom_fields", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -25,7 +27,7 @@ Console.ReadLine();
 // Retrieve all custom fields
 // GET /contactdb/custom_fields
 
-dynamic response = await sg.client.contactdb.custom_fields.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/custom_fields");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -36,7 +38,7 @@ Console.ReadLine();
 // GET /contactdb/custom_fields/{custom_field_id}
 
 var custom_field_id = "test_url_param";
-dynamic response = await sg.client.contactdb.custom_fields._(custom_field_id).get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/custom_fields/" + custom_field_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -47,7 +49,7 @@ Console.ReadLine();
 // DELETE /contactdb/custom_fields/{custom_field_id}
 
 var custom_field_id = "test_url_param";
-dynamic response = await sg.client.contactdb.custom_fields._(custom_field_id).delete();
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "contactdb/custom_fields/" + custom_field_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -62,7 +64,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.contactdb.lists.post(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "contactdb/lists", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -72,7 +74,7 @@ Console.ReadLine();
 // Retrieve all lists
 // GET /contactdb/lists
 
-dynamic response = await sg.client.contactdb.lists.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/lists");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -90,7 +92,7 @@ string data = @"[
 ]";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.contactdb.lists.delete(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "contactdb/lists", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -109,7 +111,7 @@ string queryParams = @"{
   'list_id': 1
 }";
 var list_id = "test_url_param";
-dynamic response = await sg.client.contactdb.lists._(list_id).patch(requestBody: data, queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "contactdb/lists/" + list_id, requestBody: data, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -123,7 +125,7 @@ string queryParams = @"{
   'list_id': 1
 }";
 var list_id = "test_url_param";
-dynamic response = await sg.client.contactdb.lists._(list_id).get(queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/lists/" + list_id, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -137,7 +139,7 @@ string queryParams = @"{
   'delete_contacts': 'true'
 }";
 var list_id = "test_url_param";
-dynamic response = await sg.client.contactdb.lists._(list_id).delete(queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "contactdb/lists/" + list_id, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -154,7 +156,7 @@ string data = @"[
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var list_id = "test_url_param";
-dynamic response = await sg.client.contactdb.lists._(list_id).recipients.post(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "contactdb/lists/" + list_id + "/recipients", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -170,7 +172,7 @@ string queryParams = @"{
   'page_size': 1
 }";
 var list_id = "test_url_param";
-dynamic response = await sg.client.contactdb.lists._(list_id).recipients.get(queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/lists/" + list_id + "/recipients", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -182,7 +184,7 @@ Console.ReadLine();
 
 var list_id = "test_url_param";
 var recipient_id = "test_url_param";
-dynamic response = await sg.client.contactdb.lists._(list_id).recipients._(recipient_id).post();
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "contactdb/lists/" + list_id + "/recipients/" + recipient_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -198,7 +200,7 @@ string queryParams = @"{
 }";
 var list_id = "test_url_param";
 var recipient_id = "test_url_param";
-dynamic response = await sg.client.contactdb.lists._(list_id).recipients._(recipient_id).delete(queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "contactdb/lists/" + list_id + "/recipients/" + recipient_id, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -217,7 +219,7 @@ string data = @"[
 ]";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.contactdb.recipients.patch(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "contactdb/recipients", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -243,7 +245,7 @@ string data = @"[
 ]";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.contactdb.recipients.post(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "contactdb/recipients", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -257,7 +259,7 @@ string queryParams = @"{
   'page': 1, 
   'page_size': 1
 }";
-dynamic response = await sg.client.contactdb.recipients.get(queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/recipients", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -273,7 +275,7 @@ string data = @"[
 ]";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.contactdb.recipients.delete(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "contactdb/recipients", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -283,7 +285,7 @@ Console.ReadLine();
 // Retrieve the count of billable recipients
 // GET /contactdb/recipients/billable_count
 
-dynamic response = await sg.client.contactdb.recipients.billable_count.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/recipients/billable_count");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -293,7 +295,7 @@ Console.ReadLine();
 // Retrieve a Count of Recipients
 // GET /contactdb/recipients/count
 
-dynamic response = await sg.client.contactdb.recipients.count.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/recipients/count");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -306,7 +308,7 @@ Console.ReadLine();
 string queryParams = @"{
   '{field_name}': 'test_string'
 }";
-dynamic response = await sg.client.contactdb.recipients.search.get(queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/recipients/search", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -317,7 +319,7 @@ Console.ReadLine();
 // GET /contactdb/recipients/{recipient_id}
 
 var recipient_id = "test_url_param";
-dynamic response = await sg.client.contactdb.recipients._(recipient_id).get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/recipients/" + recipient_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -328,7 +330,7 @@ Console.ReadLine();
 // DELETE /contactdb/recipients/{recipient_id}
 
 var recipient_id = "test_url_param";
-dynamic response = await sg.client.contactdb.recipients._(recipient_id).delete();
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "contactdb/recipients/" + recipient_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -339,7 +341,7 @@ Console.ReadLine();
 // GET /contactdb/recipients/{recipient_id}/lists
 
 var recipient_id = "test_url_param";
-dynamic response = await sg.client.contactdb.recipients._(recipient_id).lists.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/recipients/" + recipient_id + "/lists");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -349,7 +351,7 @@ Console.ReadLine();
 // Retrieve reserved fields
 // GET /contactdb/reserved_fields
 
-dynamic response = await sg.client.contactdb.reserved_fields.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/reserved_fields");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -385,7 +387,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.contactdb.segments.post(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "contactdb/segments", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -395,7 +397,7 @@ Console.ReadLine();
 // Retrieve all segments
 // GET /contactdb/segments
 
-dynamic response = await sg.client.contactdb.segments.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/segments");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -423,7 +425,7 @@ string queryParams = @"{
   'segment_id': 'test_string'
 }";
 var segment_id = "test_url_param";
-dynamic response = await sg.client.contactdb.segments._(segment_id).patch(requestBody: data, queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "contactdb/segments/" + segment_id, requestBody: data, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -437,7 +439,7 @@ string queryParams = @"{
   'segment_id': 1
 }";
 var segment_id = "test_url_param";
-dynamic response = await sg.client.contactdb.segments._(segment_id).get(queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/segments/" + segment_id, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -451,7 +453,7 @@ string queryParams = @"{
   'delete_contacts': 'true'
 }";
 var segment_id = "test_url_param";
-dynamic response = await sg.client.contactdb.segments._(segment_id).delete(queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "contactdb/segments/" + segment_id, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -466,7 +468,7 @@ string queryParams = @"{
   'page_size': 1
 }";
 var segment_id = "test_url_param";
-dynamic response = await sg.client.contactdb.segments._(segment_id).recipients.get(queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/segments/" + segment_id + "/recipients", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

@@ -4,7 +4,7 @@ Please see our announcement regarding [breaking changes](https://github.com/send
 
 **This library allows you to quickly and easily use the SendGrid Web API v3 via C# with .NET.**
 
-Version 7.X.X+ of this library provides full support for all SendGrid [Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html) endpoints, including the new [v3 /mail/send](https://sendgrid.com/blog/introducing-v3mailsend-sendgrids-new-mail-endpoint).
+Version 9.X.X+ of this library provides full support for all SendGrid [Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html) endpoints, including the new [v3 /mail/send](https://sendgrid.com/blog/introducing-v3mailsend-sendgrids-new-mail-endpoint).
 
 This library represents the beginning of a new path for SendGrid. We want this library to be community driven and SendGrid led. We need your help to realize this goal. To help make sure we are building the right things in the right order, we ask that you create [issues](https://github.com/sendgrid/sendgrid-csharp/issues) and [pull requests](https://github.com/sendgrid/sendgrid-csharp/blob/master/CONTRIBUTING.md) or simply upvote or comment on existing issues or pull requests.
 
@@ -30,12 +30,12 @@ We appreciate your continued support, thank you!
 
 ## Prerequisites
 
-- .NET version 4.5.2
+- .NET version 4.5.2 and above, including .NET Core (This library is build on .NET Standard 1.3)
 - The SendGrid service, starting at the [free level](https://sendgrid.com/free?source=sendgrid-csharp)
 
 ## Setup Environment Variables
 
-Update the development Environment (user space) with your [SENDGRID_API_KEY](https://app.sendgrid.com/settings/api_keys). For example, in Windows 10, please review [this thread](http://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10).
+Update the development Environment with your [SENDGRID_API_KEY](https://app.sendgrid.com/settings/api_keys). For example, in Windows 10, please review [this thread](http://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10).
 
 ## Install Package
 
@@ -46,147 +46,24 @@ PM> Install-Package SendGrid
 ```
 
 Once you have the SendGrid libraries properly referenced in your project, you can include calls to them in your code.
-For a sample implementation, check the [Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/SendGrid/Example) folder.
-
-Add the following namespaces to use the library:
-```csharp
-using System;
-using System.Web.Script.Serialization;
-using SendGrid;
-using SendGrid.Helpers.Mail; // Include if you want to use the Mail Helper
-```
+For sample implementations, check the [.NET Core Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleCoreProject) and the [.NET 4.5.2 Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleNet45Project) folders.
 
 ## Dependencies
 
-- [SendGrid.CSharp.HTTP.Client](https://github.com/sendgrid/csharp-http-client)
-- [Newtonsoft.Json](http://www.newtonsoft.com/json)
+- Please see the [.nuspec file](https://github.com/sendgrid/sendgrid-csharp/tree/master/nuspec).
 
 <a name="quick_start"></a>
 # Quick Start
 
 ## Hello Email
 
-The following is the minimum needed code to send an email with the [/mail/send Helper](https://github.com/sendgrid/sendgrid-csharp/tree/master/SendGrid/SendGrid/Helpers/Mail) ([here](https://github.com/sendgrid/sendgrid-csharp/blob/master/SendGrid/Example/Example.cs#L45) is a full example):
-
-### With Mail Helper Class
+The following is the minimum needed code to send an simple email:
 
 ```csharp
-using System;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System.Threading.Tasks;
-
-namespace Example
-{
-    internal class Example
-    {
-        private static void Main()
-        {
-	        Execute().Wait();
-        }
-
-        static async Task Execute()
-        {
-            string apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGridAPIClient(apiKey);
-
-            Email from = new Email("test@example.com");
-            string subject = "Hello World from the SendGrid CSharp Library!";
-            Email to = new Email("test@example.com");
-            Content content = new Content("text/plain", "Hello, Email!");
-            Mail mail = new Mail(from, subject, to, content);
-
-            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
-        }
-    }
-}
-```
-
-The `Mail` constructor creates a [personalization object](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html) for you. [Here](https://github.com/sendgrid/sendgrid-csharp/blob/master/SendGrid/Example/Example.cs#L33) is an example of how to add to it.
-
-### Without Mail Helper Class
-
-The following is the minimum needed code to send an email without the /mail/send Helper ([here](https://github.com/sendgrid/sendgrid-csharp/blob/master/examples/mail/mail.cs#L29) is a full example):
-
-```csharp
 using System;
-using SendGrid;
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
-using System.Threading.Tasks;
-
-namespace Example
-{
-    internal class Example
-    {
-        private static void Main()
-        {
-	        Execute().Wait();
-        }
-
-	    static async Task Execute()
-        {
-            String apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGridAPIClient(apiKey);
-
-            string data = @"{
-              'personalizations': [
-                {
-                  'to': [
-                    {
-                      'email': 'test@example.com'
-                    }
-                  ],
-                  'subject': 'Hello World from the SendGrid C# Library!'
-                }
-              ],
-              'from': {
-                'email': 'test@example.com'
-              },
-              'content': [
-                {
-                  'type': 'text/plain',
-                  'value': 'Hello, Email!'
-                }
-              ]
-            }";
-            Object json = JsonConvert.DeserializeObject<Object>(data);
-            dynamic response = await sg.client.mail.send.post(requestBody: json.ToString());
-        }
-    }
-}
-```
-
-## General v3 Web API Usage (With Fluent Interface)
-
-```csharp
-using System;
-using SendGrid;
-using System.Threading.Tasks;
-
-namespace Example
-{
-    internal class Example
-    {
-        private static void Main()
-        {
-	        Execute().Wait();
-        }
-
-        static async Task Execute()
-        {
-            string apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGrid.SendGridAPIClient(apiKey);
-            dynamic response = await sg.client.suppression.bounces.get();
-	    }
-    }
-}
-```
-
-## General v3 Web API Usage (Without Fluent Interface)
-
-```csharp
-using System;
-using SendGrid;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Example
@@ -200,12 +77,94 @@ namespace Example
 
         static async Task Execute()
         {
-                string apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", EnvironmentVariableTarget.User);
-                dynamic sg = new SendGrid.SendGridAPIClient(apiKey);
-                dynamic response = await sg.client._("suppression/bounces").get();
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("test@example.com", "Example User");
+            var subject = "Hello World from the SendGrid CSharp SDK!";
+            var to = new EmailAddress("test@example.com", "Example User");
+            var plainTextContent = "Hello, Email!";
+            var htmlContent = "<strong>Hello, Email!</strong>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var response = await client.SendEmailAsync(msg);
         }
     }
 }
+```
+
+For more advanced cases, you can build the SendGridMessage object yourself, following is the minimum required settings:
+
+```csharp
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Example
+{
+    internal class Example
+    {
+        private static void Main()
+        {
+            Execute().Wait();
+        }
+
+	    static async Task Execute()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+            var msg = new SendGridMessage()
+            {
+                From = new EmailAddress("test@example.com", "DX Team"),
+                Subject = "Hello World from the SendGrid CSharp SDK!",
+                PlainTextContent = "Hello, Email!",
+                HtmlContent = "<strong>Hello, Email!</strong>"
+            };
+            msg.AddTo(new EmailAddress("test@example.com", "Test User"));
+            var response = await client.SendEmailAsync(msg);
+        }
+    }
+}
+```
+
+You can find an example of all of the email features [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs#L79).
+
+## General v3 Web API Usage
+
+```csharp
+using System;
+using System.Threading.Tasks;
+using SendGrid;
+
+namespace Example
+{
+    internal class Example
+    {
+        private static void Main()
+        {
+            Execute().Wait();
+        }
+
+        static async Task Execute()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+            var queryParams = @"{
+                'limit': 100
+            }";
+            var response = await client.RequestAsync(method: SendGridClient.Method.GET,
+                                                     urlPath: "suppression/bounces",
+                                                     queryParams: queryParams);
+	    }
+    }
+}
+```
+## Web Proxy
+
+```csharp
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var proxy = new WebProxy("http://proxy:1337");
+var client = new SendGridClient(proxy, apiKey);
 ```
 
 <a name="usage"></a>
