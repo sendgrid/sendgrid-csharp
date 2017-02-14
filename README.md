@@ -63,7 +63,6 @@ The following is the minimum needed code to send an simple email:
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Example
@@ -97,7 +96,6 @@ For more advanced cases, you can build the SendGridMessage object yourself, foll
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Example
