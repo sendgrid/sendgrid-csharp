@@ -17,7 +17,6 @@
         <dependencies>
             <group targetFramework=".NETFramework4.0">
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
-                <dependency id="Microsoft.AspNetCore.Http.Abstractions" version="1.1.0" />
             </group>
             <group targetFramework=".NETStandard1.3">
                 <dependency id="NETStandard.Library" version="1.6.1" />
