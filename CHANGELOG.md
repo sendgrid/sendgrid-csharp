@@ -1,9 +1,15 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.0.9] - 2017-02-15 ##
+## Fix
+- Issue #396: Make 'stylecop' a development dependency
+- Thanks to [@knopa](https://github.com/knopa) for the heads up!
+
 ## [9.0.8] - 2017-02-14 ##
 ## Update
-- Issue #394: Make 'stylecop' a development dependency
+- Issue #394: Issue with CreateSingleEmail
+- You can now have either a null plain/text or plain/html type in the MailHelper
 - Thanks to [@onionhammer](https://github.com/onionhammer) for the heads up!
 
 ## [9.0.7] - 2017-02-14 ##

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>Sendgrid</id>
-        <version>9.0.8</version>
+        <version>9.0.9</version>
         <title>SendGrid</title>
         <authors>Elmer Thomas</authors>
         <licenseUrl>https://github.com/sendgrid/sendgrid-csharp/blob/master/MIT.LICENSE</licenseUrl>
@@ -11,7 +11,8 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>C# client library and examples for using SendGrid API's to send mail and access Web API v3 endpoints. Github repo located at : https://github.com/sendgrid/sendgrid-csharp</description>
         <summary>C# client library and examples for using SendGrid API's to send mail and access Web API v3 endpoints.</summary>
-        <releaseNotes>Moved StyleCop to be a development dependency</releaseNotes>
+        <releaseNotes>- Issue #396: Make 'stylecop' a development dependency
+- Thanks to [@knopa](https://github.com/knopa) for the heads up!</releaseNotes>
         <copyright>Copyright 2017</copyright>
         <tags>SendGrid Email Mail Microsoft Azure Transactional</tags>
         <dependencies>
@@ -27,11 +28,11 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="lib\net452\SendGrid.dll" target="lib\net452\SendGrid.dll" />
-        <file src="lib\net452\SendGrid.pdb" target="lib\net452\SendGrid.pdb" />
-        <file src="lib\net452\SendGrid.xml" target="lib\net452\SendGrid.xml" />
-        <file src="lib\netstandard1.3\SendGrid.dll" target="lib\netstandard1.3\SendGrid.dll" />
-        <file src="lib\netstandard1.3\SendGrid.pdb" target="lib\netstandard1.3\SendGrid.pdb" />
-        <file src="lib\netstandard1.3\SendGrid.xml" target="lib\netstandard1.3\SendGrid.xml" />
+        <file src="..\src\SendGrid\bin\Release\net452\SendGrid.dll" target="lib\net452\SendGrid.dll" />
+        <file src="..\src\SendGrid\bin\Release\net452\SendGrid.pdb" target="lib\net452\SendGrid.pdb" />
+        <file src="..\src\SendGrid\bin\Release\net452\SendGrid.xml" target="lib\net452\SendGrid.xml" />
+        <file src="..\src\SendGrid\bin\Release\netstandard1.3\SendGrid.dll" target="lib\netstandard1.3\SendGrid.dll" />
+        <file src="..\src\SendGrid\bin\Release\netstandard1.3\SendGrid.pdb" target="lib\netstandard1.3\SendGrid.pdb" />
+        <file src="..\src\SendGrid\bin\Release\netstandard1.3\SendGrid.xml" target="lib\netstandard1.3\SendGrid.xml" />
     </files>
 </package>
