@@ -31,8 +31,16 @@ namespace SendGrid.Helpers.Mail
             var msg = new SendGridMessage();
             msg.SetFrom(from);
             msg.SetSubject(subject);
-            msg.AddContent(MimeType.Text, plainTextContent);
-            msg.AddContent(MimeType.Html, htmlContent);
+            if (plainTextContent != null)
+            {
+                msg.AddContent(MimeType.Text, plainTextContent);
+            }
+
+            if (htmlContent != null)
+            {
+                msg.AddContent(MimeType.Html, htmlContent);
+            }
+
             msg.AddTo(to);
             return msg;
         }
@@ -56,8 +64,16 @@ namespace SendGrid.Helpers.Mail
             var msg = new SendGridMessage();
             msg.SetFrom(from);
             msg.SetGlobalSubject(subject);
-            msg.AddContent(MimeType.Text, plainTextContent);
-            msg.AddContent(MimeType.Html, htmlContent);
+            if (plainTextContent != null)
+            {
+                msg.AddContent(MimeType.Text, plainTextContent);
+            }
+
+            if (htmlContent != null)
+            {
+                msg.AddContent(MimeType.Html, htmlContent);
+            }
+
             for (var i = 0; i < tos.Count; i++)
             {
                 msg.AddTo(tos[i], i);
@@ -86,8 +102,16 @@ namespace SendGrid.Helpers.Mail
         {
             var msg = new SendGridMessage();
             msg.SetFrom(from);
-            msg.AddContent(MimeType.Text, plainTextContent);
-            msg.AddContent(MimeType.Html, htmlContent);
+            if (plainTextContent != null)
+            {
+                msg.AddContent(MimeType.Text, plainTextContent);
+            }
+
+            if (htmlContent != null)
+            {
+                msg.AddContent(MimeType.Html, htmlContent);
+            }
+
             for (var i = 0; i < tos.Count; i++)
             {
                 msg.AddTo(tos[i], i);
