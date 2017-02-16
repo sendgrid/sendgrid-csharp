@@ -17,7 +17,6 @@
         }
     },
     "dependencies": {
-        "Microsoft.AspNetCore.Http.Abstractions": "1.1.0",
         "StyleCop.Analyzers": {
             "version": "1.0.0",
             "type": "build"
@@ -29,22 +28,24 @@
                 "define": [ "NETSTANDARD" ]
             },
             "imports": "dnxcore50",
-            "dependencies": {
-                "NETStandard.Library": "1.6.1",
-                "Newtonsoft.Json": "9.0.1"
-            }
+          "dependencies": {
+            "Microsoft.AspNetCore.Http.Abstractions": "1.1.0",
+            "NETStandard.Library": "1.6.1",
+            "Newtonsoft.Json": "9.0.1"
+          }
         },
         "net452": {
             "buildOptions": {
                 "define": [ "NET452" ]
             },
             "dependencies": {
-                "Newtonsoft.Json": "9.0.1"
-            },
-            "frameworkAssemblies": {
-                "System.Runtime.Serialization": "4.0.0"
-            }
+              "Newtonsoft.Json": "9.0.1"
+          },
+          "frameworkAssemblies": {
+            "System.Net.Http": "4.0.0",
+            "System.Runtime.Serialization": "4.0.0"
+          }
         }
     },
-    "version": "9.0.9"
+    "version": "9.0.10"
 }

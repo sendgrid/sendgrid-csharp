@@ -40,7 +40,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="SendGrid">
-      <HintPath>..\src\SendGrid\bin\Debug\net452\SendGrid.dll</HintPath>
+      <HintPath>..\src\SendGrid\bin\Release\net452\SendGrid.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

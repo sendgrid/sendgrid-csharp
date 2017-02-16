@@ -1,6 +1,11 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.0.10] - 2017-02-16
+## Fix
+- Issue #395: Remove dependency for Microsoft.AspNetCore.Http.Abstractions in .NET 4
+- Thanks to [@Hinni](https://github.com/Hinni) for the heads up! 
+
 ## [9.0.9] - 2017-02-15 ##
 ## Fix
 - Issue #396: Make 'stylecop' a development dependency
