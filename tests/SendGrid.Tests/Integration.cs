@@ -330,6 +330,21 @@
                                                    "Plain Text Content",
                                                    null);
             Assert.True(msg3.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"personalizations\":[{\"to\":[{\"email\":\"test@example.com\"}],\"subject\":\"Test Subject\"}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Plain Text Content\"}]}");
+
+            var msg4 = MailHelper.CreateSingleEmail(new EmailAddress("test@example.com", "Example User"),
+                                               new EmailAddress("test@example.com"),
+                                               "Test Subject",
+                                               "",
+                                               "HTML Content");
+            Assert.True(msg4.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"personalizations\":[{\"to\":[{\"email\":\"test@example.com\"}],\"subject\":\"Test Subject\"}],\"content\":[{\"type\":\"text/html\",\"value\":\"HTML Content\"}]}");
+
+            var msg5 = MailHelper.CreateSingleEmail(new EmailAddress("test@example.com", "Example User"),
+                                                   new EmailAddress("test@example.com"),
+                                                   "Test Subject",
+                                                   "Plain Text Content",
+                                                   "");
+            Assert.True(msg5.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"personalizations\":[{\"to\":[{\"email\":\"test@example.com\"}],\"subject\":\"Test Subject\"}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Plain Text Content\"}]}");
+
         }
 
         [Fact]
@@ -363,6 +378,21 @@
                                                                        );
             Assert.True(msg3.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"subject\":\"Test Subject\",\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"}]},{\"to\":[{\"email\":\"test2@example.com\"}]},{\"to\":[{\"email\":\"test3@example.com\"}]}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Plain Text Content\"}]}");
 
+            var msg4 = MailHelper.CreateSingleEmailToMultipleRecipients(new EmailAddress("test@example.com", "Example User"),
+                                                            emails,
+                                                            "Test Subject",
+                                                            "",
+                                                            "HTML Content"
+                                                            );
+            Assert.True(msg4.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"subject\":\"Test Subject\",\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"}]},{\"to\":[{\"email\":\"test2@example.com\"}]},{\"to\":[{\"email\":\"test3@example.com\"}]}],\"content\":[{\"type\":\"text/html\",\"value\":\"HTML Content\"}]}");
+
+            var msg5 = MailHelper.CreateSingleEmailToMultipleRecipients(new EmailAddress("test@example.com", "Example User"),
+                                                                       emails,
+                                                                       "Test Subject",
+                                                                       "Plain Text Content",
+                                                                       ""
+                                                                       );
+            Assert.True(msg5.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"subject\":\"Test Subject\",\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"}]},{\"to\":[{\"email\":\"test2@example.com\"}]},{\"to\":[{\"email\":\"test3@example.com\"}]}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Plain Text Content\"}]}");
         }
 
         [Fact]
@@ -412,6 +442,28 @@
                                                                           substitutions
                                                                           );
             Assert.True(msg3.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"}],\"subject\":\"Test Subject1\",\"substitutions\":{\"-name-\":\"Name1\"}},{\"to\":[{\"email\":\"test2@example.com\"}],\"subject\":\"Test Subject2\",\"substitutions\":{\"-name-\":\"Name1\"}},{\"to\":[{\"email\":\"test3@example.com\"}],\"subject\":\"Test Subject3\",\"substitutions\":{\"-name-\":\"Name1\"}}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Hello -name-\"}]}");
+
+            plainTextContent = "";
+            htmlContent = "Goodbye -name-";
+            var msg4 = MailHelper.CreateMultipleEmailsToMultipleRecipients(new EmailAddress("test@example.com", "Example User"),
+                                                                          emails,
+                                                                          subjects,
+                                                                          plainTextContent,
+                                                                          htmlContent,
+                                                                          substitutions
+                                                                          );
+            Assert.True(msg4.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"}],\"subject\":\"Test Subject1\",\"substitutions\":{\"-name-\":\"Name1\"}},{\"to\":[{\"email\":\"test2@example.com\"}],\"subject\":\"Test Subject2\",\"substitutions\":{\"-name-\":\"Name1\"}},{\"to\":[{\"email\":\"test3@example.com\"}],\"subject\":\"Test Subject3\",\"substitutions\":{\"-name-\":\"Name1\"}}],\"content\":[{\"type\":\"text/html\",\"value\":\"Goodbye -name-\"}]}");
+
+            plainTextContent = "Hello -name-";
+            htmlContent = "";
+            var msg5 = MailHelper.CreateMultipleEmailsToMultipleRecipients(new EmailAddress("test@example.com", "Example User"),
+                                                                          emails,
+                                                                          subjects,
+                                                                          plainTextContent,
+                                                                          htmlContent,
+                                                                          substitutions
+                                                                          );
+            Assert.True(msg5.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"}],\"subject\":\"Test Subject1\",\"substitutions\":{\"-name-\":\"Name1\"}},{\"to\":[{\"email\":\"test2@example.com\"}],\"subject\":\"Test Subject2\",\"substitutions\":{\"-name-\":\"Name1\"}},{\"to\":[{\"email\":\"test3@example.com\"}],\"subject\":\"Test Subject3\",\"substitutions\":{\"-name-\":\"Name1\"}}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Hello -name-\"}]}");
         }
 
         [Fact]

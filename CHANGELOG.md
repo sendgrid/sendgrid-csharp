@@ -1,6 +1,11 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.0.11] - 2017-02-17
+## Update
+- Issue #399: Allow for empty strings to be passed in as text or html content in the MailHelper
+- Thanks to [@Angry-Leprechaun](https://github.com/Angry-Leprechaun) for the heads up!
+
 ## [9.0.10] - 2017-02-16
 ## Fix
 - Issue #395: Remove dependency for Microsoft.AspNetCore.Http.Abstractions in .NET 4
