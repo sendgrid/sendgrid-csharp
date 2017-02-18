@@ -1,6 +1,10 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.0.12] - 2017-02-17
+## Update
+- Allow for empty strings to be passed in as text or html content in *All* of the MailHelpers
+
 ## [9.0.11] - 2017-02-17
 ## Update
 - Issue #399: Allow for empty strings to be passed in as text or html content in the MailHelper

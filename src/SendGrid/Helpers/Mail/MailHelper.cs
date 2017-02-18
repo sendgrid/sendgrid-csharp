@@ -64,12 +64,12 @@ namespace SendGrid.Helpers.Mail
             var msg = new SendGridMessage();
             msg.SetFrom(from);
             msg.SetGlobalSubject(subject);
-            if (plainTextContent != null)
+            if (plainTextContent != null && plainTextContent != string.Empty)
             {
                 msg.AddContent(MimeType.Text, plainTextContent);
             }
 
-            if (htmlContent != null)
+            if (htmlContent != null && htmlContent != string.Empty)
             {
                 msg.AddContent(MimeType.Html, htmlContent);
             }
@@ -102,12 +102,12 @@ namespace SendGrid.Helpers.Mail
         {
             var msg = new SendGridMessage();
             msg.SetFrom(from);
-            if (plainTextContent != null)
+            if (plainTextContent != null && plainTextContent != string.Empty)
             {
                 msg.AddContent(MimeType.Text, plainTextContent);
             }
 
-            if (htmlContent != null)
+            if (htmlContent != null && htmlContent != string.Empty)
             {
                 msg.AddContent(MimeType.Html, htmlContent);
             }
