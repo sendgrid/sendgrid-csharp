@@ -30,7 +30,7 @@ We appreciate your continued support, thank you!
 
 ## Prerequisites
 
-- .NET version 4.5.2 and above, including .NET Core (This library is build on .NET Standard 1.3)
+- This library is built on .NET Standard 1.3, therefore, it works with NET version 4.6 and higher, or .NET Core 1.0 and higher.
 - The SendGrid service, starting at the [free level](https://sendgrid.com/free?source=sendgrid-csharp)
 
 ## Setup Environment Variables
