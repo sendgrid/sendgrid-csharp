@@ -17,7 +17,7 @@ If you can't find a solution below, please open an [issue](https://github.com/se
 * [Using the Package Manager](#package-manager)
 
 <a name="migrating"></a>
-## MigratMigrating from the v2 API to v3
+## Migrating from the v2 API to v3
 
 Please review [our guide](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/how_to_migrate_from_v2_to_v3_mail_send.html) on how to migrate from v2 to v3.
 
