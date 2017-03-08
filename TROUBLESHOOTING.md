@@ -9,6 +9,7 @@ If you can't find a solution below, please open an [issue](https://github.com/se
 * [Continue Using the v2 API](#v2)
 * [Migrating from the v8 SDK to v9](#sdkmigration)
 * [Testing v3 /mail/send Calls Directly](#testing)
+* [Using .NET 4.5.1 and lower](#net45)
 * [Missing Classes](#missing)
 * [Error Messages](#error)
 * [Versions](#versions)
@@ -42,6 +43,11 @@ v9 of this SDK is a complete rewrite that includes the removal of dynamic depend
 
 Please begin at the [README](https://github.com/sendgrid/sendgrid-csharp) and if you need further assistance, please [create an issue on GitHub](https://github.com/sendgrid/sendgrid-csharp/issues).
 
+<a name="net45"></a>
+## Using .NET 4.5.1 and lower
+
+[Microsoft is no longer supporting these versions](https://blogs.msdn.microsoft.com/dotnet/2015/12/09/support-ending-for-the-net-framework-4-4-5-and-4-5-1/). We strongly advise upgrading your software to target .NET 4.5.2 or higher. If you are unable to do so, the current solution is to download the code directly into your project and change the compile target to the desired version.
+
 <a name="missing"></a>
 ## Missing Classes
 
@@ -53,8 +59,6 @@ If you receive one of the following errors, or something similar:
 it means that you are probably not compiling your application to .NET 4.5.2. Currently, this is the only supported version of .NET by SendGrid.
 
 The current solution is to download the code directly into your project and change the compile target to the desired version.
-
-If you are using ASP.NET Core, please [upvote this issue](https://github.com/sendgrid/sendgrid-csharp/issues/221).
 
 <a name="testing"></a>
 ## Testing v3 /mail/send Calls Directly
