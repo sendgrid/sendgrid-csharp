@@ -2207,14 +2207,12 @@
         public async Task TestAccessSettingsActivityGet()
         {
             string host = "http://localhost:4010";
-            var sg = new SendGridClient(fixture.apiKey, host);
+            var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
+            var sg = new SendGridClient(fixture.apiKey, host, headers);
             string queryParams = @"{
   'limit': 1
 }";
-            Dictionary<String, String> headers = new Dictionary<String, String>();
-            headers.Clear();
-            headers.Add("X-Mock", "200");
-            Response response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "access_settings/activity", queryParams: queryParams, requestHeaders: headers);
+            Response response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "access_settings/activity", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -2222,7 +2220,8 @@
         public async Task TestAccessSettingsWhitelistPost()
         {
             string host = "http://localhost:4010";
-            var sg = new SendGridClient(fixture.apiKey, host);
+            var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
+            var sg = new SendGridClient(fixture.apiKey, host, headers);
             string data = @"{
   'ips': [
     {
@@ -2238,10 +2237,7 @@
 }";
             Object json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            Dictionary<String, String> headers = new Dictionary<String, String>();
-            headers.Clear();
-            headers.Add("X-Mock", "201");
-            Response response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "access_settings/whitelist", requestBody: data, requestHeaders: headers);
+            Response response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "access_settings/whitelist", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -2249,11 +2245,9 @@
         public async Task TestAccessSettingsWhitelistGet()
         {
             string host = "http://localhost:4010";
-            var sg = new SendGridClient(fixture.apiKey, host);
-            Dictionary<String, String> headers = new Dictionary<String, String>();
-            headers.Clear();
-            headers.Add("X-Mock", "200");
-            Response response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "access_settings/whitelist", requestHeaders: headers);
+            var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
+            var sg = new SendGridClient(fixture.apiKey, host, headers);
+            Response response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "access_settings/whitelist");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -2261,7 +2255,8 @@
         public async Task TestAccessSettingsWhitelistDelete()
         {
             string host = "http://localhost:4010";
-            var sg = new SendGridClient(fixture.apiKey, host);
+            var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
+            var sg = new SendGridClient(fixture.apiKey, host, headers);
             string data = @"{
   'ids': [
     1, 
@@ -2271,10 +2266,7 @@
 }";
             Object json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            Dictionary<String, String> headers = new Dictionary<String, String>();
-            headers.Clear();
-            headers.Add("X-Mock", "204");
-            Response response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "access_settings/whitelist", requestBody: data, requestHeaders: headers);
+            Response response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "access_settings/whitelist", requestBody: data);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -2282,12 +2274,10 @@
         public async Task TestAccessSettingsWhitelistRuleIdGet()
         {
             string host = "http://localhost:4010";
-            var sg = new SendGridClient(fixture.apiKey, host);
+            var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
+            var sg = new SendGridClient(fixture.apiKey, host, headers);
             var rule_id = "test_url_param";
-            Dictionary<String, String> headers = new Dictionary<String, String>();
-            headers.Clear();
-            headers.Add("X-Mock", "200");
-            Response response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "access_settings/whitelist/" + rule_id, requestHeaders: headers);
+            Response response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "access_settings/whitelist/" + rule_id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -2338,44 +2328,37 @@
         [Fact]
         public async Task TestAlertsAlertIdPatch()
         {
-            string host = "http://localhost:4010";
-            var sg = new SendGridClient(fixture.apiKey, host);
-            string data = @"{
+            var host = "http://localhost:4010";
+            var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
+            var sg = new SendGridClient(fixture.apiKey, host, headers);
+            var data = @"{
   'email_to': 'example@example.com'
 }";
-            Object json = JsonConvert.DeserializeObject<Object>(data);
+            var json = JsonConvert.DeserializeObject<object>(data);
             data = json.ToString();
             var alert_id = "test_url_param";
-            Dictionary<String, String> headers = new Dictionary<String, String>();
-            headers.Clear();
-            headers.Add("X-Mock", "200");
-            Response response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "alerts/" + alert_id, requestBody: data, requestHeaders: headers);
+            Response response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "alerts/" + alert_id, requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
         [Fact]
         public async Task TestAlertsAlertIdGet()
         {
-            string host = "http://localhost:4010";
-            var sg = new SendGridClient(fixture.apiKey, host);
+            var host = "http://localhost:4010";
+            var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
+            var sg = new SendGridClient(fixture.apiKey, host, headers);
             var alert_id = "test_url_param";
-            Dictionary<String, String> headers = new Dictionary<String, String>();
-            headers.Clear();
-            headers.Add("X-Mock", "200");
-            Response response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "alerts/" + alert_id, requestHeaders: headers);
+            Response response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "alerts/" + alert_id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
         [Fact]
         public async Task TestAlertsAlertIdDelete()
         {
-            string host = "http://localhost:4010";
-            var sg = new SendGridClient(fixture.apiKey, host);
+            var host = "http://localhost:4010";
+            var sg = new SendGridClient(fixture.apiKey, host, headers);
             var alert_id = "test_url_param";
-            Dictionary<String, String> headers = new Dictionary<String, String>();
-            headers.Clear();
-            headers.Add("X-Mock", "204");
-            Response response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "alerts/" + alert_id, requestHeaders: headers);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "alerts/" + alert_id);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
