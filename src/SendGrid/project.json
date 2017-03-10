@@ -7,7 +7,8 @@
     "additionalArguments": [
       "/ruleset:./SendGrid.ruleset",
       "/additionalfile:./stylecop.json"
-    ]
+    ],
+    "define": [ "DEBUG" ]
   },
     "configurations": {
         "Release": {

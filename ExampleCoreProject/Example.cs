@@ -121,45 +121,50 @@
                                                  urlPath: "asm/groups",
                                                  requestBody: json.ToString());
             var ds_response = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(response.Body.ReadAsStringAsync().Result);
-            string group_id = ds_response["id"].ToString();
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers);
             Console.WriteLine("\n\nPress any key to continue to GET single.");
             Console.ReadLine();
 
-            // GET Single
-            response = await client.RequestAsync(method: SendGridClient.Method.GET,
-                                                 urlPath: string.Format("asm/groups/{0}", group_id));
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
-            Console.WriteLine(response.Headers);
-            Console.WriteLine("\n\nPress any key to continue to PATCH.");
-            Console.ReadLine();
+            if (ds_response != null && ds_response.ContainsKey("id"))
+            {
+                string group_id = ds_response["id"].ToString();
 
-            // PATCH
-            requestBody = @"{
-                'name': 'Cool Magic Products'
-            }";
-            json = JsonConvert.DeserializeObject<object>(requestBody);
 
-            response = await client.RequestAsync(method: SendGridClient.Method.PATCH,
-                                                 urlPath: string.Format("asm/groups/{0}", group_id),
-                                                 requestBody: json.ToString());
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
-            Console.WriteLine(response.Headers.ToString());
+                // GET Single
+                response = await client.RequestAsync(method: SendGridClient.Method.GET,
+                    urlPath: string.Format("asm/groups/{0}", group_id));
+                Console.WriteLine(response.StatusCode);
+                Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+                Console.WriteLine(response.Headers);
+                Console.WriteLine("\n\nPress any key to continue to PATCH.");
+                Console.ReadLine();
 
-            Console.WriteLine("\n\nPress any key to continue to PUT.");
-            Console.ReadLine();
+                // PATCH
+                requestBody = @"{
+                    'name': 'Cool Magic Products'
+                }";
+                json = JsonConvert.DeserializeObject<object>(requestBody);
 
-            // DELETE
-            response = await client.RequestAsync(method: SendGridClient.Method.DELETE,
-                                                 urlPath: string.Format("asm/groups/{0}", group_id));
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Headers.ToString());
-            Console.WriteLine("\n\nPress any key to DELETE and exit.");
-            Console.ReadLine();
+                response = await client.RequestAsync(method: SendGridClient.Method.PATCH,
+                    urlPath: string.Format("asm/groups/{0}", group_id),
+                    requestBody: json.ToString());
+                Console.WriteLine(response.StatusCode);
+                Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+                Console.WriteLine(response.Headers.ToString());
+
+                Console.WriteLine("\n\nPress any key to continue to PUT.");
+                Console.ReadLine();
+
+                // DELETE
+                response = await client.RequestAsync(method: SendGridClient.Method.DELETE,
+                    urlPath: string.Format("asm/groups/{0}", group_id));
+                Console.WriteLine(response.StatusCode);
+                Console.WriteLine(response.Headers.ToString());
+                Console.WriteLine("\n\nPress any key to DELETE and exit.");
+                Console.ReadLine();
+            }
         }
     }
 }

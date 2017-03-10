@@ -24,10 +24,9 @@ namespace SendGrid
     public class SendGridClient
     {
         private readonly string version;
-        //private readonly string urlPath;
+        // private readonly string urlPath;
         private readonly string mediaType;
         private HttpClient client;
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
@@ -45,8 +44,7 @@ namespace SendGrid
             var baseAddress = host ?? "https://api.sendgrid.com";
             var clientVersion = GetType().GetTypeInfo().Assembly.GetName().Version.ToString();
 
-
-            //var servicePoint = ServicePointManager.FindServicePoint()
+            // var servicePoint = ServicePointManager.FindServicePoint()
 
             // Add the WebProxy if set
             if (webProxy != null)
@@ -61,20 +59,20 @@ namespace SendGrid
             }
             else
             {
-                client = new HttpClient(); 
+                client = new HttpClient();
             }
 
             // standard headers
             client.BaseAddress = new Uri(baseAddress);
             Dictionary<string, string> headers = new Dictionary<string, string>
             {
-                {"Authorization", "Bearer " + apiKey},
-                {"Content-Type", "application/json"},
-                {"User-Agent", "sendgrid/" + clientVersion + " csharp"},
-                {"Accept", "application/json"}
+                { "Authorization", "Bearer " + apiKey },
+                { "Content-Type", "application/json" },
+                { "User-Agent", "sendgrid/" + clientVersion + " csharp" },
+                { "Accept", "application/json" }
             };
 
-            // set header overrides 
+            // set header overrides
             if (requestHeaders != null)
             {
                 foreach (var header in requestHeaders)
@@ -111,7 +109,7 @@ namespace SendGrid
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <returns>Interface to the SendGrid REST API</returns>
-        public SendGridClient(string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3")  
+        public SendGridClient(string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3")
             : this(null, apiKey, host, requestHeaders, version)
         {
         }
@@ -164,7 +162,7 @@ namespace SendGrid
         /// <param name="request">The parameters for the API call</param>
         /// <param name="cancellationToken">Cancel the asynchronous call</param>
         /// <returns>Response object</returns>
-        private async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
+        public  async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
         {
             HttpResponseMessage response = await client.SendAsync(request, cancellationToken);
             return new Response(response.StatusCode, response.Content, response.Headers);
@@ -188,7 +186,7 @@ namespace SendGrid
         {
             try
             {
-                var endpoint = BuildUrl(urlPath, queryParams);
+                var endpoint = client.BaseAddress + BuildUrl(urlPath, queryParams);
                 // Build the request body
                 StringContent content = null;
                 if (requestBody != null)
@@ -222,10 +220,11 @@ namespace SendGrid
         /// <returns>A Response object.</returns>
         public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await this.RequestAsync(Method.POST,
+            return await this.RequestAsync(
+                                           Method.POST,
                                            msg.Serialize(),
                                            urlPath: "mail/send",
-                                           cancellationToken: cancellationToken).ConfigureAwait(false);
+                                           cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -242,11 +241,11 @@ namespace SendGrid
 
             if (version != null)
             {
-                url = "/" + version + "/" + urlPath;
+                url = version + "/" + urlPath;
             }
             else
             {
-                url = "/" + urlPath;
+                url = urlPath;
             }
 
             if (queryParams != null)
