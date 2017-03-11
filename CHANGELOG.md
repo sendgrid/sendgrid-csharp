@@ -1,6 +1,37 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.0.12] - 2017-02-17
+## Update
+- Allow for empty strings to be passed in as text or html content in *All* of the MailHelpers
+
+## [9.0.11] - 2017-02-17
+## Update
+- Issue #399: Allow for empty strings to be passed in as text or html content in the MailHelper
+- Thanks to [@Angry-Leprechaun](https://github.com/Angry-Leprechaun) for the heads up!
+
+## [9.0.10] - 2017-02-16
+## Fix
+- Issue #395: Remove dependency for Microsoft.AspNetCore.Http.Abstractions in .NET 4
+- Thanks to [@Hinni](https://github.com/Hinni) for the heads up! 
+
+## [9.0.9] - 2017-02-15 ##
+## Fix
+- Issue #396: Make 'stylecop' a development dependency
+- Thanks to [@knopa](https://github.com/knopa) for the heads up!
+
+## [9.0.8] - 2017-02-14 ##
+## Update
+- Issue #394: Issue with CreateSingleEmail
+- You can now have either a null plain/text or plain/html type in the MailHelper
+- Thanks to [@onionhammer](https://github.com/onionhammer) for the heads up!
+
+## [9.0.7] - 2017-02-14 ##
+### BREAKING CHANGE
+- Support for .NET Standard 1.3
+- Removed dynamic dependencies
+- Updated Mail Helper
+
 ## [8.0.4] - 2016-08-24 ##
 ### Added
 - Table of Contents in the README

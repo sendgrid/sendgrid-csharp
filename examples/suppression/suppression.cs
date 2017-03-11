@@ -1,9 +1,11 @@
-using System;
+using Newtonsoft.Json;
+using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using System;
 
-string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
+
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
 
 ////////////////////////////////////////////////////////
 // Retrieve all blocks
@@ -15,7 +17,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_time': 1
 }";
-dynamic response = await sg.client.suppression.blocks.get(queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/blocks", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -34,7 +36,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.suppression.blocks.delete(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/blocks", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -45,7 +47,7 @@ Console.ReadLine();
 // GET /suppression/blocks/{email}
 
 var email = "test_url_param";
-dynamic response = await sg.client.suppression.blocks._(email).get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/blocks/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -56,7 +58,7 @@ Console.ReadLine();
 // DELETE /suppression/blocks/{email}
 
 var email = "test_url_param";
-dynamic response = await sg.client.suppression.blocks._(email).delete();
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/blocks/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -70,7 +72,7 @@ string queryParams = @"{
   'end_time': 1, 
   'start_time': 1
 }";
-dynamic response = await sg.client.suppression.bounces.get(queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/bounces", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -89,7 +91,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.suppression.bounces.delete(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/bounces", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -100,7 +102,7 @@ Console.ReadLine();
 // GET /suppression/bounces/{email}
 
 var email = "test_url_param";
-dynamic response = await sg.client.suppression.bounces._(email).get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/bounces/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -114,7 +116,7 @@ string queryParams = @"{
   'email_address': 'example@example.com'
 }";
 var email = "test_url_param";
-dynamic response = await sg.client.suppression.bounces._(email).delete(queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/bounces/" + email, queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -130,7 +132,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_time': 1
 }";
-dynamic response = await sg.client.suppression.invalid_emails.get(queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/invalid_emails", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -149,7 +151,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.suppression.invalid_emails.delete(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/invalid_emails", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -160,7 +162,7 @@ Console.ReadLine();
 // GET /suppression/invalid_emails/{email}
 
 var email = "test_url_param";
-dynamic response = await sg.client.suppression.invalid_emails._(email).get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/invalid_emails/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -171,7 +173,7 @@ Console.ReadLine();
 // DELETE /suppression/invalid_emails/{email}
 
 var email = "test_url_param";
-dynamic response = await sg.client.suppression.invalid_emails._(email).delete();
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/invalid_emails/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -182,7 +184,7 @@ Console.ReadLine();
 // GET /suppression/spam_report/{email}
 
 var email = "test_url_param";
-dynamic response = await sg.client.suppression.spam_report._(email).get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/spam_report/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -193,7 +195,7 @@ Console.ReadLine();
 // DELETE /suppression/spam_report/{email}
 
 var email = "test_url_param";
-dynamic response = await sg.client.suppression.spam_report._(email).delete();
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/spam_report/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -209,7 +211,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_time': 1
 }";
-dynamic response = await sg.client.suppression.spam_reports.get(queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/spam_reports", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -228,7 +230,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.suppression.spam_reports.delete(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/spam_reports", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -244,7 +246,7 @@ string queryParams = @"{
   'offset': 1, 
   'start_time': 1
 }";
-dynamic response = await sg.client.suppression.unsubscribes.get(queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/unsubscribes", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
