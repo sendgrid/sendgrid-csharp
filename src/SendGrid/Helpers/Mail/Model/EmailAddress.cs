@@ -33,8 +33,17 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Gets or sets the name of the sender or recipient.
         /// </summary>
+
+        private string _name;
+        private static readonly char[] Quote = {'\"'};
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name {
+            get { return _name; }
+            set
+            {
+                _name = value?.Trim(Quote);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the email address of the sender or recipient.
