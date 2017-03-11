@@ -1,9 +1,11 @@
-using System;
+using Newtonsoft.Json;
+using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using System;
 
-string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
+
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
 
 ////////////////////////////////////////////////////////
 // Create a transactional template.
@@ -14,7 +16,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.templates.post(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "templates", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -24,7 +26,7 @@ Console.ReadLine();
 // Retrieve all transactional templates.
 // GET /templates
 
-dynamic response = await sg.client.templates.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "templates");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -40,7 +42,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var template_id = "test_url_param";
-dynamic response = await sg.client.templates._(template_id).patch(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "templates/" + template_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -51,7 +53,7 @@ Console.ReadLine();
 // GET /templates/{template_id}
 
 var template_id = "test_url_param";
-dynamic response = await sg.client.templates._(template_id).get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "templates/" + template_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -62,7 +64,7 @@ Console.ReadLine();
 // DELETE /templates/{template_id}
 
 var template_id = "test_url_param";
-dynamic response = await sg.client.templates._(template_id).delete();
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "templates/" + template_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -83,7 +85,7 @@ string data = @"{
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var template_id = "test_url_param";
-dynamic response = await sg.client.templates._(template_id).versions.post(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "templates/" + template_id + "/versions", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -104,7 +106,7 @@ Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 var template_id = "test_url_param";
 var version_id = "test_url_param";
-dynamic response = await sg.client.templates._(template_id).versions._(version_id).patch(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "templates/" + template_id + "/versions/" + version_id, requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -116,7 +118,7 @@ Console.ReadLine();
 
 var template_id = "test_url_param";
 var version_id = "test_url_param";
-dynamic response = await sg.client.templates._(template_id).versions._(version_id).get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "templates/" + template_id + "/versions/" + version_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -128,7 +130,7 @@ Console.ReadLine();
 
 var template_id = "test_url_param";
 var version_id = "test_url_param";
-dynamic response = await sg.client.templates._(template_id).versions._(version_id).delete();
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "templates/" + template_id + "/versions/" + version_id);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -140,7 +142,7 @@ Console.ReadLine();
 
 var template_id = "test_url_param";
 var version_id = "test_url_param";
-dynamic response = await sg.client.templates._(template_id).versions._(version_id).activate.post();
+var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "templates/" + template_id + "/versions/" + version_id + "/activate");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

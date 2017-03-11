@@ -1,9 +1,11 @@
-using System;
+using Newtonsoft.Json;
+using SendGrid;
 using SendGrid.Helpers.Mail; // If you are using the Mail Helper
-using Newtonsoft.Json; // You can generate your JSON string yourelf or with another library if you prefer
+using System;
 
-string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);
-dynamic sg = new SendGrid.SendGridAPIClient(_apiKey);
+
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
 
 ////////////////////////////////////////////////////////
 // Retrieve all mail settings
@@ -13,7 +15,7 @@ string queryParams = @"{
   'limit': 1, 
   'offset': 1
 }";
-dynamic response = await sg.client.mail_settings.get(queryParams: queryParams);
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -32,7 +34,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.address_whitelist.patch(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/address_whitelist", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -42,7 +44,7 @@ Console.ReadLine();
 // Retrieve address whitelist mail settings
 // GET /mail_settings/address_whitelist
 
-dynamic response = await sg.client.mail_settings.address_whitelist.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/address_whitelist");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -58,7 +60,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.bcc.patch(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/bcc", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -68,7 +70,7 @@ Console.ReadLine();
 // Retrieve all BCC mail settings
 // GET /mail_settings/bcc
 
-dynamic response = await sg.client.mail_settings.bcc.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/bcc");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -85,7 +87,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.bounce_purge.patch(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/bounce_purge", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -95,7 +97,7 @@ Console.ReadLine();
 // Retrieve bounce purge mail settings
 // GET /mail_settings/bounce_purge
 
-dynamic response = await sg.client.mail_settings.bounce_purge.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/bounce_purge");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -112,7 +114,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.footer.patch(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/footer", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -122,7 +124,7 @@ Console.ReadLine();
 // Retrieve footer mail settings
 // GET /mail_settings/footer
 
-dynamic response = await sg.client.mail_settings.footer.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/footer");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -138,7 +140,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.forward_bounce.patch(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/forward_bounce", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -148,7 +150,7 @@ Console.ReadLine();
 // Retrieve forward bounce mail settings
 // GET /mail_settings/forward_bounce
 
-dynamic response = await sg.client.mail_settings.forward_bounce.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/forward_bounce");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -164,7 +166,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.forward_spam.patch(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/forward_spam", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -174,7 +176,7 @@ Console.ReadLine();
 // Retrieve forward spam mail settings
 // GET /mail_settings/forward_spam
 
-dynamic response = await sg.client.mail_settings.forward_spam.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/forward_spam");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -189,7 +191,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.plain_content.patch(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/plain_content", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -199,7 +201,7 @@ Console.ReadLine();
 // Retrieve plain content mail settings
 // GET /mail_settings/plain_content
 
-dynamic response = await sg.client.mail_settings.plain_content.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/plain_content");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -216,7 +218,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.spam_check.patch(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/spam_check", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -226,7 +228,7 @@ Console.ReadLine();
 // Retrieve spam check mail settings
 // GET /mail_settings/spam_check
 
-dynamic response = await sg.client.mail_settings.spam_check.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/spam_check");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -242,7 +244,7 @@ string data = @"{
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
-dynamic response = await sg.client.mail_settings.template.patch(requestBody: data);
+var response = await client.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/template", requestBody: data);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -252,7 +254,7 @@ Console.ReadLine();
 // Retrieve legacy template mail settings
 // GET /mail_settings/template
 
-dynamic response = await sg.client.mail_settings.template.get();
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/template");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
