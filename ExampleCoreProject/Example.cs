@@ -31,7 +31,7 @@
             Console.WriteLine(msg.Serialize());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers);
-            Console.WriteLine("\n\nPress any key to continue.");
+            Console.WriteLine("\n\nPress <Enter> to continue.");
             Console.ReadLine();
 
             // Send a Single Email using the Mail Helper with convenience methods and initialized SendGridMessage object
@@ -48,7 +48,7 @@
             Console.WriteLine(msg.Serialize());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers);
-            Console.WriteLine("\n\nPress any key to continue.");
+            Console.WriteLine("\n\nPress <Enter> to continue.");
             Console.ReadLine();
 
             // Send a Single Email using the Mail Helper, entirely with convenience methods
@@ -63,7 +63,7 @@
             Console.WriteLine(msg.Serialize());
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers);
-            Console.WriteLine("\n\nPress any key to continue.");
+            Console.WriteLine("\n\nPress <Enter> to continue.");
             Console.ReadLine();
 
             // Send a Single Email Without the Mail Helper
@@ -94,7 +94,7 @@
                                                  urlPath: "mail/send");
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers);
-            Console.WriteLine("\n\nPress any key to continue.");
+            Console.WriteLine("\n\nPress <Enter> to continue.");
             Console.ReadLine();
 
             // GET Collection
@@ -107,7 +107,7 @@
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers);
-            Console.WriteLine("\n\nPress any key to continue to POST.");
+            Console.WriteLine("\n\nPress <Enter> to continue to POST.");
             Console.ReadLine();
 
             // POST
@@ -124,7 +124,7 @@
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers);
-            Console.WriteLine("\n\nPress any key to continue to GET single.");
+            Console.WriteLine("\n\nPress <Enter> to continue to GET single.");
             Console.ReadLine();
 
             if (ds_response != null && ds_response.ContainsKey("id"))
@@ -138,7 +138,7 @@
                 Console.WriteLine(response.StatusCode);
                 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
                 Console.WriteLine(response.Headers);
-                Console.WriteLine("\n\nPress any key to continue to PATCH.");
+                Console.WriteLine("\n\nPress <Enter> to continue to PATCH.");
                 Console.ReadLine();
 
                 // PATCH
@@ -154,7 +154,7 @@
                 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
                 Console.WriteLine(response.Headers.ToString());
 
-                Console.WriteLine("\n\nPress any key to continue to PUT.");
+                Console.WriteLine("\n\nPress <Enter> to continue to PUT.");
                 Console.ReadLine();
 
                 // DELETE
@@ -162,7 +162,7 @@
                     urlPath: string.Format("asm/groups/{0}", group_id));
                 Console.WriteLine(response.StatusCode);
                 Console.WriteLine(response.Headers.ToString());
-                Console.WriteLine("\n\nPress any key to DELETE and exit.");
+                Console.WriteLine("\n\nPress <Enter> to DELETE and exit.");
                 Console.ReadLine();
             }
         }

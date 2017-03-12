@@ -9,7 +9,6 @@ namespace SendGrid
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
@@ -24,7 +23,6 @@ namespace SendGrid
     public class SendGridClient
     {
         private readonly string version;
-        // private readonly string urlPath;
         private readonly string mediaType;
         private HttpClient client;
 
@@ -86,13 +84,13 @@ namespace SendGrid
             {
                 if (header.Key == "Authorization")
                 {
-                    var split = header.Value.Split(new char[0]);
+                    var split = header.Value.Split();
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(split[0], split[1]);
                 }
                 else if (header.Key == "Content-Type")
                 {
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(header.Value));
-                    this.mediaType = header.Value;
+                    mediaType = header.Value;
                 }
                 else
                 {
@@ -152,7 +150,7 @@ namespace SendGrid
         /// <returns>Authorization value to add to the header</returns>
         public virtual AuthenticationHeaderValue AddAuthorization(KeyValuePair<string, string> header)
         {
-            string[] split = header.Value.Split(new char[0]);
+            string[] split = header.Value.Split();
             return new AuthenticationHeaderValue(split[0], split[1]);
         }
 
@@ -162,7 +160,7 @@ namespace SendGrid
         /// <param name="request">The parameters for the API call</param>
         /// <param name="cancellationToken">Cancel the asynchronous call</param>
         /// <returns>Response object</returns>
-        public  async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
         {
             HttpResponseMessage response = await client.SendAsync(request, cancellationToken);
             return new Response(response.StatusCode, response.Content, response.Headers);
@@ -187,6 +185,7 @@ namespace SendGrid
             try
             {
                 var endpoint = client.BaseAddress + BuildUrl(urlPath, queryParams);
+
                 // Build the request body
                 StringContent content = null;
                 if (requestBody != null)
@@ -220,7 +219,7 @@ namespace SendGrid
         /// <returns>A Response object.</returns>
         public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await this.RequestAsync(
+            return await RequestAsync(
                                            Method.POST,
                                            msg.Serialize(),
                                            urlPath: "mail/send",
