@@ -162,7 +162,7 @@ namespace SendGrid
         /// <returns>Response object</returns>
         public async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
         {
-            HttpResponseMessage response = await client.SendAsync(request, cancellationToken);
+            HttpResponseMessage response = await client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return new Response(response.StatusCode, response.Content, response.Headers);
         }
 
@@ -200,7 +200,7 @@ namespace SendGrid
                     RequestUri = new Uri(endpoint),
                     Content = content
                 };
-                return await MakeRequest(request, cancellationToken);
+                return await MakeRequest(request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -223,7 +223,7 @@ namespace SendGrid
                                            Method.POST,
                                            msg.Serialize(),
                                            urlPath: "mail/send",
-                                           cancellationToken: cancellationToken);
+                                           cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
