@@ -22,8 +22,24 @@ namespace SendGrid
     /// </summary>
     public class SendGridClient
     {
-        private readonly string version;
-        private readonly string mediaType;
+        /// <summary>
+        /// Gets or sets the path to the API resource.
+        /// </summary>
+        public string UrlPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the API version.
+        /// </summary>
+        public string Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets the request media type.
+        /// </summary>
+        public string MediaType { get; set; }
+
+        /// <summary>
+        /// The HttpClient instance to use for all calls from this SendGridClient instance.
+        /// </summary>
         private HttpClient client;
 
         /// <summary>
@@ -34,17 +50,17 @@ namespace SendGrid
         /// <param name="host">Base url (e.g. https://api.sendgrid.com)</param>
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
+        /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
         /// <returns>Interface to the SendGrid REST API</returns>
-        public SendGridClient(IWebProxy webProxy, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3")
+        public SendGridClient(IWebProxy webProxy, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
         {
-            this.version = version;
+            UrlPath = urlPath;
+            Version = version;
 
             var baseAddress = host ?? "https://api.sendgrid.com";
             var clientVersion = GetType().GetTypeInfo().Assembly.GetName().Version.ToString();
 
-            // var servicePoint = ServicePointManager.FindServicePoint()
-
-            // Add the WebProxy if set
+            // Create client with WebProxy if set
             if (webProxy != null)
             {
                 var httpClientHandler = new HttpClientHandler()
@@ -90,7 +106,7 @@ namespace SendGrid
                 else if (header.Key == "Content-Type")
                 {
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(header.Value));
-                    mediaType = header.Value;
+                    MediaType = header.Value;
                 }
                 else
                 {
@@ -106,9 +122,10 @@ namespace SendGrid
         /// <param name="host">Base url (e.g. https://api.sendgrid.com)</param>
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
+        /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
         /// <returns>Interface to the SendGrid REST API</returns>
-        public SendGridClient(string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3")
-            : this(null, apiKey, host, requestHeaders, version)
+        public SendGridClient(string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
+            : this(null, apiKey, host, requestHeaders, version, urlPath)
         {
         }
 
@@ -190,7 +207,7 @@ namespace SendGrid
                 StringContent content = null;
                 if (requestBody != null)
                 {
-                    content = new StringContent(requestBody, Encoding.UTF8, this.mediaType);
+                    content = new StringContent(requestBody, Encoding.UTF8, this.MediaType);
                 }
 
                 // Build the final request
@@ -238,13 +255,16 @@ namespace SendGrid
         {
             string url = null;
 
-            if (version != null)
+            // create urlPAth - from parameter if overriden on call or from ctor parameter
+            var urlpath = urlPath ?? UrlPath;
+
+            if (Version != null)
             {
-                url = version + "/" + urlPath;
+                url = Version + "/" + urlpath;
             }
             else
             {
-                url = urlPath;
+                url = urlpath;
             }
 
             if (queryParams != null)
