@@ -1,6 +1,11 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.1.0] - 2017-03-20
+## Update
+- PR #405: Reuse HTTP Client
+- Thanks to [Jonny Bekkum](https://github.com/jonnybee) for the PR!
+
 ## [9.0.12] - 2017-02-17
 ## Update
 - Allow for empty strings to be passed in as text or html content in *All* of the MailHelpers
