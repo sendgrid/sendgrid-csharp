@@ -9,7 +9,6 @@ namespace SendGrid
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
@@ -24,34 +23,24 @@ namespace SendGrid
     public class SendGridClient
     {
         /// <summary>
-        /// The base URL for the API call.
+        /// Gets or sets the path to the API resource.
         /// </summary>
-        private string host;
+        public string UrlPath { get; set; }
 
         /// <summary>
-        /// The request headers.
+        /// Gets or sets the API version.
         /// </summary>
-        private Dictionary<string, string> requestHeaders;
+        public string Version { get; set; }
 
         /// <summary>
-        /// The API version.
+        /// Gets or sets the request media type.
         /// </summary>
-        private string version;
+        public string MediaType { get; set; }
 
         /// <summary>
-        /// The path to the API resource.
+        /// The HttpClient instance to use for all calls from this SendGridClient instance.
         /// </summary>
-        private string urlPath;
-
-        /// <summary>
-        /// The request media type.
-        /// </summary>
-        private string mediaType;
-
-        /// <summary>
-        /// The web proxy.
-        /// </summary>
-        private IWebProxy webProxy;
+        private HttpClient client;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
@@ -63,10 +52,67 @@ namespace SendGrid
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
         /// <returns>Interface to the SendGrid REST API</returns>
-        public SendGridClient(IWebProxy webProxy, string apiKey, string host = "https://api.sendgrid.com", Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
-            : this(apiKey, host, requestHeaders, version, urlPath)
+        public SendGridClient(IWebProxy webProxy, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
         {
-            this.WebProxy = webProxy;
+            UrlPath = urlPath;
+            Version = version;
+
+            var baseAddress = host ?? "https://api.sendgrid.com";
+            var clientVersion = GetType().GetTypeInfo().Assembly.GetName().Version.ToString();
+
+            // Create client with WebProxy if set
+            if (webProxy != null)
+            {
+                var httpClientHandler = new HttpClientHandler()
+                {
+                    Proxy = webProxy,
+                    PreAuthenticate = true,
+                    UseDefaultCredentials = false,
+                };
+                client = new HttpClient(httpClientHandler);
+            }
+            else
+            {
+                client = new HttpClient();
+            }
+
+            // standard headers
+            client.BaseAddress = new Uri(baseAddress);
+            Dictionary<string, string> headers = new Dictionary<string, string>
+            {
+                { "Authorization", "Bearer " + apiKey },
+                { "Content-Type", "application/json" },
+                { "User-Agent", "sendgrid/" + clientVersion + " csharp" },
+                { "Accept", "application/json" }
+            };
+
+            // set header overrides
+            if (requestHeaders != null)
+            {
+                foreach (var header in requestHeaders)
+                {
+                    headers[header.Key] = header.Value;
+                }
+            }
+
+            // add headers to httpClient
+            foreach (var header in headers)
+            {
+                if (header.Key == "Authorization")
+                {
+                    var split = header.Value.Split();
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(split[0], split[1]);
+                }
+                else if (header.Key == "Content-Type")
+                {
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(header.Value));
+                    MediaType = header.Value;
+                }
+                else
+                {
+                    client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                }
+            }
         }
 
         /// <summary>
@@ -79,22 +125,8 @@ namespace SendGrid
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
         /// <returns>Interface to the SendGrid REST API</returns>
         public SendGridClient(string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
+            : this(null, apiKey, host, requestHeaders, version, urlPath)
         {
-            this.Host = (host != null) ? host : "https://api.sendgrid.com";
-            this.Version = this.GetType().GetTypeInfo().Assembly.GetName().Version.ToString();
-            Dictionary<string, string> defaultHeaders = new Dictionary<string, string>();
-            defaultHeaders.Add("Authorization", "Bearer " + apiKey);
-            defaultHeaders.Add("Content-Type", "application/json");
-            defaultHeaders.Add("User-Agent", "sendgrid/" + this.Version + " csharp");
-            defaultHeaders.Add("Accept", "application/json");
-            this.AddRequestHeader(defaultHeaders);
-            if (requestHeaders != null)
-            {
-                this.AddRequestHeader(requestHeaders);
-            }
-
-            this.SetVersion(version);
-            this.SetUrlPath(urlPath);
         }
 
         /// <summary>
@@ -129,166 +161,23 @@ namespace SendGrid
         }
 
         /// <summary>
-        /// Gets or sets the web proxy.
-        /// </summary>
-        public IWebProxy WebProxy
-        {
-            get
-            {
-                return this.webProxy;
-            }
-
-            set
-            {
-                this.webProxy = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the request media type.
-        /// </summary>
-        public string MediaType
-        {
-            get
-            {
-                return this.mediaType;
-            }
-
-            set
-            {
-                this.mediaType = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the path to the API resource.
-        /// </summary>
-        public string UrlPath
-        {
-            get
-            {
-                return this.urlPath;
-            }
-
-            set
-            {
-                this.urlPath = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the API version.
-        /// </summary>
-        public string Version
-        {
-            get
-            {
-                return this.version;
-            }
-
-            set
-            {
-                this.version = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the request headers.
-        /// </summary>
-        public Dictionary<string, string> RequestHeaders
-        {
-            get
-            {
-                return this.requestHeaders;
-            }
-
-            set
-            {
-                this.requestHeaders = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the base URL for the API call.
-        /// </summary>
-        public string Host
-        {
-            get
-            {
-                return this.host;
-            }
-
-            set
-            {
-                this.host = value;
-            }
-        }
-
-        /// <summary>
-        /// Add requestHeaders to the API call
-        /// </summary>
-        /// <param name="requestHeaders">A dictionary of request headers</param>
-        public void AddRequestHeader(Dictionary<string, string> requestHeaders)
-        {
-            this.RequestHeaders = (this.RequestHeaders != null)
-                    ? this.RequestHeaders.Union(requestHeaders).ToDictionary(pair => pair.Key, pair => pair.Value) : requestHeaders;
-        }
-
-        /// <summary>
-        /// Set or update the UrlPath
-        /// </summary>
-        /// <param name="urlPath">The endpoint without a leading or trailing slash</param>
-        public void SetUrlPath(string urlPath)
-        {
-            this.UrlPath = urlPath;
-        }
-
-        /// <summary>
-        /// Get the urlPath to the API endpoint
-        /// </summary>
-        /// <returns>Url path to the API endpoint</returns>
-        public string GetUrlPath()
-        {
-            return this.UrlPath;
-        }
-
-        /// <summary>
         /// Add the authorization header, override to customize
         /// </summary>
         /// <param name="header">Authorization header</param>
         /// <returns>Authorization value to add to the header</returns>
         public virtual AuthenticationHeaderValue AddAuthorization(KeyValuePair<string, string> header)
         {
-            string[] split = header.Value.Split(new char[0]);
+            string[] split = header.Value.Split();
             return new AuthenticationHeaderValue(split[0], split[1]);
-        }
-
-        /// <summary>
-        /// Add the version of the API, override to customize
-        /// </summary>
-        /// <param name="version">Version string to add to the URL</param>
-        public void SetVersion(string version)
-        {
-            this.Version = version;
-        }
-
-        /// <summary>
-        /// Get the version of the API, override to customize
-        /// </summary>
-        /// <returns>Version of the API</returns>
-        public string GetVersion()
-        {
-            return this.Version;
         }
 
         /// <summary>
         /// Make the call to the API server, override for testing or customization
         /// </summary>
-        /// <param name="client">Client object ready for communication with API</param>
         /// <param name="request">The parameters for the API call</param>
         /// <param name="cancellationToken">Cancel the asynchronous call</param>
         /// <returns>Response object</returns>
-        public async Task<Response> MakeRequest(HttpClient client, HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
         {
             HttpResponseMessage response = await client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return new Response(response.StatusCode, response.Content, response.Headers);
@@ -299,7 +188,6 @@ namespace SendGrid
         /// </summary>
         /// <param name="method">HTTP verb</param>
         /// <param name="requestBody">JSON formatted string</param>
-        /// <param name="requestHeaders">Custom request headers.</param>
         /// <param name="queryParams">JSON formatted query paramaters</param>
         /// <param name="urlPath">The path to the API endpoint.</param>
         /// <param name="cancellationToken">Cancel the asynchronous call.</param>
@@ -307,76 +195,36 @@ namespace SendGrid
         public async Task<Response> RequestAsync(
                                                  SendGridClient.Method method,
                                                  string requestBody = null,
-                                                 Dictionary<string, string> requestHeaders = null,
                                                  string queryParams = null,
                                                  string urlPath = null,
                                                  CancellationToken cancellationToken = default(CancellationToken))
         {
-            using (var client = this.BuildHttpClient())
+            try
             {
-                try
+                var endpoint = client.BaseAddress + BuildUrl(urlPath, queryParams);
+
+                // Build the request body
+                StringContent content = null;
+                if (requestBody != null)
                 {
-                    // Build the URL
-                    client.BaseAddress = new Uri(this.Host);
-                    if (urlPath != null)
-                    {
-                        this.SetUrlPath(urlPath);
-                    }
-
-                    string endpoint = this.BuildUrl(queryParams);
-
-                    // Build the request headers
-                    if (requestHeaders != null)
-                    {
-                        this.AddRequestHeader(requestHeaders);
-                    }
-
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    if (this.RequestHeaders != null)
-                    {
-                        foreach (KeyValuePair<string, string> header in this.RequestHeaders)
-                        {
-                            if (header.Key == "Authorization")
-                            {
-                                client.DefaultRequestHeaders.Authorization = this.AddAuthorization(header);
-                            }
-                            else if (header.Key == "Content-Type")
-                            {
-                                this.MediaType = header.Value;
-                                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(this.MediaType));
-                            }
-                            else
-                            {
-                                client.DefaultRequestHeaders.Add(header.Key, header.Value);
-                            }
-                        }
-                    }
-
-                    // Build the request body
-                    StringContent content = null;
-                    if (requestBody != null)
-                    {
-                        content = new StringContent(requestBody, Encoding.UTF8, this.MediaType);
-                    }
-
-                    // Build the final request
-                    HttpRequestMessage request = new HttpRequestMessage
-                    {
-                        Method = new HttpMethod(method.ToString()),
-                        RequestUri = new Uri(endpoint),
-                        Content = content
-                    };
-                    return await this.MakeRequest(client, request, cancellationToken).ConfigureAwait(false);
+                    content = new StringContent(requestBody, Encoding.UTF8, this.MediaType);
                 }
-                catch (Exception ex)
+
+                // Build the final request
+                var request = new HttpRequestMessage
                 {
-                    HttpResponseMessage response = new HttpResponseMessage();
-                    string message;
-                    message = (ex is HttpRequestException) ? ".NET HttpRequestException" : ".NET Exception";
-                    message = message + ", raw message: \n\n";
-                    response.Content = new StringContent(message + ex.Message);
+                    Method = new HttpMethod(method.ToString()),
+                    RequestUri = new Uri(endpoint),
+                    Content = content
+                };
+                return await MakeRequest(request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                    var response = new HttpResponseMessage();
+                    var message = (ex is HttpRequestException) ? ".NET HttpRequestException" : ".NET Exception";
+                    response.Content = new StringContent(message + ", raw message: \n\n" + ex.Message);
                     return new Response(response.StatusCode, response.Content, response.Headers);
-                }
             }
         }
 
@@ -388,7 +236,7 @@ namespace SendGrid
         /// <returns>A Response object.</returns>
         public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await this.RequestAsync(
+            return await RequestAsync(
                                            Method.POST,
                                            msg.Serialize(),
                                            urlPath: "mail/send",
@@ -398,19 +246,25 @@ namespace SendGrid
         /// <summary>
         /// Build the final URL
         /// </summary>
+        /// <param name="urlPath">The URL path.</param>
         /// <param name="queryParams">A string of JSON formatted query parameters (e.g {'param': 'param_value'})</param>
-        /// <returns>Final URL</returns>
-        private string BuildUrl(string queryParams = null)
+        /// <returns>
+        /// Final URL
+        /// </returns>
+        private string BuildUrl(string urlPath, string queryParams = null)
         {
             string url = null;
 
-            if (this.GetVersion() != null)
+            // create urlPAth - from parameter if overriden on call or from ctor parameter
+            var urlpath = urlPath ?? UrlPath;
+
+            if (Version != null)
             {
-                url = this.Host + "/" + this.GetVersion() + "/" + this.GetUrlPath();
+                url = Version + "/" + urlpath;
             }
             else
             {
-                url = this.Host + "/" + this.GetUrlPath();
+                url = urlpath;
             }
 
             if (queryParams != null)
@@ -431,27 +285,6 @@ namespace SendGrid
             }
 
             return url;
-        }
-
-        /// <summary>
-        /// Factory method to return the right HttpClient settings.
-        /// </summary>
-        /// <returns>Instance of HttpClient</returns>
-        private HttpClient BuildHttpClient()
-        {
-            // Add the WebProxy if set
-            if (this.WebProxy != null)
-            {
-                var httpClientHandler = new HttpClientHandler()
-                {
-                    Proxy = this.WebProxy,
-                    PreAuthenticate = true,
-                    UseDefaultCredentials = false,
-                };
-                return new HttpClient(httpClientHandler);
-            }
-
-            return new HttpClient();
         }
     }
 }
