@@ -6,8 +6,11 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Net;
+    using System.Net.Http;
     using System.Threading.Tasks;
     using Xunit;
+    using System.Threading;
+    using System.Text;
 
     public class IntegrationFixture : IDisposable
     {
@@ -5769,5 +5772,138 @@
             var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/links/" + link_id + "/subuser", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
+
+        [Theory]
+        [InlineData(200, "OK")]
+        [InlineData(301, "Moved permanently")]
+        [InlineData(401, "Unauthorized")]
+        [InlineData(503, "Service unavailable")]
+        public async Task TestTakesHttpClientFactoryAsConstructorArgumentAndUsesItInHttpCalls(HttpStatusCode httpStatusCode, string message)
+        {
+            var httpResponse = String.Format("<xml><result>{0}</result></xml>", message);
+            var httpMessageHandler = new FixedStatusAndMessageHttpMessageHandler(httpStatusCode, httpResponse);
+            HttpClient clientToInject = new HttpClient(httpMessageHandler);
+
+            var sg = new SendGridClient(clientToInject, fixture.apiKey);
+
+            var data = @"{
+  'username': 'jane@example.com'
+}";
+            var json = JsonConvert.DeserializeObject<Object>(data);
+            data = json.ToString();
+            var link_id = "test_url_param";
+            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/links/" + link_id + "/subuser", requestBody: data);
+            Assert.Equal(httpStatusCode, response.StatusCode);
+            Assert.Equal(httpResponse, response.Body.ReadAsStringAsync().Result);
+        }
+
+
+        /// <summary>
+        /// Tests the conditions in issue #358.
+        /// When an Http call times out while sending a message,
+        /// the client should NOT return a response code 200, but instead re-throw the exception.
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task TestWhenHttpCallTimesOutThenExceptionIsThrown()
+        {
+            /* ****************************************************************************************
+             * Create a simple message.
+             * **************************************************************************************** */
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com"));
+            msg.AddTo(new EmailAddress("test@example.com"));
+            msg.SetSubject("Hello World from the SendGrid CSharp Library");
+            msg.AddContent(MimeType.Html, "HTML content");
+
+            /* ****************************************************************************************
+             * Here is where we ensure that the call to the SendEmailAsync() should lead to
+             * a TimeoutException being thrown by the HttpClient inside the SendGridClient object
+             * **************************************************************************************** */
+            var httpMessageHandler = new TimeOutExceptionThrowingHttpMessageHandler(20, "The operation timed out");
+            HttpClient clientToInject = new HttpClient(httpMessageHandler);
+            var sg = new SendGridClient(clientToInject, fixture.apiKey);
+
+            /* ****************************************************************************************
+             * Make the method call, expecting a an exception to be thrown.
+             * I don't care if the component code simply passes on the original exception or if it catches
+             * the original exception and throws another, custom exception. So I'll only 
+             * assert that ANY exception is thrown.
+             * **************************************************************************************** */
+            var exceptionTask = Record.ExceptionAsync(async () =>
+            {
+                var response = await sg.SendEmailAsync(msg);
+            });
+
+            Assert.NotNull(exceptionTask);
+
+            var thrownException = exceptionTask.Result;
+            Assert.NotNull(thrownException);
+
+            // If we are certain that we don't want custom exceptions to be thrown,
+            // we can also test that the original exception was thrown
+            Assert.IsType(typeof(TimeoutException), thrownException);
+
+
+        }
+
+    }
+
+    public class FakeHttpMessageHandler : HttpMessageHandler
+    {
+        public virtual HttpResponseMessage Send(HttpRequestMessage request)
+        {
+            throw new NotImplementedException("Ensure you setup this method as part of your test.");
+        }
+ 
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(Send(request));
+        }
+    }
+
+    public class FixedStatusAndMessageHttpMessageHandler : FakeHttpMessageHandler
+    {
+        private HttpStatusCode httpStatusCode;
+        private string message;
+
+        public FixedStatusAndMessageHttpMessageHandler(HttpStatusCode httpStatusCode, string message)
+        {
+            this.httpStatusCode = httpStatusCode;
+            this.message = message;
+        }
+
+        public override HttpResponseMessage Send(HttpRequestMessage request)
+        {
+            return new HttpResponseMessage(httpStatusCode)
+            {
+                Content = new StringContent(message)
+            };
+        }
+
+    }
+
+    /// <summary>
+    /// This message handler could be mocked using e.g. Moq.Mock, but the author of the test is 
+    /// careful about introducing new dependecies in the test project, so creates a concrete 
+    /// class instead.
+    /// </summary>
+    public class TimeOutExceptionThrowingHttpMessageHandler : FakeHttpMessageHandler
+    {
+        private int timeOutMilliseconds;
+        private string exceptionMessage;
+
+        public TimeOutExceptionThrowingHttpMessageHandler(int timeOutMilliseconds, string exceptionMessage)
+        {
+            this.timeOutMilliseconds = timeOutMilliseconds;
+            this.exceptionMessage = exceptionMessage;
+        }
+
+        public override HttpResponseMessage Send(HttpRequestMessage request)
+        {
+            Thread.Sleep(timeOutMilliseconds);
+            throw new TimeoutException(exceptionMessage);
+        }
+
     }
 }
