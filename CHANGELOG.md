@@ -1,6 +1,11 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.1.1] - 2017-04-12
+## Fix
+- PR #358: SendGridClient.SendEmailAsync now throws original exception
+- Thanks to [Otto Dandenell](https://github.com/ottomatic) for the PR!
+
 ## [9.1.0] - 2017-03-20
 ## Update
 - PR #405: Reuse HTTP Client

@@ -16,7 +16,6 @@
     {
         public IntegrationFixture()
         {
-
             if (Environment.GetEnvironmentVariable("TRAVIS") != "true")
             {
                 Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
@@ -5797,7 +5796,6 @@
             Assert.Equal(httpResponse, response.Body.ReadAsStringAsync().Result);
         }
 
-
         /// <summary>
         /// Tests the conditions in issue #358.
         /// When an Http call times out while sending a message,
@@ -5843,10 +5841,7 @@
             // If we are certain that we don't want custom exceptions to be thrown,
             // we can also test that the original exception was thrown
             Assert.IsType(typeof(TimeoutException), thrownException);
-
-
         }
-
     }
 
     public class FakeHttpMessageHandler : HttpMessageHandler
@@ -5880,7 +5875,6 @@
                 Content = new StringContent(message)
             };
         }
-
     }
 
     /// <summary>
@@ -5904,6 +5898,5 @@
             Thread.Sleep(timeOutMilliseconds);
             throw new TimeoutException(exceptionMessage);
         }
-
     }
 }
