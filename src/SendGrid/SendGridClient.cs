@@ -54,11 +54,6 @@ namespace SendGrid
         /// <returns>Interface to the SendGrid REST API</returns>
         public SendGridClient(IWebProxy webProxy, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
         {
-            UrlPath = urlPath;
-            Version = version;
-
-            var baseAddress = host ?? "https://api.sendgrid.com";
-            var clientVersion = GetType().GetTypeInfo().Assembly.GetName().Version.ToString();
 
             // Create client with WebProxy if set
             if (webProxy != null)
@@ -75,6 +70,58 @@ namespace SendGrid
             {
                 client = new HttpClient();
             }
+
+            InitiateClient(apiKey, host, requestHeaders, version, urlPath);
+        }
+
+        /// <summary>
+        /// Constructor. Initializes a new instance of the <see cref="SendGridClient"/> class.
+        /// </summary>
+        /// <param name="httpClient">An optional http client which may me injected in order to facilitate testing.</param>
+        /// <param name="apiKey">Your SendGrid API key.</param>
+        /// <param name="host">Base url (e.g. https://api.sendgrid.com)</param>
+        /// <param name="requestHeaders">A dictionary of request headers</param>
+        /// <param name="version">API version, override AddVersion to customize</param>
+        /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
+        /// <returns>Interface to the SendGrid REST API</returns>
+        public SendGridClient(HttpClient httpClient, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)            
+        {
+            client = (httpClient == null) ? new HttpClient() : httpClient;
+
+            InitiateClient(apiKey, host, requestHeaders, version, urlPath);
+        }
+
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendGridClient"/> class.
+        /// </summary>
+        /// <param name="apiKey">Your SendGrid API key.</param>
+        /// <param name="host">Base url (e.g. https://api.sendgrid.com)</param>
+        /// <param name="requestHeaders">A dictionary of request headers</param>
+        /// <param name="version">API version, override AddVersion to customize</param>
+        /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
+        /// <returns>Interface to the SendGrid REST API</returns>
+        public SendGridClient(string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
+            : this(httpClient: null, apiKey: apiKey,host: host, requestHeaders: requestHeaders, version: version, urlPath: urlPath)
+        {
+        }
+
+        /// <summary>
+        /// Common method to initiate internal fields regardless of which constructor was used.
+        /// </summary>
+        /// <param name="apiKey"></param>
+        /// <param name="host"></param>
+        /// <param name="requestHeaders"></param>
+        /// <param name="version"></param>
+        /// <param name="urlPath"></param>
+        private void InitiateClient(string apiKey, string host, Dictionary<string, string> requestHeaders, string version, string urlPath)
+        {
+            UrlPath = urlPath;
+            Version = version;
+
+            var baseAddress = host ?? "https://api.sendgrid.com";
+            var clientVersion = GetType().GetTypeInfo().Assembly.GetName().Version.ToString();
+
 
             // standard headers
             client.BaseAddress = new Uri(baseAddress);
@@ -113,20 +160,7 @@ namespace SendGrid
                     client.DefaultRequestHeaders.Add(header.Key, header.Value);
                 }
             }
-        }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SendGridClient"/> class.
-        /// </summary>
-        /// <param name="apiKey">Your SendGrid API key.</param>
-        /// <param name="host">Base url (e.g. https://api.sendgrid.com)</param>
-        /// <param name="requestHeaders">A dictionary of request headers</param>
-        /// <param name="version">API version, override AddVersion to customize</param>
-        /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
-        /// <returns>Interface to the SendGrid REST API</returns>
-        public SendGridClient(string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
-            : this(null, apiKey, host, requestHeaders, version, urlPath)
-        {
         }
 
         /// <summary>
@@ -192,6 +226,10 @@ namespace SendGrid
         /// <param name="urlPath">The path to the API endpoint.</param>
         /// <param name="cancellationToken">Cancel the asynchronous call.</param>
         /// <returns>Response object</returns>
+        /// <exception cref="Exception">The method will NOT catch and swallow exceptions generated by sending a request 
+        /// through the internal http client. Any underlying exception will pass right through.
+        /// In particular, this means that you may expect
+        /// a TimeoutException if you are not connected to the internet.</exception>
         public async Task<Response> RequestAsync(
                                                  SendGridClient.Method method,
                                                  string requestBody = null,
@@ -199,33 +237,23 @@ namespace SendGrid
                                                  string urlPath = null,
                                                  CancellationToken cancellationToken = default(CancellationToken))
         {
-            try
-            {
-                var endpoint = client.BaseAddress + BuildUrl(urlPath, queryParams);
+            var endpoint = client.BaseAddress + BuildUrl(urlPath, queryParams);
 
-                // Build the request body
-                StringContent content = null;
-                if (requestBody != null)
-                {
-                    content = new StringContent(requestBody, Encoding.UTF8, this.MediaType);
-                }
-
-                // Build the final request
-                var request = new HttpRequestMessage
-                {
-                    Method = new HttpMethod(method.ToString()),
-                    RequestUri = new Uri(endpoint),
-                    Content = content
-                };
-                return await MakeRequest(request, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
+            // Build the request body
+            StringContent content = null;
+            if (requestBody != null)
             {
-                    var response = new HttpResponseMessage();
-                    var message = (ex is HttpRequestException) ? ".NET HttpRequestException" : ".NET Exception";
-                    response.Content = new StringContent(message + ", raw message: \n\n" + ex.Message);
-                    return new Response(response.StatusCode, response.Content, response.Headers);
+                content = new StringContent(requestBody, Encoding.UTF8, this.MediaType);
             }
+
+            // Build the final request
+            var request = new HttpRequestMessage
+            {
+                Method = new HttpMethod(method.ToString()),
+                RequestUri = new Uri(endpoint),
+                Content = content
+            };
+            return await MakeRequest(request, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
