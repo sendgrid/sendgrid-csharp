@@ -122,7 +122,7 @@ Downloaded [Prism](https://github.com/stoplightio/prism/releases) and rename the
 
 When you run the tests for the first time, you will need to allow Prism.exe to run, but you don't need to allow outside connections.
 
-Note: Please download Prism stable version v0.6.xx as integration test are written against stable versions only. Latest alpah version has different commands to serve swagger file
+Note: Please download Prism stable version v0.6.xx as integration test are written against stable versions only. Latest alpha version has different commands to serve swagger file
 
 <a name="style_guidelines_and_naming_conventions"></a>
 ## Style Guidelines & Naming Conventions
