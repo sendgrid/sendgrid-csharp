@@ -894,6 +894,21 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Set the from email.
         /// </summary>
+        /// <param name="email">Specify the recipient's email</param>
+        /// <param name="name">Specify the recipient's name</param>
+        public void SetFrom(string email, string name = null)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new ArgumentNullException("email");
+            }
+
+            SetFrom(new EmailAddress(email, name));
+        }
+
+        /// <summary>
+        /// Set the from email.
+        /// </summary>
         /// <param name="email">An email object containing the email address and name of the sender. Unicode encoding is not supported for the from field.</param>
         public void SetFrom(EmailAddress email)
         {

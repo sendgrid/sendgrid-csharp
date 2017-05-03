@@ -79,6 +79,14 @@
             msg.SetSubject("Hello World from the SendGrid CSharp Library");
             msg.AddContent(MimeType.Html, "HTML content");
             Console.WriteLine(msg.Serialize());
+
+            msg = new SendGridMessage();
+            msg.SetFrom("test@example.com");
+            msg.AddTo("test@example.com");
+            msg.SetSubject("Hello World from the SendGrid CSharp Library");
+            msg.AddContent(MimeType.Text, "Textual content");
+            msg.AddContent(MimeType.Html, "HTML content");
+            Assert.True(msg.Serialize() == "{\"from\":{\"email\":\"test@example.com\"},\"personalizations\":[{\"to\":[{\"email\":\"test@example.com\"}],\"subject\":\"Hello World from the SendGrid CSharp Library\"}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Textual content\"},{\"type\":\"text/html\",\"value\":\"HTML content\"}]}");
         }
 
         [Fact]
@@ -1863,6 +1871,33 @@
             };
             msg.SetFrom(fromEmail);
             Assert.True(msg.Serialize() == "{\"from\":{\"name\":\"Test User1\",\"email\":\"test1@example.com\"}}");
+        }
+
+        [Fact]
+        public void TestSetFromArgumentNullExceptionIfNullEmailAddressIsSupplied()
+        {
+            var msg = new SendGridMessage();
+            Assert.Throws<ArgumentNullException>(()=> msg.SetFrom(null, "Example User"));
+        }
+
+        [Fact]
+        public void TestSetFromArgumentEmptyExceptionIfEmptyEmailAddressIsSupplied()
+        {
+            var msg = new SendGridMessage();
+            Assert.Throws<ArgumentNullException>(()=> msg.SetFrom(string.Empty, "Example User"));
+        }
+
+        
+        [Fact]
+        public void TestSetFromWithOutEmailAddressObject()
+        {
+            var msg = new SendGridMessage();
+            msg.SetFrom("test1@example.com","Test User1");
+            Assert.True(msg.Serialize() == "{\"from\":{\"name\":\"Test User1\",\"email\":\"test1@example.com\"}}");
+
+            msg = new SendGridMessage();
+            msg.SetFrom("test1@example.com");
+            Assert.True(msg.Serialize() == "{\"from\":{\"email\":\"test1@example.com\"}}");
         }
 
         [Fact]
