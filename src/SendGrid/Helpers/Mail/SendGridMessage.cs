@@ -7,6 +7,7 @@ namespace SendGrid.Helpers.Mail
 {
     using Model;
     using Newtonsoft.Json;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -134,6 +135,19 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Add a recipient email.
         /// </summary>
+        /// <param name="email">Specify the recipient's email</param>
+        /// <param name="name">Specify the recipient's name</param>
+        public void AddTo(string email, string name = null)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                throw new ArgumentNullException("email");
+
+            AddTo(new EmailAddress(email, name));
+        }
+
+        /// <summary>
+        /// Add a recipient email.
+        /// </summary>
         /// <param name="email">An email recipient that may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the recipient email.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
@@ -239,6 +253,19 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Add a cc email recipient.
         /// </summary>
+        /// <param name="email">Specify the recipient's email</param>
+        /// <param name="name">Specify the recipient's name</param>
+        public void AddCc(string email, string name = null)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                throw new ArgumentNullException("email");
+
+            AddCc(new EmailAddress(email, name));
+        }
+
+        /// <summary>
+        /// Add a cc email recipient.
+        /// </summary>
         /// <param name="email">An email recipient that may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the cc email.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
@@ -339,6 +366,19 @@ namespace SendGrid.Helpers.Mail
                 }
             };
             return;
+        }
+
+        /// <summary>
+        /// Add a bcc recipient emails.
+        /// </summary>
+        /// <param name="email">Specify the recipient's email</param>
+        /// <param name="name">Specify the recipient's name</param>
+        public void AddBcc(string email, string name = null)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                throw new ArgumentNullException("email");
+
+            AddBcc(new EmailAddress(email, name));
         }
 
         /// <summary>
@@ -849,6 +889,21 @@ namespace SendGrid.Helpers.Mail
                 }
             };
             return;
+        }
+
+        /// <summary>
+        /// Set the from email.
+        /// </summary>
+        /// <param name="email">Specify the recipient's email</param>
+        /// <param name="name">Specify the recipient's name</param>
+        public void SetFrom(string email, string name = null)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new ArgumentNullException("email");
+            }
+
+            SetFrom(new EmailAddress(email, name));
         }
 
         /// <summary>
