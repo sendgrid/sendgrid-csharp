@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.2.0] - 2017-05-05
+## Update
+- PR #444: AddTo, AddBcc, AddCc and SetFrom that just takes an email and name 
+- Solves Issue #408
+- Thanks to [Paritosh Baghel](https://github.com/paritoshmmmec) for the PR!
+
 ## [9.1.1] - 2017-04-12
 ## Fix
 - PR #358: SendGridClient.SendEmailAsync now throws original exception

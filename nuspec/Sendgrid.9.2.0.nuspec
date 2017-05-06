@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>Sendgrid</id>
-        <version>9.1.1</version>
+        <version>9.2.0</version>
         <title>SendGrid</title>
         <authors>Elmer Thomas,SendGrid DX Team</authors>
         <licenseUrl>https://github.com/sendgrid/sendgrid-csharp/blob/master/MIT.LICENSE</licenseUrl>
@@ -11,9 +11,10 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>C# client library and examples for using SendGrid API's to send mail and access Web API v3 endpoints with .NET Standard 1.3 and .NET Core support. Github repo located at : https://github.com/sendgrid/sendgrid-csharp</description>
         <summary>C# client library and examples for using SendGrid API's to send mail and access Web API v3 endpoints with .NET Standard 1.3 and .NET Core support.</summary>
-        <releaseNotes>## Fix
-- PR #358: SendGridClient.SendEmailAsync now throws original exception
-- Thanks to [Otto Dandenell](https://github.com/ottomatic) for the PR!</releaseNotes>
+        <releaseNotes>## Update
+- PR #444: AddTo, AddBcc, AddCc and SetFrom that just takes an email and name 
+- Solves Issue #408
+- Thanks to [Paritosh Baghel](https://github.com/paritoshmmmec) for the PR!</releaseNotes>
         <copyright>SendGrid, Inc. 2017</copyright>
         <tags>SendGrid Email Mail Microsoft Azure Transactional .NET Core</tags>
         <dependencies>
