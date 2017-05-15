@@ -109,7 +109,7 @@ namespace Example
             Execute().Wait();
         }
 
-	    static async Task Execute()
+	static async Task Execute()
         {
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);
