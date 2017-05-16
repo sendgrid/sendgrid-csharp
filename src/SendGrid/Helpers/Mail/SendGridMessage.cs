@@ -155,6 +155,7 @@ namespace SendGrid.Helpers.Mail
         {
             if (personalization != null)
             {
+                personalization.Tos = personalization.Tos ?? new List<EmailAddress>();
                 personalization.Tos.Add(email);
                 if (this.Personalizations == null)
                 {
