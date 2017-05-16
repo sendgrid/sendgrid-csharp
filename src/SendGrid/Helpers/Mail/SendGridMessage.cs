@@ -155,6 +155,7 @@ namespace SendGrid.Helpers.Mail
         {
             if (personalization != null)
             {
+                personalization.Tos = personalization.Tos ?? new List<EmailAddress>();
                 personalization.Tos.Add(email);
                 if (this.Personalizations == null)
                 {
@@ -273,6 +274,7 @@ namespace SendGrid.Helpers.Mail
         {
             if (personalization != null)
             {
+                personalization.Ccs = personalization.Ccs ?? new List<EmailAddress>();
                 personalization.Ccs.Add(email);
                 if (this.Personalizations == null)
                 {
@@ -391,6 +393,7 @@ namespace SendGrid.Helpers.Mail
         {
             if (personalization != null)
             {
+                personalization.Bccs = personalization.Bccs ?? new List<EmailAddress>();
                 personalization.Bccs.Add(email);
                 if (this.Personalizations == null)
                 {
