@@ -1,6 +1,11 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.2.1] - 2017-5-16
+## Fix
+- PR #457: Tos, Bccs and CCs fields could be null
+- Thanks to [Jef Statham](https://github.com/JefStat) for the PR!
+
 ## [9.2.0] - 2017-05-05
 ## Update
 - PR #444: AddTo, AddBcc, AddCc and SetFrom that just takes an email and name 
