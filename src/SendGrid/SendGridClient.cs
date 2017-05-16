@@ -21,7 +21,7 @@ namespace SendGrid
     /// A HTTP client wrapper for interacting with SendGrid's API
     /// </summary>
     public class SendGridClient : ISendGridClient
-	{
+    {
         /// <summary>
         /// Gets or sets the path to the API resource.
         /// </summary>

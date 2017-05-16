@@ -1,6 +1,11 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.3.0] - 2017-5-16
+## Update
+- PR #456: Fixed #403 Implements an interface for mocking and DI
+- Thanks to [Nate](https://github.com/nate-fr) for the PR!
+
 ## [9.2.1] - 2017-5-16
 ## Fix
 - PR #457: Tos, Bccs and CCs fields could be null
