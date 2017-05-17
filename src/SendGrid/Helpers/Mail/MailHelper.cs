@@ -121,5 +121,18 @@ namespace SendGrid.Helpers.Mail
 
             return msg;
         }
+        
+        private static readonly Regex = new Regex(@"(?:(?<name>)(?<email>[^\<]*@.*[^\>])|(?<name>[^\<]*)\<(?<email>.*@.*)\>)",
+                RegexOptions.ECMAScript);
+        public static EmailAddress StringtoEmailAddress(string rfc2822Email)
+        {
+            const string nameGroup = "name";
+            const string emailGroup = "email";
+            var match = Regex.Match(rfc2822Email);
+            if (!match.Success) return new EmailAddress(rfc2822Email);
+            var email = match.Groups[emailGroup].Value.Trim();
+            var name = match.Groups[nameGroup].Value.Trim();
+            return new EmailAddress(email, name);
+        }
     }
 }
