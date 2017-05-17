@@ -1,6 +1,11 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.4.1] - 2017-5-17
+## Update
+- PR #459: Replace if statements with function
+- Thanks to [Jef Statham](https://github.com/JefStat) for the PR!
+
 ## [9.4.0] - 2017-5-17
 ## Update
 - PR #458: Add a StringToEmailAddress helper function
