@@ -1,6 +1,11 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.4.0] - 2017-5-17
+## Update
+- PR #458: Add a StringToEmailAddress helper function
+- Thanks to [Jef Statham](https://github.com/JefStat) for the PR!
+
 ## [9.3.0] - 2017-5-16
 ## Update
 - PR #456: Fixed #403 Implements an interface for mocking and DI
