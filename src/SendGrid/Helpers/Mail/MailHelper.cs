@@ -6,12 +6,19 @@
 namespace SendGrid.Helpers.Mail
 {
     using System.Collections.Generic;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Simplified email sending for common use cases
     /// </summary>
     public class MailHelper
     {
+        private const string NameGroup = "name";
+        private const string EmailGroup = "email";
+        private static readonly Regex Rfc2822Regex = new Regex(
+            $@"(?:(?<{NameGroup}>)(?<{EmailGroup}>[^\<]*@.*[^\>])|(?<{NameGroup}>[^\<]*)\<(?<{EmailGroup}>.*@.*)\>)",
+            RegexOptions.ECMAScript);
+
         /// <summary>
         /// Send a single simple email
         /// </summary>
@@ -121,17 +128,22 @@ namespace SendGrid.Helpers.Mail
 
             return msg;
         }
-        
-        private static readonly Regex = new Regex(@"(?:(?<name>)(?<email>[^\<]*@.*[^\>])|(?<name>[^\<]*)\<(?<email>.*@.*)\>)",
-                RegexOptions.ECMAScript);
-        public static EmailAddress StringtoEmailAddress(string rfc2822Email)
+
+        /// <summary>
+        /// Uncomplex conversion of a <![CDATA["Name <email@email.com>"]]> to EmailAddress
+        /// </summary>
+        /// <param name="rfc2822Email">"email@email.com" or <![CDATA["Name <email@email.com>"]]> string</param>
+        /// <returns>EmailsAddress Object</returns>
+        public static EmailAddress StringToEmailAddress(string rfc2822Email)
         {
-            const string nameGroup = "name";
-            const string emailGroup = "email";
-            var match = Regex.Match(rfc2822Email);
-            if (!match.Success) return new EmailAddress(rfc2822Email);
-            var email = match.Groups[emailGroup].Value.Trim();
-            var name = match.Groups[nameGroup].Value.Trim();
+            var match = Rfc2822Regex.Match(rfc2822Email);
+            if (!match.Success)
+            {
+                return new EmailAddress(rfc2822Email);
+            }
+
+            var email = match.Groups[EmailGroup].Value.Trim();
+            var name = match.Groups[NameGroup].Value.Trim();
             return new EmailAddress(email, name);
         }
     }
