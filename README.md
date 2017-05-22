@@ -81,10 +81,10 @@ namespace Example
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("test@example.com", "Example User");
-            var subject = "Hello World from the SendGrid CSharp SDK!";
+            var subject = "Sending with SendGrid is Fun";
             var to = new EmailAddress("test@example.com", "Example User");
-            var plainTextContent = "Hello, Email!";
-            var htmlContent = "<strong>Hello, Email!</strong>";
+            var plainTextContent = "and easy to do anywhere, even with C#";
+            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
         }
@@ -116,9 +116,9 @@ namespace Example
             var msg = new SendGridMessage()
             {
                 From = new EmailAddress("test@example.com", "DX Team"),
-                Subject = "Hello World from the SendGrid CSharp SDK!",
-                PlainTextContent = "Hello, Email!",
-                HtmlContent = "<strong>Hello, Email!</strong>"
+                Subject = "Sending with SendGrid is Fun",
+                PlainTextContent = "and easy to do anywhere, even with C#",
+                HtmlContent = "<strong>and easy to do anywhere, even with C#</strong>"
             };
             msg.AddTo(new EmailAddress("test@example.com", "Test User"));
             var response = await client.SendEmailAsync(msg);
