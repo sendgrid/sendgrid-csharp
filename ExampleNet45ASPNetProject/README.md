@@ -1,4 +1,4 @@
-**The SendGrid C# .NET library provide an easy way to send emails. This example application shows how to integrate with an ASP.NET application. **
+**The SendGrid C# .NET library provide an easy way to send emails. This example application shows how to integrate with an ASP.NET application.**
 
 # Installation
 
@@ -22,4 +22,4 @@ You may need to download the latest Nuget executable and run `nuget.exe restore`
 
 ## Happy coding
 
-Big thanks to [paritosh baghel](paritosh baghel) for contributing this example code!
+Big thanks to [paritosh baghel](https://github.com/paritoshmmmec) for contributing this example code!
