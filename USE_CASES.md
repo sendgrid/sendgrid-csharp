@@ -178,3 +178,62 @@ namespace Example
     }
 }
 ```
+## Use Personalization to manipulate email according to recipient 
+
+```csharp
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+
+namespace Example
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Execute().Wait();
+        }
+
+        static async Task Execute()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com", "Example User"));
+            msg.SetSubject("Global Subject");
+            msg.AddTo(new EmailAddress("test234@example.com"));
+            msg.AddTo(new EmailAddress("test@example.com"), 0, new Personalization()
+            {
+                Subject = "Personalization Subject ",
+                Tos = new List<EmailAddress>()
+                    {
+                       new EmailAddress() { Email = "Test12@example.com", Name="test12" },
+                       new EmailAddress() { Email = "Test13@example.com", Name="Test13" },
+                       new EmailAddress() { Email = "Test14@example.com", Name="Test14" },
+                    },
+                Bccs = new List<EmailAddress>()
+                    {
+                       new EmailAddress() { Email = "Test15@example.com", Name="Test15" },
+                       new EmailAddress() { Email = "Test16@example.com", Name="Test16" },
+                       new EmailAddress() { Email = "Test17@example.com", Name="Test17" },
+                    },
+                Ccs = new List<EmailAddress>()
+                    {
+                       new EmailAddress() { Email = "Test25@example.com", Name="Test25" },
+                       new EmailAddress() { Email = "Test26@example.com", Name="Test26" },
+                       new EmailAddress() { Email = "Test27@example.com", Name="Test27" },
+                    }
+            });
+            var mesage = msg.Serialize();
+            msg.AddContent(MimeType.Text, "I'm replacing the <strong>body tag</strong>");
+            var response = await client.SendEmailAsync(msg);
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Headers.ToString());
+            Console.WriteLine("\n\nPress any key to exit.");
+            Console.ReadLine();
+        }
+    }
+}
+```
