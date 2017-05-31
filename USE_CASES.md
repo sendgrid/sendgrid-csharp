@@ -3,6 +3,8 @@ This documentation provides examples for specific use cases. Please [open an iss
 # Table of Contents
 
 * [Attachments](#attachments)
+* [Custom Personalization Usage]
+    * [Multiple tos, ccs and bccs](#multiple_tos_ccs_bccs)
 * [Transactional Templates](#transactional_templates)
 
 <a name="attachments"></a>
@@ -178,7 +180,13 @@ namespace Example
     }
 }
 ```
-## Use Personalization to manipulate email according to recipient 
+
+<a name="multiple_tos_ccs_bccs"></a>
+# Custom Personalization Usage - Multiple tos, ccs and bccs
+
+In this example, each email recipient receives the same email and they can see each others email address, except for the bccs.
+
+For more on [Personalizations](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html), please see the documentation.
 
 ```csharp
 using System;
@@ -201,33 +209,31 @@ namespace Example
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage();
-            msg.SetFrom(new EmailAddress("test@example.com", "Example User"));
-            msg.SetSubject("Global Subject");
-            msg.AddTo(new EmailAddress("test234@example.com"));
-            msg.AddTo(new EmailAddress("test@example.com"), 0, new Personalization()
+            msg.SetFrom(new EmailAddress("test1@example.com", "Test1"));
+            var personalization = new Personalization()
             {
-                Subject = "Personalization Subject ",
+                Subject = "Best Subject Line Ever",
                 Tos = new List<EmailAddress>()
                     {
-                       new EmailAddress() { Email = "Test12@example.com", Name="test12" },
-                       new EmailAddress() { Email = "Test13@example.com", Name="Test13" },
-                       new EmailAddress() { Email = "Test14@example.com", Name="Test14" },
+                       new EmailAddress() { Email = "test2@example.com", Name="Test2" },
+                       new EmailAddress() { Email = "test3@example.com", Name="Test3" },
+                       new EmailAddress() { Email = "test4@example.com", Name="Test4" },
                     },
                 Bccs = new List<EmailAddress>()
                     {
-                       new EmailAddress() { Email = "Test15@example.com", Name="Test15" },
-                       new EmailAddress() { Email = "Test16@example.com", Name="Test16" },
-                       new EmailAddress() { Email = "Test17@example.com", Name="Test17" },
+                       new EmailAddress() { Email = "test5@example.com", Name="Test5" },
+                       new EmailAddress() { Email = "test6@example.com", Name="Test6" },
+                       new EmailAddress() { Email = "test7@example.com", Name="Test7" },
                     },
                 Ccs = new List<EmailAddress>()
                     {
-                       new EmailAddress() { Email = "Test25@example.com", Name="Test25" },
-                       new EmailAddress() { Email = "Test26@example.com", Name="Test26" },
-                       new EmailAddress() { Email = "Test27@example.com", Name="Test27" },
+                       new EmailAddress() { Email = "test8@example.com", Name="Test8" },
+                       new EmailAddress() { Email = "test9@example.com", Name="Test9" },
+                       new EmailAddress() { Email = "test10@example.com", Name="Test10" },
                     }
-            });
-            var mesage = msg.Serialize();
-            msg.AddContent(MimeType.Text, "I'm replacing the <strong>body tag</strong>");
+            }
+            msg.AddTo(new EmailAddress("test1@example.com"), 0, personalization);
+            msg.AddContent(MimeType.Text, "Hello Email from the SendGrid C# Library");
             var response = await client.SendEmailAsync(msg);
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers.ToString());
