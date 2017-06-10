@@ -17,6 +17,8 @@ before_install:
   - ls /usr/lib/mono/4.5/MSBuild
 
 before_script:
+  # https://github.com/dotnet/sdk/issues/335
+  - if test "$TRAVIS_OS_NAME" == "osx"; then export FrameworkPathOverride=/Library/Frameworks/Mono.framework/Versions/Current/lib/mono/4.5/; else export FrameworkPathOverride=/usr/lib/mono/4.5/; fi
   - mkdir prism/bin
   - export PATH=$PATH:$PWD/prism/bin/
   - ./prism/prism.sh
