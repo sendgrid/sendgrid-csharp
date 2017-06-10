@@ -25,7 +25,7 @@ before_script:
 script:
   - dotnet restore
   - dotnet build ./src/SendGrid -c Release
-  - dotnet test ./tests/SendGrid.Tests -c Release -f netcoreapp1.0
+  - dotnet test ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp1.0
 
 notifications:
   hipchat:
