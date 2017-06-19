@@ -10,6 +10,7 @@ namespace SendGrid.Helpers.Mail
     /// <summary>
     /// The default footer that you would like appended to the bottom of every email.
     /// </summary>
+    [JsonObject(IsReference = false)]
     public class FooterSettings
     {
         /// <summary>

@@ -10,6 +10,7 @@ namespace SendGrid.Helpers.Mail
     /// <summary>
     /// Allows you to enable tracking provided by Google Analytics.
     /// </summary>
+    [JsonObject(IsReference = false)]
     public class Ganalytics
     {
         /// <summary>

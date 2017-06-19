@@ -10,6 +10,7 @@ namespace SendGrid.Helpers.Mail
     /// <summary>
     /// An email object containing the email address and name of the sender or recipient.
     /// </summary>
+    [JsonObject(IsReference = false)]
     public class EmailAddress
     {
         /// <summary>

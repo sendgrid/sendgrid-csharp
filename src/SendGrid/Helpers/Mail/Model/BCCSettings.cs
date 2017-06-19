@@ -10,6 +10,7 @@ namespace SendGrid.Helpers.Mail
     /// <summary>
     /// Gets or sets the address specified in the mail_settings.bcc object will receive a blind carbon copy (BCC) of the very first personalization defined in the personalizations array.
     /// </summary>
+    [JsonObject(IsReference = false)]
     public class BCCSettings
     {
         /// <summary>

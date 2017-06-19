@@ -10,6 +10,7 @@ namespace SendGrid.Helpers.Mail
     /// <summary>
     /// This allows you to test the content of your email for spam.
     /// </summary>
+    [JsonObject(IsReference = false)]
     public class SpamCheck
     {
         /// <summary>

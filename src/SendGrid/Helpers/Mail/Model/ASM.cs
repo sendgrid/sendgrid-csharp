@@ -11,6 +11,7 @@ namespace SendGrid.Helpers.Mail
     /// <summary>
     /// An object allowing you to specify how to handle unsubscribes.
     /// </summary>
+    [JsonObject(IsReference = false)]
     public class ASM
     {
         /// <summary>
