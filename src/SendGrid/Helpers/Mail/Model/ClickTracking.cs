@@ -10,6 +10,7 @@ namespace SendGrid.Helpers.Mail
     /// <summary>
     /// Allows you to track whether a recipient clicked a link in your email.
     /// </summary>
+    [JsonObject(IsReference = false)]
     public class ClickTracking
     {
         /// <summary>

@@ -11,6 +11,7 @@ namespace SendGrid.Helpers.Mail
     /// <summary>
     /// An object allowing you to specify how to handle unsubscribes.
     /// </summary>
+    [JsonObject(IsReference = false)]
     public class ASM
     {
         /// <summary>
@@ -23,7 +24,7 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets an array containing the unsubscribe groups that you would like to be displayed on the unsubscribe preferences page.
         /// https://sendgrid.com/docs/User_Guide/Suppressions/recipient_subscription_preferences.html
         /// </summary>
-        [JsonProperty(PropertyName = "groups_to_display")]
+        [JsonProperty(PropertyName = "groups_to_display", IsReference = false)]
         public List<int> GroupsToDisplay { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace SendGrid.Helpers.Mail
     /// <summary>
     /// Allows you to insert a subscription management link at the bottom of the text and html bodies of your email. If you would like to specify the location of the link within your email, you may use the substitution_tag.
     /// </summary>
+    [JsonObject(IsReference = false)]
     public class SubscriptionTracking
     {
         /// <summary>

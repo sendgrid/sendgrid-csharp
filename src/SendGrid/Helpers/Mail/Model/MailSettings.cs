@@ -10,6 +10,7 @@ namespace SendGrid.Helpers.Mail
     /// <summary>
     /// A collection of different mail settings that you can use to specify how you would like this email to be handled.
     /// </summary>
+    [JsonObject(IsReference = false)]
     public class MailSettings
     {
         /// <summary>
