@@ -1,6 +1,11 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.5.0] - 2017-5-17
+## Update
+- PR #478: Disable Json.Net reference handling for SendGrid objects 
+- Thanks to [sepptruetsch](https://github.com/sepptruetsch) for the PR!
+
 ## [9.4.1] - 2017-5-17
 ## Update
 - PR #459: Replace if statements with function
