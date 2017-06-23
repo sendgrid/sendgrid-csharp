@@ -195,7 +195,7 @@ Console.ReadLine();
 // DELETE /suppression/spam_report/{email}
 
 var email = "test_url_param";
-var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/spam_report/" + email);
+var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/spam_reports/" + email);
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
