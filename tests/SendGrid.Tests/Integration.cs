@@ -87,6 +87,18 @@
             msg.AddContent(MimeType.Text, "Textual content");
             msg.AddContent(MimeType.Html, "HTML content");
             Assert.True(msg.Serialize() == "{\"from\":{\"email\":\"test@example.com\"},\"personalizations\":[{\"to\":[{\"email\":\"test@example.com\"}],\"subject\":\"Hello World from the SendGrid CSharp Library\"}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Textual content\"},{\"type\":\"text/html\",\"value\":\"HTML content\"}]}");
+
+            // Test Hello World Example
+            var from = new EmailAddress("test@example.com", "Example User");
+            var subject = "Sending with SendGrid is Fun";
+            var to = new EmailAddress("test@example.com", "Example User");
+            var plainTextContent = "and easy to do anywhere, even with C#";
+            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+            msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+            Console.WriteLine(msg.Serialize());
+
+            Assert.True(msg.Serialize() == "{\"from\":{\"email\":\"test@example.com\",\"name\":\"Example User\"},\"personalizations\":[{\"to\":[{\"email\":\"test@example.com\",\"name\":\"Example User\"}],\"subject\":\"Sending with SendGrid is Fun\"}],\"content\":[{\"type\":\"text/plain\",\"value\":\"and easy to do anywhere, even with C#\"},{\"type\":\"text/html\",\"value\":\"<strong>and easy to do anywhere, even with C#</strong>\"}]}");
         }
 
         [Fact]
@@ -135,7 +147,7 @@
             msg.AddCc("test-9@example.com", "Example User-9");
             msg.AddBcc(new EmailAddress("test10example.com", "Example User10"));
             msg.AddBcc(new EmailAddress("test11@example.com", "Example User11"));
-             
+
             emails = new List<EmailAddress>
             {
                 new EmailAddress("test12@example.com", "Example User12"),
@@ -239,7 +251,7 @@
             msg.AddCcs(emails, 2);
             msg.AddBcc(new EmailAddress("test34example.com", "Example User34"), 2);
             msg.AddBcc(new EmailAddress("test35@example.com", "Example User35"), 2);
-         
+
             emails = new List<EmailAddress>
             {
                 new EmailAddress("test36@example.com", "Example User36"),
@@ -612,7 +624,7 @@
             msg = new SendGridMessage();
             msg.AddTo("test001@example.com");
             Assert.True(msg.Serialize() == "{\"personalizations\":[{\"to\":[{\"email\":\"test001@example.com\"}]}]}");
-         
+
         }
 
         [Fact]
@@ -1054,7 +1066,7 @@
             msg.AddBcc("test001@example.com");
             Assert.True(msg.Serialize() == "{\"personalizations\":[{\"bcc\":[{\"email\":\"test001@example.com\"}]}]}");
         }
-        
+
         [Fact]
         public void TestAddBccArgumentNullExceptionIfNullEmailAddressIsSupplied()
         {
@@ -1887,7 +1899,7 @@
             Assert.Throws<ArgumentNullException>(()=> msg.SetFrom(string.Empty, "Example User"));
         }
 
-        
+
         [Fact]
         public void TestSetFromWithOutEmailAddressObject()
         {
@@ -2496,10 +2508,10 @@
   'ips': [
     {
       'ip': '192.168.1.1'
-    }, 
+    },
     {
       'ip': '192.*.*.*'
-    }, 
+    },
     {
       'ip': '192.168.1.3/32'
     }
@@ -2529,8 +2541,8 @@
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
   'ids': [
-    1, 
-    2, 
+    1,
+    2,
     3
   ]
 }";
@@ -2569,8 +2581,8 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'email_to': 'example@example.com', 
-  'frequency': 'daily', 
+  'email_to': 'example@example.com',
+  'frequency': 'daily',
   'type': 'stats_notification'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -2634,11 +2646,11 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'name': 'My API Key', 
-  'sample': 'data', 
+  'name': 'My API Key',
+  'sample': 'data',
   'scopes': [
-    'mail.send', 
-    'alerts.create', 
+    'mail.send',
+    'alerts.create',
     'alerts.read'
   ]
 }";
@@ -2668,9 +2680,9 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'name': 'A New Hope', 
+  'name': 'A New Hope',
   'scopes': [
-    'user.profile.read', 
+    'user.profile.read',
     'user.profile.update'
   ]
 }";
@@ -2726,8 +2738,8 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'description': 'Suggestions for products our users might like.', 
-  'is_default': true, 
+  'description': 'Suggestions for products our users might like.',
+  'is_default': true,
   'name': 'Product Suggestions'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -2756,8 +2768,8 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'description': 'Suggestions for items our users might like.', 
-  'id': 103, 
+  'description': 'Suggestions for items our users might like.',
+  'id': 103,
   'name': 'Item Suggestions'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -2797,7 +2809,7 @@
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
   'recipient_emails': [
-    'test1@example.com', 
+    'test1@example.com',
     'test2@example.com'
   ]
 }";
@@ -2827,8 +2839,8 @@
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
   'recipient_emails': [
-    'exists1@example.com', 
-    'exists2@example.com', 
+    'exists1@example.com',
+    'exists2@example.com',
     'doesnotexists@example.com'
   ]
 }";
@@ -2869,7 +2881,7 @@
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
   'recipient_emails': [
-    'test1@example.com', 
+    'test1@example.com',
     'test2@example.com'
   ]
 }";
@@ -2919,11 +2931,11 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'aggregated_by': 'day', 
-  'browsers': 'test_string', 
-  'end_date': '2016-04-01', 
-  'limit': 'test_string', 
-  'offset': 'test_string', 
+  'aggregated_by': 'day',
+  'browsers': 'test_string',
+  'end_date': '2016-04-01',
+  'limit': 'test_string',
+  'offset': 'test_string',
   'start_date': '2016-01-01'
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "browsers/stats", queryParams: queryParams);
@@ -2939,21 +2951,21 @@
             var data = @"{
   'categories': [
     'spring line'
-  ], 
-  'custom_unsubscribe_url': '', 
-  'html_content': '<html><head><title></title></head><body><p>Check out our spring line!</p></body></html>', 
-  'ip_pool': 'marketing', 
+  ],
+  'custom_unsubscribe_url': '',
+  'html_content': '<html><head><title></title></head><body><p>Check out our spring line!</p></body></html>',
+  'ip_pool': 'marketing',
   'list_ids': [
-    110, 
+    110,
     124
-  ], 
-  'plain_content': 'Check out our spring line!', 
+  ],
+  'plain_content': 'Check out our spring line!',
   'segment_ids': [
     110
-  ], 
-  'sender_id': 124451, 
-  'subject': 'New Products for Spring!', 
-  'suppression_group_id': 42, 
+  ],
+  'sender_id': 124451,
+  'subject': 'New Products for Spring!',
+  'suppression_group_id': 42,
   'title': 'March Newsletter'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -2969,7 +2981,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'limit': 1, 
+  'limit': 1,
   'offset': 1
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "campaigns", queryParams: queryParams);
@@ -2985,10 +2997,10 @@
             var data = @"{
   'categories': [
     'summer line'
-  ], 
-  'html_content': '<html><head><title></title></head><body><p>Check out our summer line!</p></body></html>', 
-  'plain_content': 'Check out our summer line!', 
-  'subject': 'New Products for Summer!', 
+  ],
+  'html_content': '<html><head><title></title></head><body><p>Check out our summer line!</p></body></html>',
+  'plain_content': 'Check out our summer line!',
+  'subject': 'New Products for Summer!',
   'title': 'May Newsletter'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -3108,8 +3120,8 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'category': 'test_string', 
-  'limit': 1, 
+  'category': 'test_string',
+  'limit': 1,
   'offset': 1
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "categories", queryParams: queryParams);
@@ -3123,11 +3135,11 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'aggregated_by': 'day', 
-  'categories': 'test_string', 
-  'end_date': '2016-04-01', 
-  'limit': 1, 
-  'offset': 1, 
+  'aggregated_by': 'day',
+  'categories': 'test_string',
+  'end_date': '2016-04-01',
+  'limit': 1,
+  'offset': 1,
   'start_date': '2016-01-01'
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "categories/stats", queryParams: queryParams);
@@ -3141,12 +3153,12 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'aggregated_by': 'day', 
-  'end_date': '2016-04-01', 
-  'limit': 1, 
-  'offset': 1, 
-  'sort_by_direction': 'asc', 
-  'sort_by_metric': 'test_string', 
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'limit': 1,
+  'offset': 1,
+  'sort_by_direction': 'asc',
+  'sort_by_metric': 'test_string',
   'start_date': '2016-01-01'
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "categories/stats/sums", queryParams: queryParams);
@@ -3160,8 +3172,8 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'aggregated_by': 'day', 
-  'end_date': '2016-04-01', 
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
   'start_date': '2016-01-01'
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "clients/stats", queryParams: queryParams);
@@ -3175,8 +3187,8 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'aggregated_by': 'day', 
-  'end_date': '2016-04-01', 
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
   'start_date': '2016-01-01'
 }";
             var client_type = "test_url_param";
@@ -3191,7 +3203,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'name': 'pet', 
+  'name': 'pet',
   'type': 'text'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -3264,9 +3276,9 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"[
-  1, 
-  2, 
-  3, 
+  1,
+  2,
+  3,
   4
 ]";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -3328,7 +3340,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"[
-  'recipient_id1', 
+  'recipient_id1',
   'recipient_id2'
 ]";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -3344,8 +3356,8 @@
             var host = "http://localhost:4010";
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers); var queryParams = @"{
-  'list_id': 1, 
-  'page': 1, 
+  'list_id': 1,
+  'page': 1,
   'page_size': 1
 }";
             var list_id = "test_url_param";
@@ -3372,7 +3384,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'list_id': 1, 
+  'list_id': 1,
   'recipient_id': 1
 }";
             var list_id = "test_url_param";
@@ -3389,8 +3401,8 @@
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"[
   {
-    'email': 'jones@example.com', 
-    'first_name': 'Guy', 
+    'email': 'jones@example.com',
+    'first_name': 'Guy',
     'last_name': 'Jones'
   }
 ]";
@@ -3407,15 +3419,15 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers); var data = @"[
   {
-    'age': 25, 
-    'email': 'example@example.com', 
-    'first_name': '', 
+    'age': 25,
+    'email': 'example@example.com',
+    'first_name': '',
     'last_name': 'User'
-  }, 
+  },
   {
-    'age': 25, 
-    'email': 'example2@example.com', 
-    'first_name': 'Example', 
+    'age': 25,
+    'email': 'example2@example.com',
+    'first_name': 'Example',
     'last_name': 'User'
   }
 ]";
@@ -3432,7 +3444,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'page': 1, 
+  'page': 1,
   'page_size': 1
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/recipients", queryParams: queryParams);
@@ -3446,7 +3458,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"[
-  'recipient_id1', 
+  'recipient_id1',
   'recipient_id2'
 ]";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -3539,25 +3551,25 @@
             var data = @"{
   'conditions': [
     {
-      'and_or': '', 
-      'field': 'last_name', 
-      'operator': 'eq', 
+      'and_or': '',
+      'field': 'last_name',
+      'operator': 'eq',
       'value': 'Miller'
-    }, 
+    },
     {
-      'and_or': 'and', 
-      'field': 'last_clicked', 
-      'operator': 'gt', 
+      'and_or': 'and',
+      'field': 'last_clicked',
+      'operator': 'gt',
       'value': '01/02/2015'
-    }, 
+    },
     {
-      'and_or': 'or', 
-      'field': 'clicks.campaign_identifier', 
-      'operator': 'eq', 
+      'and_or': 'or',
+      'field': 'clicks.campaign_identifier',
+      'operator': 'eq',
       'value': '513'
     }
-  ], 
-  'list_id': 4, 
+  ],
+  'list_id': 4,
   'name': 'Last Name Miller'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -3585,13 +3597,13 @@
             var data = @"{
   'conditions': [
     {
-      'and_or': '', 
-      'field': 'last_name', 
-      'operator': 'eq', 
+      'and_or': '',
+      'field': 'last_name',
+      'operator': 'eq',
       'value': 'Miller'
     }
-  ], 
-  'list_id': 5, 
+  ],
+  'list_id': 5,
   'name': 'The Millers'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -3639,7 +3651,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'page': 1, 
+  'page': 1,
   'page_size': 1
 }";
             var segment_id = "test_url_param";
@@ -3654,10 +3666,10 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'aggregated_by': 'day', 
-  'end_date': '2016-04-01', 
-  'limit': 1, 
-  'offset': 1, 
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'limit': 1,
+  'offset': 1,
   'start_date': '2016-01-01'
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "devices/stats", queryParams: queryParams);
@@ -3671,11 +3683,11 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'aggregated_by': 'day', 
-  'country': 'US', 
-  'end_date': '2016-04-01', 
-  'limit': 1, 
-  'offset': 1, 
+  'aggregated_by': 'day',
+  'country': 'US',
+  'end_date': '2016-04-01',
+  'limit': 1,
+  'offset': 1,
   'start_date': '2016-01-01'
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "geo/stats", queryParams: queryParams);
@@ -3689,10 +3701,10 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'exclude_whitelabels': 'true', 
-  'ip': 'test_string', 
-  'limit': 1, 
-  'offset': 1, 
+  'exclude_whitelabels': 'true',
+  'ip': 'test_string',
+  'limit': 1,
+  'offset': 1,
   'subuser': 'test_string'
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "ips", queryParams: queryParams);
@@ -3887,138 +3899,138 @@
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
   'asm': {
-    'group_id': 1, 
+    'group_id': 1,
     'groups_to_display': [
-      1, 
-      2, 
+      1,
+      2,
       3
     ]
-  }, 
+  },
   'attachments': [
     {
-      'content': '[BASE64 encoded content block here]', 
-      'content_id': 'ii_139db99fdb5c3704', 
-      'disposition': 'inline', 
-      'filename': 'file1.jpg', 
-      'name': 'file1', 
+      'content': '[BASE64 encoded content block here]',
+      'content_id': 'ii_139db99fdb5c3704',
+      'disposition': 'inline',
+      'filename': 'file1.jpg',
+      'name': 'file1',
       'type': 'jpg'
     }
-  ], 
-  'batch_id': '[YOUR BATCH ID GOES HERE]', 
+  ],
+  'batch_id': '[YOUR BATCH ID GOES HERE]',
   'categories': [
-    'category1', 
+    'category1',
     'category2'
-  ], 
+  ],
   'content': [
     {
-      'type': 'text/html', 
+      'type': 'text/html',
       'value': '<html><p>Hello, world!</p><img src=[CID GOES HERE]></img></html>'
     }
-  ], 
+  ],
   'custom_args': {
-    'New Argument 1': 'New Value 1', 
-    'activationAttempt': '1', 
+    'New Argument 1': 'New Value 1',
+    'activationAttempt': '1',
     'customerAccountNumber': '[CUSTOMER ACCOUNT NUMBER GOES HERE]'
-  }, 
+  },
   'from': {
-    'email': 'sam.smith@example.com', 
+    'email': 'sam.smith@example.com',
     'name': 'Sam Smith'
-  }, 
-  'headers': {}, 
-  'ip_pool_name': '[YOUR POOL NAME GOES HERE]', 
+  },
+  'headers': {},
+  'ip_pool_name': '[YOUR POOL NAME GOES HERE]',
   'mail_settings': {
     'bcc': {
-      'email': 'ben.doe@example.com', 
+      'email': 'ben.doe@example.com',
       'enable': true
-    }, 
+    },
     'bypass_list_management': {
       'enable': true
-    }, 
+    },
     'footer': {
-      'enable': true, 
-      'html': '<p>Thanks</br>The SendGrid Team</p>', 
+      'enable': true,
+      'html': '<p>Thanks</br>The SendGrid Team</p>',
       'text': 'Thanks,/n The SendGrid Team'
-    }, 
+    },
     'sandbox_mode': {
       'enable': false
-    }, 
+    },
     'spam_check': {
-      'enable': true, 
-      'post_to_url': 'http://example.com/compliance', 
+      'enable': true,
+      'post_to_url': 'http://example.com/compliance',
       'threshold': 3
     }
-  }, 
+  },
   'personalizations': [
     {
       'bcc': [
         {
-          'email': 'sam.doe@example.com', 
+          'email': 'sam.doe@example.com',
           'name': 'Sam Doe'
         }
-      ], 
+      ],
       'cc': [
         {
-          'email': 'jane.doe@example.com', 
+          'email': 'jane.doe@example.com',
           'name': 'Jane Doe'
         }
-      ], 
+      ],
       'custom_args': {
-        'New Argument 1': 'New Value 1', 
-        'activationAttempt': '1', 
+        'New Argument 1': 'New Value 1',
+        'activationAttempt': '1',
         'customerAccountNumber': '[CUSTOMER ACCOUNT NUMBER GOES HERE]'
-      }, 
+      },
       'headers': {
-        'X-Accept-Language': 'en', 
+        'X-Accept-Language': 'en',
         'X-Mailer': 'MyApp'
-      }, 
-      'send_at': 1409348513, 
-      'subject': 'Hello, World!', 
+      },
+      'send_at': 1409348513,
+      'subject': 'Hello, World!',
       'substitutions': {
-        'id': 'substitutions', 
+        'id': 'substitutions',
         'type': 'object'
-      }, 
+      },
       'to': [
         {
-          'email': 'john.doe@example.com', 
+          'email': 'john.doe@example.com',
           'name': 'John Doe'
         }
       ]
     }
-  ], 
+  ],
   'reply_to': {
-    'email': 'sam.smith@example.com', 
+    'email': 'sam.smith@example.com',
     'name': 'Sam Smith'
-  }, 
+  },
   'sections': {
     'section': {
-      ':sectionName1': 'section 1 text', 
+      ':sectionName1': 'section 1 text',
       ':sectionName2': 'section 2 text'
     }
-  }, 
-  'send_at': 1409348513, 
-  'subject': 'Hello, World!', 
-  'template_id': '[YOUR TEMPLATE ID GOES HERE]', 
+  },
+  'send_at': 1409348513,
+  'subject': 'Hello, World!',
+  'template_id': '[YOUR TEMPLATE ID GOES HERE]',
   'tracking_settings': {
     'click_tracking': {
-      'enable': true, 
+      'enable': true,
       'enable_text': true
-    }, 
+    },
     'ganalytics': {
-      'enable': true, 
-      'utm_campaign': '[NAME OF YOUR REFERRER SOURCE]', 
-      'utm_content': '[USE THIS SPACE TO DIFFERENTIATE YOUR EMAIL FROM ADS]', 
-      'utm_medium': '[NAME OF YOUR MARKETING MEDIUM e.g. email]', 
-      'utm_name': '[NAME OF YOUR CAMPAIGN]', 
+      'enable': true,
+      'utm_campaign': '[NAME OF YOUR REFERRER SOURCE]',
+      'utm_content': '[USE THIS SPACE TO DIFFERENTIATE YOUR EMAIL FROM ADS]',
+      'utm_medium': '[NAME OF YOUR MARKETING MEDIUM e.g. email]',
+      'utm_name': '[NAME OF YOUR CAMPAIGN]',
       'utm_term': '[IDENTIFY PAID KEYWORDS HERE]'
-    }, 
+    },
     'open_tracking': {
-      'enable': true, 
+      'enable': true,
       'substitution_tag': '%opentrack'
-    }, 
+    },
     'subscription_tracking': {
-      'enable': true, 
-      'html': 'If you would like to unsubscribe and stop receiving these emails <% clickhere %>.', 
-      'substitution_tag': '<%click here%>', 
+      'enable': true,
+      'html': 'If you would like to unsubscribe and stop receiving these emails <% clickhere %>.',
+      'substitution_tag': '<%click here%>',
       'text': 'If you would like to unsubscribe and stop receiveing these emails <% click here %>.'
     }
   }
@@ -4036,7 +4048,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'limit': 1, 
+  'limit': 1,
   'offset': 1
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings", queryParams: queryParams);
@@ -4050,9 +4062,9 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'enabled': true, 
+  'enabled': true,
   'list': [
-    'email1@example.com', 
+    'email1@example.com',
     'example.com'
   ]
 }";
@@ -4079,7 +4091,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'email': 'email@example.com', 
+  'email': 'email@example.com',
   'enabled': false
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -4105,8 +4117,8 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'enabled': true, 
-  'hard_bounces': 5, 
+  'enabled': true,
+  'hard_bounces': 5,
   'soft_bounces': 5
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -4132,8 +4144,8 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'enabled': true, 
-  'html_content': '...', 
+  'enabled': true,
+  'html_content': '...',
   'plain_content': '...'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -4159,7 +4171,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'email': 'example@example.com', 
+  'email': 'example@example.com',
   'enabled': true
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -4185,7 +4197,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'email': '', 
+  'email': '',
   'enabled': false
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -4236,8 +4248,8 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'enabled': true, 
-  'max_score': 5, 
+  'enabled': true,
+  'max_score': 5,
   'url': 'url'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -4263,7 +4275,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'enabled': true, 
+  'enabled': true,
   'html_content': '<% body %>'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -4289,11 +4301,11 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'aggregated_by': 'day', 
-  'end_date': '2016-04-01', 
-  'limit': 1, 
-  'mailbox_providers': 'test_string', 
-  'offset': 1, 
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'limit': 1,
+  'mailbox_providers': 'test_string',
+  'offset': 1,
   'start_date': '2016-01-01'
 }";
 
@@ -4308,7 +4320,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'limit': 1, 
+  'limit': 1,
   'offset': 1
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "partner_settings", queryParams: queryParams);
@@ -4322,8 +4334,8 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'enable_subuser_statistics': true, 
-  'enabled': true, 
+  'enable_subuser_statistics': true,
+  'enabled': true,
   'license_key': ''
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -4359,20 +4371,20 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'address': '123 Elm St.', 
-  'address_2': 'Apt. 456', 
-  'city': 'Denver', 
-  'country': 'United States', 
+  'address': '123 Elm St.',
+  'address_2': 'Apt. 456',
+  'city': 'Denver',
+  'country': 'United States',
   'from': {
-    'email': 'from@example.com', 
+    'email': 'from@example.com',
     'name': 'Example INC'
-  }, 
-  'nickname': 'My Sender ID', 
+  },
+  'nickname': 'My Sender ID',
   'reply_to': {
-    'email': 'replyto@example.com', 
+    'email': 'replyto@example.com',
     'name': 'Example INC'
-  }, 
-  'state': 'Colorado', 
+  },
+  'state': 'Colorado',
   'zip': '80202'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -4398,20 +4410,20 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'address': '123 Elm St.', 
-  'address_2': 'Apt. 456', 
-  'city': 'Denver', 
-  'country': 'United States', 
+  'address': '123 Elm St.',
+  'address_2': 'Apt. 456',
+  'city': 'Denver',
+  'country': 'United States',
   'from': {
-    'email': 'from@example.com', 
+    'email': 'from@example.com',
     'name': 'Example INC'
-  }, 
-  'nickname': 'My Sender ID', 
+  },
+  'nickname': 'My Sender ID',
   'reply_to': {
-    'email': 'replyto@example.com', 
+    'email': 'replyto@example.com',
     'name': 'Example INC'
-  }, 
-  'state': 'Colorado', 
+  },
+  'state': 'Colorado',
   'zip': '80202'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -4461,10 +4473,10 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'aggregated_by': 'day', 
-  'end_date': '2016-04-01', 
-  'limit': 1, 
-  'offset': 1, 
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'limit': 1,
+  'offset': 1,
   'start_date': '2016-01-01'
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "stats", queryParams: queryParams);
@@ -4478,12 +4490,12 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'email': 'John@example.com', 
+  'email': 'John@example.com',
   'ips': [
-    '1.1.1.1', 
+    '1.1.1.1',
     '2.2.2.2'
-  ], 
-  'password': 'johns_password', 
+  ],
+  'password': 'johns_password',
   'username': 'John@example.com'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -4499,8 +4511,8 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'limit': 1, 
-  'offset': 1, 
+  'limit': 1,
+  'offset': 1,
   'username': 'test_string'
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers", queryParams: queryParams);
@@ -4527,11 +4539,11 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'aggregated_by': 'day', 
-  'end_date': '2016-04-01', 
-  'limit': 1, 
-  'offset': 1, 
-  'start_date': '2016-01-01', 
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'limit': 1,
+  'offset': 1,
+  'start_date': '2016-01-01',
   'subusers': 'test_string'
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers/stats", queryParams: queryParams);
@@ -4545,11 +4557,11 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'date': 'test_string', 
-  'limit': 1, 
-  'offset': 1, 
-  'sort_by_direction': 'asc', 
-  'sort_by_metric': 'test_string', 
+  'date': 'test_string',
+  'limit': 1,
+  'offset': 1,
+  'sort_by_direction': 'asc',
+  'sort_by_metric': 'test_string',
   'subuser': 'test_string'
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers/stats/monthly", queryParams: queryParams);
@@ -4563,12 +4575,12 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'aggregated_by': 'day', 
-  'end_date': '2016-04-01', 
-  'limit': 1, 
-  'offset': 1, 
-  'sort_by_direction': 'asc', 
-  'sort_by_metric': 'test_string', 
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'limit': 1,
+  'offset': 1,
+  'sort_by_direction': 'asc',
+  'sort_by_metric': 'test_string',
   'start_date': '2016-01-01'
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers/stats/sums", queryParams: queryParams);
@@ -4625,7 +4637,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'email': 'example@example.com', 
+  'email': 'example@example.com',
   'frequency': 500
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -4642,7 +4654,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'email': 'example@example.com', 
+  'email': 'example@example.com',
   'frequency': 50000
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -4681,10 +4693,10 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'date': 'test_string', 
-  'limit': 1, 
-  'offset': 1, 
-  'sort_by_direction': 'asc', 
+  'date': 'test_string',
+  'limit': 1,
+  'offset': 1,
+  'sort_by_direction': 'asc',
   'sort_by_metric': 'test_string'
 }";
             var subuser_name = "test_url_param";
@@ -4699,9 +4711,9 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'end_time': 1, 
-  'limit': 1, 
-  'offset': 1, 
+  'end_time': 1,
+  'limit': 1,
+  'offset': 1,
   'start_time': 1
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/blocks", queryParams: queryParams);
@@ -4715,9 +4727,9 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'delete_all': false, 
+  'delete_all': false,
   'emails': [
-    'example1@example.com', 
+    'example1@example.com',
     'example2@example.com'
   ]
 }";
@@ -4756,7 +4768,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'end_time': 1, 
+  'end_time': 1,
   'start_time': 1
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/bounces", queryParams: queryParams);
@@ -4770,9 +4782,9 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'delete_all': true, 
+  'delete_all': true,
   'emails': [
-    'example@example.com', 
+    'example@example.com',
     'example2@example.com'
   ]
 }";
@@ -4814,9 +4826,9 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'end_time': 1, 
-  'limit': 1, 
-  'offset': 1, 
+  'end_time': 1,
+  'limit': 1,
+  'offset': 1,
   'start_time': 1
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/invalid_emails", queryParams: queryParams);
@@ -4830,9 +4842,9 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'delete_all': false, 
+  'delete_all': false,
   'emails': [
-    'example1@example.com', 
+    'example1@example.com',
     'example2@example.com'
   ]
 }";
@@ -4893,9 +4905,9 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'end_time': 1, 
-  'limit': 1, 
-  'offset': 1, 
+  'end_time': 1,
+  'limit': 1,
+  'offset': 1,
   'start_time': 1
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/spam_reports", queryParams: queryParams);
@@ -4909,9 +4921,9 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'delete_all': false, 
+  'delete_all': false,
   'emails': [
-    'example1@example.com', 
+    'example1@example.com',
     'example2@example.com'
   ]
 }";
@@ -4928,9 +4940,9 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'end_time': 1, 
-  'limit': 1, 
-  'offset': 1, 
+  'end_time': 1,
+  'limit': 1,
+  'offset': 1,
   'start_time': 1
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/unsubscribes", queryParams: queryParams);
@@ -5007,11 +5019,11 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'active': 1, 
-  'html_content': '<%body%>', 
-  'name': 'example_version_name', 
-  'plain_content': '<%body%>', 
-  'subject': '<%subject%>', 
+  'active': 1,
+  'html_content': '<%body%>',
+  'name': 'example_version_name',
+  'plain_content': '<%body%>',
+  'subject': '<%subject%>',
   'template_id': 'ddb96bbc-9b92-425e-8979-99464621b543'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -5028,10 +5040,10 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'active': 1, 
-  'html_content': '<%body%>', 
-  'name': 'updated_example_name', 
-  'plain_content': '<%body%>', 
+  'active': 1,
+  'html_content': '<%body%>',
+  'name': 'updated_example_name',
+  'plain_content': '<%body%>',
   'subject': '<%subject%>'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -5085,7 +5097,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'limit': 1, 
+  'limit': 1,
   'offset': 1
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "tracking_settings", queryParams: queryParams);
@@ -5124,11 +5136,11 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'enabled': true, 
-  'utm_campaign': 'website', 
-  'utm_content': '', 
-  'utm_medium': 'email', 
-  'utm_source': 'sendgrid.com', 
+  'enabled': true,
+  'utm_campaign': 'website',
+  'utm_content': '',
+  'utm_medium': 'email',
+  'utm_source': 'sendgrid.com',
   'utm_term': ''
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -5179,11 +5191,11 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'enabled': true, 
-  'html_content': 'html content', 
-  'landing': 'landing page html', 
-  'plain_content': 'text content', 
-  'replace': 'replacement tag', 
+  'enabled': true,
+  'html_content': 'html content',
+  'landing': 'landing page html',
+  'plain_content': 'text content',
+  'replace': 'replacement tag',
   'url': 'url'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -5254,7 +5266,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'new_password': 'new_password', 
+  'new_password': 'new_password',
   'old_password': 'old_password'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -5270,8 +5282,8 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'city': 'Orange', 
-  'first_name': 'Example', 
+  'city': 'Orange',
+  'first_name': 'Example',
   'last_name': 'User'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -5297,7 +5309,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'batch_id': 'YOUR_BATCH_ID', 
+  'batch_id': 'YOUR_BATCH_ID',
   'status': 'pause'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -5361,7 +5373,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'require_tls': true, 
+  'require_tls': true,
   'require_valid_cert': false
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -5412,18 +5424,18 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'bounce': true, 
-  'click': true, 
-  'deferred': true, 
-  'delivered': true, 
-  'dropped': true, 
-  'enabled': true, 
-  'group_resubscribe': true, 
-  'group_unsubscribe': true, 
-  'open': true, 
-  'processed': true, 
-  'spam_report': true, 
-  'unsubscribe': true, 
+  'bounce': true,
+  'click': true,
+  'deferred': true,
+  'delivered': true,
+  'dropped': true,
+  'enabled': true,
+  'group_resubscribe': true,
+  'group_unsubscribe': true,
+  'open': true,
+  'processed': true,
+  'spam_report': true,
+  'unsubscribe': true,
   'url': 'url'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -5464,9 +5476,9 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'hostname': 'myhostname.com', 
-  'send_raw': false, 
-  'spam_check': true, 
+  'hostname': 'myhostname.com',
+  'send_raw': false,
+  'spam_check': true,
   'url': 'http://email.myhosthame.com'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -5492,8 +5504,8 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'send_raw': true, 
-  'spam_check': false, 
+  'send_raw': true,
+  'spam_check': false,
   'url': 'http://newdomain.com/parse'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -5532,10 +5544,10 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'aggregated_by': 'day', 
-  'end_date': '2016-04-01', 
-  'limit': 'test_string', 
-  'offset': 'test_string', 
+  'aggregated_by': 'day',
+  'end_date': '2016-04-01',
+  'limit': 'test_string',
+  'offset': 'test_string',
   'start_date': '2016-01-01'
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/webhooks/parse/stats", queryParams: queryParams);
@@ -5549,15 +5561,15 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'automatic_security': false, 
-  'custom_spf': true, 
-  'default': true, 
-  'domain': 'example.com', 
+  'automatic_security': false,
+  'custom_spf': true,
+  'default': true,
+  'domain': 'example.com',
   'ips': [
-    '192.168.1.1', 
+    '192.168.1.1',
     '192.168.1.2'
-  ], 
-  'subdomain': 'news', 
+  ],
+  'subdomain': 'news',
   'username': 'john@example.com'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -5573,10 +5585,10 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'domain': 'test_string', 
-  'exclude_subusers': 'true', 
-  'limit': 1, 
-  'offset': 1, 
+  'domain': 'test_string',
+  'exclude_subusers': 'true',
+  'limit': 1,
+  'offset': 1,
   'username': 'test_string'
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/domains", queryParams: queryParams);
@@ -5620,7 +5632,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'custom_spf': true, 
+  'custom_spf': true,
   'default': false
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -5714,8 +5726,8 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'domain': 'example.com', 
-  'ip': '192.168.1.1', 
+  'domain': 'example.com',
+  'ip': '192.168.1.1',
   'subdomain': 'email'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
@@ -5731,8 +5743,8 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var queryParams = @"{
-  'ip': 'test_string', 
-  'limit': 1, 
+  'ip': 'test_string',
+  'limit': 1,
   'offset': 1
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/ips", queryParams: queryParams);
@@ -5779,14 +5791,14 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, host, headers);
             var data = @"{
-  'default': true, 
-  'domain': 'example.com', 
+  'default': true,
+  'domain': 'example.com',
   'subdomain': 'mail'
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var queryParams = @"{
-  'limit': 1, 
+  'limit': 1,
   'offset': 1
 }";
             var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/links", requestBody: data, queryParams: queryParams);
@@ -5963,7 +5975,7 @@
             /* ****************************************************************************************
              * Make the method call, expecting a an exception to be thrown.
              * I don't care if the component code simply passes on the original exception or if it catches
-             * the original exception and throws another, custom exception. So I'll only 
+             * the original exception and throws another, custom exception. So I'll only
              * assert that ANY exception is thrown.
              * **************************************************************************************** */
             var exceptionTask = Record.ExceptionAsync(async () =>
@@ -5980,7 +5992,7 @@
             // we can also test that the original exception was thrown
             Assert.IsType(typeof(TimeoutException), thrownException);
         }
-        
+
         /// <summary>
         /// Tests the conditions in issue #469.
         /// JSON sent to SendGrid should never include reference handling ($id & $ref)
@@ -6021,7 +6033,7 @@
             msg.SetSpamCheck(true);
             msg.SetSubject("Hello World from the SendGrid CSharp Library");
             msg.SetSubscriptionTracking(true);
-            msg.SetTemplateId("templateID");            
+            msg.SetTemplateId("templateID");
 
             msg.AddAttachment("balance_001.pdf",
                               "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gQ3JhcyBwdW12",
@@ -6039,7 +6051,7 @@
             msg.AddSection("sectionKey", "sectionValue");
             msg.AddSubstitution("substitutionKey", "substitutionValue");
             msg.AddTo(new EmailAddress("test@example.com"));
-            
+
             /* ****************************************************************************************
              * Serialize & check
              * **************************************************************************************** */
@@ -6055,7 +6067,7 @@
         {
             throw new NotImplementedException("Ensure you setup this method as part of your test.");
         }
- 
+
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             return Task.FromResult(Send(request));
@@ -6083,8 +6095,8 @@
     }
 
     /// <summary>
-    /// This message handler could be mocked using e.g. Moq.Mock, but the author of the test is 
-    /// careful about introducing new dependecies in the test project, so creates a concrete 
+    /// This message handler could be mocked using e.g. Moq.Mock, but the author of the test is
+    /// careful about introducing new dependecies in the test project, so creates a concrete
     /// class instead.
     /// </summary>
     public class TimeOutExceptionThrowingHttpMessageHandler : FakeHttpMessageHandler
