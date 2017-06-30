@@ -11,6 +11,7 @@
     using Xunit;
     using System.Threading;
     using System.Text;
+    using Xunit.Abstractions;
 
     public class IntegrationFixture : IDisposable
     {
@@ -55,10 +56,12 @@
     public class Integration : IClassFixture<IntegrationFixture>
     {
         IntegrationFixture fixture;
+        private readonly ITestOutputHelper output;
 
-        public Integration(IntegrationFixture fixture)
+        public Integration(IntegrationFixture fixture, ITestOutputHelper output)
         {
             this.fixture = fixture;
+            this.output = output;
         }
 
         // Base case for sending a single email
@@ -73,21 +76,6 @@
             msg.AddContent(MimeType.Html, "HTML content");
             Assert.True(msg.Serialize() == "{\"from\":{\"email\":\"test@example.com\"},\"personalizations\":[{\"to\":[{\"email\":\"test@example.com\"}],\"subject\":\"Hello World from the SendGrid CSharp Library\"}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Textual content\"},{\"type\":\"text/html\",\"value\":\"HTML content\"}]}");
 
-            msg = new SendGridMessage();
-            msg.SetFrom(new EmailAddress("test@example.com"));
-            msg.AddTo(new EmailAddress("test@example.com"));
-            msg.SetSubject("Hello World from the SendGrid CSharp Library");
-            msg.AddContent(MimeType.Html, "HTML content");
-            Console.WriteLine(msg.Serialize());
-
-            msg = new SendGridMessage();
-            msg.SetFrom("test@example.com");
-            msg.AddTo("test@example.com");
-            msg.SetSubject("Hello World from the SendGrid CSharp Library");
-            msg.AddContent(MimeType.Text, "Textual content");
-            msg.AddContent(MimeType.Html, "HTML content");
-            Assert.True(msg.Serialize() == "{\"from\":{\"email\":\"test@example.com\"},\"personalizations\":[{\"to\":[{\"email\":\"test@example.com\"}],\"subject\":\"Hello World from the SendGrid CSharp Library\"}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Textual content\"},{\"type\":\"text/html\",\"value\":\"HTML content\"}]}");
-
             // Test Hello World Example
             var from = new EmailAddress("test@example.com", "Example User");
             var subject = "Sending with SendGrid is Fun";
@@ -96,9 +84,9 @@
             var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
             msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
 
-            Console.WriteLine(msg.Serialize());
+            output.WriteLine(msg.Serialize());
 
-            Assert.True(msg.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"subject\":\"Sending with SendGrid is Fun\"}],\"content\":[{\"type\":\"text/plain\",\"value\":\"and easy to do anywhere, even with C#\"},{\"type\":\"text/html\",\"value\":\"<strong>and easy to do anywhere, even with C#</strong>\"}]}");
+            Assert.True(msg.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test@example.com\"}],\"subject\":\"Sending with SendGrid is Fun\"}],\"content\":[{\"type\":\"text/plain\",\"value\":\"and easy to do anywhere, even with C#\"},{\"type\":\"text/html\",\"value\":\"\\u003cstrong\\u003eand easy to do anywhere, even with C#\\u003c/strong\\u003e\"}]}");
         }
 
         [Fact]
