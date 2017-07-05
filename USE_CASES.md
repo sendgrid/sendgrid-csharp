@@ -18,28 +18,28 @@ using System.IO;
 
 namespace Example
 {
-	internal class Example
-	{
-		private static void Main()
-		{
-			Execute().Wait();
-		}
+    internal class Example
+    {
+        private static void Main()
+        {
+            Execute().Wait();
+        }
 
-		static async Task Execute()
-		{
-			var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
-			var client = new SendGridClient(apiKey);
-			var from = new EmailAddress("test@example.com");
-			var subject = "Subject";
-			var to = new EmailAddress("test@example.com");
-			var body = "Email Body";
-			var msg = MailHelper.CreateSingleEmail(from, to, subject, body, "");
-			var bytes = File.ReadAllBytes("/Users/username/file.txt");
-			var file = Convert.ToBase64String(bytes);
-			msg.AddAttachment("file.txt", file);
-			var response = await client.SendEmailAsync(msg);
-		}
-	}
+        static async Task Execute()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("test@example.com");
+            var subject = "Subject";
+            var to = new EmailAddress("test@example.com");
+            var body = "Email Body";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, body, "");
+            var bytes = File.ReadAllBytes("/Users/username/file.txt");
+            var file = Convert.ToBase64String(bytes);
+            msg.AddAttachment("file.txt", file);
+            var response = await client.SendEmailAsync(msg);
+        }
+    }
 }
 ```
 
@@ -55,12 +55,12 @@ using System.Collections.Generic;
 
 namespace KitchenSink
 {
-	internal class KitchenSink
-	{
-		private static void Main()
-		{
-			Execute().Wait();
-		}
+    internal class KitchenSink
+    {
+        private static void Main()
+        {
+            Execute().Wait();
+        }
 
         static async Task Execute()
         {
@@ -70,7 +70,7 @@ namespace KitchenSink
 
             // For a detailed description of each of these settings, please see the [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
 
-			msg.AddTo(new EmailAddress("test1@example.com", "Example User 1"));
+            msg.AddTo(new EmailAddress("test1@example.com", "Example User 1"));
             var to_emails = new List<EmailAddress>
             {
                 new EmailAddress("test2@example.com", "Example User2"),
@@ -193,106 +193,106 @@ namespace KitchenSink
                 new Content("text/calendar", "Party Time!!"),
                 new Content("text/calendar2", "Party Time2!!")
             };
-			msg.AddContents(contents);
+            msg.AddContents(contents);
 
-			// For base64 encoding, see [`Convert.ToBase64String`](https://msdn.microsoft.com/en-us/library/system.convert.tobase64string(v=vs.110).aspx)
+            // For base64 encoding, see [`Convert.ToBase64String`](https://msdn.microsoft.com/en-us/library/system.convert.tobase64string(v=vs.110).aspx)
             // For an example using an attachment, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#attachments).
-			msg.AddAttachment("balance_001.pdf",
-							  "base64 encoded string",
-							  "application/pdf",
-							  "attachment",
-							  "Balance Sheet");
+            msg.AddAttachment("balance_001.pdf",
+                              "base64 encoded string",
+                              "application/pdf",
+                              "attachment",
+                              "Balance Sheet");
             var attachments = new List<Attachment>()
             {
-				new Attachment()
+                new Attachment()
                 {
-    				Content = "base64 encoded string",
-    				Type = "image/png",
-    				Filename = "banner.png",
-    				Disposition = "inline",
-    				ContentId = "Banner"
-    			},
-				new Attachment()
-    			{
-    				Content = "base64 encoded string",
-    				Type = "image/png",
-    				Filename = "banner2.png",
-    				Disposition = "inline",
-    				ContentId = "Banner 2"
-    			}
+                    Content = "base64 encoded string",
+                    Type = "image/png",
+                    Filename = "banner.png",
+                    Disposition = "inline",
+                    ContentId = "Banner"
+                },
+                new Attachment()
+                {
+                    Content = "base64 encoded string",
+                    Type = "image/png",
+                    Filename = "banner2.png",
+                    Disposition = "inline",
+                    ContentId = "Banner 2"
+                }
             };
-			msg.AddAttachments(attachments);
+            msg.AddAttachments(attachments);
 
             // For a full transactional template example, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transactional-templates).
-			msg.SetTemplateId("13b8f94f-bcae-4ec6-b752-70d6cb59f932");
+            msg.SetTemplateId("13b8f94f-bcae-4ec6-b752-70d6cb59f932");
 
             msg.AddGlobalHeader("X-Day", "Monday");
-			var globalHeaders = new Dictionary<string, string> 
+            var globalHeaders = new Dictionary<string, string> 
             { 
                 { "X-Month", "January" },
                 { "X-Year", "2017" } 
             };
             msg.AddGlobalHeaders(globalHeaders);
 
-			msg.AddSection("%section1", "Substitution for Section 1 Tag");
-			var sections = new Dictionary<string, string>
-			{
-				{"%section2%", "Substitution for Section 2 Tag"},
-				{"%section3%", "Substitution for Section 3 Tag"}
-			};
-			msg.AddSections(sections);
+            msg.AddSection("%section1", "Substitution for Section 1 Tag");
+            var sections = new Dictionary<string, string>
+            {
+                {"%section2%", "Substitution for Section 2 Tag"},
+                {"%section3%", "Substitution for Section 3 Tag"}
+            };
+            msg.AddSections(sections);
 
-			msg.AddCategory("customer");
-			var categories = new List<string> 
+            msg.AddCategory("customer");
+            var categories = new List<string> 
             { 
                 "vip",
                 "new_account"
             };
-			msg.AddCategories(categories);
+            msg.AddCategories(categories);
 
-			msg.AddGlobalCustomArg("campaign", "welcome");
-			var globalCustomArgs = new Dictionary<string, string>
+            msg.AddGlobalCustomArg("campaign", "welcome");
+            var globalCustomArgs = new Dictionary<string, string>
             { 
                 { "sequence2", "2" },
                 { "sequence3", "3" } 
             };
-			msg.AddGlobalCustomArgs(globalCustomArgs);
+            msg.AddGlobalCustomArgs(globalCustomArgs);
 
             msg.SetAsm(3, new List<int>() { 1, 4, 5 });
 
-			msg.SetGlobalSendAt(1461775051);
+            msg.SetGlobalSendAt(1461775051);
 
-			msg.SetIpPoolName("23");
-			
+            msg.SetIpPoolName("23");
+            
             // This must be a valid [batch ID](https://sendgrid.com/docs/API_Reference/SMTP_API/scheduling_parameters.html)
-			//msg.SetBatchId("some_batch_id");
+            //msg.SetBatchId("some_batch_id");
 
-			msg.SetBccSetting(true, "test@example.com");
+            msg.SetBccSetting(true, "test@example.com");
 
-			msg.SetBypassListManagement(true);
-			
+            msg.SetBypassListManagement(true);
+            
             msg.SetFooterSetting(true, "Some Footer HTML", "Some Footer Text");
-			
+            
             msg.SetSandBoxMode(true);
-			
+            
             msg.SetSpamCheck(true, 1, "https://gotchya.example.com");
-			
+            
             msg.SetClickTracking(true, false);
-			
+            
             msg.SetOpenTracking(true, "Optional tag to replace with the open image in the body of the message");
-			
+            
             msg.SetSubscriptionTracking(true,
-									   "HTML to insert into the text / html portion of the message",
-									   "text to insert into the text/plain portion of the message",
-									   "substitution tag");
-			
+                                       "HTML to insert into the text / html portion of the message",
+                                       "text to insert into the text/plain portion of the message",
+                                       "substitution tag");
+            
             msg.SetGoogleAnalytics(true,
-								   "some campaign",
-								   "some content",
-								   "some medium",
-								   "some source",
-								   "some term");
-			
+                                   "some campaign",
+                                   "some content",
+                                   "some medium",
+                                   "some source",
+                                   "some term");
+            
             msg.SetReplyTo(new EmailAddress("test+reply@example.com", "Reply To Me"));
 
             var response = await client.SendEmailAsync(msg);
@@ -301,8 +301,8 @@ namespace KitchenSink
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers);
             Console.ReadLine();
-		}
-	}
+        }
+    }
 }
 ```
 
@@ -328,7 +328,7 @@ Template Body:
 ```html
 <html>
 <head>
-	<title></title>
+    <title></title>
 </head>
 <body>
 Hello -name-,
