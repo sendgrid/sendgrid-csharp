@@ -44,7 +44,7 @@ namespace Example
 ```
 
 <a name="kitchensink"></a>
-# Kitchen Sink - an example with all settings used.
+# Kitchen Sink - an example with all settings used
 
 ```csharp
 using SendGrid;
