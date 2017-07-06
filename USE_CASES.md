@@ -54,9 +54,9 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace KitchenSink
+namespace Example
 {
-    internal class KitchenSink
+    internal class Example
     {
         private static void Main()
         {
