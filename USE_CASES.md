@@ -2,9 +2,10 @@ This documentation provides examples for specific use cases. Please [open an iss
 
 # Table of Contents
 
-* [Attachments](#attachments)
-* [Kitchen Sink - an example with all settings used](#kitchensink)
-* [Transactional Templates](#transactional_templates)
+* [Email - Attachments](#attachments)
+* [Email - Kitchen Sink - an example with all settings used](#kitchensink)
+* [Email - Send a Single Email to a Single Recipient](#singleemailsinglerecipient)
+* [Email - Transactional Templates](#transactional_templates)
 
 <a name="attachments"></a>
 # Attachments
@@ -27,7 +28,7 @@ namespace Example
 
         static async Task Execute()
         {
-            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("test@example.com");
             var subject = "Subject";
@@ -53,9 +54,9 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace KitchenSink
+namespace Example
 {
-    internal class KitchenSink
+    internal class Example
     {
         private static void Main()
         {
@@ -64,7 +65,7 @@ namespace KitchenSink
 
         static async Task Execute()
         {
-            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage();
 
@@ -301,6 +302,40 @@ namespace KitchenSink
             Console.WriteLine(response.Body.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers);
             Console.ReadLine();
+        }
+    }
+}
+```
+
+<a name="singleemailsinglerecipient"></a>
+# Send a Single Email to a Single Recipient
+
+```csharp
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System;
+using System.Threading.Tasks;
+
+namespace Example
+{
+    internal class Example
+    {
+        private static void Main()
+        {
+            Execute().Wait();
+        }
+
+        static async Task Execute()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("test@example.com", "Example User");
+            var subject = "Sending with SendGrid is Fun";
+            var to = new EmailAddress("test@example.com", "Example User");
+            var plainTextContent = "and easy to do anywhere, even with C#";
+            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var response = await client.SendEmailAsync(msg);
         }
     }
 }
