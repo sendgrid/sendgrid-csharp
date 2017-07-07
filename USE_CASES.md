@@ -6,6 +6,7 @@ This documentation provides examples for specific use cases. Please [open an iss
 * [Email - Kitchen Sink - an example with all settings used](#kitchensink)
 * [Email - Send a Single Email to Multiple Recipients](#singleemailmultiplerecipients)
 * [Email - Send a Single Email to a Single Recipient](#singleemailsinglerecipient)
+* [Email - Send Multiple Emails to Multiple Recipients](#multipleemailsmultiplerecipients)
 * [Email - Transactional Templates](#transactional_templates)
 
 <a name="attachments"></a>
@@ -229,10 +230,10 @@ namespace Example
             msg.SetTemplateId("13b8f94f-bcae-4ec6-b752-70d6cb59f932");
 
             msg.AddGlobalHeader("X-Day", "Monday");
-            var globalHeaders = new Dictionary<string, string> 
-            { 
+            var globalHeaders = new Dictionary<string, string>
+            {
                 { "X-Month", "January" },
-                { "X-Year", "2017" } 
+                { "X-Year", "2017" }
             };
             msg.AddGlobalHeaders(globalHeaders);
 
@@ -245,8 +246,8 @@ namespace Example
             msg.AddSections(sections);
 
             msg.AddCategory("customer");
-            var categories = new List<string> 
-            { 
+            var categories = new List<string>
+            {
                 "vip",
                 "new_account"
             };
@@ -254,9 +255,9 @@ namespace Example
 
             msg.AddGlobalCustomArg("campaign", "welcome");
             var globalCustomArgs = new Dictionary<string, string>
-            { 
+            {
                 { "sequence2", "2" },
-                { "sequence3", "3" } 
+                { "sequence3", "3" }
             };
             msg.AddGlobalCustomArgs(globalCustomArgs);
 
@@ -265,36 +266,36 @@ namespace Example
             msg.SetGlobalSendAt(1461775051);
 
             msg.SetIpPoolName("23");
-            
+
             // This must be a valid [batch ID](https://sendgrid.com/docs/API_Reference/SMTP_API/scheduling_parameters.html)
             //msg.SetBatchId("some_batch_id");
 
             msg.SetBccSetting(true, "test@example.com");
 
             msg.SetBypassListManagement(true);
-            
+
             msg.SetFooterSetting(true, "Some Footer HTML", "Some Footer Text");
-            
+
             msg.SetSandBoxMode(true);
-            
+
             msg.SetSpamCheck(true, 1, "https://gotchya.example.com");
-            
+
             msg.SetClickTracking(true, false);
-            
+
             msg.SetOpenTracking(true, "Optional tag to replace with the open image in the body of the message");
-            
+
             msg.SetSubscriptionTracking(true,
                                        "HTML to insert into the text / html portion of the message",
                                        "text to insert into the text/plain portion of the message",
                                        "substitution tag");
-            
+
             msg.SetGoogleAnalytics(true,
                                    "some campaign",
                                    "some content",
                                    "some medium",
                                    "some source",
                                    "some term");
-            
+
             msg.SetReplyTo(new EmailAddress("test+reply@example.com", "Reply To Me"));
 
             var response = await client.SendEmailAsync(msg);
@@ -335,9 +336,9 @@ namespace Example
             var from = new EmailAddress("test@example.com", "Example User");
             var tos = new List<EmailAddress>
             {
-                new EmailAddress("test1@example.com"),
-                new EmailAddress("test2@example.com"),
-                new EmailAddress("test3@example.com")
+                new EmailAddress("test1@example.com", "Example User1"),
+                new EmailAddress("test2@example.com", "Example User2"),
+                new EmailAddress("test3@example.com", "Example User3")
             };
             var subject = "Sending with SendGrid is Fun";
             var plainTextContent = "and easy to do anywhere, even with C#";
@@ -383,6 +384,59 @@ namespace Example
             var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
+        }
+    }
+}
+```
+
+<a name="multipleemailsmultiplerecipients"></a>
+# Send Multiple Emails to Multiple Recipients
+
+```csharp
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+
+namespace Example
+{
+    internal class Example
+    {
+        private static void Main()
+        {
+            Execute().Wait();
+        }
+
+        static async Task Execute()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+
+            var from = new EmailAddress("test@example.com", "Example User");
+            var tos = new List<EmailAddress>
+            {
+                new EmailAddress("test1@example.com", "Example User1"),
+                new EmailAddress("test2@example.com", "Example User2"),
+                new EmailAddress("test3@example.com", "Example User3")
+            };
+            var subjects = new List<string> { "Test Subject1", "Test Subject2", "Test Subject3" };
+            var plainTextContent = "Hello -name-";
+            var htmlContent = "Goodbye -name-";
+            var substitutions = new List<Dictionary<string, string>>
+            {
+                new Dictionary<string, string>() {{"-name-", "Name1"}},
+                new Dictionary<string, string>() {{"-name-", "Name2"}},
+                new Dictionary<string, string>() {{"-name-", "Name3"}}
+            };
+
+            var msg = MailHelper.CreateMultipleEmailsToMultipleRecipients(from,
+                                                                          tos,
+                                                                          subjects,
+                                                                          plainTextContent,
+                                                                          htmlContent,
+                                                                          substitutions
+                                                                          );
         }
     }
 }
@@ -467,7 +521,7 @@ namespace Example
 ## Without Mail Helper Class
 
 ```csharp
-using Newtonsoft.Json; 
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System;
 using SendGrid;
