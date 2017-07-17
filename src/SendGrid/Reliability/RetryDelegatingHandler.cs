@@ -7,7 +7,7 @@
 
     using Polly;
     using Polly.Retry;
-    
+
     public class RetryDelegatingHandler : DelegatingHandler
     {
         private readonly ReliabilitySettings settings;

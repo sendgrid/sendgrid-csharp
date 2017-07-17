@@ -77,5 +77,19 @@ namespace SendGrid.Tests.Reliability
 
             Assert.Equal(3, innerHandler.InvocationCount);
         }
+
+        [Fact]
+        public async Task Invoke_ShouldRetryTheExpectedAmountOfTimesAndReturnExceptionWhenInternalServerErrorsEncountered()
+        {
+            innerHandler.ConfigureBehaviour(innerHandler.InternalServerError);
+
+            await Assert.ThrowsAsync<HttpRequestException>(
+                () =>
+                {
+                    return client.SendAsync(new HttpRequestMessage());
+                });
+
+            Assert.Equal(3, innerHandler.InvocationCount);
+        }
     }
 }
