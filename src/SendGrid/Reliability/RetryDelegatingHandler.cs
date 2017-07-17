@@ -7,7 +7,7 @@
 
     using Polly;
     using Polly.Retry;
-
+    
     public class RetryDelegatingHandler : DelegatingHandler
     {
         private readonly ReliabilitySettings settings;
@@ -28,23 +28,28 @@
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            if (!settings.UseRetryPolicy)
+            {
+                return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            }
+
             HttpResponseMessage responseMessage;
 
             var result = await retryPolicy.ExecuteAndCaptureAsync(
-                              async  () =>
-                                  {
-                                      try
-                                      {
-                                          responseMessage = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
-                                          EnsureResponseIsValid(responseMessage);
-                                      }
-                                      catch (TaskCanceledException)
-                                      {
-                                          throw new TimeoutException();
-                                      }
+                             async () =>
+                                 {
+                                     try
+                                     {
+                                         responseMessage = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+                                         EnsureResponseIsValid(responseMessage);
+                                     }
+                                     catch (TaskCanceledException)
+                                     {
+                                         throw new TimeoutException();
+                                     }
 
-                                      return responseMessage;
-                                  });
+                                     return responseMessage;
+                                 });
 
             if (result.Outcome == OutcomeType.Successful)
             {

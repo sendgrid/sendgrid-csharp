@@ -6047,6 +6047,24 @@
             bool containsReferenceHandlingProperty = serializedMessage.Contains(referenceHandlingProperty);
             Assert.False(containsReferenceHandlingProperty);
         }
+
+
+        [Fact]
+        public async Task TestRetryBehaviour()
+        {
+            var host = "http://localhost:4010";
+            var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
+            var options = new SendGridClientOptions() { ApiKey = fixture.apiKey, Host = host, RequestHeaders = headers };
+            options.ReliabilitySettings.UseRetryPolicy = true;
+            options.ReliabilitySettings.RetryCount = 2;
+            var sg = new SendGridClient(options);
+            var id = "test_url_param";
+
+            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/links/" + id + "/validate");
+
+            Assert.True(HttpStatusCode.OK == response.StatusCode);
+        }
+
     }
 
     public class FakeHttpMessageHandler : HttpMessageHandler

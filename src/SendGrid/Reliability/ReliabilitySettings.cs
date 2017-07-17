@@ -8,14 +8,18 @@ namespace SendGrid.Reliability
     public class ReliabilitySettings
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationReliabilitySettings"/> class.
-        /// Default ctor, sets default property values
+        /// Initializes a new instance of the <see cref="ReliabilitySettings"/> class.
         /// </summary>
         public ReliabilitySettings()
         {
             RetryCount = 0;
             RetryInterval = TimeSpan.FromSeconds(1);
         }
+
+        /// <summary>
+        /// Gets or sets whether the retry policy is enabled when sending HTTP requests. Defaults to false
+        /// </summary>
+        public bool UseRetryPolicy { get; set; }
 
         /// <summary>
         ///     Gets or sets the number of retries to execute against an HTTP service endpoint before throwing an exceptions. Defaults to 2
