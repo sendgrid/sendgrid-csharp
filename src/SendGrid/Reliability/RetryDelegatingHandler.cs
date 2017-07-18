@@ -14,6 +14,10 @@
 
         private RetryPolicy retryPolicy;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class.
+        /// </summary>
+        /// <param name="settings">A ReliabilitySettings instance</param>
         public RetryDelegatingHandler(ReliabilitySettings settings)
             : this(new HttpClientHandler(), settings)
         {
@@ -28,7 +32,7 @@
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (!settings.UseRetryPolicy)
+            if (settings.RetryCount == 0)
             {
                 return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
             }
@@ -41,7 +45,7 @@
                                      try
                                      {
                                          responseMessage = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
-                                         EnsureResponseIsValid(responseMessage);
+                                         ThrowHttpRequestExceptionIfResponseIsWithinTheServerErrorRange(responseMessage);
                                      }
                                      catch (TaskCanceledException)
                                      {
@@ -59,7 +63,7 @@
             throw result.FinalException;
         }
 
-        private static void EnsureResponseIsValid(HttpResponseMessage responseMessage)
+        private static void ThrowHttpRequestExceptionIfResponseIsWithinTheServerErrorRange(HttpResponseMessage responseMessage)
         {
             if ((int)responseMessage.StatusCode >= 500 && (int)responseMessage.StatusCode < 600)
             {

@@ -17,12 +17,7 @@ namespace SendGrid.Reliability
         }
 
         /// <summary>
-        /// Gets or sets whether the retry policy is enabled when sending HTTP requests. Defaults to false
-        /// </summary>
-        public bool UseRetryPolicy { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the number of retries to execute against an HTTP service endpoint before throwing an exceptions. Defaults to 2
+        ///     Gets or sets the number of retries to execute against an HTTP service endpoint before throwing an exceptions. Defaults to 0 (no retries, you must explicitly enable)
         /// </summary>
         public int RetryCount { get; set; }
 

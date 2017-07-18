@@ -36,7 +36,7 @@
         public Dictionary<string, string> RequestHeaders { get; set; }
 
         /// <summary>
-        /// Base url (e.g. https://api.sendgrid.com, this is the default)
+        /// Gets or sets base url (e.g. https://api.sendgrid.com, this is the default)
         /// </summary>
         public string Host { get; set; }
 

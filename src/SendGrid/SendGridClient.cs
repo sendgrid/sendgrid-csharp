@@ -98,6 +98,11 @@ namespace SendGrid
         /// <returns>Interface to the SendGrid REST API</returns>
         public SendGridClient(HttpClient httpClient, SendGridClientOptions options)
         {
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
             this.options = options;
             client = (httpClient == null) ? new HttpClient(new RetryDelegatingHandler(options.ReliabilitySettings)) : httpClient;
 

@@ -1,4 +1,6 @@
-﻿namespace SendGrid.Tests
+﻿using SendGrid.Reliability;
+
+namespace SendGrid.Tests
 {
     using Helpers.Mail;
     using Newtonsoft.Json;
@@ -6050,21 +6052,32 @@
 
 
         [Fact]
-        public async Task TestRetryBehaviour()
+        public async Task TestRetryBehaviourThrowsTimeoutException()
         {
-            var host = "http://localhost:4010";
-            var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
-            var options = new SendGridClientOptions() { ApiKey = fixture.apiKey, Host = host, RequestHeaders = headers };
-            options.ReliabilitySettings.UseRetryPolicy = true;
-            options.ReliabilitySettings.RetryCount = 2;
-            var sg = new SendGridClient(options);
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com"));
+            msg.AddTo(new EmailAddress("test@example.com"));
+            msg.SetSubject("Hello World from the SendGrid CSharp Library");
+            msg.AddContent(MimeType.Html, "HTML content");
+
+            var options = new SendGridClientOptions
+            {
+                ApiKey = fixture.apiKey,
+                ReliabilitySettings = {RetryCount = 2}
+            };
+
             var id = "test_url_param";
 
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/links/" + id + "/validate");
+            var httpMessageHandler = new TimeOutExceptionThrowingHttpMessageHandler(20, "The operation timed out");
+            var retryHandler = new RetryDelegatingHandler(httpMessageHandler, options.ReliabilitySettings);
+            
+            HttpClient clientToInject = new HttpClient(retryHandler);
+            var sg = new SendGridClient(clientToInject, options);
 
-            Assert.True(HttpStatusCode.OK == response.StatusCode);
+            var exception = await Assert.ThrowsAsync<TimeoutException>(() => sg.SendEmailAsync(msg));
+
+            Assert.NotNull(exception);
         }
-
     }
 
     public class FakeHttpMessageHandler : HttpMessageHandler

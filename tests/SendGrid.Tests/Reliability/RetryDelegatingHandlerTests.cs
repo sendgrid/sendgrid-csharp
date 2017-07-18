@@ -19,8 +19,7 @@ namespace SendGrid.Tests.Reliability
         {
             reliabilitySettings = new ReliabilitySettings
             {
-                RetryCount = 2,
-                UseRetryPolicy = true
+                RetryCount = 2
             };
             innerHandler = new RetryTestBehaviourDelegatingHandler();
             client = new HttpClient(new RetryDelegatingHandler(innerHandler, reliabilitySettings))
@@ -30,12 +29,13 @@ namespace SendGrid.Tests.Reliability
         }
 
         [Fact]
-        public async Task Invoke_ShouldReturnNoErrorWhenOK()
+        public async Task Invoke_ShouldReturnHttpResponseAndNotRetryWhenSuccessful()
         {
             innerHandler.ConfigureBehaviour(innerHandler.OK);
 
-            await client.SendAsync(new HttpRequestMessage());
+            var result = await client.SendAsync(new HttpRequestMessage());
 
+            Assert.Equal(result.StatusCode, HttpStatusCode.OK);
             Assert.Equal(1, innerHandler.InvocationCount);
         }
 
