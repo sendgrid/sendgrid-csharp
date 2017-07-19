@@ -74,7 +74,7 @@ namespace SendGrid
             }
             else
             {
-                client = new HttpClient(new RetryDelegatingHandler(options.ReliabilitySettings));
+                client = CreateHttpClientWithRetryHandler();
             }
 
             InitiateClient(apiKey, host, requestHeaders, version, urlPath);
@@ -104,7 +104,7 @@ namespace SendGrid
             }
 
             this.options = options;
-            client = (httpClient == null) ? new HttpClient(new RetryDelegatingHandler(options.ReliabilitySettings)) : httpClient;
+            client = (httpClient == null) ? CreateHttpClientWithRetryHandler() : httpClient;
 
             InitiateClient(options.ApiKey, options.Host, options.RequestHeaders, options.Version, options.UrlPath);
         }
@@ -191,6 +191,11 @@ namespace SendGrid
                     client.DefaultRequestHeaders.Add(header.Key, header.Value);
                 }
             }
+        }
+
+        private HttpClient CreateHttpClientWithRetryHandler()
+        {
+            return new HttpClient(new RetryDelegatingHandler(options.ReliabilitySettings));
         }
 
         /// <summary>
