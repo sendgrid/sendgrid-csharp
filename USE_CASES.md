@@ -350,8 +350,7 @@ namespace Example
                                                                        plainTextContent,
                                                                        htmlContent
                                                                        );
-            var response = await client.SendEmailAsync(msg);  
-
+            var response = await client.SendEmailAsync(msg);
         }
     }
 }
