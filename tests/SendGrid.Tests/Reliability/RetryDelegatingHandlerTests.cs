@@ -91,5 +91,21 @@ namespace SendGrid.Tests.Reliability
 
             Assert.Equal(3, innerHandler.InvocationCount);
         }
+
+        [Fact]
+        public void ReliabilitySettingsShouldNotAllowNegativeRetryCount()
+        {
+            var settings = new ReliabilitySettings();
+
+            Assert.Throws<ArgumentException>(() => settings.RetryCount = -1);
+        }
+
+        [Fact]
+        public void ReliabilitySettingsShouldNotAllowRetryIntervalGreaterThan30Seconds()
+        {
+            var settings = new ReliabilitySettings();
+
+            Assert.Throws<ArgumentException>(() => settings.RetryInterval = TimeSpan.FromSeconds(31));
+        }
     }
 }
