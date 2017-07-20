@@ -1,6 +1,10 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.5.1] - 2017-7-20
+## Fix
+- Issue #494: Repair bad pdb file 
+
 ## [9.5.0] - 2017-5-17
 ## Update
 - PR #478: Disable Json.Net reference handling for SendGrid objects 
