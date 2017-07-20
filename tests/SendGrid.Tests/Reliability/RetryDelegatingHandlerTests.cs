@@ -101,6 +101,14 @@ namespace SendGrid.Tests.Reliability
         }
 
         [Fact]
+        public void ReliabilitySettingsShouldNotAllowRetryCountGreaterThan5()
+        {
+            var settings = new ReliabilitySettings();
+
+            Assert.Throws<ArgumentException>(() => settings.RetryCount = 6);
+        }
+
+        [Fact]
         public void ReliabilitySettingsShouldNotAllowRetryIntervalGreaterThan30Seconds()
         {
             var settings = new ReliabilitySettings();

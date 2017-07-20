@@ -36,6 +36,11 @@ namespace SendGrid.Reliability
                     throw new ArgumentException("Retry count must be greater than zero");
                 }
 
+                if (value > 5)
+                {
+                    throw new ArgumentException("Retry count must be less than 5");
+                }
+
                 retryCount = value;
             }
         }
