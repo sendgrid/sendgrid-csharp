@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>9.5.1</VersionPrefix>
+    <VersionPrefix>9.5.2</VersionPrefix>
     <TargetFrameworks>netstandard1.3;net452</TargetFrameworks>
     <PlatformTarget>anycpu</PlatformTarget>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -15,6 +15,8 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+    <DebugSymbols Condition=" '$(TargetFramework)' == 'net452' ">true</DebugSymbols>
+    <DebugType Condition=" '$(TargetFramework)' == 'net452' ">full</DebugType>
   </PropertyGroup>
 
   <ItemGroup>

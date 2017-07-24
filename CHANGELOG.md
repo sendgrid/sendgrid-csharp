@@ -1,6 +1,11 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.5.2] - 2017-7-24
+## Fix
+- Issue #494: Update pdb format for VSTS
+- Thanks to [Murray Crowe](https://github.com/murraybiscuit) for the fix!
+
 ## [9.5.1] - 2017-7-20
 ## Fix
 - Issue #494: Repair bad pdb file 
