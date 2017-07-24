@@ -65,6 +65,7 @@ We welcome direct contributions to the sendgrid-csharp code base. Thank you!
 ##### Prerequisites #####
 
 - .NET 4.5.2+
+- [Visual Studio Community 2017](https://www.visualstudio.com/downloads/)+
 
 ##### Initial setup: #####
 

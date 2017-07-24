@@ -350,6 +350,7 @@ namespace Example
                                                                        plainTextContent,
                                                                        htmlContent
                                                                        );
+            var response = await client.SendEmailAsync(msg);
         }
     }
 }
@@ -437,6 +438,7 @@ namespace Example
                                                                           htmlContent,
                                                                           substitutions
                                                                           );
+            var response = await client.SendEmailAsync(msg);                                                            
         }
     }
 }
