@@ -7,6 +7,9 @@
     using Polly;
     using Polly.Retry;
 
+    /// <summary>
+    /// A delegating handler that provides retry functionality while executing a request
+    /// </summary>
     public class RetryDelegatingHandler : DelegatingHandler
     {
         private readonly ReliabilitySettings settings;
@@ -26,19 +29,19 @@
             : base(innerHandler)
         {
             this.settings = settings;
-            ConfigurePolicy();
+            this.ConfigurePolicy();
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (settings.RetryCount == 0)
+            if (this.settings.RetryCount == 0)
             {
                 return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
             }
 
             HttpResponseMessage responseMessage;
 
-            var result = await retryPolicy.ExecuteAndCaptureAsync(
+            var result = await this.retryPolicy.ExecuteAndCaptureAsync(
                              async () =>
                                  {
                                      try
@@ -72,7 +75,7 @@
 
         private void ConfigurePolicy()
         {
-            retryPolicy = Policy.Handle<HttpRequestException>().Or<TimeoutException>().WaitAndRetryAsync(settings.RetryCount, i => settings.RetryInterval);
+            this.retryPolicy = Policy.Handle<HttpRequestException>().Or<TimeoutException>().WaitAndRetryAsync(settings.RetryCount, i => settings.RetryInterval);
         }
     }
 }

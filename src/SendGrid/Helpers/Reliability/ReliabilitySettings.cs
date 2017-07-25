@@ -1,13 +1,14 @@
-using System;
-
 namespace SendGrid.Helpers.Reliability
 {
+    using System;
+
     /// <summary>
     /// Defines the reliability settings to use on HTTP requests
     /// </summary>
     public class ReliabilitySettings
     {
         private int retryCount;
+
         private TimeSpan retryInterval;
 
         /// <summary>
@@ -15,8 +16,8 @@ namespace SendGrid.Helpers.Reliability
         /// </summary>
         public ReliabilitySettings()
         {
-            retryCount = 0;
-            retryInterval = TimeSpan.FromSeconds(1);
+            this.retryCount = 0;
+            this.retryInterval = TimeSpan.FromSeconds(1);
         }
 
         /// <summary>
@@ -26,7 +27,7 @@ namespace SendGrid.Helpers.Reliability
         {
             get
             {
-                return retryCount;
+                return this.retryCount;
             }
 
             set
@@ -41,7 +42,7 @@ namespace SendGrid.Helpers.Reliability
                     throw new ArgumentException("The maximum number of retries is 5");
                 }
 
-                retryCount = value;
+                this.retryCount = value;
             }
         }
 
@@ -52,7 +53,7 @@ namespace SendGrid.Helpers.Reliability
         {
             get
             {
-                return retryInterval;
+                return this.retryInterval;
             }
 
             set
@@ -62,7 +63,7 @@ namespace SendGrid.Helpers.Reliability
                     throw new ArgumentException("The maximum retry interval is 30 seconds");
                 }
 
-                retryInterval = value;
+                this.retryInterval = value;
             }
         }
     }

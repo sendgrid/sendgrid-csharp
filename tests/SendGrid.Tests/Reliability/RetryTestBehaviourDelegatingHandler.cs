@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace SendGrid.Tests.Helpers.Reliability
+namespace SendGrid.Tests.Reliability
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class RetryTestBehaviourDelegatingHandler : DelegatingHandler
     {
         private readonly List<Func<Task<HttpResponseMessage>>> behaviours;
