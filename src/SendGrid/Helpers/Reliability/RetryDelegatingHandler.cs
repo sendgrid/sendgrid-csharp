@@ -1,12 +1,12 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using Polly;
-using Polly.Retry;
-
-namespace SendGrid.Helpers.Reliability
+﻿namespace SendGrid.Helpers.Reliability
 {
+    using System;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Polly;
+    using Polly.Retry;
+
     public class RetryDelegatingHandler : DelegatingHandler
     {
         private readonly ReliabilitySettings settings;

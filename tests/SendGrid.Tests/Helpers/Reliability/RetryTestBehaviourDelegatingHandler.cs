@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -8,22 +9,24 @@ namespace SendGrid.Tests.Helpers.Reliability
 {
     public class RetryTestBehaviourDelegatingHandler : DelegatingHandler
     {
-        private Func<Task<HttpResponseMessage>> behaviour;
+        private readonly List<Func<Task<HttpResponseMessage>>> behaviours;
 
         public RetryTestBehaviourDelegatingHandler()
         {
-            ConfigureBehaviour(OK);
+            behaviours = new List<Func<Task<HttpResponseMessage>>>();
         }
 
         public int InvocationCount { get; private set; }
 
-        public void ConfigureBehaviour(Func<Task<HttpResponseMessage>> configuredBehavior)
+        public void AddBehaviour(Func<Task<HttpResponseMessage>> configuredBehavior)
         {
-            behaviour = () =>
+            Task<HttpResponseMessage> behaviour()
             {
                 InvocationCount++;
                 return configuredBehavior();
-            };
+            }
+
+            behaviours.Add(behaviour);
         }
 
         public Task<HttpResponseMessage> OK()
@@ -57,7 +60,7 @@ namespace SendGrid.Tests.Helpers.Reliability
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            return behaviour();
+            return behaviours[InvocationCount]();
         }
     }
 }

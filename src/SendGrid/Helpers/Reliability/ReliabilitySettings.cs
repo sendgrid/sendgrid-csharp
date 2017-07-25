@@ -38,7 +38,7 @@ namespace SendGrid.Helpers.Reliability
 
                 if (value > 5)
                 {
-                    throw new ArgumentException("Retry count must be less than 5");
+                    throw new ArgumentException("The maximum number of retries is 5");
                 }
 
                 retryCount = value;
@@ -59,7 +59,7 @@ namespace SendGrid.Helpers.Reliability
             {
                 if (value.TotalSeconds > 30)
                 {
-                    throw new ArgumentException("Maximum retry interval is 30 seconds");
+                    throw new ArgumentException("The maximum retry interval is 30 seconds");
                 }
 
                 retryInterval = value;
