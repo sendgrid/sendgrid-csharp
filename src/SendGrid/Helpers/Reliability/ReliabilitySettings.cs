@@ -1,7 +1,7 @@
-namespace SendGrid.Reliability
-{
-    using System;
+using System;
 
+namespace SendGrid.Helpers.Reliability
+{
     /// <summary>
     /// Defines the reliability settings to use on HTTP requests
     /// </summary>

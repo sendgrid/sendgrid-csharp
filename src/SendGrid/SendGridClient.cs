@@ -3,6 +3,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using SendGrid.Helpers.Reliability;
+
 namespace SendGrid
 {
     using Helpers.Mail;
@@ -16,8 +18,6 @@ namespace SendGrid
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-
-    using SendGrid.Reliability;
 
     /// <summary>
     /// A HTTP client wrapper for interacting with SendGrid's API

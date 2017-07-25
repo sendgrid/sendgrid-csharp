@@ -1,4 +1,4 @@
-﻿using SendGrid.Reliability;
+﻿using SendGrid.Helpers.Reliability;
 
 namespace SendGrid.Tests
 {

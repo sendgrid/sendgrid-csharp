@@ -2,10 +2,10 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using SendGrid.Reliability;
+using SendGrid.Helpers.Reliability;
 using Xunit;
 
-namespace SendGrid.Tests.Reliability
+namespace SendGrid.Tests.Helpers.Reliability
 {
     public class RetryDelegatingHandlerTests
     {
