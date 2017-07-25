@@ -1,8 +1,6 @@
-﻿using SendGrid.Helpers.Reliability;
-
-namespace SendGrid.Tests
+﻿namespace SendGrid.Tests
 {
-    using Helpers.Mail;
+    using SendGrid.Helpers.Mail;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
@@ -12,8 +10,8 @@ namespace SendGrid.Tests
     using System.Threading.Tasks;
     using Xunit;
     using System.Threading;
-    using System.Text;
     using Xunit.Abstractions;
+    using SendGrid.Helpers.Reliability;
 
     public class IntegrationFixture : IDisposable
     {
