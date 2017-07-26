@@ -590,15 +590,15 @@ The SendGridClient provides functionality for handling transient errors that mig
 
 By default, retry behaviour is off, you must explicitly enable it by setting the retry count to a value greater than zero. To set the retry count, you must use the SendGridClient construct that takes a **SendGridClientOptions** object, allowing you to configure the **ReliabilitySettings**
 
-##RetryCount
+### RetryCount
 
 The amount of times to retry the operation before reporting an exception to the caller. This is in addition to the initial attempt, so setting a value of 1 would result in 2 attempts - the initial attempt and the retry. Defaults to zero, so retry behaviour is not enabled. The maximum amount of retries permitted is 5. 
 
-##RetryInterval
+### RetryInterval
 
 The policy implemented is a 'wait and retry'. The RetryInterval setting defines the amount of time to wait between operations that fail before attmepting a retry. By default, this is set to 1 second - the maximum amount of time allowed is 30 seconds. 
 
-##Examples
+## Examples
 
 In this example, we are setting RetryCount to 1, with an interval between attempts of 5 seconds. This means that if the inital attempt to send mail fails, then it will wait 5 seconds then try again a single time. 
 
