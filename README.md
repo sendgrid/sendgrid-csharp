@@ -1,6 +1,7 @@
 [![BuildStatus](https://travis-ci.org/sendgrid/sendgrid-csharp.png?branch=master)](https://travis-ci.org/sendgrid/sendgrid-csharp)
+[![Email Notifications Badge](https://dx.sendgrid.com/badge/csharp)](https://dx.sendgrid.com/newsletter/csharp)
 
-Please see our announcement regarding [breaking changes](https://github.com/sendgrid/sendgrid-csharp/issues/317). Your support is appreciated!
+**NEW:** Subscribe to email [notifications](https://dx.sendgrid.com/newsletter/csharp) for releases and breaking changes.
 
 **This library allows you to quickly and easily use the SendGrid Web API v3 via C# with .NET.**
 
@@ -187,7 +188,7 @@ var client = new SendGridClient(proxy, apiKey);
 
 Please see our announcement regarding [breaking changes](https://github.com/sendgrid/sendgrid-csharp/issues/317). Your support is appreciated!
 
-All updates to this library is documented in our [CHANGELOG](https://github.com/sendgrid/sendgrid-csharp/blob/master/CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-csharp/releases).
+All updates to this library are documented in our [CHANGELOG](https://github.com/sendgrid/sendgrid-csharp/blob/master/CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-csharp/releases). You may also subscribe to email [release notifications](https://dx.sendgrid.com/newsletter/csharp) for releases and breaking changes.
 
 <a name="roadmap"></a>
 # Roadmap
