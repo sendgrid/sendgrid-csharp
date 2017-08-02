@@ -1,6 +1,8 @@
-﻿namespace SendGrid.Tests
+﻿using SendGrid.Tests.Reliability;
+
+namespace SendGrid.Tests
 {
-    using Helpers.Mail;
+    using SendGrid.Helpers.Mail;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
@@ -10,8 +12,8 @@
     using System.Threading.Tasks;
     using Xunit;
     using System.Threading;
-    using System.Text;
     using Xunit.Abstractions;
+    using SendGrid.Helpers.Reliability;
 
     public class IntegrationFixture : IDisposable
     {
@@ -43,7 +45,7 @@
         {
             if (Environment.GetEnvironmentVariable("TRAVIS") != "true")
             {
-                process.Kill();
+                process.Kill();                                 
                 Trace.WriteLine("Shutting Down Prism");
             }
         }
@@ -6046,6 +6048,69 @@
             string serializedMessage = msg.Serialize();
             bool containsReferenceHandlingProperty = serializedMessage.Contains(referenceHandlingProperty);
             Assert.False(containsReferenceHandlingProperty);
+        }
+
+
+        [Fact]
+        public async Task TestRetryBehaviourThrowsTimeoutException()
+        {
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com"));
+            msg.AddTo(new EmailAddress("test@example.com"));
+            msg.SetSubject("Hello World from the SendGrid CSharp Library");
+            msg.AddContent(MimeType.Html, "HTML content");
+
+            var options = new SendGridClientOptions
+            {
+                ApiKey = fixture.apiKey,
+                ReliabilitySettings = {RetryCount = 1}
+            };
+
+            var id = "test_url_param";
+
+            var httpMessageHandler = new RetryTestBehaviourDelegatingHandler();
+            httpMessageHandler.AddBehaviour(httpMessageHandler.TaskCancelled);
+            httpMessageHandler.AddBehaviour(httpMessageHandler.TaskCancelled);
+
+            var retryHandler = new RetryDelegatingHandler(httpMessageHandler, options.ReliabilitySettings);
+            
+            HttpClient clientToInject = new HttpClient(retryHandler);
+            var sg = new SendGridClient(clientToInject, options);
+
+            var exception = await Assert.ThrowsAsync<TimeoutException>(() => sg.SendEmailAsync(msg));
+
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public async Task TestRetryBehaviourSucceedsOnSecondAttempt()
+        {
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com"));
+            msg.AddTo(new EmailAddress("test@example.com"));
+            msg.SetSubject("Hello World from the SendGrid CSharp Library");
+            msg.AddContent(MimeType.Html, "HTML content");
+
+            var options = new SendGridClientOptions
+            {
+                ApiKey = fixture.apiKey,
+                ReliabilitySettings = { RetryCount = 1 }
+            };
+
+            var id = "test_url_param";
+
+            var httpMessageHandler = new RetryTestBehaviourDelegatingHandler();
+            httpMessageHandler.AddBehaviour(httpMessageHandler.TaskCancelled);
+            httpMessageHandler.AddBehaviour(httpMessageHandler.OK);
+
+            var retryHandler = new RetryDelegatingHandler(httpMessageHandler, options.ReliabilitySettings);
+
+            HttpClient clientToInject = new HttpClient(retryHandler);
+            var sg = new SendGridClient(clientToInject, options);
+
+            var result = await sg.SendEmailAsync(msg);
+
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
         }
     }
 
