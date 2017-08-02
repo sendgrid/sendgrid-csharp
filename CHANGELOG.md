@@ -1,6 +1,11 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.6.0] - 2017-08-02
+## Added
+- Pull #497: Transient Fault Handling
+- Thanks to [Dylan Morley](https://github.com/dylan-asos) for the PR!
+
 ## [9.5.2] - 2017-7-24
 ## Fix
 - Issue #494: Update pdb format for VSTS
