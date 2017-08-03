@@ -3,8 +3,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using SendGrid.Helpers.Reliability;
-
 namespace SendGrid
 {
     using Helpers.Mail;
@@ -24,8 +22,6 @@ namespace SendGrid
     /// </summary>
     public class SendGridClient : ISendGridClient
     {
-        private readonly SendGridClientOptions options;
-
         /// <summary>
         /// Gets or sets the path to the API resource.
         /// </summary>
@@ -67,46 +63,14 @@ namespace SendGrid
                     PreAuthenticate = true,
                     UseDefaultCredentials = false,
                 };
-
-                var retryHandler = new RetryDelegatingHandler(httpClientHandler, options.ReliabilitySettings);
-
-                client = new HttpClient(retryHandler);
+                client = new HttpClient(httpClientHandler);
             }
             else
             {
-                client = CreateHttpClientWithRetryHandler();
+                client = new HttpClient();
             }
 
             InitiateClient(apiKey, host, requestHeaders, version, urlPath);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SendGridClient"/> class.
-        /// </summary>
-        /// <param name="options">A <see cref="SendGridClientOptions"/> instance that defines the configuration settings to use with the client </param>
-        /// <returns>Interface to the SendGrid REST API</returns>
-        public SendGridClient(SendGridClientOptions options)
-            : this(null, options)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SendGridClient"/> class.
-        /// </summary>
-        /// <param name="httpClient">An optional http client which may me injected in order to facilitate testing.</param>
-        /// <param name="options">A <see cref="SendGridClientOptions"/> instance that defines the configuration settings to use with the client </param>
-        /// <returns>Interface to the SendGrid REST API</returns>
-        public SendGridClient(HttpClient httpClient, SendGridClientOptions options)
-        {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
-
-            this.options = options;
-            client = (httpClient == null) ? CreateHttpClientWithRetryHandler() : httpClient;
-
-            InitiateClient(options.ApiKey, options.Host, options.RequestHeaders, options.Version, options.UrlPath);
         }
 
         /// <summary>
@@ -120,8 +84,10 @@ namespace SendGrid
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
         /// <returns>Interface to the SendGrid REST API</returns>
         public SendGridClient(HttpClient httpClient, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
-            : this(httpClient, new SendGridClientOptions() { ApiKey = apiKey, Host = host, RequestHeaders = requestHeaders, Version = version, UrlPath = urlPath })
         {
+            client = (httpClient == null) ? new HttpClient() : httpClient;
+
+            InitiateClient(apiKey, host, requestHeaders, version, urlPath);
         }
 
         /// <summary>
@@ -191,11 +157,6 @@ namespace SendGrid
                     client.DefaultRequestHeaders.Add(header.Key, header.Value);
                 }
             }
-        }
-
-        private HttpClient CreateHttpClientWithRetryHandler()
-        {
-            return new HttpClient(new RetryDelegatingHandler(options.ReliabilitySettings));
         }
 
         /// <summary>

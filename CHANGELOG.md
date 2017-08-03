@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.7.0] - 2017-08-03
+## Added
+- Reverted to version 9.5.2, per the conversation here: #501
+- Polly (which implemented Transient Fault Handling) was removed in favor of a dependency free solution.
+- Transient Fault Handling with Polly still exists in version 9.6.1, if needed
+
 ## [9.6.1] - 2017-08-03
 ## Fixed
 - Fix for issue #501: Could not load file or assembly 'Polly, Version=5.2.0.0, Culture=neutral, PublicKeyToken=null'
