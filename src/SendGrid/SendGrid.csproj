@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>9.6.0</VersionPrefix>
+    <VersionPrefix>9.6.1</VersionPrefix>
     <TargetFrameworks>netstandard1.3;net452</TargetFrameworks>
     <PlatformTarget>anycpu</PlatformTarget>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Polly" Version="5.2.0" />
+    <PackageReference Include="Polly-Signed" Version="5.2.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.0">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>

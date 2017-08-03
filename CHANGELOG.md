@@ -1,6 +1,11 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.6.1] - 2017-08-03
+## Fixed
+- Fix for issue #501: Could not load file or assembly 'Polly, Version=5.2.0.0, Culture=neutral, PublicKeyToken=null'
+- The dependency for Polly has been corrected
+
 ## [9.6.0] - 2017-08-02
 ## Added
 - Pull #497: Transient Fault Handling
