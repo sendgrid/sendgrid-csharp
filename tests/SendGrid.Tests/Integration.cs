@@ -505,7 +505,7 @@
                                                                        true
                                                                        );
             Debug.WriteLine(msg6.Serialize());
-            Assert.True(msg6.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"subject\":\"Test Subject\",\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"},{\"email\":\"test2@example.com\"},{\"email\":\"test3@example.com\"}]}],\"content\":[{\"type\":\"text / plain\",\"value\":\"Plain Text Content\"},{\"type\":\"text / html\",\"value\":\"HTML Content\"}]}");
+            Assert.True(msg6.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"subject\":\"Test Subject\",\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"},{\"email\":\"test2@example.com\"},{\"email\":\"test3@example.com\"}]}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Plain Text Content\"},{\"type\":\"text/html\",\"value\":\"HTML Content\"}]}");
         }
 
         [Fact]
