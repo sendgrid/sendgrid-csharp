@@ -165,7 +165,6 @@ namespace SendGrid.Helpers.Mail
                                                                             string htmlContent,
                                                                             bool showAllRecipients = false)
         {
-
             var msg = new SendGridMessage();
             if (showAllRecipients)
             {
