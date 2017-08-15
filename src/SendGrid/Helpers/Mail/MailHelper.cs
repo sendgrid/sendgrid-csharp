@@ -146,5 +146,48 @@ namespace SendGrid.Helpers.Mail
             var name = match.Groups[NameGroup].Value.Trim();
             return new EmailAddress(email, name);
         }
+
+        /// <summary>
+        /// Send a single simple email to multiple recipients with option for displaying all the recipients present in "To" section of email
+        /// </summary>
+        /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
+        /// <param name="tos">A list of email objects that may contain the recipient’s name, but must always contain the recipient’s email.</param>
+        /// <param name="subject">The subject of your email. This may be overridden by SetGlobalSubject().</param>
+        /// <param name="plainTextContent">The text/plain content of the email body.</param>
+        /// <param name="htmlContent">The text/html content of the email body.</param>
+        /// <param name="showAllRecipients">Displays all the recipients present in the "To" section of email.The default value is false</param>
+        /// <returns>A SendGridMessage object.</returns>
+        public static SendGridMessage CreateSingleEmailToMultipleRecipients(
+                                                                            EmailAddress from,
+                                                                            List<EmailAddress> tos,
+                                                                            string subject,
+                                                                            string plainTextContent,
+                                                                            string htmlContent,
+                                                                            bool showAllRecipients = false)
+        {
+            var msg = new SendGridMessage();
+            if (showAllRecipients)
+            {
+                msg.SetFrom(from);
+                msg.SetGlobalSubject(subject);
+                if (!string.IsNullOrEmpty(plainTextContent))
+                {
+                    msg.AddContent(MimeType.Text, plainTextContent);
+                }
+
+                if (!string.IsNullOrEmpty(htmlContent))
+                {
+                    msg.AddContent(MimeType.Html, htmlContent);
+                }
+
+                msg.AddTos(tos);
+            }
+            else
+            {
+                msg = CreateSingleEmailToMultipleRecipients(from, tos, subject, plainTextContent, htmlContent);
+            }
+
+            return msg;
+        }
     }
 }

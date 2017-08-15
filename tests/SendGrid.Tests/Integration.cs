@@ -449,6 +449,65 @@
         }
 
         [Fact]
+        public void TestCreateSingleEmailToMultipleRecipientsToggleRecipientDisplay()
+        {
+            var emails = new List<EmailAddress>
+            {
+                new EmailAddress("test1@example.com"),
+                new EmailAddress("test2@example.com"),
+                new EmailAddress("test3@example.com")
+            };
+            var msg = MailHelper.CreateSingleEmailToMultipleRecipients(new EmailAddress("test@example.com", "Example User"),
+                                                                       emails,
+                                                                       "Test Subject",
+                                                                       "Plain Text Content",
+                                                                       "HTML Content"
+                                                                       );
+            Assert.True(msg.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"subject\":\"Test Subject\",\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"}]},{\"to\":[{\"email\":\"test2@example.com\"}]},{\"to\":[{\"email\":\"test3@example.com\"}]}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Plain Text Content\"},{\"type\":\"text/html\",\"value\":\"HTML Content\"}]}");
+
+            var msg2 = MailHelper.CreateSingleEmailToMultipleRecipients(new EmailAddress("test@example.com", "Example User"),
+                                                                        emails,
+                                                                        "Test Subject",
+                                                                        null,
+                                                                        "HTML Content"
+                                                                        );
+            Assert.True(msg2.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"subject\":\"Test Subject\",\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"}]},{\"to\":[{\"email\":\"test2@example.com\"}]},{\"to\":[{\"email\":\"test3@example.com\"}]}],\"content\":[{\"type\":\"text/html\",\"value\":\"HTML Content\"}]}");
+
+            var msg3 = MailHelper.CreateSingleEmailToMultipleRecipients(new EmailAddress("test@example.com", "Example User"),
+                                                                       emails,
+                                                                       "Test Subject",
+                                                                       "Plain Text Content",
+                                                                       null
+                                                                       );
+            Assert.True(msg3.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"subject\":\"Test Subject\",\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"}]},{\"to\":[{\"email\":\"test2@example.com\"}]},{\"to\":[{\"email\":\"test3@example.com\"}]}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Plain Text Content\"}]}");
+
+            var msg4 = MailHelper.CreateSingleEmailToMultipleRecipients(new EmailAddress("test@example.com", "Example User"),
+                                                            emails,
+                                                            "Test Subject",
+                                                            "",
+                                                            "HTML Content"
+                                                            );
+            Assert.True(msg4.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"subject\":\"Test Subject\",\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"}]},{\"to\":[{\"email\":\"test2@example.com\"}]},{\"to\":[{\"email\":\"test3@example.com\"}]}],\"content\":[{\"type\":\"text/html\",\"value\":\"HTML Content\"}]}");
+
+            var msg5 = MailHelper.CreateSingleEmailToMultipleRecipients(new EmailAddress("test@example.com", "Example User"),
+                                                                       emails,
+                                                                       "Test Subject",
+                                                                       "Plain Text Content",
+                                                                       ""
+                                                                       );
+            Assert.True(msg5.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"subject\":\"Test Subject\",\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"}]},{\"to\":[{\"email\":\"test2@example.com\"}]},{\"to\":[{\"email\":\"test3@example.com\"}]}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Plain Text Content\"}]}");
+
+            var msg6 = MailHelper.CreateSingleEmailToMultipleRecipients(new EmailAddress("test@example.com", "Example User"),
+                                                                       emails,
+                                                                       "Test Subject",
+                                                                       "Plain Text Content",
+                                                                       "HTML Content",
+                                                                       true
+                                                                       );
+            Assert.True(msg6.Serialize() == "{\"from\":{\"name\":\"Example User\",\"email\":\"test@example.com\"},\"subject\":\"Test Subject\",\"personalizations\":[{\"to\":[{\"email\":\"test1@example.com\"},{\"email\":\"test2@example.com\"},{\"email\":\"test3@example.com\"}]}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Plain Text Content\"},{\"type\":\"text/html\",\"value\":\"HTML Content\"}]}");
+        }
+
+        [Fact]
         public void TestCreateMultipleEmailsToMultipleRecipients()
         {
             var emails = new List<EmailAddress>
