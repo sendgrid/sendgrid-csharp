@@ -343,12 +343,14 @@ namespace Example
             var subject = "Sending with SendGrid is Fun";
             var plainTextContent = "and easy to do anywhere, even with C#";
             var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+            var showAllRecipients = false; // Set to true if you want the recipients to see each others email addresses
 
             var msg = MailHelper.CreateSingleEmailToMultipleRecipients(from,
                                                                        tos,
                                                                        subject,
                                                                        plainTextContent,
-                                                                       htmlContent
+                                                                       htmlContent,
+                                                                       showAllRecipients
                                                                        );
             var response = await client.SendEmailAsync(msg);
         }
