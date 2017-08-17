@@ -11,6 +11,8 @@
     using Xunit;
     using System.Threading;
     using System.Text;
+    using Helpers.Reliability;
+    using Reliability;
     using Xunit.Abstractions;
 
     public class IntegrationFixture : IDisposable
@@ -6105,6 +6107,65 @@
             string serializedMessage = msg.Serialize();
             bool containsReferenceHandlingProperty = serializedMessage.Contains(referenceHandlingProperty);
             Assert.False(containsReferenceHandlingProperty);
+        }
+
+        [Fact]
+        public async Task TestRetryBehaviourThrowsTimeoutException()
+        {
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com"));
+            msg.AddTo(new EmailAddress("test@example.com"));
+            msg.SetSubject("Hello World from the SendGrid CSharp Library");
+            msg.AddContent(MimeType.Html, "HTML content");
+
+            var options = new SendGridClientOptions
+            {
+                ApiKey = fixture.apiKey,
+                ReliabilitySettings = { RetryCount = 1 },
+                Host = "http://localhost:4010"
+            };
+
+            var id = "test_url_param";
+
+            var retryHandler = new RetryDelegatingHandler(new HttpClientHandler(), options.ReliabilitySettings);
+
+            HttpClient clientToInject = new HttpClient(retryHandler) { Timeout = TimeSpan.FromMilliseconds(1) };
+            var sg = new SendGridClient(clientToInject, options);
+
+            var exception = await Assert.ThrowsAsync<TimeoutException>(() => sg.SendEmailAsync(msg));
+
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public async Task TestRetryBehaviourSucceedsOnSecondAttempt()
+        {
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com"));
+            msg.AddTo(new EmailAddress("test@example.com"));
+            msg.SetSubject("Hello World from the SendGrid CSharp Library");
+            msg.AddContent(MimeType.Html, "HTML content");
+
+            var options = new SendGridClientOptions
+            {
+                ApiKey = fixture.apiKey,
+                ReliabilitySettings = { RetryCount = 1 }
+            };
+
+            var id = "test_url_param";
+
+            var httpMessageHandler = new RetryTestBehaviourDelegatingHandler();
+            httpMessageHandler.AddBehaviour(httpMessageHandler.TaskCancelled);
+            httpMessageHandler.AddBehaviour(httpMessageHandler.OK);
+
+            var retryHandler = new RetryDelegatingHandler(httpMessageHandler, options.ReliabilitySettings);
+
+            HttpClient clientToInject = new HttpClient(retryHandler);
+            var sg = new SendGridClient(clientToInject, options);
+
+            var result = await sg.SendEmailAsync(msg);
+
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
         }
     }
 

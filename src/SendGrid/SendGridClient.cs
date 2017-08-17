@@ -16,12 +16,15 @@ namespace SendGrid
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
+    using SendGrid.Helpers.Reliability;
 
     /// <summary>
     /// A HTTP client wrapper for interacting with SendGrid's API
     /// </summary>
     public class SendGridClient : ISendGridClient
     {
+        private readonly SendGridClientOptions options;
+
         /// <summary>
         /// Gets or sets the path to the API resource.
         /// </summary>
@@ -63,14 +66,46 @@ namespace SendGrid
                     PreAuthenticate = true,
                     UseDefaultCredentials = false,
                 };
-                client = new HttpClient(httpClientHandler);
+
+                var retryHandler = new RetryDelegatingHandler(httpClientHandler, options.ReliabilitySettings);
+
+                client = new HttpClient(retryHandler);
             }
             else
             {
-                client = new HttpClient();
+                client = CreateHttpClientWithRetryHandler();
             }
 
             InitiateClient(apiKey, host, requestHeaders, version, urlPath);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendGridClient"/> class.
+        /// </summary>
+        /// <param name="options">A <see cref="SendGridClientOptions"/> instance that defines the configuration settings to use with the client </param>
+        /// <returns>Interface to the SendGrid REST API</returns>
+        public SendGridClient(SendGridClientOptions options)
+            : this(null, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendGridClient"/> class.
+        /// </summary>
+        /// <param name="httpClient">An optional http client which may me injected in order to facilitate testing.</param>
+        /// <param name="options">A <see cref="SendGridClientOptions"/> instance that defines the configuration settings to use with the client </param>
+        /// <returns>Interface to the SendGrid REST API</returns>
+        public SendGridClient(HttpClient httpClient, SendGridClientOptions options)
+        {
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
+            this.options = options;
+            client = (httpClient == null) ? CreateHttpClientWithRetryHandler() : httpClient;
+
+            InitiateClient(options.ApiKey, options.Host, options.RequestHeaders, options.Version, options.UrlPath);
         }
 
         /// <summary>
@@ -84,10 +119,8 @@ namespace SendGrid
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
         /// <returns>Interface to the SendGrid REST API</returns>
         public SendGridClient(HttpClient httpClient, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
+            : this(httpClient, new SendGridClientOptions() { ApiKey = apiKey, Host = host, RequestHeaders = requestHeaders, Version = version, UrlPath = urlPath })
         {
-            client = (httpClient == null) ? new HttpClient() : httpClient;
-
-            InitiateClient(apiKey, host, requestHeaders, version, urlPath);
         }
 
         /// <summary>
@@ -159,6 +192,11 @@ namespace SendGrid
             }
         }
 
+        private HttpClient CreateHttpClientWithRetryHandler()
+        {
+            return new HttpClient(new RetryDelegatingHandler(options.ReliabilitySettings));
+        }
+
         /// <summary>
         /// The supported API methods.
         /// </summary>
@@ -227,11 +265,11 @@ namespace SendGrid
         /// In particular, this means that you may expect
         /// a TimeoutException if you are not connected to the internet.</exception>
         public async Task<Response> RequestAsync(
-                                                 SendGridClient.Method method,
-                                                 string requestBody = null,
-                                                 string queryParams = null,
-                                                 string urlPath = null,
-                                                 CancellationToken cancellationToken = default(CancellationToken))
+            SendGridClient.Method method,
+            string requestBody = null,
+            string queryParams = null,
+            string urlPath = null,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             var endpoint = client.BaseAddress + BuildUrl(urlPath, queryParams);
 
@@ -261,10 +299,10 @@ namespace SendGrid
         public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await RequestAsync(
-                                           Method.POST,
-                                           msg.Serialize(),
-                                           urlPath: "mail/send",
-                                           cancellationToken: cancellationToken).ConfigureAwait(false);
+                Method.POST,
+                msg.Serialize(),
+                urlPath: "mail/send",
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
