@@ -8,6 +8,7 @@ This documentation provides examples for specific use cases. Please [open an iss
 * [Email - Send a Single Email to a Single Recipient](#singleemailsinglerecipient)
 * [Email - Send Multiple Emails to Multiple Recipients](#multipleemailsmultiplerecipients)
 * [Email - Transactional Templates](#transactional_templates)
+* [Transient Fault Handling](#transient_faults)
 
 <a name="attachments"></a>
 # Attachments
@@ -581,4 +582,53 @@ namespace Example
         }
     }
 }
+```
+
+<a name="transient_faults"></a>
+# Transient Fault Handling
+
+The SendGridClient provides functionality for handling transient errors that might occur when sending an HttpRequest. This includes client side timeouts while sending the mail, or any errors returned within the 500 range. 
+
+By default, retry behaviour is off, you must explicitly enable it by setting the retry count to a value greater than zero. To set the retry count, you must use the SendGridClient construct that takes a **SendGridClientOptions** object, allowing you to configure the **ReliabilitySettings**
+
+### RetryCount
+
+The amount of times to retry the operation before reporting an exception to the caller. This is in addition to the initial attempt, so setting a value of 1 would result in 2 attempts - the initial attempt and the retry. Defaults to zero, so retry behaviour is not enabled. The maximum amount of retries permitted is 5. 
+
+### RetryInterval
+
+The policy implemented is a 'wait and retry'. The RetryInterval setting defines the amount of time to wait between operations that fail before attempting a retry. By default, this is set to 1 second - the maximum amount of time allowed is 30 seconds. 
+
+## Examples
+
+In this example, we are setting RetryCount to 1, with an interval between attempts of 5 seconds. This means that if the inital attempt to send mail fails, then it will wait 5 seconds then try again a single time. 
+
+```csharp
+
+var options = new SendGridClientOptions
+{
+    ApiKey = "Your-Api-Key",
+    ReliabilitySettings = {RetryCount = 1, RetryInterval = TimeSpan.FromSeconds(5)}
+};
+
+var client = new SendGridClient(options);
+
+```
+
+The SendGridClientOptions object defines all the settings that can be set for the client, e.g.
+
+```csharp
+
+var options = new SendGridClientOptions
+{
+    ApiKey = "Your-Api-Key",
+    ReliabilitySettings = {RetryCount = 1, RetryInterval = TimeSpan.FromSeconds(5)},
+    Host = "Your-Host",
+    UrlPath = "Url-Path",
+    Version = "3",
+    RequestHeaders = new Dictionary<string, string>() {{"header-key", "header-value"}}
+};
+
+var client = new SendGridClient(options);
+
 ```
