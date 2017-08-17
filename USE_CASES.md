@@ -597,7 +597,7 @@ The amount of times to retry the operation before reporting an exception to the 
 
 ### RetryInterval
 
-The policy implemented is a 'wait and retry'. The RetryInterval setting defines the amount of time to wait between operations that fail before attmepting a retry. By default, this is set to 1 second - the maximum amount of time allowed is 30 seconds. 
+The policy implemented is a 'wait and retry'. The RetryInterval setting defines the amount of time to wait between operations that fail before attempting a retry. By default, this is set to 1 second - the maximum amount of time allowed is 30 seconds. 
 
 ## Examples
 
