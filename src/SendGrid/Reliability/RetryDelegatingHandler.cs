@@ -58,7 +58,7 @@
                     }
 
                     // ReSharper disable once MethodSupportsCancellation, cancel will be indicated on the token
-                    await Task.Delay(this.settings.RetryInterval);
+                    await Task.Delay(this.settings.RetryInterval).ConfigureAwait(false);
                 }
                 catch (HttpRequestException)
                 {
@@ -69,7 +69,7 @@
                         throw;
                     }
 
-                    await Task.Delay(this.settings.RetryInterval);
+                    await Task.Delay(this.settings.RetryInterval).ConfigureAwait(false);
                 }
             }
 
