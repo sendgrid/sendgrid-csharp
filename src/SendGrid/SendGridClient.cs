@@ -23,7 +23,7 @@ namespace SendGrid
     /// </summary>
     public class SendGridClient : ISendGridClient
     {
-        private readonly SendGridClientOptions options;
+        private readonly SendGridClientOptions options = new SendGridClientOptions();
 
         /// <summary>
         /// Gets or sets the path to the API resource.

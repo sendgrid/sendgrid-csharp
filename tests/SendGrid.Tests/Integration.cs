@@ -45,7 +45,7 @@
         {
             if (Environment.GetEnvironmentVariable("TRAVIS") != "true")
             {
-                process.Kill();
+                process.Kill();              
                 Trace.WriteLine("Shutting Down Prism");
             }
         }
@@ -5994,6 +5994,22 @@
             Assert.Equal(httpStatusCode, response.StatusCode);
             Assert.Equal(httpResponse, response.Body.ReadAsStringAsync().Result);
         }
+        
+        [Fact]
+        public void TestTakesProxyAsConstructorArgumentAndInitiailsesHttpClient()
+        {
+            var sg = new SendGridClient(new FakeWebProxy(), fixture.apiKey);
+
+            Assert.NotNull(sg);            
+        }
+
+        [Fact]
+        public void TestTakesNullProxyAsConstructorArgumentAndInitiailsesHttpClient()
+        {
+            var sg = new SendGridClient(null as IWebProxy, fixture.apiKey);
+
+            Assert.NotNull(sg);
+        }
 
         /// <summary>
         /// Tests the conditions in issue #358.
@@ -6167,6 +6183,21 @@
 
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
         }
+    }
+
+    public class FakeWebProxy : IWebProxy
+    {
+        public Uri GetProxy(Uri destination)
+        {
+            return new Uri("https://dummy-proxy");
+        }
+
+        public bool IsBypassed(Uri host)
+        {
+            return false;
+        }
+
+        public ICredentials Credentials { get; set; }
     }
 
     public class FakeHttpMessageHandler : HttpMessageHandler
