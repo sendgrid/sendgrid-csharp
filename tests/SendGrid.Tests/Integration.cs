@@ -5998,17 +5998,21 @@
         [Fact]
         public void TestTakesProxyAsConstructorArgumentAndInitiailsesHttpClient()
         {
-            var sg = new SendGridClient(new FakeWebProxy(), fixture.apiKey);
+            var urlPath = "urlPath";
 
-            Assert.NotNull(sg);            
+            var sg = new SendGridClient(new FakeWebProxy(), fixture.apiKey, urlPath: "urlPath");
+
+            Assert.Equal(sg.UrlPath, urlPath);
         }
 
         [Fact]
         public void TestTakesNullProxyAsConstructorArgumentAndInitiailsesHttpClient()
         {
-            var sg = new SendGridClient(null as IWebProxy, fixture.apiKey);
+            var urlPath = "urlPath";
 
-            Assert.NotNull(sg);
+            var sg = new SendGridClient(null as IWebProxy, fixture.apiKey, urlPath: "urlPath");
+
+            Assert.Equal(sg.UrlPath, urlPath);            
         }
 
         /// <summary>
