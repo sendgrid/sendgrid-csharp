@@ -6130,7 +6130,7 @@
             var retryHandler = new RetryDelegatingHandler(new HttpClientHandler(), options.ReliabilitySettings);
 
             HttpClient clientToInject = new HttpClient(retryHandler) { Timeout = TimeSpan.FromMilliseconds(1) };
-            var sg = new SendGridClient(clientToInject, options);
+            var sg = new SendGridClient(clientToInject, options.ApiKey, options.Host);
 
             var exception = await Assert.ThrowsAsync<TimeoutException>(() => sg.SendEmailAsync(msg));
 
@@ -6161,7 +6161,7 @@
             var retryHandler = new RetryDelegatingHandler(httpMessageHandler, options.ReliabilitySettings);
 
             HttpClient clientToInject = new HttpClient(retryHandler);
-            var sg = new SendGridClient(clientToInject, options);
+            var sg = new SendGridClient(clientToInject, options.ApiKey, options.Host);
 
             var result = await sg.SendEmailAsync(msg);
 

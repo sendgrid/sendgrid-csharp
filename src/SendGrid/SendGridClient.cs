@@ -95,7 +95,7 @@ namespace SendGrid
         /// <param name="httpClient">An optional http client which may me injected in order to facilitate testing.</param>
         /// <param name="options">A <see cref="SendGridClientOptions"/> instance that defines the configuration settings to use with the client </param>
         /// <returns>Interface to the SendGrid REST API</returns>
-        public SendGridClient(HttpClient httpClient, SendGridClientOptions options)
+        internal SendGridClient(HttpClient httpClient, SendGridClientOptions options)
         {
             if (options == null)
             {
