@@ -59,6 +59,17 @@
         }
 
         [Fact]
+        public async Task Invoke_ShouldReturnErrorWithoutRetryWhen500ErrorStatusIsNotTransient()
+        {
+            innerHandler.AddBehaviour(innerHandler.HttpVersionNotSupported);
+
+            var response = await client.SendAsync(new HttpRequestMessage());
+
+            Assert.Equal((HttpStatusCode)505, response.StatusCode);
+            Assert.Equal(1, innerHandler.InvocationCount);
+        }
+
+        [Fact]
         public async Task Invoke_ShoulddRetryOnceWhenFailedOnFirstAttemptThenSuccessful()
         {
             innerHandler.AddBehaviour(innerHandler.TaskCancelled);

@@ -31,19 +31,26 @@ namespace SendGrid.Tests.Reliability
 
         public Task<HttpResponseMessage> OK()
         {
-            var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(string.Empty) };
-            return Task.Factory.StartNew(() => httpResponseMessage);
+            return CreateHttpResponse(HttpStatusCode.OK);
         }
 
         public Task<HttpResponseMessage> InternalServerError()
         {
-            var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent(string.Empty) };
-            return Task.Factory.StartNew(() => httpResponseMessage);
+            return CreateHttpResponse(HttpStatusCode.InternalServerError);
         }
 
         public Task<HttpResponseMessage> AuthenticationError()
         {
-            var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.Unauthorized) { Content = new StringContent(string.Empty) };
+            return CreateHttpResponse(HttpStatusCode.Unauthorized);
+        }
+        public Task<HttpResponseMessage> HttpVersionNotSupported()
+        {
+            return CreateHttpResponse((HttpStatusCode)505);
+        }
+
+        public Task<HttpResponseMessage> CreateHttpResponse(HttpStatusCode statusCode)
+        {
+            var httpResponseMessage = new HttpResponseMessage(statusCode) { Content = new StringContent(string.Empty) };
             return Task.Factory.StartNew(() => httpResponseMessage);
         }
 

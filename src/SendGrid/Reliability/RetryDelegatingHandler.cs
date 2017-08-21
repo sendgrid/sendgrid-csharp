@@ -78,7 +78,7 @@
 
         private static void ThrowHttpRequestExceptionIfResponseIsWithinTheServerErrorRange(HttpResponseMessage responseMessage)
         {
-            if ((int)responseMessage.StatusCode >= 500 && (int)responseMessage.StatusCode < 600)
+            if ((int)responseMessage.StatusCode >= 500 && (int)responseMessage.StatusCode <= 504)
             {
                 throw new HttpRequestException(string.Format("Response Http Status code {0} indicates server error", responseMessage.StatusCode));
             }
