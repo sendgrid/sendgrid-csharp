@@ -65,12 +65,23 @@
 
             var response = await client.SendAsync(new HttpRequestMessage());
 
-            Assert.Equal((HttpStatusCode)505, response.StatusCode);
+            Assert.Equal(HttpStatusCode.HttpVersionNotSupported, response.StatusCode);
             Assert.Equal(1, innerHandler.InvocationCount);
         }
 
         [Fact]
-        public async Task Invoke_ShoulddRetryOnceWhenFailedOnFirstAttemptThenSuccessful()
+        public async Task Invoke_ShouldReturnErrorWithoutRetryWhen501ErrorStatus()
+        {
+            innerHandler.AddBehaviour(innerHandler.NotImplemented);
+
+            var response = await client.SendAsync(new HttpRequestMessage());
+
+            Assert.Equal(HttpStatusCode.NotImplemented, response.StatusCode);
+            Assert.Equal(1, innerHandler.InvocationCount);
+        }
+
+        [Fact]
+        public async Task Invoke_ShouldRetryOnceWhenFailedOnFirstAttemptThenSuccessful()
         {
             innerHandler.AddBehaviour(innerHandler.TaskCancelled);
             innerHandler.AddBehaviour(innerHandler.OK);
@@ -96,7 +107,7 @@
         public async Task Invoke_ShouldRetryTheExpectedAmountOfTimesAndReturnExceptionWhenInternalServerErrorsEncountered()
         {
             innerHandler.AddBehaviour(innerHandler.InternalServerError);
-            innerHandler.AddBehaviour(innerHandler.InternalServerError);
+            innerHandler.AddBehaviour(innerHandler.ServiceUnavailable);
 
             await Assert.ThrowsAsync<HttpRequestException>(() => client.SendAsync(new HttpRequestMessage()));
 

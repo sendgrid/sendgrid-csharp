@@ -38,6 +38,10 @@ namespace SendGrid.Tests.Reliability
         {
             return CreateHttpResponse(HttpStatusCode.InternalServerError);
         }
+        public Task<HttpResponseMessage> ServiceUnavailable()
+        {
+            return CreateHttpResponse(HttpStatusCode.ServiceUnavailable);
+        }
 
         public Task<HttpResponseMessage> AuthenticationError()
         {
@@ -45,7 +49,11 @@ namespace SendGrid.Tests.Reliability
         }
         public Task<HttpResponseMessage> HttpVersionNotSupported()
         {
-            return CreateHttpResponse((HttpStatusCode)505);
+            return CreateHttpResponse(HttpStatusCode.HttpVersionNotSupported);
+        }
+        public Task<HttpResponseMessage> NotImplemented()
+        {
+            return CreateHttpResponse(HttpStatusCode.NotImplemented);
         }
 
         public Task<HttpResponseMessage> CreateHttpResponse(HttpStatusCode statusCode)

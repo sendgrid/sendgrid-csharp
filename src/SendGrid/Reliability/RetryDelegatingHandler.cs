@@ -1,6 +1,7 @@
 ﻿namespace SendGrid.Helpers.Reliability
 {
     using System;
+    using System.Collections.Generic;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
@@ -10,6 +11,8 @@
     /// </summary>
     public class RetryDelegatingHandler : DelegatingHandler
     {
+        private static List<int> retriableStatusCodes = new List<int>() { 500, 502, 503, 504 };
+
         private readonly ReliabilitySettings settings;
 
         /// <summary>
@@ -44,7 +47,7 @@
                 {
                     responseMessage = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
-                    ThrowHttpRequestExceptionIfResponseIsWithinTheServerErrorRange(responseMessage);
+                    ThrowHttpRequestExceptionIfResponseCodeIsRetriable(responseMessage);
 
                     sent = true;
                 }
@@ -76,11 +79,13 @@
             return responseMessage;
         }
 
-        private static void ThrowHttpRequestExceptionIfResponseIsWithinTheServerErrorRange(HttpResponseMessage responseMessage)
+        private static void ThrowHttpRequestExceptionIfResponseCodeIsRetriable(HttpResponseMessage responseMessage)
         {
-            if ((int)responseMessage.StatusCode >= 500 && (int)responseMessage.StatusCode <= 504)
+            int statusCode = (int)responseMessage.StatusCode;
+
+            if (retriableStatusCodes.Contains(statusCode))
             {
-                throw new HttpRequestException(string.Format("Response Http Status code {0} indicates server error", responseMessage.StatusCode));
+                throw new HttpRequestException(string.Format("Http status code '{0}' indicates server error", statusCode));
             }
         }
     }
