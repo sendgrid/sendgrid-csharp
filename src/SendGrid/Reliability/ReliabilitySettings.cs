@@ -21,9 +21,9 @@ namespace SendGrid.Helpers.Reliability
         }
 
         /// <summary>
-        ///     Gets or sets the number of retries to execute against when sending an HTTP Request before throwing an exception. Defaults to 0 (no retries, you must explicitly enable)
+        ///     Gets or sets the maximum number of retries to execute against when sending an HTTP Request before throwing an exception. Defaults to 0 (no retries, you must explicitly enable)
         /// </summary>
-        public int RetryCount
+        public int MaximumNumberOfRetries
         {
             get
             {
@@ -39,7 +39,7 @@ namespace SendGrid.Helpers.Reliability
 
                 if (value > 5)
                 {
-                    throw new ArgumentException("The maximum number of retries is 5");
+                    throw new ArgumentException("The maximum number of retries that can be attempted is 5");
                 }
 
                 this.retryCount = value;

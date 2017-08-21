@@ -11,7 +11,7 @@
     /// </summary>
     public class RetryDelegatingHandler : DelegatingHandler
     {
-        private static List<int> retriableStatusCodes = new List<int>() { 500, 502, 503, 504 };
+        private static readonly List<int> RetriableStatusCodes = new List<int>() { 500, 502, 503, 504 };
 
         private readonly ReliabilitySettings settings;
 
@@ -32,12 +32,15 @@
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (this.settings.RetryCount == 0)
+            if (this.settings.MaximumNumberOfRetries == 0)
             {
                 return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
             }
 
             HttpResponseMessage responseMessage = null;
+            var backOffCalculator = new ExponentialBackOffCalculator(settings.RetryInterval);
+
+            var waitFor = settings.RetryInterval;
             var numberOfAttempts = 0;
             var sent = false;
 
@@ -55,25 +58,27 @@
                 {
                     numberOfAttempts++;
 
-                    if (numberOfAttempts > this.settings.RetryCount)
+                    if (numberOfAttempts > this.settings.MaximumNumberOfRetries)
                     {
                         throw new TimeoutException();
                     }
 
                     // ReSharper disable once MethodSupportsCancellation, cancel will be indicated on the token
-                    await Task.Delay(this.settings.RetryInterval).ConfigureAwait(false);
+                    await Task.Delay(waitFor).ConfigureAwait(false);
                 }
                 catch (HttpRequestException)
                 {
                     numberOfAttempts++;
 
-                    if (numberOfAttempts > this.settings.RetryCount)
+                    if (numberOfAttempts > this.settings.MaximumNumberOfRetries)
                     {
                         throw;
                     }
 
-                    await Task.Delay(this.settings.RetryInterval).ConfigureAwait(false);
+                    await Task.Delay(waitFor).ConfigureAwait(false);
                 }
+
+                waitFor = backOffCalculator.GetNextWaitInterval(numberOfAttempts);
             }
 
             return responseMessage;
@@ -83,9 +88,30 @@
         {
             int statusCode = (int)responseMessage.StatusCode;
 
-            if (retriableStatusCodes.Contains(statusCode))
+            if (RetriableStatusCodes.Contains(statusCode))
             {
                 throw new HttpRequestException(string.Format("Http status code '{0}' indicates server error", statusCode));
+            }
+        }
+
+        private class ExponentialBackOffCalculator
+        {
+            private TimeSpan baseInterval;
+
+            private readonly Random random = new Random();
+
+            public ExponentialBackOffCalculator(TimeSpan baseInterval)
+            {
+                this.baseInterval = baseInterval;
+            }
+
+            public TimeSpan GetNextWaitInterval(int numberOfAttempts)
+            {
+                var interval = this.baseInterval.TotalMilliseconds + (Math.Pow(2, numberOfAttempts) * 1000);
+
+                var randomDelay = this.random.Next(0, 1000);
+
+                return TimeSpan.FromMilliseconds(interval + randomDelay);
             }
         }
     }

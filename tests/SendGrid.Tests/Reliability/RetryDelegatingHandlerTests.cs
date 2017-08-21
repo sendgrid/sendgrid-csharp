@@ -17,7 +17,7 @@
         {
             var reliabilitySettings = new ReliabilitySettings
             {
-                RetryCount = 1
+                MaximumNumberOfRetries = 1
             };
             innerHandler = new RetryTestBehaviourDelegatingHandler();
             client = new HttpClient(new RetryDelegatingHandler(innerHandler, reliabilitySettings))
@@ -119,7 +119,7 @@
         {
             var settings = new ReliabilitySettings();
 
-            Assert.Throws<ArgumentException>(() => settings.RetryCount = -1);
+            Assert.Throws<ArgumentException>(() => settings.MaximumNumberOfRetries = -1);
         }
 
         [Fact]
@@ -127,7 +127,7 @@
         {
             var settings = new ReliabilitySettings();
 
-            Assert.Throws<ArgumentException>(() => settings.RetryCount = 6);
+            Assert.Throws<ArgumentException>(() => settings.MaximumNumberOfRetries = 6);
         }
 
         [Fact]

@@ -6141,7 +6141,7 @@
             var options = new SendGridClientOptions
             {
                 ApiKey = fixture.apiKey,
-                ReliabilitySettings = { RetryCount = 1 },
+                ReliabilitySettings = { MaximumNumberOfRetries = 1 },
                 Host = "http://localhost:4010"
             };
 
@@ -6169,7 +6169,7 @@
             var options = new SendGridClientOptions
             {
                 ApiKey = fixture.apiKey,
-                ReliabilitySettings = { RetryCount = 1 }
+                ReliabilitySettings = { MaximumNumberOfRetries = 1 }
             };
 
             var id = "test_url_param";
