@@ -15,6 +15,8 @@
 
         private readonly ReliabilitySettings settings;
 
+        private readonly Random random = new Random();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class.
         /// </summary>
@@ -38,7 +40,6 @@
             }
 
             HttpResponseMessage responseMessage = null;
-            var backOffCalculator = new ExponentialBackOffCalculator(settings.RetryInterval);
 
             var waitFor = settings.RetryInterval;
             var numberOfAttempts = 0;
@@ -50,7 +51,7 @@
                 {
                     responseMessage = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
-                    ThrowHttpRequestExceptionIfResponseCodeIsRetriable(responseMessage);
+                    ThrowHttpRequestExceptionIfResponseCodeCanBeRetried(responseMessage);
 
                     sent = true;
                 }
@@ -78,13 +79,13 @@
                     await Task.Delay(waitFor).ConfigureAwait(false);
                 }
 
-                waitFor = backOffCalculator.GetNextWaitInterval(numberOfAttempts);
+                waitFor = GetNextWaitInterval(numberOfAttempts);
             }
 
             return responseMessage;
         }
 
-        private static void ThrowHttpRequestExceptionIfResponseCodeIsRetriable(HttpResponseMessage responseMessage)
+        private static void ThrowHttpRequestExceptionIfResponseCodeCanBeRetried(HttpResponseMessage responseMessage)
         {
             int statusCode = (int)responseMessage.StatusCode;
 
@@ -94,25 +95,13 @@
             }
         }
 
-        private class ExponentialBackOffCalculator
+        private TimeSpan GetNextWaitInterval(int numberOfAttempts)
         {
-            private TimeSpan baseInterval;
+            var interval = this.settings.RetryInterval.TotalMilliseconds + (Math.Pow(2, numberOfAttempts) * 1000);
 
-            private readonly Random random = new Random();
+            var randomDelay = this.random.Next(0, 1000);
 
-            public ExponentialBackOffCalculator(TimeSpan baseInterval)
-            {
-                this.baseInterval = baseInterval;
-            }
-
-            public TimeSpan GetNextWaitInterval(int numberOfAttempts)
-            {
-                var interval = this.baseInterval.TotalMilliseconds + (Math.Pow(2, numberOfAttempts) * 1000);
-
-                var randomDelay = this.random.Next(0, 1000);
-
-                return TimeSpan.FromMilliseconds(interval + randomDelay);
-            }
+            return TimeSpan.FromMilliseconds(interval + randomDelay);
         }
     }
 }

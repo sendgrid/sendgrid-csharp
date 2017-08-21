@@ -27,7 +27,7 @@
         }
 
         [Fact]
-        public async Task Invoke_ShouldReturnHttpResponseAndNotRetryWhenSuccessful()
+        public async Task ShouldReturnHttpResponseAndNotRetryWhenSuccessful()
         {
             innerHandler.AddBehaviour(innerHandler.OK);
 
@@ -38,7 +38,7 @@
         }
 
         [Fact]
-        public async Task Invoke_ShouldReturnHttpResponseAndNotRetryWhenUnauthorised()
+        public async Task ShouldReturnHttpResponseAndNotRetryWhenUnauthorised()
         {
             innerHandler.AddBehaviour(innerHandler.AuthenticationError);
 
@@ -49,7 +49,7 @@
         }
 
         [Fact]
-        public async Task Invoke_ShouldReturnErrorWithoutRetryWhenErrorIsNotTransient()
+        public async Task ShouldReturnErrorWithoutRetryWhenErrorIsNotTransient()
         {
             innerHandler.AddBehaviour(innerHandler.NonTransientException);
 
@@ -59,7 +59,7 @@
         }
 
         [Fact]
-        public async Task Invoke_ShouldReturnErrorWithoutRetryWhen500ErrorStatusIsNotTransient()
+        public async Task ShouldReturnErrorWithoutRetryWhen500ErrorStatusIsNotTransient()
         {
             innerHandler.AddBehaviour(innerHandler.HttpVersionNotSupported);
 
@@ -70,7 +70,7 @@
         }
 
         [Fact]
-        public async Task Invoke_ShouldReturnErrorWithoutRetryWhen501ErrorStatus()
+        public async Task ShouldReturnErrorWithoutRetryWhen501ErrorStatus()
         {
             innerHandler.AddBehaviour(innerHandler.NotImplemented);
 
@@ -81,7 +81,7 @@
         }
 
         [Fact]
-        public async Task Invoke_ShouldRetryOnceWhenFailedOnFirstAttemptThenSuccessful()
+        public async Task ShouldRetryOnceWhenFailedOnFirstAttemptThenSuccessful()
         {
             innerHandler.AddBehaviour(innerHandler.TaskCancelled);
             innerHandler.AddBehaviour(innerHandler.OK);
@@ -93,7 +93,7 @@
         }
 
         [Fact]
-        public async Task Invoke_ShouldRetryTheExpectedAmountOfTimesAndReturnTimeoutExceptionWhenTasksCancelled()
+        public async Task ShouldRetryTheExpectedAmountOfTimesAndReturnTimeoutExceptionWhenTasksCancelled()
         {
             innerHandler.AddBehaviour(innerHandler.TaskCancelled);
             innerHandler.AddBehaviour(innerHandler.TaskCancelled);
@@ -104,7 +104,7 @@
         }
 
         [Fact]
-        public async Task Invoke_ShouldRetryTheExpectedAmountOfTimesAndReturnExceptionWhenInternalServerErrorsEncountered()
+        public async Task ShouldRetryTheExpectedAmountOfTimesAndReturnExceptionWhenInternalServerErrorsEncountered()
         {
             innerHandler.AddBehaviour(innerHandler.InternalServerError);
             innerHandler.AddBehaviour(innerHandler.ServiceUnavailable);
