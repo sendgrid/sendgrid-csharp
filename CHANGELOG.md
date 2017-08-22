@@ -1,6 +1,13 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.9.0] - 2017-08=22
+## Added
+- #509 Transient Fault Handling (dependency free)
+- Implements retry behaviour for transient faults when using HttpClient to send the request.
+- Please see #509 and [USE_CASES.md](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transient_faults) for details.
+- Thanks to [Dylan Morley](https://github.com/dylan-asos) for the PR!
+
 ## [9.8.0] - 2017-08-15
 ## Added
 - Single email to multiple recipients - Toggle display of recipients #508

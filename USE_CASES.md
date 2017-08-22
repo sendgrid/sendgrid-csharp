@@ -616,7 +616,7 @@ In this example we are setting RetryCount to 2, with a mimimum wait time of 1 se
 
 var options = new SendGridClientOptions
 {
-    ApiKey = "Your-Api-Key",
+    ApiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY"),
     ReliabilitySettings = new ReliabilitySettings(2, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(3))
 };
 
@@ -630,7 +630,7 @@ The SendGridClientOptions object defines all the settings that can be set for th
 
 var options = new SendGridClientOptions
 {
-    ApiKey = "Your-Api-Key",
+    ApiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY"),
     ReliabilitySettings = new ReliabilitySettings(2, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(3)),
     Host = "Your-Host",
     UrlPath = "Url-Path",
