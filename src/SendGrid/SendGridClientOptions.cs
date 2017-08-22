@@ -1,5 +1,6 @@
 ﻿namespace SendGrid
 {
+    using System;
     using System.Collections.Generic;
     using SendGrid.Helpers.Reliability;
 
@@ -8,21 +9,27 @@
     /// </summary>
     public class SendGridClientOptions
     {
+        private ReliabilitySettings reliabilitySettings = new ReliabilitySettings();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridClientOptions"/> class.
         /// </summary>
         public SendGridClientOptions()
         {
-            ReliabilitySettings = new ReliabilitySettings();
             RequestHeaders = new Dictionary<string, string>();
             Host = "https://api.sendgrid.com";
             Version = "v3";
         }
 
         /// <summary>
-        /// Gets the reliability settings to use on HTTP Requests
+        /// Gets or sets the reliability settings to use on HTTP Requests
         /// </summary>
-        public ReliabilitySettings ReliabilitySettings { get; }
+        public ReliabilitySettings ReliabilitySettings
+        {
+            get => this.reliabilitySettings;
+
+            set => this.reliabilitySettings = value ?? throw new ArgumentNullException(nameof(value));
+        }
 
         /// <summary>
         /// Gets or sets the SendGrid API key

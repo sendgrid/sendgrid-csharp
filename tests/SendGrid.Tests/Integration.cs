@@ -6141,7 +6141,7 @@
             var options = new SendGridClientOptions
             {
                 ApiKey = fixture.apiKey,
-                ReliabilitySettings = { MaximumNumberOfRetries = 1 },
+                ReliabilitySettings = new ReliabilitySettings(1, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(1)),
                 Host = "http://localhost:4010"
             };
 
@@ -6169,7 +6169,7 @@
             var options = new SendGridClientOptions
             {
                 ApiKey = fixture.apiKey,
-                ReliabilitySettings = { MaximumNumberOfRetries = 1 }
+                ReliabilitySettings = new ReliabilitySettings(1, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(1))
             };
 
             var id = "test_url_param";

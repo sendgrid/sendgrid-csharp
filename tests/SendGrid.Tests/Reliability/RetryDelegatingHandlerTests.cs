@@ -15,10 +15,9 @@
 
         public RetryDelegatingHandlerTests()
         {
-            var reliabilitySettings = new ReliabilitySettings
-            {
-                MaximumNumberOfRetries = 1
-            };
+            var reliabilitySettings = new ReliabilitySettings(1, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10),
+                TimeSpan.FromSeconds(1));
+
             innerHandler = new RetryTestBehaviourDelegatingHandler();
             client = new HttpClient(new RetryDelegatingHandler(innerHandler, reliabilitySettings))
             {
@@ -112,30 +111,6 @@
             await Assert.ThrowsAsync<HttpRequestException>(() => client.SendAsync(new HttpRequestMessage()));
 
             Assert.Equal(2, innerHandler.InvocationCount);
-        }
-
-        [Fact]
-        public void ReliabilitySettingsShouldNotAllowNegativeRetryCount()
-        {
-            var settings = new ReliabilitySettings();
-
-            Assert.Throws<ArgumentException>(() => settings.MaximumNumberOfRetries = -1);
-        }
-
-        [Fact]
-        public void ReliabilitySettingsShouldNotAllowRetryCountGreaterThan5()
-        {
-            var settings = new ReliabilitySettings();
-
-            Assert.Throws<ArgumentException>(() => settings.MaximumNumberOfRetries = 6);
-        }
-
-        [Fact]
-        public void ReliabilitySettingsShouldNotAllowRetryIntervalGreaterThan30Seconds()
-        {
-            var settings = new ReliabilitySettings();
-
-            Assert.Throws<ArgumentException>(() => settings.MinimumBackOff = TimeSpan.FromSeconds(31));
         }
     }
 }

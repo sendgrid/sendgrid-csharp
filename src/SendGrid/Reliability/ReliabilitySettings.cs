@@ -7,104 +7,82 @@ namespace SendGrid.Helpers.Reliability
     /// </summary>
     public class ReliabilitySettings
     {
-        private int maximumNumberOfRetries;
-
-        private TimeSpan minimumBackOff;
-        private TimeSpan maximumBackOff;
-        private TimeSpan deltaBackOff;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReliabilitySettings"/> class with default settings.
+        /// </summary>
+        public ReliabilitySettings()
+            : this(0, TimeSpan.Zero, TimeSpan.Zero, TimeSpan.Zero)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReliabilitySettings"/> class.
         /// </summary>
-        public ReliabilitySettings()
+        /// <param name="maximumNumberOfRetries">The maximum number of retries to execute against when sending an HTTP Request before throwing an exception</param>
+        /// <param name="minimumBackoff">The minimum amount of time to wait between between HTTP retries</param>
+        /// <param name="maximumBackOff">the maximum amount of time to wait between between HTTP retries</param>
+        /// <param name="deltaBackOff">the value that will be used to calculate a random delta in the exponential delay between retries</param>
+        public ReliabilitySettings(int maximumNumberOfRetries, TimeSpan minimumBackoff, TimeSpan maximumBackOff, TimeSpan deltaBackOff)
         {
-            this.maximumNumberOfRetries = 0;
-            this.minimumBackOff = TimeSpan.FromSeconds(1);
-            this.deltaBackOff = TimeSpan.FromSeconds(1);
-            this.maximumBackOff = TimeSpan.FromSeconds(10);
+            if (maximumNumberOfRetries < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maximumNumberOfRetries), "maximumNumberOfRetries must be greater than 0");
+            }
+
+            if (maximumNumberOfRetries > 5)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maximumNumberOfRetries), "The maximum number of retries allowed is 5");
+            }
+
+            if (minimumBackoff.Ticks < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(minimumBackoff), "minimumBackoff must be greater than 0");
+            }
+
+            if (maximumBackOff.Ticks < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maximumBackOff), "maximumBackOff must be greater than 0");
+            }
+
+            if (maximumBackOff.TotalSeconds > 30)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maximumBackOff), "maximumBackOff must be less than 30 seconds");
+            }
+
+            if (deltaBackOff.Ticks < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(deltaBackOff), "deltaBackOff must be greater than 0");
+            }
+
+            if (minimumBackoff.TotalMilliseconds > maximumBackOff.TotalMilliseconds)
+            {
+                throw new ArgumentOutOfRangeException(nameof(minimumBackoff), "minimumBackoff must be less than maximumBackOff");
+            }
+
+            this.MaximumNumberOfRetries = maximumNumberOfRetries;
+            this.MinimumBackOff = minimumBackoff;
+            this.DeltaBackOff = deltaBackOff;
+            this.MaximumBackOff = maximumBackOff;
         }
 
         /// <summary>
-        ///     Gets or sets the maximum number of retries to execute against when sending an HTTP Request before throwing an exception. Defaults to 0 (no retries, you must explicitly enable)
+        ///     Gets the maximum number of retries to execute against when sending an HTTP Request before throwing an exception. Defaults to 0 (no retries, you must explicitly enable)
         /// </summary>
-        public int MaximumNumberOfRetries
-        {
-            get
-            {
-                return this.maximumNumberOfRetries;
-            }
-
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentException("Retry count must be greater than zero");
-                }
-
-                if (value > 5)
-                {
-                    throw new ArgumentException("The maximum number of retries that can be attempted is 5");
-                }
-
-                this.maximumNumberOfRetries = value;
-            }
-        }
+        public int MaximumNumberOfRetries { get; }
 
         /// <summary>
-        /// Gets or sets the interval between HTTP retries. Defaults to 1 second
+        /// Gets the minimum amount of time to wait between between HTTP retries. Defaults to 1 second
         /// </summary>
-        public TimeSpan MinimumBackOff
-        {
-            get
-            {
-                return this.minimumBackOff;
-            }
+        public TimeSpan MinimumBackOff { get; }
 
-            set
-            {
-                if (value.TotalSeconds > 30)
-                {
-                    throw new ArgumentException("The maximum setting for minimum back off is 30 seconds");
-                }
+        /// <summary>
+        /// Gets the maximum amount of time to wait between between HTTP retries. Defaults to 10 seconds
+        /// </summary>
+        public TimeSpan MaximumBackOff { get; }
 
-                this.minimumBackOff = value;
-            }
-        }
-
-        public TimeSpan MaximumBackOff
-        {
-            get
-            {
-                return this.maximumBackOff;
-            }
-
-            set
-            {
-                if (value.TotalSeconds > 30)
-                {
-                    throw new ArgumentException("The maximum setting to back off for is 30 seconds");
-                }
-
-                this.maximumBackOff = value;
-            }
-        }
-
-        public TimeSpan DeltaBackOff
-        {
-            get
-            {
-                return this.deltaBackOff;
-            }
-
-            set
-            {
-                if (value.TotalSeconds > 30)
-                {
-                    throw new ArgumentException("The maximum delta interval is 5 seconds");
-                }
-
-                this.deltaBackOff = value;
-            }
-        }
+        /// <summary>
+        /// Gets the value that will be used to calculate a random delta in the exponential delay between retries. Defaults to 1 second
+        /// </summary>
+        public TimeSpan DeltaBackOff { get; }
     }
 }
