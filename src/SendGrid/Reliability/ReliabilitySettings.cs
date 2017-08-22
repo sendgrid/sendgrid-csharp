@@ -7,17 +7,21 @@ namespace SendGrid.Helpers.Reliability
     /// </summary>
     public class ReliabilitySettings
     {
-        private int retryCount;
+        private int maximumNumberOfRetries;
 
-        private TimeSpan retryInterval;
+        private TimeSpan minimumBackOff;
+        private TimeSpan maximumBackOff;
+        private TimeSpan deltaBackOff;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReliabilitySettings"/> class.
         /// </summary>
         public ReliabilitySettings()
         {
-            this.retryCount = 0;
-            this.retryInterval = TimeSpan.FromSeconds(1);
+            this.maximumNumberOfRetries = 0;
+            this.minimumBackOff = TimeSpan.FromSeconds(1);
+            this.deltaBackOff = TimeSpan.FromSeconds(1);
+            this.maximumBackOff = TimeSpan.FromSeconds(10);
         }
 
         /// <summary>
@@ -27,7 +31,7 @@ namespace SendGrid.Helpers.Reliability
         {
             get
             {
-                return this.retryCount;
+                return this.maximumNumberOfRetries;
             }
 
             set
@@ -42,28 +46,64 @@ namespace SendGrid.Helpers.Reliability
                     throw new ArgumentException("The maximum number of retries that can be attempted is 5");
                 }
 
-                this.retryCount = value;
+                this.maximumNumberOfRetries = value;
             }
         }
 
         /// <summary>
         /// Gets or sets the interval between HTTP retries. Defaults to 1 second
         /// </summary>
-        public TimeSpan RetryInterval
+        public TimeSpan MinimumBackOff
         {
             get
             {
-                return this.retryInterval;
+                return this.minimumBackOff;
             }
 
             set
             {
                 if (value.TotalSeconds > 30)
                 {
-                    throw new ArgumentException("The maximum retry interval is 30 seconds");
+                    throw new ArgumentException("The maximum setting for minimum back off is 30 seconds");
                 }
 
-                this.retryInterval = value;
+                this.minimumBackOff = value;
+            }
+        }
+
+        public TimeSpan MaximumBackOff
+        {
+            get
+            {
+                return this.maximumBackOff;
+            }
+
+            set
+            {
+                if (value.TotalSeconds > 30)
+                {
+                    throw new ArgumentException("The maximum setting to back off for is 30 seconds");
+                }
+
+                this.maximumBackOff = value;
+            }
+        }
+
+        public TimeSpan DeltaBackOff
+        {
+            get
+            {
+                return this.deltaBackOff;
+            }
+
+            set
+            {
+                if (value.TotalSeconds > 30)
+                {
+                    throw new ArgumentException("The maximum delta interval is 5 seconds");
+                }
+
+                this.deltaBackOff = value;
             }
         }
     }

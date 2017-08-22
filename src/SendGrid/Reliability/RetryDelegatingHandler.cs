@@ -107,18 +107,14 @@
 
         private TimeSpan GetNextWaitInterval(int numberOfAttempts)
         {
-            var randomDelay = this.random.Next(0, 500);
+            var delta = (int)((Math.Pow(2.0, numberOfAttempts) - 1.0) *
+                               this.random.Next(
+                                   (int)(this.settings.DeltaBackOff.TotalMilliseconds * 0.8),
+                                   (int)(this.settings.DeltaBackOff.TotalMilliseconds * 1.2)));
 
-            if (numberOfAttempts == 0)
-            {
-                return TimeSpan.FromMilliseconds(this.settings.RetryInterval.TotalMilliseconds + randomDelay);
-            }
+            var interval = (int)Math.Min(this.settings.MinimumBackOff.TotalMilliseconds + delta, this.settings.MaximumBackOff.TotalMilliseconds);
 
-            var exponentialIncrease = Math.Pow(2, numberOfAttempts) * 1000;
-
-            var actualIncrease = TimeSpan.FromMilliseconds(this.settings.RetryInterval.TotalMilliseconds + exponentialIncrease + randomDelay);
-
-            return actualIncrease;
+            return TimeSpan.FromMilliseconds(interval);
         }
     }
 }

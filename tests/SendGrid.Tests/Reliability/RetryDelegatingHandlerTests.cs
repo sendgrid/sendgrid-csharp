@@ -135,7 +135,7 @@
         {
             var settings = new ReliabilitySettings();
 
-            Assert.Throws<ArgumentException>(() => settings.RetryInterval = TimeSpan.FromSeconds(31));
+            Assert.Throws<ArgumentException>(() => settings.MinimumBackOff = TimeSpan.FromSeconds(31));
         }
     }
 }
