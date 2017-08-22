@@ -12,9 +12,6 @@ env:
 before_install:
   - mkdir -p .nuget
   - wget -O .nuget/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
-  - mono .nuget/nuget.exe
-  - ls /usr/lib/mono/4.5
-  - ls /usr/lib/mono/4.5/MSBuild
 
 before_script:
   # https://github.com/dotnet/sdk/issues/335
@@ -28,6 +25,8 @@ script:
   - dotnet restore
   - dotnet build ./src/SendGrid -c Release
   - dotnet test ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp1.0
+  - ls /home/travis/build/sendgrid/sendgrid-csharp/src/SendGrid/bin/Release/net452/
+  - ls /home/travis/build/sendgrid/sendgrid-csharp/src/SendGrid/bin/Release/netstandard1.3/
 
 notifications:
   hipchat:
