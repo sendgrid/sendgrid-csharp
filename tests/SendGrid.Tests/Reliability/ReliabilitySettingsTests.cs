@@ -101,6 +101,14 @@
             Assert.Equal(TimeSpan.Zero, defaultSettings.DeltaBackOff);
             Assert.Equal(0, defaultSettings.MaximumNumberOfRetries);
         }
+
+        [Fact]
+        public void ShouldNotAllowNullInstanceOnSendGridClientOptions()
+        {
+            var options = new SendGridClientOptions();
+
+            Assert.Throws<ArgumentNullException>(() => options.ReliabilitySettings = null);
+        }
     }
 }
 
