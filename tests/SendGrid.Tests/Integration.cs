@@ -11,6 +11,8 @@
     using Xunit;
     using System.Threading;
     using System.Text;
+    using Helpers.Reliability;
+    using Reliability;
     using Xunit.Abstractions;
 
     public class IntegrationFixture : IDisposable
@@ -43,7 +45,7 @@
         {
             if (Environment.GetEnvironmentVariable("TRAVIS") != "true")
             {
-                process.Kill();
+                process.Kill();              
                 Trace.WriteLine("Shutting Down Prism");
             }
         }
@@ -5992,6 +5994,26 @@
             Assert.Equal(httpStatusCode, response.StatusCode);
             Assert.Equal(httpResponse, response.Body.ReadAsStringAsync().Result);
         }
+        
+        [Fact]
+        public void TestTakesProxyAsConstructorArgumentAndInitiailsesHttpClient()
+        {
+            var urlPath = "urlPath";
+
+            var sg = new SendGridClient(new FakeWebProxy(), fixture.apiKey, urlPath: "urlPath");
+
+            Assert.Equal(sg.UrlPath, urlPath);
+        }
+
+        [Fact]
+        public void TestTakesNullProxyAsConstructorArgumentAndInitiailsesHttpClient()
+        {
+            var urlPath = "urlPath";
+
+            var sg = new SendGridClient(null as IWebProxy, fixture.apiKey, urlPath: "urlPath");
+
+            Assert.Equal(sg.UrlPath, urlPath);            
+        }
 
         /// <summary>
         /// Tests the conditions in issue #358.
@@ -6106,6 +6128,80 @@
             bool containsReferenceHandlingProperty = serializedMessage.Contains(referenceHandlingProperty);
             Assert.False(containsReferenceHandlingProperty);
         }
+
+        [Fact]
+        public async Task TestRetryBehaviourThrowsTimeoutException()
+        {
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com"));
+            msg.AddTo(new EmailAddress("test@example.com"));
+            msg.SetSubject("Hello World from the SendGrid CSharp Library");
+            msg.AddContent(MimeType.Html, "HTML content");
+
+            var options = new SendGridClientOptions
+            {
+                ApiKey = fixture.apiKey,
+                ReliabilitySettings = new ReliabilitySettings(1, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(1)),
+                Host = "http://localhost:4010"
+            };
+
+            var id = "test_url_param";
+
+            var retryHandler = new RetryDelegatingHandler(new HttpClientHandler(), options.ReliabilitySettings);
+
+            HttpClient clientToInject = new HttpClient(retryHandler) { Timeout = TimeSpan.FromMilliseconds(1) };
+            var sg = new SendGridClient(clientToInject, options.ApiKey, options.Host);
+
+            var exception = await Assert.ThrowsAsync<TimeoutException>(() => sg.SendEmailAsync(msg));
+
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public async Task TestRetryBehaviourSucceedsOnSecondAttempt()
+        {
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com"));
+            msg.AddTo(new EmailAddress("test@example.com"));
+            msg.SetSubject("Hello World from the SendGrid CSharp Library");
+            msg.AddContent(MimeType.Html, "HTML content");
+
+            var options = new SendGridClientOptions
+            {
+                ApiKey = fixture.apiKey,
+                ReliabilitySettings = new ReliabilitySettings(1, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(1))
+            };
+
+            var id = "test_url_param";
+
+            var httpMessageHandler = new RetryTestBehaviourDelegatingHandler();
+            httpMessageHandler.AddBehaviour(httpMessageHandler.TaskCancelled);
+            httpMessageHandler.AddBehaviour(httpMessageHandler.OK);
+
+            var retryHandler = new RetryDelegatingHandler(httpMessageHandler, options.ReliabilitySettings);
+
+            HttpClient clientToInject = new HttpClient(retryHandler);
+            var sg = new SendGridClient(clientToInject, options.ApiKey, options.Host);
+
+            var result = await sg.SendEmailAsync(msg);
+
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+        }
+    }
+
+    public class FakeWebProxy : IWebProxy
+    {
+        public Uri GetProxy(Uri destination)
+        {
+            return new Uri("https://dummy-proxy");
+        }
+
+        public bool IsBypassed(Uri host)
+        {
+            return false;
+        }
+
+        public ICredentials Credentials { get; set; }
     }
 
     public class FakeHttpMessageHandler : HttpMessageHandler
