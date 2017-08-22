@@ -23,8 +23,6 @@
 
         private readonly ReliabilitySettings settings;
 
-        private readonly Random random = new Random();
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class.
         /// </summary>
@@ -107,8 +105,10 @@
 
         private TimeSpan GetNextWaitInterval(int numberOfAttempts)
         {
+            var random = new Random();
+
             var delta = (int)((Math.Pow(2.0, numberOfAttempts) - 1.0) *
-                               this.random.Next(
+                               random.Next(
                                    (int)(this.settings.DeltaBackOff.TotalMilliseconds * 0.8),
                                    (int)(this.settings.DeltaBackOff.TotalMilliseconds * 1.2)));
 
