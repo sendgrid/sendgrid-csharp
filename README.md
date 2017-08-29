@@ -36,6 +36,10 @@ We appreciate your continued support, thank you!
 - .NET Standard 1.3 support
 - A SendGrid account, [sign up for free](https://sendgrid.com/free?source=sendgrid-csharp) to send up to 40,000 emails for the first 30 days or check out [our pricing](https://sendgrid.com/pricing?source=sendgrid-csharp).
 
+## Obtain API Key
+
+You can obtain your API Key within the [SendGrid UI](https://app.sendgrid.com/settings/api_keys).
+
 ## Setup Environment Variables
 
 Update the development Environment with your [SENDGRID_API_KEY](https://app.sendgrid.com/settings/api_keys). For example, in Windows 10, please review [this thread](http://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10).
