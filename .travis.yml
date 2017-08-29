@@ -27,7 +27,7 @@ script:
   - dotnet test ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp1.0
   - ls /home/travis/build/sendgrid/sendgrid-csharp/src/SendGrid/bin/Release/net452/
   - ls /home/travis/build/sendgrid/sendgrid-csharp/src/SendGrid/bin/Release/netstandard1.3/
-  - dotnet pack -c Release
+  - dotnet pack ./src/SendGrid -c Release
 
 notifications:
   hipchat:
