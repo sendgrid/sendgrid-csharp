@@ -64,7 +64,7 @@ For sample implementations, check the [.NET Core Example](https://github.com/sen
 
 ## Hello Email
 
-The following is the minimum needed code to send an simple email:
+The following is the minimum needed code to send an simple email, just modify the `apiKey`, `from` and `to` variables:
 
 ```csharp
 using SendGrid;
@@ -97,6 +97,8 @@ namespace Example
 }
 ```
 
+After executing the above code, `response.StatusCode` should be `202` and you should have an email in the inbox of the to recipient. You can check the status of your email via the UI [here](https://app.sendgrid.com/email_activity?). Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as SendGrid processes your email.
+
 For more advanced cases, you can build the SendGridMessage object yourself, following is the minimum required settings:
 
 ```csharp
@@ -114,7 +116,7 @@ namespace Example
             Execute().Wait();
         }
 
-	static async Task Execute()
+	    static async Task Execute()
         {
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);
