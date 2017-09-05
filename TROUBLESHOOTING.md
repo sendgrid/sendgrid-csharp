@@ -125,3 +125,15 @@ Console.WriteLine(msg.Serialize());
 ## UI Requests are Failing
 
 If your UI based requests are failing, it may be due to a little known issue where the UI only has a single thread. The answer here is to use `ContextAwait(false)` on the end of your request call, so that the thread does not reset back to request context and stays in capture context. Normally, async the request thread would "let go" of the capture context and reset to request context. With the UI, there is only a single thread, so you have to force the thread to switch to capture context, using `ContextAwait(false)`. For more information, please see a better summary that is linked to a longer article [in StackOverflow](https://stackoverflow.com/a/13494570).
+
+In our example code, you would change:
+
+```csharp
+var response = await client.SendEmailAsync(msg);
+```
+
+to 
+
+```csharp
+var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
+```
