@@ -5,9 +5,9 @@
 
 **This library allows you to quickly and easily use the SendGrid Web API v3 via C# with .NET.**
 
-Version 9.X.X+ of this library provides full support for all SendGrid [Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html) endpoints, including the new [v3 /mail/send](https://sendgrid.com/blog/introducing-v3mailsend-sendgrids-new-mail-endpoint).
+Version 9.X.X+ of this library provides full support for all SendGrid [Web API v3](https://sendgrid.com/docs/API_Reference/api_v3.html) endpoints, including the new [v3 /mail/send](https://sendgrid.com/blog/introducing-v3mailsend-sendgrids-new-mail-endpoint).
 
-This library represents the beginning of a new path for SendGrid. We want this library to be community driven and SendGrid led. We need your help to realize this goal. To help make sure we are building the right things in the right order, we ask that you create [issues](https://github.com/sendgrid/sendgrid-csharp/issues) and [pull requests](https://github.com/sendgrid/sendgrid-csharp/blob/master/CONTRIBUTING.md) or simply upvote or comment on existing issues or pull requests.
+We want this library to be community driven and SendGrid led. We need your help to realize this goal. To help make sure we are building the right things in the right order, we ask that you create [issues](https://github.com/sendgrid/sendgrid-csharp/issues) and [pull requests](https://github.com/sendgrid/sendgrid-csharp/blob/master/CONTRIBUTING.md) or simply upvote or comment on existing issues or pull requests.
 
 Please browse the rest of this README for further detail.
 
@@ -34,7 +34,11 @@ We appreciate your continued support, thank you!
 - .NET version 4.5.2 and higher
 - .NET Core 1.0 and higher
 - .NET Standard 1.3 support
-- [A SendGrid account](https://sendgrid.com/free?source=sendgrid-csharp)
+- A SendGrid account, [sign up for free](https://sendgrid.com/free?source=sendgrid-csharp) to send up to 40,000 emails for the first 30 days or check out [our pricing](https://sendgrid.com/pricing?source=sendgrid-csharp).
+
+## Obtain API Key
+
+You can obtain your API Key within the [SendGrid UI](https://app.sendgrid.com/settings/api_keys).
 
 ## Setup Environment Variables
 
@@ -60,7 +64,7 @@ For sample implementations, check the [.NET Core Example](https://github.com/sen
 
 ## Hello Email
 
-The following is the minimum needed code to send an simple email:
+The following is the minimum needed code to send an simple email, just modify the `apiKey`, `from` and `to` variables:
 
 ```csharp
 using SendGrid;
@@ -93,6 +97,8 @@ namespace Example
 }
 ```
 
+After executing the above code, `response.StatusCode` should be `202` and you should have an email in the inbox of the to recipient. You can check the status of your email via the UI [here](https://app.sendgrid.com/email_activity?). Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as SendGrid processes your email.
+
 For more advanced cases, you can build the SendGridMessage object yourself, following is the minimum required settings:
 
 ```csharp
@@ -110,7 +116,7 @@ namespace Example
             Execute().Wait();
         }
 
-	static async Task Execute()
+	    static async Task Execute()
         {
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);

@@ -9,6 +9,8 @@ This documentation provides examples for specific use cases. Please [open an iss
 * [Email - Send Multiple Emails to Multiple Recipients](#multipleemailsmultiplerecipients)
 * [Email - Transactional Templates](#transactional_templates)
 * [Transient Fault Handling](#transient_faults)
+* [How to Setup a Domain Whitelabel](#domain_whitelabel)
+* [How to View Email Statistics](#email_stats)
 
 <a name="attachments"></a>
 # Attachments
@@ -641,3 +643,17 @@ var options = new SendGridClientOptions
 var client = new SendGridClient(options);
 
 ```
+
+<a name="domain_whitelabel"></a>
+# How to Setup a Domain Whitelabel
+
+You can find documentation for how to setup a domain whitelabel via the UI [here](https://sendgrid.com/docs/Classroom/Basics/Whitelabel/setup_domain_whitelabel.html) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#whitelabel).
+
+Find more information about all of SendGrid's whitelabeling realated doucmentation [here](https://sendgrid.com/docs/Classroom/Basics/Whitelabel/index.html).
+
+<a name="email_stats"></a>
+# How to View Email Statistics
+
+You can find documentation for how to view your email statistics via the UI [here](https://app.sendgrid.com/statistics) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#stats).
+
+Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as SendGrid processes your email.
