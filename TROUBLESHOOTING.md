@@ -16,6 +16,7 @@ If you can't find a solution below, please open an [issue](https://github.com/se
 * [Using the Package Manager](#package-manager)
 * [Versioning Convention](#versioning)
 * [Viewing the Request Body](#request-body)
+* [UI requests are failing](#ui-requests)
 
 <a name="v2"></a>
 ## Continue Using the v2 API
@@ -119,3 +120,8 @@ You can do this right before you call `var response = await client.SendEmailAsyn
 ```csharp
 Console.WriteLine(msg.Serialize());
 ```
+
+<a name="ui-requests"></a>
+## UI Requests are Failing
+
+If your UI based requests are failing, it may be due to a little known issue where the UI only has a single thread. The answer here is to use `ContextAwait(false)` on the end of your request call, so that the thread does not reset back to request context and stays in capture context. Normally, async the request thread would "let go" of the capture context and reset to request context. With the UI, there is only a single thread, so you have to force the thread to switch to capture context, using `ContextAwait(false)`. For more information, please see a better summary that is linked to a longer article [in StackOverflow](https://stackoverflow.com/a/13494570).
