@@ -1,7 +1,21 @@
 [![BuildStatus](https://travis-ci.org/sendgrid/sendgrid-csharp.png?branch=master)](https://travis-ci.org/sendgrid/sendgrid-csharp)
 [![Email Notifications Badge](https://dx.sendgrid.com/badge/csharp)](https://dx.sendgrid.com/newsletter/csharp)
 
-**NEW:** Subscribe to email [notifications](https://dx.sendgrid.com/newsletter/csharp) for releases and breaking changes.
+<a name="announcements"></a>
+# Announcements
+
+## September 2017 - Breaking Changes
+
+Please see our announcement regarding [breaking changes](https://github.com/sendgrid/sendgrid-csharp/issues/317). Your support is appreciated!
+
+All updates to this library are documented in our [CHANGELOG](https://github.com/sendgrid/sendgrid-csharp/blob/master/CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-csharp/releases). You may also subscribe to email [release notifications](https://dx.sendgrid.com/newsletter/csharp) for releases and breaking changes.
+
+## August 2017 - Release Notes Newsletter 
+
+Subscribe to email [notifications](https://dx.sendgrid.com/newsletter/csharp) for releases and breaking changes.
+
+
+# Overview
 
 **This library allows you to quickly and easily use the SendGrid Web API v3 via C# with .NET.**
 
@@ -188,13 +202,6 @@ var client = new SendGridClient(proxy, apiKey);
 # Use Cases
 
 [Examples of common API use cases](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md), such as how to send an email with a transactional template.
-
-<a name="announcements"></a>
-# Announcements
-
-Please see our announcement regarding [breaking changes](https://github.com/sendgrid/sendgrid-csharp/issues/317). Your support is appreciated!
-
-All updates to this library are documented in our [CHANGELOG](https://github.com/sendgrid/sendgrid-csharp/blob/master/CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-csharp/releases). You may also subscribe to email [release notifications](https://dx.sendgrid.com/newsletter/csharp) for releases and breaking changes.
 
 <a name="roadmap"></a>
 # Roadmap
