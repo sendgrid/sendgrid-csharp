@@ -4,15 +4,9 @@
 <a name="announcements"></a>
 # Announcements
 
-## September 2017 - Breaking Changes
+### August 2017
 
-Please see our announcement regarding [breaking changes](https://github.com/sendgrid/sendgrid-csharp/issues/317). Your support is appreciated!
-
-All updates to this library are documented in our [CHANGELOG](https://github.com/sendgrid/sendgrid-csharp/blob/master/CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-csharp/releases). You may also subscribe to email [release notifications](https://dx.sendgrid.com/newsletter/csharp) for releases and breaking changes.
-
-## August 2017 - Release Notes Newsletter 
-
-Subscribe to email [notifications](https://dx.sendgrid.com/newsletter/csharp) for releases and breaking changes.
+* Subscribe to email [notifications](https://dx.sendgrid.com/newsletter/csharp) for releases and breaking changes.
 
 
 # Overview
