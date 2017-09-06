@@ -14,4 +14,5 @@ Any other information you want to share that is relevant to the issue being repo
 #### Technical details:
 
 * sendgrid-csharp Version: master (latest commit: [commit number])
+* Platform (WebForms, ASP.NET, ASP.NET Core, etc.)
 * .NET Version: 4.5.2
