@@ -5,11 +5,14 @@
 
 namespace SendGrid.Helpers.Mail
 {
-    using Model;
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Model;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Class SendGridMessage builds an object that sends an email through SendGrid.
@@ -17,6 +20,9 @@ namespace SendGrid.Helpers.Mail
     [JsonObject(IsReference = false)]
     public class SendGridMessage
     {
+        // Maximum attachment size is limited to 30MB
+        private const int MaxAttachmentSize = 30 * 1024 * 1024;
+
         /// <summary>
         /// Gets or sets an email object containing the email address and name of the sender. Unicode encoding is not supported for the from field.
         /// </summary>
@@ -982,6 +988,39 @@ namespace SendGrid.Helpers.Mail
             }
 
             return;
+        }
+
+        /// <summary>
+        /// Add an attachment from a stream to the email. No attachment will be added in the case that the stream cannot be read, or if the attachment length exceeds SendGrid's maximum size (30MB).
+        /// </summary>
+        /// <param name="filename">The filename the attachment will display in the email.</param>
+        /// <param name="contentStream">The stream to use as content of the attachment.</param>
+        /// <param name="type">The mime type of the content you are attaching. For example, application/pdf or image/jpeg.</param>
+        /// <param name="disposition">The content-disposition of the attachment specifying how you would like the attachment to be displayed. For example, "inline" results in the attached file being displayed automatically within the message while "attachment" results in the attached file requiring some action to be taken before it is displayed (e.g. opening or downloading the file). Defaults to "attachment". Can be either "attachment" or "inline".</param>
+        /// <param name="content_id">A unique id that you specify for the attachment. This is used when the disposition is set to "inline" and the attachment is an image, allowing the file to be displayed within the body of your email. Ex: <![CDATA[ <img src="cid:ii_139db99fdb5c3704"></img> ]]></param>
+        /// <param name="cancellationToken">A cancellation token which can notify if the task should be canceled.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        public async Task AddAttachmentAsync(string filename, Stream contentStream, string type = null, string disposition = null, string content_id = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Stream doesn't want us to read it, can't do anything else here
+            if (!contentStream.CanRead)
+            {
+                return;
+            }
+
+            if (contentStream.Length > MaxAttachmentSize)
+            {
+                return;
+            }
+
+            var streamBytes = new byte[contentStream.Length];
+
+            // Read all the bytes. Note that we can safely case the length as an int, as the maximum allowed is less than int.MaxValue
+            await contentStream.ReadAsync(streamBytes, 0, (int)contentStream.Length, cancellationToken);
+
+            var base64Content = Convert.ToBase64String(streamBytes);
+
+            this.AddAttachment(filename, base64Content, type, disposition, content_id);
         }
 
         /// <summary>
