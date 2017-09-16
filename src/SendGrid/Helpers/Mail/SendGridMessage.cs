@@ -1003,19 +1003,21 @@ namespace SendGrid.Helpers.Mail
                 ContentId = content_id
             };
 
+            this.AddAttachment(attachment);
+        }
+
+        /// <summary>
+        /// Add an attachment to the email.
+        /// </summary>
+        /// <param name="attachment">An Attachment.</param>
+        public void AddAttachment(Attachment attachment)
+        {
             if (this.Attachments == null)
             {
-                this.Attachments = new List<Attachment>()
-                {
-                    attachment
-                };
-            }
-            else
-            {
-                this.Attachments.Add(attachment);
+                this.Attachments = new List<Attachment>();
             }
 
-            return;
+            this.Attachments.Add(attachment);
         }
 
         /// <summary>
@@ -1027,14 +1029,9 @@ namespace SendGrid.Helpers.Mail
             if (this.Attachments == null)
             {
                 this.Attachments = new List<Attachment>();
-                this.Attachments = attachments;
-            }
-            else
-            {
-                this.Attachments.AddRange(attachments);
             }
 
-            return;
+            this.Attachments.AddRange(attachments);
         }
 
         /// <summary>
