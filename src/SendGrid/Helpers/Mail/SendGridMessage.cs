@@ -987,17 +987,17 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Add an attachment to the email.
         /// </summary>
-        /// <param name="filename">The filename of the attachment.</param>
-        /// <param name="content">The Base64 encoded content of the attachment.</param>
+        /// <param name="filename">The filename the attachment will display in the email.</param>
+        /// <param name="base64Content">The Base64 encoded content of the attachment.</param>
         /// <param name="type">The mime type of the content you are attaching. For example, application/pdf or image/jpeg.</param>
         /// <param name="disposition">The content-disposition of the attachment specifying how you would like the attachment to be displayed. For example, "inline" results in the attached file being displayed automatically within the message while "attachment" results in the attached file requiring some action to be taken before it is displayed (e.g. opening or downloading the file). Defaults to "attachment". Can be either "attachment" or "inline".</param>
         /// <param name="content_id">A unique id that you specify for the attachment. This is used when the disposition is set to "inline" and the attachment is an image, allowing the file to be displayed within the body of your email. Ex: <![CDATA[ <img src="cid:ii_139db99fdb5c3704"></img> ]]></param>
-        public void AddAttachment(string filename, string content, string type = null, string disposition = null, string content_id = null)
+        public void AddAttachment(string filename, string base64Content, string type = null, string disposition = null, string content_id = null)
         {
             var attachment = new Attachment()
             {
                 Filename = filename,
-                Content = content,
+                Content = base64Content,
                 Type = type,
                 Disposition = disposition,
                 ContentId = content_id
