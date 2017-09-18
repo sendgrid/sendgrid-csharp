@@ -20,9 +20,6 @@ namespace SendGrid.Helpers.Mail
     [JsonObject(IsReference = false)]
     public class SendGridMessage
     {
-        // Maximum attachment size is limited to 30MB
-        private const int MaxAttachmentSize = 30 * 1024 * 1024;
-
         /// <summary>
         /// Gets or sets an email object containing the email address and name of the sender. Unicode encoding is not supported for the from field.
         /// </summary>
@@ -991,7 +988,7 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
-        /// Add an attachment from a stream to the email. No attachment will be added in the case that the stream cannot be read, or if the attachment length exceeds SendGrid's maximum size (30MB).
+        /// Add an attachment from a stream to the email. No attachment will be added in the case that the stream cannot be read. Streams of length greater than int.MaxValue are truncated
         /// </summary>
         /// <param name="filename">The filename the attachment will display in the email.</param>
         /// <param name="contentStream">The stream to use as content of the attachment.</param>
@@ -1008,15 +1005,10 @@ namespace SendGrid.Helpers.Mail
                 return;
             }
 
-            if (contentStream.Length > MaxAttachmentSize)
-            {
-                return;
-            }
+            var contentLength = Convert.ToInt32(contentStream.Length);
+            var streamBytes = new byte[contentLength];
 
-            var streamBytes = new byte[contentStream.Length];
-
-            // Read all the bytes. Note that we can safely case the length as an int, as the maximum allowed is less than int.MaxValue
-            await contentStream.ReadAsync(streamBytes, 0, (int)contentStream.Length, cancellationToken);
+            await contentStream.ReadAsync(streamBytes, 0, contentLength, cancellationToken);
 
             var base64Content = Convert.ToBase64String(streamBytes);
 
