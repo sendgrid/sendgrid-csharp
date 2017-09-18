@@ -988,7 +988,7 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
-        /// Add an attachment from a stream to the email. No attachment will be added in the case that the stream cannot be read. Streams of length greater than int.MaxValue are truncated
+        /// Add an attachment from a stream to the email. No attachment will be added in the case that the stream cannot be read. Streams of length greater than int.MaxValue are truncated.
         /// </summary>
         /// <param name="filename">The filename the attachment will display in the email.</param>
         /// <param name="contentStream">The stream to use as content of the attachment.</param>
