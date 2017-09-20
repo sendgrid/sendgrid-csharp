@@ -52,7 +52,7 @@ Grab your API Key from the [SendGrid UI](https://app.sendgrid.com/settings/api_k
 
 ## Setup Environment Variables
 
-Set your [SENDGRID_API_KEY](https://app.sendgrid.com/settings/api_keys) environment variable in your development environment. For example,[this thread](http://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10) explains how to set an environment variable in a Windows 10 system.
+Do not hard code your [SendGrid API Key](https://app.sendgrid.com/settings/api_keys) into your code. Instead, use something like an [environment variable](http://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10) or [Web.config](https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure).
 
 ## Install Package
 
