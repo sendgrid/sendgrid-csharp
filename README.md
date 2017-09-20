@@ -62,8 +62,8 @@ To use SendGrid in your C# project, you can either <a href="https://github.com/s
 PM> Install-Package SendGrid
 ```
 
-Once you have the SendGrid libraries properly referenced in your project, you can include calls to them in your code.
-For sample implementations, check the [.NET Core Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleCoreProject) and the [.NET 4.5.2 Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleNet45Project) folders.
+Once you have the SendGrid library installed, you can include calls to them in your code.
+For sample implementations, see the [.NET Core Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleCoreProject) and the [.NET 4.5.2 Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleNet45Project) folders.
 
 ## Dependencies
 
