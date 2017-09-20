@@ -15,9 +15,11 @@ Subscribe to email [notifications](https://dx.sendgrid.com/newsletter/csharp) fo
 
 Version 9.X.X+ of this library provides full support for all SendGrid [Web API v3](https://sendgrid.com/docs/API_Reference/api_v3.html) endpoints, including the new [v3 /mail/send](https://sendgrid.com/blog/introducing-v3mailsend-sendgrids-new-mail-endpoint).
 
-We want this library to be community driven and SendGrid led. We need your help to realize this goal. To help make sure we are building the right things in the right order, we ask that you create [issues](https://github.com/sendgrid/sendgrid-csharp/issues) and [pull requests](https://github.com/sendgrid/sendgrid-csharp/blob/master/CONTRIBUTING.md) or simply upvote or comment on existing issues or pull requests.
+We want this library to be community driven, and SendGrid led. We need your help to realize this goal. To help make sure we are building the right things in the right order, we ask that you create [issues](https://github.com/sendgrid/sendgrid-csharp/issues) and [pull requests](https://github.com/sendgrid/sendgrid-csharp/blob/master/CONTRIBUTING.md) or simply upvote or comment on existing issues or pull requests.
 
-All updates to this library are documented in our [CHANGELOG](https://github.com/sendgrid/sendgrid-csharp/blob/master/CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-csharp/releases). You may also subscribe to email [release notifications](https://dx.sendgrid.com/newsletter/csharp) for releases and breaking changes.
+For updates to this library, see our [CHANGELOG](https://github.com/sendgrid/sendgrid-csharp/blob/master/CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-csharp/releases). 
+
+Subscribe to email [release notifications](https://dx.sendgrid.com/newsletter/csharp) to receive emails about releases and breaking changes.
 
 We appreciate your continued support, thank you!
 
@@ -44,24 +46,24 @@ We appreciate your continued support, thank you!
 - .NET Standard 1.3 support
 - A SendGrid account, [sign up for free](https://sendgrid.com/free?source=sendgrid-csharp) to send up to 40,000 emails for the first 30 days or check out [our pricing](https://sendgrid.com/pricing?source=sendgrid-csharp).
 
-## Obtain API Key
+## Obtain an API Key
 
-You can obtain your API Key within the [SendGrid UI](https://app.sendgrid.com/settings/api_keys).
+Grab your API Key from the [SendGrid UI](https://app.sendgrid.com/settings/api_keys).
 
 ## Setup Environment Variables
 
-Update the development Environment with your [SENDGRID_API_KEY](https://app.sendgrid.com/settings/api_keys). For example, in Windows 10, please review [this thread](http://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10).
+Do not hard code your [SendGrid API Key](https://app.sendgrid.com/settings/api_keys) into your code. Instead, use something like an [environment variable](http://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10) or [Web.config](https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure).
 
 ## Install Package
 
-To use SendGrid in your C# project, you can either <a href="https://github.com/sendgrid/sendgrid-csharp.git">download the SendGrid C# .NET libraries directly from our Github repository</a> or, if you have the NuGet package manager installed, you can grab them automatically.
+To use SendGrid in your C# project, you can either <a href="https://github.com/sendgrid/sendgrid-csharp.git">download the SendGrid C# .NET libraries directly from our Github repository</a>. If you have the NuGet package manager installed, you can grab them automatically:
 
 ```
 PM> Install-Package SendGrid
 ```
 
-Once you have the SendGrid libraries properly referenced in your project, you can include calls to them in your code.
-For sample implementations, check the [.NET Core Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleCoreProject) and the [.NET 4.5.2 Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleNet45Project) folders.
+Once you have the SendGrid library installed, you can include calls to them in your code.
+For sample implementations, see the [.NET Core Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleCoreProject) and the [.NET 4.5.2 Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleNet45Project) folders.
 
 ## Dependencies
 
@@ -72,7 +74,7 @@ For sample implementations, check the [.NET Core Example](https://github.com/sen
 
 ## Hello Email
 
-The following is the minimum needed code to send an simple email, just modify the `apiKey`, `from` and `to` variables:
+The following is the minimum needed code to send an simple email. Use this example, and modify the `apiKey`, `from` and `to` variables:
 
 ```csharp
 using SendGrid;
@@ -105,9 +107,9 @@ namespace Example
 }
 ```
 
-After executing the above code, `response.StatusCode` should be `202` and you should have an email in the inbox of the to recipient. You can check the status of your email via the UI [here](https://app.sendgrid.com/email_activity?). Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as SendGrid processes your email.
+After executing the above code, `response.StatusCode` should be `202` and you should have an email in the inbox of the to recipient. You can check the status of your email [in the UI](https://app.sendgrid.com/email_activity?). Alternatively, we can post events to a URL of your choice using our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html). This gives you data about the events that occur as SendGrid processes your email.
 
-For more advanced cases, you can build the SendGridMessage object yourself, following is the minimum required settings:
+For more advanced cases, you can build the SendGridMessage object yourself with these minimum required settings:
 
 ```csharp
 using SendGrid;
@@ -185,7 +187,7 @@ var client = new SendGridClient(proxy, apiKey);
 <a name="usage"></a>
 # Usage
 
-- [SendGrid Docs](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html)
+- [SendGrid Docs](https://sendgrid.com/docs/API_Reference/api_v3.html)
 - [Library Usage Docs](https://github.com/sendgrid/sendgrid-csharp/tree/master/USAGE.md)
 - [Example Code - .NET Core](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleCoreProject)
 - [Example Code - .NET 4.5.2+](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleNet45Project)
@@ -195,12 +197,12 @@ var client = new SendGridClient(proxy, apiKey);
 <a name="use_cases"></a>
 # Use Cases
 
-[Examples of common API use cases](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md), such as how to send an email with a transactional template.
+Here are some [examples of common API use cases](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md), such as how to send an email with a transactional template.
 
 <a name="roadmap"></a>
 # Roadmap
 
-If you are interested in the future direction of this project, please take a look at our open [issues](https://github.com/sendgrid/sendgrid-csharp/issues) and [pull requests](https://github.com/sendgrid/sendgrid-csharp/pulls). We would love to hear your feedback.
+If you are interested in the future direction of this project, please take a look at our open [issues](https://github.com/sendgrid/sendgrid-csharp/issues) and [pull requests](https://github.com/sendgrid/sendgrid-csharp/pulls). We would love to hear your feedback!
 
 <a name="contribute"></a>
 # How to Contribute
