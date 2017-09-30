@@ -3900,10 +3900,10 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ```csharp
 string queryParams = @"{
-  'end_time': 1, 
-  'limit': 1, 
-  'offset': 1, 
-  'start_time': 1
+  'end_time': 1443651154, 
+  'limit': 10, 
+  'offset': 0, 
+  'start_time': 1443651141
 }";
 var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/invalid_emails", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
