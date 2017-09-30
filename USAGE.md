@@ -3788,9 +3788,10 @@ For more information see:
 
 
 ```csharp
+// Start and end times are as unix timestamps
 string queryParams = @"{
-  'end_time': 1, 
-  'start_time': 1
+  'end_time': 1443651154,
+  'start_time': 1443651141
 }";
 var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/bounces", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
