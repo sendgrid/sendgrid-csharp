@@ -3782,7 +3782,7 @@ Bounces are messages that are returned to the server that sent it.
 For more information see: 
 
 * [User Guide > Bounces](https://sendgrid.com/docs/User_Guide/Suppressions/bounces.html) for more information
-* [Glossary > Bounces](https://sendgrid.com/docs/Glossary/Bounces.html)
+* [Glossary > Bounces](https://sendgrid.com/docs/Glossary/bounces.html)
 
 ### GET /suppression/bounces
 
