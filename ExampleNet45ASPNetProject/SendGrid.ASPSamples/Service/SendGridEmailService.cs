@@ -12,7 +12,7 @@ namespace SendGrid.ASPSamples
     public class SendGridEmailService
     {
         private readonly SendGridClient _client;
-        private string apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+        private string apiKey = ConfigurationManager.AppSettings["SendGridApiKey"];
         private static readonly string MessageId = "X-Message-Id";
 
         public SendGridEmailService()
@@ -44,7 +44,7 @@ namespace SendGrid.ASPSamples
             return ProcessResponse(_client.SendEmailAsync(emailMessage).Result);
         }
 
-        private  EmailResponse ProcessResponse(Response response)
+        private EmailResponse ProcessResponse(Response response)
         {
             if (response.StatusCode.Equals(System.Net.HttpStatusCode.Accepted)
                 || response.StatusCode.Equals(System.Net.HttpStatusCode.OK))

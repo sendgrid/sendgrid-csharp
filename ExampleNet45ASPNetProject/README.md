@@ -9,7 +9,7 @@
 
 ##  Setup Environment Variables
 
-Update the development Environment with your SENDGRID_API_KEY.
+Update the "SendGridApiKey" appSettings variable within the web.config file.
 
 ## Steps
 
