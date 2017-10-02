@@ -16,7 +16,9 @@
 
         static async Task Execute()
         {
+            // Retrieve the API key from the environment variables. See the project README for more info about setting this up.
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
+
             var client = new SendGridClient(apiKey);
 
             // Send a Single Email using the Mail Helper
