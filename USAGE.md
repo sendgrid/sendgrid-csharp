@@ -3688,10 +3688,10 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ```csharp
 string queryParams = @"{
-  'end_time': 1, 
-  'limit': 1, 
-  'offset': 1, 
-  'start_time': 1
+  'end_time': 1443651154, 
+  'limit': 10, 
+  'offset': 0, 
+  'start_time': 1443651141
 }";
 var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/blocks", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
@@ -3782,15 +3782,16 @@ Bounces are messages that are returned to the server that sent it.
 For more information see: 
 
 * [User Guide > Bounces](https://sendgrid.com/docs/User_Guide/Suppressions/bounces.html) for more information
-* [Glossary > Bounces](https://sendgrid.com/docs/Glossary/Bounces.html)
+* [Glossary > Bounces](https://sendgrid.com/docs/Glossary/bounces.html)
 
 ### GET /suppression/bounces
 
 
 ```csharp
+// Start and end times are as unix timestamps
 string queryParams = @"{
-  'end_time': 1, 
-  'start_time': 1
+  'end_time': 1443651154,
+  'start_time': 1443651141
 }";
 var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/bounces", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
@@ -3899,10 +3900,10 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ```csharp
 string queryParams = @"{
-  'end_time': 1, 
-  'limit': 1, 
-  'offset': 1, 
-  'start_time': 1
+  'end_time': 1443651154, 
+  'limit': 10, 
+  'offset': 0, 
+  'start_time': 1443651141
 }";
 var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/invalid_emails", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
@@ -4043,10 +4044,10 @@ For more information, please see our [User Guide](https://sendgrid.com/docs/User
 
 ```csharp
 string queryParams = @"{
-  'end_time': 1, 
-  'limit': 1, 
-  'offset': 1, 
-  'start_time': 1
+  'end_time': 1443651154, 
+  'limit': 10, 
+  'offset': 0, 
+  'start_time': 1443651141
 }";
 var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/spam_reports", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
@@ -4099,10 +4100,10 @@ A global suppression (or global unsubscribe) is an email address of a recipient 
 
 ```csharp
 string queryParams = @"{
-  'end_time': 1, 
-  'limit': 1, 
-  'offset': 1, 
-  'start_time': 1
+  'end_time': 1443651154, 
+  'limit': 10, 
+  'offset': 0, 
+  'start_time': 1443651141
 }";
 var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/unsubscribes", queryParams: queryParams);
 Console.WriteLine(response.StatusCode);
