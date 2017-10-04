@@ -13,8 +13,9 @@ Update the "SendGridApiKey" appSettings variable within the web.config file.
 
 ## Steps
 
-1. Open SendGrid.ASPSamples.sln 
-2. Build the solution and run the project
+1. Open SendGrid.ASPSamples.sln
+2. Switch to one of the example project (right click on a project -> "Set as StartUp project")
+2. Build and run the project
 
 You may need to download the latest Nuget executable and run `nuget.exe restore`
 
