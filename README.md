@@ -50,9 +50,36 @@ We appreciate your continued support, thank you!
 
 Grab your API Key from the [SendGrid UI](https://app.sendgrid.com/settings/api_keys).
 
-## Setup Environment Variables
+## Setup Environment Variables to Manange Your API Key
 
 Do not hard code your [SendGrid API Key](https://app.sendgrid.com/settings/api_keys) into your code. Instead, use something like an [environment variable](http://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10) or [Web.config](https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure).
+
+The examples found below in this quick start and in the example projects all make use of storing their API keys as an environment variable.
+
+Environment variables are usually part of the OS and are available to programs within that same OS.
+It gives the option to bypass hardcoding credentials, making them easy to manage.
+
+The following example will go through adding an environment variable in Windows 10.
+
+Looking at the code example from the [Quick Start](#quick_start), we see that the second line of the `Execute()` method tries to retrieve an environment variable like so:
+
+```csharp
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+```
+
+`NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY` isn't a variable of your OS environment yet, so let's add it.
+
+Press `win + R` (or search for "run"), fill in "SystemPropertiesAdvanced", press `enter` and then click "Enviroment variables".
+
+You'll get two lists of variables, but we'll focus on the User Variables for this example.
+
+Click the "New" button beneath the User Variables list. Give it the name `NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY` (or rename the variable in both the environment and code to a more generic name).
+
+For value, insert your SendGrid API key. Click "Ok", and once again in the Variable Overview and lastly, close the system properties window.
+
+You may need to restart your IDE to make use of the new variable.
+
+Now, if all went well, you can access the just added variable in your C# SendGrid projects! Ready for some examples?
 
 ## Install Package
 
@@ -71,29 +98,6 @@ For sample implementations, see the [.NET Core Example](https://github.com/sendg
 
 <a name="quick_start"></a>
 # Quick Start
-## Manage keys using Environment Variables
-The examples found below in this quick start and in the example projects all make use of storing their API keys as an environment variable.
-
-Environment variables are usually part of the OS and are available to programs within that same OS.
-It gives the option to bypass hardcoding credentials, and making them easy to manage.
-
-This example will go through adding an environment variable in Windows (10).
-
-If we look at a code example from the quick start we see that the second line of the `Execute()` method tries to retrieve an enviroment variable:
-```csharp
-var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
-```
-`NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY` isn't a variable of your OS environment yet, so let's add it.
-
-Press `win + R` (or search for "run"), fill in "SystemPropertiesAdvanced", press enter and then click on "Enviroment variables".
-You'll get two lists of variables, but we'll focus on the User Variables for this example.
-
-Click the "New" button beneath the User Variables list. Give it the name `NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY` (or rename the variable in both the environment and code to a more generic name).
-For value insert your SendGrid API key. Click on "Ok", and again in the variable overview and lastly close the system properties window.
-
-You maybe have to restart your IDE you were working in to make use of the new variable.
-
-Now, if all went well you can access the just added variable in your C# SendGrid projects! Ready for some examples?
 
 ## Hello Email
 
