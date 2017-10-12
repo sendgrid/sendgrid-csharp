@@ -32,6 +32,7 @@ var client = new SendGridClient(apiKey);
 * [SCOPES](#scopes)
 * [SENDERS](#senders)
 * [STATS](#stats)
+* [STATUS CODES](#status_codes)
 * [SUBUSERS](#subusers)
 * [SUPPRESSION](#suppression)
 * [TEMPLATES](#templates)
@@ -3325,6 +3326,22 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
+
+<a name="status_codes"></a>
+# STATUS CODES
+
+## Supported Status Codes
+
+| Status Code | Description |
+|:----------|:-------------|
+| 200 | No error |
+| 201 | Successfully created |
+| 204 | Successfully deleted |
+| 400 | Bad request |
+| 401 | Requires authentication |
+| 406 | Missing Accept header. example: Accept: application/json |
+| 429 | Too Many Requests |
+| 500 | Internal service error |
 
 <a name="subusers"></a>
 # SUBUSERS
