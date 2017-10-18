@@ -16,6 +16,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+    using System.Linq;
+    using Newtonsoft.Json.Linq;
+    using System.Collections;
 
 namespace SendGrid
 {
@@ -244,6 +247,19 @@ namespace SendGrid
                 msg.Serialize(),
                 urlPath: "mail/send",
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task<IList<string>> GetUnassignedIpsAsync()
+        {
+            var response = await RequestAsync(
+                Method.GET,
+                null,
+                urlPath: "ips");
+
+            dynamic result = JArray.Parse(await response.Body.ReadAsStringAsync());
+            return ((IEnumerable<dynamic>)result)
+                .Where(ip => !((IEnumerable<dynamic>)ip.subusers).Any())
+                .Select(ip => (string)ip.ip).ToList();
         }
 
         /// <summary>
