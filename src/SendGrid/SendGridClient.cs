@@ -46,6 +46,11 @@ namespace SendGrid
         private HttpClient client;
 
         /// <summary>
+        /// The <see cref="ContentVerifier"/> instance to use, for checking of forbidden content.
+        /// </summary>
+        private ContentVerifier contentVerifier;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
         /// </summary>
         /// <param name="webProxy">Web proxy.</param>
@@ -190,6 +195,9 @@ namespace SendGrid
                     client.DefaultRequestHeaders.Add(header.Key, header.Value);
                 }
             }
+
+            // initialize a ContentVerifier
+            contentVerifier = new ContentVerifier();
         }
 
         private HttpClient CreateHttpClientWithRetryHandler()
@@ -298,11 +306,42 @@ namespace SendGrid
         /// <returns>A Response object.</returns>
         public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken))
         {
+            var serializedMessage = msg.Serialize();
+
+            // check content for secrets
+            msg.Contents.ForEach(content => contentVerifier.VerifyString(content.Value));
+
             return await RequestAsync(
                 Method.POST,
-                msg.Serialize(),
+                serializedMessage,
                 urlPath: "mail/send",
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Adds a new Verificationrule which checks if content contains given string.
+        /// </summary>
+        /// <param name="ruleContent">The string to check for.</param>
+        public void AddContentVerifyTextRule(string ruleContent)
+        {
+            contentVerifier.AddVerificationRule(ContentVerifier.VerifyMethod.STRING, ruleContent);
+        }
+
+        /// <summary>
+        /// Adds a new Verificationrule which checks if content matches given regex.
+        /// </summary>
+        /// <param name="ruleContent">The regex to check for.</param>
+        public void AddContentVerifyRegexRule(string ruleContent)
+        {
+            contentVerifier.AddVerificationRule(ContentVerifier.VerifyMethod.REGEX, ruleContent);
+        }
+
+        /// <summary>
+        /// Clears current Verificationrules.
+        /// </summary>
+        public void ClearContentVerificationRules()
+        {
+            contentVerifier.ClearVerificationRules();
         }
 
         /// <summary>

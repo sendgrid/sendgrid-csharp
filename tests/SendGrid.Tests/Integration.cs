@@ -5962,6 +5962,56 @@
 
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
         }
+
+        [Fact]
+        public async Task TestSendSecretSucceedsWithNoRule()
+        {           
+            var msg = MailHelper.CreateSingleEmail(new EmailAddress("test@example.com"), new EmailAddress("test@example.com"),
+                "subject", "SG.2lYHfLnYQreOCCGw4qz_1g.YK3NWvjLNbrqUWwMvO108Fmb_78E4EErrbr2MF4bvBTULAW",
+                "<strong>SG.2lYHfLnYQreOCCGw4qz_1g.YK3NWvjLNbrqUWwMvO108Fmb_78E4EErrbr2MF4bvBTULAW</strong>");
+
+            var sg = new SendGridClient(fixture.apiKey, fixture.host);
+
+            var response = await sg.SendEmailAsync(msg);
+            Assert.True(HttpStatusCode.Accepted == response.StatusCode);
+
+        }
+
+        [Fact]
+        public async Task TestSendSecretFailsWithRegexRule()
+        {
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com"));
+            msg.AddTo(new EmailAddress("test@example.com"));
+            msg.SetSubject("secret : SG.2lYHfLnYQreOCCGw4qz_1g.YK3NWvjLNbrqUWwMvO108Fmb_78E4EErrbr2MF4bvBTULAW");
+            msg.AddContent(MimeType.Html, "<strong> secret : SG.2lYHfLnYQreOCCGw4qz_1g.YK3NWvjLNbrqUWwMvO108Fmb_78E4EErrbr2MF4bvBTULAW</strong>");
+          
+            var sg = new SendGridClient(fixture.apiKey, fixture.host);
+          
+            sg.AddContentVerifyRegexRule(".*SG\\.[a-zA-Z0-9_]+\\.[a-zA-Z0-9_]+.*");
+
+            var exception = await Assert.ThrowsAsync<ArgumentException>(() => sg.SendEmailAsync(msg));
+
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public async Task TestSendSecretFailsWithTextRule()
+        {
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com"));
+            msg.AddTo(new EmailAddress("test@example.com"));
+            msg.SetSubject("This line contains a secret.");
+            msg.AddContent(MimeType.Html, "<strong> This line also contains a secret.</strong>");
+
+            var sg = new SendGridClient(fixture.apiKey, fixture.host);
+
+            sg.AddContentVerifyTextRule("secret");
+
+            var exception = await Assert.ThrowsAsync<ArgumentException>(() => sg.SendEmailAsync(msg));
+
+            Assert.NotNull(exception);
+        }
     }
 
     public class FakeWebProxy : IWebProxy
