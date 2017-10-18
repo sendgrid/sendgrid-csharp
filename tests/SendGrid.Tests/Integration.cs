@@ -13,6 +13,7 @@
     using SendGrid.Helpers.Reliability;
     using Xunit;
     using Xunit.Abstractions;
+    using System.Linq;
 
     public class IntegrationFixture : IDisposable
     {
@@ -2704,6 +2705,18 @@
             msg.SetGoogleAnalytics(true, "campaign3", "content3", "medium3", "source3", "term3");
             Assert.True(msg.Serialize() == "{\"tracking_settings\":{\"ganalytics\":{\"enable\":true,\"utm_source\":\"source3\",\"utm_medium\":\"medium3\",\"utm_term\":\"term3\",\"utm_content\":\"content3\",\"utm_campaign\":\"campaign3\"}}}");
         }
+
+        [Fact]
+        public async Task TestGetUnassignedIps() {
+            var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
+            var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
+
+            var ips = await sg.GetUnassignedIpsAsync();
+
+            Assert.False(ips.Any(ip => ip == "192.168.1.1"));
+            Assert.True(ips.Any(ip => ip == "208.115.214.22"));
+        }
+
         [Fact]
         public async Task TestAccessSettingsActivityGet()
         {
