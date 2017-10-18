@@ -5970,10 +5970,14 @@
                 "subject", "SG.2lYHfLnYQreOCCGw4qz_1g.YK3NWvjLNbrqUWwMvO108Fmb_78E4EErrbr2MF4bvBTULAW",
                 "<strong>SG.2lYHfLnYQreOCCGw4qz_1g.YK3NWvjLNbrqUWwMvO108Fmb_78E4EErrbr2MF4bvBTULAW</strong>");
 
-            var sg = new SendGridClient(fixture.apiKey, fixture.host);
+            var httpMessageHandler = new RetryTestBehaviourDelegatingHandler();
+            httpMessageHandler.AddBehaviour(httpMessageHandler.OK);
+            HttpClient clientToInject = new HttpClient(httpMessageHandler);
 
+            var sg = new SendGridClient(clientToInject, fixture.apiKey, fixture.host);
+            
             var response = await sg.SendEmailAsync(msg);
-            Assert.True(HttpStatusCode.Accepted == response.StatusCode);
+            Assert.True(HttpStatusCode.OK == response.StatusCode);
 
         }
 
