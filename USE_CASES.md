@@ -40,9 +40,7 @@ namespace Example
             var to = new EmailAddress("test@example.com");
             var body = "Email Body";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, body, "");
-            var bytes = File.ReadAllBytes("/Users/username/file.txt");
-            var file = Convert.ToBase64String(bytes);
-            msg.AddAttachment("file.txt", file);
+            msg.AddFile("file.txt", "/Users/username/file.txt");
             var response = await client.SendEmailAsync(msg);
         }
     }
