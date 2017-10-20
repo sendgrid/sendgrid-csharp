@@ -1,4 +1,5 @@
-﻿using SendGrid.Permissions.Scopes;
+﻿using SendGrid.Permissions;
+using SendGrid.Permissions.Scopes;
 using Xunit;
 
 namespace SendGrid.Tests.Permissions
@@ -11,20 +12,9 @@ namespace SendGrid.Tests.Permissions
             var sb = new SendGridPermissionsBuilder();
             sb.AddPermissionsFor<Alerts>(ScopeOptions.ReadOnly);
 
-           var json =  sb.ToJson();
+            var scopes = sb.Build();
 
-            Assert.Equal("[\"alerts.read\"]", json);
-        }
-
-        [Fact]
-        public void CreateAllCrudScope()
-        {
-            var sb = new SendGridPermissionsBuilder();
-            sb.AddPermissionsFor<Alerts>(ScopeOptions.All);
-
-            var json = sb.ToJson();
-
-            Assert.Equal("[\"alerts.create\",\"alerts.delete\",\"alerts.read\",\"alerts.update\"]", json);
+            Assert.Contains(scopes, x => x == "alerts.read");
         }
 
         [Fact]
@@ -41,13 +31,89 @@ namespace SendGrid.Tests.Permissions
         }
 
         [Fact]
+        public void BuildAllSubusersScopes()
+        {
+            var sb = new SendGridPermissionsBuilder();
+            sb.AddPermissionsFor<Subusers>(ScopeOptions.All);
+
+            var scopes = sb.Build();
+
+            Assert.Contains(scopes, x => x == "subusers.create");
+            Assert.Contains(scopes, x => x == "subusers.delete");
+            Assert.Contains(scopes, x => x == "subusers.read");
+            Assert.Contains(scopes, x => x == "subusers.update");
+            Assert.Contains(scopes, x => x == "subusers.credits.create");
+            Assert.Contains(scopes, x => x == "subusers.credits.delete");
+            Assert.Contains(scopes, x => x == "subusers.credits.read");
+            Assert.Contains(scopes, x => x == "subusers.credits.update");
+            Assert.Contains(scopes, x => x == "subusers.credits.remaining.create");
+            Assert.Contains(scopes, x => x == "subusers.credits.remaining.delete");
+            Assert.Contains(scopes, x => x == "subusers.credits.remaining.read");
+            Assert.Contains(scopes, x => x == "subusers.credits.remaining.update");
+            Assert.Contains(scopes, x => x == "subusers.monitor.create");
+            Assert.Contains(scopes, x => x == "subusers.monitor.delete");
+            Assert.Contains(scopes, x => x == "subusers.monitor.read");
+            Assert.Contains(scopes, x => x == "subusers.monitor.update");
+            Assert.Contains(scopes, x => x == "subusers.reputations.read");
+            Assert.Contains(scopes, x => x == "subusers.stats.read");
+            Assert.Contains(scopes, x => x == "subusers.stats.monthly.read");
+            Assert.Contains(scopes, x => x == "subusers.stats.sums.read");
+            Assert.Contains(scopes, x => x == "subusers.summary.read");
+        }
+
+        [Fact]
         public void CreateAdminCrudScope()
         {
             var sb = new SendGridPermissionsBuilder();
             sb.CreateAdminPermissions();
-            var json = sb.ToJson();
 
-            Assert.Equal("[\"alerts.create\",\"alerts.delete\",\"alerts.read\",\"alerts.update\",\"categories.create\",\"categories.delete\",\"categories.read\",\"categories.update\",\"categories.stats.read\",\"categories.stats.sums.read\",\"mail.send\",\"mail.batch.create\",\"mail.batch.delete\",\"mail.batch.read\",\"mail.batch.update\"]", json);
+            var scopes = sb.Build();
+
+            Assert.Contains(scopes, x => x == "alerts.create");
+            Assert.Contains(scopes, x => x == "alerts.delete");
+            Assert.Contains(scopes, x => x == "alerts.read");
+            Assert.Contains(scopes, x => x == "alerts.update");
+
+            Assert.Contains(scopes, x => x == "api_keys.create");
+            Assert.Contains(scopes, x => x == "api_keys.delete");
+            Assert.Contains(scopes, x => x == "api_keys.read");
+            Assert.Contains(scopes, x => x == "api_keys.update");
+
+            Assert.Contains(scopes, x => x == "categories.create");
+            Assert.Contains(scopes, x => x == "categories.delete");
+            Assert.Contains(scopes, x => x == "categories.read");
+            Assert.Contains(scopes, x => x == "categories.update");
+            Assert.Contains(scopes, x => x == "categories.stats.read");
+            Assert.Contains(scopes, x => x == "categories.stats.sums.read");
+
+            Assert.Contains(scopes, x => x == "mail.send");
+            Assert.Contains(scopes, x => x == "mail.batch.create");
+            Assert.Contains(scopes, x => x == "mail.batch.delete");
+            Assert.Contains(scopes, x => x == "mail.batch.read");
+            Assert.Contains(scopes, x => x == "mail.batch.update");
+
+            Assert.Contains(scopes, x => x == "subusers.create");
+            Assert.Contains(scopes, x => x == "subusers.delete");
+            Assert.Contains(scopes, x => x == "subusers.read");
+            Assert.Contains(scopes, x => x == "subusers.update");
+            Assert.Contains(scopes, x => x == "subusers.credits.create");
+            Assert.Contains(scopes, x => x == "subusers.credits.delete");
+            Assert.Contains(scopes, x => x == "subusers.credits.read");
+            Assert.Contains(scopes, x => x == "subusers.credits.update");
+            Assert.Contains(scopes, x => x == "subusers.credits.remaining.create");
+            Assert.Contains(scopes, x => x == "subusers.credits.remaining.delete");
+            Assert.Contains(scopes, x => x == "subusers.credits.remaining.read");
+            Assert.Contains(scopes, x => x == "subusers.credits.remaining.update");
+            Assert.Contains(scopes, x => x == "subusers.monitor.create");
+            Assert.Contains(scopes, x => x == "subusers.monitor.delete");
+            Assert.Contains(scopes, x => x == "subusers.monitor.read");
+            Assert.Contains(scopes, x => x == "subusers.monitor.update");
+            Assert.Contains(scopes, x => x == "subusers.reputations.read");
+            Assert.Contains(scopes, x => x == "subusers.stats.read");
+            Assert.Contains(scopes, x => x == "subusers.stats.monthly.read");
+            Assert.Contains(scopes, x => x == "subusers.stats.sums.read");
+            Assert.Contains(scopes, x => x == "subusers.summary.read");
+
         }
 
         [Fact]
@@ -55,9 +121,15 @@ namespace SendGrid.Tests.Permissions
         {
             var sb = new SendGridPermissionsBuilder();
             sb.AddPermissionsFor<Categories>(ScopeOptions.All);
-            var json = sb.ToJson();
 
-            Assert.Equal("[\"categories.create\",\"categories.delete\",\"categories.read\",\"categories.update\",\"categories.stats.read\",\"categories.stats.sums.read\"]", json);
+            var scopes = sb.Build();
+
+            Assert.Contains(scopes, x => x == "categories.create");
+            Assert.Contains(scopes, x => x == "categories.delete");
+            Assert.Contains(scopes, x => x == "categories.read");
+            Assert.Contains(scopes, x => x == "categories.update");
+            Assert.Contains(scopes, x => x == "categories.stats.read");
+            Assert.Contains(scopes, x => x == "categories.stats.sums.read");
         }
 
         [Fact]
@@ -65,9 +137,14 @@ namespace SendGrid.Tests.Permissions
         {
             var sb = new SendGridPermissionsBuilder();
             sb.CreateFullAccessMailSend();
-            var json = sb.ToJson();
 
-            Assert.Equal("[\"mail.send\",\"mail.batch.create\",\"mail.batch.delete\",\"mail.batch.read\",\"mail.batch.update\"]", json);
+            var scopes = sb.Build();
+
+            Assert.Contains(scopes, x => x == "mail.send");
+            Assert.Contains(scopes, x => x == "mail.batch.create");
+            Assert.Contains(scopes, x => x == "mail.batch.delete");
+            Assert.Contains(scopes, x => x == "mail.batch.read");
+            Assert.Contains(scopes, x => x == "mail.batch.update");
         }
     }
 }
