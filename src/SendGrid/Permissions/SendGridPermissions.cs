@@ -15,6 +15,8 @@ namespace SendGrid
         IEnumerable<IScope> SubScopes { get; }
 
         string ToJson(ScopeOptions options, string prefix = null);
+
+        IEnumerable<string> Build(ScopeOptions options, string prefix = null);
     }
 
     public abstract class Scope : IScope
@@ -34,6 +36,8 @@ namespace SendGrid
         /// </summary>
         public IEnumerable<IScope> SubScopes { get; internal set; }
 
+        public abstract IEnumerable<string> Build(ScopeOptions options, string prefix = null);
+
         public abstract string ToJson(ScopeOptions options, string prefix);
     }
 
@@ -52,6 +56,29 @@ namespace SendGrid
         }
 
         public string[] AllowedOptions { get; protected set; }
+
+        public override IEnumerable<string> Build(ScopeOptions options, string prefix = null)
+        {
+            var setOptions = this.AllowedOptions.Join(options, allowed => allowed, set => set, (a, s) => a);
+
+            var scopes = new List<string>();
+
+            var name = prefix == null ? this.Name : $"{prefix}.{this.Name}";
+            foreach (var so in setOptions)
+            {
+                scopes.Add($"{name}.{so}");
+            }
+
+            if (this.SubScopes != null && this.SubScopes.Any())
+            {
+                foreach (var subScope in this.SubScopes)
+                {
+                    scopes.AddRange(subScope.Build(options, name));
+                }
+            }
+
+            return scopes;
+        }
 
         public override string ToJson(ScopeOptions options, string prefix = null)
         {
@@ -125,7 +152,7 @@ namespace SendGrid
         }
 
         private SendGridPermissionsBuilder AddPermissionsFor<TScopeOptions>(Type scopeType, TScopeOptions options)
-    where TScopeOptions : ScopeOptions
+            where TScopeOptions : ScopeOptions
         {
             this.scopes.Add(this.scopeMap[scopeType], options);
             return this;
@@ -153,6 +180,12 @@ namespace SendGrid
 
             sb.Append(this.scopes.Last().Key.ToJson(this.scopes.Last().Value));
             return sb.ToString().TrimEnd(',') + "]";
+        }
+
+        public IEnumerable<string> Build()
+        {
+            var scopes = this.scopes.SelectMany(x => x.Key.Build(x.Value));
+            return scopes;
         }
 
         public string CreateFullAccessMailSend()

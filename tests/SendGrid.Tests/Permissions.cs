@@ -28,6 +28,19 @@ namespace SendGrid.Tests.Permissions
         }
 
         [Fact]
+        public void BuildAllCrudScope()
+        {
+            var sb = new SendGridPermissionsBuilder();
+            sb.AddPermissionsFor<Alerts>(ScopeOptions.All);
+
+            var scopes = sb.Build();
+            Assert.Contains(scopes, x => x == "alerts.create");
+            Assert.Contains(scopes, x => x == "alerts.delete");
+            Assert.Contains(scopes, x => x == "alerts.read");
+            Assert.Contains(scopes, x => x == "alerts.update");
+        }
+
+        [Fact]
         public void CreateAdminCrudScope()
         {
             var sb = new SendGridPermissionsBuilder();
