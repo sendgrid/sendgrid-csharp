@@ -139,7 +139,7 @@ Generally, we follow the style guidelines as suggested by the official language.
    # Clone your fork of the repo into the current directory
    git clone https://github.com/sendgrid/sendgrid-csharp
    # Navigate to the newly cloned directory
-   cd sendgrid-python
+   cd sendgrid-csharp
    # Assign the original repo to a remote called "upstream"
    git remote add upstream https://github.com/sendgrid/sendgrid-csharp
    ```
