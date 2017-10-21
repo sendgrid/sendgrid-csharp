@@ -76,7 +76,7 @@ var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABL
 
 `NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY` isn't a variable of your OS environment yet, so let's add it.
 
-Press `win + R` (or search for "run"), fill in "SystemPropertiesAdvanced", press `enter` and then click "Enviroment variables".
+Press `win + R` (or search for "run"), fill in "SystemPropertiesAdvanced", press `enter` and then click "Environment variables".
 
 You'll get two lists of variables, but we'll focus on the User Variables for this example.
 
