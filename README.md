@@ -26,9 +26,9 @@ We appreciate your continued support, thank you!
 # Table of Contents
 
 * [Installation](#installation)
-* [Quick Start](#quick_start)
+* [Quick Start](#quick-start)
 * [Usage](#usage)
-* [Use Cases](#use_cases)
+* [Use Cases](#use-cases)
 * [Announcements](#announcements)
 * [Roadmap](#roadmap)
 * [How to Contribute](#contribute)
@@ -96,7 +96,7 @@ For sample implementations, see the [.NET Core Example](https://github.com/sendg
 
 - Please see the [.nuspec file](https://github.com/sendgrid/sendgrid-csharp/tree/master/nuspec).
 
-<a name="quick_start"></a>
+<a name="quick-start"></a>
 # Quick Start
 
 ## Hello Email
@@ -221,7 +221,7 @@ var client = new SendGridClient(proxy, apiKey);
 - [How-to: Migration from v2 to v3](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/how_to_migrate_from_v2_to_v3_mail_send.html)
 - [v3 Web API Mail Send Helper](https://github.com/sendgrid/sendgrid-csharp/tree/master/src/SendGrid/Helpers/Mail)
 
-<a name="use_cases"></a>
+<a name="use-cases"></a>
 # Use Cases
 
 Here are some [examples of common API use cases](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md), such as how to send an email with a transactional template.
@@ -238,10 +238,10 @@ We encourage contribution to our library (you might even score some nifty swag),
 
 Quick links:
 
-- [Feature Request](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#feature_request)
-- [Bug Reports](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#submit_a_bug_report)
+- [Feature Request](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#feature-request)
+- [Bug Reports](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#submit-a-bug-report)
 - [Sign the CLA to Create a Pull Request](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#cla)
-- [Improvements to the Codebase](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#improvements_to_the_codebase)
+- [Improvements to the Codebase](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#improvements-to-the-codebase)
 
 <a name="troubleshooting"></a>
 # Troubleshooting
