@@ -13,9 +13,9 @@ var client = new SendGridClient(apiKey);
 
 # Table of Contents
 
-* [ACCESS SETTINGS](#access_settings)
+* [ACCESS SETTINGS](#access-settings)
 * [ALERTS](#alerts)
-* [API KEYS](#api_keys)
+* [API KEYS](#api-keys)
 * [ASM](#asm)
 * [BROWSERS](#browsers)
 * [CAMPAIGNS](#campaigns)
@@ -26,22 +26,22 @@ var client = new SendGridClient(apiKey);
 * [GEO](#geo)
 * [IPS](#ips)
 * [MAIL](#mail)
-* [MAIL SETTINGS](#mail_settings)
-* [MAILBOX PROVIDERS](#mailbox_providers)
-* [PARTNER SETTINGS](#partner_settings)
+* [MAIL SETTINGS](#mail-settings)
+* [MAILBOX PROVIDERS](#mailbox-providers)
+* [PARTNER SETTINGS](#partner-settings)
 * [SCOPES](#scopes)
 * [SENDERS](#senders)
 * [STATS](#stats)
-* [STATUS CODES](#status_codes)
+* [STATUS CODES](#status-codes)
 * [SUBUSERS](#subusers)
 * [SUPPRESSION](#suppression)
 * [TEMPLATES](#templates)
-* [TRACKING SETTINGS](#tracking_settings)
+* [TRACKING SETTINGS](#tracking-settings)
 * [USER](#user)
 * [WHITELABEL](#whitelabel)
 
 
-<a name="access_settings"></a>
+<a name="access-settings"></a>
 # ACCESS SETTINGS
 
 ## Retrieve all recent access attempts
@@ -318,7 +318,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
-<a name="api_keys"></a>
+<a name="api-keys"></a>
 # API KEYS
 
 ## Create API keys
@@ -2601,7 +2601,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
-<a name="mail_settings"></a>
+<a name="mail-settings"></a>
 # MAIL SETTINGS
 
 ## Retrieve all mail settings
@@ -3030,7 +3030,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
-<a name="mailbox_providers"></a>
+<a name="mailbox-providers"></a>
 # MAILBOX PROVIDERS
 
 ## Retrieve email statistics by mailbox provider.
@@ -3060,7 +3060,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
-<a name="partner_settings"></a>
+<a name="partner-settings"></a>
 # PARTNER SETTINGS
 
 ## Returns a list of all partner settings.
@@ -3327,7 +3327,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
-<a name="status_codes"></a>
+<a name="status-codes"></a>
 # STATUS CODES
 
 ## Supported Status Codes
@@ -4392,7 +4392,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
-<a name="tracking_settings"></a>
+<a name="tracking-settings"></a>
 # TRACKING SETTINGS
 
 ## Retrieve Tracking Settings
