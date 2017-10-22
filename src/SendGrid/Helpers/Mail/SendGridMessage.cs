@@ -697,7 +697,7 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Add substitutions to the email.
         /// </summary>
-        /// <param name="substitutions">A list of Substituions.</param>
+        /// <param name="substitutions">A list of Substitutions.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the substitutions.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddSubstitutions(Dictionary<string, string> substitutions, int personalizationIndex = 0, Personalization personalization = null)
@@ -748,10 +748,10 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
-        /// Add a custom arguement to the email.
+        /// Add a custom argument to the email.
         /// </summary>
-        /// <param name="customArgKey">The custom arguement key.</param>
-        /// <param name="customArgValue">The custom arguement value.</param>
+        /// <param name="customArgKey">The custom argument key.</param>
+        /// <param name="customArgValue">The custom argument value.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the custom arg.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddCustomArg(string customArgKey, string customArgValue, int personalizationIndex = 0, Personalization personalization = null)
@@ -803,7 +803,7 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
-        /// Add custom arguements to the email.
+        /// Add custom arguments to the email.
         /// </summary>
         /// <param name="customArgs">A list of CustomArgs.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the custom args.</param>
@@ -1169,9 +1169,9 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
-        /// Add a global custom arguement.
+        /// Add a global custom argument.
         /// </summary>
-        /// <param name="key">The custom arguement key. The value of this key will be overridden by custom args at the personalization level.</param>
+        /// <param name="key">The custom arguments key. The value of this key will be overridden by custom args at the personalization level.</param>
         /// <param name="value">The custom argument value.</param>
         public void AddGlobalCustomArg(string key, string value)
         {
@@ -1191,7 +1191,7 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
-        /// Add global custom arguements.
+        /// Add global custom arguments.
         /// </summary>
         /// <param name="customArgs">A list of CustomArgs.</param>
         public void AddGlobalCustomArgs(Dictionary<string, string> customArgs)
@@ -1505,7 +1505,7 @@ namespace SendGrid.Helpers.Mail
                 }
             }
 
-            var jsonSeriazerSettings = new JsonSerializerSettings
+            var jsonSerializerSettings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
                 DefaultValueHandling = DefaultValueHandling.Include,
@@ -1515,7 +1515,7 @@ namespace SendGrid.Helpers.Mail
             return JsonConvert.SerializeObject(
                                                this,
                                                Formatting.None,
-                                               jsonSeriazerSettings);
+                                               jsonSerializerSettings);
         }
     }
 }

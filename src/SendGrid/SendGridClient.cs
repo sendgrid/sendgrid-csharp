@@ -291,10 +291,10 @@ namespace SendGrid
         }
 
         /// <summary>
-        /// Make a request to send an email through SendGrid asychronously.
+        /// Make a request to send an email through SendGrid asynchronously.
         /// </summary>
         /// <param name="msg">A SendGridMessage object with the details for the request.</param>
-        /// <param name="cancellationToken">Cancel the asychronous call.</param>
+        /// <param name="cancellationToken">Cancel the asynchronous call.</param>
         /// <returns>A Response object.</returns>
         public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -317,7 +317,7 @@ namespace SendGrid
         {
             string url = null;
 
-            // create urlPAth - from parameter if overriden on call or from ctor parameter
+            // create urlPAth - from parameter if overridden on call or from ctor parameter
             var urlpath = urlPath ?? UrlPath;
 
             if (Version != null)

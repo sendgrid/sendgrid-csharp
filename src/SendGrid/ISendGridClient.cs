@@ -63,10 +63,10 @@ namespace SendGrid
         Task<Response> RequestAsync(SendGridClient.Method method, string requestBody = null, string queryParams = null, string urlPath = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Make a request to send an email through SendGrid asychronously.
+        /// Make a request to send an email through SendGrid asynchronously.
         /// </summary>
         /// <param name="msg">A SendGridMessage object with the details for the request.</param>
-        /// <param name="cancellationToken">Cancel the asychronous call.</param>
+        /// <param name="cancellationToken">Cancel the asynchronous call.</param>
         /// <returns>A Response object.</returns>
         Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken));
     }

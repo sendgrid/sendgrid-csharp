@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
 ## [9.8.0] - 2017-08-15
 ## Added
 - Single email to multiple recipients - Toggle display of recipients #508
-- The method `CreateSingleEmailToMultipleRecipients` now has an additional optional paramter to control whether the email recipients can see each others email addresses. Please see [USE_CASES.md](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#singleemailmultiplerecipients) for details.
+- The method `CreateSingleEmailToMultipleRecipients` now has an additional optional parameter to control whether the email recipients can see each others email addresses. Please see [USE_CASES.md](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#singleemailmultiplerecipients) for details.
 - Thanks to [Niladri Dutta](Niladri24dutta) for the PR!
 
 ## [9.7.0] - 2017-08-03

@@ -612,7 +612,7 @@ The value that will be used to calculate a random delta in the exponential delay
 
 ## Examples
 
-In this example we are setting RetryCount to 2, with a mimimum wait time of 1 seconds, a maximum of 10 seconds and a delta of 3 seconds
+In this example we are setting RetryCount to 2, with a minimum wait time of 1 seconds, a maximum of 10 seconds and a delta of 3 seconds
 
 ```csharp
 
