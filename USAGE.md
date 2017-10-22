@@ -1512,9 +1512,8 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ```csharp
 string queryParams = @"{
-  'list_id': 1, 
   'page': 1, 
-  'page_size': 1
+  'page_size': 100
 }";
 var list_id = "test_url_param";
 var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/lists/" + list_id + "/recipients", queryParams: queryParams);
