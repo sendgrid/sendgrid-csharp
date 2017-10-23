@@ -3660,7 +3660,7 @@ Console.ReadLine();
 
 ## Retrieve the monthly email statistics for a single subuser
 
-**This endpoint allows you to retrive the monthly email statistics for a specific subuser.**
+**This endpoint allows you to retrieve the monthly email statistics for a specific subuser.**
 
 While you can always view the statistics for all email activity on your account, subuser statistics enable you to view specific segments of your stats for your subusers. Emails sent, bounces, and spam reports are always tracked for subusers. Unsubscribes, clicks, and opens are tracked if you have enabled the required settings.
 
@@ -5710,7 +5710,7 @@ Console.ReadLine();
 **This endpoint allows you to retrieve the associated link whitelabel for a subuser.**
 
 Link whitelables can be associated with subusers from the parent account. This functionality allows
-subusers to send mail using their parent's linke whitelabels. To associate a link whitelabel, the parent account
+subusers to send mail using their parent's link whitelabels. To associate a link whitelabel, the parent account
 must first create a whitelabel and validate it. The parent may then associate that whitelabel with a subuser via the API or the Subuser Management page in the user interface.
 
 Email link whitelabels allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
@@ -5736,7 +5736,7 @@ Console.ReadLine();
 **This endpoint allows you to disassociate a link whitelabel from a subuser.**
 
 Link whitelables can be associated with subusers from the parent account. This functionality allows
-subusers to send mail using their parent's linke whitelabels. To associate a link whitelabel, the parent account
+subusers to send mail using their parent's link whitelabels. To associate a link whitelabel, the parent account
 must first create a whitelabel and validate it. The parent may then associate that whitelabel with a subuser via the API or the Subuser Management page in the user interface.
 
 Email link whitelabels allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
@@ -5847,7 +5847,7 @@ Console.ReadLine();
 **This endpoint allows you to associate a link whitelabel with a subuser account.**
 
 Link whitelables can be associated with subusers from the parent account. This functionality allows
-subusers to send mail using their parent's linke whitelabels. To associate a link whitelabel, the parent account
+subusers to send mail using their parent's link whitelabels. To associate a link whitelabel, the parent account
 must first create a whitelabel and validate it. The parent may then associate that whitelabel with a subuser via the API or the Subuser Management page in the user interface.
 
 Email link whitelabels allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
