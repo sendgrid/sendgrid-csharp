@@ -3,6 +3,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using System.Linq;
+using SendGrid.Helpers.Statistics;
+
 namespace SendGrid
 {
     using Helpers.Mail;
@@ -44,6 +47,11 @@ namespace SendGrid
         /// The HttpClient instance to use for all calls from this SendGridClient instance.
         /// </summary>
         private HttpClient client;
+
+        /// <summary>
+        /// Acceptable format for date in the API
+        /// </summary>
+        private const string DateFormat = "yyyy-MM-dd";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
@@ -303,6 +311,51 @@ namespace SendGrid
                 msg.Serialize(),
                 urlPath: "mail/send",
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Global Stats provide all the email statistics for a given date range.
+        /// </summary>
+        /// <param name="startDate">The starting date of the statistics to retrieve</param>
+        /// <param name="endDate">The end date of the statistics to retrieve. Defaults to today.</param>
+        /// <param name="aggregateType">How to group the statistics</param>
+        /// <param name="cancellationToken">Cancel the asynchronous call.</param>
+        /// <returns>A list of statistics for a given date range.</returns>
+        public async Task<IList<StatisticItem>> GetGlobalStatsAsync(DateTime startDate, DateTime? endDate, StatsAggregateType? aggregateType, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var queryParams = new Dictionary<string, string>
+            {
+                ["start_date"] = startDate.Date.ToString(DateFormat)
+            };
+
+            if (endDate.HasValue)
+            {
+                queryParams["end_date"] = endDate.Value.Date.ToString(DateFormat);
+            }
+
+            if (aggregateType.HasValue)
+            {
+                queryParams["aggregated_by"] = aggregateType.Value.ToString().ToLower();
+            }
+
+            var response = await RequestAsync(
+                Method.GET,
+                queryParams: JsonConvert.SerializeObject(queryParams),
+                urlPath: "stats",
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+
+            var responseBody = await response.Body.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<IList<StatisticItem>>(responseBody);
+        }
+
+        public enum StatsAggregateType
+        {
+            DAY,
+
+            WEEK,
+
+            MONTH
         }
 
         /// <summary>
