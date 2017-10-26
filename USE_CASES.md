@@ -11,6 +11,7 @@ This documentation provides examples for specific use cases. Please [open an iss
 * [Transient Fault Handling](#transient-faults)
 * [How to Setup a Domain Whitelabel](#domain-whitelabel)
 * [How to View Email Statistics](#email-stats)
+* [Deploy a Hello Email app on Heroku](#deploy-heroku)
 
 <a name="attachments"></a>
 # Attachments
@@ -657,3 +658,93 @@ Find more information about all of SendGrid's whitelabeling related documentatio
 You can find documentation for how to view your email statistics via the UI [here](https://app.sendgrid.com/statistics) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#stats).
 
 Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as SendGrid processes your email.
+
+<a name="deploy-heroku"></a>
+# Deploy a Hello Email app on Heroku
+
+This tutorial will go over how to create a basic web application with ASP.NET Core 2.0 that will allow a user to send an e-mail using SendGrid and deploy it for free on [Heroku](https://www.heroku.com/).
+
+## Prerequisites
+* [GitHub](https://github.com/join) Account
+* [Heroku](https://signup.heroku.com) Account
+* [SendGrid](https://app.sendgrid.com/signup) Account
+* [ASP.NET Core 2.0](https://www.microsoft.com/net/core)
+
+### Step 1 - Project Setup
+There are a number of ways to deploy an application to Heroku but the simplest way is to use your GitHub account. Initialize a new repository and create a new ASP.NET Core web application project either through the command line or Visual Studio. More information about how to do this can be found [here](https://docs.microsoft.com/en-us/aspnet/core/getting-started).
+
+### Step 2 - Setup SendGrid
+Install the SendGrid SDK with NuGet using the **Install-Package SendGrid** command, or alternatively, search for SendGrid in the Nuget Package Manager and add it to your project. Once it is installed, create a new controller like the following:
+
+```csharp
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System;
+using System.Net;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+
+namespace HelloEmail
+{
+    public class HomeController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<HttpStatusCode> SendEmail(string sender, string receiver, string subj, string content)
+        {
+            var apiKey = Environment.GetEnvironmentVariable("SendGridAPIKey");
+            var client = new SendGridClient(apiKey);
+
+            var from = new EmailAddress(sender);
+            var to = new EmailAddress(receiver);
+
+            var subject = subj;
+            var body = content;
+
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, body, "");
+            var response = await client.SendEmailAsync(msg);
+
+            return response.StatusCode;
+        }
+    }
+}
+```
+
+The SendEmail method takes in the parameters of a basic e-mail which will be passed in from an HTML form. The SendGrid API key is obtained from the environment variables which will be set up in Step 4 of this tutorial. This is done for security purposes to prevent a situation where a private API key is accidentally pushed into a public repository. After the e-mail is sent, the user is taken to a page that displays the HTTP response code.
+
+### Step 3 - Create Email Form
+Edit the Index.cshtml file and add the following form:
+
+```html
+<form action="/Home/SendEmail" method="post">
+    <input type="email" name="sender" value="from" /> <br />
+    <input type="email" name="receiver" value="to" /> <br />
+    <input type="text" name="subj" value="subject" /> <br />
+    <input type="text" name="content" value="body" /> <br />
+
+    <input type="submit" value="Send E-mail" />
+</form>
+```
+
+This form will pass input data as parameters to the SendEmail method in order to create the e-mail. The action attribute indicates the target controller and method to pass data to, which in this case is the HomeController and the SendEmail method.
+
+### Step 4 - Deployment
+After saving the project, push the code to the repository that was created in Step 1. Navigate to the [Heroku Create App page](https://dashboard.heroku.com/new-app) and fill out the form for your application. Afterwards, navigate to the Settings page of your application.
+
+#### Create environment variable
+Click the *Reveal Config Vars* button under the Config Variables section. You will be prompted to insert a key-value pair representing the environment variables that are referenced by your application. Add a new key labeled **SendGridAPIKey** and enter your SendGrid API key as the value which can be obtained from the [SendGrid Dashboard](https://app.sendgrid.com/settings/api_keys).
+
+#### Select Buildpack
+Heroku does not natively support the .NET platform so this project will have to rely on a public buildpack to finish the application's deployment. Click the *Add buildpack* button under the Buildpacks section.
+
+Enter **https://github.com/jincod/dotnetcore-buildpack** in the URL field and save your changes. To learn more about Buildpacks, see the [Heroku Documentation](https://devcenter.heroku.com/articles/buildpacks).
+
+#### Link repository
+The ASP.NET project must be linked to the Heroku app. As stated in Step 1, the fastest way to do this is to simply link the repository from a GitHub account. Click the Deploy tab of the application and select the *Connect to GitHub* button under the Deployment method section. After linking a GitHub account, enter the name of the HelloEmail repository and connect the correct repository.
+
+#### Deploy
+Once all code has been committed to the repository, a branch can be selected for either manual or automatic deployment. Automatic deployment will re-deploy the application every time a change in the repository is detected. For manual deployment, just click the *Deploy Branch* button and wait for the build to complete. If the deployment process was successful, a link to your live application will be provided. If an error occurred, it will be shown inside the Build Log.
