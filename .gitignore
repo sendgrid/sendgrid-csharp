@@ -324,3 +324,5 @@ $RECYCLE.BIN/
 
 # Code
 /.vscode
+
+.env
