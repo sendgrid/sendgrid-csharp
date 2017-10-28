@@ -312,6 +312,47 @@ namespace Example
 }
 ```
 
+<a name="search-recipients-with-conditions"></a>
+#Search recipients with conditions
+
+```csharp
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+
+namespace Example
+{
+	internal class Example
+	{
+		private static void Main()
+		{
+			Execute().Wait();
+		}
+
+		static async Task Execute()
+		{
+			string data=@"{
+				'conditions': [
+				{
+					'field' : 'last_name',
+					'value': 'test last name',
+					'operator': 'eq',
+					'and_or': ''
+				}]
+			}";
+
+			dynamic response = await sq.Client.contactdb.recipients.search.post(requestBody:data);
+			Console.WriteLine(response.StatusCode);
+			Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+			Console.WriteLine(response.Headers.ToString());
+			Console.ReadLine();
+
+		}
+	}
+}
+
 <a name="singleemailmultiplerecipients"></a>
 # Send a Single Email to Multiple Recipients
 
@@ -585,6 +626,8 @@ namespace Example
     }
 }
 ```
+
+
 
 <a name="transient-faults"></a>
 # Transient Fault Handling
