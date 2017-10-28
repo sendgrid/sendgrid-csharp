@@ -90,7 +90,7 @@ Now, if all went well, you can access the newly added variable in your C# SendGr
 
 ## Install Package
 
-To use SendGrid in your C# project, you can either <a href="https://github.com/sendgrid/sendgrid-csharp.git">download the SendGrid C# .NET libraries directly from our Github repository</a>or if you have the NuGet package manager installed, you can grab them automatically:
+To use SendGrid in your C# project, you can either <a href="https://github.com/sendgrid/sendgrid-csharp.git">download the SendGrid C# .NET libraries directly from our Github repository</a> or if you have the NuGet package manager installed, you can grab them automatically:
 
 ```
 PM> Install-Package SendGrid
