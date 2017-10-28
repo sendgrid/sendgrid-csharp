@@ -108,7 +108,7 @@ namespace SendGrid
         ///     Converts string formatted response headers to a Dictionary.
         /// </summary>
         /// <param name="content">https://msdn.microsoft.com/en-us/library/system.net.http.headers.httpresponseheaders(v=vs.118).aspx</param>
-        /// <returns>Dictionary object representation of  HttpRepsonseHeaders</returns>
+        /// <returns>Dictionary object representation of  HttpResponseHeaders</returns>
         public virtual Dictionary<string, string> DeserializeResponseHeaders(HttpResponseHeaders content)
         {
             var dsContent = new Dictionary<string, string>();

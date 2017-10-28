@@ -7,10 +7,10 @@ This documentation provides examples for specific use cases. Please [open an iss
 * [Email - Send a Single Email to Multiple Recipients](#singleemailmultiplerecipients)
 * [Email - Send a Single Email to a Single Recipient](#singleemailsinglerecipient)
 * [Email - Send Multiple Emails to Multiple Recipients](#multipleemailsmultiplerecipients)
-* [Email - Transactional Templates](#transactional_templates)
-* [Transient Fault Handling](#transient_faults)
-* [How to Setup a Domain Whitelabel](#domain_whitelabel)
-* [How to View Email Statistics](#email_stats)
+* [Email - Transactional Templates](#transactional-templates)
+* [Transient Fault Handling](#transient-faults)
+* [How to Setup a Domain Whitelabel](#domain-whitelabel)
+* [How to View Email Statistics](#email-stats)
 
 <a name="attachments"></a>
 # Attachments
@@ -449,7 +449,7 @@ namespace Example
 }
 ```
 
-<a name="transactional_templates"></a>
+<a name="transactional-templates"></a>
 # Transactional Templates
 
 For this example, we assume you have created a [transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html). Following is the template content we used for testing.
@@ -586,7 +586,7 @@ namespace Example
 }
 ```
 
-<a name="transient_faults"></a>
+<a name="transient-faults"></a>
 # Transient Fault Handling
 
 The SendGridClient provides functionality for handling transient errors that might occur when sending an HttpRequest. This includes client side timeouts while sending the mail, or certain errors returned within the 500 range. Errors within the 500 range are limited to 500 Internal Server Error, 502 Bad Gateway, 503 Service unavailable and 504 Gateway timeout.
@@ -612,7 +612,7 @@ The value that will be used to calculate a random delta in the exponential delay
 
 ## Examples
 
-In this example we are setting RetryCount to 2, with a mimimum wait time of 1 seconds, a maximum of 10 seconds and a delta of 3 seconds
+In this example we are setting RetryCount to 2, with a minimum wait time of 1 seconds, a maximum of 10 seconds and a delta of 3 seconds
 
 ```csharp
 
@@ -644,14 +644,14 @@ var client = new SendGridClient(options);
 
 ```
 
-<a name="domain_whitelabel"></a>
+<a name="domain-whitelabel"></a>
 # How to Setup a Domain Whitelabel
 
 You can find documentation for how to setup a domain whitelabel via the UI [here](https://sendgrid.com/docs/Classroom/Basics/Whitelabel/setup_domain_whitelabel.html) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#whitelabel).
 
 Find more information about all of SendGrid's whitelabeling related documentation [here](https://sendgrid.com/docs/Classroom/Basics/Whitelabel/index.html).
 
-<a name="email_stats"></a>
+<a name="email-stats"></a>
 # How to View Email Statistics
 
 You can find documentation for how to view your email statistics via the UI [here](https://app.sendgrid.com/statistics) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#stats).

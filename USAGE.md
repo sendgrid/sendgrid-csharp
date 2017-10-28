@@ -13,9 +13,9 @@ var client = new SendGridClient(apiKey);
 
 # Table of Contents
 
-* [ACCESS SETTINGS](#access_settings)
+* [ACCESS SETTINGS](#access-settings)
 * [ALERTS](#alerts)
-* [API KEYS](#api_keys)
+* [API KEYS](#api-keys)
 * [ASM](#asm)
 * [BROWSERS](#browsers)
 * [CAMPAIGNS](#campaigns)
@@ -26,21 +26,22 @@ var client = new SendGridClient(apiKey);
 * [GEO](#geo)
 * [IPS](#ips)
 * [MAIL](#mail)
-* [MAIL SETTINGS](#mail_settings)
-* [MAILBOX PROVIDERS](#mailbox_providers)
-* [PARTNER SETTINGS](#partner_settings)
+* [MAIL SETTINGS](#mail-settings)
+* [MAILBOX PROVIDERS](#mailbox-providers)
+* [PARTNER SETTINGS](#partner-settings)
 * [SCOPES](#scopes)
 * [SENDERS](#senders)
 * [STATS](#stats)
+* [STATUS CODES](#status-codes)
 * [SUBUSERS](#subusers)
 * [SUPPRESSION](#suppression)
 * [TEMPLATES](#templates)
-* [TRACKING SETTINGS](#tracking_settings)
+* [TRACKING SETTINGS](#tracking-settings)
 * [USER](#user)
 * [WHITELABEL](#whitelabel)
 
 
-<a name="access_settings"></a>
+<a name="access-settings"></a>
 # ACCESS SETTINGS
 
 ## Retrieve all recent access attempts
@@ -152,7 +153,7 @@ Console.ReadLine();
 
 ## Retrieve a specific whitelisted IP
 
-**This endpoint allows you to retreive a specific IP address that has been whitelisted.**
+**This endpoint allows you to retrieve a specific IP address that has been whitelisted.**
 
 You must include the ID for the specific IP address you want to retrieve in your call.
 
@@ -317,7 +318,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
-<a name="api_keys"></a>
+<a name="api-keys"></a>
 # API KEYS
 
 ## Create API keys
@@ -458,7 +459,7 @@ Console.ReadLine();
 
 **This endpoint allows you to revoke an existing API Key**
 
-Authentications using this API Key will fail after this request is made, with some small propogation delay.If the API Key ID does not exist an HTTP 404 will be returned.
+Authentications using this API Key will fail after this request is made, with some small propagation delay.If the API Key ID does not exist an HTTP 404 will be returned.
 
 The API Keys feature allows customers to be able to generate an API Key credential which can be used for authentication with the SendGrid v3 Web API or the [Mail API Endpoint](https://sendgrid.com/docs/API_Reference/Web_API/mail.html).
 
@@ -519,7 +520,7 @@ This endpoint will return information for each group ID that you include in your
 
 Suppressions are a list of email addresses that will not receive content sent under a given [group](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html).
 
-Suppression groups, or [unsubscribe groups](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html), allow you to label a category of content that you regularly send. This gives your recipients the ability to opt out of a specific set of your email. For example, you might define a group for your transactional email, and one for your marketing email so that your users can continue recieving your transactional email witout having to receive your marketing content.
+Suppression groups, or [unsubscribe groups](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html), allow you to label a category of content that you regularly send. This gives your recipients the ability to opt out of a specific set of your email. For example, you might define a group for your transactional email, and one for your marketing email so that your users can continue receiving your transactional email without having to receive your marketing content.
 
 ### GET /asm/groups
 
@@ -748,9 +749,9 @@ Console.ReadLine();
 
 ## Retrieve a Global Suppression
 
-**This endpoint allows you to retrieve a global suppression. You can also use this endpoint to confirm if an email address is already globally suppresed.**
+**This endpoint allows you to retrieve a global suppression. You can also use this endpoint to confirm if an email address is already globally suppressed.**
 
-If the email address you include in the URL path parameter `{email}` is alreayd globally suppressed, the response will include that email address. If the address you enter for `{email}` is not globally suppressed, an empty JSON object `{}` will be returned.
+If the email address you include in the URL path parameter `{email}` is already globally suppressed, the response will include that email address. If the address you enter for `{email}` is not globally suppressed, an empty JSON object `{}` will be returned.
 
 A global suppression (or global unsubscribe) is an email address of a recipient who does not want to receive any of your messages. A globally suppressed recipient will be removed from any email you send. For more information, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Suppressions/global_unsubscribes.html).
 
@@ -1511,9 +1512,8 @@ The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.co
 
 ```csharp
 string queryParams = @"{
-  'list_id': 1, 
   'page': 1, 
-  'page_size': 1
+  'page_size': 100
 }";
 var list_id = "test_url_param";
 var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/lists/" + list_id + "/recipients", queryParams: queryParams);
@@ -1837,7 +1837,7 @@ Valid operators for create and update depend on the type of the field you are se
 
 Segment conditions using "eq" or "ne" for email clicks and opens should provide a "field" of either *clicks.campaign_identifier* or *opens.campaign_identifier*. The condition value should be a string containing the id of a completed campaign. 
 
-Segments may contain multiple condtions, joined by an "and" or "or" in the "and_or" field. The first condition in the conditions list must have an empty "and_or", and subsequent conditions must all specify an "and_or".
+Segments may contain multiple conditions, joined by an "and" or "or" in the "and_or" field. The first condition in the conditions list must have an empty "and_or", and subsequent conditions must all specify an "and_or".
 
 The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html) recipients.
 
@@ -2152,7 +2152,7 @@ Console.ReadLine();
 
 ## Retrieve all IP pools.
 
-**This endpoint allows you to retreive all of your IP pools.**
+**This endpoint allows you to retrieve all of your IP pools.**
 
 IP Pools allow you to group your dedicated SendGrid IP addresses together. For example, you could create separate pools for your transactional and marketing email. When sending marketing emails, specify that you want to use the marketing IP pool. This allows you to maintain separate reputations for your different email traffic.
 
@@ -2600,7 +2600,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
-<a name="mail_settings"></a>
+<a name="mail-settings"></a>
 # MAIL SETTINGS
 
 ## Retrieve all mail settings
@@ -3029,7 +3029,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
-<a name="mailbox_providers"></a>
+<a name="mailbox-providers"></a>
 # MAILBOX PROVIDERS
 
 ## Retrieve email statistics by mailbox provider.
@@ -3059,7 +3059,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
-<a name="partner_settings"></a>
+<a name="partner-settings"></a>
 # PARTNER SETTINGS
 
 ## Returns a list of all partner settings.
@@ -3325,6 +3325,22 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
+
+<a name="status-codes"></a>
+# STATUS CODES
+
+## Supported Status Codes
+
+| Status Code | Description |
+|:----------|:-------------|
+| 200 | No error |
+| 201 | Successfully created |
+| 204 | Successfully deleted |
+| 400 | Bad request |
+| 401 | Requires authentication |
+| 406 | Missing Accept header. example: Accept: application/json |
+| 429 | Too Many Requests |
+| 500 | Internal service error |
 
 <a name="subusers"></a>
 # SUBUSERS
@@ -3644,7 +3660,7 @@ Console.ReadLine();
 
 ## Retrieve the monthly email statistics for a single subuser
 
-**This endpoint allows you to retrive the monthly email statistics for a specific subuser.**
+**This endpoint allows you to retrieve the monthly email statistics for a specific subuser.**
 
 While you can always view the statistics for all email activity on your account, subuser statistics enable you to view specific segments of your stats for your subusers. Emails sent, bounces, and spam reports are always tracked for subusers. Unsubscribes, clicks, and opens are tracked if you have enabled the required settings.
 
@@ -4375,7 +4391,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
-<a name="tracking_settings"></a>
+<a name="tracking-settings"></a>
 # TRACKING SETTINGS
 
 ## Retrieve Tracking Settings
@@ -4629,7 +4645,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve the current credit balance for your account.**
 
-Your monthly credit allotment limits the number of emails you may send before incurring overage charges. For more information about credits and billing, please visit our [Clssroom](https://sendgrid.com/docs/Classroom/Basics/Billing/billing_info_and_faqs.html).
+Your monthly credit allotment limits the number of emails you may send before incurring overage charges. For more information about credits and billing, please visit our [Classroom](https://sendgrid.com/docs/Classroom/Basics/Billing/billing_info_and_faqs.html).
 
 ### GET /user/credits
 
@@ -5070,7 +5086,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve all of your current inbound parse settings.**
 
-The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the contnet, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
+The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the content, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
 
 ### GET /user/webhooks/parse/settings
 
@@ -5087,7 +5103,7 @@ Console.ReadLine();
 
 **This endpoint allows you to update a specific inbound parse setting.**
 
-The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the contnet, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
+The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the content, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
 
 ### PATCH /user/webhooks/parse/settings/{hostname}
 
@@ -5112,7 +5128,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve a specific inbound parse setting.**
 
-The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the contnet, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
+The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the content, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
 
 ### GET /user/webhooks/parse/settings/{hostname}
 
@@ -5130,7 +5146,7 @@ Console.ReadLine();
 
 **This endpoint allows you to delete a specific inbound parse setting.**
 
-The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the contnet, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
+The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the content, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
 
 ### DELETE /user/webhooks/parse/settings/{hostname}
 
@@ -5146,9 +5162,9 @@ Console.ReadLine();
 
 ## Retrieves Inbound Parse Webhook statistics.
 
-**This endpoint allows you to retrieve the statistics for your Parse Webhook useage.**
+**This endpoint allows you to retrieve the statistics for your Parse Webhook usage.**
 
-SendGrid's Inbound Parse Webhook allows you to parse the contents and attachments of incomming emails. The Parse API can then POST the parsed emails to a URL that you specify. The Inbound Parse Webhook cannot parse messages greater than 20MB in size, including all attachments.
+SendGrid's Inbound Parse Webhook allows you to parse the contents and attachments of incoming emails. The Parse API can then POST the parsed emails to a URL that you specify. The Inbound Parse Webhook cannot parse messages greater than 20MB in size, including all attachments.
 
 There are a number of pre-made integrations for the SendGrid Parse Webhook which make processing events easy. You can find these integrations in the [Library Index](https://sendgrid.com/docs/Integrate/libraries.html#-Webhook-Libraries).
 
@@ -5694,7 +5710,7 @@ Console.ReadLine();
 **This endpoint allows you to retrieve the associated link whitelabel for a subuser.**
 
 Link whitelables can be associated with subusers from the parent account. This functionality allows
-subusers to send mail using their parent's linke whitelabels. To associate a link whitelabel, the parent account
+subusers to send mail using their parent's link whitelabels. To associate a link whitelabel, the parent account
 must first create a whitelabel and validate it. The parent may then associate that whitelabel with a subuser via the API or the Subuser Management page in the user interface.
 
 Email link whitelabels allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
@@ -5720,7 +5736,7 @@ Console.ReadLine();
 **This endpoint allows you to disassociate a link whitelabel from a subuser.**
 
 Link whitelables can be associated with subusers from the parent account. This functionality allows
-subusers to send mail using their parent's linke whitelabels. To associate a link whitelabel, the parent account
+subusers to send mail using their parent's link whitelabels. To associate a link whitelabel, the parent account
 must first create a whitelabel and validate it. The parent may then associate that whitelabel with a subuser via the API or the Subuser Management page in the user interface.
 
 Email link whitelabels allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
@@ -5831,7 +5847,7 @@ Console.ReadLine();
 **This endpoint allows you to associate a link whitelabel with a subuser account.**
 
 Link whitelables can be associated with subusers from the parent account. This functionality allows
-subusers to send mail using their parent's linke whitelabels. To associate a link whitelabel, the parent account
+subusers to send mail using their parent's link whitelabels. To associate a link whitelabel, the parent account
 must first create a whitelabel and validate it. The parent may then associate that whitelabel with a subuser via the API or the Subuser Management page in the user interface.
 
 Email link whitelabels allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
