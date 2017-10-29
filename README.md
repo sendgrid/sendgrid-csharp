@@ -108,7 +108,7 @@ For sample implementations, see the [.NET Core Example](https://github.com/sendg
 ### Initial Setup
 
 ```bash
-cp .env_sample .env
+copy .env_sample .env
 ```
 
 ### Environment Variable
