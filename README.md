@@ -84,6 +84,18 @@ Click the "New" button beneath the User Variables list. Give it the name `NAME_O
 
 For value, insert your SendGrid API key. Click "Ok", and once again in the Variable Overview and lastly, close the system properties window.
 
+For other Windows version, you can set an environment variable like this:
+
+```csharp
+var setKey = Environment.SetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY", value);
+```
+
+For example,
+
+```csharp
+var setKey = Environment.SetEnvironmentVariable("SENDGRID_API_KEY", YOUR_API_KEY);
+```
+
 You may need to restart your IDE to make use of the new variable.
 
 Now, if all went well, you can access the just added variable in your C# SendGrid projects! Ready for some examples?
@@ -102,24 +114,6 @@ For sample implementations, see the [.NET Core Example](https://github.com/sendg
 ## Dependencies
 
 - Please see the [.nuspec file](https://github.com/sendgrid/sendgrid-csharp/tree/master/nuspec).
-
-## Setup Environment Variables
-
-### Initial Setup
-
-```bash
-copy .env_sample .env
-```
-
-### Environment Variable
-
-Update the development environment with your [SENDGRID_API_KEY](https://app.sendgrid.com/settings/api_keys), for example:
-
-```bash
-echo "export SENDGRID_API_KEY='YOUR_API_KEY'" > sendgrid.env
-echo "sendgrid.env" >> .gitignore
-source ./sendgrid.env
-```
 
 <a name="quick-start"></a>
 # Quick Start
