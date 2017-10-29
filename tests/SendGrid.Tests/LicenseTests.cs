@@ -3,6 +3,7 @@ namespace SendGrid.Tests
 	using System;
 	using System.IO;
 	using System.Linq;
+	using System.Reflection;
 	using Xunit;
 
     public class LicenseTests
@@ -10,7 +11,8 @@ namespace SendGrid.Tests
         [Fact]
         public void ShouldHaveCurrentYearInLicense()
         {
-            var line = File.ReadLines(@"..\..\..\..\..\LICENSE.txt").Skip(2).Take(1).First();
+            var directoryInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
+            var line = File.ReadLines(Path.Combine(directoryInfo.Parent.Parent.Parent.Parent.Parent.FullName, "LICENSE.txt")).Skip(2).Take(1).First();
             Assert.Contains(DateTime.Now.Year.ToString(), line);
         }
     }
