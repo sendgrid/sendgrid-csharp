@@ -3,7 +3,8 @@ You can use Docker to easily try out or test sendgrid-csharp.
 # Quickstart
 
 1. Install Docker on your machine.
-2. Run `docker run -it sendgrid/sendgrid-csharp`.
+2. Build the latest container with `docker build -t sendgrid/sendgrid-csharp docker`
+3. Run `docker run -it sendgrid/sendgrid-csharp`.
 
 # Info
 
