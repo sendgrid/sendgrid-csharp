@@ -52,11 +52,11 @@ namespace Example
 ## Attach Local File With Attachment Helper Class
 
 ```csharp
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System;
-using System.Threading.Tasks;
-using System.IO;
 
 namespace Example
 {
@@ -77,8 +77,8 @@ namespace Example
             var body = "Email Body";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, body, "");
             var attachmentSource = new FileAttachmentSource("/Users/username/file.txt");
-            var attachment = AttachmentHelper.CreateAttachment(attachmentSource);
-            msg.AddAttachment(new List<Attachment>() { attachment });
+            var attachment = await AttachmentHelper.CreateAttachmentAsync(attachmentSource);
+            msg.AddAttachments(new List<Attachment>() { attachment });
             var response = await client.SendEmailAsync(msg);
         }
     }
