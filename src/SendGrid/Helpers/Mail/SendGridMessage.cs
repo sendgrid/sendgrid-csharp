@@ -1486,6 +1486,13 @@ namespace SendGrid.Helpers.Mail
                     // MimeType.Text > MimeType.Html > Everything Else
                     for (var i = 0; i < this.Contents.Count; i++)
                     {
+                        if (string.IsNullOrEmpty(this.Contents[i].Type) || string.IsNullOrEmpty(this.Contents[i].Value))
+                        {
+                            this.Contents.RemoveAt(i);
+                            i--;
+                            continue;
+                        }
+
                         if (this.Contents[i].Type == MimeType.Html)
                         {
                             var tempContent = new Content();

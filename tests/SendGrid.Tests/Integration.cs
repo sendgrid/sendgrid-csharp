@@ -1994,6 +1994,19 @@
             msg.AddContent(MimeType.Text, "content2");
             Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
 
+            //New content objects have invalid values
+            msg.AddContent(MimeType.Text, "");
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
+
+            msg.AddContent(MimeType.Text, null);
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
+
+            msg.AddContent("", "Content4");
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
+
+            msg.AddContent(null, "Content5");
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
+
 
             //Content object exists
             msg = new SendGridMessage();
@@ -2003,8 +2016,8 @@
                 Value = "content3"
             };
             msg.Contents = new List<Content> {content};
-            msg.AddContent(MimeType.Text, "content4");
-            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content4\"},{\"type\":\"text/html\",\"value\":\"content3\"}]}");
+            msg.AddContent(MimeType.Text, "content6");
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content6\"},{\"type\":\"text/html\",\"value\":\"content3\"}]}");
         }
 
         [Fact]
@@ -2016,17 +2029,46 @@
             var content = new Content()
             {
                 Type = MimeType.Html,
-                Value = "content5"
+                Value = "content7"
             };
             contents.Add(content);
             content = new Content()
             {
                 Type = MimeType.Text,
-                Value = "content6"
+                Value = "content8"
             };
             contents.Add(content);
             msg.AddContents(contents);
-            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content6\"},{\"type\":\"text/html\",\"value\":\"content5\"}]}");
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content8\"},{\"type\":\"text/html\",\"value\":\"content7\"}]}");
+
+            //New content objects have invalid values
+            contents = new List<Content>();
+            content = new Content()
+            {
+                Type = MimeType.Text,
+                Value = ""
+            };
+            contents.Add(content);
+            content = new Content()
+            {
+                Type = MimeType.Text,
+                Value = null
+            };
+            contents.Add(content);
+            content = new Content()
+            {
+                Type = "",
+                Value = "Content9"
+            };
+            contents.Add(content);
+            content = new Content()
+            {
+                Type = null,
+                Value = "Content10"
+            };
+            contents.Add(content);
+            msg.AddContents(contents);
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content8\"},{\"type\":\"text/html\",\"value\":\"content7\"}]}");
 
             //Content object exists
             msg = new SendGridMessage();
