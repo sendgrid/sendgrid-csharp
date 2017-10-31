@@ -90,23 +90,23 @@ Next, update your Environment with your [SENDGRID_APIKEY](https://app.sendgrid.c
 <a name="understanding-the-codebase"></a>
 ## Understanding the Code Base
 
-**/examples**
+**[/examples](https://github.com/sendgrid/sendgrid-csharp/blob/master/examples)**
 
 Examples that demonstrate usage.
 
-**/ExampleCoreProject/Example.cs**
+**[/ExampleCoreProject/Example.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/ExampleCoreProject/Example.cs)**
 
 A working .NET Core example project for testing.
 
-**/ExampleNet45Project/Example.cs**
+**[/ExampleNet45Project/Example.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/ExampleNet45Project/Example.cs)**
 
 A working .NET 4.5.2 example project for testing.
 
-**src/SendGrid/SendGridClient.cs**
+**[/src/SendGrid/SendGridClient.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/SendGridClient.cs)**
 
 The main interface to the SendGrid API is the class `SendGridClient`.
 
-**/tests/SendGrid.Tests/Integration.cs**
+**[/tests/SendGrid.Tests/Integration.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs)**
 
 Integration tests
 
