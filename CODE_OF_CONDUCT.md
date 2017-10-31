@@ -3,7 +3,7 @@
 The SendGrid open source community is made up of members from around the globe with a diverse set of skills, personalities, and experiences. It is through these differences that our community experiences successes and continued growth. When you're working with members of the community, we encourage you to follow these guidelines, which help steer our interactions and strive to maintain a positive, successful and growing community. 
 
 ### Be Open
-Members of the community are open to collaboration, whether it's on pull requests, code reviews, approvals, issues or otherwise. We're receptive to constructive comments and criticism, as the experiences and skill sets of all members contribute to the whole of our efforts. We're accepting of all who wish to take part in our activities, fostering an environment where anyone can participate, and everyone can make a difference.
+Members of the community are open to collaboration, whether it's on pull requests, code reviews, approvals, issues or otherwise. We're receptive to constructive comments and criticism, as the experiences and skill sets of all members contribute to the whole of our efforts. We're accepting of all who wish to take part in our activities, fostering an environment where anyone can participate, and everyone can make a difference and a build a better opensource community.
 
 ### Be Considerate
 Members of the community are considerate of their peers, which include other contributors and users of SendGrid. We're thoughtful when addressing the efforts of others, keeping in mind that often the labor was completed with the intent of the good of the community. We're attentive in our communications, whether in person or online, and we're tactful when approaching differing views.
