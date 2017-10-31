@@ -43,6 +43,12 @@
             this.settings = settings;
         }
 
+        /// <summary>
+        /// Sends an HttpRequestMesage asynchronously
+        /// </summary>
+        /// <param name="request">The HttpRequestMessage to send</param>
+        /// <param name="cancellationToken">Cancellation token to cancel the request</param>
+        /// <returns>Task with HttpResponseMessage</returns>
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (this.settings.MaximumNumberOfRetries == 0)

@@ -16,9 +16,9 @@
         /// </summary>
         public SendGridClientOptions()
         {
-            RequestHeaders = new Dictionary<string, string>();
-            Host = "https://api.sendgrid.com";
-            Version = "v3";
+            this.RequestHeaders = new Dictionary<string, string>();
+            this.Host = "https://api.sendgrid.com";
+            this.Version = "v3";
         }
 
         /// <summary>
