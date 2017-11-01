@@ -1,6 +1,6 @@
 namespace SendGrid.Tests
 {
-    using System;
+    using System.IO;
     using Xunit;
 
     public class TestRequiredFilesExist
