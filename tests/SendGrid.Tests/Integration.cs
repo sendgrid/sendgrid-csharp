@@ -5962,8 +5962,6 @@
                 Host = "http://localhost:4010"
             };
 
-            var id = "test_url_param";
-
             var retryHandler = new RetryDelegatingHandler(new HttpClientHandler(), options.ReliabilitySettings);
 
             HttpClient clientToInject = new HttpClient(retryHandler) { Timeout = TimeSpan.FromMilliseconds(1) };
@@ -5988,8 +5986,6 @@
                 ApiKey = fixture.apiKey,
                 ReliabilitySettings = new ReliabilitySettings(1, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(1))
             };
-
-            var id = "test_url_param";
 
             var httpMessageHandler = new RetryTestBehaviourDelegatingHandler();
             httpMessageHandler.AddBehaviour(httpMessageHandler.TaskCancelled);
