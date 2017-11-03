@@ -98,11 +98,11 @@ var setKey = Environment.SetEnvironmentVariable("SENDGRID_API_KEY", YOUR_API_KEY
 
 You may need to restart your IDE to make use of the new variable.
 
-Now, if all went well, you can access the just added variable in your C# SendGrid projects! Ready for some examples?
+Now, if all went well, you can access the newly added variable in your C# SendGrid projects! Ready for some examples?
 
 ## Install Package
 
-To use SendGrid in your C# project, you can either <a href="https://github.com/sendgrid/sendgrid-csharp.git">download the SendGrid C# .NET libraries directly from our Github repository</a>. If you have the NuGet package manager installed, you can grab them automatically:
+To use SendGrid in your C# project, you can either <a href="https://github.com/sendgrid/sendgrid-csharp.git">download the SendGrid C# .NET libraries directly from our Github repository</a> or if you have the NuGet package manager installed, you can grab them automatically:
 
 ```
 PM> Install-Package SendGrid
