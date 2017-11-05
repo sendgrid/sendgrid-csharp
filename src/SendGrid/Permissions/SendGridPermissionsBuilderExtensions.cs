@@ -138,6 +138,7 @@ namespace SendGrid.Permissions
         public static SendGridPermissionsBuilder CreateReadOnlyIpManagement(this SendGridPermissionsBuilder builder)
         {
             builder.AddPermissionsFor<IpManagement>(ScopeOptions.ReadOnly);
+            builder.Exclude(x => x.StartsWith("ips.pools.ips."));
             return builder;
         }
 
@@ -151,6 +152,8 @@ namespace SendGrid.Permissions
         public static SendGridPermissionsBuilder CreateFullAccessIpManagement(this SendGridPermissionsBuilder builder)
         {
             builder.AddPermissionsFor<IpManagement>();
+            builder.Exclude(x => x.StartsWith("ips.pools.ips.") && (x.EndsWith("update") || x.EndsWith("read")));
+            builder.Exclude(x => x.StartsWith("ips.warmup.") && x.EndsWith("update"));
             return builder;
         }
 
@@ -190,6 +193,7 @@ namespace SendGrid.Permissions
         public static SendGridPermissionsBuilder CreateReadOnlyInboundParse(this SendGridPermissionsBuilder builder)
         {
             builder.AddPermissionsFor<Webhooks>(ScopeOptions.ReadOnly);
+            builder.Exclude(x => !x.StartsWith("user.webhooks.parse"));
             return builder;
         }
 
@@ -203,6 +207,7 @@ namespace SendGrid.Permissions
         public static SendGridPermissionsBuilder CreateFullAccessInboundParse(this SendGridPermissionsBuilder builder)
         {
             builder.AddPermissionsFor<Webhooks>();
+            builder.Exclude(x => !x.StartsWith("user.webhooks.parse"));
             return builder;
         }
 
@@ -255,7 +260,8 @@ namespace SendGrid.Permissions
         public static SendGridPermissionsBuilder CreateFullAccessMarketingCampaigns(this SendGridPermissionsBuilder builder)
         {
             builder.AddPermissionsFor<MarketingCampaigns>();
-            builder.AddScope("partner_settings.new_relic.read");
+            builder.AddPermissionsFor<PartnerSettings>();
+            builder.Exclude(x => x.StartsWith("partner_settings") && !x.EndsWith("new_relic.read"));
             return builder;
         }
 

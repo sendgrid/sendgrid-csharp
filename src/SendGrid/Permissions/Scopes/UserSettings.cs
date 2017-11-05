@@ -25,7 +25,6 @@
                 new SendGridPermissionScope("settings.enforced_tls", "read", "update"),
                 new SendGridPermissionScope("timezone", "read", "update"),
                 new SendGridPermissionScope("username", "read", "update"),
-                new Webhooks()
             };
         }
     }

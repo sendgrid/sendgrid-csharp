@@ -11,16 +11,16 @@
     public class SendGridPermissionsBuilder
     {
         /// <summary>
-        /// The raw scopes to be added to the final list of scopes.
+        /// The filters
         /// </summary>
-        private IList<string> rawScopes;
+        private IList<Func<string, bool>> filters;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridPermissionsBuilder"/> class.
         /// </summary>
         public SendGridPermissionsBuilder()
         {
-            this.rawScopes = new List<string>();
+            this.filters = new List<Func<string, bool>>();
             this.AddedScopes = new Dictionary<ISendGridPermissionScope, ScopeOptions>();
             this.AllScopesMap = new Dictionary<Type, ISendGridPermissionScope>
             {
@@ -32,6 +32,7 @@
                 { typeof(Browsers), new Browsers() },
                 { typeof(Categories), new Categories() },
                 { typeof(Clients), new Clients() },
+                { typeof(Credentials), new Credentials() },
                 { typeof(Devices), new Devices() },
                 { typeof(EmailActivity), new EmailActivity() },
                 { typeof(Geo), new Geo() },
@@ -40,6 +41,7 @@
                 { typeof(Mail), new Mail() },
                 { typeof(MailboxProviders), new MailboxProviders() },
                 { typeof(MarketingCampaigns), new MarketingCampaigns() },
+                { typeof(Newsletter), new Newsletter() },
                 { typeof(PartnerSettings), new PartnerSettings() },
                 { typeof(ScheduledSends), new ScheduledSends() },
                 { typeof(Stats), new Stats() },
@@ -50,6 +52,7 @@
                 { typeof(Templates), new Templates() },
                 { typeof(Tracking), new Tracking() },
                 { typeof(UserSettings), new UserSettings() },
+                { typeof(Webhooks), new Webhooks() },
                 { typeof(Whitelabel), new Whitelabel() },
             };
         }
@@ -72,41 +75,15 @@
         {
             var scopes = this.AddedScopes
                 .SelectMany(x => x.Key.Build(x.Value))
+                .ToList();
 
-            .Concat(this.rawScopes)
-            .OrderBy(x => x);
+            foreach (var f in this.filters)
+            {
+                scopes.RemoveAll(x => f(x));
+            }
 
-
-            //.OrderBy(x => x);
-            //.Select(x => new
-            //{
-            //    Name = x.Key.Name,
-            //    Scopes = x.Key.Build(x.Value); //.OrderBy(s => s)
-            //})
-
-            //.se
-
-            //.OrderBy(x => x.Name);
-            return scopes;//scopes.SelectMany(x => x.Scopes);
+            return scopes;
         }
-
-        /// <summary>
-        /// Builds the list of API Key scopes based on the permissions that have been added to this instance using <paramref name="allowedScopes" /> as a whitelist filter.
-        /// </summary>
-        /// <param name="allowedScopes">The allowed scopes.</param>
-        /// <returns>
-        /// A list of strings representing the scope names.
-        /// </returns>
-        //public IEnumerable<string> Build(IEnumerable<string> allowedScopes)
-        //{
-        //    var builtScopes = this.Build().ToArray();
-        //    var filteredScopes = allowedScopes.Join(
-        //        builtScopes,
-        //        allowed => allowed,
-        //        built => built,
-        //        (a, b) => a);
-        //    return filteredScopes;
-        //}
 
         /// <summary>
         /// Adds the permissions for the specified <typeparamref name="TScope"/>
@@ -140,13 +117,13 @@
         }
 
         /// <summary>
-        /// Adds the scope.
+        /// Adds the filter.
         /// </summary>
-        /// <param name="scope">The scope.</param>
+        /// <param name="filter">The filter.</param>
         /// <returns>The builder instance with the scope added.</returns>
-        public SendGridPermissionsBuilder AddScope(string scope)
+        public SendGridPermissionsBuilder Exclude(Func<string, bool> filter)
         {
-            this.rawScopes.Add(scope);
+            this.filters.Add(filter);
             return this;
         }
     }

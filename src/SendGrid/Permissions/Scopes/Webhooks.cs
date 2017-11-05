@@ -9,9 +9,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Webhooks"/> class.
         /// </summary>
-        /// <param name="prefix">The prefix.</param>
         public Webhooks()
-            : base("webhooks")
+            : base("user.webhooks")
         {
             this.SubScopes = new[]
             {
