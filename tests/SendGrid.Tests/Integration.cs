@@ -1,18 +1,17 @@
 ﻿namespace SendGrid.Tests
 {
-    using Helpers.Mail;
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Net;
     using System.Net.Http;
-    using System.Threading.Tasks;
-    using Xunit;
     using System.Threading;
-    using System.Text;
-    using Helpers.Reliability;
+    using System.Threading.Tasks;
+    using Newtonsoft.Json;
     using Reliability;
+    using SendGrid.Helpers.Mail;
+    using SendGrid.Helpers.Reliability;
+    using Xunit;
     using Xunit.Abstractions;
 
     public class IntegrationFixture : IDisposable
