@@ -1000,7 +1000,7 @@ namespace SendGrid.Helpers.Mail
         public async Task AddAttachmentAsync(string filename, Stream contentStream, string type = null, string disposition = null, string content_id = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Stream doesn't want us to read it, can't do anything else here
-            if (!contentStream.CanRead)
+            if (contentStream == null || !contentStream.CanRead)
             {
                 return;
             }
@@ -1025,7 +1025,12 @@ namespace SendGrid.Helpers.Mail
         /// <param name="content_id">A unique id that you specify for the attachment. This is used when the disposition is set to "inline" and the attachment is an image, allowing the file to be displayed within the body of your email. Ex: <![CDATA[ <img src="cid:ii_139db99fdb5c3704"></img> ]]></param>
         public void AddAttachment(string filename, string base64Content, string type = null, string disposition = null, string content_id = null)
         {
-            var attachment = new Attachment()
+            if (string.IsNullOrWhiteSpace(filename) || string.IsNullOrWhiteSpace(base64Content))
+            {
+                return;
+            }
+
+            var attachment = new Attachment
             {
                 Filename = filename,
                 Content = base64Content,
@@ -1055,7 +1060,7 @@ namespace SendGrid.Helpers.Mail
         /// Add attachments to the email.
         /// </summary>
         /// <param name="attachments">A list of Attachments.</param>
-        public void AddAttachments(List<Attachment> attachments)
+        public void AddAttachments(IEnumerable<Attachment> attachments)
         {
             if (this.Attachments == null)
             {
