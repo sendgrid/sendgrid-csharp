@@ -8,8 +8,8 @@ namespace SendGrid.Tests
 
         // ./Docker or docker/Docker
         public void checkDockerExists() {
-            bool dockerExists = File.Exists("./Docker") ||
-            File.Exists("./docker/Docker");
+            bool dockerExists = File.Exists("./Dockerfile") ||
+            File.Exists("./docker/Dockerfile");
             Assert.True(dockerExists);
         }
 
@@ -72,7 +72,8 @@ namespace SendGrid.Tests
         // ./LICENSE.md
         public void checkLicenseExists()
         {
-            Assert.True(File.Exists("./LICENSE.md"));
+            Assert.True(File.Exists("./LICENSE.md")) ||
+            File.Exists("./LICENSE.txt");
         }
 
         // ./.github/PULL_REQUEST_TEMPLATE
