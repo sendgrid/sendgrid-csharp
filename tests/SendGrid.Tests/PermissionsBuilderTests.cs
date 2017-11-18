@@ -1,26 +1,33 @@
-﻿
-
-namespace SendGrid.Tests
+﻿namespace SendGrid.Tests
 {
     using Permissions;
     using Permissions.Scopes;
     using System;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Moq;
     using System.Linq;
     using Xunit;
 
     public class PermissionsBuilderTests
     {
         [Fact]
-        public void CanFilterFinalScopeList()
+        public async Task CanFilterFinalScopeList()
         {
+            var content = "{\"scopes\": [\"alerts.read\"]}";
+            var client = new Mock<ISendGridClient>();
+            client.Setup(x => x.RequestAsync(SendGridClient.Method.GET, null, null, "scopes", CancellationToken.None))
+                .ReturnsAsync(new Response(HttpStatusCode.OK, new StringContent(content), null));
+                
             var sb = new SendGridPermissionsBuilder();
-            var scopes = sb.AddPermissionsFor<Alerts>()
-                .Exclude(s => s.EndsWith("delete") || s.EndsWith("read"))
-                .Build()
-                .ToArray();
+            sb.AddPermissionsFor<Alerts>();
+            await sb.FilterByCurrentApiKeyAsync(client.Object);
+            var scopes = sb.Build().ToArray();
 
-            Assert.Contains(scopes, x => x == "alerts.create");
-            Assert.Contains(scopes, x => x == "alerts.update");
+            Assert.Equal(1, scopes.Length);
+            Assert.Contains(scopes, x => x == "alerts.read");
         }
 
         [Fact]
