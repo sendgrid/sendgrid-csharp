@@ -16,14 +16,6 @@
         string Name { get; }
 
         /// <summary>
-        /// Gets a value indicating whether this scope can only appear in the admin API Key scopes.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [admin only]; otherwise, <c>false</c>.
-        /// </value>
-        bool IsAdminOnly { get; }
-
-        /// <summary>
         /// Gets a value indicating whether this instance is mutually exclusive.
         /// </summary>
         /// <value>
@@ -40,11 +32,19 @@
         IEnumerable<ISendGridPermissionScope> SubScopes { get; }
 
         /// <summary>
+        /// Gets the allowed options.
+        /// </summary>
+        /// <value>
+        /// The allowed options.
+        /// </value>
+        ScopeOptions AllowedOptions { get; }
+
+        /// <summary>
         /// Builds the specified options.
         /// </summary>
-        /// <param name="options">The options.</param>
+        /// <param name="requestedOptions">The options.</param>
         /// <param name="prefix">The prefix.</param>
-        /// <returns>The list of scopes for this permission based on the <paramref name="options"/> with an optional <paramref name="prefix"/></returns>
-        IEnumerable<string> Build(ScopeOptions options, string prefix = null);
+        /// <returns>The list of scopes for this permission based on the <paramref name="requestedOptions"/> with an optional <paramref name="prefix"/></returns>
+        IEnumerable<string> Build(ScopeOptions requestedOptions, string prefix = null);
     }
 }

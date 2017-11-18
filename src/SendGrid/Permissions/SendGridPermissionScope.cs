@@ -1,8 +1,10 @@
 ﻿namespace SendGrid.Permissions
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <inheritdoc />
     /// <summary>
     /// Represents an API Key permission scope
     /// </summary>
@@ -13,20 +15,8 @@
         /// </summary>
         /// <param name="name">The name of the scope</param>
         internal SendGridPermissionScope(string name)
+            : this(name, ScopeOptions.Crud)
         {
-            this.Name = name;
-            this.AllowedOptions = ScopeOptions.AllCrud.ToArray();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SendGridPermissionScope"/> class.
-        /// </summary>
-        /// <param name="name">The name of the scope</param>
-        /// <param name="allowedOptions">The allowed options e.g. create, delete, read, update</param>
-        internal SendGridPermissionScope(string name, params string[] allowedOptions)
-            : this(name)
-        {
-            this.AllowedOptions = allowedOptions;
         }
 
         /// <summary>
@@ -35,8 +25,19 @@
         /// <param name="name">The name.</param>
         /// <param name="allowedOptions">The allowed options e.g. create, delete, read, update.</param>
         internal SendGridPermissionScope(string name, IEnumerable<string> allowedOptions)
-         : this(name, allowedOptions.ToArray())
+            : this(name, allowedOptions?.ToArray())
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendGridPermissionScope"/> class.
+        /// </summary>
+        /// <param name="name">The name of the scope</param>
+        /// <param name="allowedOptions">The allowed options e.g. create, delete, read, update</param>
+        internal SendGridPermissionScope(string name, params string[] allowedOptions)
+        {
+            this.Name = name ?? throw new ArgumentNullException(nameof(name));
+            this.AllowedOptions = new ScopeOptions(allowedOptions ?? new string[0]);
         }
 
         /// <summary>
@@ -53,7 +54,7 @@
         /// <value>
         /// The allowed options.
         /// </value>
-        public string[] AllowedOptions { get; internal set; }
+        public ScopeOptions AllowedOptions { get; internal set; }
 
         /// <summary>
         /// Gets the sub scopes.
@@ -62,14 +63,6 @@
         /// The sub scopes.
         /// </value>
         public IEnumerable<ISendGridPermissionScope> SubScopes { get; internal set; }
-
-        /// <summary>
-        /// Gets a value indicating whether this scope can only appear in the admin API Key scopes.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if [admin only]; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsAdminOnly { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating whether this instance is mutually exclusive.
@@ -82,19 +75,19 @@
         /// <summary>
         /// Builds the specified options.
         /// </summary>
-        /// <param name="options">The options.</param>
+        /// <param name="requestedOptions">The options.</param>
         /// <param name="prefix">The prefix.</param>
         /// <returns>
-        /// The list of scopes for this permission based on the <paramref name="options" /> with an optional <paramref name="prefix" />
+        /// The list of scopes for this permission based on the <paramref name="requestedOptions" /> with an optional <paramref name="prefix" />
         /// </returns>
-        public IEnumerable<string> Build(ScopeOptions options, string prefix = null)
+        public IEnumerable<string> Build(ScopeOptions requestedOptions, string prefix = null)
         {
-            var setOptions = this.AllowedOptions.Join(options, allowed => allowed, set => set, (a, s) => a);
+            var settableOptions = this.AllowedOptions.Filter(requestedOptions);
 
             var scopes = new List<string>();
 
             var name = prefix == null ? this.Name : $"{prefix}.{this.Name}";
-            foreach (var so in setOptions)
+            foreach (var so in settableOptions)
             {
                 scopes.Add($"{name}.{so}");
             }
@@ -103,7 +96,7 @@
             {
                 foreach (var subScope in this.SubScopes)
                 {
-                    scopes.AddRange(subScope.Build(options, name));
+                    scopes.AddRange(subScope.Build(requestedOptions, name));
                 }
             }
 

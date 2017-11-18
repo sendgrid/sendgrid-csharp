@@ -6,7 +6,7 @@
     /// <remarks>
     /// The billing scope is mutually exclusive
     /// </remarks>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class Billing : SendGridPermissionScope
     {
         /// <summary>

@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for subusers
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class Subusers : SendGridPermissionScope
     {
         /// <summary>

@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for stats
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class Stats : SendGridPermissionScope
     {
         /// <summary>

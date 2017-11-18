@@ -1,11 +1,12 @@
-﻿using SendGrid.Permissions;
-using SendGrid.Permissions.Scopes;
-using System;
-using System.Linq;
-using Xunit;
+﻿
 
 namespace SendGrid.Tests
 {
+    using Permissions;
+    using Permissions.Scopes;
+    using System;
+    using System.Linq;
+    using Xunit;
 
     public class PermissionsBuilderTests
     {
@@ -23,7 +24,7 @@ namespace SendGrid.Tests
         }
 
         [Fact]
-        public void CreateReadOnlyCrudScope()
+        public void BuildReadOnlyScopeContainsOnlyReadScope()
         {
             var sb = new SendGridPermissionsBuilder();
             sb.AddPermissionsFor<Alerts>(ScopeOptions.ReadOnly);
@@ -34,7 +35,7 @@ namespace SendGrid.Tests
         }
 
         [Fact]
-        public void BuildAllCrudScope()
+        public void BuildFullAccessScopeContainsAllCrudScopes()
         {
             var sb = new SendGridPermissionsBuilder();
             sb.AddPermissionsFor<Alerts>(ScopeOptions.All);
@@ -48,38 +49,18 @@ namespace SendGrid.Tests
         }
 
         [Fact]
-        public void BuildAllSubusersScopes()
+        public void BuildFullAccessScopeContainsExtraScopes()
         {
             var sb = new SendGridPermissionsBuilder();
-            sb.AddPermissionsFor<Subusers>(ScopeOptions.All);
+            sb.AddPermissionsFor<Mail>(ScopeOptions.All);
 
             var scopes = sb.Build().ToArray();
 
-            Assert.Contains(scopes, x => x == "subusers.create");
-            Assert.Contains(scopes, x => x == "subusers.delete");
-            Assert.Contains(scopes, x => x == "subusers.read");
-            Assert.Contains(scopes, x => x == "subusers.update");
-            Assert.Contains(scopes, x => x == "subusers.credits.create");
-            Assert.Contains(scopes, x => x == "subusers.credits.delete");
-            Assert.Contains(scopes, x => x == "subusers.credits.read");
-            Assert.Contains(scopes, x => x == "subusers.credits.update");
-            Assert.Contains(scopes, x => x == "subusers.credits.remaining.create");
-            Assert.Contains(scopes, x => x == "subusers.credits.remaining.delete");
-            Assert.Contains(scopes, x => x == "subusers.credits.remaining.read");
-            Assert.Contains(scopes, x => x == "subusers.credits.remaining.update");
-            Assert.Contains(scopes, x => x == "subusers.monitor.create");
-            Assert.Contains(scopes, x => x == "subusers.monitor.delete");
-            Assert.Contains(scopes, x => x == "subusers.monitor.read");
-            Assert.Contains(scopes, x => x == "subusers.monitor.update");
-            Assert.Contains(scopes, x => x == "subusers.reputations.read");
-            Assert.Contains(scopes, x => x == "subusers.stats.read");
-            Assert.Contains(scopes, x => x == "subusers.stats.monthly.read");
-            Assert.Contains(scopes, x => x == "subusers.stats.sums.read");
-            Assert.Contains(scopes, x => x == "subusers.summary.read");
+            Assert.Contains(scopes, x => x == "mail.send");
         }
 
         [Fact]
-        public void CreateScopeWithSubScopes()
+        public void BuildScopeWithSubScopesContainsSubScopesWithPrefixOfParentScope()
         {
             var sb = new SendGridPermissionsBuilder();
             sb.AddPermissionsFor<Categories>(ScopeOptions.All);
@@ -103,7 +84,7 @@ namespace SendGrid.Tests
         }
 
         [Fact]
-        public void BillingPermissionIsMutuallyExclusiveWhenOtherPermissionsAreAddedToBuilderAlreadyBilling()
+        public void BillingPermissionIsMutuallyExclusiveWhenOtherPermissionsAreAddedToBuilderAlreadyContainingBilling()
         {
             var sb = new SendGridPermissionsBuilder();
             sb.AddPermissionsFor<Billing>();

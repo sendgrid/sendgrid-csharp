@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for alerts
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class Alerts : SendGridPermissionScope
     {
         /// <summary>

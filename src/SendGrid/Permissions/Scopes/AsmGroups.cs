@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for asm.groups
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class AsmGroups : SendGridPermissionScope
     {
         /// <summary>

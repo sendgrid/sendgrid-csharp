@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for user.webhooks
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     internal class Webhooks : SendGridPermissionScope
     {
         /// <summary>
@@ -16,7 +16,7 @@
             {
                 new SendGridPermissionScope("event")
                 {
-                    AllowedOptions = new string[0],
+                    AllowedOptions = ScopeOptions.None,
                     SubScopes = new[]
                     {
                          new SendGridPermissionScope("settings", "read", "update"),
@@ -25,7 +25,7 @@
                 },
                 new SendGridPermissionScope("parse")
                     {
-                        AllowedOptions = new string[0],
+                        AllowedOptions = ScopeOptions.None,
                         SubScopes = new[]
                     {
                             new SendGridPermissionScope("settings"),

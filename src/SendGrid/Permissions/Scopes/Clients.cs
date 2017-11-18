@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for clients
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class Clients : SendGridPermissionScope
     {
         /// <summary>
@@ -12,8 +12,7 @@
         public Clients()
             : base("clients", "read")
         {
-            this.IsAdminOnly = true;
-            this.AllowedOptions = new string[0];
+            this.AllowedOptions = ScopeOptions.None;
             this.SubScopes = new[]
             {
                 new SendGridPermissionScope("desktop.stats", "read"),

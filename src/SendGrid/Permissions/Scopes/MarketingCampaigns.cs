@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for marketing_campaigns
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class MarketingCampaigns : SendGridPermissionScope
     {
         /// <summary>

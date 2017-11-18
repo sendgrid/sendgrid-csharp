@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for templates
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class Templates : SendGridPermissionScope
     {
         /// <summary>

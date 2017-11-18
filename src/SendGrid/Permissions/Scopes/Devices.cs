@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for devices.stats
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     internal class Devices : SendGridPermissionScope
     {
         /// <summary>
@@ -12,7 +12,6 @@
         public Devices()
             : base("devices.stats", "read")
         {
-            this.IsAdminOnly = true;
         }
     }
 }

@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for whitelabel
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class Whitelabel : SendGridPermissionScope
     {
         /// <summary>

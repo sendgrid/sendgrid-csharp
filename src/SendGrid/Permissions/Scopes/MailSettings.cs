@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for mail_settings
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class MailSettings : SendGridPermissionScope
     {
         /// <summary>

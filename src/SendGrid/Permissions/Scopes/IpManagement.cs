@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for ips
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class IpManagement : SendGridPermissionScope
     {
         /// <summary>

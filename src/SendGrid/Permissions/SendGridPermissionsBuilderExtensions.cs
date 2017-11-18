@@ -1,9 +1,6 @@
-﻿
-
-namespace SendGrid.Permissions
+﻿namespace SendGrid.Permissions
 {
-    using System;
-    using SendGrid.Permissions.Scopes;
+    using Scopes;
 
     /// <summary>
     /// Extension methods for creating permissions for common API key use cases

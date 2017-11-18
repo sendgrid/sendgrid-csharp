@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for user.scheduled_sends
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class ScheduledSends : SendGridPermissionScope
     {
         /// <summary>

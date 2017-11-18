@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for mailbox_providers
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     internal class MailboxProviders : SendGridPermissionScope
     {
         /// <summary>
@@ -12,7 +12,6 @@
         public MailboxProviders()
             : base("mailbox_providers.stats", "read")
         {
-            this.IsAdminOnly = true;
         }
     }
 }

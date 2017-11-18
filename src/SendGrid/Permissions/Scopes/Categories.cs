@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for categories
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class Categories : SendGridPermissionScope
     {
         /// <summary>

@@ -13,7 +13,7 @@
         /// <summary>
         /// The filters
         /// </summary>
-        private IList<Func<string, bool>> filters;
+        private readonly IList<Func<string, bool>> filters;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridPermissionsBuilder"/> class.
@@ -58,14 +58,17 @@
         }
 
         /// <summary>
-        /// The scopes
-        /// </summary>
-        internal IDictionary<ISendGridPermissionScope, ScopeOptions> AddedScopes { get; }
-
-        /// <summary>
-        /// The scope map
+        /// Gets the scope type map
         /// </summary>
         public IDictionary<Type, ISendGridPermissionScope> AllScopesMap { get; }
+
+        /// <summary>
+        /// Gets the scopes that have been added to this builder instance
+        /// </summary>
+        /// <value>
+        /// The added scopes.
+        /// </value>
+        internal IDictionary<ISendGridPermissionScope, ScopeOptions> AddedScopes { get; }
 
         /// <summary>
         /// Builds the list of API Key scopes based on the permissions that have been added to this instance.
@@ -92,7 +95,7 @@
         /// <param name="options">The options.</param>
         /// <returns>The builder instance with the permissions added.</returns>
         public SendGridPermissionsBuilder AddPermissionsFor<TScope>(ScopeOptions options)
-            where TScope : SendGridPermissionScope
+            where TScope : ISendGridPermissionScope
         {
             var scope = this.AllScopesMap[typeof(TScope)];
 

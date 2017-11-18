@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for api_keys
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class ApiKeys : SendGridPermissionScope
     {
         /// <summary>

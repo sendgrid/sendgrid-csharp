@@ -4,7 +4,7 @@
     /// Scopes for suppressions
     /// </summary>
     /// <remarks>Why are there suppression and suppressions?</remarks>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class Suppressions : SendGridPermissionScope
     {
         /// <summary>

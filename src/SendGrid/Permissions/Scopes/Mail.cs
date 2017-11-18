@@ -4,7 +4,7 @@
     /// <summary>
     /// Scopes for mail
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class Mail : SendGridPermissionScope
     {
         /// <summary>
@@ -13,7 +13,7 @@
         public Mail()
             : base("mail")
         {
-            this.AllowedOptions = new[] { "send" };
+            this.AllowedOptions = new ScopeOptions("send");
             this.SubScopes = new[]
             {
                 new SendGridPermissionScope("batch")

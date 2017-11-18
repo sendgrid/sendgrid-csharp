@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for email_activity
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     internal class EmailActivity : SendGridPermissionScope
     {
         /// <summary>
@@ -12,7 +12,6 @@
         public EmailActivity()
             : base("email_activity", "read")
         {
-            this.IsAdminOnly = true;
         }
     }
 }

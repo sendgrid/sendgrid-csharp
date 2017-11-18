@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for access_settings
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class AccessSettings : SendGridPermissionScope
     {
         /// <summary>
@@ -12,9 +12,7 @@
         public AccessSettings()
             : base("access_settings")
         {
-            this.IsAdminOnly = true;
-            // no top level scopes
-            this.AllowedOptions = new string[0];
+            this.AllowedOptions = ScopeOptions.None;
             this.SubScopes = new[]
             {
                 new SendGridPermissionScope("activity", "read"),

@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for browser.stats
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     internal class Browsers : SendGridPermissionScope
     {
         /// <summary>
@@ -12,7 +12,6 @@
         public Browsers()
             : base("browsers.stats", "read")
         {
-            this.IsAdminOnly = true;
         }
     }
 }

@@ -3,7 +3,7 @@
     /// <summary>
     /// Scopes for suppression
     /// </summary>
-    /// <seealso cref="SendGrid.Permissions.SendGridPermissionScope" />
+    /// <seealso cref="SendGridPermissionScope" />
     public class Suppression : SendGridPermissionScope
     {
         /// <summary>
