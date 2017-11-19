@@ -29,7 +29,7 @@
                         SubScopes = new[]
                     {
                             new SendGridPermissionScope("settings"),
-                            new SendGridPermissionScope("stats", ScopeOptions.ReadOnly),
+                            new SendGridPermissionScope("stats", ScopeOptions.ReadOnly)
                     }
                 }
             };

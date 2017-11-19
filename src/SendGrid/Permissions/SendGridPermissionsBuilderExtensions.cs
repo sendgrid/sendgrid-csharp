@@ -271,10 +271,48 @@
         /// </returns>
         public static SendGridPermissionsBuilder CreateAdminPermissions(this SendGridPermissionsBuilder builder)
         {
-            foreach (var scope in builder.AllScopesMap.Values)
-            {
-                builder.AddedScopes.Add(scope, ScopeOptions.All);
-            }
+            builder
+                .AddPermissionsFor<Alerts>()
+                .AddPermissionsFor<AsmGroups>()
+                .AddPermissionsFor<IpManagement>(ScopeOptions.ReadOnly)
+                .Exclude(s => s.StartsWith("ips") && s != "ips.pools.ips.read")
+                .AddPermissionsFor<Mail>()
+                .AddPermissionsFor<EmailActivity>()
+                .AddPermissionsFor<MailSettings>().Exclude(x => x == "mail_settings.read")
+                .AddPermissionsFor<PartnerSettings>().Exclude(x => x == "partner_settings.read")
+                .AddPermissionsFor<MarketingCampaigns>()
+                .AddPermissionsFor<Tracking>().Exclude(x => x == "tracking_settings.read")
+                .AddPermissionsFor<Webhooks>().Exclude(x =>
+                    x == "user.webhooks.create" || x == "user.webhooks.delete" || x == "user.webhooks.read" ||
+                    x == "user.webhooks.update")
+                .AddPermissionsFor<Stats>()
+                .AddPermissionsFor<Categories>()
+                .AddPermissionsFor<Devices>()
+                .AddPermissionsFor<Clients>()
+                .AddPermissionsFor<Geo>()
+                .AddPermissionsFor<MailboxProviders>()
+                .AddPermissionsFor<Browsers>()
+                .AddPermissionsFor<Templates>()
+                .Exclude(x => x.StartsWith("templates.versions.activate") && !x.EndsWith("create"))
+                .AddPermissionsFor<UserSettings>().Exclude(
+                    x => x.StartsWith("user.account")
+                         || x.StartsWith("user.credits")
+                         || x.StartsWith("user.email")
+                         || x.StartsWith("user.multifactor_authentication")
+                         || x.StartsWith("user.password")
+                         || x.StartsWith("user.profile")
+                         || x.StartsWith("user.username"))
+                .AddPermissionsFor<ApiKeys>()
+                .AddPermissionsFor<ScheduledSends>()
+                .AddPermissionsFor<AccessSettings>()
+                .AddPermissionsFor<Whitelabel>()
+                .AddPermissionsFor<Suppression>().Exclude(
+                    x => x.StartsWith("suppression") && (
+                             x.Contains("bounces")
+                             || x.Contains("invalid_emails")
+                             || x.Contains("spam_reports")
+                             || x.Contains("unsubscribes")
+                             || x.Contains("blocks")));
 
             return builder;
         }
