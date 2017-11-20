@@ -72,8 +72,9 @@ namespace SendGrid.Tests
         // ./LICENSE.md
         public void checkLicenseExists()
         {
-            Assert.True(File.Exists("./LICENSE.md")) ||
+            bool licenseExists = File.Exists("./LICENSE.md") ||
             File.Exists("./LICENSE.txt");
+            Assert.True(licenseExists);
         }
 
         // ./.github/PULL_REQUEST_TEMPLATE
