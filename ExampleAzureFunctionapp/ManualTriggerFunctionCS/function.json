@@ -1,0 +1,16 @@
+{
+  "bindings": [
+    
+    {
+      "name": "$return",
+      "type": "sendGrid",
+      "direction": "out",
+      "apiKey": "SENDGRIDEKY"
+    },
+    {
+    "type": "manualTrigger",
+    "direction": "in",
+    "name": "input"
+    }
+  ]
+}
