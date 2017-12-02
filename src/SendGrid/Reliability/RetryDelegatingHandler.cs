@@ -35,7 +35,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class.
         /// </summary>
-        /// <param name="innerHandler">A HttpMessageHandler instance to set as the innner handler</param>
+        /// <param name="innerHandler">A HttpMessageHandler instance to set as the inner handler</param>
         /// <param name="settings">A ReliabilitySettings instance</param>
         public RetryDelegatingHandler(HttpMessageHandler innerHandler, ReliabilitySettings settings)
             : base(innerHandler)

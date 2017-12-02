@@ -1,8 +1,7 @@
 ﻿namespace SendGrid.Tests.Reliability
 {
     using System;
-
-    using Helpers.Reliability;
+    using SendGrid.Helpers.Reliability;
     using Xunit;
 
     public class ReliabilitySettingsTests

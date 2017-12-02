@@ -5,12 +5,13 @@
 
 namespace SendGrid
 {
-    using Newtonsoft.Json;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
+    using System.Threading.Tasks;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// The response received from an API call to SendGrid
@@ -98,9 +99,10 @@ namespace SendGrid
         /// </summary>
         /// <param name="content">https://msdn.microsoft.com/en-us/library/system.net.http.httpcontent(v=vs.118).aspx</param>
         /// <returns>Dictionary object representation of HttpContent</returns>
-        public virtual Dictionary<string, dynamic> DeserializeResponseBody(HttpContent content)
+        public virtual async Task<Dictionary<string, dynamic>> DeserializeResponseBodyAsync(HttpContent content)
         {
-            var dsContent = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(content.ReadAsStringAsync().Result);
+            var stringContent = await content.ReadAsStringAsync().ConfigureAwait(false);
+            var dsContent = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(stringContent);
             return dsContent;
         }
 
@@ -108,7 +110,7 @@ namespace SendGrid
         ///     Converts string formatted response headers to a Dictionary.
         /// </summary>
         /// <param name="content">https://msdn.microsoft.com/en-us/library/system.net.http.headers.httpresponseheaders(v=vs.118).aspx</param>
-        /// <returns>Dictionary object representation of  HttpRepsonseHeaders</returns>
+        /// <returns>Dictionary object representation of  HttpResponseHeaders</returns>
         public virtual Dictionary<string, string> DeserializeResponseHeaders(HttpResponseHeaders content)
         {
             var dsContent = new Dictionary<string, string>();
