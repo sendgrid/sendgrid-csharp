@@ -3,6 +3,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using HtmlAgilityPack;
+
 namespace SendGrid.Helpers.Mail
 {
     using System.Collections.Generic;
@@ -188,6 +190,18 @@ namespace SendGrid.Helpers.Mail
             }
 
             return msg;
+        }
+
+        /// <summary>
+        /// Convert the HTML content to plain text
+        /// </summary>
+        /// <param name="html">The html content which is going to be converted</param>
+        /// <returns>A string</returns>
+        public static string HtmlToPlainText(string html)
+        {
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(html);
+            return document.DocumentNode == null ? string.Empty : document.DocumentNode.InnerText;
         }
     }
 }
