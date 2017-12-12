@@ -11,6 +11,7 @@ This documentation provides examples for specific use cases. Please [open an iss
 * [Transient Fault Handling](#transient-faults)
 * [How to Setup a Domain Whitelabel](#domain-whitelabel)
 * [How to View Email Statistics](#email-stats)
+* [Create and deploy a simple Hello Email app on Microsoft Azure with C#](#deployazure)
 
 <a name="attachments"></a>
 # Attachments
@@ -675,3 +676,136 @@ Find more information about all of SendGrid's whitelabeling related documentatio
 You can find documentation for how to view your email statistics via the UI [here](https://app.sendgrid.com/statistics) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#stats).
 
 Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as SendGrid processes your email.
+
+<a name="deployazure"></a>
+# Create and deploy a simple Hello Email app on Microsoft Azure with C# 
+### Create and Store SendGrid API Key
+
+Log into your SendGrid account and create an API. 
+
+1.	Go to the API Keys page in the SendGrid UI, and click Create API Key.
+2.	Give your API key a name.
+3.	Select Full Access, Restricted Access, or Billing Access.
+4.	If you’re selecting Restricted Access, or Billing Access, select the specific permissions to give each category. For more information, see API key permissions.
+5.	Click Create a Key.
+6.	Copy your API Key somewhere safe. For security reasons, do not put it directly in your code, or commit it somewhere like GitHub
+
+Note: The API key will only be displayed once, make sure you copy it somewhere secure.
+
+### Create your Email Application
+
+Create and save your project using your preferred IDE, this example uses Visual Studio.
+
+Add the SendGrid SDK to your Project
+1.	Using the toolbar navigate to Project and choose Manage NuGet
+2.	Click the Browse tab, locate the up-to-date Send Grid and install the latest stable version (current v9.9.0). 
+3.	Review the changes and accept the license agreement.
+
+You should now be able to see SendGrid in the Project references.
+
+Below is a simple C# code example, copy and paste into your project.
+
+ASP.NET
+```
+    <div>
+        <button ID="btnSend" onclick="btnSend_Click">Send</button>
+    </div>
+```
+
+C# Code behind
+```csharp
+using System;
+using System.Configuration;
+using System.Threading.Tasks;
+using System.Web.UI;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+
+public partial class _Default : Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void btnSend_Click(object sender, EventArgs e)
+    {
+        Execute().Wait();
+    }
+    static async Task Execute()
+    {
+        var apiKey = ConfigurationManager.AppSettings["apiKey"].ToString();
+        var client = new SendGridClient(apiKey);
+        var from = new EmailAddress("test@example.com", "Example User");
+        var subject = "Sending with SendGrid is Fun";
+        var to = new EmailAddress("test@example.com", "Example User");
+        var plainTextContent = "and easy to do anywhere, even with C#";
+        var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+        var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+        var response = await client.SendEmailAsync(msg);
+    }
+}
+```
+Update the TO and FROM emails with your email addresses.
+
+In the web.config, add a line for an external file that will store the secret API key.
+```XML
+</connectionStrings>
+   <appSettings file="..\..\AppSettingsSecrets.config">          
+   </appSettings>
+  <system.web>
+  ```
+Create an external XML file, that will not be uploaded to source control. The markup in the external file (AppSettingsSecrets.config in this sample), is the same markup that would be found in the web.config file:
+```XML
+<appSettings>   
+   <!-- SendGrid-->
+   <add key="apiKey" value="My API key value" />
+</appSettings>
+```
+Test your application to confirm all settings are correct and save it.
+
+### Add your application to GitHub
+Log into your GitHub account and create a new repository. This can be done from the toolbar at the top of the window next to your profile icon.
+
+Enter a short name for the repository name, for example HelloWorldAzure. The description is optional by can be very helpful. Once the options are completed to your presence, click Create Repository. GitHub will then create the repository and display a customized quick setup guide. 
+
+In this example, the git command line would be:
+```git
+echo "# HelloWorldAzure" >> README.md
+git init
+git add README.md
+git add --all
+git commit -m "initial commit"
+git remote add origin https://github.com/silviak/HelloWorldAzure.git
+git push -u origin master
+```
+It is very important that the secrets file containing the API key is not stored in source control. If it does get uploaded, remove the file and add to the .gitignore.
+
+Your application is now stored in source control.
+
+### Setting up Azure
+Log into your Azure portal and begin setting up your resources.
+
+On the left toolbar, choose App Services and then Add. Choose the type of application and click Create. Choose the appropriate responses for your application and then click Create.
+
+Once the application is deployed, it is time to set up the deployment with GitHub.
+
+Click on the App on your Azure Dashboard, this will take you to an overview. On the App Service toolbar, choose Deployment Options.
+
+Then configure the settings by choosing GitHub as your source. You will be prompted to authorize Azure to access GitHub. Once that is complete, you can choose the project repository you created earlier in this tutorial.  Once your settings are completed, click ok and you will see a notification that Azure is deploying the App Service. 
+
+### Deploying API key to Azure
+For more information see: [MSDN article](https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure).
+
+The app settings and connection string values override the same settings in the web.config file. In our example, we did not deploy these settings to Azure, but if these keys were in the web.config file, the settings shown on the portal would take precedence.
+
+To set them manually, log in to your Azure Portal
+Click Browse > Web Apps, then click the name of your web app.
+
+Click All settings > Application settings.
+
+Scroll down until you see the App setting and update with the information from your application. 
+
+Click save. 
+
+*** You are now ready to test your first email!
