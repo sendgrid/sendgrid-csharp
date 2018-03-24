@@ -48,6 +48,7 @@ namespace SendGrid.Helpers.Reliability
             this.settings = settings;
         }
 
+        /// <inheritdoc />
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (this.settings.MaximumNumberOfRetries == 0)
