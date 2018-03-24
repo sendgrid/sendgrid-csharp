@@ -1,12 +1,12 @@
-﻿namespace SendGrid.Helpers.Reliability
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
+namespace SendGrid.Helpers.Reliability
+{
     /// <summary>
     /// A delegating handler that provides retry functionality while executing a request
     /// </summary>

@@ -1,9 +1,9 @@
-﻿namespace SendGrid
-{
-    using System;
-    using System.Collections.Generic;
-    using SendGrid.Helpers.Reliability;
+﻿using SendGrid.Helpers.Reliability;
+using System;
+using System.Collections.Generic;
 
+namespace SendGrid
+{
     /// <summary>
     /// Defines the options to use with the SendGrid client
     /// </summary>

@@ -3,17 +3,17 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Newtonsoft.Json;
+using SendGrid.Helpers.Mail.Model;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace SendGrid.Helpers.Mail
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Model;
-    using Newtonsoft.Json;
-
     /// <summary>
     /// Class SendGridMessage builds an object that sends an email through SendGrid.
     /// </summary>

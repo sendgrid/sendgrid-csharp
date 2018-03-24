@@ -3,21 +3,21 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Newtonsoft.Json;
+using SendGrid.Helpers.Mail;
+using SendGrid.Helpers.Reliability;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Reflection;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace SendGrid
 {
-    using Helpers.Mail;
-    using Newtonsoft.Json;
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Reflection;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using SendGrid.Helpers.Reliability;
-
     /// <summary>
     /// A HTTP client wrapper for interacting with SendGrid's API
     /// </summary>
