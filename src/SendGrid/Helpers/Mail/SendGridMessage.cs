@@ -144,7 +144,9 @@ namespace SendGrid.Helpers.Mail
         public void AddTo(string email, string name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
+            {
                 throw new ArgumentNullException("email");
+            }
 
             AddTo(new EmailAddress(email, name));
         }
@@ -263,7 +265,9 @@ namespace SendGrid.Helpers.Mail
         public void AddCc(string email, string name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
+            {
                 throw new ArgumentNullException("email");
+            }
 
             AddCc(new EmailAddress(email, name));
         }
@@ -382,7 +386,9 @@ namespace SendGrid.Helpers.Mail
         public void AddBcc(string email, string name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
+            {
                 throw new ArgumentNullException("email");
+            }
 
             AddBcc(new EmailAddress(email, name));
         }
