@@ -5863,14 +5863,11 @@
              * the original exception and throws another, custom exception. So I'll only
              * assert that ANY exception is thrown.
              * **************************************************************************************** */
-            var exceptionTask = Record.ExceptionAsync(async () =>
+            var thrownException = await Record.ExceptionAsync(async () =>
             {
                 var response = await sg.SendEmailAsync(msg);
             });
 
-            Assert.NotNull(exceptionTask);
-
-            var thrownException = exceptionTask.Result;
             Assert.NotNull(thrownException);
 
             // If we are certain that we don't want custom exceptions to be thrown,
