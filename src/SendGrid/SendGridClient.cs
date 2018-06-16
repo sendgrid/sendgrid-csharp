@@ -52,16 +52,16 @@ namespace SendGrid
                     UseDefaultCredentials = false,
                 };
 
-                var retryHandler = new RetryDelegatingHandler(httpClientHandler, options.ReliabilitySettings);
+                var retryHandler = new RetryDelegatingHandler(httpClientHandler, this.options.ReliabilitySettings);
 
-                client = new HttpClient(retryHandler);
+                this.client = new HttpClient(retryHandler);
             }
             else
             {
-                client = CreateHttpClientWithRetryHandler();
+                this.client = this.CreateHttpClientWithRetryHandler();
             }
 
-            InitiateClient(apiKey, host, requestHeaders, version, urlPath);
+            this.InitiateClient(apiKey, host, requestHeaders, version, urlPath);
         }
 
         /// <summary>
@@ -117,9 +117,9 @@ namespace SendGrid
             }
 
             this.options = options;
-            client = (httpClient == null) ? CreateHttpClientWithRetryHandler() : httpClient;
+            this.client = (httpClient == null) ? this.CreateHttpClientWithRetryHandler() : httpClient;
 
-            InitiateClient(options.ApiKey, options.Host, options.RequestHeaders, options.Version, options.UrlPath);
+            this.InitiateClient(options.ApiKey, options.Host, options.RequestHeaders, options.Version, options.UrlPath);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace SendGrid
         /// <returns>Response object</returns>
         public async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
         {
-            HttpResponseMessage response = await client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            HttpResponseMessage response = await this.client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return new Response(response.StatusCode, response.Content, response.Headers);
         }
 
@@ -211,7 +211,7 @@ namespace SendGrid
             string urlPath = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var endpoint = client.BaseAddress + BuildUrl(urlPath, queryParams);
+            var endpoint = this.client.BaseAddress + this.BuildUrl(urlPath, queryParams);
 
             // Build the request body
             StringContent content = null;
@@ -227,7 +227,7 @@ namespace SendGrid
                 RequestUri = new Uri(endpoint),
                 Content = content
             };
-            return await MakeRequest(request, cancellationToken).ConfigureAwait(false);
+            return await this.MakeRequest(request, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace SendGrid
         /// <returns>A Response object.</returns>
         public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await RequestAsync(
+            return await this.RequestAsync(
                 Method.POST,
                 msg.Serialize(),
                 urlPath: "mail/send",
@@ -255,14 +255,14 @@ namespace SendGrid
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
         private void InitiateClient(string apiKey, string host, Dictionary<string, string> requestHeaders, string version, string urlPath)
         {
-            UrlPath = urlPath;
-            Version = version;
+            this.UrlPath = urlPath;
+            this.Version = version;
 
             var baseAddress = host ?? "https://api.sendgrid.com";
-            var clientVersion = GetType().GetTypeInfo().Assembly.GetName().Version.ToString();
+            var clientVersion = this.GetType().GetTypeInfo().Assembly.GetName().Version.ToString();
 
             // standard headers
-            client.BaseAddress = new Uri(baseAddress);
+            this.client.BaseAddress = new Uri(baseAddress);
             Dictionary<string, string> headers = new Dictionary<string, string>
             {
                 { "Authorization", "Bearer " + apiKey },
@@ -286,23 +286,23 @@ namespace SendGrid
                 if (header.Key == "Authorization")
                 {
                     var split = header.Value.Split();
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(split[0], split[1]);
+                    this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(split[0], split[1]);
                 }
                 else if (header.Key == "Content-Type")
                 {
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(header.Value));
-                    MediaType = header.Value;
+                    this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(header.Value));
+                    this.MediaType = header.Value;
                 }
                 else
                 {
-                    client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                    this.client.DefaultRequestHeaders.Add(header.Key, header.Value);
                 }
             }
         }
 
         private HttpClient CreateHttpClientWithRetryHandler()
         {
-            return new HttpClient(new RetryDelegatingHandler(options.ReliabilitySettings));
+            return new HttpClient(new RetryDelegatingHandler(this.options.ReliabilitySettings));
         }
 
         /// <summary>
@@ -318,11 +318,11 @@ namespace SendGrid
             string url = null;
 
             // create urlPAth - from parameter if overridden on call or from ctor parameter
-            var urlpath = urlPath ?? UrlPath;
+            var urlpath = urlPath ?? this.UrlPath;
 
-            if (Version != null)
+            if (this.Version != null)
             {
-                url = Version + "/" + urlpath;
+                url = this.Version + "/" + urlpath;
             }
             else
             {
