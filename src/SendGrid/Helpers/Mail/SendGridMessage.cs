@@ -1420,7 +1420,7 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         /// <param name="enable">Gets or sets a value indicating whether this setting is enabled.</param>
         /// <param name="substitutionTag">Allows you to specify a substitution tag that you can insert in the body of your email at a location that you desire. This tag will be replaced by the open tracking pixel.</param>
-        public void SetOpenTracking(bool enable, string substitutionTag)
+        public void SetOpenTracking(bool enable, string substitutionTag = null)
         {
             if (this.TrackingSettings == null)
             {
