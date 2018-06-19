@@ -245,7 +245,7 @@ namespace SendGrid
         /// <param name="request">The parameters for the API call</param>
         /// <param name="cancellationToken">Cancel the asynchronous call</param>
         /// <returns>Response object</returns>
-        public async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
         {
             HttpResponseMessage response = await client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return new Response(response.StatusCode, response.Content, response.Headers);
