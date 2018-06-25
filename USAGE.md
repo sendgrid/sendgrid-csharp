@@ -4260,8 +4260,7 @@ string data = @"{
   'html_content': '<%body%>', 
   'name': 'example_version_name', 
   'plain_content': '<%body%>', 
-  'subject': '<%subject%>', 
-  'template_id': 'ddb96bbc-9b92-425e-8979-99464621b543'
+  'subject': '<%subject%>'
 }";
 var json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
