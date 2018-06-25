@@ -10,8 +10,6 @@
 <a name="announcements"></a>
 # Announcements
 
-## August 2017
-
 Subscribe to email [notifications](https://dx.sendgrid.com/newsletter/csharp) for releases and breaking changes.
 
 
@@ -57,11 +55,11 @@ We appreciate your continued support, thank you!
 
 Grab your API Key from the [SendGrid UI](https://app.sendgrid.com/settings/api_keys).
 
-## Easily manage API keys using Environment Variables
+## Setup Environment Variables to Manage Your API Key
 
-TL;DR: 
+Manage your [SendGrid API Keys](https://app.sendgrid.com/settings/api_keys) by storing them in Environment Variables or in [Web.config](https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure). It is a good practice to keep your data and configuration settings separate. This way to you can change your SendGrid API key without changing your code. Also, we strongly advise against storing sensitive data directly in your code.
 
-Setup Environment Variables in Windows
+Setup Environment Variables using the UI:
 1. Press Win+R and run SystemPropertiesAdvanced
 2. Click on Environment Variables
 3. Click New in user variables section
@@ -69,11 +67,9 @@ Setup Environment Variables in Windows
 5. Type actual API Key in the value
 6. Restart the IDE and you're done!
 
-Setup Environment Variables using CMD
+Setup Environment Variables using CMD:
 1. Run CMD as administrator
 2. setx SENDGRID_API_KEY "YOUR_API_KEY"
-
-Easily manage your [SendGrid API Keys](https://app.sendgrid.com/settings/api_keys) by storing them into Environment Variables or [Web.config](https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure). It is a good practice to keep your data and configuration settings separate. This way to you can change your SendGrid API key without changing your code. 
 
 Here are few example to get and set API Keys programatically:
 
