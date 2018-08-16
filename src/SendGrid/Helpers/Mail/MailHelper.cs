@@ -5,6 +5,7 @@
 
 namespace SendGrid.Helpers.Mail
 {
+    using System;
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
 
@@ -53,6 +54,38 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
+        /// Send a single dynamic template email
+        /// </summary>
+        /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
+        /// <param name="to">An email object that may contain the recipient’s name, but must always contain the recipient’s email.</param>
+        /// <param name="templateId">The ID of the template.</param>
+        /// <param name="dynamicTemplateData">The data with which to populate the dynamic template.</param>
+        /// <returns>A SendGridMessage object.</returns>
+        public static SendGridMessage CreateSingleDynamicTemplateEmail(
+                                                        EmailAddress from,
+                                                        EmailAddress to,
+                                                        string templateId,
+                                                        Dictionary<string, string> dynamicTemplateData)
+        {
+            if (string.IsNullOrWhiteSpace(templateId))
+            {
+                throw new ArgumentException($"{nameof(templateId)} is required when creating a dynamic template email.", nameof(templateId));
+            }
+
+            var msg = new SendGridMessage();
+            msg.SetFrom(from);
+            msg.AddTo(to);
+            msg.TemplateId = templateId;
+
+            if (dynamicTemplateData != null)
+            {
+                msg.AddDynamicTemplateDataValues(dynamicTemplateData);
+            }
+
+            return msg;
+        }
+
+        /// <summary>
         /// Send a single simple email to multiple recipients
         /// </summary>
         /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
@@ -84,6 +117,44 @@ namespace SendGrid.Helpers.Mail
             for (var i = 0; i < tos.Count; i++)
             {
                 msg.AddTo(tos[i], i);
+            }
+
+            return msg;
+        }
+
+        /// <summary>
+        /// Send a single simple email to multiple recipients
+        /// </summary>
+        /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
+        /// <param name="tos">A list of email objects that may contain the recipient’s name, but must always contain the recipient’s email.</param>
+        /// <param name="templateId">The ID of the template.</param>
+        /// <param name="dynamicTemplateData">The data with which to populate the dynamic template.</param>
+        /// <returns>A SendGridMessage object.</returns>
+        public static SendGridMessage CreateSingleDynamicTemplateEmailToMultipleRecipients(
+                                                                            EmailAddress from,
+                                                                            List<EmailAddress> tos,
+                                                                            string templateId,
+                                                                            Dictionary<string, string> dynamicTemplateData)
+        {
+            if (string.IsNullOrWhiteSpace(templateId))
+            {
+                throw new ArgumentException($"{nameof(templateId)} is required when creating a dynamic template email.", nameof(templateId));
+            }
+
+            var msg = new SendGridMessage();
+            msg.SetFrom(from);
+            msg.TemplateId = templateId;
+
+            var setDynamicTemplateDataValues = dynamicTemplateData != null;
+
+            for (var i = 0; i < tos.Count; i++)
+            {
+                msg.AddTo(tos[i], i);
+
+                if (setDynamicTemplateDataValues)
+                {
+                    msg.AddDynamicTemplateDataValues(dynamicTemplateData, i);
+                }
             }
 
             return msg;
@@ -124,6 +195,44 @@ namespace SendGrid.Helpers.Mail
                 msg.AddTo(tos[i], i);
                 msg.SetSubject(subjects[i], i);
                 msg.AddSubstitutions(substitutions[i], i);
+            }
+
+            return msg;
+        }
+
+        /// <summary>
+        /// Send multiple emails to multiple recipients.
+        /// </summary>
+        /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
+        /// <param name="tos">A list of email objects that may contain the recipient’s name, but must always contain the recipient’s email.</param>
+        /// <param name="templateId">The ID of the template.</param>
+        /// <param name="dynamicTemplateData">The data with which to populate the dynamic template.</param>
+        /// <returns>A SendGridMessage object.</returns>
+        public static SendGridMessage CreateMultipleDynamicTemplateEmailsToMultipleRecipients(
+                                                                               EmailAddress from,
+                                                                               List<EmailAddress> tos,
+                                                                               string templateId,
+                                                                               List<Dictionary<string, string>> dynamicTemplateData)
+        {
+            if (string.IsNullOrWhiteSpace(templateId))
+            {
+                throw new ArgumentException($"{nameof(templateId)} is required when creating a dynamic template email.", nameof(templateId));
+            }
+
+            var msg = new SendGridMessage();
+            msg.SetFrom(from);
+            msg.TemplateId = templateId;
+
+            var setDynamicTemplateDataValues = dynamicTemplateData != null;
+
+            for (var i = 0; i < tos.Count; i++)
+            {
+                msg.AddTo(tos[i], i);
+
+                if (setDynamicTemplateDataValues)
+                {
+                    msg.AddDynamicTemplateDataValues(dynamicTemplateData[i], i);
+                }
             }
 
             return msg;

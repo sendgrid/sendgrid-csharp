@@ -7,7 +7,8 @@ This documentation provides examples for specific use cases. Please [open an iss
 * [Email - Send a Single Email to Multiple Recipients](#singleemailmultiplerecipients)
 * [Email - Send a Single Email to a Single Recipient](#singleemailsinglerecipient)
 * [Email - Send Multiple Emails to Multiple Recipients](#multipleemailsmultiplerecipients)
-* [Email - Transactional Templates](#transactional-templates)
+* [Email - Dynamic Transactional Templates](#dynamic-transactional-templates)
+* [Email - _Legacy_ Transactional Templates](#transactional-templates)
 * [Transient Fault Handling](#transient-faults)
 * [How to Setup a Domain Whitelabel](#domain-whitelabel)
 * [How to View Email Statistics](#email-stats)
@@ -467,8 +468,142 @@ namespace Example
 }
 ```
 
+<a name="dynamic-transactional-templates"></a>
+# Dynamic Transactional Templates
+
+For this example, we assume you have created a [dynamic transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/Create_and_edit_dynamic_transactional_templates.html).
+Following is the template content we used for testing.
+
+Template ID (replace with your own):
+
+```text
+d-d42b0eea09964d1ab957c18986c01828
+```
+
+Email Subject:
+
+```text
+Dynamic Subject: {{subject}}
+```
+
+Template Body:
+
+```html
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+Hello {{name}},
+<br /><br/>
+I'm glad you are trying out the dynamic template feature!
+<br /><br/>
+I hope you are having a great day in {{city}} :)
+<br /><br/>
+</body>
+</html>
+```
+
+## With Mail Helper Class
+
+```csharp
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System.Threading.Tasks;
+using System;
+
+namespace Example
+{
+    internal class Example
+    {
+        private static void Main()
+        {
+            Execute().Wait();
+        }
+
+        static async Task Execute()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com", "Example User"));
+            msg.AddTo(new EmailAddress("test@example.com", "Example User"));
+            msg.SetTemplateId("d-d42b0eea09964d1ab957c18986c01828");
+            msg.AddDynamicTemplateDataValue("subject", "Hi!");
+            msg.AddDynamicTemplateDataValue("name", "Example User");
+            msg.AddDynamicTemplateDataValue("city", "Birmingham");
+            var response = await client.SendEmailAsync(msg);
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Headers.ToString());
+            Console.WriteLine("\n\nPress any key to exit.");
+            Console.ReadLine();
+        }
+    }
+}
+```
+
+Methods also exist on `MailHelper` to create dynamic template emails:
+* `CreateSingleDynamicTemplateEmail`
+* `CreateSingleDynamicTemplateEmailToMultipleRecipients`
+* `CreateMultipleDynamicTemplateEmailsToMultipleRecipients`
+
+## Without Mail Helper Class
+
+```csharp
+using Newtonsoft.Json;
+using System.Threading.Tasks;
+using System;
+using SendGrid;
+
+namespace Example
+{
+    internal class Example
+    {
+        private static void Main()
+        {
+            Execute().Wait();
+        }
+
+        static async Task Execute()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+
+            string data = @"{
+              'personalizations': [
+                {
+                  'to': [
+                    {
+                      'email': 'test@example.com'
+                    }
+                  ],
+                  'dynamic_template_data': {
+                    'subject': 'Hi!',
+                    'name': 'Example User',
+                    'city': 'Birmingham'
+                  }
+                }
+              ],
+              'from': {
+                'email': 'test@example.com'
+              },
+              'template_id': 'd-d42b0eea09964d1ab957c18986c01828'
+            }";
+            var json = JsonConvert.DeserializeObject<Object>(data);
+            var response = await client.RequestAsync(method: SendGridClient.Method.POST,
+                                                     requestBody: json.ToString(),
+                                                     urlPath: "mail/send");
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Headers.ToString());
+            Console.WriteLine("\n\nPress any key to exit.");
+            Console.ReadLine();
+        }
+    }
+}
+```
+
 <a name="transactional-templates"></a>
-# Transactional Templates
+# _Legacy_ Transactional Templates
 
 For this example, we assume you have created a [transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html). Following is the template content we used for testing.
 

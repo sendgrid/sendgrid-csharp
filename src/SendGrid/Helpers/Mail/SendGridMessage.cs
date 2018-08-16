@@ -751,6 +751,114 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
+        /// Add a dynamic template data value to the email.
+        /// </summary>
+        /// <param name="dynamicTemplateDataKey">The dynamic template data key.</param>
+        /// <param name="dynamicTemplateDataValue">The substitution value.</param>
+        /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the substitution.</param>
+        /// <param name="personalization">A personalization object to append to the message.</param>
+        public void AddDynamicTemplateDataValue(string dynamicTemplateDataKey, string dynamicTemplateDataValue, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.DynamicTemplateData.Add(dynamicTemplateDataKey, dynamicTemplateDataValue);
+                if (this.Personalizations == null)
+                {
+                    this.Personalizations = new List<Personalization>();
+                    this.Personalizations.Add(personalization);
+                }
+                else
+                {
+                    this.Personalizations.Add(personalization);
+                }
+
+                return;
+            }
+
+            if (this.Personalizations != null)
+            {
+                if (this.Personalizations[personalizationIndex] == null)
+                {
+                    var p = new Personalization();
+                    this.Personalizations.Insert(personalizationIndex, p);
+                }
+
+                if (this.Personalizations[personalizationIndex].DynamicTemplateData == null)
+                {
+                    this.Personalizations[personalizationIndex].DynamicTemplateData = new Dictionary<string, string>();
+                }
+
+                this.Personalizations[personalizationIndex].DynamicTemplateData.Add(dynamicTemplateDataKey, dynamicTemplateDataValue);
+                return;
+            }
+
+            this.Personalizations = new List<Personalization>()
+            {
+                new Personalization()
+                {
+                    DynamicTemplateData = new Dictionary<string, string>()
+                    {
+                        { dynamicTemplateDataKey, dynamicTemplateDataValue }
+                    }
+                }
+            };
+            return;
+        }
+
+        /// <summary>
+        /// Add dynamic template data to the email.
+        /// </summary>
+        /// <param name="dynamicTemplateData">A collection of Dynamic Template Data key value pairs.</param>
+        /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the substitutions.</param>
+        /// <param name="personalization">A personalization object to append to the message.</param>
+        public void AddDynamicTemplateDataValues(Dictionary<string, string> dynamicTemplateData, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.DynamicTemplateData = (personalization.DynamicTemplateData != null)
+                    ? personalization.DynamicTemplateData.Union(dynamicTemplateData).ToDictionary(pair => pair.Key, pair => pair.Value) : dynamicTemplateData;
+                if (this.Personalizations == null)
+                {
+                    this.Personalizations = new List<Personalization>();
+                    this.Personalizations.Add(personalization);
+                }
+                else
+                {
+                    this.Personalizations.Add(personalization);
+                }
+
+                return;
+            }
+
+            if (this.Personalizations != null)
+            {
+                if (this.Personalizations[personalizationIndex] == null)
+                {
+                    var p = new Personalization();
+                    this.Personalizations.Insert(personalizationIndex, p);
+                }
+
+                if (this.Personalizations[personalizationIndex].DynamicTemplateData == null)
+                {
+                    this.Personalizations[personalizationIndex].DynamicTemplateData = new Dictionary<string, string>();
+                }
+
+                this.Personalizations[personalizationIndex].DynamicTemplateData = (this.Personalizations[personalizationIndex].DynamicTemplateData != null)
+                    ? this.Personalizations[personalizationIndex].DynamicTemplateData.Union(dynamicTemplateData).ToDictionary(pair => pair.Key, pair => pair.Value) : dynamicTemplateData;
+                return;
+            }
+
+            this.Personalizations = new List<Personalization>()
+            {
+                new Personalization()
+                {
+                    DynamicTemplateData = dynamicTemplateData
+                }
+            };
+            return;
+        }
+
+        /// <summary>
         /// Add a custom argument to the email.
         /// </summary>
         /// <param name="customArgKey">The custom argument key.</param>

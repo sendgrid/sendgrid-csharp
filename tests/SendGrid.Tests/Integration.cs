@@ -1659,6 +1659,205 @@
         }
 
         [Fact]
+        public void TestAddDynamicTemplateDataValue()
+        {
+            // Personalization not passed in, Personalization does not exist
+            var msg = new SendGridMessage();
+            msg.AddDynamicTemplateDataValue("key1", "Dynamic Template Data Value 1");
+            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key1\":\"Dynamic Template Data Value 1\"}}]}");
+
+            // Personalization passed in, no Personalizations
+            msg = new SendGridMessage();
+            var personalization = new Personalization()
+            {
+                DynamicTemplateData = new Dictionary<string, string>()
+                {
+                    { "key2", "Dynamic Template Data Value 2" }
+                }
+            };
+            msg.AddDynamicTemplateDataValue("key3", "Dynamic Template Data Value 3", 0, personalization);
+            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key2\":\"Dynamic Template Data Value 2\",\"key3\":\"Dynamic Template Data Value 3\"}}]}");
+
+            // Personalization passed in, Personalization exists
+            msg = new SendGridMessage
+            {
+                Personalizations = new List<Personalization>()
+                {
+                    new Personalization()
+                    {
+                        DynamicTemplateData = new Dictionary<string, string>()
+                        {
+                            {"key4", "Dynamic Template Data Value 4"}
+                        }
+                    }
+                }
+            };
+            personalization = new Personalization()
+            {
+                DynamicTemplateData = new Dictionary<string, string>()
+                {
+                    { "key5", "Dynamic Template Data Value 5" }
+                }
+            };
+            msg.AddDynamicTemplateDataValue("key6", "Dynamic Template Data Value 6", 1, personalization);
+            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key4\":\"Dynamic Template Data Value 4\"}},{\"dynamic_template_data\":{\"key5\":\"Dynamic Template Data Value 5\",\"key6\":\"Dynamic Template Data Value 6\"}}]}");
+
+            // Personalization not passed in Personalization exists
+            msg = new SendGridMessage
+            {
+                Personalizations = new List<Personalization>()
+                {
+                    new Personalization()
+                    {
+                        DynamicTemplateData = new Dictionary<string, string>()
+                        {
+                            {"key7", "Dynamic Template Data Value 7"}
+                        }
+                    }
+                }
+            };
+            msg.AddDynamicTemplateDataValue("key8", "Dynamic Template Data Value 8");
+            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key7\":\"Dynamic Template Data Value 7\",\"key8\":\"Dynamic Template Data Value 8\"}}]}");
+
+            // Personalization not passed in Personalizations exists
+            msg = new SendGridMessage
+            {
+                Personalizations = new List<Personalization>()
+                {
+                    new Personalization()
+                    {
+                        DynamicTemplateData = new Dictionary<string, string>()
+                        {
+                            {"key9", "Dynamic Template Data Value 9"}
+                        }
+                    }
+                }
+            };
+            personalization = new Personalization()
+            {
+                DynamicTemplateData = new Dictionary<string, string>()
+                {
+                    { "key10", "Dynamic Template Data Value 10" }
+                }
+            };
+            msg.Personalizations.Add(personalization);
+            msg.AddDynamicTemplateDataValue("key11", "Dynamic Template Data Value 11");
+            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key9\":\"Dynamic Template Data Value 9\",\"key11\":\"Dynamic Template Data Value 11\"}},{\"dynamic_template_data\":{\"key10\":\"Dynamic Template Data Value 10\"}}]}");
+        }
+
+        [Fact]
+        public void TestAddDynamicTemplateDataValues()
+        {
+            // Personalization not passed in, Personalization does not exist
+            var msg = new SendGridMessage();
+            var dynamicTemplateDataValues = new Dictionary<string, string>
+            {
+                {"key12", "Dynamic Template Data Value 12"},
+                {"key13", "Dynamic Template Data Value 13"}
+            };
+            msg.AddDynamicTemplateDataValues(dynamicTemplateDataValues);
+            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key12\":\"Dynamic Template Data Value 12\",\"key13\":\"Dynamic Template Data Value 13\"}}]}");
+
+            // Personalization passed in, no Personalizations
+            msg = new SendGridMessage();
+            dynamicTemplateDataValues = new Dictionary<string, string>
+            {
+                {"key14", "Dynamic Template Data Value 14"},
+                {"key15", "Dynamic Template Data Value 15"}
+            };
+            var personalization = new Personalization()
+            {
+                DynamicTemplateData = dynamicTemplateDataValues
+            };
+            dynamicTemplateDataValues = new Dictionary<string, string>
+            {
+                {"key16", "Dynamic Template Data Value 16"},
+                {"key17", "Dynamic Template Data Value 17"}
+            };
+            msg.AddDynamicTemplateDataValues(dynamicTemplateDataValues, 0, personalization);
+            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key14\":\"Dynamic Template Data Value 14\",\"key15\":\"Dynamic Template Data Value 15\",\"key16\":\"Dynamic Template Data Value 16\",\"key17\":\"Dynamic Template Data Value 17\"}}]}");
+
+            // Personalization passed in, Personalization exists
+            msg = new SendGridMessage();
+            dynamicTemplateDataValues = new Dictionary<string, string>
+            {
+                {"key18", "Dynamic Template Data Value 18"},
+                {"key19", "Dynamic Template Data Value 19"}
+            };
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    DynamicTemplateData = dynamicTemplateDataValues
+                }
+            };
+            dynamicTemplateDataValues = new Dictionary<string, string>
+            {
+                {"key20", "Dynamic Template Data Value 20"},
+                {"key21", "Dynamic Template Data Value 21"}
+            };
+            personalization = new Personalization()
+            {
+                DynamicTemplateData = dynamicTemplateDataValues
+            };
+            dynamicTemplateDataValues = new Dictionary<string, string>
+            {
+                {"key22", "Dynamic Template Data Value 22"},
+                {"key23", "Dynamic Template Data Value 23"}
+            };
+            msg.AddDynamicTemplateDataValues(dynamicTemplateDataValues, 1, personalization);
+            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key18\":\"Dynamic Template Data Value 18\",\"key19\":\"Dynamic Template Data Value 19\"}},{\"dynamic_template_data\":{\"key20\":\"Dynamic Template Data Value 20\",\"key21\":\"Dynamic Template Data Value 21\",\"key22\":\"Dynamic Template Data Value 22\",\"key23\":\"Dynamic Template Data Value 23\"}}]}");
+
+            // Personalization not passed in Personalization exists
+            msg = new SendGridMessage();
+            dynamicTemplateDataValues = new Dictionary<string, string>
+            {
+                {"key24", "Dynamic Template Data Value 24"},
+                {"key25", "Dynamic Template Data Value 25"}
+            };
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    DynamicTemplateData = dynamicTemplateDataValues
+                }
+            };
+            dynamicTemplateDataValues = new Dictionary<string, string>
+            {
+                {"key26", "Dynamic Template Data Value 26"},
+                {"key27", "Dynamic Template Data Value 27"}
+            };
+            msg.AddDynamicTemplateDataValues(dynamicTemplateDataValues);
+            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key24\":\"Dynamic Template Data Value 24\",\"key25\":\"Dynamic Template Data Value 25\",\"key26\":\"Dynamic Template Data Value 26\",\"key27\":\"Dynamic Template Data Value 27\"}}]}");
+
+            // Personalization not passed in Personalizations exists
+            msg = new SendGridMessage();
+            dynamicTemplateDataValues = new Dictionary<string, string>
+            {
+                {"key28", "Dynamic Template Data Value 28"},
+                {"key29", "Dynamic Template Data Value 29"}
+            };
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    DynamicTemplateData = dynamicTemplateDataValues
+                }
+            };
+            dynamicTemplateDataValues = new Dictionary<string, string>
+            {
+                {"key30", "Dynamic Template Data Value 30"},
+                {"key31", "Dynamic Template Data Value 31"}
+            };
+            personalization = new Personalization()
+            {
+                DynamicTemplateData = dynamicTemplateDataValues
+            };
+            msg.Personalizations.Add(personalization);
+            dynamicTemplateDataValues = new Dictionary<string, string>
+            {
+                {"key32", "Dynamic Template Data Value 32"},
+                {"key33", "Dynamic Template Data Value 33"}
+            };
+            msg.AddDynamicTemplateDataValues(dynamicTemplateDataValues);
+            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key28\":\"Dynamic Template Data Value 28\",\"key29\":\"Dynamic Template Data Value 29\",\"key32\":\"Dynamic Template Data Value 32\",\"key33\":\"Dynamic Template Data Value 33\"}},{\"dynamic_template_data\":{\"key30\":\"Dynamic Template Data Value 30\",\"key31\":\"Dynamic Template Data Value 31\"}}]}");
+        }
+
+        [Fact]
         public void TestAddCustomArg()
         {
             // Personalization not passed in, Personalization does not exist
@@ -6073,20 +6272,6 @@
         {
             Thread.Sleep(timeOutMilliseconds);
             throw new TimeoutException(exceptionMessage);
-        }
-    }
-
-    public class MailHelperTests
-    {
-        [Theory]
-        [InlineData("Name Of A Person+", "send@grid.com", "Name Of A Person+ <   send@grid.com  >   ")]
-        [InlineData("", "send@grid.com", "   send@grid.com  ")]
-        [InlineData(null, "notAValidEmail", "notAValidEmail")]
-        public void TestStringToEmail(string expectedName, string expectedEmail, string rf2822Email)
-        {
-            var address = MailHelper.StringToEmailAddress(rf2822Email);
-            Assert.Equal(expectedEmail, address.Email);
-            Assert.Equal(expectedName, address.Name);
         }
     }
 }
