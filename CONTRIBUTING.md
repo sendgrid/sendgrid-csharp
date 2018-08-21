@@ -75,7 +75,7 @@ git clone https://github.com/sendgrid/sendgrid-csharp.git
 
 - Open `sendgrid-csharp/SendGrid.sln`
 
-## Environment Variables
+### Environment Variables
 
 First, get your free SendGrid account [here](https://sendgrid.com/free?source=sendgrid-csharp).
 
