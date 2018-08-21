@@ -368,7 +368,7 @@ namespace SendGrid
             var dict = new Dictionary<string, List<object>>();
             
             using(var sr = new StringReader(json))
-            using (var reader = new JsonTextReader(sr))
+            using(var reader = new JsonTextReader(sr))
             {
                 var propertyName = "";
                 while (reader.Read())
@@ -397,4 +397,5 @@ namespace SendGrid
             }
             return dict;
         }
+    }
 }
