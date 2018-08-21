@@ -498,7 +498,7 @@ Hello {{name}},
 <br /><br/>
 I'm glad you are trying out the dynamic template feature!
 <br /><br/>
-I hope you are having a great day in {{city}} :)
+I hope you are having a great day in {{location.city}} :)
 <br /><br/>
 </body>
 </html>
@@ -507,6 +507,7 @@ I hope you are having a great day in {{city}} :)
 ## With Mail Helper Class
 
 ```csharp
+using Newtonsoft.Json;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
@@ -529,14 +530,45 @@ namespace Example
             msg.SetFrom(new EmailAddress("test@example.com", "Example User"));
             msg.AddTo(new EmailAddress("test@example.com", "Example User"));
             msg.SetTemplateId("d-d42b0eea09964d1ab957c18986c01828");
-            msg.AddDynamicTemplateDataValue("subject", "Hi!");
-            msg.AddDynamicTemplateDataValue("name", "Example User");
-            msg.AddDynamicTemplateDataValue("city", "Birmingham");
+
+            var dynamicTemplateData = new ExampleDynamicTemplateData
+            {
+                Subject = "Hi!",
+                Name = "Example User",
+                Location = new Location
+                {
+                    City = "Birmingham",
+                    Country = "United Kingdom"
+                }
+            };
+
+            msg.SetDynamicTemplateData(dynamicTemplateData);
             var response = await client.SendEmailAsync(msg);
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers.ToString());
             Console.WriteLine("\n\nPress any key to exit.");
             Console.ReadLine();
+        }
+
+        private class ExampleDynamicTemplateData
+        {
+            [JsonProperty("subject")]
+            public string Subject { get; set; }
+            
+            [JsonProperty("name")]
+            public string Name { get; set; }
+
+            [JsonProperty("location")]
+            public Location Location { get; set; }
+        }
+
+        private class Location
+        {
+            [JsonProperty("city")]
+            public string City { get; set; }
+            
+            [JsonProperty("country")]
+            public string Country { get; set; }
         }
     }
 }
@@ -580,7 +612,10 @@ namespace Example
                   'dynamic_template_data': {
                     'subject': 'Hi!',
                     'name': 'Example User',
-                    'city': 'Birmingham'
+                    'location': {
+                        'city': 'Birmingham',
+                        'country': 'United Kingdom'
+                    }
                   }
                 }
               ],

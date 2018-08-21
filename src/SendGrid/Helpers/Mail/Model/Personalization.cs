@@ -68,6 +68,6 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets the dynamic template data object following the pattern "dynamic template data key":"dynamic template data value". All are assumed to be strings. These key value pairs will apply to the content of your dynamic template email, in addition to the subject and reply-to parameters.
         /// </summary>
         [JsonProperty(PropertyName = "dynamic_template_data", IsReference = false)]
-        public Dictionary<string, object> DynamicTemplateData { get; set; }
+        public object DynamicTemplateData { get; set; }
     }
 }

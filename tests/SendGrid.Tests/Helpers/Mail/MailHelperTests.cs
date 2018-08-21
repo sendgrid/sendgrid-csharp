@@ -82,10 +82,10 @@ namespace SendGrid.Tests.Helpers.Mail
             };
 
             var templateId = "d-template2";
-            var dynamicTemplateData = new List<Dictionary<string, object>>
+            var dynamicTemplateData = new List<object>
             {
-                new Dictionary<string, object> { { "key1", "value1" } },
-                new Dictionary<string, object> { { "key2", "value2" } }
+                new { key1 = "value1" },
+                new { key2 = "value2" }
             };
 
             var sendGridMessage = MailHelper.CreateMultipleDynamicTemplateEmailsToMultipleRecipients(
