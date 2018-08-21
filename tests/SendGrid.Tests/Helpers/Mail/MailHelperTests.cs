@@ -24,7 +24,7 @@ namespace SendGrid.Tests.Helpers.Mail
             var from = new EmailAddress("from@email.com", "FromName");
             var to = new EmailAddress("to@email.com");
             var templateId = "d-template1";
-            var dynamicTemplateData = new Dictionary<string, string>
+            var dynamicTemplateData = new Dictionary<string, object>
             {
                 { "key1", "value1" }
             };
@@ -52,7 +52,7 @@ namespace SendGrid.Tests.Helpers.Mail
             };
 
             var templateId = "d-template2";
-            var dynamicTemplateData = new Dictionary<string, string>
+            var dynamicTemplateData = new Dictionary<string, object>
             {
                 { "key1", "value1" }
             };
@@ -82,10 +82,10 @@ namespace SendGrid.Tests.Helpers.Mail
             };
 
             var templateId = "d-template2";
-            var dynamicTemplateData = new List<Dictionary<string, string>>
+            var dynamicTemplateData = new List<Dictionary<string, object>>
             {
-                new Dictionary<string, string> { { "key1", "value1" } },
-                new Dictionary<string, string> { { "key2", "value2" } }
+                new Dictionary<string, object> { { "key1", "value1" } },
+                new Dictionary<string, object> { { "key2", "value2" } }
             };
 
             var sendGridMessage = MailHelper.CreateMultipleDynamicTemplateEmailsToMultipleRecipients(

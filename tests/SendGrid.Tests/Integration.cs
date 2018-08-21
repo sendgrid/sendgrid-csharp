@@ -1670,7 +1670,7 @@
             msg = new SendGridMessage();
             var personalization = new Personalization()
             {
-                DynamicTemplateData = new Dictionary<string, string>()
+                DynamicTemplateData = new Dictionary<string, object>()
                 {
                     { "key2", "Dynamic Template Data Value 2" }
                 }
@@ -1685,7 +1685,7 @@
                 {
                     new Personalization()
                     {
-                        DynamicTemplateData = new Dictionary<string, string>()
+                        DynamicTemplateData = new Dictionary<string, object>()
                         {
                             {"key4", "Dynamic Template Data Value 4"}
                         }
@@ -1694,7 +1694,7 @@
             };
             personalization = new Personalization()
             {
-                DynamicTemplateData = new Dictionary<string, string>()
+                DynamicTemplateData = new Dictionary<string, object>()
                 {
                     { "key5", "Dynamic Template Data Value 5" }
                 }
@@ -1709,7 +1709,7 @@
                 {
                     new Personalization()
                     {
-                        DynamicTemplateData = new Dictionary<string, string>()
+                        DynamicTemplateData = new Dictionary<string, object>()
                         {
                             {"key7", "Dynamic Template Data Value 7"}
                         }
@@ -1726,7 +1726,7 @@
                 {
                     new Personalization()
                     {
-                        DynamicTemplateData = new Dictionary<string, string>()
+                        DynamicTemplateData = new Dictionary<string, object>()
                         {
                             {"key9", "Dynamic Template Data Value 9"}
                         }
@@ -1735,7 +1735,7 @@
             };
             personalization = new Personalization()
             {
-                DynamicTemplateData = new Dictionary<string, string>()
+                DynamicTemplateData = new Dictionary<string, object>()
                 {
                     { "key10", "Dynamic Template Data Value 10" }
                 }
@@ -1750,7 +1750,7 @@
         {
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
-            var dynamicTemplateDataValues = new Dictionary<string, string>
+            var dynamicTemplateDataValues = new Dictionary<string, object>
             {
                 {"key12", "Dynamic Template Data Value 12"},
                 {"key13", "Dynamic Template Data Value 13"}
@@ -1760,7 +1760,7 @@
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
-            dynamicTemplateDataValues = new Dictionary<string, string>
+            dynamicTemplateDataValues = new Dictionary<string, object>
             {
                 {"key14", "Dynamic Template Data Value 14"},
                 {"key15", "Dynamic Template Data Value 15"}
@@ -1769,7 +1769,7 @@
             {
                 DynamicTemplateData = dynamicTemplateDataValues
             };
-            dynamicTemplateDataValues = new Dictionary<string, string>
+            dynamicTemplateDataValues = new Dictionary<string, object>
             {
                 {"key16", "Dynamic Template Data Value 16"},
                 {"key17", "Dynamic Template Data Value 17"}
@@ -1779,7 +1779,7 @@
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
-            dynamicTemplateDataValues = new Dictionary<string, string>
+            dynamicTemplateDataValues = new Dictionary<string, object>
             {
                 {"key18", "Dynamic Template Data Value 18"},
                 {"key19", "Dynamic Template Data Value 19"}
@@ -1789,7 +1789,7 @@
                     DynamicTemplateData = dynamicTemplateDataValues
                 }
             };
-            dynamicTemplateDataValues = new Dictionary<string, string>
+            dynamicTemplateDataValues = new Dictionary<string, object>
             {
                 {"key20", "Dynamic Template Data Value 20"},
                 {"key21", "Dynamic Template Data Value 21"}
@@ -1798,7 +1798,7 @@
             {
                 DynamicTemplateData = dynamicTemplateDataValues
             };
-            dynamicTemplateDataValues = new Dictionary<string, string>
+            dynamicTemplateDataValues = new Dictionary<string, object>
             {
                 {"key22", "Dynamic Template Data Value 22"},
                 {"key23", "Dynamic Template Data Value 23"}
@@ -1808,7 +1808,7 @@
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
-            dynamicTemplateDataValues = new Dictionary<string, string>
+            dynamicTemplateDataValues = new Dictionary<string, object>
             {
                 {"key24", "Dynamic Template Data Value 24"},
                 {"key25", "Dynamic Template Data Value 25"}
@@ -1818,7 +1818,7 @@
                     DynamicTemplateData = dynamicTemplateDataValues
                 }
             };
-            dynamicTemplateDataValues = new Dictionary<string, string>
+            dynamicTemplateDataValues = new Dictionary<string, object>
             {
                 {"key26", "Dynamic Template Data Value 26"},
                 {"key27", "Dynamic Template Data Value 27"}
@@ -1828,7 +1828,7 @@
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
-            dynamicTemplateDataValues = new Dictionary<string, string>
+            dynamicTemplateDataValues = new Dictionary<string, object>
             {
                 {"key28", "Dynamic Template Data Value 28"},
                 {"key29", "Dynamic Template Data Value 29"}
@@ -1838,7 +1838,7 @@
                     DynamicTemplateData = dynamicTemplateDataValues
                 }
             };
-            dynamicTemplateDataValues = new Dictionary<string, string>
+            dynamicTemplateDataValues = new Dictionary<string, object>
             {
                 {"key30", "Dynamic Template Data Value 30"},
                 {"key31", "Dynamic Template Data Value 31"}
@@ -1848,7 +1848,7 @@
                 DynamicTemplateData = dynamicTemplateDataValues
             };
             msg.Personalizations.Add(personalization);
-            dynamicTemplateDataValues = new Dictionary<string, string>
+            dynamicTemplateDataValues = new Dictionary<string, object>
             {
                 {"key32", "Dynamic Template Data Value 32"},
                 {"key33", "Dynamic Template Data Value 33"}

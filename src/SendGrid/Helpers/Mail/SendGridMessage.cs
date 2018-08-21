@@ -785,7 +785,7 @@ namespace SendGrid.Helpers.Mail
 
                 if (this.Personalizations[personalizationIndex].DynamicTemplateData == null)
                 {
-                    this.Personalizations[personalizationIndex].DynamicTemplateData = new Dictionary<string, string>();
+                    this.Personalizations[personalizationIndex].DynamicTemplateData = new Dictionary<string, object>();
                 }
 
                 this.Personalizations[personalizationIndex].DynamicTemplateData.Add(dynamicTemplateDataKey, dynamicTemplateDataValue);
@@ -796,7 +796,7 @@ namespace SendGrid.Helpers.Mail
             {
                 new Personalization()
                 {
-                    DynamicTemplateData = new Dictionary<string, string>()
+                    DynamicTemplateData = new Dictionary<string, object>()
                     {
                         { dynamicTemplateDataKey, dynamicTemplateDataValue }
                     }
@@ -811,7 +811,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="dynamicTemplateData">A collection of Dynamic Template Data key value pairs.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the substitutions.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
-        public void AddDynamicTemplateDataValues(Dictionary<string, string> dynamicTemplateData, int personalizationIndex = 0, Personalization personalization = null)
+        public void AddDynamicTemplateDataValues(Dictionary<string, object> dynamicTemplateData, int personalizationIndex = 0, Personalization personalization = null)
         {
             if (personalization != null)
             {
@@ -840,7 +840,7 @@ namespace SendGrid.Helpers.Mail
 
                 if (this.Personalizations[personalizationIndex].DynamicTemplateData == null)
                 {
-                    this.Personalizations[personalizationIndex].DynamicTemplateData = new Dictionary<string, string>();
+                    this.Personalizations[personalizationIndex].DynamicTemplateData = new Dictionary<string, object>();
                 }
 
                 this.Personalizations[personalizationIndex].DynamicTemplateData = (this.Personalizations[personalizationIndex].DynamicTemplateData != null)

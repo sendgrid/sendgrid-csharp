@@ -65,7 +65,7 @@ namespace SendGrid.Helpers.Mail
                                                         EmailAddress from,
                                                         EmailAddress to,
                                                         string templateId,
-                                                        Dictionary<string, string> dynamicTemplateData)
+                                                        Dictionary<string, object> dynamicTemplateData)
         {
             if (string.IsNullOrWhiteSpace(templateId))
             {
@@ -134,7 +134,7 @@ namespace SendGrid.Helpers.Mail
                                                                             EmailAddress from,
                                                                             List<EmailAddress> tos,
                                                                             string templateId,
-                                                                            Dictionary<string, string> dynamicTemplateData)
+                                                                            Dictionary<string, object> dynamicTemplateData)
         {
             if (string.IsNullOrWhiteSpace(templateId))
             {
@@ -212,7 +212,7 @@ namespace SendGrid.Helpers.Mail
                                                                                EmailAddress from,
                                                                                List<EmailAddress> tos,
                                                                                string templateId,
-                                                                               List<Dictionary<string, string>> dynamicTemplateData)
+                                                                               List<Dictionary<string, object>> dynamicTemplateData)
         {
             if (string.IsNullOrWhiteSpace(templateId))
             {
