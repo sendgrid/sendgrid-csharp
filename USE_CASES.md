@@ -468,7 +468,9 @@ namespace Example
 ```
 
 <a name="transactional-templates"></a>
-# Transactional Templates
+# (LEGACY) Transactional Templates
+
+IF YOU ARE USING OUR NEW TEMPLATES, PLEASE SEE [THIS ISSUE](https://github.com/sendgrid/sendgrid-csharp/issues/716).
 
 For this example, we assume you have created a [transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html). Following is the template content we used for testing.
 
