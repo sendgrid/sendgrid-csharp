@@ -25,8 +25,8 @@ script:
   - dotnet restore
   - dotnet build ./src/SendGrid -c Release
   - dotnet test ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp1.0
-  - ls /home/travis/build/sendgrid/sendgrid-csharp/src/SendGrid/bin/Release/net452/
-  - ls /home/travis/build/sendgrid/sendgrid-csharp/src/SendGrid/bin/Release/netstandard1.3/
+  - ls ./src/SendGrid/bin/Release/net452/
+  - ls ./src/SendGrid/bin/Release/netstandard1.3/
   - dotnet pack ./src/SendGrid -c Release
   - curl -s https://codecov.io/bash > .codecov
   - chmod +x .codecov
