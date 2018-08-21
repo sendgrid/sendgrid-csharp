@@ -17,6 +17,7 @@ namespace SendGrid
     using Helpers.Mail;
     using Newtonsoft.Json;
     using SendGrid.Helpers.Reliability;
+    using System.IO;
 
     /// <summary>
     /// A HTTP client wrapper for interacting with SendGrid's API
@@ -331,22 +332,71 @@ namespace SendGrid
 
             if (queryParams != null)
             {
-                var ds_query_params = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(queryParams);
+                var ds_query_params = ParseJson(queryParams);
                 string query = "?";
                 foreach (var pair in ds_query_params)
                 {
-                    if (query != "?")
+                    foreach(var element in pair.Value) 
                     {
-                        query = query + "&";
-                    }
+                        if (query != "?")
+                        {
+                            query = query + "&";
+                        }
 
-                    query = query + pair.Key + "=" + pair.Value.ToString();
+                        query = query + pair.Key + "=" + element;
+                    }
                 }
 
                 url = url + query;
             }
 
             return url;
+        }
+
+        /// <summary>
+        /// Parses a JSON string without removing duplicate keys.
+        /// </summary>
+        /// <remarks>
+        /// This function flattens all Objects/Array.
+        /// This means that for example <code>{'id': 1, 'id': 2, 'id': 3}</code> and 
+        /// <code>{'id': [1, 2, 3]}</code> result in the same output.
+        /// </remarks>
+        /// <param name="json">The JSON string to parse.</param>
+        /// <returns>A dictionary of all values.</returns>
+        private Dictionary<string, List<object>> ParseJson(string json)
+        {
+            var dict = new Dictionary<string, List<object>>();
+            
+            using(var sr = new StringReader(json))
+            using (var reader = new JsonTextReader(sr))
+            {
+                var propertyName = "";
+                while (reader.Read())
+                {
+                    switch (reader.TokenType)
+                    {
+                        case JsonToken.PropertyName:
+                        {
+                            propertyName = reader.Value.ToString();
+                            if(!dict.ContainsKey(propertyName))
+                                dict.Add(propertyName, new List<object>());
+                            break;
+                        }
+                        case JsonToken.Boolean:
+                        case JsonToken.Integer:
+                        case JsonToken.Float:
+                        case JsonToken.Bytes:
+                        case JsonToken.String:
+                        case JsonToken.Date:
+                        {
+                            dict[propertyName].Add(reader.Value);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return dict;
         }
     }
 }

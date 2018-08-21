@@ -28,10 +28,11 @@ namespace Example
     {
         private static void Main()
         {
-            Execute().Wait();
+            ExecuteManualAttachmentAdd().Wait();
+            ExecuteStreamAttachmentAdd().Wait();
         }
 
-        static async Task Execute()
+        static async Task ExecuteManualAttachmentAdd()
         {
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);
@@ -44,6 +45,23 @@ namespace Example
             var file = Convert.ToBase64String(bytes);
             msg.AddAttachment("file.txt", file);
             var response = await client.SendEmailAsync(msg);
+        }
+
+        static async Task ExecuteStreamAttachmentAdd()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("test@example.com");
+            var subject = "Subject";
+            var to = new EmailAddress("test@example.com");
+            var body = "Email Body";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, body, "");
+
+            using (var fileStream = File.OpenRead("/Users/username/file.txt"))
+            {
+                msg.AddAttachment("file.txt", fileStream);
+                var response = await client.SendEmailAsync(msg);
+            }
         }
     }
 }
@@ -450,7 +468,9 @@ namespace Example
 ```
 
 <a name="transactional-templates"></a>
-# Transactional Templates
+# (LEGACY) Transactional Templates
+
+IF YOU ARE USING OUR NEW TEMPLATES, PLEASE SEE [THIS ISSUE](https://github.com/sendgrid/sendgrid-csharp/issues/716).
 
 For this example, we assume you have created a [transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html). Following is the template content we used for testing.
 

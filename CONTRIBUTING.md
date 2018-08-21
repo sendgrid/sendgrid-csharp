@@ -9,6 +9,7 @@ Hello! Thank you for choosing to help contribute to one of the SendGrid open sou
 - [Testing](#testing)
 - [Style Guidelines & Naming Conventions](#style-guidelines-and-naming-conventions)
 - [Creating a Pull Request](#creating-a-pull-request)
+- [Code Reviews](#code-reviews)
 
 <a name="roadmap"></a>
 We use [GitHub Projects](https://github.com/sendgrid/sendgrid-csharp/projects) to help define current roadmaps, please feel free to grab an issue from our [GitHub Issues](https://github.com/sendgrid/sendgrid-csharp/issues). Please indicate that you have begun work on it to avoid collisions. Once a PR is made, community review, comments, suggestions and additional PRs are welcomed and encouraged.
@@ -75,7 +76,7 @@ git clone https://github.com/sendgrid/sendgrid-csharp.git
 
 - Open `sendgrid-csharp/SendGrid.sln`
 
-## Environment Variables
+### Environment Variables
 
 First, get your free SendGrid account [here](https://sendgrid.com/free?source=sendgrid-csharp).
 
@@ -90,23 +91,23 @@ Next, update your Environment with your [SENDGRID_APIKEY](https://app.sendgrid.c
 <a name="understanding-the-codebase"></a>
 ## Understanding the Code Base
 
-**/examples**
+**[/examples](https://github.com/sendgrid/sendgrid-csharp/blob/master/examples)**
 
 Examples that demonstrate usage.
 
-**/ExampleCoreProject/Example.cs**
+**[/ExampleCoreProject/Example.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/ExampleCoreProject/Example.cs)**
 
 A working .NET Core example project for testing.
 
-**/ExampleNet45Project/Example.cs**
+**[/ExampleNet45Project/Example.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/ExampleNet45Project/Example.cs)**
 
 A working .NET 4.5.2 example project for testing.
 
-**src/SendGrid/SendGridClient.cs**
+**[/src/SendGrid/SendGridClient.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/SendGridClient.cs)**
 
 The main interface to the SendGrid API is the class `SendGridClient`.
 
-**/tests/SendGrid.Tests/Integration.cs**
+**[/tests/SendGrid.Tests/Integration.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs)**
 
 Integration tests
 
@@ -139,8 +140,10 @@ Generally, we follow the style guidelines as suggested by the official language.
    ```bash
    # Clone your fork of the repo into the current directory
    git clone https://github.com/sendgrid/sendgrid-csharp
+   
    # Navigate to the newly cloned directory
    cd sendgrid-csharp
+   
    # Assign the original repo to a remote called "upstream"
    git remote add upstream https://github.com/sendgrid/sendgrid-csharp
    ```
@@ -185,3 +188,8 @@ Generally, we follow the style guidelines as suggested by the official language.
     with a clear title and description against the `master` branch. All tests must be passing before we will review the PR.
 
 If you have any additional questions, please feel free to [email](mailto:dx@sendgrid.com) us or create an issue in this repo.
+
+<a name="code-reviews"></a>
+## Code Reviews
+
+If you can, please look at open PRs and review them. Give feedback and help us merge these PRs much faster! If you don't know how, Github has some great information on how to review a Pull Request.
