@@ -63,7 +63,7 @@ namespace SendGrid
         }
 
         /// <summary>
-        /// Gets or sets the response headers returned from SendGrid.
+        /// Gets or sets the response body returned from SendGrid.
         /// </summary>
         public HttpContent Body
         {
@@ -79,7 +79,7 @@ namespace SendGrid
         }
 
         /// <summary>
-        /// Gets or sets the response body returned from SendGrid.
+        /// Gets or sets the response headers returned from SendGrid.
         /// </summary>
         public HttpResponseHeaders Headers
         {
