@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Newtonsoft.Json;
+
 namespace SendGrid.Helpers.Mail
 {
-    using Newtonsoft.Json;
-
     /// <summary>
     /// Allows you to track whether the email was opened or not, but including a single pixel image in the body of the content. When the pixel is loaded, we can log that the email was opened.
     /// </summary>

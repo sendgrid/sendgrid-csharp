@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Newtonsoft.Json;
+
 namespace SendGrid.Helpers.Mail
 {
-    using Newtonsoft.Json;
-
     /// <summary>
     /// Allows you to insert a subscription management link at the bottom of the text and html bodies of your email. If you would like to specify the location of the link within your email, you may use the substitution_tag.
     /// </summary>

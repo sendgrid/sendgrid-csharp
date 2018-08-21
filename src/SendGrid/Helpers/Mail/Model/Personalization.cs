@@ -3,11 +3,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Newtonsoft.Json;
+using System.Collections.Generic;
+
 namespace SendGrid.Helpers.Mail
 {
-    using Newtonsoft.Json;
-    using System.Collections.Generic;
-
     /// <summary>
     /// An array of messages and their metadata. Each object within personalizations can be thought of as an envelope - it defines who should receive an individual message and how that message should be handled. For more information, please see our documentation on Personalizations. Parameters in personalizations will override the parameters of the same name from the message level.
     /// https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html

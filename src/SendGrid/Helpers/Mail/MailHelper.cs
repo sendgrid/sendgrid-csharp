@@ -3,11 +3,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
 namespace SendGrid.Helpers.Mail
 {
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
-
     /// <summary>
     /// Simplified email sending for common use cases
     /// </summary>

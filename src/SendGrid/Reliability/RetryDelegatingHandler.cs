@@ -1,12 +1,17 @@
-﻿namespace SendGrid.Helpers.Reliability
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
+﻿// <copyright file="RetryDelegatingHandler.cs" company="SendGrid">
+// Copyright (c) SendGrid. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
 
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace SendGrid.Helpers.Reliability
+{
     /// <summary>
     /// A delegating handler that provides retry functionality while executing a request
     /// </summary>
@@ -43,6 +48,7 @@
             this.settings = settings;
         }
 
+        /// <inheritdoc />
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (this.settings.MaximumNumberOfRetries == 0)

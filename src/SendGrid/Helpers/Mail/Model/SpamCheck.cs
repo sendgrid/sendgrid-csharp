@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Newtonsoft.Json;
+
 namespace SendGrid.Helpers.Mail
 {
-    using Newtonsoft.Json;
-
     /// <summary>
     /// This allows you to test the content of your email for spam.
     /// </summary>

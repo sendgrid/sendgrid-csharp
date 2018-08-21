@@ -3,11 +3,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Newtonsoft.Json;
+using System.Collections.Generic;
+
 namespace SendGrid.Helpers.Mail
 {
-    using Newtonsoft.Json;
-    using System.Collections.Generic;
-
     /// <summary>
     /// An object allowing you to specify how to handle unsubscribes.
     /// </summary>
