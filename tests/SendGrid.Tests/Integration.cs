@@ -5992,14 +5992,11 @@
              * the original exception and throws another, custom exception. So I'll only
              * assert that ANY exception is thrown.
              * **************************************************************************************** */
-            var exceptionTask = Record.ExceptionAsync(async () =>
+            var thrownException = await Record.ExceptionAsync(async () =>
             {
                 var response = await sg.SendEmailAsync(msg);
             });
 
-            Assert.NotNull(exceptionTask);
-
-            var thrownException = exceptionTask.Result;
             Assert.NotNull(thrownException);
 
             // If we are certain that we don't want custom exceptions to be thrown,
@@ -6090,8 +6087,6 @@
                 Host = "http://localhost:4010"
             };
 
-            var id = "test_url_param";
-
             var retryHandler = new RetryDelegatingHandler(new HttpClientHandler(), options.ReliabilitySettings);
 
             HttpClient clientToInject = new HttpClient(retryHandler) { Timeout = TimeSpan.FromMilliseconds(1) };
@@ -6116,8 +6111,6 @@
                 ApiKey = fixture.apiKey,
                 ReliabilitySettings = new ReliabilitySettings(1, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(1))
             };
-
-            var id = "test_url_param";
 
             var httpMessageHandler = new RetryTestBehaviourDelegatingHandler();
             httpMessageHandler.AddBehaviour(httpMessageHandler.TaskCancelled);

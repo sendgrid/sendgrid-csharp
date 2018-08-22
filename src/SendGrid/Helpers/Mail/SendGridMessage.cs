@@ -3,17 +3,17 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Newtonsoft.Json;
+using SendGrid.Helpers.Mail.Model;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace SendGrid.Helpers.Mail
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Model;
-    using Newtonsoft.Json;
-
     /// <summary>
     /// Class SendGridMessage builds an object that sends an email through SendGrid.
     /// </summary>
@@ -144,9 +144,11 @@ namespace SendGrid.Helpers.Mail
         public void AddTo(string email, string name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
+            {
                 throw new ArgumentNullException("email");
+            }
 
-            AddTo(new EmailAddress(email, name));
+            this.AddTo(new EmailAddress(email, name));
         }
 
         /// <summary>
@@ -263,9 +265,11 @@ namespace SendGrid.Helpers.Mail
         public void AddCc(string email, string name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
+            {
                 throw new ArgumentNullException("email");
+            }
 
-            AddCc(new EmailAddress(email, name));
+            this.AddCc(new EmailAddress(email, name));
         }
 
         /// <summary>
@@ -382,9 +386,11 @@ namespace SendGrid.Helpers.Mail
         public void AddBcc(string email, string name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
+            {
                 throw new ArgumentNullException("email");
+            }
 
-            AddBcc(new EmailAddress(email, name));
+            this.AddBcc(new EmailAddress(email, name));
         }
 
         /// <summary>
@@ -961,7 +967,7 @@ namespace SendGrid.Helpers.Mail
                 throw new ArgumentNullException("email");
             }
 
-            SetFrom(new EmailAddress(email, name));
+            this.SetFrom(new EmailAddress(email, name));
         }
 
         /// <summary>
@@ -1471,7 +1477,7 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         /// <param name="enable">Gets or sets a value indicating whether this setting is enabled.</param>
         /// <param name="substitutionTag">Allows you to specify a substitution tag that you can insert in the body of your email at a location that you desire. This tag will be replaced by the open tracking pixel.</param>
-        public void SetOpenTracking(bool enable, string substitutionTag)
+        public void SetOpenTracking(bool enable, string substitutionTag = null)
         {
             if (this.TrackingSettings == null)
             {
