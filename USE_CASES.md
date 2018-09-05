@@ -542,7 +542,7 @@ namespace Example
             msg.AddTo(new EmailAddress("test@example.com", "Example User"));
             msg.SetTemplateId("d-d42b0eea09964d1ab957c18986c01828");
 
-            var dynamicTemplateData = new ExampleDynamicTemplateData
+            var dynamicTemplateData = new ExampleTemplateData
             {
                 Subject = "Hi!",
                 Name = "Example User",
@@ -553,7 +553,7 @@ namespace Example
                 }
             };
 
-            msg.SetDynamicTemplateData(dynamicTemplateData);
+            msg.SetTemplateData(dynamicTemplateData);
             var response = await client.SendEmailAsync(msg);
             Console.WriteLine(response.StatusCode);
             Console.WriteLine(response.Headers.ToString());
@@ -561,7 +561,7 @@ namespace Example
             Console.ReadLine();
         }
 
-        private class ExampleDynamicTemplateData
+        private class ExampleTemplateData
         {
             [JsonProperty("subject")]
             public string Subject { get; set; }
