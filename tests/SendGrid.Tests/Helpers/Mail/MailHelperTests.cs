@@ -19,7 +19,7 @@ namespace SendGrid.Tests.Helpers.Mail
         }
 
         [Fact]
-        public void TestCreateSingleDynamicTemplateEmail()
+        public void TestCreateSingleTemplateEmail()
         {
             var from = new EmailAddress("from@email.com", "FromName");
             var to = new EmailAddress("to@email.com");
@@ -29,7 +29,7 @@ namespace SendGrid.Tests.Helpers.Mail
                 { "key1", "value1" }
             };
 
-            var sendGridMessage = MailHelper.CreateSingleDynamicTemplateEmail(
+            var sendGridMessage = MailHelper.CreateSingleTemplateEmail(
                 from,
                 to,
                 templateId,
@@ -38,11 +38,11 @@ namespace SendGrid.Tests.Helpers.Mail
             Assert.Equal(from, sendGridMessage.From);
             Assert.Equal(to, sendGridMessage.Personalizations.Single().Tos.Single());
             Assert.Equal(templateId, sendGridMessage.TemplateId);
-            Assert.Equal(dynamicTemplateData, sendGridMessage.Personalizations.Single().DynamicTemplateData);
+            Assert.Equal(dynamicTemplateData, sendGridMessage.Personalizations.Single().TemplateData);
         }
 
         [Fact]
-        public void TestCreateSingleDynamicTemplateEmailToMultipleRecipients()
+        public void TestCreateSingleTemplateEmailToMultipleRecipients()
         {
             var from = new EmailAddress("from@email.com", "FromName");
             var tos = new List<EmailAddress>
@@ -67,12 +67,12 @@ namespace SendGrid.Tests.Helpers.Mail
             Assert.Equal(tos[0], sendGridMessage.Personalizations.ElementAt(0).Tos.Single());
             Assert.Equal(tos[1], sendGridMessage.Personalizations.ElementAt(1).Tos.Single());
             Assert.Equal(templateId, sendGridMessage.TemplateId);
-            Assert.Equal(dynamicTemplateData, sendGridMessage.Personalizations.ElementAt(0).DynamicTemplateData);
-            Assert.Equal(dynamicTemplateData, sendGridMessage.Personalizations.ElementAt(1).DynamicTemplateData);
+            Assert.Equal(dynamicTemplateData, sendGridMessage.Personalizations.ElementAt(0).TemplateData);
+            Assert.Equal(dynamicTemplateData, sendGridMessage.Personalizations.ElementAt(1).TemplateData);
         }
 
         [Fact]
-        public void TestCreateMultipleDynamicTemplateEmailsToMultipleRecipients()
+        public void TestCreateMultipleTemplateEmailsToMultipleRecipients()
         {
             var from = new EmailAddress("from@email.com", "FromName");
             var tos = new List<EmailAddress>
@@ -88,7 +88,7 @@ namespace SendGrid.Tests.Helpers.Mail
                 new { key2 = "value2" }
             };
 
-            var sendGridMessage = MailHelper.CreateMultipleDynamicTemplateEmailsToMultipleRecipients(
+            var sendGridMessage = MailHelper.CreateMultipleTemplateEmailsToMultipleRecipients(
                 from,
                 tos,
                 templateId,
@@ -98,8 +98,8 @@ namespace SendGrid.Tests.Helpers.Mail
             Assert.Equal(tos[0], sendGridMessage.Personalizations.ElementAt(0).Tos.Single());
             Assert.Equal(tos[1], sendGridMessage.Personalizations.ElementAt(1).Tos.Single());
             Assert.Equal(templateId, sendGridMessage.TemplateId);
-            Assert.Equal(dynamicTemplateData[0], sendGridMessage.Personalizations.ElementAt(0).DynamicTemplateData);
-            Assert.Equal(dynamicTemplateData[1], sendGridMessage.Personalizations.ElementAt(1).DynamicTemplateData);
+            Assert.Equal(dynamicTemplateData[0], sendGridMessage.Personalizations.ElementAt(0).TemplateData);
+            Assert.Equal(dynamicTemplateData[1], sendGridMessage.Personalizations.ElementAt(1).TemplateData);
         }
     }
 }

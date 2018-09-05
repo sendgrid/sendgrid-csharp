@@ -61,7 +61,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="templateId">The ID of the template.</param>
         /// <param name="dynamicTemplateData">The data with which to populate the dynamic template.</param>
         /// <returns>A SendGridMessage object.</returns>
-        public static SendGridMessage CreateSingleDynamicTemplateEmail(
+        public static SendGridMessage CreateSingleTemplateEmail(
                                                         EmailAddress from,
                                                         EmailAddress to,
                                                         string templateId,
@@ -79,7 +79,7 @@ namespace SendGrid.Helpers.Mail
 
             if (dynamicTemplateData != null)
             {
-                msg.SetDynamicTemplateData(dynamicTemplateData);
+                msg.SetTemplateData(dynamicTemplateData);
             }
 
             return msg;
@@ -130,7 +130,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="templateId">The ID of the template.</param>
         /// <param name="dynamicTemplateData">The data with which to populate the dynamic template.</param>
         /// <returns>A SendGridMessage object.</returns>
-        public static SendGridMessage CreateSingleDynamicTemplateEmailToMultipleRecipients(
+        public static SendGridMessage CreateSingleTemplateEmailToMultipleRecipients(
                                                                             EmailAddress from,
                                                                             List<EmailAddress> tos,
                                                                             string templateId,
@@ -153,7 +153,7 @@ namespace SendGrid.Helpers.Mail
 
                 if (setDynamicTemplateDataValues)
                 {
-                    msg.SetDynamicTemplateData(dynamicTemplateData, i);
+                    msg.SetTemplateData(dynamicTemplateData, i);
                 }
             }
 
@@ -208,7 +208,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="templateId">The ID of the template.</param>
         /// <param name="dynamicTemplateData">The data with which to populate the dynamic template.</param>
         /// <returns>A SendGridMessage object.</returns>
-        public static SendGridMessage CreateMultipleDynamicTemplateEmailsToMultipleRecipients(
+        public static SendGridMessage CreateMultipleTemplateEmailsToMultipleRecipients(
                                                                                EmailAddress from,
                                                                                List<EmailAddress> tos,
                                                                                string templateId,
@@ -231,7 +231,7 @@ namespace SendGrid.Helpers.Mail
 
                 if (setDynamicTemplateDataValues)
                 {
-                    msg.SetDynamicTemplateData(dynamicTemplateData[i], i);
+                    msg.SetTemplateData(dynamicTemplateData[i], i);
                 }
             }
 

@@ -759,14 +759,14 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Add dynamic template data to the email.
         /// </summary>
-        /// <param name="dynamicTemplateData">A Dynamic Template Data object.</param>
+        /// <param name="dynamicTemplateData">A Template Data object.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the substitutions.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
-        public void SetDynamicTemplateData(object dynamicTemplateData, int personalizationIndex = 0, Personalization personalization = null)
+        public void SetTemplateData(object dynamicTemplateData, int personalizationIndex = 0, Personalization personalization = null)
         {
             if (personalization != null)
             {
-                personalization.DynamicTemplateData = dynamicTemplateData;
+                personalization.TemplateData = dynamicTemplateData;
                 if (this.Personalizations == null)
                 {
                     this.Personalizations = new List<Personalization>();
@@ -788,12 +788,12 @@ namespace SendGrid.Helpers.Mail
                     this.Personalizations.Insert(personalizationIndex, p);
                 }
 
-                if (this.Personalizations[personalizationIndex].DynamicTemplateData == null)
+                if (this.Personalizations[personalizationIndex].TemplateData == null)
                 {
-                    this.Personalizations[personalizationIndex].DynamicTemplateData = new Dictionary<string, object>();
+                    this.Personalizations[personalizationIndex].TemplateData = new Dictionary<string, object>();
                 }
 
-                this.Personalizations[personalizationIndex].DynamicTemplateData = dynamicTemplateData;
+                this.Personalizations[personalizationIndex].TemplateData = dynamicTemplateData;
                 return;
             }
 
@@ -801,7 +801,7 @@ namespace SendGrid.Helpers.Mail
             {
                 new Personalization()
                 {
-                    DynamicTemplateData = dynamicTemplateData
+                    TemplateData = dynamicTemplateData
                 }
             };
             return;

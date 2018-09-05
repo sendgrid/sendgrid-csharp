@@ -2,17 +2,27 @@ This documentation provides examples for specific use cases. Please [open an iss
 
 # Table of Contents
 
-* [Email - Attachments](#attachments)
-* [Email - Kitchen Sink - an example with all settings used](#kitchensink)
-* [Email - Send a Single Email to Multiple Recipients](#singleemailmultiplerecipients)
-* [Email - Send a Single Email to a Single Recipient](#singleemailsinglerecipient)
-* [Email - Send Multiple Emails to Multiple Recipients](#multipleemailsmultiplerecipients)
-* [Email - Dynamic Transactional Templates](#dynamic-transactional-templates)
-* [Email - _Legacy_ Transactional Templates](#transactional-templates)
-* [Transient Fault Handling](#transient-faults)
-* [How to Setup a Domain Whitelabel](#domain-whitelabel)
-* [How to View Email Statistics](#email-stats)
-* [How to transform HTML to plain text](#html-to-plain-text)
+- [Table of Contents](#table-of-contents)
+- [Attachments](#attachments)
+- [Kitchen Sink - an example with all settings used](#kitchen-sink---an-example-with-all-settings-used)
+- [Send a Single Email to Multiple Recipients](#send-a-single-email-to-multiple-recipients)
+- [Send a Single Email to a Single Recipient](#send-a-single-email-to-a-single-recipient)
+- [Send Multiple Emails to Multiple Recipients](#send-multiple-emails-to-multiple-recipients)
+- [Transactional Templates](#transactional-templates)
+    - [With Mail Helper Class](#with-mail-helper-class)
+    - [Without Mail Helper Class](#without-mail-helper-class)
+- [_Legacy_ Transactional Templates](#legacy-transactional-templates)
+    - [Legacy Template With Mail Helper Class](#legacy-template-with-mail-helper-class)
+    - [Legacy Template Without Mail Helper Class](#legacy-template-without-mail-helper-class)
+- [Transient Fault Handling](#transient-fault-handling)
+        - [RetryCount](#retrycount)
+        - [MinimumBackOff](#minimumbackoff)
+        - [MaximumBackOff](#maximumbackoff)
+        - [DeltaBackOff](#deltabackoff)
+    - [Examples](#examples)
+- [How to Setup a Domain Whitelabel](#how-to-setup-a-domain-whitelabel)
+- [How to View Email Statistics](#how-to-view-email-statistics)
+- [How to transform HTML to plain text](#how-to-transform-html-to-plain-text)
 
 <a name="attachments"></a>
 # Attachments
@@ -469,10 +479,10 @@ namespace Example
 }
 ```
 
-<a name="dynamic-transactional-templates"></a>
-# Dynamic Transactional Templates
+<a name="transactional-templates"></a>
+# Transactional Templates
 
-For this example, we assume you have created a [dynamic transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/Create_and_edit_dynamic_transactional_templates.html).
+For this example, we assume you have created a [transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/Create_and_edit_dynamic_transactional_templates.html).
 Following is the template content we used for testing.
 
 Template ID (replace with your own):
@@ -576,9 +586,9 @@ namespace Example
 ```
 
 Methods also exist on `MailHelper` to create dynamic template emails:
-* `CreateSingleDynamicTemplateEmail`
-* `CreateSingleDynamicTemplateEmailToMultipleRecipients`
-* `CreateMultipleDynamicTemplateEmailsToMultipleRecipients`
+* `CreateSingleTemplateEmail`
+* `CreateSingleTemplateEmailToMultipleRecipients`
+* `CreateMultipleTemplateEmailsToMultipleRecipients`
 
 ## Without Mail Helper Class
 
@@ -638,10 +648,10 @@ namespace Example
 }
 ```
 
-<a name="transactional-templates"></a>
+<a name="legacy-transactional-templates"></a>
 # _Legacy_ Transactional Templates
 
-For this example, we assume you have created a [transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html). Following is the template content we used for testing.
+For this example, we assume you have created a [legacy transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html). Following is the template content we used for testing.
 
 Template ID (replace with your own):
 
@@ -675,7 +685,7 @@ I hope you are having a great day in -city- :)
 </html>
 ```
 
-## With Mail Helper Class
+## Legacy Template With Mail Helper Class
 
 ```csharp
 using SendGrid;
@@ -714,7 +724,7 @@ namespace Example
 }
 ```
 
-## Without Mail Helper Class
+## Legacy Template Without Mail Helper Class
 
 ```csharp
 using Newtonsoft.Json;

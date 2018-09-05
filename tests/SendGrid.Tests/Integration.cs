@@ -1659,7 +1659,7 @@
         }
 
         [Fact]
-        public void TestSetDynamicTemplateData()
+        public void TestSetTemplateData()
         {
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
@@ -1668,7 +1668,7 @@
                 key12 = "Dynamic Template Data Value 12",
                 key13 = "Dynamic Template Data Value 13"
             };
-            msg.SetDynamicTemplateData(dynamicTemplateData1);
+            msg.SetTemplateData(dynamicTemplateData1);
             Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key12\":\"Dynamic Template Data Value 12\",\"key13\":\"Dynamic Template Data Value 13\"}}]}");
 
             // Personalization passed in, no Personalizations
@@ -1680,14 +1680,14 @@
             };
             var personalization = new Personalization()
             {
-                DynamicTemplateData = dynamicTemplateData2
+                TemplateData = dynamicTemplateData2
             };
             var dynamicTemplateData3 = new
             {
                 key16 = "Dynamic Template Data Value 16",
                 key17 = "Dynamic Template Data Value 17"
             };
-            msg.SetDynamicTemplateData(dynamicTemplateData3, 0, personalization);
+            msg.SetTemplateData(dynamicTemplateData3, 0, personalization);
             Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key16\":\"Dynamic Template Data Value 16\",\"key17\":\"Dynamic Template Data Value 17\"}}]}");
 
             // Personalization passed in, Personalization exists
@@ -1699,7 +1699,7 @@
             };
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
-                    DynamicTemplateData = dynamicTemplateData4
+                    TemplateData = dynamicTemplateData4
                 }
             };
             var dynamicTemplateData5 = new
@@ -1709,14 +1709,14 @@
             };
             personalization = new Personalization()
             {
-                DynamicTemplateData = dynamicTemplateData5
+                TemplateData = dynamicTemplateData5
             };
             var dynamicTemplateData6 = new
             {
                 key22 = "Dynamic Template Data Value 22",
                 key23 = "Dynamic Template Data Value 23"
             };
-            msg.SetDynamicTemplateData(dynamicTemplateData6, 1, personalization);
+            msg.SetTemplateData(dynamicTemplateData6, 1, personalization);
             Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key18\":\"Dynamic Template Data Value 18\",\"key19\":\"Dynamic Template Data Value 19\"}},{\"dynamic_template_data\":{\"key22\":\"Dynamic Template Data Value 22\",\"key23\":\"Dynamic Template Data Value 23\"}}]}");
 
             // Personalization not passed in Personalization exists
@@ -1728,7 +1728,7 @@
             };
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
-                    DynamicTemplateData = dynamicTemplateData7
+                    TemplateData = dynamicTemplateData7
                 }
             };
             var dynamicTemplateData8 = new
@@ -1736,7 +1736,7 @@
                 key26 = "Dynamic Template Data Value 26",
                 key27 = "Dynamic Template Data Value 27"
             };
-            msg.SetDynamicTemplateData(dynamicTemplateData8);
+            msg.SetTemplateData(dynamicTemplateData8);
             Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key26\":\"Dynamic Template Data Value 26\",\"key27\":\"Dynamic Template Data Value 27\"}}]}");
 
             // Personalization not passed in Personalizations exists
@@ -1748,7 +1748,7 @@
             };
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
-                    DynamicTemplateData = dynamicTemplateData9
+                    TemplateData = dynamicTemplateData9
                 }
             };
             var dynamicTemplateData10 = new
@@ -1758,7 +1758,7 @@
             };
             personalization = new Personalization()
             {
-                DynamicTemplateData = dynamicTemplateData10
+                TemplateData = dynamicTemplateData10
             };
             msg.Personalizations.Add(personalization);
             var dynamicTemplateData11 = new
@@ -1766,7 +1766,7 @@
                 key32 = "Dynamic Template Data Value 32",
                 key33 = "Dynamic Template Data Value 33"
             };
-            msg.SetDynamicTemplateData(dynamicTemplateData11);
+            msg.SetTemplateData(dynamicTemplateData11);
             Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key32\":\"Dynamic Template Data Value 32\",\"key33\":\"Dynamic Template Data Value 33\"}},{\"dynamic_template_data\":{\"key30\":\"Dynamic Template Data Value 30\",\"key31\":\"Dynamic Template Data Value 31\"}}]}");
 
             // Complex dynamic template data
@@ -1783,7 +1783,7 @@
                     innerObjectKey1 = "Dynamic Template Data Deep Object Value 1"
                 }
             };
-            msg.SetDynamicTemplateData(dynamicTemplateData12);
+            msg.SetTemplateData(dynamicTemplateData12);
             Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"array\":[\"Dynamic Template Data Array Value 1\",\"Dynamic Template Data Array Value 2\"],\"innerObject\":{\"innerObjectKey1\":\"Dynamic Template Data Deep Object Value 1\"}}}]}");
         }
 
