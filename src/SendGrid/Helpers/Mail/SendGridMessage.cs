@@ -1277,11 +1277,13 @@ namespace SendGrid.Helpers.Mail
         /// An array containing the unsubscribe groups that you would like to be displayed on the unsubscribe preferences page.
         /// https://sendgrid.com/docs/User_Guide/Suppressions/recipient_subscription_preferences.html
         /// </param>
-        public void SetAsm(int groupID, List<int> groupsToDisplay)
+        public void SetAsm(int groupID, List<int> groupsToDisplay = null)
         {
             this.Asm = new ASM();
             this.Asm.GroupId = groupID;
-            this.Asm.GroupsToDisplay = groupsToDisplay;
+            if (groupsToDisplay != null) {
+                this.Asm.GroupsToDisplay = groupsToDisplay;
+            }
             return;
         }
 
