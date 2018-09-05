@@ -757,6 +757,57 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
+        /// Add dynamic template data to the email.
+        /// </summary>
+        /// <param name="dynamicTemplateData">A Template Data object.</param>
+        /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the substitutions.</param>
+        /// <param name="personalization">A personalization object to append to the message.</param>
+        public void SetTemplateData(object dynamicTemplateData, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.TemplateData = dynamicTemplateData;
+                if (this.Personalizations == null)
+                {
+                    this.Personalizations = new List<Personalization>();
+                    this.Personalizations.Add(personalization);
+                }
+                else
+                {
+                    this.Personalizations.Add(personalization);
+                }
+
+                return;
+            }
+
+            if (this.Personalizations != null)
+            {
+                if (this.Personalizations[personalizationIndex] == null)
+                {
+                    var p = new Personalization();
+                    this.Personalizations.Insert(personalizationIndex, p);
+                }
+
+                if (this.Personalizations[personalizationIndex].TemplateData == null)
+                {
+                    this.Personalizations[personalizationIndex].TemplateData = new Dictionary<string, object>();
+                }
+
+                this.Personalizations[personalizationIndex].TemplateData = dynamicTemplateData;
+                return;
+            }
+
+            this.Personalizations = new List<Personalization>()
+            {
+                new Personalization()
+                {
+                    TemplateData = dynamicTemplateData
+                }
+            };
+            return;
+        }
+
+        /// <summary>
         /// Add a custom argument to the email.
         /// </summary>
         /// <param name="customArgKey">The custom argument key.</param>
