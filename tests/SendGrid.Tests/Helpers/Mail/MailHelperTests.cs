@@ -57,7 +57,7 @@ namespace SendGrid.Tests.Helpers.Mail
                 { "key1", "value1" }
             };
 
-            var sendGridMessage = MailHelper.CreateSingleDynamicTemplateEmailToMultipleRecipients(
+            var sendGridMessage = MailHelper.CreateSingleTemplateEmailToMultipleRecipients(
                 from,
                 tos,
                 templateId,
