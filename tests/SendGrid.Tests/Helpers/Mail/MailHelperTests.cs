@@ -78,8 +78,8 @@ namespace SendGrid.Tests.Helpers.Mail
             var tos = new List<EmailAddress>
             {
                 new EmailAddress("to1@email.com"),
-                new EmailAddress("to1@email.com"),
-                new EmailAddress("to2@email.com")
+                new EmailAddress("to2@email.com"),
+                new EmailAddress("to1@email.com")
             };
 
             var templateId = "d-template2";
@@ -97,6 +97,7 @@ namespace SendGrid.Tests.Helpers.Mail
             Assert.Equal(from, sendGridMessage.From);
             Assert.Equal(tos[0], sendGridMessage.Personalizations.ElementAt(0).Tos.Single());
             Assert.Equal(tos[1], sendGridMessage.Personalizations.ElementAt(1).Tos.Single());
+            Assert.Equal(2, sendGridMessage.Personalizations.Count);
             Assert.Equal(templateId, sendGridMessage.TemplateId);
             Assert.Equal(dynamicTemplateData, sendGridMessage.Personalizations.ElementAt(0).TemplateData);
             Assert.Equal(dynamicTemplateData, sendGridMessage.Personalizations.ElementAt(1).TemplateData);

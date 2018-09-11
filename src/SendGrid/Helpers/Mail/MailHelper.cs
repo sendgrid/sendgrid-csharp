@@ -22,6 +22,9 @@ namespace SendGrid.Helpers.Mail
             $@"(?:(?<{NameGroup}>)(?<{EmailGroup}>[^\<]*@.*[^\>])|(?<{NameGroup}>[^\<]*)\<(?<{EmailGroup}>.*@.*)\>)",
             RegexOptions.ECMAScript);
 
+        private static readonly LambdaComparer<EmailAddress> EmailAddressComparer = new LambdaComparer<EmailAddress>(
+            (a1, a2) => a1.Email.Equals(a2.Email, StringComparison.OrdinalIgnoreCase));
+
         /// <summary>
         /// Send a single simple email
         /// </summary>
@@ -116,8 +119,7 @@ namespace SendGrid.Helpers.Mail
                 msg.AddContent(MimeType.Html, htmlContent);
             }
 
-            var emailAddressComparer = new LambdaComparer<EmailAddress>((a1, a2) => a1.Email.Equals(a2.Email, StringComparison.OrdinalIgnoreCase));
-            var distinctTos = tos.Distinct(emailAddressComparer).ToList();
+            var distinctTos = tos.Distinct(EmailAddressComparer).ToList();
 
             for (var i = 0; i < distinctTos.Count; i++)
             {
@@ -152,8 +154,7 @@ namespace SendGrid.Helpers.Mail
 
             var setDynamicTemplateDataValues = dynamicTemplateData != null;
 
-            var emailAddressComparer = new LambdaComparer<EmailAddress>((a1, a2) => a1.Email.Equals(a2.Email, StringComparison.OrdinalIgnoreCase));
-            var distinctTos = tos.Distinct(emailAddressComparer).ToList();
+            var distinctTos = tos.Distinct(EmailAddressComparer).ToList();
 
             for (var i = 0; i < distinctTos.Count; i++)
             {
@@ -198,8 +199,7 @@ namespace SendGrid.Helpers.Mail
                 msg.AddContent(MimeType.Html, htmlContent);
             }
 
-            var emailAddressComparer = new LambdaComparer<EmailAddress>((a1, a2) => a1.Email.Equals(a2.Email, StringComparison.OrdinalIgnoreCase));
-            var distinctTos = tos.Distinct(emailAddressComparer).ToList();
+            var distinctTos = tos.Distinct(EmailAddressComparer).ToList();
 
             for (var i = 0; i < distinctTos.Count; i++)
             {
@@ -236,8 +236,7 @@ namespace SendGrid.Helpers.Mail
 
             var setDynamicTemplateDataValues = dynamicTemplateData != null;
 
-            var emailAddressComparer = new LambdaComparer<EmailAddress>((a1, a2) => a1.Email.Equals(a2.Email, StringComparison.OrdinalIgnoreCase));
-            var distinctTos = tos.Distinct(emailAddressComparer).ToList();
+            var distinctTos = tos.Distinct(EmailAddressComparer).ToList();
 
             for (var i = 0; i < distinctTos.Count; i++)
             {
