@@ -5,6 +5,7 @@
 
 using Newtonsoft.Json;
 using SendGrid.Helpers.Mail.Model;
+using SendGrid.Helpers.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -214,9 +215,17 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddTos(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
         {
+            var emailAddressComparer = new LambdaComparer<EmailAddress>((a1, a2) => a1.Email.Equals(a2.Email, StringComparison.OrdinalIgnoreCase));
+
+            var distinctEmailAdress = emails.Distinct(emailAddressComparer).ToList();
+            if (distinctEmailAdress.Count == 0)
+            {
+                return;
+            }
+
             if (personalization != null)
             {
-                personalization.Tos.AddRange(emails);
+                personalization.Tos.AddRange(distinctEmailAdress);
                 if (this.Personalizations == null)
                 {
                     this.Personalizations = new List<Personalization>();
@@ -243,7 +252,7 @@ namespace SendGrid.Helpers.Mail
                     this.Personalizations[personalizationIndex].Tos = new List<EmailAddress>();
                 }
 
-                this.Personalizations[personalizationIndex].Tos.AddRange(emails);
+                this.Personalizations[personalizationIndex].Tos.AddRange(distinctEmailAdress);
                 return;
             }
 
@@ -251,7 +260,7 @@ namespace SendGrid.Helpers.Mail
             {
                 new Personalization()
                 {
-                    Tos = emails
+                    Tos = distinctEmailAdress
                 }
             };
             return;
@@ -335,9 +344,17 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddCcs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
         {
+            var emailAddressComparer = new LambdaComparer<EmailAddress>((a1, a2) => a1.Email.Equals(a2.Email, StringComparison.OrdinalIgnoreCase));
+
+            var distinctEmailAdress = emails.Distinct(emailAddressComparer).ToList();
+            if (distinctEmailAdress.Count == 0)
+            {
+                return;
+            }
+
             if (personalization != null)
             {
-                personalization.Ccs.AddRange(emails);
+                personalization.Ccs.AddRange(distinctEmailAdress);
                 if (this.Personalizations == null)
                 {
                     this.Personalizations = new List<Personalization>();
@@ -364,7 +381,7 @@ namespace SendGrid.Helpers.Mail
                     this.Personalizations[personalizationIndex].Ccs = new List<EmailAddress>();
                 }
 
-                this.Personalizations[personalizationIndex].Ccs.AddRange(emails);
+                this.Personalizations[personalizationIndex].Ccs.AddRange(distinctEmailAdress);
                 return;
             }
 
@@ -372,7 +389,7 @@ namespace SendGrid.Helpers.Mail
             {
                 new Personalization()
                 {
-                    Ccs = emails
+                    Ccs = distinctEmailAdress
                 }
             };
             return;
@@ -456,9 +473,17 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddBccs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
         {
+            var emailAddressComparer = new LambdaComparer<EmailAddress>((a1, a2) => a1.Email.Equals(a2.Email, StringComparison.OrdinalIgnoreCase));
+
+            var distinctEmailAdress = emails.Distinct(emailAddressComparer).ToList();
+            if (distinctEmailAdress.Count == 0)
+            {
+                return;
+            }
+
             if (personalization != null)
             {
-                personalization.Bccs.AddRange(emails);
+                personalization.Bccs.AddRange(distinctEmailAdress);
                 if (this.Personalizations == null)
                 {
                     this.Personalizations = new List<Personalization>();
@@ -485,7 +510,7 @@ namespace SendGrid.Helpers.Mail
                     this.Personalizations[personalizationIndex].Bccs = new List<EmailAddress>();
                 }
 
-                this.Personalizations[personalizationIndex].Bccs.AddRange(emails);
+                this.Personalizations[personalizationIndex].Bccs.AddRange(distinctEmailAdress);
                 return;
             }
 
@@ -493,7 +518,7 @@ namespace SendGrid.Helpers.Mail
             {
                 new Personalization()
                 {
-                    Bccs = emails
+                    Bccs = distinctEmailAdress
                 }
             };
             return;

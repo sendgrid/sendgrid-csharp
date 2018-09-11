@@ -3,8 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using SendGrid.Helpers.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace SendGrid.Helpers.Mail
@@ -114,9 +116,12 @@ namespace SendGrid.Helpers.Mail
                 msg.AddContent(MimeType.Html, htmlContent);
             }
 
-            for (var i = 0; i < tos.Count; i++)
+            var emailAddressComparer = new LambdaComparer<EmailAddress>((a1, a2) => a1.Email.Equals(a2.Email, StringComparison.OrdinalIgnoreCase));
+            var distinctTos = tos.Distinct(emailAddressComparer).ToList();
+
+            for (var i = 0; i < distinctTos.Count; i++)
             {
-                msg.AddTo(tos[i], i);
+                msg.AddTo(distinctTos[i], i);
             }
 
             return msg;
@@ -147,9 +152,12 @@ namespace SendGrid.Helpers.Mail
 
             var setDynamicTemplateDataValues = dynamicTemplateData != null;
 
-            for (var i = 0; i < tos.Count; i++)
+            var emailAddressComparer = new LambdaComparer<EmailAddress>((a1, a2) => a1.Email.Equals(a2.Email, StringComparison.OrdinalIgnoreCase));
+            var distinctTos = tos.Distinct(emailAddressComparer).ToList();
+
+            for (var i = 0; i < distinctTos.Count; i++)
             {
-                msg.AddTo(tos[i], i);
+                msg.AddTo(distinctTos[i], i);
 
                 if (setDynamicTemplateDataValues)
                 {
@@ -190,9 +198,12 @@ namespace SendGrid.Helpers.Mail
                 msg.AddContent(MimeType.Html, htmlContent);
             }
 
-            for (var i = 0; i < tos.Count; i++)
+            var emailAddressComparer = new LambdaComparer<EmailAddress>((a1, a2) => a1.Email.Equals(a2.Email, StringComparison.OrdinalIgnoreCase));
+            var distinctTos = tos.Distinct(emailAddressComparer).ToList();
+
+            for (var i = 0; i < distinctTos.Count; i++)
             {
-                msg.AddTo(tos[i], i);
+                msg.AddTo(distinctTos[i], i);
                 msg.SetSubject(subjects[i], i);
                 msg.AddSubstitutions(substitutions[i], i);
             }
@@ -225,9 +236,12 @@ namespace SendGrid.Helpers.Mail
 
             var setDynamicTemplateDataValues = dynamicTemplateData != null;
 
-            for (var i = 0; i < tos.Count; i++)
+            var emailAddressComparer = new LambdaComparer<EmailAddress>((a1, a2) => a1.Email.Equals(a2.Email, StringComparison.OrdinalIgnoreCase));
+            var distinctTos = tos.Distinct(emailAddressComparer).ToList();
+
+            for (var i = 0; i < distinctTos.Count; i++)
             {
-                msg.AddTo(tos[i], i);
+                msg.AddTo(distinctTos[i], i);
 
                 if (setDynamicTemplateDataValues)
                 {
