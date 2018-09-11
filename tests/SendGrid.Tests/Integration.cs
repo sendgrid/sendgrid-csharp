@@ -5917,10 +5917,10 @@
         }
 
         [Theory]
-        [InlineData(200, "OK")]
-        [InlineData(301, "Moved permanently")]
-        [InlineData(401, "Unauthorized")]
-        [InlineData(503, "Service unavailable")]
+        [InlineData(HttpStatusCode.OK, "OK")]
+        [InlineData(HttpStatusCode.MovedPermanently, "Moved permanently")]
+        [InlineData(HttpStatusCode.Unauthorized, "Unauthorized")]
+        [InlineData(HttpStatusCode.ServiceUnavailable, "Service unavailable")]
         public async Task TestTakesHttpClientFactoryAsConstructorArgumentAndUsesItInHttpCalls(HttpStatusCode httpStatusCode, string message)
         {
             var httpResponse = String.Format("<xml><result>{0}</result></xml>", message);
