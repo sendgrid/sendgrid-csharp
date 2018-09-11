@@ -104,6 +104,33 @@ namespace SendGrid.Tests.Helpers.Mail
         }
 
         [Fact]
+        public void TestCreateSingleEmailToMultipleDuplicateRecipients()
+        {
+            var from = new EmailAddress("from@email.com", "FromName");
+            var tos = new List<EmailAddress>
+            {
+                new EmailAddress("to1@email.com"),
+                new EmailAddress("to2@email.com"),
+                new EmailAddress("to1@email.com")
+            };
+
+            var subject = "Mail Subject";
+            var plainText = "Plain Text";
+
+            var sendGridMessage = MailHelper.CreateSingleEmailToMultipleRecipients(
+                from,
+                tos,
+                subject,
+                plainText,
+                null);
+
+            Assert.Equal(from, sendGridMessage.From);
+            Assert.Equal(tos[0], sendGridMessage.Personalizations.ElementAt(0).Tos.Single());
+            Assert.Equal(tos[1], sendGridMessage.Personalizations.ElementAt(1).Tos.Single());
+            Assert.Equal(2, sendGridMessage.Personalizations.Count);
+        }
+
+        [Fact]
         public void TestCreateMultipleTemplateEmailsToMultipleRecipients()
         {
             var from = new EmailAddress("from@email.com", "FromName");
