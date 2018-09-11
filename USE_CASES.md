@@ -53,7 +53,7 @@ namespace Example
             var to = new EmailAddress("test@example.com");
             var body = "Email Body";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, body, "");
-            var bytes = File.ReadAllBytes("/Users/username/file.txt");
+            var bytes = File.ReadAllBytes("C:\\Users\\username\\file.txt");
             var file = Convert.ToBase64String(bytes);
             msg.AddAttachment("file.txt", file);
             var response = await client.SendEmailAsync(msg);
@@ -69,9 +69,9 @@ namespace Example
             var body = "Email Body";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, body, "");
 
-            using (var fileStream = File.OpenRead("/Users/username/file.txt"))
+            using (var fileStream = File.OpenRead("C:\\Users\\username\\file.txt"))
             {
-                msg.AddAttachment("file.txt", fileStream);
+                await msg.AddAttachmentAsync("file.txt", fileStream);
                 var response = await client.SendEmailAsync(msg);
             }
         }
@@ -139,14 +139,19 @@ namespace Example
             };
             msg.AddHeaders(headers);
 
-            msg.AddSubstitution("%name1%", "Example Name 1");
-            msg.AddSubstitution("%city1%", "Denver");
-            var substitutions = new Dictionary<string, string>()
+            // If you require complex substitutions this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transactional-templates).
+            var dynamicTemplateData = new ExampleTemplateData
             {
-                { "%name2%", "Example Name 2" },
-                { "%city2%", "Orange" }
+                Subject = "Hi!",
+                Name = "Example User",
+                Location = new Location
+                {
+                    City = "Birmingham",
+                    Country = "United Kingdom"
+                }
             };
-            msg.AddSubstitutions(substitutions);
+
+            msg.SetTemplateData(dynamicTemplateData);
 
             msg.AddCustomArg("marketing1", "false");
             msg.AddCustomArg("transactional1", "true");
@@ -194,14 +199,19 @@ namespace Example
             };
             msg.AddHeaders(headers1, 1);
 
-            msg.AddSubstitution("%name3%", "Example Name 3", 1);
-            msg.AddSubstitution("%city3%", "Redwood City", 1);
-            var substitutions1 = new Dictionary<string, string>()
+            // For a full transactional template example, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transactional-templates).
+            var dynamicTemplateData2 = new ExampleTemplateData
             {
-                { "%name4%", "Example Name 4" },
-                { "%city4%", "London" }
+                Subject = "Hi 2!",
+                Name = "Example User 2",
+                Location = new Location
+                {
+                    City = "Birmingham 2",
+                    Country = "United Kingdom 2"
+                }
             };
-            msg.AddSubstitutions(substitutions1, 1);
+
+            msg.SetTemplateData(dynamicTemplateData2, 1);
 
             msg.AddCustomArg("marketing3", "true", 1);
             msg.AddCustomArg("transactional3", "false", 1);
@@ -260,7 +270,7 @@ namespace Example
             msg.AddAttachments(attachments);
 
             // For a full transactional template example, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transactional-templates).
-            msg.SetTemplateId("13b8f94f-bcae-4ec6-b752-70d6cb59f932");
+            msg.SetTemplateId("d-d42b0eea09964d1ab957c18986c01828");
 
             msg.AddGlobalHeader("X-Day", "Monday");
             var globalHeaders = new Dictionary<string, string>
