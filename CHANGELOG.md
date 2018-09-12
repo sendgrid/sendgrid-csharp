@@ -1,7 +1,62 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
-## [9.9.0] - 2017-08=22
+## [9.10.0] - 2017-09-12
+## Added
+- [PR #724](https://github.com/sendgrid/sendgrid-csharp/pull/724) Add Dynamic Template Support. Big thanks to [Carl Hartshorn](https://github.com/carl-hartshorn) for the PR!
+- [PR #643](https://github.com/sendgrid/sendgrid-csharp/pull/643) HTML to Plain text documentation. Big thanks to [Jorge Durán](https://github.com/ganchito55) for the PR!
+- [PR #627](https://github.com/sendgrid/sendgrid-csharp/pull/627) Add Code Review to Contributing.md. Big thanks to [Thomas Alrek](https://github.com/thomas-alrek) for the PR!
+- [PR #618](https://github.com/sendgrid/sendgrid-csharp/pull/618) Added links to code base in CONTRIBUTION.md. Big thanks to [Kunal Garg](https://github.com/Kunalgarg2100) for the PR!
+- [PR #617](https://github.com/sendgrid/sendgrid-csharp/pull/617) Added codecov support. Big thanks to [Rishabh Chaudhary](https://github.com/Rishabh04-02) for the PR!
+- [PR #610](https://github.com/sendgrid/sendgrid-csharp/pull/610) Added test to check the license date. Big thanks to [Vitor Mascena Barbosa](https://github.com/VitorBarbosa) for the PR!
+- [PR #601](https://github.com/sendgrid/sendgrid-csharp/pull/601) Update .Net 4.5 References and update the targetFramework monikers. Big thanks to [Felipe Leusin](https://github.com/felipeleusin) for the PR!
+- [PR #586](https://github.com/sendgrid/sendgrid-csharp/pull/586) Allow for duplicate keys in QueryParams. Big thanks to [Florian Hofmair](https://github.com/ImbaKnugel) for the PR!
+- [PR #720](https://github.com/sendgrid/sendgrid-csharp/pull/720) Update CONTRIBUTING.md for improved readability. Big thanks to [Anshul Singhal](https://github.com/af4ro) for the PR!
+- [PR #718](https://github.com/sendgrid/sendgrid-csharp/pull/718) Update README badge. Big thanks to [Anshul Singhal](https://github.com/af4ro) for the PR!
+- [PR #701](https://github.com/sendgrid/sendgrid-csharp/pull/701) Improved environment variable setup instructions. Big thanks to [Siddharth Kochar](https://github.com/sidkcr) for the PR!
+- [PR #537](https://github.com/sendgrid/sendgrid-csharp/pull/537) Added .NET WebForms example. Big thanks to [Roel de Vries](https://github.com/roel-de-vries) for the PR!
+- [PR #522](https://github.com/sendgrid/sendgrid-csharp/pull/522) Update add attachment interface. Big thanks to [Graham Mueller](https://github.com/shortstuffsushi) for the PR!
+- [PR #609](https://github.com/sendgrid/sendgrid-csharp/pull/609) Added unittest to check for specific repo files. Big thanks to [Manjiri Tapaswi](https://github.com/mptap) for the PR!
+- [PR #528](https://github.com/sendgrid/sendgrid-csharp/pull/528) Made DeserializeResponseBody asynchronous. Big thanks to [Xavier Hahn](https://github.com/Gimly) for the PR!
+- [PR #531](https://github.com/sendgrid/sendgrid-csharp/pull/531) Skip invalid content objects during serialization. Big thanks to [Roel de Vries](https://github.com/roel-de-vries) for the PR!
+- [PR #557](https://github.com/sendgrid/sendgrid-csharp/pull/557) Add Dockerfile. Big thanks to [George Vanburgh](https://github.com/FireEater64) for the PR!
+- [PR #599](https://github.com/sendgrid/sendgrid-csharp/pull/599) Add a .env_sample file, update gitignore, update README.md. Big thanks to [thepriefy](https://github.com/thepriefy) for the PR!
+- [PR #596](https://github.com/sendgrid/sendgrid-csharp/pull/596) Add github PR template. Big thanks to [Alex](https://github.com/pushkyn) for the PR!
+- [PR #582](https://github.com/sendgrid/sendgrid-csharp/pull/582) SEO Friendly Section links. Big thanks to [Alex](https://github.com/pushkyn) for the PR!
+- [PR #581](https://github.com/sendgrid/sendgrid-csharp/pull/581) Add/Update Badges on README. Big thanks to [Alex](https://github.com/pushkyn) for the PR!
+- [PR #554](https://github.com/sendgrid/sendgrid-csharp/pull/554) Add a Code Of Conduct. Big thanks to [Henrik Bergqvist](https://github.com/hbbq) for the PR!
+- [PR #548](https://github.com/sendgrid/sendgrid-csharp/pull/548) Add status codes to USAGE.md. Big thanks to [Hank McCord](https://github.com/InKahootz) for the PR!
+- [PR #532](https://github.com/sendgrid/sendgrid-csharp/pull/532) Added information about setting up environment variables. Big thanks to [Roel de Vries](https://github.com/roel-de-vries) for the PR!
+- [PR #523](https://github.com/sendgrid/sendgrid-csharp/pull/523) README improvements. Big thanks to [Kaylyn Sigler](https://github.com/ksigler7) for the PR!
+- [PR #513](https://github.com/sendgrid/sendgrid-csharp/pull/513) Reduced duplication in Integration tests. Big thanks to [Dylan Morley](https://github.com/dylan-asos) for the PR!
+- [PR #514](https://github.com/sendgrid/sendgrid-csharp/pull/514) Added UI thread information. Big thanks to [Matt Bernier](https://github.com/mbernier) for the PR!
+- [PR #515](https://github.com/sendgrid/sendgrid-csharp/pull/515) README improvements. Big thanks to [Matt Bernier](https://github.com/mbernier) for the PR!
+- [PR #518](https://github.com/sendgrid/sendgrid-csharp/pull/518) README improvements. Big thanks to [Matt Bernier](https://github.com/mbernier) for the PR!
+
+## Fixed
+- [PR #735](https://github.com/sendgrid/sendgrid-csharp/pull/735) Fix #418 groupsToDisplay shold be optional.
+- [PR #719](https://github.com/sendgrid/sendgrid-csharp/pull/719) Update travis config to use relative path. Big thanks to [Maxim Rubis](https://github.com/siburny) for the PR!
+- [PR #702](https://github.com/sendgrid/sendgrid-csharp/pull/702) Fixed virtual bug. Big thanks to [Phil](https://github.com/psboies) for the PR!
+- [PR #700](https://github.com/sendgrid/sendgrid-csharp/pull/700) Add default value for SubstitutionTag parameter. Big thanks to [Vedant Koditkar](https://github.com/KoditkarVedant) for the PR!
+- [PR #688](https://github.com/sendgrid/sendgrid-csharp/pull/688) Fix mixup of Response.Body and Response.Header summarie. Big thanks to [Ryan David Sheasb](https://github.com/ryan27968) for the PR!
+- [PR #635](https://github.com/sendgrid/sendgrid-csharp/pull/635) Fixed "Variable assigned but never used" issue. Big thanks to [Unlocked](https://github.com/TheUnlocked) for the PR!
+- [PR #615](https://github.com/sendgrid/sendgrid-csharp/pull/615) Update USAGE.md - fix typo. Big thanks to [Anvesh Chaturvedi](https://github.com/anveshc05) for the PR!
+- [PR #613](https://github.com/sendgrid/sendgrid-csharp/pull/613) Update CONTRIBUTING.md - fix typo. Big thanks to [thepriefy](https://github.com/thepriefy) for the PR!
+- [PR #669](https://github.com/sendgrid/sendgrid-csharp/pull/669) Update Create Template Version Docs as per sendgrid support request. Big thanks to [Tom Needham](https://github.com/06needhamt) for the PR!
+- [PR #603](https://github.com/sendgrid/sendgrid-csharp/pull/603) Minor readability fixes in README. Big thanks to [Rion Williams](https://github.com/rionmonster) for the PR!
+- [PR #592](https://github.com/sendgrid/sendgrid-csharp/pull/592) Update USAGE.md - fix typos. Big thanks to [Anatoly](https://github.com/anatolyyyyyy) for the PR!
+- [PR #608](https://github.com/sendgrid/sendgrid-csharp/pull/608) Updated the LICENSE.txt file to have the correct date range. Big thanks to [Duarte Fernandes](https://github.com/duartefq) for the PR!
+- [PR #588](https://github.com/sendgrid/sendgrid-csharp/pull/588) Update USAGE.md - fix typos. Big thanks to [Varun Dey](https://github.com/varundey) for the PR!
+- [PR #585](https://github.com/sendgrid/sendgrid-csharp/pull/585) Update USAGE.md - fix typos. Big thanks to [Alex](https://github.com/pushkyn) for the PR!
+- [PR #584](https://github.com/sendgrid/sendgrid-csharp/pull/584) Spelling corrections in md, xml docs and variable names. Big thanks to [Brandon Smith](https://github.com/brandon93s) for the PR!
+- [PR #527](https://github.com/sendgrid/sendgrid-csharp/pull/527) Corrected list all recipients documentation. Big thanks to [Xavier Hahn](https://github.com/Gimly) for the PR!
+- [PR #583](https://github.com/sendgrid/sendgrid-csharp/pull/583) Fix a typo in CONTRIBUTING.md. Big thanks to [ChatPion](https://github.com/ChatPion) for the PR!
+- [PR #547](https://github.com/sendgrid/sendgrid-csharp/pull/547) Fix TROUBLESHOOTING.md typo. Big thanks to [Cícero Pablo](https://github.com/ciceropablo) for the PR!
+- [PR #546](https://github.com/sendgrid/sendgrid-csharp/pull/546) Fix README.md typo. Big thanks to [Cícero Pablo](https://github.com/ciceropablo) for the PR!
+- [PR #529](https://github.com/sendgrid/sendgrid-csharp/pull/529) Update bounce usage Fixes. Big thanks to [Xavier Hahn](https://github.com/Gimly) for the PR!
+- [PR #519](https://github.com/sendgrid/sendgrid-csharp/pull/519) Change ContextAwait to ConfigureAwait in TROUBLESHOOTING.md doc. Big thanks to [Brian Surowiec](https://github.com/xt0rted) for the PR!
+
+## [9.9.0] - 2017-08-22
 ## Added
 - #509 Transient Fault Handling (dependency free)
 - Implements retry behaviour for transient faults when using HttpClient to send the request.

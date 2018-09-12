@@ -483,7 +483,7 @@ namespace Example
                                                                           htmlContent,
                                                                           substitutions
                                                                           );
-            var response = await client.SendEmailAsync(msg);                                                            
+            var response = await client.SendEmailAsync(msg);
         }
     }
 }
