@@ -190,7 +190,11 @@ namespace SendGrid.Helpers.Mail
                     this.Personalizations[personalizationIndex].Tos = new List<EmailAddress>();
                 }
 
-                this.Personalizations[personalizationIndex].Tos.Add(email);
+                if (!this.Personalizations[personalizationIndex].Tos.Exists(a => a.Email.Equals(email.Email, StringComparison.OrdinalIgnoreCase)))
+                {
+                    this.Personalizations[personalizationIndex].Tos.Add(email);
+                }
+
                 return;
             }
 
@@ -319,7 +323,11 @@ namespace SendGrid.Helpers.Mail
                     this.Personalizations[personalizationIndex].Ccs = new List<EmailAddress>();
                 }
 
-                this.Personalizations[personalizationIndex].Ccs.Add(email);
+                if (!this.Personalizations[personalizationIndex].Ccs.Exists(a => a.Email.Equals(email.Email, StringComparison.OrdinalIgnoreCase)))
+                {
+                    this.Personalizations[personalizationIndex].Ccs.Add(email);
+                }
+
                 return;
             }
 
@@ -448,7 +456,11 @@ namespace SendGrid.Helpers.Mail
                     this.Personalizations[personalizationIndex].Bccs = new List<EmailAddress>();
                 }
 
-                this.Personalizations[personalizationIndex].Bccs.Add(email);
+                if (!this.Personalizations[personalizationIndex].Bccs.Exists(a => a.Email.Equals(email.Email, StringComparison.OrdinalIgnoreCase)))
+                {
+                    this.Personalizations[personalizationIndex].Bccs.Add(email);
+                }
+
                 return;
             }
 

@@ -281,5 +281,21 @@
         }
 
         #endregion
+
+        [Fact]
+        public void SendGridMessage_MultipleTo()
+        {
+            // Arrange 
+            var sut = new SendGridMessage();
+
+            //Act
+            sut.AddTo("test@test.com");
+            sut.AddTo("test@test.com");
+            sut.AddTo("new@test.com");
+
+            //Assert
+            Assert.Equal(2, sut.Personalizations.FirstOrDefault().Tos.Count);
+        }
+
     }
 }
