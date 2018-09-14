@@ -1,7 +1,7 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
-## [9.10.0] - 2017-09-12
+## [9.10.0] - 2018-09-12
 ## Added
 - [PR #724](https://github.com/sendgrid/sendgrid-csharp/pull/724) Add Dynamic Template Support. Big thanks to [Carl Hartshorn](https://github.com/carl-hartshorn) for the PR!
 - [PR #643](https://github.com/sendgrid/sendgrid-csharp/pull/643) HTML to Plain text documentation. Big thanks to [Jorge Durán](https://github.com/ganchito55) for the PR!
