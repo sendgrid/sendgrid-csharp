@@ -12,7 +12,7 @@ namespace SendGrid.Tests.Helpers.Mail
         [InlineData("Example+data@example.com")]
         public void ConvertEmailAddresses(string email)
         {
-            var address = new MailAddress(email).GetSendGridAddress();
+            var address = new MailAddress(email).ToSendGridAddress();
             Assert.Equal(email, address.Email);
         }
 
@@ -28,7 +28,7 @@ namespace SendGrid.Tests.Helpers.Mail
 
             mail.Body = body;
 
-            var message = mail.GetSendGridMessage();
+            var message = mail.ToSendGridMessage();
 
             Assert.Equal(from, message.From.Email);
             Assert.Equal(subject, message.Subject);
@@ -48,7 +48,7 @@ namespace SendGrid.Tests.Helpers.Mail
             mail.CC.Add(cc);
             mail.Bcc.Add(bcc);
 
-            var message = mail.GetSendGridMessage();
+            var message = mail.ToSendGridMessage();
 
 
             Assert.Equal(from, message.From.Email);
@@ -65,7 +65,7 @@ namespace SendGrid.Tests.Helpers.Mail
             var mail = new MailMessage(from, to);
             mail.ReplyToList.Add(replyTo);
 
-            var message = mail.GetSendGridMessage();
+            var message = mail.ToSendGridMessage();
 
             Assert.Equal(replyTo, message.ReplyTo.Email);
         }

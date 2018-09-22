@@ -14,14 +14,19 @@ namespace SendGrid.Helpers.Mail
 
     public static class MailMessageExtensions
     {
-        public static EmailAddress GetSendGridAddress(this MailAddress address)
+        public static EmailAddress ToSendGridAddress(this MailAddress address)
         {
             return string.IsNullOrWhiteSpace(address.DisplayName) ?
                 new EmailAddress(address.Address) :
                 new EmailAddress(address.Address, address.DisplayName.Replace(",", "").Replace(";", ""));
         }
 
-        public static SendGrid.Helpers.Mail.Attachment GetSendGridAttachment(this System.Net.Mail.Attachment attachment)
+        /// <summary>
+        /// Copies the attachment from a MailMessage into the <see cref="SendGridMessage"/> object as a base64 string.
+        /// </summary>
+        /// <param name="attachment">The attachment to be converted</param>
+        /// <returns>Returns a <see cref="Attachment"/></returns>
+        public static SendGrid.Helpers.Mail.Attachment ToSendGridAttachment(this System.Net.Mail.Attachment attachment)
         {
             using (var stream = new MemoryStream())
             {
@@ -37,32 +42,37 @@ namespace SendGrid.Helpers.Mail
             }
         }
 
-        public static SendGridMessage GetSendGridMessage(this MailMessage message)
+        /// <summary>
+        /// Converts a System.Net.Mail.MailMessage to a SendGrid message.
+        /// </summary>
+        /// <param name="message">The MailMessage to be converted</param>
+        /// <returns>Returns a <see cref="SendGridMessage"/> with the properties from the MailMessage</returns>
+        public static SendGridMessage ToSendGridMessage(this MailMessage message)
         {
             var sendgridMessage = new SendGridMessage();
 
-            sendgridMessage.From = GetSendGridAddress(message.From);
+            sendgridMessage.From = ToSendGridAddress(message.From);
 
             if (message.ReplyToList.Any())
             {
-                sendgridMessage.ReplyTo = message.ReplyToList.First().GetSendGridAddress();
+                sendgridMessage.ReplyTo = message.ReplyToList.First().ToSendGridAddress();
             }
 
             if (message.To.Any())
             {
-                var tos = message.To.Select(x => x.GetSendGridAddress()).ToList();
+                var tos = message.To.Select(x => x.ToSendGridAddress()).ToList();
                 sendgridMessage.AddTos(tos);
             }
 
             if (message.CC.Any())
             {
-                var cc = message.CC.Select(x => x.GetSendGridAddress()).ToList();
+                var cc = message.CC.Select(x => x.ToSendGridAddress()).ToList();
                 sendgridMessage.AddCcs(cc);
             }
 
             if (message.Bcc.Any())
             {
-                var bcc = message.Bcc.Select(x => x.GetSendGridAddress()).ToList();
+                var bcc = message.Bcc.Select(x => x.ToSendGridAddress()).ToList();
                 sendgridMessage.AddBccs(bcc);
             }
 
@@ -98,7 +108,7 @@ namespace SendGrid.Helpers.Mail
             if (message.Attachments.Any())
             {
                 sendgridMessage.Attachments = new System.Collections.Generic.List<SendGrid.Helpers.Mail.Attachment>();
-                sendgridMessage.Attachments.AddRange(message.Attachments.Select(x => GetSendGridAttachment(x)));
+                sendgridMessage.Attachments.AddRange(message.Attachments.Select(x => ToSendGridAttachment(x)));
             }
 
             return sendgridMessage;
@@ -106,4 +116,5 @@ namespace SendGrid.Helpers.Mail
 
     }
 }
+
 #endif
