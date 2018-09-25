@@ -63,7 +63,12 @@ namespace SendGrid.Helpers.Mail
 
             if (message.ReplyToList.Any())
             {
-                sendgridMessage.ReplyTo = message.ReplyToList.First().ToSendGridAddress();
+                if (message.ReplyToList.Count > 1)
+                {
+                    throw new ArgumentException("Sendgrid only supports one reply to address.");
+                }
+
+                sendgridMessage.ReplyTo = message.ReplyToList.Single().ToSendGridAddress();
             }
 
             if (message.To.Any())
