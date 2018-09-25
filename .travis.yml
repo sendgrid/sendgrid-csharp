@@ -1,5 +1,5 @@
 language: csharp
-dotnet: 2.0.9
+dotnet: 2.1
 os: linux
 dist: trusty
 mono: latest
