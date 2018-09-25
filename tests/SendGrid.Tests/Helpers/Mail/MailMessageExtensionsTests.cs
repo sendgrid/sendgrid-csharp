@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Net.Mail;
 using SendGrid.Helpers.Mail;
 using Xunit;
@@ -68,6 +69,37 @@ namespace SendGrid.Tests.Helpers.Mail
             var message = mail.ToSendGridMessage();
 
             Assert.Equal(replyTo, message.ReplyTo.Email);
+        }
+
+        [Fact]
+        public void TestMailMessageShouldConvertAttachements()
+        {
+            var mail = new MailMessage("Ben@Example.com", "HR@Example.com");
+            var data = new byte[] { 0x1, 0x2, 0x3, 0x4 };
+
+            SendGridMessage message = null;
+
+            using (var stream = new MemoryStream(data))
+            {
+                mail.Attachments.Add(new System.Net.Mail.Attachment(stream, "Example.pdf"));
+                message = mail.ToSendGridMessage();
+            }
+
+            Assert.NotEmpty(message.Attachments);
+            var attachment = message.Attachments.Single();
+            Assert.Equal("Example.pdf", attachment.Filename);
+            Assert.False(string.IsNullOrEmpty(attachment.Content));
+        }
+
+        [Fact]
+        public void TestMailMessageHeaderConverted()
+        {
+            var mail = new MailMessage("Ben@Example.com", "HR@Example.com");
+            mail.Headers.Add("Example", "Example");
+
+            var message = mail.ToSendGridMessage();
+            var headers = message.Personalizations.SelectMany(x => x.Headers);
+            Assert.Contains(headers, x => x.Key == "Example" && x.Value == "Example");
         }
     }
 }
