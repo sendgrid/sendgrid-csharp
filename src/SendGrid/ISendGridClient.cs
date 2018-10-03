@@ -69,5 +69,11 @@ namespace SendGrid
         /// <param name="cancellationToken">Cancel the asynchronous call.</param>
         /// <returns>A Response object.</returns>
         Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Creates an instance of the wrapper for the Contacts API
+        /// </summary>
+        /// <returns>An instance of the contacts API wrapper</returns>
+        IContactDbClient CreateContactDbClient();
     }
 }
