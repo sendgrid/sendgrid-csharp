@@ -160,5 +160,38 @@ namespace SendGrid.Tests.Helpers.Mail
             Assert.Equal(dynamicTemplateData[0], sendGridMessage.Personalizations.ElementAt(0).TemplateData);
             Assert.Equal(dynamicTemplateData[1], sendGridMessage.Personalizations.ElementAt(1).TemplateData);
         }
+
+        [Fact]
+        public void TestCreateMultipleTemplateEmailsToMultipleDuplicateRecipients()
+        {
+            var from = new EmailAddress("from@email.com", "FromName");
+            var tos = new List<EmailAddress>
+            {
+                new EmailAddress("to1@email.com"),
+                new EmailAddress("to2@email.com"),
+                new EmailAddress("to2@email.com")
+            };
+
+            var templateId = "d-template2";
+            var dynamicTemplateData = new List<object>
+            {
+                new { key1 = "value1" },
+                new { key2 = "value2" }
+            };
+
+            var sendGridMessage = MailHelper.CreateMultipleTemplateEmailsToMultipleRecipients(
+                from,
+                tos,
+                templateId,
+                dynamicTemplateData);
+
+            Assert.Equal(from, sendGridMessage.From);
+            Assert.Equal(tos[0], sendGridMessage.Personalizations.ElementAt(0).Tos.Single());
+            Assert.Equal(tos[1], sendGridMessage.Personalizations.ElementAt(1).Tos.Single());
+            Assert.Equal(2, sendGridMessage.Personalizations.Count);
+            Assert.Equal(templateId, sendGridMessage.TemplateId);
+            Assert.Equal(dynamicTemplateData[0], sendGridMessage.Personalizations.ElementAt(0).TemplateData);
+            Assert.Equal(dynamicTemplateData[1], sendGridMessage.Personalizations.ElementAt(1).TemplateData);
+        }
     }
 }
