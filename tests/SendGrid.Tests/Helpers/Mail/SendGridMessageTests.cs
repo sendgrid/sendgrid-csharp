@@ -46,7 +46,7 @@
             sut.AddAttachment(filename, content, type, disposition, contentId);
 
             // Assert
-            Assert.Equal(1, sut.Attachments.Count);
+            Assert.Single(sut.Attachments);
 
             var attachment = sut.Attachments.First();
 
@@ -57,6 +57,7 @@
             Assert.Equal(contentId, attachment.ContentId);
         }
 
+        [Fact]
         public void SendGridMessage_AddAttachment_Doesnt_Touch_Attachment_Passed_In()
         {
             // Arrange
@@ -81,7 +82,7 @@
             sut.AddAttachment(attachment);
 
             // Assert
-            Assert.Equal(1, sut.Attachments.Count);
+            Assert.Single(sut.Attachments);
 
             var addedAttachment = sut.Attachments.First();
 
@@ -163,7 +164,7 @@
             sut.AddAttachments(attachments);
 
             // Assert
-            Assert.Equal(1, sut.Attachments.Count);
+            Assert.Single(sut.Attachments);
 
             var addedAttachment = sut.Attachments.First();
 
@@ -209,7 +210,7 @@
             await sut.AddAttachmentAsync("filename", stream);
 
             // Assert
-            Assert.Equal(1, sut.Attachments.Count);
+            Assert.Single(sut.Attachments);
 
             var attachment = sut.Attachments.First();
 
@@ -269,7 +270,7 @@
             await sut.AddAttachmentAsync(filename, contentStream, type, disposition, contentId);
 
             // Assert
-            Assert.Equal(1, sut.Attachments.Count);
+            Assert.Single(sut.Attachments);
 
             var addedAttachment = sut.Attachments.First();
 
