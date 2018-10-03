@@ -10,6 +10,5 @@ namespace SendGrid.Helpers.ContactDb
     /// </summary>
     public class ContactHelper
     {
-        
     }
 }

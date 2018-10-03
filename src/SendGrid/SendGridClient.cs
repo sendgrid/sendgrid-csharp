@@ -397,5 +397,14 @@ namespace SendGrid
             }
             return dict;
         }
+
+        /// <summary>
+        /// Creates an instance of the wrapper for the Contacts API
+        /// </summary>
+        /// <returns>An instance of the contacts API wrapper</returns>
+        public IContactDbClient CreateContactDbClient()
+        {
+            return new ContactDbClient(this.client);
+        }
     }
 }
