@@ -1332,9 +1332,11 @@ namespace SendGrid.Helpers.Mail
         {
             this.Asm = new ASM();
             this.Asm.GroupId = groupID;
-            if (groupsToDisplay != null) {
+            if (groupsToDisplay != null)
+            {
                 this.Asm.GroupsToDisplay = groupsToDisplay;
             }
+
             return;
         }
 
