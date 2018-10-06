@@ -114,6 +114,121 @@ namespace SendGrid.Helpers.ContactDb
         /// <returns>A Response object.</returns>
         Task<Response> DeleteRecipientFromList(int listId, int recipientId);
 
-        Task<Response> UpdateRecipient();
+        /// <summary>
+        /// Update recipient
+        /// </summary>
+        /// <param name="recipient">Recipient to update in the database.</param>
+        /// <returns>A Response object.</returns>
+        Task<Response> UpdateRecipient(Recipient recipient);
+
+        /// <summary>
+        /// Add recipients
+        /// </summary>
+        /// <param name="recipients">The list of recipients to add to the database.</param>
+        /// <returns>A Response object.</returns>
+        Task<Response> AddRecipients(IEnumerable<Recipient> recipients);
+
+        /// <summary>
+        /// Retrieves the list of recipients.
+        /// </summary>
+        /// <param name="pageNumber">The number of the page to retrieve.</param>
+        /// <param name="pageSize">The number of items in the page.</param>
+        /// <returns>A Response object.</returns>
+        Task<Response> GetRecipients(int pageNumber, int pageSize);
+
+        /// <summary>
+        /// Delete recipients.
+        /// </summary>
+        /// <param name="recipientsId">The list of identifiers of the recipients to delete.</param>
+        /// <returns>A Response object.</returns>
+        Task<Response> DeleteRecipients(IEnumerable<string> recipientsId);
+
+        /// <summary>
+        /// Retrieve a count of billable recipients.
+        /// </summary>
+        /// <returns>A Response object.</returns>
+        Task<Response> GetBillableRecipientsCount();
+
+        /// <summary>
+        /// Retrieve a count of recipients.
+        /// </summary>
+        /// <returns>A Response object.</returns>
+        Task<Response> GetRecipientsCount();
+
+        /// <summary>
+        /// Retrieve recipients matching search criteria.
+        /// </summary>
+        /// <param name="queryParams">Retrieve recipients matching search criteria.</param>        
+        /// <returns>A Response object.</returns>
+        Task<Response> SearchRecipients(string queryParams);
+
+        /// <summary>
+        /// Retrieve a single recipient.
+        /// </summary>
+        /// <param name="recipientId">The identifier of the recipient to retrieve.</param>        
+        /// <returns>A Response object.</returns>
+        Task<Response> GetRecipient(string recipientId);
+
+        /// <summary>
+        /// Delete a recipient.
+        /// </summary>
+        /// <param name="recipientId">The identifier of the recipient to delete.</param>        
+        /// <returns>A Response object.</returns>
+        Task<Response> DeleteRecipient(string recipientId);
+
+        /// <summary>
+        /// Retrieve the lists that a recipient is on.
+        /// </summary>
+        /// <param name="recipientId">The identifier of the recipient.</param>        
+        /// <returns>A Response object.</returns>
+        Task<Response> GetRecipientsList(string recipientId);
+
+        /// <summary>
+        /// Retrieve reserved fields.
+        /// </summary>
+        /// <returns>A Response object.</returns>
+        Task<Response> GetReservedFields();
+
+        /// <summary>
+        /// Create a segment.
+        /// </summary>
+        /// <param name="segment">The JSON representation of a segemnt.</param>        
+        /// <returns>A Response object.</returns>
+        Task<Response> CreateSegment(string segment);
+
+        /// <summary>
+        /// Retrieve all segments.
+        /// </summary>
+        /// <returns>A Response object.</returns>
+        Task<Response> GetAllSegments();
+
+        /// <summary>
+        /// Update a segment.
+        /// </summary>
+        /// <param name="segmentId">The segment identifier.</param>        
+        /// <param name="segment">The JSON representation of a segment.</param>        
+        /// <returns>A Response object.</returns>
+        Task<Response> UpdateSegment(string segmentId, string segment);
+
+        /// <summary>
+        /// Retrieve a segment.
+        /// </summary>
+        /// <param name="segmentId">The segment identifier.</param>        
+        /// <returns>A Response object.</returns>
+        Task<Response> GetSegment(string segmentId);
+        
+        /// <summary>
+        /// Delete a segment.
+        /// </summary>
+        /// <param name="segmentId">The segment identifier.</param>        
+        /// <returns>A Response object.</returns>
+        Task<Response> DeleteSegment(string segmentId);
+
+        /// <summary>
+        /// Retrieve recipients on a segment.
+        /// </summary>
+        /// <param name="segmentId">The segment identifier.</param>        
+        /// <returns>A Response object.</returns>
+        Task<Response> GetSegmentRecipients(string segmentId);
     }
 }

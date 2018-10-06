@@ -6,8 +6,9 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using SendGrid.Helpers.CustomDb;
 
-namespace SendGrid
+namespace SendGrid.Helpers.ContactDb
 {
     internal class ContactDbClient : IContactDbClient
     {
@@ -16,6 +17,11 @@ namespace SendGrid
         public ContactDbClient(HttpClient client)
         {
             this.client = client;
+        }
+
+        public Task<Response> AddRecipients(IEnumerable<Recipient> recipients)
+        {
+            throw new System.NotImplementedException();
         }
 
         public Task<Response> AddRecipientsToList(int listId, IEnumerable<string> recipients)
@@ -38,6 +44,11 @@ namespace SendGrid
             throw new System.NotImplementedException();
         }
 
+        public Task<Response> CreateSegment(string segment)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Task<Response> DeleteCustomField(string customFieldId)
         {
             throw new System.NotImplementedException();
@@ -53,7 +64,22 @@ namespace SendGrid
             throw new System.NotImplementedException();
         }
 
+        public Task<Response> DeleteRecipient(string recipientId)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Task<Response> DeleteRecipientFromList(int listId, int recipientId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Response> DeleteRecipients(IEnumerable<string> recipientsId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Response> DeleteSegment(string segmentId)
         {
             throw new System.NotImplementedException();
         }
@@ -73,6 +99,16 @@ namespace SendGrid
             throw new System.NotImplementedException();
         }
 
+        public Task<Response> GetAllSegments()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Response> GetBillableRecipientsCount()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Task<Response> GetCustomField(string customFieldId)
         {
             throw new System.NotImplementedException();
@@ -83,12 +119,62 @@ namespace SendGrid
             throw new System.NotImplementedException();
         }
 
+        public Task<Response> GetRecipient(string recipientId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Response> GetRecipients(int pageNumber, int pageSize)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Response> GetRecipientsCount()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Response> GetRecipientsList(string recipientId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Response> GetReservedFields()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Response> GetSegment(string segmentId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Response> GetSegmentRecipients(string segmentId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Response> SearchRecipients(string queryParams)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Task<Response> UpdateList(int listId, string newName)
         {
             throw new System.NotImplementedException();
         }
 
         public Task<Response> UpdateRecipient()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Response> UpdateRecipient(Recipient recipient)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Response> UpdateSegment(string segmentId, string segment)
         {
             throw new System.NotImplementedException();
         }
