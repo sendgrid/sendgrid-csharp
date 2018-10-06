@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using SendGrid.Helpers.CustomDb;
 
-namespace SendGrid
+namespace SendGrid.Helpers.ContactDb
 {
     /// <summary>
     /// A HTTP client wrapper for interacting with SendGrid's Contact API

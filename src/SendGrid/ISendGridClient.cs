@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using SendGrid.Helpers.ContactDb;
 using SendGrid.Helpers.Mail;
 using System.Collections.Generic;
 using System.Net.Http;

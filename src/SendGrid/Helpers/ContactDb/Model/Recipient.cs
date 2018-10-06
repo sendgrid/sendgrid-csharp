@@ -1,4 +1,4 @@
-// <copyright file="ASM.cs" company="SendGrid">
+// <copyright file="Recipient.cs" company="SendGrid">
 // Copyright (c) SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace SendGrid.Helpers.CustomDb
 {
-    public class CustomField
+    public class Recipient
     {
         public int Id { get; set; }
 
