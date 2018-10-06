@@ -33,6 +33,7 @@ I hope you are having a great day in {{location.city}} :)
 </body>
 </html>
 ```
+
 ## With Mail Helper Class
 
 ```csharp
@@ -108,3 +109,60 @@ Methods also exist on `MailHelper` to create dynamic template emails:
 * `CreateSingleTemplateEmailToMultipleRecipients`
 * `CreateMultipleTemplateEmailsToMultipleRecipients`
 
+## Without Mail Helper Class
+
+```csharp
+using Newtonsoft.Json;
+using System.Threading.Tasks;
+using System;
+using SendGrid;
+
+namespace Example
+{
+    internal class Example
+    {
+        private static void Main()
+        {
+            Execute().Wait();
+        }
+
+        static async Task Execute()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+
+            string data = @"{
+              'personalizations': [
+                {
+                  'to': [
+                    {
+                      'email': 'test@example.com'
+                    }
+                  ],
+                  'dynamic_template_data': {
+                    'subject': 'Hi!',
+                    'name': 'Example User',
+                    'location': {
+                        'city': 'Birmingham',
+                        'country': 'United Kingdom'
+                    }
+                  }
+                }
+              ],
+              'from': {
+                'email': 'test@example.com'
+              },
+              'template_id': 'd-d42b0eea09964d1ab957c18986c01828'
+            }";
+            var json = JsonConvert.DeserializeObject<Object>(data);
+            var response = await client.RequestAsync(method: SendGridClient.Method.POST,
+                                                     requestBody: json.ToString(),
+                                                     urlPath: "mail/send");
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Headers.ToString());
+            Console.WriteLine("\n\nPress any key to exit.");
+            Console.ReadLine();
+        }
+    }
+}
+```
