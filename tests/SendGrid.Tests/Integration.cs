@@ -6125,6 +6125,22 @@
 
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
         }
+
+        [Fact]
+        public async Task TestUsingInvalidTemplateIdThrowsException()
+        {
+            var headers = new Dictionary<string, string> { { "X-Mock", "404" } };
+            var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com"));
+            msg.AddTo(new EmailAddress("test@example.com"));
+            msg.SetSubject("Hello World from the SendGrid CSharp Library");
+            msg.SetTemplateId("1000");
+
+            var exception = await Assert.ThrowsAsync<Exception>(() => sg.SendEmailAsync(msg));
+
+            Assert.NotNull(exception);
+        }
     }
 
     public class FakeWebProxy : IWebProxy

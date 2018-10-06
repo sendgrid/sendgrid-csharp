@@ -4,6 +4,7 @@
 // </copyright>
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SendGrid.Helpers.Mail;
 using SendGrid.Helpers.Reliability;
 using System;
@@ -213,6 +214,23 @@ namespace SendGrid
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var endpoint = this.client.BaseAddress + this.BuildUrl(urlPath, queryParams);
+
+            // Additional validation if the request is a mail/send request
+            if (urlPath.ToLower() == "mail/send" && !string.IsNullOrWhiteSpace(requestBody))
+            {
+                var body = JObject.Parse(requestBody);
+                var template_id = (string)body["template_id"];
+
+                // If a template ID is provided and the account has GET access to tokens, check that the token exists
+                if (!string.IsNullOrWhiteSpace(template_id))
+                {
+                    var response = await this.RequestAsync(Method.GET, urlPath: $"templates/{template_id}");
+                    if (response.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        throw new Exception("The provided template_id does not exist for this account.");
+                    }
+                }
+            }
 
             // Build the request body
             StringContent content = null;
