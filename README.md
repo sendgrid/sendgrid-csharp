@@ -243,9 +243,9 @@ Quick links:
 
 - [Feature Request](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#feature-request)
 - [Bug Reports](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#submit-a-bug-report)
-- [Sign the CLA to Create a Pull Request](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#cla)
 - [Improvements to the Codebase](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#improvements-to-the-codebase)
 - [Review Pull Requests](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#code-reviews)
+- Sign the CLA to Create a Pull Request [here](https://cla.sendgrid.com/sendgrid/sendgrid-csharp)
 
 <a name="troubleshooting"></a>
 # Troubleshooting
@@ -255,7 +255,10 @@ Please see our [troubleshooting guide](https://github.com/sendgrid/sendgrid-csha
 <a name="about"></a>
 # About
 
-sendgrid-csharp is guided and supported by the SendGrid [Developer Experience Team](mailto:dx@sendgrid.com).
+sendgrid-csharp is guided and supported by the SendGrid Developer Experience Team.
+
+Email the Developer Experience Team [here](mailto:dx@sendgrid.com) in case of any assistance or queries.
+
 
 sendgrid-csharp is maintained and funded by SendGrid, Inc. The names and logos for sendgrid-csharp are trademarks of SendGrid, Inc.
 
