@@ -103,8 +103,11 @@ namespace SendGrid.Helpers.ContactDb
         /// <summary>
         /// Retrieve all recipients on a List.
         /// </summary>
+        /// <param name="listId">The identifier of the list.</param>
+        /// <param name="page">Page index of first recipient to return (must be a positive integer)</param>
+        /// <param name="pageSize">Number of recipients to return at a time (must be a positive integer between 1 and 1000)</param>
         /// <returns>A Response object.</returns>
-        Task<Response> GetAllListRecipients();
+        Task<Response> GetAllListRecipients(int listId, int page = 1, int pageSize = 100);
 
         /// <summary>
         /// Add a recipient to a list
@@ -112,7 +115,7 @@ namespace SendGrid.Helpers.ContactDb
         /// <param name="listId">The identifier of the list.</param>
         /// <param name="recipientId">The identifier of the recipient.</param>
         /// <returns>A Response object.</returns>
-        Task<Response> DeleteRecipientFromList(int listId, int recipientId);
+        Task<Response> DeleteRecipientFromList(int listId, string recipientId);
 
         /// <summary>
         /// Update recipient
@@ -216,19 +219,22 @@ namespace SendGrid.Helpers.ContactDb
         /// <param name="segmentId">The segment identifier.</param>        
         /// <returns>A Response object.</returns>
         Task<Response> GetSegment(string segmentId);
-        
+
         /// <summary>
         /// Delete a segment.
         /// </summary>
-        /// <param name="segmentId">The segment identifier.</param>        
+        /// <param name="segmentId">The segment identifier.</param>
+        /// <param name="deleteContacts">True to delete all contacts matching the segment in addition to deleting the segment.</param>
         /// <returns>A Response object.</returns>
-        Task<Response> DeleteSegment(string segmentId);
+        Task<Response> DeleteSegment(string segmentId, bool deleteContacts);
 
         /// <summary>
         /// Retrieve recipients on a segment.
         /// </summary>
-        /// <param name="segmentId">The segment identifier.</param>        
+        /// <param name="segmentId">The segment identifier.</param>
+        /// <param name="page">Page index of first recipient to return (must be a positive integer)</param>
+        /// <param name="pageSize">Number of recipients to return at a time (must be a positive integer between 1 and 1000)</param>
         /// <returns>A Response object.</returns>
-        Task<Response> GetSegmentRecipients(string segmentId);
+        Task<Response> GetSegmentRecipients(string segmentId, int page, int pageSize);
     }
 }

@@ -405,7 +405,7 @@ namespace SendGrid
         /// <returns>An instance of the contacts API wrapper</returns>
         public IContactDbClient CreateContactDbClient()
         {
-            return new ContactDbClient(this.client);
+            return new ContactDbClient(this);
         }
     }
 }

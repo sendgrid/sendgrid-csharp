@@ -6,177 +6,267 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using SendGrid.Helpers.CustomDb;
 
 namespace SendGrid.Helpers.ContactDb
 {
     internal class ContactDbClient : IContactDbClient
     {
-        private HttpClient client;
+        private SendGridClient client;
 
-        public ContactDbClient(HttpClient client)
+        public ContactDbClient(SendGridClient client)
         {
             this.client = client;
         }
 
-        public Task<Response> AddRecipients(IEnumerable<Recipient> recipients)
+        public async Task<Response> AddRecipients(IEnumerable<Recipient> recipients)
         {
-            throw new System.NotImplementedException();
+            var jsonData = JsonConvert.SerializeObject(recipients);
+            return await client.RequestAsync(
+                method: SendGridClient.Method.POST,
+                urlPath: "contactdb/recipients",
+                requestBody: jsonData);
         }
 
-        public Task<Response> AddRecipientsToList(int listId, IEnumerable<string> recipients)
+        public async Task<Response> AddRecipientsToList(int listId, IEnumerable<string> recipients)
         {
-            throw new System.NotImplementedException();
+            var jsonData = JsonConvert.SerializeObject(recipients);
+            return await client.RequestAsync(
+                method: SendGridClient.Method.POST,
+                urlPath: $"contactdb/lists/{listId}/recipients",
+                requestBody: jsonData);
         }
 
-        public Task<Response> AddRecipientToList(int listId, string recipient)
+        public async Task<Response> AddRecipientToList(int listId, string recipientId)
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.POST,
+                urlPath: $"contactdb/lists/{listId}/recipients{recipientId}");
         }
 
-        public Task<Response> CreateCustomField(string name, string type)
+        public async Task<Response> CreateCustomField(string name, string type)
         {
-            throw new System.NotImplementedException();
+            var data = new { name, type };
+            var jsonData = JsonConvert.SerializeObject(data);
+
+            return await client.RequestAsync(
+                method: SendGridClient.Method.POST,
+                urlPath: "contactdb/custom_fields",
+                requestBody: jsonData);
         }
 
-        public Task<Response> CreateList(string name)
+        public async Task<Response> CreateList(string name)
         {
-            throw new System.NotImplementedException();
+            var data = new { name };
+            var jsonData = JsonConvert.SerializeObject(data);
+
+            return await client.RequestAsync(
+                method: SendGridClient.Method.POST,
+                urlPath: "contactdb/lists",
+                requestBody: jsonData);
         }
 
-        public Task<Response> CreateSegment(string segment)
+        public async Task<Response> CreateSegment(string segment)
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.POST,
+                urlPath: "contactdb/segments",
+                requestBody: segment);
         }
 
-        public Task<Response> DeleteCustomField(string customFieldId)
+        public async Task<Response> DeleteCustomField(string customFieldId)
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.DELETE,
+                urlPath: $"contactdb/custom_fields/{customFieldId}");
         }
 
-        public Task<Response> DeleteList(int listId)
+        public async Task<Response> DeleteList(int listId)
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.DELETE,
+                urlPath: $"contactdb/lists/{listId}");
         }
 
-        public Task<Response> DeleteLists(IEnumerable<int> listsIds)
+        public async Task<Response> DeleteLists(IEnumerable<int> listsIds)
         {
-            throw new System.NotImplementedException();
+            var jsonData = JsonConvert.SerializeObject(listsIds);
+            return await client.RequestAsync(
+                method: SendGridClient.Method.DELETE,
+                urlPath: "contactdb/lists",
+                requestBody: jsonData);
         }
 
-        public Task<Response> DeleteRecipient(string recipientId)
+        public async Task<Response> DeleteRecipient(string recipientId)
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.DELETE,
+                urlPath: $"contactdb/recipients/{recipientId}");
         }
 
-        public Task<Response> DeleteRecipientFromList(int listId, int recipientId)
+        public async Task<Response> DeleteRecipientFromList(int listId, string recipientId)
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.DELETE,
+                urlPath: $"contactdb/lists/{listId}/recipients/{recipientId}");
         }
 
-        public Task<Response> DeleteRecipients(IEnumerable<string> recipientsId)
+        public async Task<Response> DeleteRecipients(IEnumerable<string> recipientsId)
         {
-            throw new System.NotImplementedException();
+            var jsonData = JsonConvert.SerializeObject(recipientsId);
+            return await client.RequestAsync(
+                method: SendGridClient.Method.DELETE,
+                urlPath: "contactdb/recipients",
+                requestBody: jsonData);
         }
 
-        public Task<Response> DeleteSegment(string segmentId)
+        public async Task<Response> DeleteSegment(string segmentId, bool deleteContacts)
         {
-            throw new System.NotImplementedException();
+            string queryParams = $"{{'delete_contacts': '{deleteContacts}'}}";
+
+            return await client.RequestAsync(
+                method: SendGridClient.Method.DELETE,
+                urlPath: $"contactdb/segments/{segmentId}",
+                queryParams: queryParams);
         }
 
-        public Task<Response> GetAllCustomFields()
+        public async Task<Response> GetAllCustomFields()
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.GET,
+                urlPath: "contactdb/custom_fields");
         }
 
-        public Task<Response> GetAllListRecipients()
+        public async Task<Response> GetAllListRecipients(int listId, int page = 1, int pageSize = 100)
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.GET,
+                urlPath: $"contactdb/lists/{listId}/recipients/?page_size={pageSize}&page={page}");
         }
 
-        public Task<Response> GetAllLists()
+        public async Task<Response> GetAllLists()
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.GET,
+                urlPath: "contactdb/lists");
         }
 
-        public Task<Response> GetAllSegments()
+        public async Task<Response> GetAllSegments()
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.GET,
+                urlPath: "contactdb/segments");
         }
 
-        public Task<Response> GetBillableRecipientsCount()
+        public async Task<Response> GetBillableRecipientsCount()
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.GET,
+                urlPath: "contactdb/recipients/billable_count");
         }
 
-        public Task<Response> GetCustomField(string customFieldId)
+        public async Task<Response> GetCustomField(string customFieldId)
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.GET,
+                urlPath: $"contactdb/custom_fields/{customFieldId}");
         }
 
-        public Task<Response> GetList(int listId)
+        public async Task<Response> GetList(int listId)
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.GET,
+                urlPath: $"contactdb/lists/{listId}");
         }
 
-        public Task<Response> GetRecipient(string recipientId)
+        public async Task<Response> GetRecipient(string recipientId)
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.GET,
+                urlPath: $"contactdb/recipients/{recipientId}");
         }
 
-        public Task<Response> GetRecipients(int pageNumber, int pageSize)
+        public async Task<Response> GetRecipients(int pageNumber, int pageSize)
         {
-            throw new System.NotImplementedException();
+            string queryParams = $"{{'page': {pageNumber},'page_size': {pageSize}}}";
+            return await client.RequestAsync(
+                method: SendGridClient.Method.GET,
+                urlPath: "contactdb/recipients",
+                queryParams: queryParams);
         }
 
-        public Task<Response> GetRecipientsCount()
+        public async Task<Response> GetRecipientsCount()
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.GET,
+                urlPath: "contactdb/recipients/count");
         }
 
-        public Task<Response> GetRecipientsList(string recipientId)
+        public async Task<Response> GetRecipientsList(string recipientId)
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.GET,
+                urlPath: $"contactdb/recipients/{recipientId}/lists");
         }
 
-        public Task<Response> GetReservedFields()
+        public async Task<Response> GetReservedFields()
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.GET,
+                urlPath: "contactdb/reserved_fields");
         }
 
-        public Task<Response> GetSegment(string segmentId)
+        public async Task<Response> GetSegment(string segmentId)
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.GET,
+                urlPath: $"contactdb/segments/{segmentId}");
         }
 
-        public Task<Response> GetSegmentRecipients(string segmentId)
+        public async Task<Response> GetSegmentRecipients(string segmentId, int page, int pageSize)
         {
-            throw new System.NotImplementedException();
+            string queryParams = $"{{'page': {page},'page_size': {pageSize}}}";
+            return await client.RequestAsync(
+                method: SendGridClient.Method.GET,
+                urlPath: $"contactdb/segments/{segmentId}/recipients",
+                queryParams: queryParams);
         }
 
-        public Task<Response> SearchRecipients(string queryParams)
+        public async Task<Response> SearchRecipients(string queryParams)
         {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.GET,
+                urlPath: "contactdb/recipients/search",
+                queryParams: queryParams);
         }
 
-        public Task<Response> UpdateList(int listId, string newName)
+        public async Task<Response> UpdateList(int listId, string newName)
         {
-            throw new System.NotImplementedException();
+            var data = new { name = newName };
+            var jsonData = JsonConvert.SerializeObject(data);
+
+            return await client.RequestAsync(
+                method: SendGridClient.Method.PATCH,
+                urlPath: $"contactdb/lists/{listId}",
+                requestBody: jsonData);
         }
 
-        public Task<Response> UpdateRecipient()
+        public async Task<Response> UpdateRecipient(Recipient recipient)
         {
-            throw new System.NotImplementedException();
+            var jsonData = JsonConvert.SerializeObject(recipient);
+            return await client.RequestAsync(
+                method: SendGridClient.Method.PATCH,
+                urlPath: "contactdb/recipients",
+                requestBody: jsonData);
         }
 
-        public Task<Response> UpdateRecipient(Recipient recipient)
+        public async Task<Response> UpdateSegment(string segmentId, string segment)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<Response> UpdateSegment(string segmentId, string segment)
-        {
-            throw new System.NotImplementedException();
+            return await client.RequestAsync(
+                method: SendGridClient.Method.PATCH,
+                urlPath: $"contactdb/segments/{segmentId}",
+                requestBody: segment);
         }
     }
 }
