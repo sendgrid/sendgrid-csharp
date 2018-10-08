@@ -7,8 +7,8 @@ using Newtonsoft.Json;
 using SendGrid.Helpers.Mail;
 using SendGrid.Helpers.Reliability;
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -273,11 +273,11 @@ namespace SendGrid
 
             if (queryParams != null)
             {
-                var ds_query_params = ParseJson(queryParams);
+                var ds_query_params = this.ParseJson(queryParams);
                 string query = "?";
                 foreach (var pair in ds_query_params)
                 {
-                    foreach(var element in pair.Value) 
+                    foreach (var element in pair.Value)
                     {
                         if (query != "?")
                         {
@@ -359,7 +359,7 @@ namespace SendGrid
         /// </summary>
         /// <remarks>
         /// This function flattens all Objects/Array.
-        /// This means that for example <code>{'id': 1, 'id': 2, 'id': 3}</code> and 
+        /// This means that for example <code>{'id': 1, 'id': 2, 'id': 3}</code> and
         /// <code>{'id': [1, 2, 3]}</code> result in the same output.
         /// </remarks>
         /// <param name="json">The JSON string to parse.</param>
@@ -367,11 +367,11 @@ namespace SendGrid
         private Dictionary<string, List<object>> ParseJson(string json)
         {
             var dict = new Dictionary<string, List<object>>();
-            
-            using(var sr = new StringReader(json))
-            using(var reader = new JsonTextReader(sr))
+
+            using (var sr = new StringReader(json))
+            using (var reader = new JsonTextReader(sr))
             {
-                var propertyName = "";
+                var propertyName = string.Empty;
                 while (reader.Read())
                 {
                     switch (reader.TokenType)
@@ -379,10 +379,14 @@ namespace SendGrid
                         case JsonToken.PropertyName:
                         {
                             propertyName = reader.Value.ToString();
-                            if(!dict.ContainsKey(propertyName))
+                            if (!dict.ContainsKey(propertyName))
+                            {
                                 dict.Add(propertyName, new List<object>());
+                            }
+
                             break;
                         }
+
                         case JsonToken.Boolean:
                         case JsonToken.Integer:
                         case JsonToken.Float:
@@ -396,6 +400,7 @@ namespace SendGrid
                     }
                 }
             }
+
             return dict;
         }
 

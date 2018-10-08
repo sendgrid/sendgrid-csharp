@@ -6001,7 +6001,7 @@
 
             // If we are certain that we don't want custom exceptions to be thrown,
             // we can also test that the original exception was thrown
-            Assert.IsType(typeof(TimeoutException), thrownException);
+            Assert.IsType<TimeoutException>(thrownException);
         }
 
         /// <summary>
