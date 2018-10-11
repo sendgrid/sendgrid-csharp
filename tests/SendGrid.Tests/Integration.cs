@@ -5937,7 +5937,7 @@
             var link_id = "test_url_param";
             var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/links/" + link_id + "/subuser", requestBody: data);
             Assert.Equal(httpStatusCode, response.StatusCode);
-            Assert.Equal(httpResponse, response.Body.ReadAsStringAsync().Result);
+            Assert.Equal(httpResponse, await response.Content.ReadAsStringAsync());
         }
         
         [Fact]

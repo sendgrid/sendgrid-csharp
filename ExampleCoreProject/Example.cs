@@ -107,7 +107,7 @@
                                                           urlPath: "asm/groups",
                                                           queryParams: queryParams);
             Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers);
             Console.WriteLine("\n\nPress <Enter> to continue to POST.");
             Console.ReadLine();
@@ -122,9 +122,9 @@
             response = await client.RequestAsync(method: SendGridClient.Method.POST,
                                                  urlPath: "asm/groups",
                                                  requestBody: json.ToString());
-            var ds_response = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(response.Body.ReadAsStringAsync().Result);
+            var ds_response = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(response.Content.ReadAsStringAsync().Result);
             Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers);
             Console.WriteLine("\n\nPress <Enter> to continue to GET single.");
             Console.ReadLine();
@@ -138,7 +138,7 @@
                 response = await client.RequestAsync(method: SendGridClient.Method.GET,
                     urlPath: string.Format("asm/groups/{0}", group_id));
                 Console.WriteLine(response.StatusCode);
-                Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+                Console.WriteLine(response.Content.ReadAsStringAsync().Result);
                 Console.WriteLine(response.Headers);
                 Console.WriteLine("\n\nPress <Enter> to continue to PATCH.");
                 Console.ReadLine();
@@ -153,7 +153,7 @@
                     urlPath: string.Format("asm/groups/{0}", group_id),
                     requestBody: json.ToString());
                 Console.WriteLine(response.StatusCode);
-                Console.WriteLine(response.Body.ReadAsStringAsync().Result);
+                Console.WriteLine(response.Content.ReadAsStringAsync().Result);
                 Console.WriteLine(response.Headers.ToString());
 
                 Console.WriteLine("\n\nPress <Enter> to continue to PUT.");

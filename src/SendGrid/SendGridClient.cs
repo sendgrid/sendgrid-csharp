@@ -186,10 +186,10 @@ namespace SendGrid
         /// <param name="request">The parameters for the API call</param>
         /// <param name="cancellationToken">Cancel the asynchronous call</param>
         /// <returns>Response object</returns>
-        public virtual async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<HttpResponseMessage> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
         {
-            HttpResponseMessage response = await this.client.SendAsync(request, cancellationToken).ConfigureAwait(false);
-            return new Response(response.StatusCode, response.Content, response.Headers);
+            var response = await this.client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            return response;
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace SendGrid
         /// through the internal http client. Any underlying exception will pass right through.
         /// In particular, this means that you may expect
         /// a TimeoutException if you are not connected to the internet.</exception>
-        public async Task<Response> RequestAsync(
+        public async Task<HttpResponseMessage> RequestAsync(
             SendGridClient.Method method,
             string requestBody = null,
             string queryParams = null,
@@ -237,7 +237,7 @@ namespace SendGrid
         /// <param name="msg">A SendGridMessage object with the details for the request.</param>
         /// <param name="cancellationToken">Cancel the asynchronous call.</param>
         /// <returns>A Response object.</returns>
-        public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpResponseMessage> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await this.RequestAsync(
                 Method.POST,
