@@ -1332,9 +1332,11 @@ namespace SendGrid.Helpers.Mail
         {
             this.Asm = new ASM();
             this.Asm.GroupId = groupID;
-            if (groupsToDisplay != null) {
+            if (groupsToDisplay != null)
+            {
                 this.Asm.GroupsToDisplay = groupsToDisplay;
             }
+
             return;
         }
 
@@ -1608,7 +1610,8 @@ namespace SendGrid.Helpers.Mail
             {
                 NullValueHandling = NullValueHandling.Ignore,
                 DefaultValueHandling = DefaultValueHandling.Include,
-                StringEscapeHandling = StringEscapeHandling.EscapeHtml
+                StringEscapeHandling = StringEscapeHandling.EscapeHtml,
+                PreserveReferencesHandling = PreserveReferencesHandling.None
             };
 
             return JsonConvert.SerializeObject(
