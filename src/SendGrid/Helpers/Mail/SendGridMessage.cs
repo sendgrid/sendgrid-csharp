@@ -1610,7 +1610,8 @@ namespace SendGrid.Helpers.Mail
             {
                 NullValueHandling = NullValueHandling.Ignore,
                 DefaultValueHandling = DefaultValueHandling.Include,
-                StringEscapeHandling = StringEscapeHandling.EscapeHtml
+                StringEscapeHandling = StringEscapeHandling.EscapeHtml,
+                PreserveReferencesHandling = PreserveReferencesHandling.None
             };
 
             return JsonConvert.SerializeObject(
