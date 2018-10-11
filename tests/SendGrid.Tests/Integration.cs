@@ -16,42 +16,12 @@
 
     public class IntegrationFixture : IDisposable
     {
-        public IntegrationFixture()
-        {
-            if (Environment.GetEnvironmentVariable("TRAVIS") != "true")
-            {
-                Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-                Trace.WriteLine("Starting Prism (~20 seconds)");
-                var startInfo = new ProcessStartInfo
-                {
-                    CreateNoWindow = true,
-                    UseShellExecute = false,
-                    FileName = "prism.exe",
-                    Arguments =
-                        "run -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json"
-                };
-                process.StartInfo = startInfo;
-                process.Start();
-                System.Threading.Thread.Sleep(15000);
-            }
-            else
-            {
-                System.Threading.Thread.Sleep(15000);
-            }
-        }
-
         public void Dispose()
         {
-            if (Environment.GetEnvironmentVariable("TRAVIS") != "true")
-            {
-                process.Kill();              
-                Trace.WriteLine("Shutting Down Prism");
-            }
         }
 
         public string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
-        public string host = "http://localhost:4010";
-        public Process process = new Process();
+        public string host = Environment.GetEnvironmentVariable("PRISM_URL") ?? "http://localhost:4010";
     }
 
     public class Integration : IClassFixture<IntegrationFixture>

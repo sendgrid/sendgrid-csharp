@@ -1,0 +1,16 @@
+version: '2'
+services:
+  prism:
+    command: mock --spec https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json
+    image: stoplight/prism:latest
+    ports:
+      - 4010:4010
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp1.0
+    depends_on:
+      - prism
+    environment:
+      - PRISM_URL=http://prism:4010
