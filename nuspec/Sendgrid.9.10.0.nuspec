@@ -16,16 +16,16 @@
         <tags>SendGrid Email Mail Microsoft Azure Transactional .NET Core</tags>
         <dependencies>
             <group targetFramework=".NETFramework4.0">
-                <dependency id="Newtonsoft.Json" version="9.0.1" />
+                <dependency id="Newtonsoft.Json" version="11.0.2" />
                 <dependency id="System.Net.Http" version="4.3.3" />
             </group>
             <group targetFramework=".NETStandard1.3">
-                <dependency id="Newtonsoft.Json" version="9.0.1" />
+                <dependency id="Newtonsoft.Json" version="11.0.2" />
                 <dependency id="Microsoft.AspNetCore.Http.Abstractions" version="1.1.2" />
             </group>
             <group targetFramework=".NETStandard2.0">
                 <dependency id="Microsoft.AspNetCore.Http.Abstractions" version="1.1.2" />
-                <dependency id="Newtonsoft.Json" version="9.0.1" />
+                <dependency id="Newtonsoft.Json" version="10.0.3" />
             </group>
         </dependencies>
     </metadata>
