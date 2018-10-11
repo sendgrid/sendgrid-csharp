@@ -14,6 +14,7 @@
     using Xunit;
     using Xunit.Abstractions;
     using System.Linq;
+    using SendGrid.Helpers.IpAddresses;
 
     public class IntegrationFixture : IDisposable
     {
@@ -2710,8 +2711,9 @@
         public async Task TestGetUnassignedIps() {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
+            var helper = new IpAddressHelper(sg);
 
-            var ips = await sg.GetUnassignedIpsAsync();
+            var ips = await helper.GetUnassignedIpsAsync();
 
             Assert.False(ips.Any(ip => ip == "192.168.1.1"));
             Assert.True(ips.Any(ip => ip == "208.115.214.22"));
