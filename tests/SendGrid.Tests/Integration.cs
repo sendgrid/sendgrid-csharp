@@ -1669,7 +1669,7 @@
                 key13 = "Dynamic Template Data Value 13"
             };
             msg.SetTemplateData(dynamicTemplateData1);
-            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key12\":\"Dynamic Template Data Value 12\",\"key13\":\"Dynamic Template Data Value 13\"}}]}");
+            Assert.Equal("{\"personalizations\":[{\"dynamic_template_data\":{\"key12\":\"Dynamic Template Data Value 12\",\"key13\":\"Dynamic Template Data Value 13\"}}]}", msg.Serialize());
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
@@ -1688,7 +1688,7 @@
                 key17 = "Dynamic Template Data Value 17"
             };
             msg.SetTemplateData(dynamicTemplateData3, 0, personalization);
-            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key16\":\"Dynamic Template Data Value 16\",\"key17\":\"Dynamic Template Data Value 17\"}}]}");
+            Assert.Equal("{\"personalizations\":[{\"dynamic_template_data\":{\"key16\":\"Dynamic Template Data Value 16\",\"key17\":\"Dynamic Template Data Value 17\"}}]}", msg.Serialize());
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
@@ -1717,7 +1717,7 @@
                 key23 = "Dynamic Template Data Value 23"
             };
             msg.SetTemplateData(dynamicTemplateData6, 1, personalization);
-            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key18\":\"Dynamic Template Data Value 18\",\"key19\":\"Dynamic Template Data Value 19\"}},{\"dynamic_template_data\":{\"key22\":\"Dynamic Template Data Value 22\",\"key23\":\"Dynamic Template Data Value 23\"}}]}");
+            Assert.Equal("{\"personalizations\":[{\"dynamic_template_data\":{\"key18\":\"Dynamic Template Data Value 18\",\"key19\":\"Dynamic Template Data Value 19\"}},{\"dynamic_template_data\":{\"key22\":\"Dynamic Template Data Value 22\",\"key23\":\"Dynamic Template Data Value 23\"}}]}", msg.Serialize());
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
@@ -1737,7 +1737,7 @@
                 key27 = "Dynamic Template Data Value 27"
             };
             msg.SetTemplateData(dynamicTemplateData8);
-            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key26\":\"Dynamic Template Data Value 26\",\"key27\":\"Dynamic Template Data Value 27\"}}]}");
+            Assert.Equal("{\"personalizations\":[{\"dynamic_template_data\":{\"key26\":\"Dynamic Template Data Value 26\",\"key27\":\"Dynamic Template Data Value 27\"}}]}", msg.Serialize());
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
@@ -1767,7 +1767,7 @@
                 key33 = "Dynamic Template Data Value 33"
             };
             msg.SetTemplateData(dynamicTemplateData11);
-            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key32\":\"Dynamic Template Data Value 32\",\"key33\":\"Dynamic Template Data Value 33\"}},{\"dynamic_template_data\":{\"key30\":\"Dynamic Template Data Value 30\",\"key31\":\"Dynamic Template Data Value 31\"}}]}");
+            Assert.Equal("{\"personalizations\":[{\"dynamic_template_data\":{\"key32\":\"Dynamic Template Data Value 32\",\"key33\":\"Dynamic Template Data Value 33\"}},{\"dynamic_template_data\":{\"key30\":\"Dynamic Template Data Value 30\",\"key31\":\"Dynamic Template Data Value 31\"}}]}", msg.Serialize());
 
             // Complex dynamic template data
             msg = new SendGridMessage();
@@ -1784,7 +1784,7 @@
                 }
             };
             msg.SetTemplateData(dynamicTemplateData12);
-            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"array\":[\"Dynamic Template Data Array Value 1\",\"Dynamic Template Data Array Value 2\"],\"innerObject\":{\"innerObjectKey1\":\"Dynamic Template Data Deep Object Value 1\"}}}]}");
+            Assert.Equal("{\"personalizations\":[{\"dynamic_template_data\":{\"array\":[\"Dynamic Template Data Array Value 1\",\"Dynamic Template Data Array Value 2\"],\"innerObject\":{\"innerObjectKey1\":\"Dynamic Template Data Deep Object Value 1\"}}}]}", msg.Serialize());
         }
 
         [Fact]
