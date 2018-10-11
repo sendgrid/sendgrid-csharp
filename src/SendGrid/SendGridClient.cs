@@ -249,19 +249,6 @@ namespace SendGrid
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<IList<string>> GetUnassignedIpsAsync()
-        {
-            var response = await RequestAsync(
-                Method.GET,
-                null,
-                urlPath: "ips");
-
-            dynamic result = JArray.Parse(await response.Body.ReadAsStringAsync());
-            return ((IEnumerable<dynamic>)result)
-                .Where(ip => !((IEnumerable<dynamic>)ip.subusers).Any())
-                .Select(ip => (string)ip.ip).ToList();
-        }
-
         /// <summary>
         /// Build the final URL
         /// </summary>

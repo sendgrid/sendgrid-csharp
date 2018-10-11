@@ -9,22 +9,20 @@ This documentation provides examples for specific use cases. Please [open an iss
 - [Send a Single Email to a Single Recipient](#send-a-single-email-to-a-single-recipient)
 - [Send Multiple Emails to Multiple Recipients](#send-multiple-emails-to-multiple-recipients)
 - [Transactional Templates](#transactional-templates)
-    - [With Mail Helper Class](#with-mail-helper-class)
-    - [Without Mail Helper Class](#without-mail-helper-class)
+  - [With Mail Helper Class](#with-mail-helper-class)
+  - [Without Mail Helper Class](#without-mail-helper-class)
 - [_Legacy_ Transactional Templates](#legacy-transactional-templates)
-    - [Legacy Template With Mail Helper Class](#legacy-template-with-mail-helper-class)
-    - [Legacy Template Without Mail Helper Class](#legacy-template-without-mail-helper-class)
-- [Transient Fault Handling](#transient-fault-handling)
-        - [RetryCount](#retrycount)
-        - [MinimumBackOff](#minimumbackoff)
-        - [MaximumBackOff](#maximumbackoff)
-        - [DeltaBackOff](#deltabackoff)
-    - [Examples](#examples)
+  - [Legacy Template With Mail Helper Class](#legacy-template-with-mail-helper-class)
+  - [Legacy Template Without Mail Helper Class](#legacy-template-without-mail-helper-class)
+- [Transient Fault Handling](#transient-fault-handling) - [RetryCount](#retrycount) - [MinimumBackOff](#minimumbackoff) - [MaximumBackOff](#maximumbackoff) - [DeltaBackOff](#deltabackoff)
+  - [Examples](#examples)
 - [How to Setup a Domain Whitelabel](#how-to-setup-a-domain-whitelabel)
 - [How to View Email Statistics](#how-to-view-email-statistics)
 - [How to transform HTML to plain text](#how-to-transform-html-to-plain-text)
+- [How to Get Unassigned IPs With IP Address Class](#how-to-get-unassigned-ips)
 
 <a name="attachments"></a>
+
 # Attachments
 
 ```csharp
@@ -80,6 +78,7 @@ namespace Example
 ```
 
 <a name="kitchensink"></a>
+
 # Kitchen Sink - an example with all settings used
 
 ```csharp
@@ -353,6 +352,7 @@ namespace Example
 ```
 
 <a name="singleemailmultiplerecipients"></a>
+
 # Send a Single Email to Multiple Recipients
 
 ```csharp
@@ -402,6 +402,7 @@ namespace Example
 ```
 
 <a name="singleemailsinglerecipient"></a>
+
 # Send a Single Email to a Single Recipient
 
 ```csharp
@@ -436,6 +437,7 @@ namespace Example
 ```
 
 <a name="multipleemailsmultiplerecipients"></a>
+
 # Send Multiple Emails to Multiple Recipients
 
 ```csharp
@@ -490,6 +492,7 @@ namespace Example
 ```
 
 <a name="transactional-templates"></a>
+
 # Transactional Templates
 
 For this example, we assume you have created a [transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/Create_and_edit_dynamic_transactional_templates.html).
@@ -575,7 +578,7 @@ namespace Example
         {
             [JsonProperty("subject")]
             public string Subject { get; set; }
-            
+
             [JsonProperty("name")]
             public string Name { get; set; }
 
@@ -587,7 +590,7 @@ namespace Example
         {
             [JsonProperty("city")]
             public string City { get; set; }
-            
+
             [JsonProperty("country")]
             public string Country { get; set; }
         }
@@ -596,9 +599,10 @@ namespace Example
 ```
 
 Methods also exist on `MailHelper` to create dynamic template emails:
-* `CreateSingleTemplateEmail`
-* `CreateSingleTemplateEmailToMultipleRecipients`
-* `CreateMultipleTemplateEmailsToMultipleRecipients`
+
+- `CreateSingleTemplateEmail`
+- `CreateSingleTemplateEmailToMultipleRecipients`
+- `CreateMultipleTemplateEmailsToMultipleRecipients`
 
 ## Without Mail Helper Class
 
@@ -659,6 +663,7 @@ namespace Example
 ```
 
 <a name="legacy-transactional-templates"></a>
+
 # _Legacy_ Transactional Templates
 
 For this example, we assume you have created a [legacy transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html). Following is the template content we used for testing.
@@ -796,6 +801,7 @@ namespace Example
 ```
 
 <a name="transient-faults"></a>
+
 # Transient Fault Handling
 
 The SendGridClient provides functionality for handling transient errors that might occur when sending an HttpRequest. This includes client side timeouts while sending the mail, or certain errors returned within the 500 range. Errors within the 500 range are limited to 500 Internal Server Error, 502 Bad Gateway, 503 Service unavailable and 504 Gateway timeout.
@@ -804,11 +810,11 @@ By default, retry behaviour is off, you must explicitly enable it by setting the
 
 ### RetryCount
 
-The amount of times to retry the operation before reporting an exception to the caller. This is in addition to the initial attempt so setting a value of 1 would result in 2 attempts, the initial attempt and the retry. Defaults to zero, retry behaviour is not enabled. The maximum amount of retries permitted is 5. 
+The amount of times to retry the operation before reporting an exception to the caller. This is in addition to the initial attempt so setting a value of 1 would result in 2 attempts, the initial attempt and the retry. Defaults to zero, retry behaviour is not enabled. The maximum amount of retries permitted is 5.
 
 ### MinimumBackOff
 
-The minimum amount of time to wait between retries. 
+The minimum amount of time to wait between retries.
 
 ### MaximumBackOff
 
@@ -816,15 +822,13 @@ The maximum possible amount of time to wait between retries. The maximum value a
 
 ### DeltaBackOff
 
-The value that will be used to calculate a random delta in the exponential delay between retries.  A random element of time is factored into the delta calculation as this helps avoid many clients retrying at regular intervals.
-
+The value that will be used to calculate a random delta in the exponential delay between retries. A random element of time is factored into the delta calculation as this helps avoid many clients retrying at regular intervals.
 
 ## Examples
 
 In this example we are setting RetryCount to 2, with a minimum wait time of 1 seconds, a maximum of 10 seconds and a delta of 3 seconds
 
 ```csharp
-
 var options = new SendGridClientOptions
 {
     ApiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY"),
@@ -832,13 +836,11 @@ var options = new SendGridClientOptions
 };
 
 var client = new SendGridClient(options);
-
 ```
 
 The SendGridClientOptions object defines all the settings that can be set for the client, e.g.
 
 ```csharp
-
 var options = new SendGridClientOptions
 {
     ApiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY"),
@@ -850,10 +852,10 @@ var options = new SendGridClientOptions
 };
 
 var client = new SendGridClient(options);
-
 ```
 
 <a name="domain-whitelabel"></a>
+
 # How to Setup a Domain Whitelabel
 
 You can find documentation for how to setup a domain whitelabel via the UI [here](https://sendgrid.com/docs/Classroom/Basics/Whitelabel/setup_domain_whitelabel.html) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#whitelabel).
@@ -861,6 +863,7 @@ You can find documentation for how to setup a domain whitelabel via the UI [here
 Find more information about all of SendGrid's whitelabeling related documentation [here](https://sendgrid.com/docs/Classroom/Basics/Whitelabel/index.html).
 
 <a name="email-stats"></a>
+
 # How to View Email Statistics
 
 You can find documentation for how to view your email statistics via the UI [here](https://app.sendgrid.com/statistics) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#stats).
@@ -868,9 +871,10 @@ You can find documentation for how to view your email statistics via the UI [her
 Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as SendGrid processes your email.
 
 <a name="html-to-plain-text"></a>
+
 # How to transform HTML to plain text
 
-Although the HTML tags could be removed using regular expressions, the best solution is parsing the HTML code with a specific library, such as [HTMLAgilityPack](http://html-agility-pack.net/). 
+Although the HTML tags could be removed using regular expressions, the best solution is parsing the HTML code with a specific library, such as [HTMLAgilityPack](http://html-agility-pack.net/).
 
 The following code shows how to parse an input string with HTML code and remove all tags:
 
@@ -891,8 +895,40 @@ namespace Example {
 			HtmlDocument document = new HtmlDocument();
 			document.LoadHtml(html);
 			return document.DocumentNode == null ? string.Empty : document.DocumentNode.InnerText;
-		}	
+		}
 	}
 }
+```
 
+<a name="how-to-get-unassigned-ips"></a>
+
+# How to get a list of unassigned IPs
+
+This is how you can use the helper to get a list of unassigned IPs from your account.
+
+```csharp
+using SendGrid;
+using SendGrid.Helpers.IpAddresses;
+using System;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace Example
+{
+    internal class Example
+    {
+        private static void Main()
+        {
+            ExecuteManualAttachmentAdd().Wait();
+        }
+
+        static async Task ExecuteGetUnassignedIps()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+            var helper = new IpAddressHelper(client);
+            var ips = await helper.GetUnassignedIpsAsync();
+        }
+    }
+}
 ```
