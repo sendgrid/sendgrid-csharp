@@ -120,11 +120,24 @@ All test files are in the [`SendGrid.Tests`](https://github.com/sendgrid/sendgri
 
 For the purposes of contributing to this repo, please update the [`Integration.cs`](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs) file with unit tests as you modify the code.
 
-Downloaded [Prism](https://github.com/stoplightio/prism/releases) and rename the executable to be prism.exe and place the renamed executable in your PATH.
+We use a mock server for integration/contract testing that is driven by our OpenAPI specification and StopLight.io's Prism service. The service is spun up utilizing [StopLight's Prism Docker image](https://hub.docker.com/r/stoplight/prism/).
 
-When you run the tests for the first time, you will need to allow Prism.exe to run, but you don't need to allow outside connections.
+### Prerequisites ###
 
-Note: Please download Prism stable version v0.6.xx as integration test are written against stable versions only. Latest alpha version has different commands to serve swagger file
+- [Docker](https://docs.docker.com/install/)
+
+Run the tests in a Docker container
+```bash
+docker-compose run --rm test
+```
+
+Alternatively, if running the tests locally (eg. from Visual Studio):
+
+1. Start Prism in a Docker container
+   ```bash
+   docker-compose run --rm -p 4010:4010 prism
+   ```
+2. Run the tests
 
 <a name="style-guidelines-and-naming-conventions"></a>
 ## Style Guidelines & Naming Conventions
