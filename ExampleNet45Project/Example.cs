@@ -107,7 +107,7 @@
                                                           urlPath: "asm/groups",
                                                           queryParams: queryParams);
             Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Content);
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
             Console.WriteLine(response.Headers);
             Console.WriteLine("\n\nPress <Enter> to continue to POST.");
             Console.ReadLine();
@@ -137,7 +137,7 @@
                 response = await client.RequestAsync(method: SendGridClient.Method.GET,
                     urlPath: string.Format("asm/groups/{0}", group_id));
                 Console.WriteLine(response.StatusCode);
-                Console.WriteLine(response.Content);
+                Console.WriteLine(response.Content.ReadAsStringAsync().Result);
                 Console.WriteLine(response.Headers);
                 Console.WriteLine("\n\nPress <Enter> to continue to PATCH.");
                 Console.ReadLine();
@@ -153,7 +153,7 @@
                     urlPath: string.Format("asm/groups/{0}", group_id),
                     requestBody: json.ToString());
                 Console.WriteLine(response.StatusCode);
-                Console.WriteLine(response.Content);
+                Console.WriteLine(response.Content.ReadAsStringAsync().Result);
                 Console.WriteLine(response.Headers.ToString());
 
                 Console.WriteLine("\n\nPress <Enter> to continue to PUT.");
