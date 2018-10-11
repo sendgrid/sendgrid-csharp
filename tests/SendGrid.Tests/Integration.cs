@@ -4920,7 +4920,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/spam_report/" + email);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/spam_reports/" + email);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4930,7 +4930,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/spam_report/" + email);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/spam_reports/" + email);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
