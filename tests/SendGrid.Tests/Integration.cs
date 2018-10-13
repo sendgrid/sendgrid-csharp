@@ -6125,6 +6125,33 @@
 
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
         }
+
+        [Fact]
+        public void TestSendingSyncSucceeds()
+        {
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com"));
+            msg.AddTo(new EmailAddress("test@example.com"));
+            msg.SetSubject("Hello World from the SendGrid CSharp Library");
+            msg.AddContent(MimeType.Html, "HTML content");
+
+            var options = new SendGridClientOptions
+            {
+                ApiKey = fixture.apiKey,
+                ReliabilitySettings = new ReliabilitySettings(1, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(1))
+            };
+
+            var httpMessageHandler = new RetryTestBehaviourDelegatingHandler();
+            httpMessageHandler.AddBehaviour(httpMessageHandler.OK);
+
+            var retryHandler = new RetryDelegatingHandler(httpMessageHandler, options.ReliabilitySettings);
+            var sg = new SendGridClient(new HttpClient(retryHandler), options.ApiKey, options.Host);
+
+            var result = sg.SendEmail(msg);
+
+            Assert.NotNull(result);
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+        }
     }
 
     public class FakeWebProxy : IWebProxy
