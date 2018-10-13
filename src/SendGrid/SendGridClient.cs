@@ -247,6 +247,18 @@ namespace SendGrid
         }
 
         /// <summary>
+        /// Make a request to send an email through SendGrid synchronously.
+        /// </summary>
+        /// <param name="msg">A SendGridMessage object with the details for the request.</param>
+        /// <param name="cancellationToken">Cancel the asynchronous call happening in the background</param>
+        /// <returns>A Response object.</returns>
+        public Response SendEmail(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var task = Task.Run(() => this.SendEmailAsync(msg, cancellationToken), cancellationToken);
+            return task.Result;
+        }
+
+        /// <summary>
         /// Build the final URL
         /// </summary>
         /// <param name="urlPath">The URL path.</param>
