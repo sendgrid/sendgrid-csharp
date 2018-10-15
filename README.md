@@ -58,7 +58,7 @@ Grab your API Key from the [SendGrid UI](https://app.sendgrid.com/settings/api_k
 
 ## Setup Environment Variables to Manage Your API Key
 
-Manage your [SendGrid API Keys](https://app.sendgrid.com/settings/api_keys) by storing them in Environment Variables or in [Web.config](https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure). It is a good practice to keep your data and configuration settings separate. This way to you can change your SendGrid API key without changing your code. Also, we strongly advise against storing sensitive data directly in your code.
+Manage your [SendGrid API Keys](https://app.sendgrid.com/settings/api_keys) by storing them in Environment Variables or in [Web.config](https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure). It is a good practice to keep your data and configuration settings separate. This way you can change your SendGrid API key without changing your code. Also, we strongly advise against storing sensitive data directly in your code.
 
 Setup Environment Variables using the UI:
 1. Press Win+R and run SystemPropertiesAdvanced
@@ -72,7 +72,7 @@ Setup Environment Variables using CMD:
 1. Run CMD as administrator
 2. setx SENDGRID_API_KEY "YOUR_API_KEY"
 
-Here are few example to get and set API Keys programatically:
+Here are few example to get and set API Keys programmatically:
 
 Get Environment Variable
 ```csharp
@@ -92,7 +92,7 @@ To use SendGrid in your C# project, you can either <a href="https://github.com/s
 PM> Install-Package SendGrid
 ```
 
-Once you have the SendGrid library installed, you can include calls to them in your code.
+Once you have the SendGrid library installed, you can include calls to it in your code.
 For sample implementations, see the [.NET Core Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleCoreProject) and the [.NET 4.5.2 Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleNet45Project) folders.
 
 ## Dependencies
@@ -104,7 +104,7 @@ For sample implementations, see the [.NET Core Example](https://github.com/sendg
 
 ## Hello Email
 
-The following is the minimum needed code to send an simple email. Use this example, and modify the `apiKey`, `from` and `to` variables:
+The following is the minimum needed code to send a simple email. Use this example, and modify the `apiKey`, `from` and `to` variables:
 
 ```csharp
 using SendGrid;
@@ -137,7 +137,7 @@ namespace Example
 }
 ```
 
-After executing the above code, `response.StatusCode` should be `202` and you should have an email in the inbox of the to recipient. You can check the status of your email [in the UI](https://app.sendgrid.com/email_activity?). Alternatively, we can post events to a URL of your choice using our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html). This gives you data about the events that occur as SendGrid processes your email.
+After executing the above code, `response.StatusCode` should be `202` and you should have an email in the inbox of the `to` recipient. You can check the status of your email [in the UI](https://app.sendgrid.com/email_activity?). Alternatively, we can post events to a URL of your choice using our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html). This gives you data about the events that occur as SendGrid processes your email.
 
 For more advanced cases, you can build the SendGridMessage object yourself with these minimum required settings:
 
