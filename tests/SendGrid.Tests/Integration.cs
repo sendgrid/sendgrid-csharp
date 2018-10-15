@@ -5,6 +5,7 @@
     using System.Diagnostics;
     using System.Net;
     using System.Net.Http;
+    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using Newtonsoft.Json;
@@ -4464,6 +4465,24 @@
         }
 
         [Fact]
+        public async Task TestInvalidUtf8Charset()
+        {
+            var httpResponse = @"{
+  'scopes': [
+    'user.profile.read',
+    'user.profile.update'
+  ]
+}";
+            var httpMessageHandler = new InvalidUtf8CharsetMessageHandler(httpResponse);
+            HttpClient clientToInject = new HttpClient(httpMessageHandler);
+
+            var sg = new SendGridClient(clientToInject, fixture.apiKey);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "scopes");
+            var responseBody = response.Body.ReadAsStringAsync().Result;
+            Assert.Equal(httpResponse, responseBody);
+        }
+
+        [Fact]
         public async Task TestSendersPost()
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
@@ -6195,6 +6214,34 @@
         {
             Thread.Sleep(timeOutMilliseconds);
             throw new TimeoutException(exceptionMessage);
+        }
+    }
+
+    /// <summary>
+    /// A MessageHandler that returns the invalid character set value "utf8", instead of "utf-8",
+    /// in the Content-Type response header.
+    /// This reproduces the current behaviour of the SendGrid API's /scopes and /subusers endpoints.
+    /// See: #368 https://github.com/sendgrid/sendgrid-csharp/issues/368
+    /// </summary>
+    public class InvalidUtf8CharsetMessageHandler : FakeHttpMessageHandler
+    {
+        private string message;
+
+        public InvalidUtf8CharsetMessageHandler(string message)
+        {
+            this.message = message;
+        }
+
+        public override HttpResponseMessage Send(HttpRequestMessage request)
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(message, Encoding.UTF8)
+            };
+
+            response.Content.Headers.ContentType.CharSet = "utf8";
+
+            return response;
         }
     }
 }

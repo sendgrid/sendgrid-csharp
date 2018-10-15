@@ -189,6 +189,13 @@ namespace SendGrid
         public virtual async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
         {
             HttpResponseMessage response = await this.client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+
+            // Correct invalid UTF-8 charset values returned by API
+            if (response.Content?.Headers?.ContentType?.CharSet == "utf8")
+            {
+                response.Content.Headers.ContentType.CharSet = Encoding.UTF8.WebName;
+            }
+
             return new Response(response.StatusCode, response.Content, response.Headers);
         }
 
