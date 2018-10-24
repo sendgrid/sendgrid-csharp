@@ -89,7 +89,7 @@ The current solution is to download the code directly into your project and chan
 <a name="testing"></a>
 ## Testing v3 /mail/send Calls Directly
 
-[Here](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/curl_examples.html) are some cURL examples for common use cases.
+[Here](https://sendgrid.com/docs/for-developers/sending-email/curl-examples/) are some cURL examples for common use cases.
 
 <a name="net45"></a>
 ## Using .NET 4.5.1 and lower
