@@ -4,6 +4,7 @@
 // </copyright>
 
 using Newtonsoft.Json;
+using SendGrid.Helpers.Errors;
 using SendGrid.Helpers.Mail;
 using SendGrid.Helpers.Reliability;
 using System;
@@ -40,8 +41,9 @@ namespace SendGrid
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
+        /// <param name="httpErrorAsException">Whether HTTP error responses should be raised as exceptions.</param>
         /// <returns>Interface to the SendGrid REST API</returns>
-        public SendGridClient(IWebProxy webProxy, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
+        public SendGridClient(IWebProxy webProxy, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null, bool httpErrorAsException = false)
         {
             // Create client with WebProxy if set
             if (webProxy != null)
@@ -62,7 +64,7 @@ namespace SendGrid
                 this.client = this.CreateHttpClientWithRetryHandler();
             }
 
-            this.InitiateClient(apiKey, host, requestHeaders, version, urlPath);
+            this.InitiateClient(apiKey, host, requestHeaders, version, urlPath, httpErrorAsException);
         }
 
         /// <summary>
@@ -84,9 +86,10 @@ namespace SendGrid
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
+        /// <param name="httpErrorAsException">Whether HTTP error responses should be raised as exceptions.</param>
         /// <returns>Interface to the SendGrid REST API</returns>
-        public SendGridClient(HttpClient httpClient, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
-            : this(httpClient, new SendGridClientOptions() { ApiKey = apiKey, Host = host, RequestHeaders = requestHeaders, Version = version, UrlPath = urlPath })
+        public SendGridClient(HttpClient httpClient, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null, bool httpErrorAsException = false)
+            : this(httpClient, new SendGridClientOptions() { ApiKey = apiKey, Host = host, RequestHeaders = requestHeaders, Version = version, UrlPath = urlPath, HttpErrorAsException = httpErrorAsException })
         {
         }
 
@@ -98,9 +101,10 @@ namespace SendGrid
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
+        /// <param name="httpErrorAsException">Whether HTTP error responses should be raised as exceptions.</param>
         /// <returns>Interface to the SendGrid REST API</returns>
-        public SendGridClient(string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
-            : this(httpClient: null, apiKey: apiKey, host: host, requestHeaders: requestHeaders, version: version, urlPath: urlPath)
+        public SendGridClient(string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null, bool httpErrorAsException = false)
+            : this(httpClient: null, apiKey: apiKey, host: host, requestHeaders: requestHeaders, version: version, urlPath: urlPath, httpErrorAsException: httpErrorAsException)
         {
         }
 
@@ -120,7 +124,7 @@ namespace SendGrid
             this.options = options;
             this.client = (httpClient == null) ? this.CreateHttpClientWithRetryHandler() : httpClient;
 
-            this.InitiateClient(options.ApiKey, options.Host, options.RequestHeaders, options.Version, options.UrlPath);
+            this.InitiateClient(options.ApiKey, options.Host, options.RequestHeaders, options.Version, options.UrlPath, options.HttpErrorAsException);
         }
 
         /// <summary>
@@ -170,6 +174,11 @@ namespace SendGrid
         public string MediaType { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether HTTP error responses should be raised as exceptions.
+        /// </summary>
+        public bool HttpErrorAsException { get; set; }
+
+        /// <summary>
         /// Add the authorization header, override to customize
         /// </summary>
         /// <param name="header">Authorization header</param>
@@ -189,6 +198,12 @@ namespace SendGrid
         public virtual async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
         {
             HttpResponseMessage response = await this.client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode && this.HttpErrorAsException)
+            {
+                await ErrorHandler.ThrowException(response).ConfigureAwait(false);
+            }
+
             return new Response(response.StatusCode, response.Content, response.Headers);
         }
 
@@ -306,7 +321,8 @@ namespace SendGrid
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
-        private void InitiateClient(string apiKey, string host, Dictionary<string, string> requestHeaders, string version, string urlPath)
+        /// <param name="httpErrorAsException">Whether HTTP error responses should be raised as exceptions.</param>
+        private void InitiateClient(string apiKey, string host, Dictionary<string, string> requestHeaders, string version, string urlPath, bool httpErrorAsException)
         {
             this.UrlPath = urlPath;
             this.Version = version;
@@ -351,6 +367,8 @@ namespace SendGrid
                     this.client.DefaultRequestHeaders.Add(header.Key, header.Value);
                 }
             }
+
+            this.HttpErrorAsException = httpErrorAsException;
         }
 
         /// <summary>
@@ -376,15 +394,15 @@ namespace SendGrid
                     switch (reader.TokenType)
                     {
                         case JsonToken.PropertyName:
-                        {
-                            propertyName = reader.Value.ToString();
-                            if (!dict.ContainsKey(propertyName))
                             {
-                                dict.Add(propertyName, new List<object>());
-                            }
+                                propertyName = reader.Value.ToString();
+                                if (!dict.ContainsKey(propertyName))
+                                {
+                                    dict.Add(propertyName, new List<object>());
+                                }
 
-                            break;
-                        }
+                                break;
+                            }
 
                         case JsonToken.Boolean:
                         case JsonToken.Integer:
@@ -392,10 +410,10 @@ namespace SendGrid
                         case JsonToken.Bytes:
                         case JsonToken.String:
                         case JsonToken.Date:
-                        {
-                            dict[propertyName].Add(reader.Value);
-                            break;
-                        }
+                            {
+                                dict[propertyName].Add(reader.Value);
+                                break;
+                            }
                     }
                 }
             }

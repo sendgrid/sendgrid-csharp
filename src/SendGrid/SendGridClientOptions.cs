@@ -24,6 +24,7 @@ namespace SendGrid
             this.RequestHeaders = new Dictionary<string, string>();
             this.Host = "https://api.sendgrid.com";
             this.Version = "v3";
+            this.HttpErrorAsException = false;
         }
 
         /// <summary>
@@ -60,5 +61,10 @@ namespace SendGrid
         /// Gets or sets the path to the API endpoint.
         /// </summary>
         public string UrlPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether HTTP error responses should be raised as exceptions. Default is false
+        /// </summary>
+        public bool HttpErrorAsException { get; set; }
     }
 }

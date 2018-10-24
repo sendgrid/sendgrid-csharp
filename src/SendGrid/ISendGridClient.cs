@@ -33,6 +33,11 @@ namespace SendGrid
         string MediaType { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether HTTP error responses should be raised as exceptions.
+        /// </summary>
+        bool HttpErrorAsException { get; set; }
+
+        /// <summary>
         /// Add the authorization header, override to customize
         /// </summary>
         /// <param name="header">Authorization header</param>
