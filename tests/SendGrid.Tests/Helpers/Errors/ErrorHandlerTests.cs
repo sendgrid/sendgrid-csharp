@@ -5,13 +5,21 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace SendGrid.Tests.Helpers.Errors
 {
-    public class ErrorHandlerTests
+    public class ErrorHandlerTests : IClassFixture<IntegrationFixture>
     {
-        private string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
+        IntegrationFixture fixture;
+        private readonly ITestOutputHelper output;
 
+        public ErrorHandlerTests(IntegrationFixture fixture, ITestOutputHelper output)
+        {
+            this.fixture = fixture;
+            this.output = output;
+        }
+        
         [Fact]
         public async void TestUnauthorizedRequestException()
         {
@@ -52,7 +60,7 @@ namespace SendGrid.Tests.Helpers.Errors
         [Fact]
         public async void TestBadRequestExceptionFromEmailNull()
         {            
-            var client = new SendGridClient(_apiKey, httpErrorAsException: true);
+            var client = new SendGridClient(fixture.apiKey, httpErrorAsException: true);
 
             var from = new EmailAddress("", "Example User");
             var subject = "Hello World from the SendGrid CSharp Library Helper!";
@@ -89,7 +97,7 @@ namespace SendGrid.Tests.Helpers.Errors
         [Fact]
         public async void TestBadRequestExceptionSubjectError()
         {
-            var client = new SendGridClient(_apiKey, httpErrorAsException: true);
+            var client = new SendGridClient(fixture.apiKey, httpErrorAsException: true);
 
             var from = new EmailAddress("test@example.com", "Example User");
             var subject = "";
@@ -126,7 +134,7 @@ namespace SendGrid.Tests.Helpers.Errors
         [Fact]
         public async void TestBadRequestAttachmentError()
         {
-            var client = new SendGridClient(_apiKey, httpErrorAsException: true);
+            var client = new SendGridClient(fixture.apiKey, httpErrorAsException: true);
 
             var from = new EmailAddress("test@example.com");
             var subject = "Subject";
@@ -173,7 +181,7 @@ namespace SendGrid.Tests.Helpers.Errors
         [Fact]
         public async void TestBadRequestTemplateError()
         {
-            var client = new SendGridClient(_apiKey, httpErrorAsException: true);
+            var client = new SendGridClient(fixture.apiKey, httpErrorAsException: true);
 
             var msg = new SendGridMessage();
             msg.SetFrom(new EmailAddress("test@example.com", "Example User"));
