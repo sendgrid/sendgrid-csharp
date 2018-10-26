@@ -93,7 +93,7 @@ Next, update your Environment with your [SENDGRID_APIKEY](https://app.sendgrid.c
 
 **[/examples](https://github.com/sendgrid/sendgrid-csharp/blob/master/examples)**
 
-Examples that demonstrate usage.
+Examples that demonstrate usage:
 
 **[/ExampleCoreProject/Example.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/ExampleCoreProject/Example.cs)**
 
