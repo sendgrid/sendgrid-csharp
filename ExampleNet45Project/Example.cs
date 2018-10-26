@@ -46,6 +46,8 @@
             };
             msg.AddTo(new EmailAddress("test@example.com", "Example User"));
 
+            
+
             response = await client.SendEmailAsync(msg);
             Console.WriteLine(msg.Serialize());
             Console.WriteLine(response.StatusCode);

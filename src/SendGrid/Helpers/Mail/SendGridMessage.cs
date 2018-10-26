@@ -189,7 +189,13 @@ namespace SendGrid.Helpers.Mail
                     this.Personalizations[personalizationIndex].Tos = new List<EmailAddress>();
                 }
 
-                this.Personalizations[personalizationIndex].Tos.Add(email);
+                List<string> lstEmail = this.Personalizations[personalizationIndex].Tos.Select(x => x.Email).ToList();
+
+                if (!lstEmail.Any(x => x == email.Email))
+                {
+                    this.Personalizations[personalizationIndex].Tos.Add(email);
+                }
+
                 return;
             }
 
