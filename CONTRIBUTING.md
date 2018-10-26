@@ -17,7 +17,7 @@ We use [GitHub Projects](https://github.com/sendgrid/sendgrid-csharp/projects) t
 <a name="cla"></a>
 ## CLAs and CCLAs
 
-Before you get started, SendGrid requires that a SendGrid Contributor License Agreement (CLA) be filled out by every contributor to a SendGrid open source project.
+Before you get started, SendGrid requires a SendGrid Contributor License Agreement (CLA) be filled out by every contributor to a SendGrid open source project.
 
 Our goal with the CLA is to clarify the rights of our contributors and reduce other risks arising from inappropriate contributions.  The CLA also clarifies the rights SendGrid holds in each contribution and helps to avoid misunderstandings over what rights each contributor is required to grant to SendGrid when making a contribution.  In this way the CLA encourages broad participation by our open source community and helps us build strong open source projects, free from any individual contributor withholding or revoking rights to any contribution.
 
