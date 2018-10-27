@@ -46,7 +46,7 @@ var client = new SendGridClient(apiKey);
 
 ## Retrieve all recent access attempts
 
-**This endpoint allows you to retrieve a list of all of the IP addresses that recently attempted to access your account either through the User Interface or the API.**
+**This endpoint allows you to retrieve a list of IP addresses that are recently attempted to access your account either through the User Interface or the API.**
 
 IP Access Management allows you to control which IP addresses can be used to access your account, either through the User Interface or the API. There is no limit to the number of IP addresses that you can add to your whitelist. It is possible to remove your own IP address from the whitelist, thus preventing yourself from accessing your account.
 
@@ -70,7 +70,7 @@ Console.ReadLine();
 
 **This endpoint allows you to add one or more IP addresses to your IP whitelist.**
 
-When adding an IP to your whitelist, include the IP address in an array. You can whitelist one IP at a time, or you can whitelist multiple IPs at once.
+When adding an IP addresses to your whitelist, include the IP address in an array. You can whitelist one IP addresses at a time, or you can whitelist multiple IPs at once.
 
 IP Access Management allows you to control which IP addresses can be used to access your account, either through the User Interface or the API. There is no limit to the number of IP addresses that you can add to your whitelist. It is possible to remove your own IP address from the whitelist, thus preventing yourself from accessing your account.
 
@@ -106,7 +106,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve a list of IP addresses that are currently whitelisted.**
 
-IP Access Management allows you to control which IP addresses can be used to access your account, either through the User Interface or the API. There is no limit to the number of IP addresses that you can add to your whitelist. It is possible to remove your own IP address from the whitelist, thus preventing yourself from accessing your account.
+IP Access Management allows you to control which IP addresses can be used to access your account, either through the User Interface or the API. There is no limit to the number of IP addresses that you can add to your whitelist. It is possible to remove your own IP address from the whitelist, thus preventing yourself from accessing to your account.
 
 For more information, please see our [User Guide](http://sendgrid.com/docs/User_Guide/Settings/ip_access_management.html).
 
