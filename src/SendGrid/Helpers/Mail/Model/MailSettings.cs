@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Newtonsoft.Json;
+
 namespace SendGrid.Helpers.Mail
 {
-    using Newtonsoft.Json;
-
     /// <summary>
     /// A collection of different mail settings that you can use to specify how you would like this email to be handled.
     /// </summary>

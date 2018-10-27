@@ -1,9 +1,14 @@
-﻿namespace SendGrid
-{
-    using System;
-    using System.Collections.Generic;
-    using SendGrid.Helpers.Reliability;
+﻿// <copyright file="SendGridClientOptions.cs" company="SendGrid">
+// Copyright (c) SendGrid. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
 
+using SendGrid.Helpers.Reliability;
+using System;
+using System.Collections.Generic;
+
+namespace SendGrid
+{
     /// <summary>
     /// Defines the options to use with the SendGrid client
     /// </summary>

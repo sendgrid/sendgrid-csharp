@@ -3,17 +3,17 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Newtonsoft.Json;
+using SendGrid.Helpers.Mail.Model;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace SendGrid.Helpers.Mail
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using Model;
-    using Newtonsoft.Json;
-    using System.Threading;
-    using System.Threading.Tasks;
-
     /// <summary>
     /// Class SendGridMessage builds an object that sends an email through SendGrid.
     /// </summary>
@@ -757,6 +757,57 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
+        /// Add dynamic template data to the email.
+        /// </summary>
+        /// <param name="dynamicTemplateData">A Template Data object.</param>
+        /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the substitutions.</param>
+        /// <param name="personalization">A personalization object to append to the message.</param>
+        public void SetTemplateData(object dynamicTemplateData, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.TemplateData = dynamicTemplateData;
+                if (this.Personalizations == null)
+                {
+                    this.Personalizations = new List<Personalization>();
+                    this.Personalizations.Add(personalization);
+                }
+                else
+                {
+                    this.Personalizations.Add(personalization);
+                }
+
+                return;
+            }
+
+            if (this.Personalizations != null)
+            {
+                if (this.Personalizations[personalizationIndex] == null)
+                {
+                    var p = new Personalization();
+                    this.Personalizations.Insert(personalizationIndex, p);
+                }
+
+                if (this.Personalizations[personalizationIndex].TemplateData == null)
+                {
+                    this.Personalizations[personalizationIndex].TemplateData = new Dictionary<string, object>();
+                }
+
+                this.Personalizations[personalizationIndex].TemplateData = dynamicTemplateData;
+                return;
+            }
+
+            this.Personalizations = new List<Personalization>()
+            {
+                new Personalization()
+                {
+                    TemplateData = dynamicTemplateData
+                }
+            };
+            return;
+        }
+
+        /// <summary>
         /// Add a custom argument to the email.
         /// </summary>
         /// <param name="customArgKey">The custom argument key.</param>
@@ -1277,11 +1328,15 @@ namespace SendGrid.Helpers.Mail
         /// An array containing the unsubscribe groups that you would like to be displayed on the unsubscribe preferences page.
         /// https://sendgrid.com/docs/User_Guide/Suppressions/recipient_subscription_preferences.html
         /// </param>
-        public void SetAsm(int groupID, List<int> groupsToDisplay)
+        public void SetAsm(int groupID, List<int> groupsToDisplay = null)
         {
             this.Asm = new ASM();
             this.Asm.GroupId = groupID;
-            this.Asm.GroupsToDisplay = groupsToDisplay;
+            if (groupsToDisplay != null)
+            {
+                this.Asm.GroupsToDisplay = groupsToDisplay;
+            }
+
             return;
         }
 
@@ -1426,7 +1481,7 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         /// <param name="enable">Gets or sets a value indicating whether this setting is enabled.</param>
         /// <param name="substitutionTag">Allows you to specify a substitution tag that you can insert in the body of your email at a location that you desire. This tag will be replaced by the open tracking pixel.</param>
-        public void SetOpenTracking(bool enable, string substitutionTag)
+        public void SetOpenTracking(bool enable, string substitutionTag = null)
         {
             if (this.TrackingSettings == null)
             {

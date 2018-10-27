@@ -1,24 +1,24 @@
-﻿// <copyright file="SendGridClient.cs" company="SendGrid">
+// <copyright file="SendGridClient.cs" company="SendGrid">
 // Copyright (c) SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Newtonsoft.Json;
+using SendGrid.Helpers.Mail;
+using SendGrid.Helpers.Reliability;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Reflection;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace SendGrid
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Reflection;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Helpers.Mail;
-    using Newtonsoft.Json;
-    using SendGrid.Helpers.Reliability;
-    using System.IO;
-
     /// <summary>
     /// A HTTP client wrapper for interacting with SendGrid's API
     /// </summary>
@@ -30,52 +30,6 @@ namespace SendGrid
         /// The HttpClient instance to use for all calls from this SendGridClient instance.
         /// </summary>
         private HttpClient client;
-
-        /// <summary>
-        /// The supported API methods.
-        /// </summary>
-        public enum Method
-        {
-            /// <summary>
-            /// Remove a resource.
-            /// </summary>
-            DELETE,
-
-            /// <summary>
-            /// Get a resource.
-            /// </summary>
-            GET,
-
-            /// <summary>
-            /// Modify a portion of the resource.
-            /// </summary>
-            PATCH,
-
-            /// <summary>
-            /// Create a resource or execute a function. (e.g send an email)
-            /// </summary>
-            POST,
-
-            /// <summary>
-            /// Update an entire resource.s
-            /// </summary>
-            PUT
-        }
-
-        /// <summary>
-        /// Gets or sets the path to the API resource.
-        /// </summary>
-        public string UrlPath { get; set; }
-
-        /// <summary>
-        /// Gets or sets the API version.
-        /// </summary>
-        public string Version { get; set; }
-
-        /// <summary>
-        /// Gets or sets the request media type.
-        /// </summary>
-        public string MediaType { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
@@ -170,6 +124,52 @@ namespace SendGrid
         }
 
         /// <summary>
+        /// The supported API methods.
+        /// </summary>
+        public enum Method
+        {
+            /// <summary>
+            /// Remove a resource.
+            /// </summary>
+            DELETE,
+
+            /// <summary>
+            /// Get a resource.
+            /// </summary>
+            GET,
+
+            /// <summary>
+            /// Modify a portion of the resource.
+            /// </summary>
+            PATCH,
+
+            /// <summary>
+            /// Create a resource or execute a function. (e.g send an email)
+            /// </summary>
+            POST,
+
+            /// <summary>
+            /// Update an entire resource.s
+            /// </summary>
+            PUT
+        }
+
+        /// <summary>
+        /// Gets or sets the path to the API resource.
+        /// </summary>
+        public string UrlPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the API version.
+        /// </summary>
+        public string Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets the request media type.
+        /// </summary>
+        public string MediaType { get; set; }
+
+        /// <summary>
         /// Add the authorization header, override to customize
         /// </summary>
         /// <param name="header">Authorization header</param>
@@ -186,7 +186,7 @@ namespace SendGrid
         /// <param name="request">The parameters for the API call</param>
         /// <param name="cancellationToken">Cancel the asynchronous call</param>
         /// <returns>Response object</returns>
-        public async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
         {
             HttpResponseMessage response = await this.client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return new Response(response.StatusCode, response.Content, response.Headers);
@@ -247,6 +247,58 @@ namespace SendGrid
         }
 
         /// <summary>
+        /// Build the final URL
+        /// </summary>
+        /// <param name="urlPath">The URL path.</param>
+        /// <param name="queryParams">A string of JSON formatted query parameters (e.g {'param': 'param_value'})</param>
+        /// <returns>
+        /// Final URL
+        /// </returns>
+        private string BuildUrl(string urlPath, string queryParams = null)
+        {
+            string url = null;
+
+            // create urlPAth - from parameter if overridden on call or from ctor parameter
+            var urlpath = urlPath ?? this.UrlPath;
+
+            if (this.Version != null)
+            {
+                url = this.Version + "/" + urlpath;
+            }
+            else
+            {
+                url = urlpath;
+            }
+
+            if (queryParams != null)
+            {
+                var ds_query_params = this.ParseJson(queryParams);
+                string query = "?";
+                foreach (var pair in ds_query_params)
+                {
+                    foreach (var element in pair.Value)
+                    {
+                        if (query != "?")
+                        {
+                            query = query + "&";
+                        }
+
+                        query = query + pair.Key + "=" + element;
+                    }
+                }
+
+                url = url + query;
+            }
+
+            return url;
+        }
+
+        private HttpClient CreateHttpClientWithRetryHandler()
+        {
+            return new HttpClient(new RetryDelegatingHandler(this.options.ReliabilitySettings));
+        }
+
+        /// <summary>
         /// Common method to initiate internal fields regardless of which constructor was used.
         /// </summary>
         /// <param name="apiKey">Your SendGrid API key.</param>
@@ -301,64 +353,12 @@ namespace SendGrid
             }
         }
 
-        private HttpClient CreateHttpClientWithRetryHandler()
-        {
-            return new HttpClient(new RetryDelegatingHandler(this.options.ReliabilitySettings));
-        }
-
-        /// <summary>
-        /// Build the final URL
-        /// </summary>
-        /// <param name="urlPath">The URL path.</param>
-        /// <param name="queryParams">A string of JSON formatted query parameters (e.g {'param': 'param_value'})</param>
-        /// <returns>
-        /// Final URL
-        /// </returns>
-        private string BuildUrl(string urlPath, string queryParams = null)
-        {
-            string url = null;
-
-            // create urlPAth - from parameter if overridden on call or from ctor parameter
-            var urlpath = urlPath ?? this.UrlPath;
-
-            if (this.Version != null)
-            {
-                url = this.Version + "/" + urlpath;
-            }
-            else
-            {
-                url = urlpath;
-            }
-
-            if (queryParams != null)
-            {
-                var ds_query_params = ParseJson(queryParams);
-                string query = "?";
-                foreach (var pair in ds_query_params)
-                {
-                    foreach(var element in pair.Value) 
-                    {
-                        if (query != "?")
-                        {
-                            query = query + "&";
-                        }
-
-                        query = query + pair.Key + "=" + element;
-                    }
-                }
-
-                url = url + query;
-            }
-
-            return url;
-        }
-
         /// <summary>
         /// Parses a JSON string without removing duplicate keys.
         /// </summary>
         /// <remarks>
         /// This function flattens all Objects/Array.
-        /// This means that for example <code>{'id': 1, 'id': 2, 'id': 3}</code> and 
+        /// This means that for example <code>{'id': 1, 'id': 2, 'id': 3}</code> and
         /// <code>{'id': [1, 2, 3]}</code> result in the same output.
         /// </remarks>
         /// <param name="json">The JSON string to parse.</param>
@@ -366,11 +366,11 @@ namespace SendGrid
         private Dictionary<string, List<object>> ParseJson(string json)
         {
             var dict = new Dictionary<string, List<object>>();
-            
-            using(var sr = new StringReader(json))
+
+            using (var sr = new StringReader(json))
             using (var reader = new JsonTextReader(sr))
             {
-                var propertyName = "";
+                var propertyName = string.Empty;
                 while (reader.Read())
                 {
                     switch (reader.TokenType)
@@ -378,10 +378,14 @@ namespace SendGrid
                         case JsonToken.PropertyName:
                         {
                             propertyName = reader.Value.ToString();
-                            if(!dict.ContainsKey(propertyName))
+                            if (!dict.ContainsKey(propertyName))
+                            {
                                 dict.Add(propertyName, new List<object>());
+                            }
+
                             break;
                         }
+
                         case JsonToken.Boolean:
                         case JsonToken.Integer:
                         case JsonToken.Float:
