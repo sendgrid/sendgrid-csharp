@@ -35,7 +35,7 @@ If you'd like to make a feature request, please read this section.
 The GitHub issue tracker is the preferred channel for library feature requests, but please respect the following restrictions:
 
 - Please **search for existing issues** in order to ensure we don't have duplicate bugs/feature requests.
-- Please be respectful and considerate of others when commenting on issues
+- Please be respectful and considerate of others when commenting on isssue
 
 <a name="submit-a-bug-report"></a>
 ## Submit a Bug Report
