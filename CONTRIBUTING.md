@@ -59,6 +59,8 @@ In order to make the process easier, we've included a [sample bug report templat
 
 We welcome direct contributions to the sendgrid-csharp code base. Thank you!
 
+Please note that we utilize the [Gitflow Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) for Git to help keep project development organized and consistent.
+
 ### Development Environment ###
 
 #### Install and Run Locally ####
@@ -155,11 +157,11 @@ Generally, we follow the style guidelines as suggested by the official language.
    git pull upstream <dev-branch>
    ```
 
-3. Create a new topic branch (off the main project development branch) to
+3. Create a new topic branch off the `development` branch to
    contain your feature, change, or fix:
 
    ```bash
-   git checkout -b <topic-branch-name>
+   git checkout -b <topic-branch-name> development
    ```
 
 4. Commit your changes in logical chunks. Please adhere to these [git commit
@@ -172,7 +174,7 @@ Generally, we follow the style guidelines as suggested by the official language.
 
 4b. Create or update the example code that demonstrates the functionality of this change to the code.
 
-5. Locally merge (or rebase) the upstream development branch into your topic branch:
+5. Locally merge (or rebase) the upstream `development` branch into your topic branch:
 
    ```bash
    git pull [--rebase] upstream development
