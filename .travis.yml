@@ -27,10 +27,11 @@ script:
   - dotnet test ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp1.0 /p:AltCover=true
   - ls ./src/SendGrid/bin/Release/net452/
   - ls ./src/SendGrid/bin/Release/netstandard1.3/
+  - ls ./tests/SendGrid.Tests/
   - dotnet pack ./src/SendGrid -c Release
   - curl -s https://codecov.io/bash > .codecov
   - chmod +x .codecov
-  - ./.codecov
+  - ./.codecov -f "tests/SendGrid.Tests/coverage.xml" -t "UPLOAD-TOKEN-HERE"
   
 after_success:
   - bash <(curl -s https://codecov.io/bash)  
