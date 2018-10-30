@@ -24,10 +24,12 @@ before_script:
 script:
   - dotnet restore
   - dotnet build ./src/SendGrid -c Release
-  - dotnet test /p:AltCover=true ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp1.0
+  - dotnet test ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp1.0 /p:AltCover=true
   - ls ./src/SendGrid/bin/Release/net452/
   - ls ./src/SendGrid/bin/Release/netstandard1.3/
   - ls ./tests/SendGrid.Tests/
+  - ls
+  - find . -type f -name '*.xml'
   - dotnet pack ./src/SendGrid -c Release
   - curl -s https://codecov.io/bash > .codecov
   - chmod +x .codecov
