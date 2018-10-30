@@ -7,12 +7,17 @@ namespace SendGrid.Helpers.Errors.Model
     /// <summary>
     /// Base class for the json error response
     /// </summary>
-    public class ErrorResponse
+    public class SendGridErrorResponse
     {
         /// <summary>
-        /// Gets or sets the Default error Status Code and Reason Phrase
+        /// Gets or sets the error Status Code
         /// </summary>
-        public string DefaultErrorData { get; set; }
+        public int ErrorHttpStatusCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the error Reason Phrase
+        /// </summary>
+        public string ErrorReasonPhrase { get; set; }
 
         /// <summary>
         /// Gets or sets the send grid error message

@@ -142,9 +142,10 @@ namespace SendGrid.Helpers.Errors
                 }
             }
 
-            ErrorResponse errorResponse = new ErrorResponse
+            SendGridErrorResponse errorResponse = new SendGridErrorResponse
             {
-                DefaultErrorData = $"{errorStatusCode} - {errorReasonPhrase}",
+                ErrorHttpStatusCode = errorStatusCode,
+                ErrorReasonPhrase = errorReasonPhrase,
                 SendGriErrorMessage = errorValue,
                 FieldWithError = fieldValue,
                 HelpLink = helpValue

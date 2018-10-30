@@ -45,12 +45,15 @@
         {
             if (Environment.GetEnvironmentVariable("TRAVIS") != "true")
             {
-                process.Kill();              
-                Trace.WriteLine("Shutting Down Prism");
+                if (!process.HasExited)
+                {
+                    process.Kill();
+                    Trace.WriteLine("Shutting Down Prism");
+                }
             }
         }
 
-        public string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
+        public string apiKey = "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";//Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
         public string host = "http://localhost:4010";
         public Process process = new Process();
     }
@@ -6152,9 +6155,10 @@
 
                 var jsonErrorReponse = ex.Message;
 
-                ErrorResponse errorResponseExpected = new ErrorResponse
+                SendGridErrorResponse errorResponseExpected = new SendGridErrorResponse
                 {
-                    DefaultErrorData = "401 - Unauthorized",
+                    ErrorHttpStatusCode = 401,
+                    ErrorReasonPhrase = "Unauthorized",
                     SendGriErrorMessage = "Permission denied, wrong credentials",
                     FieldWithError = null,
                     HelpLink = null
@@ -6189,9 +6193,10 @@
 
                 var jsonErrorReponse = ex.Message;
 
-                ErrorResponse errorResponseExpected = new ErrorResponse
+                SendGridErrorResponse errorResponseExpected = new SendGridErrorResponse
                 {
-                    DefaultErrorData = "400 - Bad Request",
+                    ErrorHttpStatusCode = 400,
+                    ErrorReasonPhrase = "Bad Request",
                     SendGriErrorMessage = "The from email does not contain a valid address.",
                     FieldWithError = "from.email",
                     HelpLink = "http://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html#message.from"
@@ -6226,9 +6231,10 @@
 
                 var jsonErrorReponse = ex.Message;
 
-                ErrorResponse errorResponseExpected = new ErrorResponse
+                SendGridErrorResponse errorResponseExpected = new SendGridErrorResponse
                 {
-                    DefaultErrorData = "400 - Bad Request",
+                    ErrorHttpStatusCode = 400,
+                    ErrorReasonPhrase = "Bad Request",
                     SendGriErrorMessage = "The subject is required. You can get around this requirement if you use a template with a subject defined or if every personalization has a subject defined.",
                     FieldWithError = "subject",
                     HelpLink = "http://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html#message.subject"
@@ -6273,9 +6279,10 @@
 
                 var jsonErrorReponse = ex.Message;
 
-                ErrorResponse errorResponseExpected = new ErrorResponse
+                SendGridErrorResponse errorResponseExpected = new SendGridErrorResponse
                 {
-                    DefaultErrorData = "400 - Bad Request",
+                    ErrorHttpStatusCode = 400,
+                    ErrorReasonPhrase = "Bad Request",
                     SendGriErrorMessage = "The attachment content is required.",
                     FieldWithError = "attachments.0.content",
                     HelpLink = "http://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html#message.attachments.content"
@@ -6308,9 +6315,10 @@
 
                 var jsonErrorReponse = ex.Message;
 
-                ErrorResponse errorResponseExpected = new ErrorResponse
+                SendGridErrorResponse errorResponseExpected = new SendGridErrorResponse
                 {
-                    DefaultErrorData = "400 - Bad Request",
+                    ErrorHttpStatusCode = 400,
+                    ErrorReasonPhrase = "Bad Request",
                     SendGriErrorMessage = "The template_id must be a valid GUID, you provided ''.",
                     FieldWithError = "template_id",
                     HelpLink = "http://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html#message.template_id"
