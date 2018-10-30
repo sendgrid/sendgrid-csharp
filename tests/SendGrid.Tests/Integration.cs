@@ -53,7 +53,7 @@
             }
         }
 
-        public string apiKey = "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";//Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
+        public string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
         public string host = "http://localhost:4010";
         public Process process = new Process();
     }
