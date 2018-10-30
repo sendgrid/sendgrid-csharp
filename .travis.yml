@@ -24,7 +24,7 @@ before_script:
 script:
   - dotnet restore
   - dotnet build ./src/SendGrid -c Release
-  - dotnet test ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp1.0 /p:AltCover=true
+  - dotnet test ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp1.0 /p:AltCover=true /p:AltCoverXmlreport="./coverage.xml"
   - ls ./src/SendGrid/bin/Release/net452/
   - ls ./src/SendGrid/bin/Release/netstandard1.3/
   - ls ./tests/SendGrid.Tests/
