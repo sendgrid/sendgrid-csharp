@@ -23,9 +23,8 @@ before_script:
 
 script:
   - dotnet restore
-  - dotnet tool install --global altcover.global
   - dotnet build ./src/SendGrid -c Release
-  - dotnet test ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp1.0 /p:AltCover=true
+  - dotnet test /p:AltCover=true ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp1.0
   - ls ./src/SendGrid/bin/Release/net452/
   - ls ./src/SendGrid/bin/Release/netstandard1.3/
   - ls ./tests/SendGrid.Tests/
