@@ -50,7 +50,7 @@ We appreciate your continued support, thank you!
 - .NET version 4.5.2 and higher
 - .NET Core 1.0 and higher
 - .NET Standard 1.3 support
-- A SendGrid account, [sign up for free](https://sendgrid.com/free?source=sendgrid-csharp) to send up to 40,000 emails for the first 30 days or check out [our pricing](https://sendgrid.com/pricing?source=sendgrid-csharp).
+- A SendGrid account, [sign up for free](https://sendgrid.com/free?source=sendgrid-csharp) to send up to 40,000 emails for the first 30 days, then send 100 emails/day free forever or check out [our pricing](https://sendgrid.com/pricing?source=sendgrid-csharp).
 
 ## Obtain an API Key
 
