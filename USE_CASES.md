@@ -2,16 +2,28 @@ This documentation provides examples for specific use cases. Please [open an iss
 
 # Table of Contents
 
-* [Email - Attachments](#attachments)
-* [Email - Kitchen Sink - an example with all settings used](#kitchensink)
-* [Email - Send a Single Email to Multiple Recipients](#singleemailmultiplerecipients)
-* [Email - Send a Single Email to a Single Recipient](#singleemailsinglerecipient)
-* [Email - Send Multiple Emails to Multiple Recipients](#multipleemailsmultiplerecipients)
-* [Email - Transactional Templates](#transactional-templates)
-* [Transient Fault Handling](#transient-faults)
-* [How to Setup a Domain Whitelabel](#domain-whitelabel)
-* [How to View Email Statistics](#email-stats)
-* [Deploy a Hello Email app on Heroku](#deploy-heroku)
+- [Table of Contents](#table-of-contents)
+- [Attachments](#attachments)
+- [Kitchen Sink - an example with all settings used](#kitchen-sink---an-example-with-all-settings-used)
+- [Send a Single Email to Multiple Recipients](#send-a-single-email-to-multiple-recipients)
+- [Send a Single Email to a Single Recipient](#send-a-single-email-to-a-single-recipient)
+- [Send Multiple Emails to Multiple Recipients](#send-multiple-emails-to-multiple-recipients)
+- [Transactional Templates](#transactional-templates)
+    - [With Mail Helper Class](#with-mail-helper-class)
+    - [Without Mail Helper Class](#without-mail-helper-class)
+- [_Legacy_ Transactional Templates](#legacy-transactional-templates)
+    - [Legacy Template With Mail Helper Class](#legacy-template-with-mail-helper-class)
+    - [Legacy Template Without Mail Helper Class](#legacy-template-without-mail-helper-class)
+- [Transient Fault Handling](#transient-fault-handling)
+        - [RetryCount](#retrycount)
+        - [MinimumBackOff](#minimumbackoff)
+        - [MaximumBackOff](#maximumbackoff)
+        - [DeltaBackOff](#deltabackoff)
+    - [Examples](#examples)
+- [How to Setup a Domain Whitelabel](#how-to-setup-a-domain-whitelabel)
+- [How to View Email Statistics](#how-to-view-email-statistics)
+- [How to transform HTML to plain text](#how-to-transform-html-to-plain-text)
+- [Deploy a Hello Email app on Heroku](#deploy-heroku)
 
 <a name="attachments"></a>
 # Attachments
@@ -29,10 +41,11 @@ namespace Example
     {
         private static void Main()
         {
-            Execute().Wait();
+            ExecuteManualAttachmentAdd().Wait();
+            ExecuteStreamAttachmentAdd().Wait();
         }
 
-        static async Task Execute()
+        static async Task ExecuteManualAttachmentAdd()
         {
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);
@@ -41,10 +54,27 @@ namespace Example
             var to = new EmailAddress("test@example.com");
             var body = "Email Body";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, body, "");
-            var bytes = File.ReadAllBytes("/Users/username/file.txt");
+            var bytes = File.ReadAllBytes("C:\\Users\\username\\file.txt");
             var file = Convert.ToBase64String(bytes);
             msg.AddAttachment("file.txt", file);
             var response = await client.SendEmailAsync(msg);
+        }
+
+        static async Task ExecuteStreamAttachmentAdd()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("test@example.com");
+            var subject = "Subject";
+            var to = new EmailAddress("test@example.com");
+            var body = "Email Body";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, body, "");
+
+            using (var fileStream = File.OpenRead("C:\\Users\\username\\file.txt"))
+            {
+                await msg.AddAttachmentAsync("file.txt", fileStream);
+                var response = await client.SendEmailAsync(msg);
+            }
         }
     }
 }
@@ -110,14 +140,19 @@ namespace Example
             };
             msg.AddHeaders(headers);
 
-            msg.AddSubstitution("%name1%", "Example Name 1");
-            msg.AddSubstitution("%city1%", "Denver");
-            var substitutions = new Dictionary<string, string>()
+            // If you require complex substitutions this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transactional-templates).
+            var dynamicTemplateData = new ExampleTemplateData
             {
-                { "%name2%", "Example Name 2" },
-                { "%city2%", "Orange" }
+                Subject = "Hi!",
+                Name = "Example User",
+                Location = new Location
+                {
+                    City = "Birmingham",
+                    Country = "United Kingdom"
+                }
             };
-            msg.AddSubstitutions(substitutions);
+
+            msg.SetTemplateData(dynamicTemplateData);
 
             msg.AddCustomArg("marketing1", "false");
             msg.AddCustomArg("transactional1", "true");
@@ -165,14 +200,19 @@ namespace Example
             };
             msg.AddHeaders(headers1, 1);
 
-            msg.AddSubstitution("%name3%", "Example Name 3", 1);
-            msg.AddSubstitution("%city3%", "Redwood City", 1);
-            var substitutions1 = new Dictionary<string, string>()
+            // For a full transactional template example, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transactional-templates).
+            var dynamicTemplateData2 = new ExampleTemplateData
             {
-                { "%name4%", "Example Name 4" },
-                { "%city4%", "London" }
+                Subject = "Hi 2!",
+                Name = "Example User 2",
+                Location = new Location
+                {
+                    City = "Birmingham 2",
+                    Country = "United Kingdom 2"
+                }
             };
-            msg.AddSubstitutions(substitutions1, 1);
+
+            msg.SetTemplateData(dynamicTemplateData2, 1);
 
             msg.AddCustomArg("marketing3", "true", 1);
             msg.AddCustomArg("transactional3", "false", 1);
@@ -231,7 +271,7 @@ namespace Example
             msg.AddAttachments(attachments);
 
             // For a full transactional template example, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transactional-templates).
-            msg.SetTemplateId("13b8f94f-bcae-4ec6-b752-70d6cb59f932");
+            msg.SetTemplateId("d-d42b0eea09964d1ab957c18986c01828");
 
             msg.AddGlobalHeader("X-Day", "Monday");
             var globalHeaders = new Dictionary<string, string>
@@ -444,7 +484,7 @@ namespace Example
                                                                           htmlContent,
                                                                           substitutions
                                                                           );
-            var response = await client.SendEmailAsync(msg);                                                            
+            var response = await client.SendEmailAsync(msg);
         }
     }
 }
@@ -453,7 +493,176 @@ namespace Example
 <a name="transactional-templates"></a>
 # Transactional Templates
 
-For this example, we assume you have created a [transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html). Following is the template content we used for testing.
+For this example, we assume you have created a [transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/Create_and_edit_dynamic_transactional_templates.html).
+Following is the template content we used for testing.
+
+Template ID (replace with your own):
+
+```text
+d-d42b0eea09964d1ab957c18986c01828
+```
+
+Email Subject:
+
+```text
+Dynamic Subject: {{subject}}
+```
+
+Template Body:
+
+```html
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+Hello {{name}},
+<br /><br/>
+I'm glad you are trying out the dynamic template feature!
+<br /><br/>
+I hope you are having a great day in {{location.city}} :)
+<br /><br/>
+</body>
+</html>
+```
+
+## With Mail Helper Class
+
+```csharp
+using Newtonsoft.Json;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System.Threading.Tasks;
+using System;
+
+namespace Example
+{
+    internal class Example
+    {
+        private static void Main()
+        {
+            Execute().Wait();
+        }
+
+        static async Task Execute()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("test@example.com", "Example User"));
+            msg.AddTo(new EmailAddress("test@example.com", "Example User"));
+            msg.SetTemplateId("d-d42b0eea09964d1ab957c18986c01828");
+
+            var dynamicTemplateData = new ExampleTemplateData
+            {
+                Subject = "Hi!",
+                Name = "Example User",
+                Location = new Location
+                {
+                    City = "Birmingham",
+                    Country = "United Kingdom"
+                }
+            };
+
+            msg.SetTemplateData(dynamicTemplateData);
+            var response = await client.SendEmailAsync(msg);
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Headers.ToString());
+            Console.WriteLine("\n\nPress any key to exit.");
+            Console.ReadLine();
+        }
+
+        private class ExampleTemplateData
+        {
+            [JsonProperty("subject")]
+            public string Subject { get; set; }
+            
+            [JsonProperty("name")]
+            public string Name { get; set; }
+
+            [JsonProperty("location")]
+            public Location Location { get; set; }
+        }
+
+        private class Location
+        {
+            [JsonProperty("city")]
+            public string City { get; set; }
+            
+            [JsonProperty("country")]
+            public string Country { get; set; }
+        }
+    }
+}
+```
+
+Methods also exist on `MailHelper` to create dynamic template emails:
+* `CreateSingleTemplateEmail`
+* `CreateSingleTemplateEmailToMultipleRecipients`
+* `CreateMultipleTemplateEmailsToMultipleRecipients`
+
+## Without Mail Helper Class
+
+```csharp
+using Newtonsoft.Json;
+using System.Threading.Tasks;
+using System;
+using SendGrid;
+
+namespace Example
+{
+    internal class Example
+    {
+        private static void Main()
+        {
+            Execute().Wait();
+        }
+
+        static async Task Execute()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+
+            string data = @"{
+              'personalizations': [
+                {
+                  'to': [
+                    {
+                      'email': 'test@example.com'
+                    }
+                  ],
+                  'dynamic_template_data': {
+                    'subject': 'Hi!',
+                    'name': 'Example User',
+                    'location': {
+                        'city': 'Birmingham',
+                        'country': 'United Kingdom'
+                    }
+                  }
+                }
+              ],
+              'from': {
+                'email': 'test@example.com'
+              },
+              'template_id': 'd-d42b0eea09964d1ab957c18986c01828'
+            }";
+            var json = JsonConvert.DeserializeObject<Object>(data);
+            var response = await client.RequestAsync(method: SendGridClient.Method.POST,
+                                                     requestBody: json.ToString(),
+                                                     urlPath: "mail/send");
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Headers.ToString());
+            Console.WriteLine("\n\nPress any key to exit.");
+            Console.ReadLine();
+        }
+    }
+}
+```
+
+<a name="legacy-transactional-templates"></a>
+# _Legacy_ Transactional Templates
+
+For this example, we assume you have created a [legacy transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html). Following is the template content we used for testing.
 
 Template ID (replace with your own):
 
@@ -487,7 +696,7 @@ I hope you are having a great day in -city- :)
 </html>
 ```
 
-## With Mail Helper Class
+## Legacy Template With Mail Helper Class
 
 ```csharp
 using SendGrid;
@@ -526,7 +735,7 @@ namespace Example
 }
 ```
 
-## Without Mail Helper Class
+## Legacy Template Without Mail Helper Class
 
 ```csharp
 using Newtonsoft.Json;
@@ -659,6 +868,36 @@ You can find documentation for how to view your email statistics via the UI [her
 
 Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as SendGrid processes your email.
 
+<a name="html-to-plain-text"></a>
+# How to transform HTML to plain text
+
+Although the HTML tags could be removed using regular expressions, the best solution is parsing the HTML code with a specific library, such as [HTMLAgilityPack](http://html-agility-pack.net/). 
+
+The following code shows how to parse an input string with HTML code and remove all tags:
+
+```csharp
+using HtmlAgilityPack;
+
+namespace Example {
+
+    internal class Example
+    {
+		/// <summary>
+		/// Convert the HTML content to plain text
+		/// </summary>
+		/// <param name="html">The html content which is going to be converted</param>
+		/// <returns>A string</returns>
+		public static string HtmlToPlainText(string html)
+		{
+			HtmlDocument document = new HtmlDocument();
+			document.LoadHtml(html);
+			return document.DocumentNode == null ? string.Empty : document.DocumentNode.InnerText;
+		}	
+	}
+}
+
+```
+
 <a name="deploy-heroku"></a>
 # Deploy a Hello Email app on Heroku
 
@@ -748,3 +987,4 @@ The ASP.NET project must be linked to the Heroku app. As stated in Step 1, the f
 
 #### Deploy
 Once all code has been committed to the repository, a branch can be selected for either manual or automatic deployment. Automatic deployment will re-deploy the application every time a change in the repository is detected. For manual deployment, just click the *Deploy Branch* button and wait for the build to complete. If the deployment process was successful, a link to your live application will be provided. If an error occurred, it will be shown inside the Build Log.
+

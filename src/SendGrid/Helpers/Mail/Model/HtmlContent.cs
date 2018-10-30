@@ -3,10 +3,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Newtonsoft.Json;
+
 namespace SendGrid.Helpers.Mail.Model
 {
-    using Newtonsoft.Json;
-
     /// <summary>
     /// Helper class for plain html mime types
     /// </summary>

@@ -6,11 +6,10 @@
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE.txt)
 [![Twitter Follow](https://img.shields.io/twitter/follow/sendgrid.svg?style=social&label=Follow)](https://twitter.com/sendgrid)
 [![GitHub contributors](https://img.shields.io/github/contributors/sendgrid/sendgrid-csharp.svg)](https://github.com/sendgrid/sendgrid-csharp/graphs/contributors)
+[![Open Source Helpers](https://www.codetriage.com/sendgrid/sendgrid-csharp/badges/users.svg)](https://www.codetriage.com/sendgrid/sendgrid-csharp)
 
 <a name="announcements"></a>
 # Announcements
-
-## August 2017
 
 Subscribe to email [notifications](https://dx.sendgrid.com/newsletter/csharp) for releases and breaking changes.
 
@@ -51,7 +50,7 @@ We appreciate your continued support, thank you!
 - .NET version 4.5.2 and higher
 - .NET Core 1.0 and higher
 - .NET Standard 1.3 support
-- A SendGrid account, [sign up for free](https://sendgrid.com/free?source=sendgrid-csharp) to send up to 40,000 emails for the first 30 days or check out [our pricing](https://sendgrid.com/pricing?source=sendgrid-csharp).
+- A SendGrid account, [sign up for free](https://sendgrid.com/free?source=sendgrid-csharp) to send up to 40,000 emails for the first 30 days, then send 100 emails/day free forever or check out [our pricing](https://sendgrid.com/pricing?source=sendgrid-csharp).
 
 ## Obtain an API Key
 
@@ -59,38 +58,35 @@ Grab your API Key from the [SendGrid UI](https://app.sendgrid.com/settings/api_k
 
 ## Setup Environment Variables to Manage Your API Key
 
-Do not hard code your [SendGrid API Key](https://app.sendgrid.com/settings/api_keys) into your code. Instead, use something like an [environment variable](http://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10) or [Web.config](https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure).
+Manage your [SendGrid API Keys](https://app.sendgrid.com/settings/api_keys) by storing them in Environment Variables or in [Web.config](https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure). It is a good practice to keep your data and configuration settings separate. This way to you can change your SendGrid API key without changing your code. Also, we strongly advise against storing sensitive data directly in your code.
 
-The examples found below in this quick start and in the example projects all make use of storing their API keys as an environment variable.
+Setup Environment Variables using the UI:
+1. Press Win+R and run SystemPropertiesAdvanced
+2. Click on Environment Variables
+3. Click New in user variables section
+4. Type SENDGRID_API_KEY in the name. (Make sure this name matches the name of key in your code)
+5. Type actual API Key in the value
+6. Restart the IDE and you're done!
 
-Environment variables are usually part of the OS and are available to programs within that same OS.
-It gives the option to bypass hardcoding credentials, making them easy to manage.
+Setup Environment Variables using CMD:
+1. Run CMD as administrator
+2. setx SENDGRID_API_KEY "YOUR_API_KEY"
 
-The following example will go through adding an environment variable in Windows 10.
+Here are few example to get and set API Keys programatically:
 
-Looking at the code example from the [Quick Start](#quick_start), we see that the second line of the `Execute()` method tries to retrieve an environment variable like so:
-
+Get Environment Variable
 ```csharp
-var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
 ```
 
-`NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY` isn't a variable of your OS environment yet, so let's add it.
-
-Press `win + R` (or search for "run"), fill in "SystemPropertiesAdvanced", press `enter` and then click "Environment variables".
-
-You'll get two lists of variables, but we'll focus on the User Variables for this example.
-
-Click the "New" button beneath the User Variables list. Give it the name `NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY` (or rename the variable in both the environment and code to a more generic name).
-
-For value, insert your SendGrid API key. Click "Ok", and once again in the Variable Overview and lastly, close the system properties window.
-
-You may need to restart your IDE to make use of the new variable.
-
-Now, if all went well, you can access the just added variable in your C# SendGrid projects! Ready for some examples?
+Set Environment Variable
+```csharp
+var setKey = Environment.SetEnvironmentVariable("SENDGRID_API_KEY", "YOUR_API_KEY");
+```
 
 ## Install Package
 
-To use SendGrid in your C# project, you can either <a href="https://github.com/sendgrid/sendgrid-csharp.git">download the SendGrid C# .NET libraries directly from our Github repository</a>. If you have the NuGet package manager installed, you can grab them automatically:
+To use SendGrid in your C# project, you can either <a href="https://github.com/sendgrid/sendgrid-csharp.git">download the SendGrid C# .NET libraries directly from our Github repository</a> or if you have the NuGet package manager installed, you can grab them automatically:
 
 ```
 PM> Install-Package SendGrid
@@ -247,8 +243,9 @@ Quick links:
 
 - [Feature Request](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#feature-request)
 - [Bug Reports](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#submit-a-bug-report)
-- [Sign the CLA to Create a Pull Request](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#cla)
 - [Improvements to the Codebase](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#improvements-to-the-codebase)
+- [Review Pull Requests](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#code-reviews)
+- Sign the CLA to Create a Pull Request [here](https://cla.sendgrid.com/sendgrid/sendgrid-csharp)
 
 <a name="troubleshooting"></a>
 # Troubleshooting
@@ -258,7 +255,10 @@ Please see our [troubleshooting guide](https://github.com/sendgrid/sendgrid-csha
 <a name="about"></a>
 # About
 
-sendgrid-csharp is guided and supported by the SendGrid [Developer Experience Team](mailto:dx@sendgrid.com).
+sendgrid-csharp is guided and supported by the SendGrid Developer Experience Team.
+
+Email the Developer Experience Team [here](mailto:dx@sendgrid.com) in case of any assistance or queries.
+
 
 sendgrid-csharp is maintained and funded by SendGrid, Inc. The names and logos for sendgrid-csharp are trademarks of SendGrid, Inc.
 

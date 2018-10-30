@@ -3,14 +3,17 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Newtonsoft.Json;
+using SendGrid.Helpers.Mail.Model;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace SendGrid.Helpers.Mail
 {
-    using Model;
-    using Newtonsoft.Json;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
     /// <summary>
     /// Class SendGridMessage builds an object that sends an email through SendGrid.
     /// </summary>
@@ -141,9 +144,11 @@ namespace SendGrid.Helpers.Mail
         public void AddTo(string email, string name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
+            {
                 throw new ArgumentNullException("email");
+            }
 
-            AddTo(new EmailAddress(email, name));
+            this.AddTo(new EmailAddress(email, name));
         }
 
         /// <summary>
@@ -260,9 +265,11 @@ namespace SendGrid.Helpers.Mail
         public void AddCc(string email, string name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
+            {
                 throw new ArgumentNullException("email");
+            }
 
-            AddCc(new EmailAddress(email, name));
+            this.AddCc(new EmailAddress(email, name));
         }
 
         /// <summary>
@@ -379,9 +386,11 @@ namespace SendGrid.Helpers.Mail
         public void AddBcc(string email, string name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
+            {
                 throw new ArgumentNullException("email");
+            }
 
-            AddBcc(new EmailAddress(email, name));
+            this.AddBcc(new EmailAddress(email, name));
         }
 
         /// <summary>
@@ -748,6 +757,57 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
+        /// Add dynamic template data to the email.
+        /// </summary>
+        /// <param name="dynamicTemplateData">A Template Data object.</param>
+        /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the substitutions.</param>
+        /// <param name="personalization">A personalization object to append to the message.</param>
+        public void SetTemplateData(object dynamicTemplateData, int personalizationIndex = 0, Personalization personalization = null)
+        {
+            if (personalization != null)
+            {
+                personalization.TemplateData = dynamicTemplateData;
+                if (this.Personalizations == null)
+                {
+                    this.Personalizations = new List<Personalization>();
+                    this.Personalizations.Add(personalization);
+                }
+                else
+                {
+                    this.Personalizations.Add(personalization);
+                }
+
+                return;
+            }
+
+            if (this.Personalizations != null)
+            {
+                if (this.Personalizations[personalizationIndex] == null)
+                {
+                    var p = new Personalization();
+                    this.Personalizations.Insert(personalizationIndex, p);
+                }
+
+                if (this.Personalizations[personalizationIndex].TemplateData == null)
+                {
+                    this.Personalizations[personalizationIndex].TemplateData = new Dictionary<string, object>();
+                }
+
+                this.Personalizations[personalizationIndex].TemplateData = dynamicTemplateData;
+                return;
+            }
+
+            this.Personalizations = new List<Personalization>()
+            {
+                new Personalization()
+                {
+                    TemplateData = dynamicTemplateData
+                }
+            };
+            return;
+        }
+
+        /// <summary>
         /// Add a custom argument to the email.
         /// </summary>
         /// <param name="customArgKey">The custom argument key.</param>
@@ -907,7 +967,7 @@ namespace SendGrid.Helpers.Mail
                 throw new ArgumentNullException("email");
             }
 
-            SetFrom(new EmailAddress(email, name));
+            this.SetFrom(new EmailAddress(email, name));
         }
 
         /// <summary>
@@ -985,56 +1045,86 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
-        /// Add an attachment to the email.
+        /// Add an attachment from a stream to the email. No attachment will be added in the case that the stream cannot be read. Streams of length greater than int.MaxValue are truncated.
         /// </summary>
-        /// <param name="filename">The filename of the attachment.</param>
-        /// <param name="content">The Base64 encoded content of the attachment.</param>
+        /// <param name="filename">The filename the attachment will display in the email.</param>
+        /// <param name="contentStream">The stream to use as content of the attachment.</param>
         /// <param name="type">The mime type of the content you are attaching. For example, application/pdf or image/jpeg.</param>
         /// <param name="disposition">The content-disposition of the attachment specifying how you would like the attachment to be displayed. For example, "inline" results in the attached file being displayed automatically within the message while "attachment" results in the attached file requiring some action to be taken before it is displayed (e.g. opening or downloading the file). Defaults to "attachment". Can be either "attachment" or "inline".</param>
         /// <param name="content_id">A unique id that you specify for the attachment. This is used when the disposition is set to "inline" and the attachment is an image, allowing the file to be displayed within the body of your email. Ex: <![CDATA[ <img src="cid:ii_139db99fdb5c3704"></img> ]]></param>
-        public void AddAttachment(string filename, string content, string type = null, string disposition = null, string content_id = null)
+        /// <param name="cancellationToken">A cancellation token which can notify if the task should be canceled.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        public async Task AddAttachmentAsync(string filename, Stream contentStream, string type = null, string disposition = null, string content_id = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var attachment = new Attachment()
+            // Stream doesn't want us to read it, can't do anything else here
+            if (contentStream == null || !contentStream.CanRead)
+            {
+                return;
+            }
+
+            var contentLength = Convert.ToInt32(contentStream.Length);
+            var streamBytes = new byte[contentLength];
+
+            await contentStream.ReadAsync(streamBytes, 0, contentLength, cancellationToken);
+
+            var base64Content = Convert.ToBase64String(streamBytes);
+
+            this.AddAttachment(filename, base64Content, type, disposition, content_id);
+        }
+
+        /// <summary>
+        /// Add an attachment to the email.
+        /// </summary>
+        /// <param name="filename">The filename the attachment will display in the email.</param>
+        /// <param name="base64Content">The Base64 encoded content of the attachment.</param>
+        /// <param name="type">The mime type of the content you are attaching. For example, application/pdf or image/jpeg.</param>
+        /// <param name="disposition">The content-disposition of the attachment specifying how you would like the attachment to be displayed. For example, "inline" results in the attached file being displayed automatically within the message while "attachment" results in the attached file requiring some action to be taken before it is displayed (e.g. opening or downloading the file). Defaults to "attachment". Can be either "attachment" or "inline".</param>
+        /// <param name="content_id">A unique id that you specify for the attachment. This is used when the disposition is set to "inline" and the attachment is an image, allowing the file to be displayed within the body of your email. Ex: <![CDATA[ <img src="cid:ii_139db99fdb5c3704"></img> ]]></param>
+        public void AddAttachment(string filename, string base64Content, string type = null, string disposition = null, string content_id = null)
+        {
+            if (string.IsNullOrWhiteSpace(filename) || string.IsNullOrWhiteSpace(base64Content))
+            {
+                return;
+            }
+
+            var attachment = new Attachment
             {
                 Filename = filename,
-                Content = content,
+                Content = base64Content,
                 Type = type,
                 Disposition = disposition,
                 ContentId = content_id
             };
 
+            this.AddAttachment(attachment);
+        }
+
+        /// <summary>
+        /// Add an attachment to the email.
+        /// </summary>
+        /// <param name="attachment">An Attachment.</param>
+        public void AddAttachment(Attachment attachment)
+        {
             if (this.Attachments == null)
             {
-                this.Attachments = new List<Attachment>()
-                {
-                    attachment
-                };
-            }
-            else
-            {
-                this.Attachments.Add(attachment);
+                this.Attachments = new List<Attachment>();
             }
 
-            return;
+            this.Attachments.Add(attachment);
         }
 
         /// <summary>
         /// Add attachments to the email.
         /// </summary>
         /// <param name="attachments">A list of Attachments.</param>
-        public void AddAttachments(List<Attachment> attachments)
+        public void AddAttachments(IEnumerable<Attachment> attachments)
         {
             if (this.Attachments == null)
             {
                 this.Attachments = new List<Attachment>();
-                this.Attachments = attachments;
-            }
-            else
-            {
-                this.Attachments.AddRange(attachments);
             }
 
-            return;
+            this.Attachments.AddRange(attachments);
         }
 
         /// <summary>
@@ -1238,11 +1328,15 @@ namespace SendGrid.Helpers.Mail
         /// An array containing the unsubscribe groups that you would like to be displayed on the unsubscribe preferences page.
         /// https://sendgrid.com/docs/User_Guide/Suppressions/recipient_subscription_preferences.html
         /// </param>
-        public void SetAsm(int groupID, List<int> groupsToDisplay)
+        public void SetAsm(int groupID, List<int> groupsToDisplay = null)
         {
             this.Asm = new ASM();
             this.Asm.GroupId = groupID;
-            this.Asm.GroupsToDisplay = groupsToDisplay;
+            if (groupsToDisplay != null)
+            {
+                this.Asm.GroupsToDisplay = groupsToDisplay;
+            }
+
             return;
         }
 
@@ -1387,7 +1481,7 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         /// <param name="enable">Gets or sets a value indicating whether this setting is enabled.</param>
         /// <param name="substitutionTag">Allows you to specify a substitution tag that you can insert in the body of your email at a location that you desire. This tag will be replaced by the open tracking pixel.</param>
-        public void SetOpenTracking(bool enable, string substitutionTag)
+        public void SetOpenTracking(bool enable, string substitutionTag = null)
         {
             if (this.TrackingSettings == null)
             {
@@ -1486,6 +1580,13 @@ namespace SendGrid.Helpers.Mail
                     // MimeType.Text > MimeType.Html > Everything Else
                     for (var i = 0; i < this.Contents.Count; i++)
                     {
+                        if (string.IsNullOrEmpty(this.Contents[i].Type) || string.IsNullOrEmpty(this.Contents[i].Value))
+                        {
+                            this.Contents.RemoveAt(i);
+                            i--;
+                            continue;
+                        }
+
                         if (this.Contents[i].Type == MimeType.Html)
                         {
                             var tempContent = new Content();

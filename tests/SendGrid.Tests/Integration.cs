@@ -1,18 +1,17 @@
 ﻿namespace SendGrid.Tests
 {
-    using Helpers.Mail;
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Net;
     using System.Net.Http;
-    using System.Threading.Tasks;
-    using Xunit;
     using System.Threading;
-    using System.Text;
-    using Helpers.Reliability;
+    using System.Threading.Tasks;
+    using Newtonsoft.Json;
     using Reliability;
+    using SendGrid.Helpers.Mail;
+    using SendGrid.Helpers.Reliability;
+    using Xunit;
     using Xunit.Abstractions;
 
     public class IntegrationFixture : IDisposable
@@ -1660,6 +1659,135 @@
         }
 
         [Fact]
+        public void TestSetTemplateData()
+        {
+            // Personalization not passed in, Personalization does not exist
+            var msg = new SendGridMessage();
+            var dynamicTemplateData1 = new
+            {
+                key12 = "Dynamic Template Data Value 12",
+                key13 = "Dynamic Template Data Value 13"
+            };
+            msg.SetTemplateData(dynamicTemplateData1);
+            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key12\":\"Dynamic Template Data Value 12\",\"key13\":\"Dynamic Template Data Value 13\"}}]}");
+
+            // Personalization passed in, no Personalizations
+            msg = new SendGridMessage();
+            var dynamicTemplateData2 = new
+            {
+                key14 = "Dynamic Template Data Value 14",
+                key15 = "Dynamic Template Data Value 15"
+            };
+            var personalization = new Personalization()
+            {
+                TemplateData = dynamicTemplateData2
+            };
+            var dynamicTemplateData3 = new
+            {
+                key16 = "Dynamic Template Data Value 16",
+                key17 = "Dynamic Template Data Value 17"
+            };
+            msg.SetTemplateData(dynamicTemplateData3, 0, personalization);
+            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key16\":\"Dynamic Template Data Value 16\",\"key17\":\"Dynamic Template Data Value 17\"}}]}");
+
+            // Personalization passed in, Personalization exists
+            msg = new SendGridMessage();
+            var dynamicTemplateData4 = new
+            {
+                key18 = "Dynamic Template Data Value 18",
+                key19 = "Dynamic Template Data Value 19"
+            };
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    TemplateData = dynamicTemplateData4
+                }
+            };
+            var dynamicTemplateData5 = new
+            {
+                key20 = "Dynamic Template Data Value 20",
+                key21 = "Dynamic Template Data Value 21"
+            };
+            personalization = new Personalization()
+            {
+                TemplateData = dynamicTemplateData5
+            };
+            var dynamicTemplateData6 = new
+            {
+                key22 = "Dynamic Template Data Value 22",
+                key23 = "Dynamic Template Data Value 23"
+            };
+            msg.SetTemplateData(dynamicTemplateData6, 1, personalization);
+            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key18\":\"Dynamic Template Data Value 18\",\"key19\":\"Dynamic Template Data Value 19\"}},{\"dynamic_template_data\":{\"key22\":\"Dynamic Template Data Value 22\",\"key23\":\"Dynamic Template Data Value 23\"}}]}");
+
+            // Personalization not passed in Personalization exists
+            msg = new SendGridMessage();
+            var dynamicTemplateData7 = new
+            {
+                key24 = "Dynamic Template Data Value 24",
+                key25 = "Dynamic Template Data Value 25"
+            };
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    TemplateData = dynamicTemplateData7
+                }
+            };
+            var dynamicTemplateData8 = new
+            {
+                key26 = "Dynamic Template Data Value 26",
+                key27 = "Dynamic Template Data Value 27"
+            };
+            msg.SetTemplateData(dynamicTemplateData8);
+            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key26\":\"Dynamic Template Data Value 26\",\"key27\":\"Dynamic Template Data Value 27\"}}]}");
+
+            // Personalization not passed in Personalizations exists
+            msg = new SendGridMessage();
+            var dynamicTemplateData9 = new
+            {
+                key28 = "Dynamic Template Data Value 28",
+                key29 = "Dynamic Template Data Value 29"
+            };
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    TemplateData = dynamicTemplateData9
+                }
+            };
+            var dynamicTemplateData10 = new
+            {
+                key30 = "Dynamic Template Data Value 30",
+                key31 = "Dynamic Template Data Value 31"
+            };
+            personalization = new Personalization()
+            {
+                TemplateData = dynamicTemplateData10
+            };
+            msg.Personalizations.Add(personalization);
+            var dynamicTemplateData11 = new
+            {
+                key32 = "Dynamic Template Data Value 32",
+                key33 = "Dynamic Template Data Value 33"
+            };
+            msg.SetTemplateData(dynamicTemplateData11);
+            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"key32\":\"Dynamic Template Data Value 32\",\"key33\":\"Dynamic Template Data Value 33\"}},{\"dynamic_template_data\":{\"key30\":\"Dynamic Template Data Value 30\",\"key31\":\"Dynamic Template Data Value 31\"}}]}");
+
+            // Complex dynamic template data
+            msg = new SendGridMessage();
+            var dynamicTemplateData12 = new
+            {
+                array = new List<string>
+                {
+                    "Dynamic Template Data Array Value 1",
+                    "Dynamic Template Data Array Value 2"
+                },
+                innerObject = new
+                {
+                    innerObjectKey1 = "Dynamic Template Data Deep Object Value 1"
+                }
+            };
+            msg.SetTemplateData(dynamicTemplateData12);
+            Assert.True(msg.Serialize() == "{\"personalizations\":[{\"dynamic_template_data\":{\"array\":[\"Dynamic Template Data Array Value 1\",\"Dynamic Template Data Array Value 2\"],\"innerObject\":{\"innerObjectKey1\":\"Dynamic Template Data Deep Object Value 1\"}}}]}");
+        }
+
+        [Fact]
         public void TestAddCustomArg()
         {
             // Personalization not passed in, Personalization does not exist
@@ -1994,6 +2122,19 @@
             msg.AddContent(MimeType.Text, "content2");
             Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
 
+            //New content objects have invalid values
+            msg.AddContent(MimeType.Text, "");
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
+
+            msg.AddContent(MimeType.Text, null);
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
+
+            msg.AddContent("", "Content4");
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
+
+            msg.AddContent(null, "Content5");
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
+
 
             //Content object exists
             msg = new SendGridMessage();
@@ -2003,8 +2144,8 @@
                 Value = "content3"
             };
             msg.Contents = new List<Content> {content};
-            msg.AddContent(MimeType.Text, "content4");
-            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content4\"},{\"type\":\"text/html\",\"value\":\"content3\"}]}");
+            msg.AddContent(MimeType.Text, "content6");
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content6\"},{\"type\":\"text/html\",\"value\":\"content3\"}]}");
         }
 
         [Fact]
@@ -2016,17 +2157,46 @@
             var content = new Content()
             {
                 Type = MimeType.Html,
-                Value = "content5"
+                Value = "content7"
             };
             contents.Add(content);
             content = new Content()
             {
                 Type = MimeType.Text,
-                Value = "content6"
+                Value = "content8"
             };
             contents.Add(content);
             msg.AddContents(contents);
-            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content6\"},{\"type\":\"text/html\",\"value\":\"content5\"}]}");
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content8\"},{\"type\":\"text/html\",\"value\":\"content7\"}]}");
+
+            //New content objects have invalid values
+            contents = new List<Content>();
+            content = new Content()
+            {
+                Type = MimeType.Text,
+                Value = ""
+            };
+            contents.Add(content);
+            content = new Content()
+            {
+                Type = MimeType.Text,
+                Value = null
+            };
+            contents.Add(content);
+            content = new Content()
+            {
+                Type = "",
+                Value = "Content9"
+            };
+            contents.Add(content);
+            content = new Content()
+            {
+                Type = null,
+                Value = "Content10"
+            };
+            contents.Add(content);
+            msg.AddContents(contents);
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content8\"},{\"type\":\"text/html\",\"value\":\"content7\"}]}");
 
             //Content object exists
             msg = new SendGridMessage();
@@ -5747,10 +5917,10 @@
         }
 
         [Theory]
-        [InlineData(200, "OK")]
-        [InlineData(301, "Moved permanently")]
-        [InlineData(401, "Unauthorized")]
-        [InlineData(503, "Service unavailable")]
+        [InlineData(HttpStatusCode.OK, "OK")]
+        [InlineData(HttpStatusCode.MovedPermanently, "Moved permanently")]
+        [InlineData(HttpStatusCode.Unauthorized, "Unauthorized")]
+        [InlineData(HttpStatusCode.ServiceUnavailable, "Service unavailable")]
         public async Task TestTakesHttpClientFactoryAsConstructorArgumentAndUsesItInHttpCalls(HttpStatusCode httpStatusCode, string message)
         {
             var httpResponse = String.Format("<xml><result>{0}</result></xml>", message);
@@ -5822,19 +5992,16 @@
              * the original exception and throws another, custom exception. So I'll only
              * assert that ANY exception is thrown.
              * **************************************************************************************** */
-            var exceptionTask = Record.ExceptionAsync(async () =>
+            var thrownException = await Record.ExceptionAsync(async () =>
             {
                 var response = await sg.SendEmailAsync(msg);
             });
 
-            Assert.NotNull(exceptionTask);
-
-            var thrownException = exceptionTask.Result;
             Assert.NotNull(thrownException);
 
             // If we are certain that we don't want custom exceptions to be thrown,
             // we can also test that the original exception was thrown
-            Assert.IsType(typeof(TimeoutException), thrownException);
+            Assert.IsType<TimeoutException>(thrownException);
         }
 
         /// <summary>
@@ -5920,8 +6087,6 @@
                 Host = "http://localhost:4010"
             };
 
-            var id = "test_url_param";
-
             var retryHandler = new RetryDelegatingHandler(new HttpClientHandler(), options.ReliabilitySettings);
 
             HttpClient clientToInject = new HttpClient(retryHandler) { Timeout = TimeSpan.FromMilliseconds(1) };
@@ -5946,8 +6111,6 @@
                 ApiKey = fixture.apiKey,
                 ReliabilitySettings = new ReliabilitySettings(1, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(1))
             };
-
-            var id = "test_url_param";
 
             var httpMessageHandler = new RetryTestBehaviourDelegatingHandler();
             httpMessageHandler.AddBehaviour(httpMessageHandler.TaskCancelled);
@@ -6032,20 +6195,6 @@
         {
             Thread.Sleep(timeOutMilliseconds);
             throw new TimeoutException(exceptionMessage);
-        }
-    }
-
-    public class MailHelperTests
-    {
-        [Theory]
-        [InlineData("Name Of A Person+", "send@grid.com", "Name Of A Person+ <   send@grid.com  >   ")]
-        [InlineData("", "send@grid.com", "   send@grid.com  ")]
-        [InlineData(null, "notAValidEmail", "notAValidEmail")]
-        public void TestStringToEmail(string expectedName, string expectedEmail, string rf2822Email)
-        {
-            var address = MailHelper.StringToEmailAddress(rf2822Email);
-            Assert.Equal(expectedEmail, address.Email);
-            Assert.Equal(expectedName, address.Name);
         }
     }
 }

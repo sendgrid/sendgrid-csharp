@@ -3,15 +3,16 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+
 namespace SendGrid
 {
-    using Newtonsoft.Json;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-
     /// <summary>
     /// The response received from an API call to SendGrid
     /// </summary>
@@ -62,7 +63,7 @@ namespace SendGrid
         }
 
         /// <summary>
-        /// Gets or sets the response headers returned from SendGrid.
+        /// Gets or sets the response body returned from SendGrid.
         /// </summary>
         public HttpContent Body
         {
@@ -78,7 +79,7 @@ namespace SendGrid
         }
 
         /// <summary>
-        /// Gets or sets the response body returned from SendGrid.
+        /// Gets or sets the response headers returned from SendGrid.
         /// </summary>
         public HttpResponseHeaders Headers
         {
@@ -98,9 +99,10 @@ namespace SendGrid
         /// </summary>
         /// <param name="content">https://msdn.microsoft.com/en-us/library/system.net.http.httpcontent(v=vs.118).aspx</param>
         /// <returns>Dictionary object representation of HttpContent</returns>
-        public virtual Dictionary<string, dynamic> DeserializeResponseBody(HttpContent content)
+        public virtual async Task<Dictionary<string, dynamic>> DeserializeResponseBodyAsync(HttpContent content)
         {
-            var dsContent = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(content.ReadAsStringAsync().Result);
+            var stringContent = await content.ReadAsStringAsync().ConfigureAwait(false);
+            var dsContent = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(stringContent);
             return dsContent;
         }
 
