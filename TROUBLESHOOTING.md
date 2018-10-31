@@ -51,7 +51,7 @@ In the first case SENDGRID_API_KEY is in reference to the name of the environmen
 <a name="error"></a>
 ## Error Messages
 
-To read the error message returned by SendGrid's API:
+By default if the API returns an error, it doesn't throw an exception, but you can read the error message returned by SendGrid's API:
 
 ```csharp
 var response = await client.RequestAsync(method: SendGridClient.Method.POST,
@@ -61,6 +61,69 @@ Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result); // The message will be here
 Console.WriteLine(response.Headers.ToString());
 ```
+
+If you want to thrown the exception when the API returns an error, when you init the SendGridClient set the parameter 'httpErrorAsException' as true:
+
+```csharp
+SendGridClient client = new SendGridClient(apiKey, httpErrorAsException: true);
+```
+
+Thus if an error is thrown due to a failed request, a summary of that error along with a link to the appropriate place in the documentation will be sent back as a JSON object in the Exception Message. You can also, deserialize the JSON object as a SendGridErrorResponse. Every error status code returned by the API, has their own type of exception (BadRequestException, UnauthorizedException, PayloadTooLargeException, SendGridInternalException ...). To see all possibles status code and the errors documentation click [here](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html). 
+
+<h3> EXAMPLES </h3>
+
+<h4> 401 - Unauthorized </h4>
+
+```csharp
+SendGridClient client = new SendGridClient("", httpErrorAsException: true);
+
+try
+{
+  var response = await client.RequestAsync(method: SendGridClient.Method.POST,
+                                                   requestBody: msg.Serialize(),
+                                                   urlPath: "mail/send");
+}
+catch(Exception ex)
+{
+  SendGridErrorResponse errorResponse = JsonConvert.DeserializeObject<SendGridErrorResponse>(ex.Message);
+  Console.WriteLine(ex.Message);
+  //{
+  //  "ErrorHttpStatusCode":401,
+  //  "ErrorReasonPhrase":"Unauthorized",
+  //  "SendGriErrorMessage":"Permission denied, wrong credentials",
+  //  "FieldWithError":null,
+  //  "HelpLink":null
+  //} 
+}
+                                                 
+```
+
+<h4> 400 - Bad Request - From Email Null </h4>
+
+```csharp
+var client = new SendGridClient(apiKey, httpErrorAsException: true);
+
+try
+{
+  var from = new EmailAddress("", "Example User"); //From email null
+  var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+  var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
+}
+catch (Exception ex)
+{
+  SendGridErrorResponse errorResponse = JsonConvert.DeserializeObject<SendGridErrorResponse>(ex.Message);
+  Console.WriteLine(ex.Message);
+  //{
+  //  "ErrorHttpStatusCode":400,
+  //  "ErrorReasonPhrase":"Bad Request",
+  //  "SendGriErrorMessage":"The from email does not contain a valid address.",
+  //  "FieldWithError":"from.email",
+  //  "HelpLink":"http://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html#message.from"
+  //} 
+}                                                 
+```
+
 
 <a name="migrating"></a>
 ## Migrating from the v2 API to v3
@@ -89,7 +152,7 @@ The current solution is to download the code directly into your project and chan
 <a name="testing"></a>
 ## Testing v3 /mail/send Calls Directly
 
-[Here](https://sendgrid.com/docs/for-developers/sending-email/curl-examples/) are some cURL examples for common use cases.
+[Here](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/curl_examples.html) are some cURL examples for common use cases.
 
 <a name="net45"></a>
 ## Using .NET 4.5.1 and lower
