@@ -243,10 +243,10 @@ window.matchMedia = window.matchMedia || (function(doc, undefined){
 					maxnull = max === null,
 					em = "em";
 				
-				if( !!min ){
+				if( min ){
 					min = parseFloat( min ) * ( min.indexOf( em ) > -1 ? ( eminpx || getEmValue() ) : 1 );
 				}
-				if( !!max ){
+				if( max ){
 					max = parseFloat( max ) * ( max.indexOf( em ) > -1 ? ( eminpx || getEmValue() ) : 1 );
 				}
 				
