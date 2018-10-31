@@ -31,7 +31,15 @@ We appreciate your continued support, thank you!
 # Table of Contents
 
 * [Installation](#installation)
+	* [Prerequisites](#pre)
+	* [Obtain an API Key](#obtain-api)
+	* [Setup Environment Variables to Manage Your API Key](#setup)
+	* [Install Package](#install-package)
+	* [Dependencies](#dependencies)
 * [Quick Start](#quick-start)
+	* [Hello Email](#hello)
+	* [General v3 Web API Usage](#v3)
+	* [Web Proxy](#proxy)
 * [Usage](#usage)
 * [Use Cases](#use-cases)
 * [Announcements](#announcements)
@@ -45,6 +53,7 @@ We appreciate your continued support, thank you!
 <a name="installation"></a>
 # Installation
 
+<a name="pre"></a>
 ## Prerequisites
 
 - .NET version 4.5.2 and higher
@@ -52,10 +61,12 @@ We appreciate your continued support, thank you!
 - .NET Standard 1.3 support
 - A SendGrid account, [sign up for free](https://sendgrid.com/free?source=sendgrid-csharp) to send up to 40,000 emails for the first 30 days, then send 100 emails/day free forever or check out [our pricing](https://sendgrid.com/pricing?source=sendgrid-csharp).
 
+<a name="obtain-api"></a>
 ## Obtain an API Key
 
 Grab your API Key from the [SendGrid UI](https://app.sendgrid.com/settings/api_keys).
 
+<a name="setup"></a>
 ## Setup Environment Variables to Manage Your API Key
 
 Manage your [SendGrid API Keys](https://app.sendgrid.com/settings/api_keys) by storing them in Environment Variables or in [Web.config](https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure). It is a good practice to keep your data and configuration settings separate. This way to you can change your SendGrid API key without changing your code. Also, we strongly advise against storing sensitive data directly in your code.
@@ -84,6 +95,7 @@ Set Environment Variable
 var setKey = Environment.SetEnvironmentVariable("SENDGRID_API_KEY", "YOUR_API_KEY");
 ```
 
+<a name="install-package"></a>
 ## Install Package
 
 To use SendGrid in your C# project, you can either <a href="https://github.com/sendgrid/sendgrid-csharp.git">download the SendGrid C# .NET libraries directly from our Github repository</a> or if you have the NuGet package manager installed, you can grab them automatically:
@@ -95,6 +107,7 @@ PM> Install-Package SendGrid
 Once you have the SendGrid library installed, you can include calls to them in your code.
 For sample implementations, see the [.NET Core Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleCoreProject) and the [.NET 4.5.2 Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleNet45Project) folders.
 
+<a name = "dependencies"></a>
 ## Dependencies
 
 - Please see the [.nuspec file](https://github.com/sendgrid/sendgrid-csharp/tree/master/nuspec).
@@ -102,6 +115,7 @@ For sample implementations, see the [.NET Core Example](https://github.com/sendg
 <a name="quick-start"></a>
 # Quick Start
 
+<a name = "hello"></a>
 ## Hello Email
 
 The following is the minimum needed code to send an simple email. Use this example, and modify the `apiKey`, `from` and `to` variables:
@@ -176,6 +190,7 @@ namespace Example
 
 You can find an example of all of the email features [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs#L79).
 
+<a name = "v3"></a>
 ## General v3 Web API Usage
 
 ```csharp
@@ -206,6 +221,7 @@ namespace Example
     }
 }
 ```
+<a name = "proxy"></a>
 ## Web Proxy
 
 ```csharp
