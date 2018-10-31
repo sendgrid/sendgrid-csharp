@@ -31,7 +31,7 @@ var client = new SendGridClient(apiKey);
 * [PARTNER SETTINGS](#partner-settings)
 * [SCOPES](#scopes)
 * [SENDERS](#senders)
-* [Sender Authentication](#sender-authentication)
+* [SENDER AUTHENTICATION](#sender-authentication)
 * [STATS](#stats)
 * [STATUS CODES](#status-codes)
 * [SUBUSERS](#subusers)
