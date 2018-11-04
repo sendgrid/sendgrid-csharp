@@ -2083,7 +2083,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve a list of all assigned and unassigned IPs.**
 
-Response includes warm up status, pools, assigned subusers, and whitelabel info. The start_date field corresponds to when warmup started for that IP.
+Response includes warm up status, pools, assigned subusers, and authentication info. The start_date field corresponds to when warmup started for that IP.
 
 A single IP address or a range of IP addresses may be dedicated to an account in order to send email for multiple domains. The reputation of this IP is based on the aggregate performance of all the senders who use it.
 
@@ -2130,7 +2130,7 @@ Console.ReadLine();
 
 IP Pools allow you to group your dedicated SendGrid IP addresses together. For example, you could create separate pools for your transactional and marketing email. When sending marketing emails, specify that you want to use the marketing IP pool. This allows you to maintain separate reputations for your different email traffic.
 
-IP pools can only be used with whitelabeled IP addresses.
+IP pools can only be used with authenticated IP addresses.
 
 If an IP pool is NOT specified for an email, it will use any IP available, including ones in pools.
 
@@ -2156,7 +2156,7 @@ Console.ReadLine();
 
 IP Pools allow you to group your dedicated SendGrid IP addresses together. For example, you could create separate pools for your transactional and marketing email. When sending marketing emails, specify that you want to use the marketing IP pool. This allows you to maintain separate reputations for your different email traffic.
 
-IP pools can only be used with whitelabeled IP addresses.
+IP pools can only be used with authenticated IP addresses.
 
 If an IP pool is NOT specified for an email, it will use any IP available, including ones in pools.
 
@@ -2177,7 +2177,7 @@ Console.ReadLine();
 
 IP Pools allow you to group your dedicated SendGrid IP addresses together. For example, you could create separate pools for your transactional and marketing email. When sending marketing emails, specify that you want to use the marketing IP pool. This allows you to maintain separate reputations for your different email traffic.
 
-IP pools can only be used with whitelabeled IP addresses.
+IP pools can only be used with authenticated IP addresses.
 
 If an IP pool is NOT specified for an email, it will use any IP available, including ones in pools.
 
@@ -2204,7 +2204,7 @@ Console.ReadLine();
 
 IP Pools allow you to group your dedicated SendGrid IP addresses together. For example, you could create separate pools for your transactional and marketing email. When sending marketing emails, specify that you want to use the marketing IP pool. This allows you to maintain separate reputations for your different email traffic.
 
-IP pools can only be used with whitelabeled IP addresses.
+IP pools can only be used with authenticated IP addresses.
 
 If an IP pool is NOT specified for an email, it will use any IP available, including ones in pools.
 
@@ -2226,7 +2226,7 @@ Console.ReadLine();
 
 IP Pools allow you to group your dedicated SendGrid IP addresses together. For example, you could create separate pools for your transactional and marketing email. When sending marketing emails, specify that you want to use the marketing IP pool. This allows you to maintain separate reputations for your different email traffic.
 
-IP pools can only be used with whitelabeled IP addresses.
+IP pools can only be used with authenticated IP addresses.
 
 If an IP pool is NOT specified for an email, it will use any IP available, including ones in pools.
 
@@ -3157,7 +3157,7 @@ Console.ReadLine();
 
 *You may create up to 100 unique sender identities.*
 
-Sender Identities are required to be verified before use. If your domain has been whitelabeled it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
+Sender Identities are required to be verified before use. If your domain has been authenticated it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
 
 ### POST /senders
 
@@ -3193,7 +3193,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve a list of all sender identities that have been created for your account.**
 
-Sender Identities are required to be verified before use. If your domain has been whitelabeled it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
+Sender Identities are required to be verified before use. If your domain has been authenticated it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
 
 ### GET /senders
 
@@ -3210,7 +3210,7 @@ Console.ReadLine();
 
 **This endpoint allows you to update a sender identity.**
 
-Updates to `from.email` require re-verification. If your domain has been whitelabeled it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
+Updates to `from.email` require re-verification. If your domain has been authenticated it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
 
 Partial updates are allowed, but fields that are marked as "required" in the POST (create) endpoint must not be nil if that field is included in the PATCH request.
 
@@ -3249,7 +3249,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve a specific sender identity.**
 
-Sender Identities are required to be verified before use. If your domain has been whitelabeled it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
+Sender Identities are required to be verified before use. If your domain has been authenticated it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
 
 ### GET /senders/{sender_id}
 
@@ -3267,7 +3267,7 @@ Console.ReadLine();
 
 **This endoint allows you to delete one of your sender identities.**
 
-Sender Identities are required to be verified before use. If your domain has been whitelabeled it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
+Sender Identities are required to be verified before use. If your domain has been authenticated it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
 
 ### DELETE /senders/{sender_id}
 
@@ -3285,7 +3285,7 @@ Console.ReadLine();
 
 **This enpdoint allows you to resend a sender identity verification email.**
 
-Sender Identities are required to be verified before use. If your domain has been whitelabeled it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
+Sender Identities are required to be verified before use. If your domain has been authenticated it will auto verify on creation. Otherwise an email will be sent to the `from.email`.
 
 ### POST /senders/{sender_id}/resend_verification
 
