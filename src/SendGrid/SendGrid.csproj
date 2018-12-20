@@ -9,6 +9,8 @@
     <AssemblyOriginatorKeyFile>../../tools/sendgrid-csharp.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<Version>9.10.0</Version>
     <DebugSymbols Condition=" '$(TargetFramework)' == 'net452' ">true</DebugSymbols>
     <DebugType Condition=" '$(TargetFramework)' == 'net452' ">full</DebugType>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb;.xml</AllowedOutputExtensionsInPackageBuildOutputFolder>
