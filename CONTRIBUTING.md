@@ -157,11 +157,11 @@ Generally, we follow the style guidelines as suggested by the official language.
    git pull upstream <dev-branch>
    ```
 
-3. Create a new topic branch off the `development` branch to
+3. Create a new topic branch off the `master` branch to
    contain your feature, change, or fix:
 
    ```bash
-   git checkout -b <topic-branch-name> development
+   git checkout -b <topic-branch-name> master
    ```
 
 4. Commit your changes in logical chunks. Please adhere to these [git commit
