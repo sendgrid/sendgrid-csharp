@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <VersionPrefix>9.12.0</VersionPrefix>
-    <TargetFrameworks>netstandard1.3;netstandard2.0;net452</TargetFrameworks>
+    <TargetFrameworks>net45;netstandard20</TargetFrameworks>
     <PlatformTarget>anycpu</PlatformTarget>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <OutputType>Library</OutputType>
@@ -11,8 +11,6 @@
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<Version>9.10.0</Version>
-    <DebugSymbols Condition=" '$(TargetFramework)' == 'net452' ">true</DebugSymbols>
-    <DebugType Condition=" '$(TargetFramework)' == 'net452' ">full</DebugType>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb;.xml</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
 
@@ -38,30 +36,25 @@
     </AssemblyAttribute>
   </ItemGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+  </ItemGroup>-->
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard20' ">
+		<PackageReference Include="System.Web.Http" Version="4.0.0" />
+	</ItemGroup>
 
 </Project>
