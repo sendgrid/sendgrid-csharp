@@ -1,5 +1,5 @@
-﻿// <copyright file="Personalization.cs" company="SendGrid">
-// Copyright (c) SendGrid. All rights reserved.
+﻿// <copyright file="Personalization.cs" company="Twilio SendGrid">
+// Copyright (c) Twilio SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
@@ -59,7 +59,7 @@ namespace SendGrid.Helpers.Mail
         public Dictionary<string, string> CustomArgs { get; set; }
 
         /// <summary>
-        /// Gets or sets a unix timestamp allowing you to specify when you want your email to be sent from SendGrid. This is not necessary if you want the email to be sent at the time of your API request.
+        /// Gets or sets a unix timestamp allowing you to specify when you want your email to be sent from Twilio SendGrid. This is not necessary if you want the email to be sent at the time of your API request.
         /// </summary>
         [JsonProperty(PropertyName = "send_at")]
         public long? SendAt { get; set; }

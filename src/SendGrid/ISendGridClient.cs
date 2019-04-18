@@ -1,5 +1,5 @@
-﻿// <copyright file="ISendGridClient.cs" company="SendGrid">
-// Copyright (c) SendGrid. All rights reserved.
+﻿// <copyright file="ISendGridClient.cs" company="Twilio SendGrid">
+// Copyright (c) Twilio SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace SendGrid
 {
     /// <summary>
-    /// A HTTP client wrapper for interacting with SendGrid's API
+    /// A HTTP client wrapper for interacting with Twilio SendGrid's API
     /// </summary>
     public interface ISendGridClient
     {
@@ -63,7 +63,7 @@ namespace SendGrid
         Task<Response> RequestAsync(SendGridClient.Method method, string requestBody = null, string queryParams = null, string urlPath = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Make a request to send an email through SendGrid asynchronously.
+        /// Make a request to send an email through Twilio SendGrid asynchronously.
         /// </summary>
         /// <param name="msg">A SendGridMessage object with the details for the request.</param>
         /// <param name="cancellationToken">Cancel the asynchronous call.</param>

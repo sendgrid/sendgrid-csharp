@@ -1,5 +1,5 @@
-// <copyright file="SendGridClient.cs" company="SendGrid">
-// Copyright (c) SendGrid. All rights reserved.
+// <copyright file="SendGridClient.cs" company="Twilio SendGrid">
+// Copyright (c) Twilio SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 namespace SendGrid
 {
     /// <summary>
-    /// A HTTP client wrapper for interacting with SendGrid's API
+    /// A HTTP client wrapper for interacting with Twilio SendGrid's API
     /// </summary>
     public class SendGridClient : ISendGridClient
     {
@@ -35,12 +35,12 @@ namespace SendGrid
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
         /// </summary>
         /// <param name="webProxy">Web proxy.</param>
-        /// <param name="apiKey">Your SendGrid API key.</param>
+        /// <param name="apiKey">Your Twilio SendGrid API key.</param>
         /// <param name="host">Base url (e.g. https://api.sendgrid.com)</param>
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
-        /// <returns>Interface to the SendGrid REST API</returns>
+        /// <returns>Interface to the Twilio SendGrid REST API</returns>
         public SendGridClient(IWebProxy webProxy, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
         {
             // Create client with WebProxy if set
@@ -69,7 +69,7 @@ namespace SendGrid
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
         /// </summary>
         /// <param name="options">A <see cref="SendGridClientOptions"/> instance that defines the configuration settings to use with the client </param>
-        /// <returns>Interface to the SendGrid REST API</returns>
+        /// <returns>Interface to the Twilio SendGrid REST API</returns>
         public SendGridClient(SendGridClientOptions options)
             : this(null, options)
         {
@@ -79,12 +79,12 @@ namespace SendGrid
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
         /// </summary>
         /// <param name="httpClient">An optional http client which may me injected in order to facilitate testing.</param>
-        /// <param name="apiKey">Your SendGrid API key.</param>
+        /// <param name="apiKey">Your Twilio SendGrid API key.</param>
         /// <param name="host">Base url (e.g. https://api.sendgrid.com)</param>
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
-        /// <returns>Interface to the SendGrid REST API</returns>
+        /// <returns>Interface to the Twilio SendGrid REST API</returns>
         public SendGridClient(HttpClient httpClient, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
             : this(httpClient, new SendGridClientOptions() { ApiKey = apiKey, Host = host, RequestHeaders = requestHeaders, Version = version, UrlPath = urlPath })
         {
@@ -93,12 +93,12 @@ namespace SendGrid
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
         /// </summary>
-        /// <param name="apiKey">Your SendGrid API key.</param>
+        /// <param name="apiKey">Your Twilio SendGrid API key.</param>
         /// <param name="host">Base url (e.g. https://api.sendgrid.com)</param>
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
-        /// <returns>Interface to the SendGrid REST API</returns>
+        /// <returns>Interface to the Twilio SendGrid REST API</returns>
         public SendGridClient(string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
             : this(httpClient: null, apiKey: apiKey, host: host, requestHeaders: requestHeaders, version: version, urlPath: urlPath)
         {
@@ -109,7 +109,7 @@ namespace SendGrid
         /// </summary>
         /// <param name="httpClient">An optional http client which may me injected in order to facilitate testing.</param>
         /// <param name="options">A <see cref="SendGridClientOptions"/> instance that defines the configuration settings to use with the client </param>
-        /// <returns>Interface to the SendGrid REST API</returns>
+        /// <returns>Interface to the Twilio SendGrid REST API</returns>
         internal SendGridClient(HttpClient httpClient, SendGridClientOptions options)
         {
             if (options == null)
@@ -149,7 +149,7 @@ namespace SendGrid
             POST,
 
             /// <summary>
-            /// Update an entire resource.s
+            /// Update an entire resource.
             /// </summary>
             PUT
         }
@@ -232,7 +232,7 @@ namespace SendGrid
         }
 
         /// <summary>
-        /// Make a request to send an email through SendGrid asynchronously.
+        /// Make a request to send an email through Twilio SendGrid asynchronously.
         /// </summary>
         /// <param name="msg">A SendGridMessage object with the details for the request.</param>
         /// <param name="cancellationToken">Cancel the asynchronous call.</param>
@@ -301,7 +301,7 @@ namespace SendGrid
         /// <summary>
         /// Common method to initiate internal fields regardless of which constructor was used.
         /// </summary>
-        /// <param name="apiKey">Your SendGrid API key.</param>
+        /// <param name="apiKey">Your Twilio SendGrid API key.</param>
         /// <param name="host">Base url (e.g. https://api.sendgrid.com)</param>
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>

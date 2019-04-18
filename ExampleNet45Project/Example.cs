@@ -23,7 +23,7 @@
 
             // Send a Single Email using the Mail Helper
             var from = new EmailAddress("test@example.com", "Example User");
-            var subject = "Hello World from the SendGrid CSharp Library Helper!";
+            var subject = "Hello World from the Twilio SendGrid CSharp Library Helper!";
             var to = new EmailAddress("test@example.com", "Example User");
             var plainTextContent = "Hello, Email from the helper [SendSingleEmailAsync]!";
             var htmlContent = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>";
@@ -40,7 +40,7 @@
             msg = new SendGridMessage()
             {
                 From = new EmailAddress("test@example.com", "Example User"),
-                Subject = "Hello World from the SendGrid CSharp Library Helper!",
+                Subject = "Hello World from the Twilio SendGrid CSharp Library Helper!",
                 PlainTextContent = "Hello, Email from the helper [SendSingleEmailAsync]!",
                 HtmlContent = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>"
             };
@@ -56,7 +56,7 @@
             // Send a Single Email using the Mail Helper, entirely with convenience methods
             msg = new SendGridMessage();
             msg.SetFrom(new EmailAddress("test@example.com", "Example User"));
-            msg.SetSubject("Hello World from the SendGrid CSharp Library Helper!");
+            msg.SetSubject("Hello World from the Twilio SendGrid CSharp Library Helper!");
             msg.AddContent(MimeType.Text, "Hello, Email from the helper [SendSingleEmailAsync]!");
             msg.AddContent(MimeType.Html, "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>");
             msg.AddTo(new EmailAddress("test@example.com", "Example User"));
@@ -77,7 +77,7 @@
                       'email': 'test@example.com'
                     }
                   ],
-                  'subject': 'Hello World from the SendGrid C# Library!'
+                  'subject': 'Hello World from the Twilio SendGrid C# Library!'
                 }
               ],
               'from': {
