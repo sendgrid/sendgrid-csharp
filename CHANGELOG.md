@@ -1,6 +1,24 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.11.0] - 2019-04-18
+## Added
+- [PR #877](https://github.com/sendgrid/sendgrid-csharp/pull/877) Twilio SMS example and branding update. 
+- [PR #790](https://github.com/sendgrid/sendgrid-csharp/pull/790) Change the environment variable placeholders to be consistent amongst all example projects. Big thanks to [Ross Macey](https://github.com/RossMacey) for the PR!
+- [PR #783](https://github.com/sendgrid/sendgrid-csharp/pull/783) Update documentation with new Git workflow. Big thanks to [Tony Ho](https://github.com/tony-ho) for the PR!
+- [PR #782](https://github.com/sendgrid/sendgrid-csharp/pull/782) Update contribution to use Gitflow workflow. Big thanks to [Anatoly](https://github.com/anatolyyyyyy) for the PR!
+- [PR #814](https://github.com/sendgrid/sendgrid-csharp/pull/814) Modification in Prerequisites for installation. Big thanks to [Rishabh](https://github.com/Rishabh04-02) for the PR!
+- [PR #817](https://github.com/sendgrid/sendgrid-csharp/pull/817) Added Announcement. Big thanks to [Kris Choi](https://github.com/krischoi07) for the PR!
+
+## Fixed
+- [PR #741](https://github.com/sendgrid/sendgrid-csharp/pull/741) Fix release date in changelog. Big thanks to [Niladri Dutta](https://github.com/Niladri24dutta) for the PR!
+- [PR #751](https://github.com/sendgrid/sendgrid-csharp/pull/751) Update to remove compiler warnings based on stylecop/xunit. Big thanks to [Garry Dixon](https://github.com/dixong) for the PR!
+- [PR #754](https://github.com/sendgrid/sendgrid-csharp/pull/754) Removed references to Microsoft.AspNetCore.Http.Abstractions package. Big thanks to [Jeremy Cantu](https://github.com/Jac21) for the PR!
+- [PR #794](https://github.com/sendgrid/sendgrid-csharp/pull/794) Updated broken links to examples. Big thanks to [Sanjay Singh](https://github.com/sanjaysingh) for the PR!
+- [PR #791](https://github.com/sendgrid/sendgrid-csharp/pull/791) Fixed typo in mail example. Big thanks to [Daredevil Geek](https://github.com/daredevilgeek) for the PR!
+- [PR #767](https://github.com/sendgrid/sendgrid-csharp/pull/767) Directly link online version of CLA and fix email mentions. Big thanks to [Bharat Raghunathan](https://github.com/Bharat123rox) for the PR!
+- [PR #762](https://github.com/sendgrid/sendgrid-csharp/pull/762) TROUBLESHOOTING.md broken link fix. Big thanks to [Arshad Kazmi](https://github.com/arshadkazmi42) for the PR!
+
 ## [9.10.0] - 2018-09-12
 ## Added
 - [PR #724](https://github.com/sendgrid/sendgrid-csharp/pull/724) Add Dynamic Template Support. Big thanks to [Carl Hartshorn](https://github.com/carl-hartshorn) for the PR!
