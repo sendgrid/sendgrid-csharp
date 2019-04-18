@@ -1,12 +1,12 @@
-﻿// <copyright file="MimeType.cs" company="SendGrid">
-// Copyright (c) SendGrid. All rights reserved.
+﻿// <copyright file="MimeType.cs" company="Twilio SendGrid">
+// Copyright (c) Twilio SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
 namespace SendGrid
 {
     /// <summary>
-    /// Helper for the common SendGrid email mime types.
+    /// Helper for the common Twilio SendGrid email mime types.
     /// </summary>
     public class MimeType
     {
