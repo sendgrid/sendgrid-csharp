@@ -23,6 +23,7 @@ This documentation provides examples for specific use cases. Please [open an iss
 - [How to Setup a Domain Whitelabel](#how-to-setup-a-domain-whitelabel)
 - [How to View Email Statistics](#how-to-view-email-statistics)
 - [How to transform HTML to plain text](#how-to-transform-html-to-plain-text)
+- [Send a SMS Message](#sms)
 
 <a name="attachments"></a>
 # Attachments
