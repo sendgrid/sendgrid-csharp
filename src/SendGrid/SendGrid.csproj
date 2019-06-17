@@ -5,19 +5,36 @@
     <TargetFrameworks>netstandard1.3;netstandard2.0;net452</TargetFrameworks>
     <PlatformTarget>anycpu</PlatformTarget>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AssemblyName>SendGrid</AssemblyName>
     <OutputType>Library</OutputType>
     <AssemblyOriginatorKeyFile>../../tools/sendgrid-csharp.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
-    <PackageId>SendGrid</PackageId>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
     <DebugSymbols Condition=" '$(TargetFramework)' == 'net452' ">true</DebugSymbols>
     <DebugType Condition=" '$(TargetFramework)' == 'net452' ">full</DebugType>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb;.xml</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyName>SendGrid</AssemblyName>
+    <Authors>Elmer Thomas;Twilio DX Team</Authors>
+    <Company>Twilio SendGrid</Company>
+    <Product>Twilio SendGrid</Product>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://sendgrid.com/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/sendgrid/sendgrid-csharp.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageIconUrl>https://sendgrid.com/wp-content/themes/sgdotcom/pages/resource/brand//2016/SendGrid-Logomark.png</PackageIconUrl>
+    <PackageDescription>C# client library and examples for using Twilio SendGrid API's to send mail and access Web API v3 endpoints with .NET Standard 1.3 and .NET Core support.</PackageDescription>
+    <PackageReleaseNotes>Please see: https://github.com/sendgrid/sendgrid-csharp/releases</PackageReleaseNotes>
+    <PackageTags>Twilio;SendGrid;Email;Mail;Microsoft;Azure;Transactional;.NET Core</PackageTags>
+    <Copyright>Twilio SendGrid, Inc. 2019</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyTrademarkAttribute">
+      <_Parameter1>Twilio SendGrid</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="stylecop.json" />

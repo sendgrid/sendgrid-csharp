@@ -98,7 +98,7 @@ For sample implementations, see the [.NET Core Example](https://github.com/sendg
 
 ## Dependencies
 
-- Please see the [.nuspec file](https://github.com/sendgrid/sendgrid-csharp/tree/master/nuspec).
+- Please see the [.csproj file](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/SendGrid.csproj).
 
 <a name="quick-start"></a>
 # Quick Start
