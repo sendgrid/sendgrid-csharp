@@ -6137,6 +6137,19 @@
 
             Assert.True(actual.Name == ExpectedName && actual.Email == ExpectedEmailAddress);
         }
+        
+        /// <summary>
+        /// Tests the conditions in issue #670.
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public void TestInjectSameHttpClientWithMultipleInstance()
+        {
+            var httpMessageHandler = new FixedStatusAndMessageHttpMessageHandler(HttpStatusCode.Accepted, string.Empty);
+            var clientToInject = new HttpClient(httpMessageHandler);
+            var sg1 = new SendGridClient(clientToInject, fixture.apiKey);
+            var sg2 = new SendGridClient(clientToInject, fixture.apiKey);
+        }
     }
 
     public class FakeWebProxy : IWebProxy
