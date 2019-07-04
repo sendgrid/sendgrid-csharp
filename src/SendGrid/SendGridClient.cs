@@ -118,13 +118,8 @@ namespace SendGrid
         /// <param name="httpClient">The HTTP Client used to send requests to the SendGrid API.</param>
         /// <param name="options">An <see cref="IOptions{SendGridClientOptions}"/> instance specifying the configuration to be used with the client.</param>
         public SendGridClient(HttpClient httpClient, IOptions<SendGridClientOptions> options)
+            : this(httpClient, options?.Value ?? throw new ArgumentNullException(nameof(options)))
         {
-            if (options?.Value == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
-
-            this.InitializeClient(httpClient, options.Value);
         }
 
         /// <summary>
@@ -135,12 +130,12 @@ namespace SendGrid
         /// <returns>Interface to the Twilio SendGrid REST API</returns>
         internal SendGridClient(HttpClient httpClient, SendGridClientOptions options)
         {
-            if (options == null)
+            this.options = options;
+            this.client = httpClient ?? CreateHttpClientWithRetryHandler();
+            if (this.options.RequestHeaders != null && this.options.RequestHeaders.TryGetValue(ContentType, out var contentType))
             {
-                throw new ArgumentNullException(nameof(options));
+                this.MediaType = contentType;
             }
-
-            this.InitializeClient(httpClient, options);
         }
 
         /// <summary>
@@ -411,38 +406,6 @@ namespace SendGrid
             }
 
             return dict;
-        }
-
-        private void InitializeClient(HttpClient httpClient, SendGridClientOptions clientOptions)
-        {
-            if (clientOptions == null)
-            {
-                throw new ArgumentNullException(nameof(clientOptions));
-            }
-
-            // When using ASP.NET's Configuration subsystem, leaving settings empty can cause essential client options to be unspecified.
-            // Therefore, we ensure the configuration contains the proper defaults here, while still allowing users to override them in the settings.
-            if (clientOptions.RequestHeaders == null)
-            {
-                clientOptions.RequestHeaders = new Dictionary<string, string>();
-            }
-
-            if (string.IsNullOrWhiteSpace(clientOptions.Host))
-            {
-                clientOptions.Host = "https://api.sendgrid.com";
-            }
-
-            if (string.IsNullOrWhiteSpace(clientOptions.Version))
-            {
-                clientOptions.Version = "v3";
-            }
-
-            this.options = clientOptions;
-            this.client = httpClient ?? CreateHttpClientWithRetryHandler();
-            if (this.options.RequestHeaders != null && this.options.RequestHeaders.TryGetValue(ContentType, out var contentType))
-            {
-                this.MediaType = contentType;
-            }
         }
     }
 }
