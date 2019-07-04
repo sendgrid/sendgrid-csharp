@@ -6125,6 +6125,18 @@
 
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
         }
+
+        [Theory]
+        [InlineData("first last <username@example.com>", "first last", "username@example.com")]
+        [InlineData("<username@example.com>", "", "username@example.com")]
+        [InlineData("username@example.com", "", "username@example.com")]
+        [InlineData("username@example.com <username@example.com>", "username@example.com", "username@example.com")]
+        public void TestStringToEmailAddress(string Input, string ExpectedName, string ExpectedEmailAddress)
+        {
+            var actual = MailHelper.StringToEmailAddress(Input);
+
+            Assert.True(actual.Name == ExpectedName && actual.Email == ExpectedEmailAddress);
+        }
     }
 
     public class FakeWebProxy : IWebProxy
