@@ -42,12 +42,12 @@ namespace SendGrid
         /// <summary>
         /// The configuration to use with current <see cref="SendGridClient"/> instance
         /// </summary>
-        private readonly SendGridClientOptions options;
+        private SendGridClientOptions options;
 
         /// <summary>
         /// The HttpClient instance to use for all calls from this SendGridClient instance.
         /// </summary>
-        private readonly HttpClient client;
+        private HttpClient client;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
@@ -115,17 +115,32 @@ namespace SendGrid
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
         /// </summary>
+        /// <param name="httpClient">The HTTP Client used to send requests to the SendGrid API.</param>
+        /// <param name="options">An <see cref="IOptions{SendGridClientOptions}"/> instance specifying the configuration to be used with the client.</param>
+        public SendGridClient(HttpClient httpClient, IOptions<SendGridClientOptions> options)
+        {
+            if (options?.Value == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
+            this.InitializeClient(httpClient, options.Value);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendGridClient"/> class.
+        /// </summary>
         /// <param name="httpClient">An optional HTTP client which may me injected in order to facilitate testing.</param>
         /// <param name="options">A <see cref="SendGridClientOptions"/> instance that defines the configuration settings to use with the client </param>
         /// <returns>Interface to the Twilio SendGrid REST API</returns>
         internal SendGridClient(HttpClient httpClient, SendGridClientOptions options)
         {
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
-            this.client = httpClient ?? CreateHttpClientWithRetryHandler();
-            if (this.options.RequestHeaders != null && this.options.RequestHeaders.TryGetValue(ContentType, out var contentType))
+            if (options == null)
             {
-                this.MediaType = contentType;
+                throw new ArgumentNullException(nameof(options));
             }
+
+            this.InitializeClient(httpClient, options);
         }
 
         /// <summary>
@@ -371,15 +386,15 @@ namespace SendGrid
                     switch (reader.TokenType)
                     {
                         case JsonToken.PropertyName:
-                        {
-                            propertyName = reader.Value.ToString();
-                            if (!dict.ContainsKey(propertyName))
                             {
-                                dict.Add(propertyName, new List<object>());
-                            }
+                                propertyName = reader.Value.ToString();
+                                if (!dict.ContainsKey(propertyName))
+                                {
+                                    dict.Add(propertyName, new List<object>());
+                                }
 
-                            break;
-                        }
+                                break;
+                            }
 
                         case JsonToken.Boolean:
                         case JsonToken.Integer:
@@ -387,15 +402,47 @@ namespace SendGrid
                         case JsonToken.Bytes:
                         case JsonToken.String:
                         case JsonToken.Date:
-                        {
-                            dict[propertyName].Add(reader.Value);
-                            break;
-                        }
+                            {
+                                dict[propertyName].Add(reader.Value);
+                                break;
+                            }
                     }
                 }
             }
 
             return dict;
+        }
+
+        private void InitializeClient(HttpClient httpClient, SendGridClientOptions clientOptions)
+        {
+            if (clientOptions == null)
+            {
+                throw new ArgumentNullException(nameof(clientOptions));
+            }
+
+            // When using ASP.NET's Configuration subsystem, leaving settings empty can cause essential client options to be unspecified.
+            // Therefore, we ensure the configuration contains the proper defaults here, while still allowing users to override them in the settings.
+            if (clientOptions.RequestHeaders == null)
+            {
+                clientOptions.RequestHeaders = new Dictionary<string, string>();
+            }
+
+            if (string.IsNullOrWhiteSpace(clientOptions.Host))
+            {
+                clientOptions.Host = "https://api.sendgrid.com";
+            }
+
+            if (string.IsNullOrWhiteSpace(clientOptions.Version))
+            {
+                clientOptions.Version = "v3";
+            }
+
+            this.options = clientOptions;
+            this.client = httpClient ?? CreateHttpClientWithRetryHandler();
+            if (this.options.RequestHeaders != null && this.options.RequestHeaders.TryGetValue(ContentType, out var contentType))
+            {
+                this.MediaType = contentType;
+            }
         }
     }
 }
