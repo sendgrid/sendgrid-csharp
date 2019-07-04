@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using SendGrid.Helpers.Mail;
 using SendGrid.Helpers.Reliability;
@@ -70,6 +71,15 @@ namespace SendGrid
         /// <returns>Interface to the Twilio SendGrid REST API</returns>
         public SendGridClient(SendGridClientOptions options)
             : this(null, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendGridClient"/> class.
+        /// </summary>
+        /// <param name="options">An <see cref="IOptions{SendGridClientOptions}"/> instance specifying the configuration to be used with the client.</param>
+        public SendGridClient(IOptions<SendGridClientOptions> options)
+            : this(options.Value)
         {
         }
 
