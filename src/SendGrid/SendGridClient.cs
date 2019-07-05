@@ -79,7 +79,7 @@ namespace SendGrid
         /// </summary>
         /// <param name="options">An <see cref="IOptions{SendGridClientOptions}"/> instance specifying the configuration to be used with the client.</param>
         public SendGridClient(IOptions<SendGridClientOptions> options)
-            : this(options.Value)
+            : this(options?.Value)
         {
         }
 
@@ -118,7 +118,7 @@ namespace SendGrid
         /// <param name="httpClient">The HTTP Client used to send requests to the SendGrid API.</param>
         /// <param name="options">An <see cref="IOptions{SendGridClientOptions}"/> instance specifying the configuration to be used with the client.</param>
         public SendGridClient(HttpClient httpClient, IOptions<SendGridClientOptions> options)
-            : this(httpClient, options?.Value ?? throw new ArgumentNullException(nameof(options)))
+            : this(httpClient, options?.Value)
         {
         }
 
@@ -130,7 +130,7 @@ namespace SendGrid
         /// <returns>Interface to the Twilio SendGrid REST API</returns>
         internal SendGridClient(HttpClient httpClient, SendGridClientOptions options)
         {
-            this.options = options;
+            this.options = options ?? throw new ArgumentNullException(nameof(options));
             this.client = httpClient ?? CreateHttpClientWithRetryHandler();
             if (this.options.RequestHeaders != null && this.options.RequestHeaders.TryGetValue(ContentType, out var contentType))
             {
