@@ -117,12 +117,7 @@ namespace Example
 {
     internal class Example
     {
-        private static void Main()
-        {
-            Execute().Wait();
-        }
-
-        static async Task Execute()
+        internal static async Task Main()
         {
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);
@@ -152,21 +147,16 @@ namespace Example
 {
     internal class Example
     {
-        private static void Main()
-        {
-            Execute().Wait();
-        }
-
-	    static async Task Execute()
+        internal static async Task Main()
         {
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("test@example.com", "DX Team"),
-                Subject = "Sending with Twilio SendGrid is Fun",
-                PlainTextContent = "and easy to do anywhere, even with C#",
-                HtmlContent = "<strong>and easy to do anywhere, even with C#</strong>"
+            From = new EmailAddress("test@example.com", "DX Team"),
+            Subject = "Sending with Twilio SendGrid is Fun",
+            PlainTextContent = "and easy to do anywhere, even with C#",
+            HtmlContent = "<strong>and easy to do anywhere, even with C#</strong>"
             };
             msg.AddTo(new EmailAddress("test@example.com", "Test User"));
             var response = await client.SendEmailAsync(msg);
@@ -188,12 +178,7 @@ namespace Example
 {
     internal class Example
     {
-        private static void Main()
-        {
-            Execute().Wait();
-        }
-
-        static async Task Execute()
+        internal static async Task Main()
         {
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);
@@ -201,9 +186,9 @@ namespace Example
                 'limit': 100
             }";
             var response = await client.RequestAsync(method: SendGridClient.Method.GET,
-                                                     urlPath: "suppression/bounces",
-                                                     queryParams: queryParams);
-	    }
+                                                        urlPath: "suppression/bounces",
+                                                        queryParams: queryParams);
+        }
     }
 }
 ```
