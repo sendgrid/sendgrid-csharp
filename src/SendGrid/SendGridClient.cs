@@ -42,12 +42,12 @@ namespace SendGrid
         /// <summary>
         /// The configuration to use with current <see cref="SendGridClient"/> instance
         /// </summary>
-        private SendGridClientOptions options;
+        private readonly SendGridClientOptions options;
 
         /// <summary>
         /// The HttpClient instance to use for all calls from this SendGridClient instance.
         /// </summary>
-        private HttpClient client;
+        private readonly HttpClient client;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
