@@ -2122,18 +2122,21 @@
             msg.AddContent(MimeType.Text, "content2");
             Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
 
+            msg.AddContent(MimeType.Amp, "content3");
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/x-amp-html\",\"value\":\"content3\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
+
             //New content objects have invalid values
             msg.AddContent(MimeType.Text, "");
-            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/x-amp-html\",\"value\":\"content3\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
 
             msg.AddContent(MimeType.Text, null);
-            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/x-amp-html\",\"value\":\"content3\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
 
             msg.AddContent("", "Content4");
-            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/x-amp-html\",\"value\":\"content3\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
 
             msg.AddContent(null, "Content5");
-            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content2\"},{\"type\":\"text/x-amp-html\",\"value\":\"content3\"},{\"type\":\"text/html\",\"value\":\"content1\"}]}");
 
 
             //Content object exists
@@ -2197,6 +2200,17 @@
             contents.Add(content);
             msg.AddContents(contents);
             Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content8\"},{\"type\":\"text/html\",\"value\":\"content7\"}]}");
+
+            //New AMP content object
+            contents = new List<Content>();
+            content = new Content()
+            {
+                Type = MimeType.Amp,
+                Value = "Content11"
+            };
+            contents.Add(content);
+            msg.AddContents(contents);
+            Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content8\"},{\"type\":\"text/x-amp-html\",\"value\":\"Content11\"},{\"type\":\"text/html\",\"value\":\"content7\"}]}");
 
             //Content object exists
             msg = new SendGridMessage();

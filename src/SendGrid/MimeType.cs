@@ -16,6 +16,11 @@ namespace SendGrid
         public static readonly string Html = "text/html";
 
         /// <summary>
+        /// The mime type for AMP4Email content.
+        /// </summary>
+        public static readonly string Amp = "text/x-amp-html";
+
+        /// <summary>
         /// The mime type for plain text content.
         /// </summary>
         public static readonly string Text = "text/plain";

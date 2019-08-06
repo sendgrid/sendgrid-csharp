@@ -1577,7 +1577,6 @@ namespace SendGrid.Helpers.Mail
             {
                 if (this.Contents.Count > 1)
                 {
-                    // MimeType.Text > MimeType.Html > Everything Else
                     for (var i = 0; i < this.Contents.Count; i++)
                     {
                         if (string.IsNullOrEmpty(this.Contents[i].Type) || string.IsNullOrEmpty(this.Contents[i].Value))
@@ -1586,23 +1585,11 @@ namespace SendGrid.Helpers.Mail
                             i--;
                             continue;
                         }
-
-                        if (this.Contents[i].Type == MimeType.Html)
-                        {
-                            var tempContent = new Content();
-                            tempContent = this.Contents[i];
-                            this.Contents.RemoveAt(i);
-                            this.Contents.Insert(0, tempContent);
-                        }
-
-                        if (this.Contents[i].Type == MimeType.Text)
-                        {
-                            var tempContent = new Content();
-                            tempContent = this.Contents[i];
-                            this.Contents.RemoveAt(i);
-                            this.Contents.Insert(0, tempContent);
-                        }
                     }
+                    // MimeType.Text > MimeType.Amp > MimeType.Html > Everything Else
+                    var reverseMimeOrder = new List<string> { MimeType.Html, MimeType.Amp, MimeType.Text };
+
+                    this.Contents = this.Contents.OrderByDescending(c => reverseMimeOrder.IndexOf(c.Type)).ToList();
                 }
             }
 

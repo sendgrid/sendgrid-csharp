@@ -235,6 +235,7 @@ namespace Example
 
             msg.AddContent(MimeType.Text, "and easy to do anywhere, even with C#");
             msg.AddContent(MimeType.Html, "<strong>and easy to do anywhere, even with C#</strong>");
+            msg.AddContent(MimeType.Amp, "<html ⚡4email>and easy to do anywhere, even with C#</html>");
             var contents = new List<Content>()
             {
                 new Content("text/calendar", "Party Time!!"),
