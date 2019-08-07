@@ -921,7 +921,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="sendAt">Specify the unix timestamp for when you want the email to be sent from Twilio SendGrid</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the send at timestamp.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
-        public void SetSendAt(int sendAt, int personalizationIndex = 0, Personalization personalization = null)
+        public void SetSendAt(long sendAt, int personalizationIndex = 0, Personalization personalization = null)
         {
             if (personalization != null)
             {
