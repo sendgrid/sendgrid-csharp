@@ -1,6 +1,11 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+## [9.12.0] - 2019-08-15
+- [PR #892](https://github.com/sendgrid/sendgrid-csharp/pull/892) Replace nuspec and AssemblyInfo with csproj. Big thanks to [Jonas Nyrup](https://github.com/jnyrup) for the PR!
+- [PR #876](https://github.com/sendgrid/sendgrid-csharp/pull/876) Add `EmailAddress` attribute. Big thanks to [Jonathan](https://github.com/vanillajonathan) for the PR!
+- [PR #839](https://github.com/sendgrid/sendgrid-csharp/pull/839) Refactored SendGridClient to support inject external managed HttpClient. Big thanks to [Charley Wu](https://github.com/akunzai) for the PR!
+
 ## [9.11.0] - 2019-04-18
 ## Added
 - [PR #877](https://github.com/sendgrid/sendgrid-csharp/pull/877) Twilio SMS example and branding update. 
