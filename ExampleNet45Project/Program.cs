@@ -7,7 +7,7 @@
     using SendGrid.Helpers.Mail;
     using System.Collections.Generic;
 
-    internal class Example
+    internal class Program
     {
         private static void Main()
         {
