@@ -111,6 +111,10 @@ namespace SendGrid
         internal SendGridClient(HttpClient httpClient, SendGridClientOptions options)
         {
             this.options = options ?? throw new ArgumentNullException(nameof(options));
+
+            if (!IsValidOptions(options))
+                throw new ArgumentException("The specified options are invalid - ensure options are non-null, and at least the API key is specified.");
+
             this.client = httpClient ?? CreateHttpClientWithRetryHandler();
             if (this.options.RequestHeaders != null && this.options.RequestHeaders.TryGetValue(ContentType, out var contentType))
             {
