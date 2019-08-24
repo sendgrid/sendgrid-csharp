@@ -387,5 +387,16 @@ namespace SendGrid
 
             return dict;
         }
+        
+        private static bool IsValidOptions(SendGridClientOptions options)
+        {
+            if (options == null)
+                return false;
+
+            if (string.IsNullOrEmpty(options.ApiKey))
+                return false;
+
+            return true;
+        }
     }
 }
