@@ -116,7 +116,6 @@ namespace SendGrid
             {
                 throw new ArgumentNullException(nameof(options.ApiKey));
             }
-                throw new ArgumentException("The specified options are invalid - ensure options are non-null, and at least the API key is specified.");
 
             this.client = httpClient ?? CreateHttpClientWithRetryHandler();
             if (this.options.RequestHeaders != null && this.options.RequestHeaders.TryGetValue(ContentType, out var contentType))
@@ -393,17 +392,6 @@ namespace SendGrid
             }
 
             return dict;
-        }
-        
-        private static bool IsValidOptions(SendGridClientOptions options)
-        {
-            if (options == null)
-                return false;
-
-            if (string.IsNullOrEmpty(options.ApiKey))
-                return false;
-
-            return true;
         }
     }
 }
