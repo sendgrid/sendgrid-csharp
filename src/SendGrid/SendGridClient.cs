@@ -112,7 +112,10 @@ namespace SendGrid
         {
             this.options = options ?? throw new ArgumentNullException(nameof(options));
 
-            if (!IsValidOptions(options))
+            if (string.IsNullOrWhiteSpace(options.ApiKey))
+            {
+                throw new ArgumentNullException(nameof(options.ApiKey));
+            }
                 throw new ArgumentException("The specified options are invalid - ensure options are non-null, and at least the API key is specified.");
 
             this.client = httpClient ?? CreateHttpClientWithRetryHandler();
