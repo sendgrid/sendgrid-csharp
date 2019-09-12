@@ -5,7 +5,7 @@
 
 using Newtonsoft.Json;
 
-namespace SendGrid.Helpers.Mail
+namespace SendGrid.Helpers.Mail.Model
 {
     /// <summary>
     /// Allows you to enable tracking provided by Google Analytics.

@@ -5,7 +5,7 @@
 
 using Newtonsoft.Json;
 
-namespace SendGrid.Helpers.Mail
+namespace SendGrid.Helpers.Mail.Model
 {
     /// <summary>
     /// This allows you to send a test email to ensure that your request body is valid and formatted correctly. For more information, please see our Classroom.

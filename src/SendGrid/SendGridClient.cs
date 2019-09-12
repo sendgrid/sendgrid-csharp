@@ -5,7 +5,6 @@
 
 using Newtonsoft.Json;
 using SendGrid.Helpers.Mail;
-using SendGrid.Helpers.Reliability;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +15,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using SendGrid.Reliability;
 
 namespace SendGrid
 {
@@ -111,10 +111,10 @@ namespace SendGrid
         internal SendGridClient(HttpClient httpClient, SendGridClientOptions options)
         {
             this.options = options ?? throw new ArgumentNullException(nameof(options));
-            this.client = httpClient ?? CreateHttpClientWithRetryHandler();
+            client = httpClient ?? CreateHttpClientWithRetryHandler();
             if (this.options.RequestHeaders != null && this.options.RequestHeaders.TryGetValue(ContentType, out var contentType))
             {
-                this.MediaType = contentType;
+                MediaType = contentType;
             }
         }
 
@@ -126,27 +126,27 @@ namespace SendGrid
             /// <summary>
             /// Remove a resource.
             /// </summary>
-            DELETE,
+            Delete,
 
             /// <summary>
             /// Get a resource.
             /// </summary>
-            GET,
+            Get,
 
             /// <summary>
             /// Modify a portion of the resource.
             /// </summary>
-            PATCH,
+            Patch,
 
             /// <summary>
             /// Create a resource or execute a function. (e.g send an email)
             /// </summary>
-            POST,
+            Post,
 
             /// <summary>
             /// Update an entire resource.
             /// </summary>
-            PUT
+            Put
         }
 
         /// <summary>
@@ -154,8 +154,8 @@ namespace SendGrid
         /// </summary>
         public string UrlPath
         {
-            get => this.options.UrlPath;
-            set => this.options.UrlPath = value;
+            get => options.UrlPath;
+            set => options.UrlPath = value;
         }
 
         /// <summary>
@@ -163,8 +163,8 @@ namespace SendGrid
         /// </summary>
         public string Version
         {
-            get => this.options.Version;
-            set => this.options.Version = value;
+            get => options.Version;
+            set => options.Version = value;
         }
 
         /// <summary>
@@ -189,9 +189,9 @@ namespace SendGrid
         /// <param name="request">The parameters for the API call</param>
         /// <param name="cancellationToken">Cancel the asynchronous call</param>
         /// <returns>Response object</returns>
-        public virtual async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default)
         {
-            HttpResponseMessage response = await this.client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            HttpResponseMessage response = await client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return new Response(response.StatusCode, response.Content, response.Headers);
         }
 
@@ -209,13 +209,13 @@ namespace SendGrid
         /// In particular, this means that you may expect
         /// a TimeoutException if you are not connected to the Internet.</exception>
         public async Task<Response> RequestAsync(
-            SendGridClient.Method method,
+            Method method,
             string requestBody = null,
             string queryParams = null,
             string urlPath = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
-            var baseAddress = new Uri(string.IsNullOrWhiteSpace(this.options.Host) ? DefaultOptions.Host : this.options.Host);
+            var baseAddress = new Uri(string.IsNullOrWhiteSpace(options.Host) ? DefaultOptions.Host : options.Host);
             if (!baseAddress.OriginalString.EndsWith("/"))
             {
                 baseAddress = new Uri(baseAddress.OriginalString + "/");
@@ -225,24 +225,24 @@ namespace SendGrid
             var request = new HttpRequestMessage
             {
                 Method = new HttpMethod(method.ToString()),
-                RequestUri = new Uri(baseAddress, this.BuildUrl(urlPath, queryParams)),
-                Content = requestBody == null ? null : new StringContent(requestBody, Encoding.UTF8, this.MediaType)
+                RequestUri = new Uri(baseAddress, BuildUrl(urlPath, queryParams)),
+                Content = requestBody == null ? null : new StringContent(requestBody, Encoding.UTF8, MediaType)
             };
 
             // set header overrides
-            if (this.options.RequestHeaders?.Count > 0)
+            if (options.RequestHeaders?.Count > 0)
             {
-                foreach (var header in this.options.RequestHeaders)
+                foreach (var header in options.RequestHeaders)
                 {
                     request.Headers.TryAddWithoutValidation(header.Key, header.Value);
                 }
             }
 
             // set standard headers
-            request.Headers.Authorization = new AuthenticationHeaderValue(Scheme, this.options.ApiKey);
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(this.MediaType));
+            request.Headers.Authorization = new AuthenticationHeaderValue(Scheme, options.ApiKey);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaType));
             request.Headers.UserAgent.TryParseAdd($"sendgrid/{ClientVersion} csharp");
-            return await this.MakeRequest(request, cancellationToken).ConfigureAwait(false);
+            return await MakeRequest(request, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -251,10 +251,10 @@ namespace SendGrid
         /// <param name="msg">A SendGridMessage object with the details for the request.</param>
         /// <param name="cancellationToken">Cancel the asynchronous call.</param>
         /// <returns>A Response object.</returns>
-        public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default)
         {
-            return await this.RequestAsync(
-                Method.POST,
+            return await RequestAsync(
+                Method.Post,
                 msg.Serialize(),
                 urlPath: "mail/send",
                 cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -301,14 +301,14 @@ namespace SendGrid
         /// </returns>
         private string BuildUrl(string urlPath, string queryParams = null)
         {
-            string url = null;
+            string url = string.Empty;
 
             // create urlPAth - from parameter if overridden on call or from constructor parameter
-            var urlpath = urlPath ?? this.options.UrlPath;
+            var urlpath = urlPath ?? options.UrlPath;
 
-            if (this.options.Version != null)
+            if (options.Version != null)
             {
-                url = this.options.Version + "/" + urlpath;
+                url = options.Version + "/" + urlpath;
             }
             else
             {
@@ -317,9 +317,9 @@ namespace SendGrid
 
             if (queryParams != null)
             {
-                var ds_query_params = this.ParseJson(queryParams);
+                var dsQueryParams = ParseJson(queryParams);
                 string query = "?";
-                foreach (var pair in ds_query_params)
+                foreach (var pair in dsQueryParams)
                 {
                     foreach (var element in pair.Value)
                     {

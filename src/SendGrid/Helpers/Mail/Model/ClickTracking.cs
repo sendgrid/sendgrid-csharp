@@ -5,7 +5,7 @@
 
 using Newtonsoft.Json;
 
-namespace SendGrid.Helpers.Mail
+namespace SendGrid.Helpers.Mail.Model
 {
     /// <summary>
     /// Allows you to track whether a recipient clicked a link in your email.

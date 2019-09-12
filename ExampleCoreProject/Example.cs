@@ -1,4 +1,6 @@
-﻿namespace Example
+﻿using SendGrid.Helpers.Mail.Model;
+
+namespace Example
 {
     using System;
     using System.Threading.Tasks;
@@ -91,7 +93,7 @@
               ]
             }";
             var json = JsonConvert.DeserializeObject<object>(data);
-            response = await client.RequestAsync(SendGridClient.Method.POST,
+            response = await client.RequestAsync(SendGridClient.Method.Post,
                                                  json.ToString(),
                                                  urlPath: "mail/send");
             Console.WriteLine(response.StatusCode);
@@ -103,7 +105,7 @@
             string queryParams = @"{
                 'limit': 100
             }";
-            response = await client.RequestAsync(method: SendGridClient.Method.GET,
+            response = await client.RequestAsync(method: SendGridClient.Method.Get,
                                                           urlPath: "asm/groups",
                                                           queryParams: queryParams);
             Console.WriteLine(response.StatusCode);
@@ -119,7 +121,7 @@
               'name': 'Magic Products'
             }";
             json = JsonConvert.DeserializeObject<object>(requestBody);
-            response = await client.RequestAsync(method: SendGridClient.Method.POST,
+            response = await client.RequestAsync(method: SendGridClient.Method.Post,
                                                  urlPath: "asm/groups",
                                                  requestBody: json.ToString());
             var ds_response = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(response.Body.ReadAsStringAsync().Result);
@@ -135,7 +137,7 @@
 
 
                 // GET Single
-                response = await client.RequestAsync(method: SendGridClient.Method.GET,
+                response = await client.RequestAsync(method: SendGridClient.Method.Get,
                     urlPath: string.Format("asm/groups/{0}", group_id));
                 Console.WriteLine(response.StatusCode);
                 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
@@ -149,7 +151,7 @@
                 }";
                 json = JsonConvert.DeserializeObject<object>(requestBody);
 
-                response = await client.RequestAsync(method: SendGridClient.Method.PATCH,
+                response = await client.RequestAsync(method: SendGridClient.Method.Patch,
                     urlPath: string.Format("asm/groups/{0}", group_id),
                     requestBody: json.ToString());
                 Console.WriteLine(response.StatusCode);
@@ -160,7 +162,7 @@
                 Console.ReadLine();
 
                 // DELETE
-                response = await client.RequestAsync(method: SendGridClient.Method.DELETE,
+                response = await client.RequestAsync(method: SendGridClient.Method.Delete,
                     urlPath: string.Format("asm/groups/{0}", group_id));
                 Console.WriteLine(response.StatusCode);
                 Console.WriteLine(response.Headers.ToString());

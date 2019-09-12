@@ -5,7 +5,7 @@
 
 using System;
 
-namespace SendGrid.Helpers.Reliability
+namespace SendGrid.Reliability
 {
     /// <summary>
     /// Defines the reliability settings to use on HTTP requests
@@ -64,10 +64,10 @@ namespace SendGrid.Helpers.Reliability
                 throw new ArgumentOutOfRangeException(nameof(minimumBackoff), "minimumBackoff must be less than maximumBackOff");
             }
 
-            this.MaximumNumberOfRetries = maximumNumberOfRetries;
-            this.MinimumBackOff = minimumBackoff;
-            this.DeltaBackOff = deltaBackOff;
-            this.MaximumBackOff = maximumBackOff;
+            MaximumNumberOfRetries = maximumNumberOfRetries;
+            MinimumBackOff = minimumBackoff;
+            DeltaBackOff = deltaBackOff;
+            MaximumBackOff = maximumBackOff;
         }
 
         /// <summary>

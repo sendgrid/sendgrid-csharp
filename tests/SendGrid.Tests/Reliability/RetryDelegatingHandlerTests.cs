@@ -1,10 +1,11 @@
-﻿namespace SendGrid.Tests.Reliability
+﻿using SendGrid.Reliability;
+
+namespace SendGrid.Tests.Reliability
 {
     using System;
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
-    using SendGrid.Helpers.Reliability;
     using Xunit;
 
     public class RetryDelegatingHandlerTests

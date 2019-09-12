@@ -1,4 +1,6 @@
-﻿namespace SendGrid.Tests.Helpers.Mail
+﻿using SendGrid.Helpers.Mail.Model;
+
+namespace SendGrid.Tests.Helpers.Mail
 {
     using System;
     using System.Collections.Generic;

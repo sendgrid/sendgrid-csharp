@@ -5,7 +5,7 @@
 
 using Newtonsoft.Json;
 
-namespace SendGrid.Helpers.Mail
+namespace SendGrid.Helpers.Mail.Model
 {
     /// <summary>
     /// A collection of different mail settings that you can use to specify how you would like this email to be handled.

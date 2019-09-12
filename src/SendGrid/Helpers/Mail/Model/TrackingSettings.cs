@@ -5,7 +5,7 @@
 
 using Newtonsoft.Json;
 
-namespace SendGrid.Helpers.Mail
+namespace SendGrid.Helpers.Mail.Model
 {
     /// <summary>
     /// Settings to determine how you would like to track the metrics of how your recipients interact with your email.

@@ -10,7 +10,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SendGrid.Helpers.Reliability
+namespace SendGrid.Reliability
 {
     /// <summary>
     /// A delegating handler that provides retry functionality while executing a request
@@ -51,7 +51,7 @@ namespace SendGrid.Helpers.Reliability
         /// <inheritdoc />
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (this.settings.MaximumNumberOfRetries == 0)
+            if (settings.MaximumNumberOfRetries == 0)
             {
                 return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
             }
@@ -63,7 +63,7 @@ namespace SendGrid.Helpers.Reliability
 
             while (!sent)
             {
-                var waitFor = this.GetNextWaitInterval(numberOfAttempts);
+                var waitFor = GetNextWaitInterval(numberOfAttempts);
 
                 try
                 {
@@ -77,7 +77,7 @@ namespace SendGrid.Helpers.Reliability
                 {
                     numberOfAttempts++;
 
-                    if (numberOfAttempts > this.settings.MaximumNumberOfRetries)
+                    if (numberOfAttempts > settings.MaximumNumberOfRetries)
                     {
                         throw new TimeoutException();
                     }
@@ -89,12 +89,12 @@ namespace SendGrid.Helpers.Reliability
                 {
                     numberOfAttempts++;
 
-                    if (numberOfAttempts > this.settings.MaximumNumberOfRetries)
+                    if (numberOfAttempts > settings.MaximumNumberOfRetries)
                     {
                         throw;
                     }
 
-                    await Task.Delay(waitFor).ConfigureAwait(false);
+                    await Task.Delay(waitFor, cancellationToken).ConfigureAwait(false);
                 }
             }
 
@@ -105,7 +105,8 @@ namespace SendGrid.Helpers.Reliability
         {
             if (RetriableServerErrorStatusCodes.Contains(responseMessage.StatusCode))
             {
-                throw new HttpRequestException(string.Format("Http status code '{0}' indicates server error", responseMessage.StatusCode));
+                throw new HttpRequestException(
+	                $"Http status code '{responseMessage.StatusCode}' indicates server error");
             }
         }
 
@@ -115,10 +116,10 @@ namespace SendGrid.Helpers.Reliability
 
             var delta = (int)((Math.Pow(2.0, numberOfAttempts) - 1.0) *
                                random.Next(
-                                   (int)(this.settings.DeltaBackOff.TotalMilliseconds * 0.8),
-                                   (int)(this.settings.DeltaBackOff.TotalMilliseconds * 1.2)));
+                                   (int)(settings.DeltaBackOff.TotalMilliseconds * 0.8),
+                                   (int)(settings.DeltaBackOff.TotalMilliseconds * 1.2)));
 
-            var interval = (int)Math.Min(this.settings.MinimumBackOff.TotalMilliseconds + delta, this.settings.MaximumBackOff.TotalMilliseconds);
+            var interval = (int)Math.Min(settings.MinimumBackOff.TotalMilliseconds + delta, settings.MaximumBackOff.TotalMilliseconds);
 
             return TimeSpan.FromMilliseconds(interval);
         }

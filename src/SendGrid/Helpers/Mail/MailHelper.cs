@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using SendGrid.Helpers.Mail.Model;
 
 namespace SendGrid.Helpers.Mail
 {

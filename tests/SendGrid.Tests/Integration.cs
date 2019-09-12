@@ -1,4 +1,7 @@
-﻿namespace SendGrid.Tests
+﻿using SendGrid.Helpers.Mail.Model;
+using SendGrid.Reliability;
+
+namespace SendGrid.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +13,6 @@
     using Newtonsoft.Json;
     using Reliability;
     using SendGrid.Helpers.Mail;
-    using SendGrid.Helpers.Reliability;
     using Xunit;
     using Xunit.Abstractions;
 
@@ -2712,7 +2714,7 @@
             var queryParams = @"{
   'limit': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "access_settings/activity", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "access_settings/activity", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -2736,7 +2738,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "access_settings/whitelist", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "access_settings/whitelist", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -2745,7 +2747,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "access_settings/whitelist");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "access_settings/whitelist");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -2763,7 +2765,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "access_settings/whitelist", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "access_settings/whitelist", requestBody: data);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -2774,7 +2776,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var rule_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "access_settings/whitelist/" + rule_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "access_settings/whitelist/" + rule_id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -2784,7 +2786,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var rule_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "access_settings/whitelist/" + rule_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "access_settings/whitelist/" + rule_id);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -2800,7 +2802,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "alerts", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "alerts", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -2809,7 +2811,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "alerts");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "alerts");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -2824,7 +2826,7 @@
             var json = JsonConvert.DeserializeObject<object>(data);
             data = json.ToString();
             var alert_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "alerts/" + alert_id, requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "alerts/" + alert_id, requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -2834,7 +2836,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var alert_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "alerts/" + alert_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "alerts/" + alert_id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -2844,7 +2846,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var alert_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "alerts/" + alert_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "alerts/" + alert_id);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -2864,7 +2866,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "api_keys", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "api_keys", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -2876,7 +2878,7 @@
             var queryParams = @"{
   'limit': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "api_keys", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "api_keys", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -2895,7 +2897,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var api_key_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PUT, urlPath: "api_keys/" + api_key_id, requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Put, urlPath: "api_keys/" + api_key_id, requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -2910,7 +2912,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var api_key_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "api_keys/" + api_key_id, requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "api_keys/" + api_key_id, requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -2920,7 +2922,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var api_key_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "api_keys/" + api_key_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "api_keys/" + api_key_id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -2930,7 +2932,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var api_key_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "api_keys/" + api_key_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "api_keys/" + api_key_id);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -2946,7 +2948,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "asm/groups", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "asm/groups", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -2958,7 +2960,7 @@
             var queryParams = @"{
   'id': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "asm/groups", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "asm/groups", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -2975,7 +2977,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var group_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "asm/groups/" + group_id, requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "asm/groups/" + group_id, requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -2985,7 +2987,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var group_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "asm/groups/" + group_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "asm/groups/" + group_id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -2995,7 +2997,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var group_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "asm/groups/" + group_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "asm/groups/" + group_id);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -3013,7 +3015,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var group_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "asm/groups/" + group_id + "/suppressions", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "asm/groups/" + group_id + "/suppressions", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -3023,7 +3025,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var group_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "asm/groups/" + group_id + "/suppressions");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "asm/groups/" + group_id + "/suppressions");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3042,7 +3044,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var group_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "asm/groups/" + group_id + "/suppressions/search", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "asm/groups/" + group_id + "/suppressions/search", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3053,7 +3055,7 @@
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var group_id = "test_url_param";
             var email = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "asm/groups/" + group_id + "/suppressions/" + email);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "asm/groups/" + group_id + "/suppressions/" + email);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -3062,7 +3064,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "asm/suppressions");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "asm/suppressions");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3079,7 +3081,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "asm/suppressions/global", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "asm/suppressions/global", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -3089,7 +3091,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "asm/suppressions/global/" + email);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "asm/suppressions/global/" + email);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3099,7 +3101,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "asm/suppressions/global/" + email);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "asm/suppressions/global/" + email);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -3109,7 +3111,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "asm/suppressions/" + email);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "asm/suppressions/" + email);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3126,7 +3128,7 @@
   'offset': 'test_string',
   'start_date': '2016-01-01'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "browsers/stats", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "browsers/stats", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3157,7 +3159,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "campaigns", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "campaigns", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -3170,7 +3172,7 @@
   'limit': 1,
   'offset': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "campaigns", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "campaigns", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3191,7 +3193,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var campaign_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "campaigns/" + campaign_id, requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "campaigns/" + campaign_id, requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3201,7 +3203,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var campaign_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "campaigns/" + campaign_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "campaigns/" + campaign_id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3211,7 +3213,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var campaign_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "campaigns/" + campaign_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "campaigns/" + campaign_id);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -3226,7 +3228,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var campaign_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "campaigns/" + campaign_id + "/schedules", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "campaigns/" + campaign_id + "/schedules", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3241,7 +3243,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var campaign_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "campaigns/" + campaign_id + "/schedules", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "campaigns/" + campaign_id + "/schedules", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -3251,7 +3253,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var campaign_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "campaigns/" + campaign_id + "/schedules");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "campaigns/" + campaign_id + "/schedules");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3261,7 +3263,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var campaign_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "campaigns/" + campaign_id + "/schedules");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "campaigns/" + campaign_id + "/schedules");
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -3271,7 +3273,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var campaign_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "campaigns/" + campaign_id + "/schedules/now");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "campaigns/" + campaign_id + "/schedules/now");
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -3286,7 +3288,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var campaign_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "campaigns/" + campaign_id + "/schedules/test", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "campaigns/" + campaign_id + "/schedules/test", requestBody: data);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -3300,7 +3302,7 @@
   'limit': 1,
   'offset': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "categories", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "categories", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3317,7 +3319,7 @@
   'offset': 1,
   'start_date': '2016-01-01'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "categories/stats", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "categories/stats", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3335,7 +3337,7 @@
   'sort_by_metric': 'test_string',
   'start_date': '2016-01-01'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "categories/stats/sums", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "categories/stats/sums", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3349,7 +3351,7 @@
   'end_date': '2016-04-01',
   'start_date': '2016-01-01'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "clients/stats", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "clients/stats", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3364,7 +3366,7 @@
   'start_date': '2016-01-01'
 }";
             var client_type = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "clients/" + client_type + "/stats", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "clients/" + client_type + "/stats", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3379,7 +3381,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "contactdb/custom_fields", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "contactdb/custom_fields", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -3388,7 +3390,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/custom_fields");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "contactdb/custom_fields");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3398,7 +3400,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var custom_field_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/custom_fields/" + custom_field_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "contactdb/custom_fields/" + custom_field_id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3408,7 +3410,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "202" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var custom_field_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "contactdb/custom_fields/" + custom_field_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "contactdb/custom_fields/" + custom_field_id);
             Assert.True(HttpStatusCode.Accepted == response.StatusCode);
         }
 
@@ -3423,7 +3425,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "contactdb/lists", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "contactdb/lists", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -3432,7 +3434,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/lists");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "contactdb/lists");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3449,7 +3451,7 @@
 ]";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "contactdb/lists", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "contactdb/lists", requestBody: data);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -3466,7 +3468,7 @@
   'list_id': 1
 }";
             var list_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "contactdb/lists/" + list_id, requestBody: data, queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "contactdb/lists/" + list_id, requestBody: data, queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3479,7 +3481,7 @@
   'list_id': 1
 }";
             var list_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/lists/" + list_id, queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "contactdb/lists/" + list_id, queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3492,7 +3494,7 @@
   'delete_contacts': 'true'
 }";
             var list_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "contactdb/lists/" + list_id, queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "contactdb/lists/" + list_id, queryParams: queryParams);
             Assert.True(HttpStatusCode.Accepted == response.StatusCode);
         }
 
@@ -3508,7 +3510,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var list_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "contactdb/lists/" + list_id + "/recipients", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "contactdb/lists/" + list_id + "/recipients", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -3522,7 +3524,7 @@
   'page_size': 1
 }";
             var list_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/lists/" + list_id + "/recipients", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "contactdb/lists/" + list_id + "/recipients", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3533,7 +3535,7 @@
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var list_id = "test_url_param";
             var recipient_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "contactdb/lists/" + list_id + "/recipients/" + recipient_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "contactdb/lists/" + list_id + "/recipients/" + recipient_id);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -3548,7 +3550,7 @@
 }";
             var list_id = "test_url_param";
             var recipient_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "contactdb/lists/" + list_id + "/recipients/" + recipient_id, queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "contactdb/lists/" + list_id + "/recipients/" + recipient_id, queryParams: queryParams);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -3566,7 +3568,7 @@
 ]";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "contactdb/recipients", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "contactdb/recipients", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -3590,7 +3592,7 @@
 ]";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "contactdb/recipients", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "contactdb/recipients", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -3603,7 +3605,7 @@
   'page': 1,
   'page_size': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/recipients", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "contactdb/recipients", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3618,7 +3620,7 @@
 ]";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "contactdb/recipients", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "contactdb/recipients", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3627,7 +3629,7 @@
         {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/recipients/billable_count");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "contactdb/recipients/billable_count");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3636,7 +3638,7 @@
         {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/recipients/count");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "contactdb/recipients/count");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3648,7 +3650,7 @@
             var queryParams = @"{
   '{field_name}': 'test_string'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/recipients/search", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "contactdb/recipients/search", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3658,7 +3660,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var recipient_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/recipients/" + recipient_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "contactdb/recipients/" + recipient_id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3668,7 +3670,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var recipient_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "contactdb/recipients/" + recipient_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "contactdb/recipients/" + recipient_id);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -3677,7 +3679,7 @@
         {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers); var recipient_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/recipients/" + recipient_id + "/lists");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "contactdb/recipients/" + recipient_id + "/lists");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3686,7 +3688,7 @@
         {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/reserved_fields");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "contactdb/reserved_fields");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3721,7 +3723,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "contactdb/segments", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "contactdb/segments", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3730,7 +3732,7 @@
         {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/segments");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "contactdb/segments");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3757,7 +3759,7 @@
   'segment_id': 'test_string'
 }";
             var segment_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "contactdb/segments/" + segment_id, requestBody: data, queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "contactdb/segments/" + segment_id, requestBody: data, queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3770,7 +3772,7 @@
   'segment_id': 1
 }";
             var segment_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/segments/" + segment_id, queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "contactdb/segments/" + segment_id, queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3783,7 +3785,7 @@
   'delete_contacts': 'true'
 }";
             var segment_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "contactdb/segments/" + segment_id, queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "contactdb/segments/" + segment_id, queryParams: queryParams);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -3797,7 +3799,7 @@
   'page_size': 1
 }";
             var segment_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/segments/" + segment_id + "/recipients", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "contactdb/segments/" + segment_id + "/recipients", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3813,7 +3815,7 @@
   'offset': 1,
   'start_date': '2016-01-01'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "devices/stats", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "devices/stats", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3830,7 +3832,7 @@
   'offset': 1,
   'start_date': '2016-01-01'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "geo/stats", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "geo/stats", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3846,7 +3848,7 @@
   'offset': 1,
   'subuser': 'test_string'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "ips", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "ips", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3855,7 +3857,7 @@
         {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "ips/assigned");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "ips/assigned");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3869,7 +3871,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "ips/pools", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "ips/pools", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3878,7 +3880,7 @@
         {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "ips/pools");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "ips/pools");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3893,7 +3895,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var pool_name = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PUT, urlPath: "ips/pools/" + pool_name, requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Put, urlPath: "ips/pools/" + pool_name, requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3903,7 +3905,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var pool_name = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "ips/pools/" + pool_name);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "ips/pools/" + pool_name);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3913,7 +3915,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var pool_name = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "ips/pools/" + pool_name);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "ips/pools/" + pool_name);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -3928,7 +3930,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var pool_name = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "ips/pools/" + pool_name + "/ips", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "ips/pools/" + pool_name + "/ips", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -3939,7 +3941,7 @@
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var pool_name = "test_url_param";
             var ip = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "ips/pools/" + pool_name + "/ips/" + ip);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "ips/pools/" + pool_name + "/ips/" + ip);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -3953,7 +3955,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "ips/warmup", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "ips/warmup", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3962,7 +3964,7 @@
         {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "ips/warmup");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "ips/warmup");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3972,7 +3974,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var ip_address = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "ips/warmup/" + ip_address);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "ips/warmup/" + ip_address);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -3982,7 +3984,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var ip_address = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "ips/warmup/" + ip_address);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "ips/warmup/" + ip_address);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -3992,7 +3994,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var ip_address = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "ips/" + ip_address);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "ips/" + ip_address);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4001,7 +4003,7 @@
         {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "mail/batch");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "mail/batch");
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -4011,7 +4013,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var batch_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail/batch/" + batch_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "mail/batch/" + batch_id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4160,7 +4162,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "mail/send", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "mail/send", requestBody: data);
             Assert.True(HttpStatusCode.Accepted == response.StatusCode);
         }
 
@@ -4173,7 +4175,7 @@
   'limit': 1,
   'offset': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "mail_settings", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4191,7 +4193,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/address_whitelist", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "mail_settings/address_whitelist", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4200,7 +4202,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/address_whitelist");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "mail_settings/address_whitelist");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4215,7 +4217,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/bcc", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "mail_settings/bcc", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4224,7 +4226,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/bcc");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "mail_settings/bcc");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4240,7 +4242,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/bounce_purge", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "mail_settings/bounce_purge", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4249,7 +4251,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/bounce_purge");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "mail_settings/bounce_purge");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4265,7 +4267,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/footer", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "mail_settings/footer", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4274,7 +4276,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/footer");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "mail_settings/footer");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4289,7 +4291,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/forward_bounce", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "mail_settings/forward_bounce", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4298,7 +4300,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/forward_bounce");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "mail_settings/forward_bounce");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4313,7 +4315,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/forward_spam", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "mail_settings/forward_spam", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4322,7 +4324,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/forward_spam");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "mail_settings/forward_spam");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4336,7 +4338,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/plain_content", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "mail_settings/plain_content", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4345,7 +4347,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/plain_content");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "mail_settings/plain_content");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4361,7 +4363,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/spam_check", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "mail_settings/spam_check", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4370,7 +4372,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/spam_check");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "mail_settings/spam_check");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4385,7 +4387,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "mail_settings/template", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "mail_settings/template", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4394,7 +4396,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/template");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "mail_settings/template");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4412,7 +4414,7 @@
   'start_date': '2016-01-01'
 }";
 
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mailbox_providers/stats", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "mailbox_providers/stats", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4425,7 +4427,7 @@
   'limit': 1,
   'offset': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "partner_settings", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "partner_settings", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4441,7 +4443,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "partner_settings/new_relic", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "partner_settings/new_relic", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4450,7 +4452,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "partner_settings/new_relic");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "partner_settings/new_relic");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4459,7 +4461,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "scopes");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "scopes");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4487,7 +4489,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "senders", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "senders", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -4496,7 +4498,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "senders");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "senders");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4525,7 +4527,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var sender_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "senders/" + sender_id, requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "senders/" + sender_id, requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4535,7 +4537,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var sender_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "senders/" + sender_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "senders/" + sender_id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4545,7 +4547,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var sender_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "senders/" + sender_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "senders/" + sender_id);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -4555,7 +4557,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var sender_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "senders/" + sender_id + "/resend_verification");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "senders/" + sender_id + "/resend_verification");
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -4571,7 +4573,7 @@
   'offset': 1,
   'start_date': '2016-01-01'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "stats", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "stats", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4591,7 +4593,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "subusers", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "subusers", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4605,7 +4607,7 @@
   'offset': 1,
   'username': 'test_string'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "subusers", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4617,7 +4619,7 @@
             var queryParams = @"{
   'usernames': 'test_string'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers/reputations", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "subusers/reputations", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4634,7 +4636,7 @@
   'start_date': '2016-01-01',
   'subusers': 'test_string'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers/stats", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "subusers/stats", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4651,7 +4653,7 @@
   'sort_by_metric': 'test_string',
   'subuser': 'test_string'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers/stats/monthly", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "subusers/stats/monthly", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4669,7 +4671,7 @@
   'sort_by_metric': 'test_string',
   'start_date': '2016-01-01'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers/stats/sums", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "subusers/stats/sums", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4684,7 +4686,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var subuser_name = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "subusers/" + subuser_name, requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "subusers/" + subuser_name, requestBody: data);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -4695,7 +4697,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var subuser_name = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "subusers/" + subuser_name);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "subusers/" + subuser_name);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -4710,7 +4712,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var subuser_name = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PUT, urlPath: "subusers/" + subuser_name + "/ips", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Put, urlPath: "subusers/" + subuser_name + "/ips", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4726,7 +4728,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var subuser_name = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PUT, urlPath: "subusers/" + subuser_name + "/monitor", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Put, urlPath: "subusers/" + subuser_name + "/monitor", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4742,7 +4744,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var subuser_name = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "subusers/" + subuser_name + "/monitor", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "subusers/" + subuser_name + "/monitor", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4752,7 +4754,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var subuser_name = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers/" + subuser_name + "/monitor");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "subusers/" + subuser_name + "/monitor");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4762,7 +4764,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var subuser_name = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "subusers/" + subuser_name + "/monitor");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "subusers/" + subuser_name + "/monitor");
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -4779,7 +4781,7 @@
   'sort_by_metric': 'test_string'
 }";
             var subuser_name = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "subusers/" + subuser_name + "/stats/monthly", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "subusers/" + subuser_name + "/stats/monthly", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4794,7 +4796,7 @@
   'offset': 1,
   'start_time': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/blocks", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "suppression/blocks", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4812,7 +4814,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/blocks", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "suppression/blocks", requestBody: data);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -4822,7 +4824,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/blocks/" + email);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "suppression/blocks/" + email);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4832,7 +4834,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/blocks/" + email);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "suppression/blocks/" + email);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -4845,7 +4847,7 @@
   'end_time': 1,
   'start_time': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/bounces", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "suppression/bounces", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4863,7 +4865,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/bounces", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "suppression/bounces", requestBody: data);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -4874,7 +4876,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/bounces/" + email);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "suppression/bounces/" + email);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4887,7 +4889,7 @@
   'email_address': 'example@example.com'
 }";
             var email = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/bounces/" + email, queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "suppression/bounces/" + email, queryParams: queryParams);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -4902,7 +4904,7 @@
   'offset': 1,
   'start_time': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/invalid_emails", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "suppression/invalid_emails", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4920,7 +4922,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/invalid_emails", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "suppression/invalid_emails", requestBody: data);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -4930,7 +4932,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/invalid_emails/" + email);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "suppression/invalid_emails/" + email);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4940,7 +4942,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/invalid_emails/" + email);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "suppression/invalid_emails/" + email);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -4950,7 +4952,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/spam_report/" + email);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "suppression/spam_report/" + email);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4960,7 +4962,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/spam_report/" + email);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "suppression/spam_report/" + email);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -4975,7 +4977,7 @@
   'offset': 1,
   'start_time': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/spam_reports", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "suppression/spam_reports", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -4993,7 +4995,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/spam_reports", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "suppression/spam_reports", requestBody: data);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -5008,7 +5010,7 @@
   'offset': 1,
   'start_time': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/unsubscribes", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "suppression/unsubscribes", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5022,7 +5024,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "templates", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "templates", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -5031,7 +5033,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "templates");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "templates");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5046,7 +5048,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var template_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "templates/" + template_id, requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "templates/" + template_id, requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5056,7 +5058,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var template_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "templates/" + template_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "templates/" + template_id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5066,7 +5068,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var template_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "templates/" + template_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "templates/" + template_id);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -5086,7 +5088,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var template_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "templates/" + template_id + "/versions", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "templates/" + template_id + "/versions", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -5106,7 +5108,7 @@
             data = json.ToString();
             var template_id = "test_url_param";
             var version_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "templates/" + template_id + "/versions/" + version_id, requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "templates/" + template_id + "/versions/" + version_id, requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5117,7 +5119,7 @@
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var template_id = "test_url_param";
             var version_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "templates/" + template_id + "/versions/" + version_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "templates/" + template_id + "/versions/" + version_id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5128,7 +5130,7 @@
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var template_id = "test_url_param";
             var version_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "templates/" + template_id + "/versions/" + version_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "templates/" + template_id + "/versions/" + version_id);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -5139,7 +5141,7 @@
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var template_id = "test_url_param";
             var version_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "templates/" + template_id + "/versions/" + version_id + "/activate");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "templates/" + template_id + "/versions/" + version_id + "/activate");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5152,7 +5154,7 @@
   'limit': 1,
   'offset': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "tracking_settings", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "tracking_settings", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5166,7 +5168,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "tracking_settings/click", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "tracking_settings/click", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5175,7 +5177,7 @@
         {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "tracking_settings/click");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "tracking_settings/click");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5194,7 +5196,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "tracking_settings/google_analytics", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "tracking_settings/google_analytics", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5203,7 +5205,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "tracking_settings/google_analytics");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "tracking_settings/google_analytics");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5217,7 +5219,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "tracking_settings/open", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "tracking_settings/open", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5226,7 +5228,7 @@
         {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "tracking_settings/open");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "tracking_settings/open");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5245,7 +5247,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "tracking_settings/subscription", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "tracking_settings/subscription", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5254,7 +5256,7 @@
         {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "tracking_settings/subscription");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "tracking_settings/subscription");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5263,7 +5265,7 @@
         {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/account");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "user/account");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5272,7 +5274,7 @@
         {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/credits");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "user/credits");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5286,7 +5288,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PUT, urlPath: "user/email", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Put, urlPath: "user/email", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5295,7 +5297,7 @@
         {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/email");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "user/email");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5310,7 +5312,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PUT, urlPath: "user/password", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Put, urlPath: "user/password", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5326,7 +5328,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "user/profile", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "user/profile", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5335,7 +5337,7 @@
         {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/profile");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "user/profile");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5350,7 +5352,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "user/scheduled_sends", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "user/scheduled_sends", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -5360,7 +5362,7 @@
             
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/scheduled_sends");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "user/scheduled_sends");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5375,7 +5377,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var batch_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "user/scheduled_sends/" + batch_id, requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "user/scheduled_sends/" + batch_id, requestBody: data);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -5385,7 +5387,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var batch_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/scheduled_sends/" + batch_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "user/scheduled_sends/" + batch_id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5395,7 +5397,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var batch_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "user/scheduled_sends/" + batch_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "user/scheduled_sends/" + batch_id);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -5410,7 +5412,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "user/settings/enforced_tls", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "user/settings/enforced_tls", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5419,7 +5421,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/settings/enforced_tls");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "user/settings/enforced_tls");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5434,7 +5436,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PUT, urlPath: "user/username", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Put, urlPath: "user/username", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5443,7 +5445,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/username");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "user/username");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5469,7 +5471,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "user/webhooks/event/settings", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "user/webhooks/event/settings", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5478,7 +5480,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/webhooks/event/settings");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "user/webhooks/event/settings");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5492,7 +5494,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "user/webhooks/event/test", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "user/webhooks/event/test", requestBody: data);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -5509,7 +5511,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "user/webhooks/parse/settings", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "user/webhooks/parse/settings", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -5518,7 +5520,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/webhooks/parse/settings");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "user/webhooks/parse/settings");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5535,7 +5537,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var hostname = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "user/webhooks/parse/settings/" + hostname, requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "user/webhooks/parse/settings/" + hostname, requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5545,7 +5547,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var hostname = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/webhooks/parse/settings/" + hostname);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "user/webhooks/parse/settings/" + hostname);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5555,7 +5557,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var hostname = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "user/webhooks/parse/settings/" + hostname);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "user/webhooks/parse/settings/" + hostname);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -5571,7 +5573,7 @@
   'offset': 'test_string',
   'start_date': '2016-01-01'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/webhooks/parse/stats", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "user/webhooks/parse/stats", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5594,7 +5596,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/domains", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "whitelabel/domains", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -5610,7 +5612,7 @@
   'offset': 1,
   'username': 'test_string'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/domains", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "whitelabel/domains", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5619,7 +5621,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/domains/default");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "whitelabel/domains/default");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5628,7 +5630,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/domains/subuser");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "whitelabel/domains/subuser");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5637,7 +5639,7 @@
         {            
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "whitelabel/domains/subuser");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "whitelabel/domains/subuser");
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -5653,7 +5655,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var domain_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "whitelabel/domains/" + domain_id, requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "whitelabel/domains/" + domain_id, requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5663,7 +5665,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var domain_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/domains/" + domain_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "whitelabel/domains/" + domain_id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5673,7 +5675,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var domain_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "whitelabel/domains/" + domain_id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "whitelabel/domains/" + domain_id);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -5688,7 +5690,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var domain_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/domains/" + domain_id + "/subuser", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "whitelabel/domains/" + domain_id + "/subuser", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -5703,7 +5705,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/domains/" + id + "/ips", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "whitelabel/domains/" + id + "/ips", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5714,7 +5716,7 @@
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var id = "test_url_param";
             var ip = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "whitelabel/domains/" + id + "/ips/" + ip);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "whitelabel/domains/" + id + "/ips/" + ip);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5724,7 +5726,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/domains/" + id + "/validate");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "whitelabel/domains/" + id + "/validate");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5740,7 +5742,7 @@
 }";
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/ips", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "whitelabel/ips", requestBody: data);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -5754,7 +5756,7 @@
   'limit': 1,
   'offset': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/ips", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "whitelabel/ips", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5764,7 +5766,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/ips/" + id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "whitelabel/ips/" + id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5774,7 +5776,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "whitelabel/ips/" + id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "whitelabel/ips/" + id);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -5784,7 +5786,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/ips/" + id + "/validate");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "whitelabel/ips/" + id + "/validate");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5804,7 +5806,7 @@
   'limit': 1,
   'offset': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/links", requestBody: data, queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "whitelabel/links", requestBody: data, queryParams: queryParams);
             Assert.True(HttpStatusCode.Created == response.StatusCode);
         }
 
@@ -5816,7 +5818,7 @@
             var queryParams = @"{
   'limit': 1
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/links", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "whitelabel/links", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5828,7 +5830,7 @@
             var queryParams = @"{
   'domain': 'test_string'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/links/default", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "whitelabel/links/default", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5840,7 +5842,7 @@
             var queryParams = @"{
   'username': 'test_string'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/links/subuser", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "whitelabel/links/subuser", queryParams: queryParams);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5852,7 +5854,7 @@
             var queryParams = @"{
   'username': 'test_string'
 }";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "whitelabel/links/subuser", queryParams: queryParams);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "whitelabel/links/subuser", queryParams: queryParams);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -5867,7 +5869,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.PATCH, urlPath: "whitelabel/links/" + id, requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Patch, urlPath: "whitelabel/links/" + id, requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5877,7 +5879,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/links/" + id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Get, urlPath: "whitelabel/links/" + id);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5887,7 +5889,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "whitelabel/links/" + id);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Delete, urlPath: "whitelabel/links/" + id);
             Assert.True(HttpStatusCode.NoContent == response.StatusCode);
         }
 
@@ -5897,7 +5899,7 @@
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/links/" + id + "/validate");
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "whitelabel/links/" + id + "/validate");
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5912,7 +5914,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var link_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/links/" + link_id + "/subuser", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "whitelabel/links/" + link_id + "/subuser", requestBody: data);
             Assert.True(HttpStatusCode.OK == response.StatusCode);
         }
 
@@ -5935,7 +5937,7 @@
             var json = JsonConvert.DeserializeObject<Object>(data);
             data = json.ToString();
             var link_id = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/links/" + link_id + "/subuser", requestBody: data);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.Post, urlPath: "whitelabel/links/" + link_id + "/subuser", requestBody: data);
             Assert.Equal(httpStatusCode, response.StatusCode);
             Assert.Equal(httpResponse, response.Body.ReadAsStringAsync().Result);
         }

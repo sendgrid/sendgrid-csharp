@@ -45,7 +45,7 @@ namespace SendGrid
         /// <param name="request">The parameters for the API call</param>
         /// <param name="cancellationToken">Cancel the asynchronous call</param>
         /// <returns>Response object</returns>
-        Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Prepare for async call to the API server
@@ -60,7 +60,7 @@ namespace SendGrid
         /// through the internal http client. Any underlying exception will pass right through.
         /// In particular, this means that you may expect
         /// a TimeoutException if you are not connected to the internet.</exception>
-        Task<Response> RequestAsync(SendGridClient.Method method, string requestBody = null, string queryParams = null, string urlPath = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Response> RequestAsync(SendGridClient.Method method, string requestBody = null, string queryParams = null, string urlPath = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Make a request to send an email through Twilio SendGrid asynchronously.
@@ -68,6 +68,6 @@ namespace SendGrid
         /// <param name="msg">A SendGridMessage object with the details for the request.</param>
         /// <param name="cancellationToken">Cancel the asynchronous call.</param>
         /// <returns>A Response object.</returns>
-        Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default);
     }
 }

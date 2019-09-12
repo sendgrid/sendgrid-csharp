@@ -1,6 +1,7 @@
 ﻿using SendGrid.Helpers.Mail;
 using System.Collections.Generic;
 using System.Linq;
+using SendGrid.Helpers.Mail.Model;
 using Xunit;
 
 namespace SendGrid.Tests.Helpers.Mail
