@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace SendGrid
 {
     /// <summary>
-    /// The response received from an API call to Twilio SendGrid
+    /// The response received from an API call to Twilio SendGrid.
     /// </summary>
     public class Response
     {
@@ -97,8 +97,8 @@ namespace SendGrid
         /// <summary>
         /// Converts string formatted response body to a Dictionary.
         /// </summary>
-        /// <returns>Dictionary object representation of HttpContent</returns>
         /// <param name="content">https://docs.microsoft.com/dotnet/api/system.net.http.httpcontent.</param>
+        /// <returns>Dictionary object representation of HttpContent.</returns>
         public virtual async Task<Dictionary<string, dynamic>> DeserializeResponseBodyAsync(HttpContent content)
         {
             var stringContent = await content.ReadAsStringAsync().ConfigureAwait(false);
@@ -107,10 +107,10 @@ namespace SendGrid
         }
 
         /// <summary>
-        ///     Converts string formatted response headers to a Dictionary.
+        /// Converts string formatted response headers to a Dictionary.
         /// </summary>
-        /// <returns>Dictionary object representation of  HttpResponseHeaders</returns>
         /// <param name="content">https://docs.microsoft.com/dotnet/api/system.net.http.headers.httpresponseheaders.</param>
+        /// <returns>Dictionary object representation of HttpResponseHeaders.</returns>
         public virtual Dictionary<string, string> DeserializeResponseHeaders(HttpResponseHeaders content)
         {
             var dsContent = new Dictionary<string, string>();
