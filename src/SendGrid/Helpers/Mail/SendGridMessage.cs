@@ -7,8 +7,10 @@ using Newtonsoft.Json;
 using SendGrid.Helpers.Mail.Model;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -1610,13 +1612,21 @@ namespace SendGrid.Helpers.Mail
             {
                 NullValueHandling = NullValueHandling.Ignore,
                 DefaultValueHandling = DefaultValueHandling.Include,
-                StringEscapeHandling = StringEscapeHandling.EscapeHtml
+                StringEscapeHandling = StringEscapeHandling.EscapeHtml,
+                Formatting = Formatting.None
             };
 
-            return JsonConvert.SerializeObject(
-                                               this,
-                                               Formatting.None,
-                                               jsonSerializerSettings);
+            var jsonSerializer = JsonSerializer.Create(jsonSerializerSettings);
+
+            var stringBuilder = new StringBuilder(256);
+            var textWriter = new StringWriter(stringBuilder, CultureInfo.InvariantCulture);
+            using (var jsonWriter = new JsonTextWriter(textWriter))
+            {
+                jsonWriter.Formatting = jsonSerializer.Formatting;
+                jsonSerializer.Serialize(jsonWriter, this);
+            }
+
+            return textWriter.ToString();
         }
     }
 }

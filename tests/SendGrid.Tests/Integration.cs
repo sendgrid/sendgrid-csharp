@@ -360,6 +360,26 @@
         }
 
         [Fact]
+        public void TestKitchenSinkIsUnaffectedByCustomContractResolver()
+        {
+            var originalGetDefaults = JsonConvert.DefaultSettings;
+
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
+            };
+
+            try
+            {
+                TestKitchenSink();
+            }
+            finally
+            {
+                JsonConvert.DefaultSettings = originalGetDefaults;
+            }
+        }
+
+        [Fact]
         public void TestCreateSingleEmail()
         {
             var msg = MailHelper.CreateSingleEmail(new EmailAddress("test@example.com", "Example User"),
