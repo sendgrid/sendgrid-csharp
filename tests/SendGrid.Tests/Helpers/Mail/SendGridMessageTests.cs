@@ -11,6 +11,72 @@
 
     public class SendGridMessageTests
     {
+
+        #region Duplicate Recipients
+        
+        [Fact]
+        public void SendGridMessage_Prevent_Duplicate_To_Recipients()
+        {
+            // Arrange
+            var sut = new SendGridMessage();
+            var tos = new List<EmailAddress>
+            {
+                new EmailAddress("to1@email.com"),
+                new EmailAddress("to2@email.com"),
+                new EmailAddress("to2@email.com"),
+                new EmailAddress("to4@email.com")
+            };
+
+            // Act
+            sut.AddTos(tos);
+
+            // Assert
+            Assert.Equal(3, sut.Personalizations.SelectMany(x => x.Tos).Count());
+        }
+
+        [Fact]
+        public void SendGridMessage_Prevent_Duplicate_Cc_Recipients()
+        {
+            // Arrange
+            var sut = new SendGridMessage();
+            var ccs = new List<EmailAddress>
+            {
+                new EmailAddress("cc1@email.com"),
+                new EmailAddress("cc2@email.com"),
+                new EmailAddress("cc2@email.com"),
+                new EmailAddress("cc4@email.com")
+            };
+
+            // Act
+            sut.AddCcs(ccs);
+
+            // Assert
+            Assert.Equal(3, sut.Personalizations.SelectMany(x => x.Ccs).Count());
+        }
+
+        [Fact]
+        public void SendGridMessage_Prevent_Duplicate_Bcc_Recipients()
+        {
+            // Arrange
+            var sut = new SendGridMessage();
+            var bccs = new List<EmailAddress>
+            {
+                new EmailAddress("bcc1@email.com"),
+                new EmailAddress("bcc2@email.com"),
+                new EmailAddress("bcc2@email.com"),
+                new EmailAddress("bcc4@email.com")
+            };
+
+            // Act
+            sut.AddBccs(bccs);
+
+            // Assert
+            Assert.Equal(3, sut.Personalizations.SelectMany(x => x.Bccs).Count());
+        }
+
+        #endregion
+
+
         #region AddAttachment tests
 
         [Theory]
