@@ -22,7 +22,7 @@
             var tos = new List<EmailAddress>
             {
                 new EmailAddress("to1@email.com"),
-                new EmailAddress("to2@email.com"),
+                new EmailAddress("TO2@email.com"),
                 new EmailAddress("to2@email.com"),
                 new EmailAddress("to4@email.com")
             };
@@ -32,6 +32,7 @@
 
             // Assert
             Assert.Equal(3, sut.Personalizations.SelectMany(x => x.Tos).Count());
+            Assert.DoesNotContain(new EmailAddress("TO2@email.com"), sut.Personalizations.SelectMany(x => x.Tos));
         }
 
         [Fact]
@@ -42,7 +43,7 @@
             var ccs = new List<EmailAddress>
             {
                 new EmailAddress("cc1@email.com"),
-                new EmailAddress("cc2@email.com"),
+                new EmailAddress("CC2@email.com"),
                 new EmailAddress("cc2@email.com"),
                 new EmailAddress("cc4@email.com")
             };
@@ -52,6 +53,7 @@
 
             // Assert
             Assert.Equal(3, sut.Personalizations.SelectMany(x => x.Ccs).Count());
+            Assert.DoesNotContain(new EmailAddress("CC2@email.com"), sut.Personalizations.SelectMany(x => x.Ccs));
         }
 
         [Fact]
@@ -62,7 +64,7 @@
             var bccs = new List<EmailAddress>
             {
                 new EmailAddress("bcc1@email.com"),
-                new EmailAddress("bcc2@email.com"),
+                new EmailAddress("BCC2@email.com"),
                 new EmailAddress("bcc2@email.com"),
                 new EmailAddress("bcc4@email.com")
             };
@@ -72,11 +74,11 @@
 
             // Assert
             Assert.Equal(3, sut.Personalizations.SelectMany(x => x.Bccs).Count());
+            Assert.DoesNotContain(new EmailAddress("BCC2@email.com"), sut.Personalizations.SelectMany(x => x.Bccs));
         }
 
         #endregion
-
-
+        
         #region AddAttachment tests
 
         [Theory]

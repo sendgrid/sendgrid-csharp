@@ -5,6 +5,7 @@
 
 using Newtonsoft.Json;
 using SendGrid.Helpers.Mail.Model;
+using SendGrid.Helpers.Mail.Utilites;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -163,7 +164,7 @@ namespace SendGrid.Helpers.Mail
             {
                 personalization.Tos = personalization.Tos ?? new List<EmailAddress>();
 
-                if (!personalization.Tos.Any(x => string.Equals(x.Email, email.Email, StringComparison.OrdinalIgnoreCase)))
+                if (!personalization.Tos.Contains(email, new EmailAddressComparer()))
                 {
                     personalization.Tos.Add(email);
 
@@ -183,7 +184,7 @@ namespace SendGrid.Helpers.Mail
 
             if (this.Personalizations != null)
             {
-                if (!this.Personalizations.SelectMany(x => x.Tos).Any(x => string.Equals(x.Email, email.Email, StringComparison.OrdinalIgnoreCase)))
+                if (!this.Personalizations.SelectMany(x => x.Tos).Contains(email, new EmailAddressComparer()))
                 {
                     if ((personalizationIndex != 0) && (this.Personalizations.Count() <= personalizationIndex))
                     {
@@ -223,9 +224,12 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddTos(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
         {
+            emails = emails.Distinct(new EmailAddressComparer()).ToList();
+
             if (personalization != null)
             {
-                personalization.Tos.AddRange(emails.Except(personalization.Tos));
+                personalization.Tos.Distinct(new EmailAddressComparer()).ToList().AddRange(emails);
+
                 if (this.Personalizations == null)
                 {
                     this.Personalizations = new List<Personalization>();
@@ -252,7 +256,8 @@ namespace SendGrid.Helpers.Mail
                     this.Personalizations[personalizationIndex].Tos = new List<EmailAddress>();
                 }
 
-                this.Personalizations[personalizationIndex].Tos.AddRange(emails.Except(this.Personalizations[personalizationIndex].Tos));
+                this.Personalizations[personalizationIndex].Tos.Distinct(new EmailAddressComparer()).ToList().AddRange(emails);
+
                 return;
             }
 
@@ -260,7 +265,7 @@ namespace SendGrid.Helpers.Mail
             {
                 new Personalization()
                 {
-                    Tos = emails.GroupBy(p => p.Email).Select(g => g.First()).ToList()
+                    Tos = emails.Distinct(new EmailAddressComparer()).ToList()
                 }
             };
             return;
@@ -292,7 +297,7 @@ namespace SendGrid.Helpers.Mail
             if (personalization != null)
             {
                 personalization.Ccs = personalization.Ccs ?? new List<EmailAddress>();
-                if (!personalization.Ccs.Any(x => string.Equals(x.Email, email.Email, StringComparison.OrdinalIgnoreCase)))
+                if (!personalization.Ccs.Contains(email, new EmailAddressComparer()))
                 {
                     personalization.Ccs.Add(email);
                     if (this.Personalizations == null)
@@ -311,7 +316,7 @@ namespace SendGrid.Helpers.Mail
 
             if (this.Personalizations != null)
             {
-                if (!this.Personalizations.SelectMany(x => x.Ccs).Any(x => string.Equals(x.Email, email.Email, StringComparison.OrdinalIgnoreCase)))
+                if (!this.Personalizations.SelectMany(x => x.Ccs).Contains(email, new EmailAddressComparer()))
                 {
                     if ((personalizationIndex != 0) && (this.Personalizations.Count() <= personalizationIndex))
                     {
@@ -351,9 +356,12 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddCcs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
         {
+            emails = emails.Distinct(new EmailAddressComparer()).ToList();
+
             if (personalization != null)
             {
-                personalization.Ccs.AddRange(emails.Except(personalization.Ccs));
+                personalization.Ccs.Distinct(new EmailAddressComparer()).ToList().AddRange(emails);
+
                 if (this.Personalizations == null)
                 {
                     this.Personalizations = new List<Personalization>();
@@ -380,7 +388,8 @@ namespace SendGrid.Helpers.Mail
                     this.Personalizations[personalizationIndex].Ccs = new List<EmailAddress>();
                 }
 
-                this.Personalizations[personalizationIndex].Ccs.AddRange(emails.Except(this.Personalizations[personalizationIndex].Ccs));
+                personalization.Ccs.Distinct(new EmailAddressComparer()).ToList().AddRange(emails);
+
                 return;
             }
 
@@ -388,7 +397,7 @@ namespace SendGrid.Helpers.Mail
             {
                 new Personalization()
                 {
-                    Ccs = emails.GroupBy(p => p.Email).Select(g => g.First()).ToList()
+                    Ccs = emails
                 }
             };
             return;
@@ -420,7 +429,7 @@ namespace SendGrid.Helpers.Mail
             if (personalization != null)
             {
                 personalization.Bccs = personalization.Bccs ?? new List<EmailAddress>();
-                if (!personalization.Bccs.Any(x => string.Equals(x.Email, email.Email, StringComparison.OrdinalIgnoreCase)))
+                if (!personalization.Bccs.Contains(email, new EmailAddressComparer()))
                 {
                     personalization.Bccs.Add(email);
                     if (this.Personalizations == null)
@@ -439,7 +448,7 @@ namespace SendGrid.Helpers.Mail
 
             if (this.Personalizations != null)
             {
-                if (!this.Personalizations.SelectMany(x => x.Bccs).Any(x => string.Equals(x.Email, email.Email, StringComparison.OrdinalIgnoreCase)))
+                if (!this.Personalizations.SelectMany(x => x.Bccs).Contains(email, new EmailAddressComparer()))
                 {
                     if (this.Personalizations[personalizationIndex] == null)
                     {
@@ -479,9 +488,12 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddBccs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
         {
+            emails = emails.Distinct(new EmailAddressComparer()).ToList();
+
             if (personalization != null)
             {
-                personalization.Bccs.AddRange(emails);
+                personalization.Bccs.Distinct(new EmailAddressComparer()).ToList().AddRange(emails);
+
                 if (this.Personalizations == null)
                 {
                     this.Personalizations = new List<Personalization>();
@@ -508,7 +520,8 @@ namespace SendGrid.Helpers.Mail
                     this.Personalizations[personalizationIndex].Bccs = new List<EmailAddress>();
                 }
 
-                this.Personalizations[personalizationIndex].Bccs.AddRange(emails.Except(this.Personalizations[personalizationIndex].Bccs));
+                this.Personalizations[personalizationIndex].Bccs.Distinct(new EmailAddressComparer()).ToList().AddRange(emails);
+
                 return;
             }
 
@@ -516,7 +529,7 @@ namespace SendGrid.Helpers.Mail
             {
                 new Personalization()
                 {
-                    Bccs = emails.GroupBy(p => p.Email).Select(g => g.First()).ToList()
+                    Bccs = emails
                 }
             };
             return;
