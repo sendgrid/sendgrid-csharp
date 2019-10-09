@@ -189,7 +189,7 @@ namespace SendGrid
         /// <param name="request">The parameters for the API call</param>
         /// <param name="cancellationToken">Cancel the asynchronous call</param>
         /// <returns>Response object</returns>
-        public virtual async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default)
         {
             HttpResponseMessage response = await this.client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return new Response(response.StatusCode, response.Content, response.Headers);
@@ -209,11 +209,11 @@ namespace SendGrid
         /// In particular, this means that you may expect
         /// a TimeoutException if you are not connected to the Internet.</exception>
         public async Task<Response> RequestAsync(
-            SendGridClient.Method method,
+            Method method,
             string requestBody = null,
             string queryParams = null,
             string urlPath = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var baseAddress = new Uri(string.IsNullOrWhiteSpace(this.options.Host) ? DefaultOptions.Host : this.options.Host);
             if (!baseAddress.OriginalString.EndsWith("/"))
@@ -251,7 +251,7 @@ namespace SendGrid
         /// <param name="msg">A SendGridMessage object with the details for the request.</param>
         /// <param name="cancellationToken">Cancel the asynchronous call.</param>
         /// <returns>A Response object.</returns>
-        public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default)
         {
             return await this.RequestAsync(
                 Method.POST,
@@ -274,7 +274,7 @@ namespace SendGrid
         {
             if (webProxy != null)
             {
-                var httpClientHandler = new HttpClientHandler()
+                var httpClientHandler = new HttpClientHandler
                 {
                     Proxy = webProxy,
                     PreAuthenticate = true,
@@ -301,7 +301,7 @@ namespace SendGrid
         /// </returns>
         private string BuildUrl(string urlPath, string queryParams = null)
         {
-            string url = null;
+            string url;
 
             // create urlPAth - from parameter if overridden on call or from constructor parameter
             var urlpath = urlPath ?? this.options.UrlPath;
@@ -317,9 +317,9 @@ namespace SendGrid
 
             if (queryParams != null)
             {
-                var ds_query_params = this.ParseJson(queryParams);
+                var dsQueryParams = this.ParseJson(queryParams);
                 string query = "?";
-                foreach (var pair in ds_query_params)
+                foreach (var pair in dsQueryParams)
                 {
                     foreach (var element in pair.Value)
                     {
