@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{71C09624-020B-410E-A8FE-1FD216A1FE31}"
 EndProject
@@ -15,11 +15,28 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SendGrid.Tests", "tests\Sen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExampleCoreProject", "ExampleCoreProject\ExampleCoreProject.csproj", "{4BD07A97-8AD2-4134-848E-6A74EB992050}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleNet45", "ExampleNet45Project\ExampleNet45.csproj", "{3B3F2699-F720-4498-8044-262EFE110A22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExampleNet45", "ExampleNet45Project\ExampleNet45.csproj", "{3B3F2699-F720-4498-8044-262EFE110A22}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SendGrid.Extensions.DependencyInjection", "src\SendGrid.Extensions.DependencyInjection\SendGrid.Extensions.DependencyInjection.csproj", "{AF9D60DF-EF22-40FD-9C56-7E7F2BCB9683}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SendGrid.Extensions.DependencyInjection.Tests", "tests\SendGrid.Extensions.DependencyInjection.Tests\SendGrid.Extensions.DependencyInjection.Tests.csproj", "{C65468A6-BDE2-4FD4-9400-B668B1395B26}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CADBDC30-FD3E-4FBA-B8F0-D3B6A1874FB9}"
+	ProjectSection(SolutionItems) = preProject
+		.env_sample = .env_sample
+		.gitignore = .gitignore
+		.travis.yml = .travis.yml
+		CHANGELOG.md = CHANGELOG.md
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		CONTRIBUTING.md = CONTRIBUTING.md
+		Dockerfile = Dockerfile
+		LICENSE.md = LICENSE.md
+		Makefile = Makefile
+		README.md = README.md
+		TROUBLESHOOTING.md = TROUBLESHOOTING.md
+		USAGE.md = USAGE.md
+		USE_CASES.md = USE_CASES.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
