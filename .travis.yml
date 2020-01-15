@@ -35,6 +35,14 @@ script:
 after_success:
   - bash <(curl -s https://codecov.io/bash)  
 
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: dotnet nuget push ./src/Sendgrid/bin/Release/SendGrid.*.nupkg --api-key $NUGET_API_KEY --source $NUGET_SOURCE
+  on:
+    branch: master
+    condition: '"x$NUGET_API_KEY" != "x" && "x$NUGET_SOURCE" != "x"'
+
 notifications:
   hipchat:
     rooms:
