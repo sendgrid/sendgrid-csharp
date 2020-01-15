@@ -26,8 +26,7 @@ after_success:
 deploy:
   skip_cleanup: true
   provider: script
-  script: dotnet nuget push ./src/Sendgrid/bin/Release/SendGrid.*.nupkg --api-key $NUGET_API_KEY --source $NUGET_SOURCE
+  script: dotnet nuget push ./src/Sendgrid/bin/Release/SendGrid.*.nupkg --api-key $NUGET_API_KEY
   on:
     branch: master
     tags: true
-
