@@ -1,13 +1,9 @@
 language: csharp
-dotnet: 1.0.4
+dotnet: 2.1
 os: linux
-dist: trusty
+dist: xenial
 mono: latest
 sudo: required
-
-env:
-  matrix:
-    secure: KJrQ+NfmzlgCSXRyqeAMDGZUG6GO4/+xk1T0wGy1BgVz8seo/fDWL8osWEljB4Sj05sfFj7CM+rociwL6sdVyqCiHbCAM7XuHs58D+4Tlh5pGHL+G1qOl65/pDl0ulq+M7PwDxHPZ60/oyH2a16t5jtD9e4W31y2fXzEbHGLHXg=
 
 before_install:
   - mkdir -p .nuget
@@ -22,15 +18,7 @@ before_script:
   - nohup prism run -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json &
 
 script:
-  - dotnet restore
-  - dotnet build ./src/SendGrid -c Release
-  - dotnet test ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp1.0
-  - ls ./src/SendGrid/bin/Release/net452/
-  - ls ./src/SendGrid/bin/Release/netstandard1.3/
-  - dotnet pack ./src/SendGrid -c Release
-  - curl -s https://codecov.io/bash > .codecov
-  - chmod +x .codecov
-  - ./.codecov
+  - make release
   
 after_success:
   - bash <(curl -s https://codecov.io/bash)  
@@ -41,14 +29,5 @@ deploy:
   script: dotnet nuget push ./src/Sendgrid/bin/Release/SendGrid.*.nupkg --api-key $NUGET_API_KEY --source $NUGET_SOURCE
   on:
     branch: master
-    condition: '"x$NUGET_API_KEY" != "x" && "x$NUGET_SOURCE" != "x"'
+    tags: true
 
-notifications:
-  hipchat:
-    rooms:
-      secure: T8r/eNzevZXJDmSK7ZKG+t/Vx0cENHIMWVuKbt3RSYbXl6QsWv8UTPamFSkLP0zbcCyGQ7d+QKaEc18ffCtiBV9MXPy8Q1XFGzKxr5/GnwMx4p0ArTqbFLCyl3JuXBmCGouWG+ulb9eOGUFc6L/4p2cwAfXf2oTcXYqosBnfoHg=
-    template:
-    - '<a href="https://travis-ci.org/%{repository}/builds/%{build_id}">%{repository}
-      Build %{build_number}</a> on branch <i>%{branch}</i> by %{author}: <strong>%{message}</strong>
-      <a href="https://github.com/%{repository}/commits/%{commit}">View on GitHub</a>'
-    format: html

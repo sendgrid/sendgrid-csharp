@@ -27,7 +27,7 @@
     <PackageDescription>C# client library and examples for using Twilio SendGrid API's to send mail and access Web API v3 endpoints with .NET Standard 1.3 and .NET Core support.</PackageDescription>
     <PackageReleaseNotes>Please see: https://github.com/sendgrid/sendgrid-csharp/releases</PackageReleaseNotes>
     <PackageTags>Twilio;SendGrid;Email;Mail;Microsoft;Azure;Transactional;.NET Core</PackageTags>
-    <Copyright>Twilio SendGrid, Inc. 2019</Copyright>
+    <Copyright>Twilio SendGrid, Inc. 2020</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
