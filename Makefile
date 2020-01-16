@@ -9,9 +9,8 @@ install:
 
 test:
 	dotnet restore
-	dotnet build --framework netstandard1.3 ./src/SendGrid/SendGrid.csproj
-	dotnet build --framework netstandard2.0 ./src/SendGrid/SendGrid.csproj
-	dotnet test ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp2.0
+	dotnet build ./src/SendGrid -c Release
+	dotnet test ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp1.0
 	ls ./src/SendGrid/bin/Release/net452/
 	ls ./src/SendGrid/bin/Release/netstandard1.3/
 	curl -s https://codecov.io/bash > .codecov
