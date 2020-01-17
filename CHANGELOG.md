@@ -1,6 +1,22 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-01-17] Version 9.12.2
+---------------------------
+**Library - Chore**
+- [PR #966](https://github.com/sendgrid/sendgrid-csharp/pull/966): deploy command needs a source URL. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+
+[2020-01-16] Version 9.12.1
+---------------------------
+**Library - Chore**
+- [PR #965](https://github.com/sendgrid/sendgrid-csharp/pull/965): prep the repo for automated releasing. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+- [PR #753](https://github.com/sendgrid/sendgrid-csharp/pull/753): Adds deploy phase that deploys to NuGet. Thanks to [@Gimly](https://github.com/Gimly)!
+
+**Library - Docs**
+- [PR #764](https://github.com/sendgrid/sendgrid-csharp/pull/764): Update documentation for retrieving all templates. Thanks to [@tony-ho](https://github.com/tony-ho)!
+
+
 [2019-08-15] Version 9.12.0
 ---------------------------
 - [PR #892](https://github.com/sendgrid/sendgrid-csharp/pull/892) Replace nuspec and AssemblyInfo with csproj. Big thanks to [Jonas Nyrup](https://github.com/jnyrup) for the PR!
