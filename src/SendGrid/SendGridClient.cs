@@ -228,6 +228,7 @@ namespace SendGrid
                 RequestUri = new Uri(baseAddress, this.BuildUrl(urlPath, queryParams)),
                 Content = requestBody == null ? null : new StringContent(requestBody, Encoding.UTF8, this.MediaType)
             };
+            request.Content.Headers.ContentType.CharSet = null;
 
             // set header overrides
             if (this.options.RequestHeaders?.Count > 0)
