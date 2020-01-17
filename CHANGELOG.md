@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-01-17] Version 9.12.4
+---------------------------
+**Library - Chore**
+- [PR #970](https://github.com/sendgrid/sendgrid-csharp/pull/970): update travis build command. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+
 [2020-01-17] Version 9.12.3
 ---------------------------
 **Library - Chore**
