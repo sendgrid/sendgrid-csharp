@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-01-17] Version 9.12.3
+---------------------------
+**Library - Chore**
+- [PR #969](https://github.com/sendgrid/sendgrid-csharp/pull/969): fix travis path for automated deploy. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+
 [2020-01-17] Version 9.12.2
 ---------------------------
 **Library - Chore**
