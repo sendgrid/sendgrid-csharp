@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-01-17] Version 9.12.2
+---------------------------
+**Library - Chore**
+- [PR #966](https://github.com/sendgrid/sendgrid-csharp/pull/966): deploy command needs a source URL. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+
 [2020-01-16] Version 9.12.1
 ---------------------------
 **Library - Chore**
