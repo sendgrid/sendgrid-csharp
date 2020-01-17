@@ -1,5 +1,5 @@
 language: csharp
-dotnet: 2.1.2
+dotnet: 1.0.4
 solution: SendGrid.sln
 os: linux
 dist: trusty
@@ -9,6 +9,7 @@ sudo: required
 before_install:
   - mkdir -p .nuget
   - wget -O .nuget/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+  - nuget update -self
   - dotnet nuget --version
 
 before_script:
