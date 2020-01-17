@@ -1,5 +1,5 @@
-// <copyright file="SendGridClient.cs" company="SendGrid">
-// Copyright (c) SendGrid. All rights reserved.
+﻿// <copyright file="SendGridClient.cs" company="Twilio SendGrid">
+// Copyright (c) Twilio SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
@@ -20,56 +20,54 @@ using System.Threading.Tasks;
 namespace SendGrid
 {
     /// <summary>
-    /// A HTTP client wrapper for interacting with SendGrid's API
+    /// A HTTP client wrapper for interacting with Twilio SendGrid's API
     /// </summary>
     public class SendGridClient : ISendGridClient
     {
-        private readonly SendGridClientOptions options = new SendGridClientOptions();
+        private const string Scheme = "Bearer";
+        private const string ContentType = "Content-Type";
+        private const string DefaultMediaType = "application/json";
+
+        /// <summary>
+        /// The <see cref="SendGridClient"/> assembly version to send in request User-Agent header
+        /// </summary>
+        private static readonly string ClientVersion = typeof(SendGridClient).GetTypeInfo().Assembly.GetName().Version.ToString();
+
+        /// <summary>
+        /// The default configuration settings to use with the SendGrid client
+        /// </summary>
+        private static readonly SendGridClientOptions DefaultOptions = new SendGridClientOptions();
+
+        /// <summary>
+        /// The configuration to use with current <see cref="SendGridClient"/> instance
+        /// </summary>
+        private readonly SendGridClientOptions options;
 
         /// <summary>
         /// The HttpClient instance to use for all calls from this SendGridClient instance.
         /// </summary>
-        private HttpClient client;
+        private readonly HttpClient client;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
         /// </summary>
         /// <param name="webProxy">Web proxy.</param>
-        /// <param name="apiKey">Your SendGrid API key.</param>
+        /// <param name="apiKey">Your Twilio SendGrid API key.</param>
         /// <param name="host">Base url (e.g. https://api.sendgrid.com)</param>
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
-        /// <returns>Interface to the SendGrid REST API</returns>
+        /// <returns>Interface to the Twilio SendGrid REST API</returns>
         public SendGridClient(IWebProxy webProxy, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
+            : this(CreateHttpClientWithWebProxy(webProxy), new SendGridClientOptions { ApiKey = apiKey, Host = host, RequestHeaders = requestHeaders, Version = version, UrlPath = urlPath })
         {
-            // Create client with WebProxy if set
-            if (webProxy != null)
-            {
-                var httpClientHandler = new HttpClientHandler()
-                {
-                    Proxy = webProxy,
-                    PreAuthenticate = true,
-                    UseDefaultCredentials = false,
-                };
-
-                var retryHandler = new RetryDelegatingHandler(httpClientHandler, this.options.ReliabilitySettings);
-
-                this.client = new HttpClient(retryHandler);
-            }
-            else
-            {
-                this.client = this.CreateHttpClientWithRetryHandler();
-            }
-
-            this.InitiateClient(apiKey, host, requestHeaders, version, urlPath);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
         /// </summary>
         /// <param name="options">A <see cref="SendGridClientOptions"/> instance that defines the configuration settings to use with the client </param>
-        /// <returns>Interface to the SendGrid REST API</returns>
+        /// <returns>Interface to the Twilio SendGrid REST API</returns>
         public SendGridClient(SendGridClientOptions options)
             : this(null, options)
         {
@@ -79,48 +77,45 @@ namespace SendGrid
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
         /// </summary>
         /// <param name="httpClient">An optional http client which may me injected in order to facilitate testing.</param>
-        /// <param name="apiKey">Your SendGrid API key.</param>
+        /// <param name="apiKey">Your Twilio SendGrid API key.</param>
         /// <param name="host">Base url (e.g. https://api.sendgrid.com)</param>
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
-        /// <returns>Interface to the SendGrid REST API</returns>
+        /// <returns>Interface to the Twilio SendGrid REST API</returns>
         public SendGridClient(HttpClient httpClient, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
-            : this(httpClient, new SendGridClientOptions() { ApiKey = apiKey, Host = host, RequestHeaders = requestHeaders, Version = version, UrlPath = urlPath })
+            : this(httpClient, new SendGridClientOptions { ApiKey = apiKey, Host = host, RequestHeaders = requestHeaders, Version = version, UrlPath = urlPath })
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
         /// </summary>
-        /// <param name="apiKey">Your SendGrid API key.</param>
+        /// <param name="apiKey">Your Twilio SendGrid API key.</param>
         /// <param name="host">Base url (e.g. https://api.sendgrid.com)</param>
         /// <param name="requestHeaders">A dictionary of request headers</param>
         /// <param name="version">API version, override AddVersion to customize</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
-        /// <returns>Interface to the SendGrid REST API</returns>
+        /// <returns>Interface to the Twilio SendGrid REST API</returns>
         public SendGridClient(string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = "v3", string urlPath = null)
-            : this(httpClient: null, apiKey: apiKey, host: host, requestHeaders: requestHeaders, version: version, urlPath: urlPath)
+            : this(null, new SendGridClientOptions { ApiKey = apiKey, Host = host, RequestHeaders = requestHeaders, Version = version, UrlPath = urlPath })
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.
         /// </summary>
-        /// <param name="httpClient">An optional http client which may me injected in order to facilitate testing.</param>
+        /// <param name="httpClient">An optional HTTP client which may me injected in order to facilitate testing.</param>
         /// <param name="options">A <see cref="SendGridClientOptions"/> instance that defines the configuration settings to use with the client </param>
-        /// <returns>Interface to the SendGrid REST API</returns>
+        /// <returns>Interface to the Twilio SendGrid REST API</returns>
         internal SendGridClient(HttpClient httpClient, SendGridClientOptions options)
         {
-            if (options == null)
+            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            this.client = httpClient ?? CreateHttpClientWithRetryHandler();
+            if (this.options.RequestHeaders != null && this.options.RequestHeaders.TryGetValue(ContentType, out var contentType))
             {
-                throw new ArgumentNullException(nameof(options));
+                this.MediaType = contentType;
             }
-
-            this.options = options;
-            this.client = (httpClient == null) ? this.CreateHttpClientWithRetryHandler() : httpClient;
-
-            this.InitiateClient(options.ApiKey, options.Host, options.RequestHeaders, options.Version, options.UrlPath);
         }
 
         /// <summary>
@@ -149,7 +144,7 @@ namespace SendGrid
             POST,
 
             /// <summary>
-            /// Update an entire resource.s
+            /// Update an entire resource.
             /// </summary>
             PUT
         }
@@ -157,17 +152,25 @@ namespace SendGrid
         /// <summary>
         /// Gets or sets the path to the API resource.
         /// </summary>
-        public string UrlPath { get; set; }
+        public string UrlPath
+        {
+            get => this.options.UrlPath;
+            set => this.options.UrlPath = value;
+        }
 
         /// <summary>
         /// Gets or sets the API version.
         /// </summary>
-        public string Version { get; set; }
+        public string Version
+        {
+            get => this.options.Version;
+            set => this.options.Version = value;
+        }
 
         /// <summary>
         /// Gets or sets the request media type.
         /// </summary>
-        public string MediaType { get; set; }
+        public string MediaType { get; set; } = DefaultMediaType;
 
         /// <summary>
         /// Add the authorization header, override to customize
@@ -197,14 +200,14 @@ namespace SendGrid
         /// </summary>
         /// <param name="method">HTTP verb</param>
         /// <param name="requestBody">JSON formatted string</param>
-        /// <param name="queryParams">JSON formatted query paramaters</param>
+        /// <param name="queryParams">JSON formatted query parameters</param>
         /// <param name="urlPath">The path to the API endpoint.</param>
         /// <param name="cancellationToken">Cancel the asynchronous call.</param>
         /// <returns>Response object</returns>
         /// <exception cref="Exception">The method will NOT catch and swallow exceptions generated by sending a request
-        /// through the internal http client. Any underlying exception will pass right through.
+        /// through the internal HTTP client. Any underlying exception will pass right through.
         /// In particular, this means that you may expect
-        /// a TimeoutException if you are not connected to the internet.</exception>
+        /// a TimeoutException if you are not connected to the Internet.</exception>
         public async Task<Response> RequestAsync(
             SendGridClient.Method method,
             string requestBody = null,
@@ -212,27 +215,38 @@ namespace SendGrid
             string urlPath = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var endpoint = this.client.BaseAddress + this.BuildUrl(urlPath, queryParams);
-
-            // Build the request body
-            StringContent content = null;
-            if (requestBody != null)
+            var baseAddress = new Uri(string.IsNullOrWhiteSpace(this.options.Host) ? DefaultOptions.Host : this.options.Host);
+            if (!baseAddress.OriginalString.EndsWith("/"))
             {
-                content = new StringContent(requestBody, Encoding.UTF8, this.MediaType);
+                baseAddress = new Uri(baseAddress.OriginalString + "/");
             }
 
             // Build the final request
             var request = new HttpRequestMessage
             {
                 Method = new HttpMethod(method.ToString()),
-                RequestUri = new Uri(endpoint),
-                Content = content
+                RequestUri = new Uri(baseAddress, this.BuildUrl(urlPath, queryParams)),
+                Content = requestBody == null ? null : new StringContent(requestBody, Encoding.UTF8, this.MediaType)
             };
+
+            // set header overrides
+            if (this.options.RequestHeaders?.Count > 0)
+            {
+                foreach (var header in this.options.RequestHeaders)
+                {
+                    request.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // set standard headers
+            request.Headers.Authorization = new AuthenticationHeaderValue(Scheme, this.options.ApiKey);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(this.MediaType));
+            request.Headers.UserAgent.TryParseAdd($"sendgrid/{ClientVersion} csharp");
             return await this.MakeRequest(request, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Make a request to send an email through SendGrid asynchronously.
+        /// Make a request to send an email through Twilio SendGrid asynchronously.
         /// </summary>
         /// <param name="msg">A SendGridMessage object with the details for the request.</param>
         /// <param name="cancellationToken">Cancel the asynchronous call.</param>
@@ -244,6 +258,37 @@ namespace SendGrid
                 msg.Serialize(),
                 urlPath: "mail/send",
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        private static HttpClient CreateHttpClientWithRetryHandler()
+        {
+            return new HttpClient(new RetryDelegatingHandler(DefaultOptions.ReliabilitySettings));
+        }
+
+        /// <summary>
+        /// Create client with WebProxy if set
+        /// </summary>
+        /// <param name="webProxy">the WebProxy</param>
+        /// <returns>HttpClient with RetryDelegatingHandler and WebProxy if set</returns>
+        private static HttpClient CreateHttpClientWithWebProxy(IWebProxy webProxy)
+        {
+            if (webProxy != null)
+            {
+                var httpClientHandler = new HttpClientHandler()
+                {
+                    Proxy = webProxy,
+                    PreAuthenticate = true,
+                    UseDefaultCredentials = false,
+                };
+
+                var retryHandler = new RetryDelegatingHandler(httpClientHandler, DefaultOptions.ReliabilitySettings);
+
+                return new HttpClient(retryHandler);
+            }
+            else
+            {
+                return CreateHttpClientWithRetryHandler();
+            }
         }
 
         /// <summary>
@@ -258,12 +303,12 @@ namespace SendGrid
         {
             string url = null;
 
-            // create urlPAth - from parameter if overridden on call or from ctor parameter
-            var urlpath = urlPath ?? this.UrlPath;
+            // create urlPAth - from parameter if overridden on call or from constructor parameter
+            var urlpath = urlPath ?? this.options.UrlPath;
 
-            if (this.Version != null)
+            if (this.options.Version != null)
             {
-                url = this.Version + "/" + urlpath;
+                url = this.options.Version + "/" + urlpath;
             }
             else
             {
@@ -280,77 +325,17 @@ namespace SendGrid
                     {
                         if (query != "?")
                         {
-                            query = query + "&";
+                            query += "&";
                         }
 
                         query = query + pair.Key + "=" + element;
                     }
                 }
 
-                url = url + query;
+                url += query;
             }
 
             return url;
-        }
-
-        private HttpClient CreateHttpClientWithRetryHandler()
-        {
-            return new HttpClient(new RetryDelegatingHandler(this.options.ReliabilitySettings));
-        }
-
-        /// <summary>
-        /// Common method to initiate internal fields regardless of which constructor was used.
-        /// </summary>
-        /// <param name="apiKey">Your SendGrid API key.</param>
-        /// <param name="host">Base url (e.g. https://api.sendgrid.com)</param>
-        /// <param name="requestHeaders">A dictionary of request headers</param>
-        /// <param name="version">API version, override AddVersion to customize</param>
-        /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint)</param>
-        private void InitiateClient(string apiKey, string host, Dictionary<string, string> requestHeaders, string version, string urlPath)
-        {
-            this.UrlPath = urlPath;
-            this.Version = version;
-
-            var baseAddress = host ?? "https://api.sendgrid.com";
-            var clientVersion = this.GetType().GetTypeInfo().Assembly.GetName().Version.ToString();
-
-            // standard headers
-            this.client.BaseAddress = new Uri(baseAddress);
-            Dictionary<string, string> headers = new Dictionary<string, string>
-            {
-                { "Authorization", "Bearer " + apiKey },
-                { "Content-Type", "application/json" },
-                { "User-Agent", "sendgrid/" + clientVersion + " csharp" },
-                { "Accept", "application/json" }
-            };
-
-            // set header overrides
-            if (requestHeaders != null)
-            {
-                foreach (var header in requestHeaders)
-                {
-                    headers[header.Key] = header.Value;
-                }
-            }
-
-            // add headers to httpClient
-            foreach (var header in headers)
-            {
-                if (header.Key == "Authorization")
-                {
-                    var split = header.Value.Split();
-                    this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(split[0], split[1]);
-                }
-                else if (header.Key == "Content-Type")
-                {
-                    this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(header.Value));
-                    this.MediaType = header.Value;
-                }
-                else
-                {
-                    this.client.DefaultRequestHeaders.Add(header.Key, header.Value);
-                }
-            }
         }
 
         /// <summary>

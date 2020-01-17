@@ -1,5 +1,5 @@
-﻿// <copyright file="SendGridMessage.cs" company="SendGrid">
-// Copyright (c) SendGrid. All rights reserved.
+﻿// <copyright file="SendGridMessage.cs" company="Twilio SendGrid">
+// Copyright (c) Twilio SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace SendGrid.Helpers.Mail
 {
     /// <summary>
-    /// Class SendGridMessage builds an object that sends an email through SendGrid.
+    /// Class SendGridMessage builds an object that sends an email through Twilio SendGrid.
     /// </summary>
     [JsonObject(IsReference = false)]
     public class SendGridMessage
@@ -916,9 +916,9 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
-        /// Specify the unix timestamp to specify when you want the email to be sent from SendGrid.
+        /// Specify the unix timestamp to specify when you want the email to be sent from Twilio SendGrid.
         /// </summary>
-        /// <param name="sendAt">Specify the unix timestamp for when you want the email to be sent from SendGrid</param>
+        /// <param name="sendAt">Specify the unix timestamp for when you want the email to be sent from Twilio SendGrid</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the send at timestamp.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void SetSendAt(int sendAt, int personalizationIndex = 0, Personalization personalization = null)
@@ -1302,7 +1302,7 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Set the global send at unix timestamp.
         /// </summary>
-        /// <param name="sendAt">A unix timestamp allowing you to specify when you want your email to be sent from SendGrid. This is not necessary if you want the email to be sent at the time of your API request.</param>
+        /// <param name="sendAt">A unix timestamp allowing you to specify when you want your email to be sent from Twilio SendGrid. This is not necessary if you want the email to be sent at the time of your API request.</param>
         public void SetGlobalSendAt(int sendAt)
         {
             this.SendAt = sendAt;
@@ -1551,9 +1551,9 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
-        /// Creates the JSON object required to make a request to SendGrid.
+        /// Creates the JSON object required to make a request to Twilio SendGrid.
         /// </summary>
-        /// <returns>The JSON object required to make a request to SendGrid.</returns>
+        /// <returns>The JSON object required to make a request to Twilio SendGrid.</returns>
         public string Serialize()
         {
             if (this.PlainTextContent != null || this.HtmlContent != null)

@@ -1,4 +1,4 @@
-﻿If you have a non-library SendGrid issue, please contact our [support team](https://support.sendgrid.com).
+﻿If you have a non-library Twilio SendGrid issue, please contact our [support team](https://support.sendgrid.com).
 
 If you can't find a solution below, please open an [issue](https://github.com/sendgrid/sendgrid-csharp/issues).
 
@@ -6,7 +6,7 @@ If you can't find a solution below, please open an [issue](https://github.com/se
 ## Table of Contents
 
 * [Continue Using the v2 API](#v2)
-* [Environment Variables and Your SendGrid API Key](#environment)
+* [Environment Variables and Your Twilio SendGrid API Key](#environment)
 * [Error Messages](#error)
 * [Migrating from the v2 API to v3](#migrating)
 * [Migrating from the v8 SDK to v9](#sdkmigration)
@@ -34,11 +34,11 @@ Download:
 Click the "Clone or download" green button in [GitHub](https://github.com/sendgrid/sendgrid-csharp/tree/b27983a8f3d84a9d28972f2720cca0315ad9fe32) and choose download.
 
 <a name="environment"></a>
-## Environment Variables and Your SendGrid API Key
+## Environment Variables and Your Twilio SendGrid API Key
 
-All of our examples assume you are using [environment variables](https://github.com/sendgrid/sendgrid-csharp#setup-environment-variables) to hold your SendGrid API key.
+All of our examples assume you are using [environment variables](https://github.com/sendgrid/sendgrid-csharp#setup-environment-variables) to hold your Twilio SendGrid API key.
 
-If you choose to add your SendGrid API key directly (not recommended):
+If you choose to add your Twilio SendGrid API key directly (not recommended):
 
 `string apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");`
 
@@ -46,12 +46,12 @@ becomes
 
 `string apiKey = "SENDGRID_API_KEY";`
 
-In the first case SENDGRID_API_KEY is in reference to the name of the environment variable, while the second case references the actual SendGrid API Key.
+In the first case SENDGRID_API_KEY is in reference to the name of the environment variable, while the second case references the actual Twilio SendGrid API Key.
 
 <a name="error"></a>
 ## Error Messages
 
-To read the error message returned by SendGrid's API:
+To read the error message returned by Twilio SendGrid's API:
 
 ```csharp
 var response = await client.RequestAsync(method: SendGridClient.Method.POST,
@@ -82,14 +82,14 @@ If you receive one of the following errors, or something similar:
 * ‘Helpers’ does not exist in the namespace ‘SengrGrid’
 * The type or namespace name ‘Mail’ could not be found
 
-it means that you are probably not compiling your application to .NET 4.5.2. Currently, this is the only supported version of .NET by SendGrid.
+it means that you are probably not compiling your application to .NET 4.5.2. Currently, this is the only supported version of .NET by Twilio SendGrid.
 
 The current solution is to download the code directly into your project and change the compile target to the desired version.
 
 <a name="testing"></a>
 ## Testing v3 /mail/send Calls Directly
 
-[Here](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/curl_examples.html) are some cURL examples for common use cases.
+[Here](https://sendgrid.com/docs/for-developers/sending-email/curl-examples/) are some cURL examples for common use cases.
 
 <a name="net45"></a>
 ## Using .NET 4.5.1 and lower

@@ -23,6 +23,7 @@ This documentation provides examples for specific use cases. Please [open an iss
 - [How to Setup a Domain Whitelabel](#how-to-setup-a-domain-whitelabel)
 - [How to View Email Statistics](#how-to-view-email-statistics)
 - [How to transform HTML to plain text](#how-to-transform-html-to-plain-text)
+- [Send a SMS Message](#sms)
 
 <a name="attachments"></a>
 # Attachments
@@ -230,7 +231,7 @@ namespace Example
 
             msg.SetSubject("this subject overrides the Global Subject");
 
-            msg.SetGlobalSubject("Sending with SendGrid is Fun");
+            msg.SetGlobalSubject("Sending with Twilio SendGrid is Fun");
 
             msg.AddContent(MimeType.Text, "and easy to do anywhere, even with C#");
             msg.AddContent(MimeType.Html, "<strong>and easy to do anywhere, even with C#</strong>");
@@ -383,7 +384,7 @@ namespace Example
                 new EmailAddress("test2@example.com", "Example User2"),
                 new EmailAddress("test3@example.com", "Example User3")
             };
-            var subject = "Sending with SendGrid is Fun";
+            var subject = "Sending with Twilio SendGrid is Fun";
             var plainTextContent = "and easy to do anywhere, even with C#";
             var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
             var showAllRecipients = false; // Set to true if you want the recipients to see each others email addresses
@@ -424,7 +425,7 @@ namespace Example
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("test@example.com", "Example User");
-            var subject = "Sending with SendGrid is Fun";
+            var subject = "Sending with Twilio SendGrid is Fun";
             var to = new EmailAddress("test@example.com", "Example User");
             var plainTextContent = "and easy to do anywhere, even with C#";
             var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
@@ -661,7 +662,7 @@ namespace Example
 <a name="legacy-transactional-templates"></a>
 # _Legacy_ Transactional Templates
 
-For this example, we assume you have created a [legacy transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html). Following is the template content we used for testing.
+For this example, we assume you have created a [legacy transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html) in the UI or via the API.. Following is the template content we used for testing.
 
 Template ID (replace with your own):
 
@@ -853,6 +854,91 @@ var client = new SendGridClient(options);
 
 ```
 
+<a name="sms"></a>
+# Send a SMS Message
+
+Following are the steps to add Twilio SMS to your app:
+
+## 1. Obtain a Free Twilio Account
+
+Sign up for a free Twilio account [here](https://www.twilio.com/try-twilio?source=sendgrid-csharp).
+
+## 2. Update Your Environment Variables
+
+You can obtain your Account Sid and Auth Token from [twilio.com/console](https://twilio.com/console).
+
+### Mac
+
+```bash
+echo "export TWILIO_ACCOUNT_SID='YOUR_TWILIO_ACCOUNT_SID'" > twilio.env
+echo "export TWILIO_AUTH_TOKEN='YOUR_TWILIO_AUTH_TOKEN'" >> twilio.env
+echo "twilio.env" >> .gitignore
+source ./twilio.env
+```
+
+### Windows
+
+Temporarily set the environment variable (accessible only during the current CLI session):
+
+```bash
+set TWILIO_ACCOUNT_SID=YOUR_TWILIO_ACCOUNT_SID
+set TWILIO_AUTH_TOKEN=YOUR_TWILIO_AUTH_TOKEN
+```
+
+Permanently set the environment variable (accessible in all subsequent CLI sessions):
+
+```bash
+setx TWILIO_ACCOUNT_SID "YOUR_TWILIO_ACCOUNT_SID"
+setx TWILIO_AUTH_TOKEN "YOUR_TWILIO_AUTH_TOKEN"
+```
+
+## 3. Install the Twilio Helper Library
+
+The best and easiest way to add the Twilio libraries to your .NET project is to use the NuGet package manager.
+
+### With Visual Studio IDE
+
+From within Visual Studio, you can use the NuGet GUI to search for and install the Twilio NuGet package. Or, as a shortcut, simply type the following command into the Package Manager Console:
+
+`Install-Package Twilio`
+
+### With .NET Core Command Line Tools
+
+If you are building with the .NET Core command line tools, then you can run the following command from within your project directory:
+
+`dotnet add package Twilio`
+
+Then, you can execute the following code.
+
+```csharp
+using System;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
+
+namespace TwilioTest
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var twilioAccountSid = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
+            var twilioAuthToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
+            TwilioClient.Init(twilioAccountSid, twilioAuthToken);
+
+            var message = MessageResource.Create(
+                new PhoneNumber("+11234567890"),
+                from: new PhoneNumber("+10987654321"),
+                body: "Hello World!"
+            );
+            Console.WriteLine(message.Sid);
+        }
+    }
+}
+```
+
+For more information, please visit the [Twilio SMS C# documentation](https://www.twilio.com/docs/sms/quickstart/csharp-dotnet-framework).
+
 <a name="domain-whitelabel"></a>
 # How to Setup a Domain Whitelabel
 
@@ -865,7 +951,7 @@ Find more information about all of SendGrid's whitelabeling related documentatio
 
 You can find documentation for how to view your email statistics via the UI [here](https://app.sendgrid.com/statistics) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#stats).
 
-Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as SendGrid processes your email.
+Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as Twilio SendGrid processes your email.
 
 <a name="html-to-plain-text"></a>
 # How to transform HTML to plain text

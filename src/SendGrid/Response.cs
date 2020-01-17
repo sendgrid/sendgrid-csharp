@@ -1,5 +1,5 @@
-﻿// <copyright file="Response.cs" company="SendGrid">
-// Copyright (c) SendGrid. All rights reserved.
+﻿// <copyright file="Response.cs" company="Twilio SendGrid">
+// Copyright (c) Twilio SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
@@ -14,22 +14,22 @@ using System.Threading.Tasks;
 namespace SendGrid
 {
     /// <summary>
-    /// The response received from an API call to SendGrid
+    /// The response received from an API call to Twilio SendGrid
     /// </summary>
     public class Response
     {
         /// <summary>
-        /// The status code returned from SendGrid.
+        /// The status code returned from Twilio SendGrid.
         /// </summary>
         private HttpStatusCode statusCode;
 
         /// <summary>
-        /// The response body returned from SendGrid.
+        /// The response body returned from Twilio SendGrid.
         /// </summary>
         private HttpContent body;
 
         /// <summary>
-        /// The response headers returned from SendGrid.
+        /// The response headers returned from Twilio SendGrid.
         /// </summary>
         private HttpResponseHeaders headers;
 
@@ -47,7 +47,7 @@ namespace SendGrid
         }
 
         /// <summary>
-        /// Gets or sets the status code returned from SendGrid.
+        /// Gets or sets the status code returned from Twilio SendGrid.
         /// </summary>
         public HttpStatusCode StatusCode
         {
@@ -63,7 +63,7 @@ namespace SendGrid
         }
 
         /// <summary>
-        /// Gets or sets the response body returned from SendGrid.
+        /// Gets or sets the response body returned from Twilio SendGrid.
         /// </summary>
         public HttpContent Body
         {
@@ -79,7 +79,7 @@ namespace SendGrid
         }
 
         /// <summary>
-        /// Gets or sets the response headers returned from SendGrid.
+        /// Gets or sets the response headers returned from Twilio SendGrid.
         /// </summary>
         public HttpResponseHeaders Headers
         {

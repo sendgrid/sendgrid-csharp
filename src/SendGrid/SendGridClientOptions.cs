@@ -1,5 +1,5 @@
-﻿// <copyright file="SendGridClientOptions.cs" company="SendGrid">
-// Copyright (c) SendGrid. All rights reserved.
+﻿// <copyright file="SendGridClientOptions.cs" company="Twilio SendGrid">
+// Copyright (c) Twilio SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace SendGrid
 {
     /// <summary>
-    /// Defines the options to use with the SendGrid client
+    /// Defines the options to use with the Twilio SendGrid client
     /// </summary>
     public class SendGridClientOptions
     {
@@ -37,12 +37,12 @@ namespace SendGrid
         }
 
         /// <summary>
-        /// Gets or sets the SendGrid API key
+        /// Gets or sets the Twilio SendGrid API key
         /// </summary>
         public string ApiKey { get; set; }
 
         /// <summary>
-        /// Gets or sets the request headers to use on HttpRequests sent to SendGrid
+        /// Gets or sets the request headers to use on HttpRequests sent to Twilio SendGrid
         /// </summary>
         public Dictionary<string, string> RequestHeaders { get; set; }
 

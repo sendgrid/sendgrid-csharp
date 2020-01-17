@@ -14,7 +14,7 @@ This Docker image contains
 
 Run it in interactive mode with `-it`.
 
-You can mount a repository in the `/mnt/sendgrid-csharp` directory to use it instead of the default SendGrid library.
+You can mount a repository in the `/mnt/sendgrid-csharp` directory to use it instead of the default Twilio SendGrid library.
 
 # Testing
 Testing is easy!  Run the container, then `dotnet test ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp1.0`
