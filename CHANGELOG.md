@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-01-17] Version 9.12.5
+---------------------------
+**Library - Fix**
+- [PR #971](https://github.com/sendgrid/sendgrid-csharp/pull/971): nuget push flag. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+
 [2020-01-17] Version 9.12.4
 ---------------------------
 **Library - Chore**
