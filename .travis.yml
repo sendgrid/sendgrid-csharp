@@ -1,8 +1,8 @@
 language: csharp
-dotnet: 1.0.4
+dotnet: 2.1.803
 solution: SendGrid.sln
 os: linux
-dist: trusty
+dist: bionic
 mono: latest
 sudo: required
 
