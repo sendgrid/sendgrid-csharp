@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-01-26] Version 9.12.6
+---------------------------
+**Library - Fix**
+- [PR #975](https://github.com/sendgrid/sendgrid-csharp/pull/975): update setup to allow strong naming on Travis. Thanks to [@jnyrup](https://github.com/jnyrup)!
+
+
 [2020-01-17] Version 9.12.5
 ---------------------------
 **Library - Fix**
