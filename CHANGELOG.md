@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-02-19] Version 9.12.7
+---------------------------
+**Library - Chore**
+- [PR #936](https://github.com/sendgrid/sendgrid-csharp/pull/936): Fix StyleCop warnings. Thanks to [@akunzai](https://github.com/akunzai)!
+
+
 [2020-01-26] Version 9.12.6
 ---------------------------
 **Library - Fix**
