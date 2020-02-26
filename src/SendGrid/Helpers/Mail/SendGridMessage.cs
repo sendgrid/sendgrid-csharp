@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using SendGrid.Helpers.Mail.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -456,6 +457,11 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddBccs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
         {
+            if (emails.Count == 0)
+            {
+                throw new InvalidOperationException("Sequence contains no elements");
+            }
+
             if (personalization != null)
             {
                 personalization.Bccs.AddRange(emails);
