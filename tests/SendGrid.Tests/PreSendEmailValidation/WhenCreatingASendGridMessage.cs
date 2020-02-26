@@ -29,6 +29,20 @@ namespace SendGrid.Tests.PreSendEmailValidation
         }
 
         [Fact]
+        public void WithAnEmptyListOfCarbonCopiesThenAnExceptionIsThrown()
+        {
+            var sendGridMessage = MailHelper.CreateSingleEmail(new EmailAddress(), new EmailAddress(), string.Empty, string.Empty, string.Empty);
+            Assert.Throws<InvalidOperationException>(() => { sendGridMessage.AddCcs(new List<EmailAddress>()); });
+        }
+
+        [Fact]
+        public void WithANullListOfCarbonCopiesThenAnExceptionIsThrown()
+        {
+            var sendGridMessage = MailHelper.CreateSingleEmail(new EmailAddress(), new EmailAddress(), string.Empty, string.Empty, string.Empty);
+            Assert.Throws<InvalidOperationException>(() => { sendGridMessage.AddCcs(new List<EmailAddress>()); });
+        }
+
+        [Fact]
         public void WithANullCarbonCopyThenAnExceptionIsThrown()
         {
             var sendGridMessage = MailHelper.CreateSingleEmail(new EmailAddress(), new EmailAddress(), string.Empty, string.Empty, string.Empty);
