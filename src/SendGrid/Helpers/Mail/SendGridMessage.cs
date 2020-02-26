@@ -278,8 +278,14 @@ namespace SendGrid.Helpers.Mail
         /// <param name="email">An email recipient that may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the cc email.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the email parameter is null</exception>
         public void AddCc(EmailAddress email, int personalizationIndex = 0, Personalization personalization = null)
         {
+            if (email == null)
+            {
+                throw new ArgumentNullException("email");
+            }
+
             if (personalization != null)
             {
                 personalization.Ccs = personalization.Ccs ?? new List<EmailAddress>();
