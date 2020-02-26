@@ -262,6 +262,7 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         /// <param name="email">Specify the recipient's email.</param>
         /// <param name="name">Specify the recipient's name.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the email parameter is null or whitespace</exception>
         public void AddCc(string email, string name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -278,8 +279,14 @@ namespace SendGrid.Helpers.Mail
         /// <param name="email">An email recipient that may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the cc email.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the email parameter is null</exception>
         public void AddCc(EmailAddress email, int personalizationIndex = 0, Personalization personalization = null)
         {
+            if (email == null)
+            {
+                throw new ArgumentNullException("email");
+            }
+
             if (personalization != null)
             {
                 personalization.Ccs = personalization.Ccs ?? new List<EmailAddress>();
@@ -333,8 +340,20 @@ namespace SendGrid.Helpers.Mail
         /// <param name="emails">A list of cc recipients. Each email object within this array may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the cc emails.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the emails parameter is null</exception>
+        /// <exception cref="System.InvalidOperationException">Thrown when the emails parameter is empty</exception>
         public void AddCcs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
         {
+            if (emails == null)
+            {
+                throw new ArgumentNullException("emails");
+            }
+
+            if (emails.Count == 0)
+            {
+                throw new InvalidOperationException("Sequence contains no elements");
+            }
+
             if (personalization != null)
             {
                 personalization.Ccs.AddRange(emails);
@@ -383,6 +402,7 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         /// <param name="email">Specify the recipient's email.</param>
         /// <param name="name">Specify the recipient's name.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the email parameter is null or whitespace</exception>
         public void AddBcc(string email, string name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -399,8 +419,14 @@ namespace SendGrid.Helpers.Mail
         /// <param name="email">An email recipient that may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the bcc email.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the email parameter is null</exception>
         public void AddBcc(EmailAddress email, int personalizationIndex = 0, Personalization personalization = null)
         {
+            if (email == null)
+            {
+                throw new ArgumentNullException("email");
+            }
+
             if (personalization != null)
             {
                 personalization.Bccs = personalization.Bccs ?? new List<EmailAddress>();
@@ -454,8 +480,20 @@ namespace SendGrid.Helpers.Mail
         /// <param name="emails">A list of bcc recipients. Each email object within this array may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the bcc emails.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the emails parameter is null</exception>
+        /// <exception cref="System.InvalidOperationException">Thrown when the emails parameter is empty</exception>
         public void AddBccs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
         {
+            if (emails == null)
+            {
+                throw new ArgumentNullException("emails");
+            }
+
+            if (emails.Count == 0)
+            {
+                throw new InvalidOperationException("Sequence contains no elements");
+            }
+
             if (personalization != null)
             {
                 personalization.Bccs.AddRange(emails);
