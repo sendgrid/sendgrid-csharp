@@ -20,5 +20,12 @@ namespace SendGrid.Tests.PreSendEmailValidation
             var sendGridMessage = MailHelper.CreateSingleEmail(new EmailAddress(), new EmailAddress(), string.Empty, string.Empty, string.Empty);
             Assert.Throws<ArgumentNullException>(() => { sendGridMessage.AddBccs(null); });
         }
+
+        [Fact]
+        public void WithANullBlindCarbonCopyThenAnExceptionIsThrown()
+        {
+            var sendGridMessage = MailHelper.CreateSingleEmail(new EmailAddress(), new EmailAddress(), string.Empty, string.Empty, string.Empty);
+            Assert.Throws<ArgumentNullException>(() => { sendGridMessage.AddBcc(null, 0); });
+        }
     }
 }
