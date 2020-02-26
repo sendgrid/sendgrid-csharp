@@ -457,6 +457,11 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddBccs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
         {
+            if (emails == null)
+            {
+                throw new ArgumentNullException("emails");
+            }
+
             if (emails.Count == 0)
             {
                 throw new InvalidOperationException("Sequence contains no elements");
