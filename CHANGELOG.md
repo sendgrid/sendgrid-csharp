@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-03-04] Version 9.13.0
+---------------------------
+**Library - Feature**
+- [PR #981](https://github.com/sendgrid/sendgrid-csharp/pull/981): sanity-check email address and address lists when adding to a message. Thanks to [@indy-singh](https://github.com/indy-singh)!
+
+
 [2020-02-19] Version 9.12.7
 ---------------------------
 **Library - Chore**
