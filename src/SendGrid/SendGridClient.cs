@@ -228,7 +228,12 @@ namespace SendGrid
                 RequestUri = new Uri(baseAddress, this.BuildUrl(urlPath, queryParams)),
                 Content = requestBody == null ? null : new StringContent(requestBody, Encoding.UTF8, this.MediaType)
             };
-            request.Content.Headers.ContentType.CharSet = null;
+
+            // Drop the default UTF-8 content type charset for JSON payloads since some APIs may not accept it.
+            if (request.Content != null && this.MediaType == DefaultMediaType)
+            {
+                request.Content.Headers.ContentType.CharSet = null;
+            }
 
             // set header overrides
             if (this.options.RequestHeaders?.Count > 0)
