@@ -227,6 +227,12 @@ namespace SendGrid
                 Content = requestBody == null ? null : new StringContent(requestBody, Encoding.UTF8, this.MediaType),
             };
 
+            // Drop the default UTF-8 content type charset for JSON payloads since some APIs may not accept it.
+            if (request.Content != null && this.MediaType == DefaultMediaType)
+            {
+                request.Content.Headers.ContentType.CharSet = null;
+            }
+
             // set header overrides
             if (this.options.RequestHeaders?.Count > 0)
             {
