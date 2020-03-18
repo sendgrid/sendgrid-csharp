@@ -1,6 +1,15 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-03-18] Version 9.13.1
+---------------------------
+**Library - Docs**
+- [PR #983](https://github.com/sendgrid/sendgrid-csharp/pull/983): Fix CC being added as BCC in csharp sample. Thanks to [@o-farooq](https://github.com/o-farooq)!
+
+**Library - Fix**
+- [PR #967](https://github.com/sendgrid/sendgrid-csharp/pull/967): Remove char set from content headers for JSON payloads. Thanks to [@marius-stanescu](https://github.com/marius-stanescu)!
+
+
 [2020-03-04] Version 9.13.0
 ---------------------------
 **Library - Feature**
