@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-04-01] Version 9.13.2
+---------------------------
+**Library - Docs**
+- [PR #989](https://github.com/sendgrid/sendgrid-csharp/pull/989): support verbiage for login issues. Thanks to [@adamchasetaylor](https://github.com/adamchasetaylor)!
+
+
 [2020-03-18] Version 9.13.1
 ---------------------------
 **Library - Docs**
