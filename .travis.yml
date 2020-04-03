@@ -20,9 +20,9 @@ before_script:
 
 script:
   - make release
-  
+
 after_success:
-  - bash <(curl -s https://codecov.io/bash)  
+  - bash <(curl -s https://codecov.io/bash)
 
 deploy:
   skip_cleanup: true
@@ -31,3 +31,11 @@ deploy:
   on:
     branch: master
     tags: true
+
+notifications:
+  slack:
+    if: branch = master
+    on_success: never
+    on_failure: change
+    rooms:
+      - secure: RdE/BGwjr4B5GktjANWdZx2hRcY5GQNQGN9+NxeJ86K2wkTRsQUpPDSj7jXHHUcD9jz+OJHrwWR5Zbun48wE3nD1O/PDs6QNOvYo/isn6PWKGUq6g2XjACPxM34UDRbrma9hGOJTtuEnar64glZEh6xk31bWCpqg/vVxxg/XhWQ=
