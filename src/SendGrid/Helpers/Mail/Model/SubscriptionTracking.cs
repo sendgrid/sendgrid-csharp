@@ -20,13 +20,13 @@ namespace SendGrid.Helpers.Mail
         public bool Enable { get; set; }
 
         /// <summary>
-        /// Gets or sets the text to be appended to the email, with the subscription tracking link. You may control where the link is by using the tag (percent symbol) (percent symbol)
+        /// Gets or sets the text to be appended to the email, with the subscription tracking link. You may control where the link is by using the tag (percent symbol) (percent symbol).
         /// </summary>
         [JsonProperty(PropertyName = "text")]
         public string Text { get; set; }
 
         /// <summary>
-        /// Gets or sets the HTML to be appended to the email, with the subscription tracking link. You may control where the link is by using the tag (percent symbol) (percent symbol)
+        /// Gets or sets the HTML to be appended to the email, with the subscription tracking link. You may control where the link is by using the tag (percent symbol) (percent symbol).
         /// </summary>
         [JsonProperty(PropertyName = "html")]
         public string Html { get; set; }
