@@ -6131,11 +6131,11 @@
         [InlineData("<username@example.com>", "", "username@example.com")]
         [InlineData("username@example.com", "", "username@example.com")]
         [InlineData("username@example.com <username@example.com>", "username@example.com", "username@example.com")]
-        public void TestStringToEmailAddress(string Input, string ExpectedName, string ExpectedEmailAddress)
+        public void TestStringToEmailAddress(string input, string expectedName, string expectedEmailAddress)
         {
-            var actual = MailHelper.StringToEmailAddress(Input);
+            var actual = MailHelper.StringToEmailAddress(input);
 
-            Assert.True(actual.Name == ExpectedName && actual.Email == ExpectedEmailAddress);
+            Assert.True(actual.Name == expectedName && actual.Email == expectedEmailAddress);
         }
         
         /// <summary>
