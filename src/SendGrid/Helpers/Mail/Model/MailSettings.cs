@@ -33,7 +33,7 @@ namespace SendGrid.Helpers.Mail
 
         /// <summary>
         /// Gets or sets the ability to send a test email to ensure that your request body is valid and formatted correctly. For more information, please see our Classroom.
-        /// https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/sandbox_mode.html
+        /// https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/sandbox_mode.html.
         /// </summary>
         [JsonProperty(PropertyName = "sandbox_mode")]
         public SandboxMode SandboxMode { get; set; }

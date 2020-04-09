@@ -38,7 +38,7 @@ namespace SendGrid.ASPSamples
 
             if (!string.IsNullOrWhiteSpace(contract.CcEmailAddress))
             {
-                emailMessage.AddBcc(new EmailAddress(contract.CcEmailAddress));
+                emailMessage.AddCc(new EmailAddress(contract.CcEmailAddress));
             }
 
             return ProcessResponse(_client.SendEmailAsync(emailMessage).Result);

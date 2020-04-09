@@ -8,7 +8,7 @@ using System;
 namespace SendGrid.Helpers.Reliability
 {
     /// <summary>
-    /// Defines the reliability settings to use on HTTP requests
+    /// Defines the reliability settings to use on HTTP requests.
     /// </summary>
     public class ReliabilitySettings
     {
@@ -23,10 +23,10 @@ namespace SendGrid.Helpers.Reliability
         /// <summary>
         /// Initializes a new instance of the <see cref="ReliabilitySettings"/> class.
         /// </summary>
-        /// <param name="maximumNumberOfRetries">The maximum number of retries to execute against when sending an HTTP Request before throwing an exception</param>
-        /// <param name="minimumBackoff">The minimum amount of time to wait between between HTTP retries</param>
-        /// <param name="maximumBackOff">the maximum amount of time to wait between between HTTP retries</param>
-        /// <param name="deltaBackOff">the value that will be used to calculate a random delta in the exponential delay between retries</param>
+        /// <param name="maximumNumberOfRetries">The maximum number of retries to execute against when sending an HTTP Request before throwing an exception.</param>
+        /// <param name="minimumBackoff">The minimum amount of time to wait between between HTTP retries.</param>
+        /// <param name="maximumBackOff">the maximum amount of time to wait between between HTTP retries.</param>
+        /// <param name="deltaBackOff">the value that will be used to calculate a random delta in the exponential delay between retries.</param>
         public ReliabilitySettings(int maximumNumberOfRetries, TimeSpan minimumBackoff, TimeSpan maximumBackOff, TimeSpan deltaBackOff)
         {
             if (maximumNumberOfRetries < 0)
@@ -71,22 +71,22 @@ namespace SendGrid.Helpers.Reliability
         }
 
         /// <summary>
-        ///     Gets the maximum number of retries to execute against when sending an HTTP Request before throwing an exception. Defaults to 0 (no retries, you must explicitly enable)
+        /// Gets the maximum number of retries to execute against when sending an HTTP Request before throwing an exception. Defaults to 0 (no retries, you must explicitly enable).
         /// </summary>
         public int MaximumNumberOfRetries { get; }
 
         /// <summary>
-        /// Gets the minimum amount of time to wait between between HTTP retries. Defaults to 1 second
+        /// Gets the minimum amount of time to wait between between HTTP retries. Defaults to 1 second.
         /// </summary>
         public TimeSpan MinimumBackOff { get; }
 
         /// <summary>
-        /// Gets the maximum amount of time to wait between between HTTP retries. Defaults to 10 seconds
+        /// Gets the maximum amount of time to wait between between HTTP retries. Defaults to 10 seconds.
         /// </summary>
         public TimeSpan MaximumBackOff { get; }
 
         /// <summary>
-        /// Gets the value that will be used to calculate a random delta in the exponential delay between retries. Defaults to 1 second
+        /// Gets the value that will be used to calculate a random delta in the exponential delay between retries. Defaults to 1 second.
         /// </summary>
         public TimeSpan DeltaBackOff { get; }
     }

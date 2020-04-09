@@ -1,7 +1,75 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
-## [9.12.0] - 2019-08-15
+[2020-04-01] Version 9.13.2
+---------------------------
+**Library - Docs**
+- [PR #989](https://github.com/sendgrid/sendgrid-csharp/pull/989): support verbiage for login issues. Thanks to [@adamchasetaylor](https://github.com/adamchasetaylor)!
+
+
+[2020-03-18] Version 9.13.1
+---------------------------
+**Library - Docs**
+- [PR #983](https://github.com/sendgrid/sendgrid-csharp/pull/983): Fix CC being added as BCC in csharp sample. Thanks to [@o-farooq](https://github.com/o-farooq)!
+
+**Library - Fix**
+- [PR #967](https://github.com/sendgrid/sendgrid-csharp/pull/967): Remove char set from content headers for JSON payloads. Thanks to [@marius-stanescu](https://github.com/marius-stanescu)!
+
+
+[2020-03-04] Version 9.13.0
+---------------------------
+**Library - Feature**
+- [PR #981](https://github.com/sendgrid/sendgrid-csharp/pull/981): sanity-check email address and address lists when adding to a message. Thanks to [@indy-singh](https://github.com/indy-singh)!
+
+
+[2020-02-19] Version 9.12.7
+---------------------------
+**Library - Chore**
+- [PR #936](https://github.com/sendgrid/sendgrid-csharp/pull/936): Fix StyleCop warnings. Thanks to [@akunzai](https://github.com/akunzai)!
+
+
+[2020-01-26] Version 9.12.6
+---------------------------
+**Library - Fix**
+- [PR #975](https://github.com/sendgrid/sendgrid-csharp/pull/975): update setup to allow strong naming on Travis. Thanks to [@jnyrup](https://github.com/jnyrup)!
+
+
+[2020-01-17] Version 9.12.5
+---------------------------
+**Library - Fix**
+- [PR #971](https://github.com/sendgrid/sendgrid-csharp/pull/971): nuget push flag. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+
+[2020-01-17] Version 9.12.4
+---------------------------
+**Library - Chore**
+- [PR #970](https://github.com/sendgrid/sendgrid-csharp/pull/970): update travis build command. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+
+[2020-01-17] Version 9.12.3
+---------------------------
+**Library - Chore**
+- [PR #969](https://github.com/sendgrid/sendgrid-csharp/pull/969): fix travis path for automated deploy. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+
+[2020-01-17] Version 9.12.2
+---------------------------
+**Library - Chore**
+- [PR #966](https://github.com/sendgrid/sendgrid-csharp/pull/966): deploy command needs a source URL. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+
+[2020-01-16] Version 9.12.1
+---------------------------
+**Library - Chore**
+- [PR #965](https://github.com/sendgrid/sendgrid-csharp/pull/965): prep the repo for automated releasing. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+- [PR #753](https://github.com/sendgrid/sendgrid-csharp/pull/753): Adds deploy phase that deploys to NuGet. Thanks to [@Gimly](https://github.com/Gimly)!
+
+**Library - Docs**
+- [PR #764](https://github.com/sendgrid/sendgrid-csharp/pull/764): Update documentation for retrieving all templates. Thanks to [@tony-ho](https://github.com/tony-ho)!
+
+
+[2019-08-15] Version 9.12.0
+---------------------------
 - [PR #892](https://github.com/sendgrid/sendgrid-csharp/pull/892) Replace nuspec and AssemblyInfo with csproj. Big thanks to [Jonas Nyrup](https://github.com/jnyrup) for the PR!
 - [PR #876](https://github.com/sendgrid/sendgrid-csharp/pull/876) Add `EmailAddress` attribute. Big thanks to [Jonathan](https://github.com/vanillajonathan) for the PR!
 - [PR #839](https://github.com/sendgrid/sendgrid-csharp/pull/839) Refactored SendGridClient to support inject external managed HttpClient. Big thanks to [Charley Wu](https://github.com/akunzai) for the PR!

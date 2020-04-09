@@ -38,7 +38,7 @@ namespace SendGrid.Helpers.Mail
         public string Disposition { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique id that you specify for the attachment. This is used when the disposition is set to "inline" and the attachment is an image, allowing the file to be displayed within the body of your email. Ex: <img src="cid:ii_139db99fdb5c3704"></img>
+        /// Gets or sets a unique id that you specify for the attachment. This is used when the disposition is set to "inline" and the attachment is an image, allowing the file to be displayed within the body of your email. Ex: <img src="cid:ii_139db99fdb5c3704"></img>.
         /// </summary>
         [JsonProperty(PropertyName = "content_id")]
         public string ContentId { get; set; }
