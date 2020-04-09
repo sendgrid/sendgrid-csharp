@@ -6126,6 +6126,18 @@
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
         }
 
+        [Theory]
+        [InlineData("first last <username@example.com>", "first last", "username@example.com")]
+        [InlineData("<username@example.com>", "", "username@example.com")]
+        [InlineData("username@example.com", "", "username@example.com")]
+        [InlineData("username@example.com <username@example.com>", "username@example.com", "username@example.com")]
+        public void TestStringToEmailAddress(string input, string expectedName, string expectedEmailAddress)
+        {
+            var actual = MailHelper.StringToEmailAddress(input);
+
+            Assert.True(actual.Name == expectedName && actual.Email == expectedEmailAddress);
+        }
+        
         /// <summary>
         /// Tests the conditions in issue #670.
         /// </summary>
