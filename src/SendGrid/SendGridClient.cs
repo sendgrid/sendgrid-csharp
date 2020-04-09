@@ -111,6 +111,12 @@ namespace SendGrid
         public SendGridClient(HttpClient httpClient, SendGridClientOptions options)
         {
             this.options = options ?? throw new ArgumentNullException(nameof(options));
+
+            if (string.IsNullOrWhiteSpace(options.ApiKey))
+            {
+                throw new ArgumentNullException(nameof(options.ApiKey));
+            }
+
             this.client = httpClient ?? CreateHttpClientWithRetryHandler();
             if (this.options.RequestHeaders != null && this.options.RequestHeaders.TryGetValue(ContentType, out var contentType))
             {
