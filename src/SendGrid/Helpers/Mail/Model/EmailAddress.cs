@@ -1,4 +1,4 @@
-﻿// <copyright file="EmailAddress.cs" company="Twilio SendGrid">
+// <copyright file="EmailAddress.cs" company="Twilio SendGrid">
 // Copyright (c) Twilio SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -52,7 +52,7 @@ namespace SendGrid.Helpers.Mail
         /// <returns>True if equal, false if not.</returns>
         public static bool operator ==(EmailAddress left, EmailAddress right)
         {
-            if (left == null && right == null)
+            if (left is null && right is null)
             {
                 return true;
             }
@@ -88,7 +88,7 @@ namespace SendGrid.Helpers.Mail
                 return true;
             }
 
-            return string.Equals(this.Name, other.Name) && string.Equals(this.Email, other.Email);
+            return string.Equals(this.Email, other.Email, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace SendGrid.Helpers.Mail
                 return false;
             }
 
-            return this.Equals((EmailAddress) obj);
+            return this.Equals((EmailAddress)obj);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace SendGrid.Helpers.Mail
         {
             unchecked
             {
-                return ((this.Name != null ? this.Name.GetHashCode() : 0) * 397) ^ (this.Email != null ? this.Email.GetHashCode() : 0);
+                return (this.Email != null ? this.Email.ToLower().GetHashCode() : 0);
             }
         }
     }
