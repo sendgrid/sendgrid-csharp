@@ -1242,6 +1242,21 @@
         }
 
         [Fact]
+        public void TestAddDuplicateEmails()
+        {
+            var msg = new SendGridMessage();
+            var emails = new List<EmailAddress>
+            {
+                new EmailAddress("user1@example.com", "example user"),
+                new EmailAddress("USER1@EXAMPLE.COM", "EXAMPLE USER")
+            };
+            msg.AddTos(emails);
+            msg.AddCcs(emails);
+            msg.AddBccs(emails);
+            Assert.Equal(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"example user\",\"email\":\"user1@example.com\"}],\"cc\":[{\"name\":\"example user\",\"email\":\"user1@example.com\"}],\"bcc\":[{\"name\":\"example user\",\"email\":\"user1@example.com\"}]}]}");
+        }
+
+        [Fact]
         public void TestSetSubject()
         {
             // Personalization not passed in, Personalization does not exist
@@ -6137,7 +6152,7 @@
 
             Assert.True(actual.Name == expectedName && actual.Email == expectedEmailAddress);
         }
-        
+
         /// <summary>
         /// Tests the conditions in issue #670.
         /// </summary>
