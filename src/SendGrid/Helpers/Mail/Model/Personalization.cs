@@ -19,18 +19,21 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets an array of recipients. Each email object within this array may contain the recipient’s name, but must always contain the recipient’s email.
         /// </summary>
         [JsonProperty(PropertyName = "to", IsReference = false)]
+        [JsonConverter(typeof(RemoveDuplicatesConverter<EmailAddress>))]
         public List<EmailAddress> Tos { get; set; }
 
         /// <summary>
         /// Gets or sets an array of recipients who will receive a copy of your email. Each email object within this array may contain the recipient’s name, but must always contain the recipient’s email.
         /// </summary>
         [JsonProperty(PropertyName = "cc", IsReference = false)]
+        [JsonConverter(typeof(RemoveDuplicatesConverter<EmailAddress>))]
         public List<EmailAddress> Ccs { get; set; }
 
         /// <summary>
         /// Gets or sets an array of recipients who will receive a blind carbon copy of your email. Each email object within this array may contain the recipient’s name, but must always contain the recipient’s email.
         /// </summary>
         [JsonProperty(PropertyName = "bcc", IsReference = false)]
+        [JsonConverter(typeof(RemoveDuplicatesConverter<EmailAddress>))]
         public List<EmailAddress> Bccs { get; set; }
 
         /// <summary>
