@@ -1,6 +1,20 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-04-15] Version 9.14.0
+---------------------------
+**Library - Feature**
+- [PR #991](https://github.com/sendgrid/sendgrid-csharp/pull/991): ignore duplicate email addresses when serializing the message. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #905](https://github.com/sendgrid/sendgrid-csharp/pull/905): Implement IEquatable in EmailAddress. Thanks to [@aevitas](https://github.com/aevitas)!
+
+**Library - Fix**
+- [PR #924](https://github.com/sendgrid/sendgrid-csharp/pull/924): validate API key is non-empty. Thanks to [@aevitas](https://github.com/aevitas)!
+- [PR #903](https://github.com/sendgrid/sendgrid-csharp/pull/903): handle @ in display name when using MailHelper.StringToEmailAddress. Thanks to [@Fieora](https://github.com/Fieora)!
+
+**Library - Docs**
+- [PR #990](https://github.com/sendgrid/sendgrid-csharp/pull/990): baseline all the templated markdown docs. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+
 [2020-04-01] Version 9.13.2
 ---------------------------
 **Library - Docs**
