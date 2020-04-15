@@ -44,12 +44,12 @@
         {
             if (Environment.GetEnvironmentVariable("TRAVIS") != "true")
             {
-                process.Kill();              
+                process.Kill();
                 Trace.WriteLine("Shutting Down Prism");
             }
         }
 
-        public string apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
+        public string apiKey = "SG.12345678901234567890123456789012";
         public string host = "http://localhost:4010";
         public Process process = new Process();
     }
@@ -318,7 +318,7 @@
             msg.AddAttachments(attachments);
             msg.SetTemplateId("13b8f94f-bcae-4ec6-b752-70d6cb59f932");
             msg.AddGlobalHeader("X-Day", "Monday");
-            var globalHeaders = new Dictionary<string, string> {{"X-Month", "January"}, {"X-Year", "2017"}};
+            var globalHeaders = new Dictionary<string, string> { { "X-Month", "January" }, { "X-Year", "2017" } };
             msg.AddGlobalHeaders(globalHeaders);
             msg.AddSection("%section1", "Substitution for Section 1 Tag");
             var sections = new Dictionary<string, string>
@@ -328,10 +328,10 @@
             };
             msg.AddSections(sections);
             msg.AddCategory("customer");
-            var categories = new List<string> {"vip", "new_account"};
+            var categories = new List<string> { "vip", "new_account" };
             msg.AddCategories(categories);
             msg.AddGlobalCustomArg("campaign", "welcome");
-            var globalCustomArgs = new Dictionary<string, string> {{"sequence2", "2"}, {"sequence3", "3"}};
+            var globalCustomArgs = new Dictionary<string, string> { { "sequence2", "2" }, { "sequence3", "3" } };
             msg.AddGlobalCustomArgs(globalCustomArgs);
             msg.SetAsm(3, new List<int>() { 1, 4, 5 });
             msg.SetGlobalSendAt(1461775051);
@@ -517,7 +517,7 @@
                 new EmailAddress("test2@example.com"),
                 new EmailAddress("test3@example.com")
             };
-            var subjects = new List<string> {"Test Subject1", "Test Subject2", "Test Subject3"};
+            var subjects = new List<string> { "Test Subject1", "Test Subject2", "Test Subject3" };
             var plainTextContent = "Hello -name-";
             var htmlContent = "Goodbye -name-";
             var substitutions = new List<Dictionary<string, string>>
@@ -679,7 +679,7 @@
         public void TestAddToArgumentNullExceptionIfNullEmailAddressIsSupplied()
         {
             var msg = new SendGridMessage();
-            Assert.Throws<ArgumentNullException>(()=> msg.AddTo(null, "Example User"));
+            Assert.Throws<ArgumentNullException>(() => msg.AddTo(null, "Example User"));
         }
 
         [Fact]
@@ -1242,6 +1242,21 @@
         }
 
         [Fact]
+        public void TestAddDuplicateEmails()
+        {
+            var msg = new SendGridMessage();
+            var emails = new List<EmailAddress>
+            {
+                new EmailAddress("user1@example.com", "example user"),
+                new EmailAddress("USER1@EXAMPLE.COM", "EXAMPLE USER")
+            };
+            msg.AddTos(emails);
+            msg.AddCcs(emails);
+            msg.AddBccs(emails);
+            Assert.Equal(msg.Serialize(), "{\"personalizations\":[{\"to\":[{\"name\":\"example user\",\"email\":\"user1@example.com\"}],\"cc\":[{\"name\":\"example user\",\"email\":\"user1@example.com\"}],\"bcc\":[{\"name\":\"example user\",\"email\":\"user1@example.com\"}]}]}");
+        }
+
+        [Fact]
         public void TestSetSubject()
         {
             // Personalization not passed in, Personalization does not exist
@@ -1396,65 +1411,65 @@
         {
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
-            var headers = new Dictionary<string, string> {{"X-Test1", "Test Value 1"}, {"X-Test2", "Test Value 2"}};
+            var headers = new Dictionary<string, string> { { "X-Test1", "Test Value 1" }, { "X-Test2", "Test Value 2" } };
             msg.AddHeaders(headers);
             Assert.True(msg.Serialize() == "{\"personalizations\":[{\"headers\":{\"X-Test1\":\"Test Value 1\",\"X-Test2\":\"Test Value 2\"}}]}");
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
-            headers = new Dictionary<string, string> {{"X-Test3", "Test Value 3"}, {"X-Test4", "Test Value 4"}};
+            headers = new Dictionary<string, string> { { "X-Test3", "Test Value 3" }, { "X-Test4", "Test Value 4" } };
             var personalization = new Personalization()
             {
                 Headers = headers
             };
-            headers = new Dictionary<string, string> {{"X-Test5", "Test Value 5"}, {"X-Test6", "Test Value 6"}};
+            headers = new Dictionary<string, string> { { "X-Test5", "Test Value 5" }, { "X-Test6", "Test Value 6" } };
             msg.AddHeaders(headers, 0, personalization);
             Assert.True(msg.Serialize() == "{\"personalizations\":[{\"headers\":{\"X-Test3\":\"Test Value 3\",\"X-Test4\":\"Test Value 4\",\"X-Test5\":\"Test Value 5\",\"X-Test6\":\"Test Value 6\"}}]}");
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
-            headers = new Dictionary<string, string> {{"X-Test7", "Test Value 7"}, {"X-Test8", "Test Value 8"}};
+            headers = new Dictionary<string, string> { { "X-Test7", "Test Value 7" }, { "X-Test8", "Test Value 8" } };
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Headers = headers
                 }
             };
-            headers = new Dictionary<string, string> {{"X-Test9", "Test Value 9"}, {"X-Test10", "Test Value 10"}};
+            headers = new Dictionary<string, string> { { "X-Test9", "Test Value 9" }, { "X-Test10", "Test Value 10" } };
             personalization = new Personalization()
             {
                 Headers = headers
             };
-            headers = new Dictionary<string, string> {{"X-Test11", "Test Value 11"}, {"X-Test12", "Test Value 12"}};
+            headers = new Dictionary<string, string> { { "X-Test11", "Test Value 11" }, { "X-Test12", "Test Value 12" } };
             msg.AddHeaders(headers, 1, personalization);
             Assert.True(msg.Serialize() == "{\"personalizations\":[{\"headers\":{\"X-Test7\":\"Test Value 7\",\"X-Test8\":\"Test Value 8\"}},{\"headers\":{\"X-Test9\":\"Test Value 9\",\"X-Test10\":\"Test Value 10\",\"X-Test11\":\"Test Value 11\",\"X-Test12\":\"Test Value 12\"}}]}");
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
-            headers = new Dictionary<string, string> {{"X-Test13", "Test Value 13"}, {"X-Test14", "Test Value 14"}};
+            headers = new Dictionary<string, string> { { "X-Test13", "Test Value 13" }, { "X-Test14", "Test Value 14" } };
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Headers = headers
                 }
             };
-            headers = new Dictionary<string, string> {{"X-Test15", "Test Value 15"}, {"X-Test16", "Test Value 16"}};
+            headers = new Dictionary<string, string> { { "X-Test15", "Test Value 15" }, { "X-Test16", "Test Value 16" } };
             msg.AddHeaders(headers);
             Assert.True(msg.Serialize() == "{\"personalizations\":[{\"headers\":{\"X-Test13\":\"Test Value 13\",\"X-Test14\":\"Test Value 14\",\"X-Test15\":\"Test Value 15\",\"X-Test16\":\"Test Value 16\"}}]}");
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
-            headers = new Dictionary<string, string> {{"X-Test17", "Test Value 17"}, {"X-Test18", "Test Value 18"}};
+            headers = new Dictionary<string, string> { { "X-Test17", "Test Value 17" }, { "X-Test18", "Test Value 18" } };
             msg.Personalizations = new List<Personalization>() {
                 new Personalization() {
                     Headers = headers
                 }
             };
-            headers = new Dictionary<string, string> {{"X-Test19", "Test Value 19"}, {"X-Test20", "Test Value 20"}};
+            headers = new Dictionary<string, string> { { "X-Test19", "Test Value 19" }, { "X-Test20", "Test Value 20" } };
             personalization = new Personalization()
             {
                 Headers = headers
             };
             msg.Personalizations.Add(personalization);
-            headers = new Dictionary<string, string> {{"X-Test21", "Test Value 21"}, {"X-Test22", "Test Value 22"}};
+            headers = new Dictionary<string, string> { { "X-Test21", "Test Value 21" }, { "X-Test22", "Test Value 22" } };
             msg.AddHeaders(headers);
             Assert.True(msg.Serialize() == "{\"personalizations\":[{\"headers\":{\"X-Test17\":\"Test Value 17\",\"X-Test18\":\"Test Value 18\",\"X-Test21\":\"Test Value 21\",\"X-Test22\":\"Test Value 22\"}},{\"headers\":{\"X-Test19\":\"Test Value 19\",\"X-Test20\":\"Test Value 20\"}}]}");
         }
@@ -2066,14 +2081,14 @@
         public void TestSetFromArgumentNullExceptionIfNullEmailAddressIsSupplied()
         {
             var msg = new SendGridMessage();
-            Assert.Throws<ArgumentNullException>(()=> msg.SetFrom(null, "Example User"));
+            Assert.Throws<ArgumentNullException>(() => msg.SetFrom(null, "Example User"));
         }
 
         [Fact]
         public void TestSetFromArgumentEmptyExceptionIfEmptyEmailAddressIsSupplied()
         {
             var msg = new SendGridMessage();
-            Assert.Throws<ArgumentNullException>(()=> msg.SetFrom(string.Empty, "Example User"));
+            Assert.Throws<ArgumentNullException>(() => msg.SetFrom(string.Empty, "Example User"));
         }
 
 
@@ -2081,7 +2096,7 @@
         public void TestSetFromWithOutEmailAddressObject()
         {
             var msg = new SendGridMessage();
-            msg.SetFrom("test1@example.com","Test User1");
+            msg.SetFrom("test1@example.com", "Test User1");
             Assert.True(msg.Serialize() == "{\"from\":{\"name\":\"Test User1\",\"email\":\"test1@example.com\"}}");
 
             msg = new SendGridMessage();
@@ -2146,7 +2161,7 @@
                 Type = MimeType.Html,
                 Value = "content3"
             };
-            msg.Contents = new List<Content> {content};
+            msg.Contents = new List<Content> { content };
             msg.AddContent(MimeType.Text, "content6");
             Assert.True(msg.Serialize() == "{\"content\":[{\"type\":\"text/plain\",\"value\":\"content6\"},{\"type\":\"text/html\",\"value\":\"content3\"}]}");
         }
@@ -2219,7 +2234,7 @@
                 Type = MimeType.Html,
                 Value = "content7"
             };
-            msg.Contents = new List<Content> {content};
+            msg.Contents = new List<Content> { content };
             contents = new List<Content>();
             content = new Content()
             {
@@ -2255,7 +2270,7 @@
                 Disposition = "inline",
                 ContentId = "id2"
             };
-            msg.Attachments = new List<Attachment> {attachment};
+            msg.Attachments = new List<Attachment> { attachment };
             msg.AddAttachment("filename3", "base64content3", "jpg", "inline", "id3");
             Assert.True(msg.Serialize() == "{\"attachments\":[{\"content\":\"base64content2\",\"type\":\"jpg\",\"filename\":\"filename2\",\"disposition\":\"inline\",\"content_id\":\"id2\"},{\"content\":\"base64content3\",\"type\":\"jpg\",\"filename\":\"filename3\",\"disposition\":\"inline\",\"content_id\":\"id3\"}]}");
         }
@@ -2297,7 +2312,7 @@
                 Disposition = "inline",
                 ContentId = "id6"
             };
-            msg.Attachments = new List<Attachment> {attachment};
+            msg.Attachments = new List<Attachment> { attachment };
             attachments = new List<Attachment>();
             attachment = new Attachment()
             {
@@ -2413,7 +2428,7 @@
             Assert.True(msg.Serialize() == "{\"categories\":[\"category1\",\"category2\"]}");
 
             //Categories object exists
-            msg = new SendGridMessage {Categories = new List<string> {"category3"}};
+            msg = new SendGridMessage { Categories = new List<string> { "category3" } };
             msg.AddCategory("category4");
             Assert.True(msg.Serialize() == "{\"categories\":[\"category3\",\"category4\"]}");
         }
@@ -2423,13 +2438,13 @@
         {
             //Categories object does not exist
             var msg = new SendGridMessage();
-            var categories = new List<string> {"category5", "category6"};
+            var categories = new List<string> { "category5", "category6" };
             msg.AddCategories(categories);
             Assert.True(msg.Serialize() == "{\"categories\":[\"category5\",\"category6\"]}");
 
             //Categories object exists
-            msg = new SendGridMessage {Categories = new List<string> {"category7", "category8"}};
-            categories = new List<string> {"category9", "category10"};
+            msg = new SendGridMessage { Categories = new List<string> { "category7", "category8" } };
+            categories = new List<string> { "category9", "category10" };
             msg.AddCategories(categories);
             Assert.True(msg.Serialize() == "{\"categories\":[\"category7\",\"category8\",\"category9\",\"category10\"]}");
         }
@@ -2732,7 +2747,7 @@
 
         [Fact]
         public async Task TestAccessSettingsWhitelistPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -2756,7 +2771,7 @@
 
         [Fact]
         public async Task TestAccessSettingsWhitelistGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "access_settings/whitelist");
@@ -2765,7 +2780,7 @@
 
         [Fact]
         public async Task TestAccessSettingsWhitelistDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -2784,7 +2799,7 @@
         [Fact]
         public async Task TestAccessSettingsWhitelistRuleIdGet()
         {
-            
+
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var rule_id = "test_url_param";
@@ -2794,7 +2809,7 @@
 
         [Fact]
         public async Task TestAccessSettingsWhitelistRuleIdDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var rule_id = "test_url_param";
@@ -2804,7 +2819,7 @@
 
         [Fact]
         public async Task TestAlertsPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -2820,7 +2835,7 @@
 
         [Fact]
         public async Task TestAlertsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "alerts");
@@ -2829,7 +2844,7 @@
 
         [Fact]
         public async Task TestAlertsAlertIdPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -2844,7 +2859,7 @@
 
         [Fact]
         public async Task TestAlertsAlertIdGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var alert_id = "test_url_param";
@@ -2854,7 +2869,7 @@
 
         [Fact]
         public async Task TestAlertsAlertIdDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var alert_id = "test_url_param";
@@ -2864,7 +2879,7 @@
 
         [Fact]
         public async Task TestApiKeysPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -2884,7 +2899,7 @@
 
         [Fact]
         public async Task TestApiKeysGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -2896,7 +2911,7 @@
 
         [Fact]
         public async Task TestApiKeysApiKeyIdPut()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -2915,7 +2930,7 @@
 
         [Fact]
         public async Task TestApiKeysApiKeyIdPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -2930,7 +2945,7 @@
 
         [Fact]
         public async Task TestApiKeysApiKeyIdGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var api_key_id = "test_url_param";
@@ -2940,7 +2955,7 @@
 
         [Fact]
         public async Task TestApiKeysApiKeyIdDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var api_key_id = "test_url_param";
@@ -2950,7 +2965,7 @@
 
         [Fact]
         public async Task TestAsmGroupsPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -2966,7 +2981,7 @@
 
         [Fact]
         public async Task TestAsmGroupsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -2978,7 +2993,7 @@
 
         [Fact]
         public async Task TestAsmGroupsGroupIdPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -2995,7 +3010,7 @@
 
         [Fact]
         public async Task TestAsmGroupsGroupIdGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var group_id = "test_url_param";
@@ -3005,7 +3020,7 @@
 
         [Fact]
         public async Task TestAsmGroupsGroupIdDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var group_id = "test_url_param";
@@ -3015,7 +3030,7 @@
 
         [Fact]
         public async Task TestAsmGroupsGroupIdSuppressionsPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -3033,7 +3048,7 @@
 
         [Fact]
         public async Task TestAsmGroupsGroupIdSuppressionsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var group_id = "test_url_param";
@@ -3043,7 +3058,7 @@
 
         [Fact]
         public async Task TestAsmGroupsGroupIdSuppressionsSearchPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -3062,7 +3077,7 @@
 
         [Fact]
         public async Task TestAsmGroupsGroupIdSuppressionsEmailDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var group_id = "test_url_param";
@@ -3073,7 +3088,7 @@
 
         [Fact]
         public async Task TestAsmSuppressionsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "asm/suppressions");
@@ -3082,7 +3097,7 @@
 
         [Fact]
         public async Task TestAsmSuppressionsGlobalPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -3099,7 +3114,7 @@
 
         [Fact]
         public async Task TestAsmSuppressionsGlobalEmailGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
@@ -3109,7 +3124,7 @@
 
         [Fact]
         public async Task TestAsmSuppressionsGlobalEmailDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
@@ -3119,7 +3134,7 @@
 
         [Fact]
         public async Task TestAsmSuppressionsEmailGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
@@ -3129,7 +3144,7 @@
 
         [Fact]
         public async Task TestBrowsersStatsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -3146,7 +3161,7 @@
 
         [Fact]
         public async Task TestCampaignsPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -3177,7 +3192,7 @@
 
         [Fact]
         public async Task TestCampaignsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -3190,7 +3205,7 @@
 
         [Fact]
         public async Task TestCampaignsCampaignIdPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -3211,7 +3226,7 @@
 
         [Fact]
         public async Task TestCampaignsCampaignIdGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var campaign_id = "test_url_param";
@@ -3221,7 +3236,7 @@
 
         [Fact]
         public async Task TestCampaignsCampaignIdDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var campaign_id = "test_url_param";
@@ -3231,7 +3246,7 @@
 
         [Fact]
         public async Task TestCampaignsCampaignIdSchedulesPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -3246,7 +3261,7 @@
 
         [Fact]
         public async Task TestCampaignsCampaignIdSchedulesPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -3261,7 +3276,7 @@
 
         [Fact]
         public async Task TestCampaignsCampaignIdSchedulesGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var campaign_id = "test_url_param";
@@ -3271,7 +3286,7 @@
 
         [Fact]
         public async Task TestCampaignsCampaignIdSchedulesDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var campaign_id = "test_url_param";
@@ -3281,7 +3296,7 @@
 
         [Fact]
         public async Task TestCampaignsCampaignIdSchedulesNowPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var campaign_id = "test_url_param";
@@ -3291,7 +3306,7 @@
 
         [Fact]
         public async Task TestCampaignsCampaignIdSchedulesTestPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -3306,7 +3321,7 @@
 
         [Fact]
         public async Task TestCategoriesGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -3320,7 +3335,7 @@
 
         [Fact]
         public async Task TestCategoriesStatsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -3337,7 +3352,7 @@
 
         [Fact]
         public async Task TestCategoriesStatsSumsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -3355,7 +3370,7 @@
 
         [Fact]
         public async Task TestClientsStatsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -3369,7 +3384,7 @@
 
         [Fact]
         public async Task TestClientsClientTypeStatsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -3384,7 +3399,7 @@
 
         [Fact]
         public async Task TestContactdbCustomFieldsPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -3399,7 +3414,7 @@
 
         [Fact]
         public async Task TestContactdbCustomFieldsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/custom_fields");
@@ -3408,7 +3423,7 @@
 
         [Fact]
         public async Task TestContactdbCustomFieldsCustomFieldIdGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var custom_field_id = "test_url_param";
@@ -3418,7 +3433,7 @@
 
         [Fact]
         public async Task TestContactdbCustomFieldsCustomFieldIdDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "202" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var custom_field_id = "test_url_param";
@@ -3429,7 +3444,7 @@
         [Fact]
         public async Task TestContactdbListsPost()
         {
-            
+
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -3443,7 +3458,7 @@
 
         [Fact]
         public async Task TestContactdbListsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "contactdb/lists");
@@ -3452,7 +3467,7 @@
 
         [Fact]
         public async Task TestContactdbListsDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"[
@@ -3469,7 +3484,7 @@
 
         [Fact]
         public async Task TestContactdbListsListIdPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers); var data = @"{
   'name': 'newlistname'
@@ -3486,7 +3501,7 @@
 
         [Fact]
         public async Task TestContactdbListsListIdGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -3499,7 +3514,7 @@
 
         [Fact]
         public async Task TestContactdbListsListIdDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "202" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -3512,7 +3527,7 @@
 
         [Fact]
         public async Task TestContactdbListsListIdRecipientsPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"[
@@ -3528,7 +3543,7 @@
 
         [Fact]
         public async Task TestContactdbListsListIdRecipientsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers); var queryParams = @"{
   'list_id': 1,
@@ -3542,7 +3557,7 @@
 
         [Fact]
         public async Task TestContactdbListsListIdRecipientsRecipientIdPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var list_id = "test_url_param";
@@ -3553,7 +3568,7 @@
 
         [Fact]
         public async Task TestContactdbListsListIdRecipientsRecipientIdDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -3568,7 +3583,7 @@
 
         [Fact]
         public async Task TestContactdbRecipientsPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"[
@@ -4211,7 +4226,7 @@
 
         [Fact]
         public async Task TestMailSettingsAddressWhitelistGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/address_whitelist");
@@ -4220,7 +4235,7 @@
 
         [Fact]
         public async Task TestMailSettingsBccPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -4235,7 +4250,7 @@
 
         [Fact]
         public async Task TestMailSettingsBccGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/bcc");
@@ -4244,7 +4259,7 @@
 
         [Fact]
         public async Task TestMailSettingsBouncePurgePatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -4260,7 +4275,7 @@
 
         [Fact]
         public async Task TestMailSettingsBouncePurgeGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/bounce_purge");
@@ -4269,7 +4284,7 @@
 
         [Fact]
         public async Task TestMailSettingsFooterPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -4285,7 +4300,7 @@
 
         [Fact]
         public async Task TestMailSettingsFooterGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/footer");
@@ -4294,7 +4309,7 @@
 
         [Fact]
         public async Task TestMailSettingsForwardBouncePatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -4309,7 +4324,7 @@
 
         [Fact]
         public async Task TestMailSettingsForwardBounceGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/forward_bounce");
@@ -4318,7 +4333,7 @@
 
         [Fact]
         public async Task TestMailSettingsForwardSpamPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -4333,7 +4348,7 @@
 
         [Fact]
         public async Task TestMailSettingsForwardSpamGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/forward_spam");
@@ -4342,7 +4357,7 @@
 
         [Fact]
         public async Task TestMailSettingsPlainContentPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -4356,7 +4371,7 @@
 
         [Fact]
         public async Task TestMailSettingsPlainContentGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/plain_content");
@@ -4365,7 +4380,7 @@
 
         [Fact]
         public async Task TestMailSettingsSpamCheckPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -4381,7 +4396,7 @@
 
         [Fact]
         public async Task TestMailSettingsSpamCheckGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/spam_check");
@@ -4390,7 +4405,7 @@
 
         [Fact]
         public async Task TestMailSettingsTemplatePatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -4405,7 +4420,7 @@
 
         [Fact]
         public async Task TestMailSettingsTemplateGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "mail_settings/template");
@@ -4414,7 +4429,7 @@
 
         [Fact]
         public async Task TestMailboxProvidersStatsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -4432,7 +4447,7 @@
 
         [Fact]
         public async Task TestPartnerSettingsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -4445,7 +4460,7 @@
 
         [Fact]
         public async Task TestPartnerSettingsNewRelicPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -4461,7 +4476,7 @@
 
         [Fact]
         public async Task TestPartnerSettingsNewRelicGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "partner_settings/new_relic");
@@ -4470,7 +4485,7 @@
 
         [Fact]
         public async Task TestScopesGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "scopes");
@@ -4479,7 +4494,7 @@
 
         [Fact]
         public async Task TestSendersPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -4507,7 +4522,7 @@
 
         [Fact]
         public async Task TestSendersGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "senders");
@@ -4516,7 +4531,7 @@
 
         [Fact]
         public async Task TestSendersSenderIdPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -4545,7 +4560,7 @@
 
         [Fact]
         public async Task TestSendersSenderIdGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var sender_id = "test_url_param";
@@ -4555,7 +4570,7 @@
 
         [Fact]
         public async Task TestSendersSenderIdDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var sender_id = "test_url_param";
@@ -4565,7 +4580,7 @@
 
         [Fact]
         public async Task TestSendersSenderIdResendVerificationPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var sender_id = "test_url_param";
@@ -4575,7 +4590,7 @@
 
         [Fact]
         public async Task TestStatsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -4591,7 +4606,7 @@
 
         [Fact]
         public async Task TestSubusersPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -4611,7 +4626,7 @@
 
         [Fact]
         public async Task TestSubusersGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -4625,7 +4640,7 @@
 
         [Fact]
         public async Task TestSubusersReputationsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -4705,7 +4720,7 @@
         [Fact]
         public async Task TestSubusersSubuserNameDelete()
         {
-            
+
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var subuser_name = "test_url_param";
@@ -4865,7 +4880,7 @@
 
         [Fact]
         public async Task TestSuppressionBouncesDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -4884,7 +4899,7 @@
         [Fact]
         public async Task TestSuppressionBouncesEmailGet()
         {
-            
+
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
@@ -4894,7 +4909,7 @@
 
         [Fact]
         public async Task TestSuppressionBouncesEmailDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -4907,7 +4922,7 @@
 
         [Fact]
         public async Task TestSuppressionInvalidEmailsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -4922,7 +4937,7 @@
 
         [Fact]
         public async Task TestSuppressionInvalidEmailsDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -4940,7 +4955,7 @@
 
         [Fact]
         public async Task TestSuppressionInvalidEmailsEmailGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
@@ -4950,7 +4965,7 @@
 
         [Fact]
         public async Task TestSuppressionInvalidEmailsEmailDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
@@ -4960,7 +4975,7 @@
 
         [Fact]
         public async Task TestSuppressionSpamReportEmailGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
@@ -4970,7 +4985,7 @@
 
         [Fact]
         public async Task TestSuppressionSpamReportEmailDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var email = "test_url_param";
@@ -4980,7 +4995,7 @@
 
         [Fact]
         public async Task TestSuppressionSpamReportsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -4995,7 +5010,7 @@
 
         [Fact]
         public async Task TestSuppressionSpamReportsDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5013,7 +5028,7 @@
 
         [Fact]
         public async Task TestSuppressionUnsubscribesGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -5028,7 +5043,7 @@
 
         [Fact]
         public async Task TestTemplatesPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5042,7 +5057,7 @@
 
         [Fact]
         public async Task TestTemplatesGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "templates");
@@ -5051,7 +5066,7 @@
 
         [Fact]
         public async Task TestTemplatesTemplateIdPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5066,7 +5081,7 @@
 
         [Fact]
         public async Task TestTemplatesTemplateIdGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var template_id = "test_url_param";
@@ -5076,7 +5091,7 @@
 
         [Fact]
         public async Task TestTemplatesTemplateIdDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var template_id = "test_url_param";
@@ -5086,7 +5101,7 @@
 
         [Fact]
         public async Task TestTemplatesTemplateIdVersionsPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5106,7 +5121,7 @@
 
         [Fact]
         public async Task TestTemplatesTemplateIdVersionsVersionIdPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5126,7 +5141,7 @@
 
         [Fact]
         public async Task TestTemplatesTemplateIdVersionsVersionIdGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var template_id = "test_url_param";
@@ -5137,7 +5152,7 @@
 
         [Fact]
         public async Task TestTemplatesTemplateIdVersionsVersionIdDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var template_id = "test_url_param";
@@ -5148,7 +5163,7 @@
 
         [Fact]
         public async Task TestTemplatesTemplateIdVersionsVersionIdActivatePost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var template_id = "test_url_param";
@@ -5159,7 +5174,7 @@
 
         [Fact]
         public async Task TestTrackingSettingsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -5214,7 +5229,7 @@
 
         [Fact]
         public async Task TestTrackingSettingsGoogleAnalyticsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "tracking_settings/google_analytics");
@@ -5371,7 +5386,7 @@
         [Fact]
         public async Task TestUserScheduledSendsGet()
         {
-            
+
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/scheduled_sends");
@@ -5380,7 +5395,7 @@
 
         [Fact]
         public async Task TestUserScheduledSendsBatchIdPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5395,7 +5410,7 @@
 
         [Fact]
         public async Task TestUserScheduledSendsBatchIdGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var batch_id = "test_url_param";
@@ -5405,7 +5420,7 @@
 
         [Fact]
         public async Task TestUserScheduledSendsBatchIdDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var batch_id = "test_url_param";
@@ -5415,7 +5430,7 @@
 
         [Fact]
         public async Task TestUserSettingsEnforcedTlsPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5430,7 +5445,7 @@
 
         [Fact]
         public async Task TestUserSettingsEnforcedTlsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/settings/enforced_tls");
@@ -5440,7 +5455,7 @@
         [Fact]
         public async Task TestUserUsernamePut()
         {
-            
+
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5454,7 +5469,7 @@
 
         [Fact]
         public async Task TestUserUsernameGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/username");
@@ -5463,7 +5478,7 @@
 
         [Fact]
         public async Task TestUserWebhooksEventSettingsPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5489,7 +5504,7 @@
 
         [Fact]
         public async Task TestUserWebhooksEventSettingsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/webhooks/event/settings");
@@ -5498,7 +5513,7 @@
 
         [Fact]
         public async Task TestUserWebhooksEventTestPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5512,7 +5527,7 @@
 
         [Fact]
         public async Task TestUserWebhooksParseSettingsPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5529,7 +5544,7 @@
 
         [Fact]
         public async Task TestUserWebhooksParseSettingsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "user/webhooks/parse/settings");
@@ -5538,7 +5553,7 @@
 
         [Fact]
         public async Task TestUserWebhooksParseSettingsHostnamePatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5555,7 +5570,7 @@
 
         [Fact]
         public async Task TestUserWebhooksParseSettingsHostnameGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var hostname = "test_url_param";
@@ -5565,7 +5580,7 @@
 
         [Fact]
         public async Task TestUserWebhooksParseSettingsHostnameDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var hostname = "test_url_param";
@@ -5575,7 +5590,7 @@
 
         [Fact]
         public async Task TestUserWebhooksParseStatsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -5591,7 +5606,7 @@
 
         [Fact]
         public async Task TestWhitelabelDomainsPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5614,7 +5629,7 @@
 
         [Fact]
         public async Task TestWhitelabelDomainsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -5630,7 +5645,7 @@
 
         [Fact]
         public async Task TestWhitelabelDomainsDefaultGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/domains/default");
@@ -5639,7 +5654,7 @@
 
         [Fact]
         public async Task TestWhitelabelDomainsSubuserGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/domains/subuser");
@@ -5648,7 +5663,7 @@
 
         [Fact]
         public async Task TestWhitelabelDomainsSubuserDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "whitelabel/domains/subuser");
@@ -5657,7 +5672,7 @@
 
         [Fact]
         public async Task TestWhitelabelDomainsDomainIdPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5673,7 +5688,7 @@
 
         [Fact]
         public async Task TestWhitelabelDomainsDomainIdGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var domain_id = "test_url_param";
@@ -5683,7 +5698,7 @@
 
         [Fact]
         public async Task TestWhitelabelDomainsDomainIdDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var domain_id = "test_url_param";
@@ -5693,7 +5708,7 @@
 
         [Fact]
         public async Task TestWhitelabelDomainsDomainIdSubuserPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5708,7 +5723,7 @@
 
         [Fact]
         public async Task TestWhitelabelDomainsIdIpsPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5723,7 +5738,7 @@
 
         [Fact]
         public async Task TestWhitelabelDomainsIdIpsIpDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var id = "test_url_param";
@@ -5734,7 +5749,7 @@
 
         [Fact]
         public async Task TestWhitelabelDomainsIdValidatePost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var id = "test_url_param";
@@ -5744,7 +5759,7 @@
 
         [Fact]
         public async Task TestWhitelabelIpsPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5760,7 +5775,7 @@
 
         [Fact]
         public async Task TestWhitelabelIpsGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -5774,7 +5789,7 @@
 
         [Fact]
         public async Task TestWhitelabelIpsIdGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var id = "test_url_param";
@@ -5784,7 +5799,7 @@
 
         [Fact]
         public async Task TestWhitelabelIpsIdDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var id = "test_url_param";
@@ -5794,7 +5809,7 @@
 
         [Fact]
         public async Task TestWhitelabelIpsIdValidatePost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var id = "test_url_param";
@@ -5804,7 +5819,7 @@
 
         [Fact]
         public async Task TestWhitelabelLinksPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5824,7 +5839,7 @@
 
         [Fact]
         public async Task TestWhitelabelLinksGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -5836,7 +5851,7 @@
 
         [Fact]
         public async Task TestWhitelabelLinksDefaultGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -5848,7 +5863,7 @@
 
         [Fact]
         public async Task TestWhitelabelLinksSubuserGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -5860,7 +5875,7 @@
 
         [Fact]
         public async Task TestWhitelabelLinksSubuserDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var queryParams = @"{
@@ -5872,7 +5887,7 @@
 
         [Fact]
         public async Task TestWhitelabelLinksIdPatch()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5887,7 +5902,7 @@
 
         [Fact]
         public async Task TestWhitelabelLinksIdGet()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var id = "test_url_param";
@@ -5897,7 +5912,7 @@
 
         [Fact]
         public async Task TestWhitelabelLinksIdDelete()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "204" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var id = "test_url_param";
@@ -5907,7 +5922,7 @@
 
         [Fact]
         public async Task TestWhitelabelLinksIdValidatePost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var id = "test_url_param";
@@ -5917,7 +5932,7 @@
 
         [Fact]
         public async Task TestWhitelabelLinksLinkIdSubuserPost()
-        {            
+        {
             var headers = new Dictionary<string, string> { { "X-Mock", "200" } };
             var sg = new SendGridClient(fixture.apiKey, fixture.host, headers);
             var data = @"{
@@ -5953,7 +5968,7 @@
             Assert.Equal(httpStatusCode, response.StatusCode);
             Assert.Equal(httpResponse, response.Body.ReadAsStringAsync().Result);
         }
-        
+
         [Fact]
         public void TestTakesProxyAsConstructorArgumentAndInitiailsesHttpClient()
         {
@@ -5971,7 +5986,7 @@
 
             var sg = new SendGridClient(null as IWebProxy, fixture.apiKey, urlPath: "urlPath");
 
-            Assert.Equal(sg.UrlPath, urlPath);            
+            Assert.Equal(sg.UrlPath, urlPath);
         }
 
         /// <summary>
@@ -6138,6 +6153,18 @@
             var result = await sg.SendEmailAsync(msg);
 
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+        }
+
+        [Theory]
+        [InlineData("first last <username@example.com>", "first last", "username@example.com")]
+        [InlineData("<username@example.com>", "", "username@example.com")]
+        [InlineData("username@example.com", "", "username@example.com")]
+        [InlineData("username@example.com <username@example.com>", "username@example.com", "username@example.com")]
+        public void TestStringToEmailAddress(string input, string expectedName, string expectedEmailAddress)
+        {
+            var actual = MailHelper.StringToEmailAddress(input);
+
+            Assert.True(actual.Name == expectedName && actual.Email == expectedEmailAddress);
         }
 
         /// <summary>
