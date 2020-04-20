@@ -173,6 +173,8 @@ namespace SendGrid.Helpers.Mail
         {
             if (emails == null)
                 throw new ArgumentNullException("emails");
+            if (emails.Count == 0)
+                throw new InvalidOperationException("Sequence contains no elements");
 
             personalization = GetPersonalization(personalizationIndex, personalization);
             personalization.Tos = personalization.Tos ?? new List<EmailAddress>();
@@ -220,6 +222,8 @@ namespace SendGrid.Helpers.Mail
         {
             if (emails == null)
                 throw new ArgumentNullException("emails");
+            if (emails.Count == 0)
+                throw new InvalidOperationException("Sequence contains no elements");
 
             personalization = GetPersonalization(personalizationIndex, personalization);
             personalization.Ccs = personalization.Ccs ?? new List<EmailAddress>();
@@ -267,6 +271,8 @@ namespace SendGrid.Helpers.Mail
         {
             if (emails == null)
                 throw new ArgumentNullException("emails");
+            if (emails.Count == 0)
+                throw new InvalidOperationException("Sequence contains no elements");
 
             personalization = GetPersonalization(personalizationIndex, personalization);
             personalization.Bccs = personalization.Bccs ?? new List<EmailAddress>();
@@ -382,7 +388,7 @@ namespace SendGrid.Helpers.Mail
         public void SetSendAt(int sendAt, int personalizationIndex = 0, Personalization personalization = null)
         {
             personalization = GetPersonalization(personalizationIndex, personalization);
-            personalization.SendAt = SendAt;
+            personalization.SendAt = sendAt;
         }
 
         /// <summary>
@@ -402,8 +408,10 @@ namespace SendGrid.Helpers.Mail
             }
             else if (this.Personalizations != null)
             {
-                if (this.Personalizations[personalizationIndex] == null)
-                    this.Personalizations.Insert(personalizationIndex, new Personalization());
+                if (personalizationIndex > this.Personalizations.Count)
+                    throw new ArgumentException("personalizationIndex " + personalizationIndex + " must not be greater than " + this.Personalizations.Count);
+                if (personalizationIndex == this.Personalizations.Count)
+                    this.Personalizations.Add(new Personalization());
 
                 personalization = this.Personalizations[personalizationIndex];
             }
