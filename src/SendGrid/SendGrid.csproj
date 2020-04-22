@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>9.13.2</VersionPrefix>
+    <VersionPrefix>9.14.0</VersionPrefix>
     <TargetFrameworks>netstandard1.3;netstandard2.0;net452</TargetFrameworks>
     <PlatformTarget>anycpu</PlatformTarget>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
