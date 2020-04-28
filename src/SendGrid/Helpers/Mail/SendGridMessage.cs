@@ -144,9 +144,7 @@ namespace SendGrid.Helpers.Mail
         public void AddTo(string email, string name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
-            {
                 throw new ArgumentNullException("email");
-            }
 
             this.AddTo(new EmailAddress(email, name));
         }
@@ -159,51 +157,10 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddTo(EmailAddress email, int personalizationIndex = 0, Personalization personalization = null)
         {
-            if (personalization != null)
-            {
-                personalization.Tos = personalization.Tos ?? new List<EmailAddress>();
-                personalization.Tos.Add(email);
-                if (this.Personalizations == null)
-                {
-                    this.Personalizations = new List<Personalization>();
-                    this.Personalizations.Add(personalization);
-                }
-                else
-                {
-                    this.Personalizations.Add(personalization);
-                }
+            if (email == null)
+                throw new ArgumentNullException("email");
 
-                return;
-            }
-
-            if (this.Personalizations != null)
-            {
-                if ((personalizationIndex != 0) && (this.Personalizations.Count() <= personalizationIndex))
-                {
-                    var p = new Personalization();
-                    this.Personalizations.Insert(personalizationIndex, p);
-                }
-
-                if (this.Personalizations[personalizationIndex].Tos == null)
-                {
-                    this.Personalizations[personalizationIndex].Tos = new List<EmailAddress>();
-                }
-
-                this.Personalizations[personalizationIndex].Tos.Add(email);
-                return;
-            }
-
-            this.Personalizations = new List<Personalization>()
-            {
-                new Personalization()
-                {
-                    Tos = new List<EmailAddress>()
-                    {
-                        email,
-                    },
-                },
-            };
-            return;
+            AddTos(new List<EmailAddress> { email }, personalizationIndex, personalization);
         }
 
         /// <summary>
@@ -214,47 +171,14 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddTos(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
         {
-            if (personalization != null)
-            {
-                personalization.Tos.AddRange(emails);
-                if (this.Personalizations == null)
-                {
-                    this.Personalizations = new List<Personalization>();
-                    this.Personalizations.Add(personalization);
-                }
-                else
-                {
-                    this.Personalizations.Add(personalization);
-                }
+            if (emails == null)
+                throw new ArgumentNullException("emails");
+            if (emails.Count == 0)
+                throw new InvalidOperationException("Sequence contains no elements");
 
-                return;
-            }
-
-            if (this.Personalizations != null)
-            {
-                if ((personalizationIndex != 0) && (this.Personalizations.Count() <= personalizationIndex))
-                {
-                    var p = new Personalization();
-                    this.Personalizations.Insert(personalizationIndex, p);
-                }
-
-                if (this.Personalizations[personalizationIndex].Tos == null)
-                {
-                    this.Personalizations[personalizationIndex].Tos = new List<EmailAddress>();
-                }
-
-                this.Personalizations[personalizationIndex].Tos.AddRange(emails);
-                return;
-            }
-
-            this.Personalizations = new List<Personalization>()
-            {
-                new Personalization()
-                {
-                    Tos = emails,
-                },
-            };
-            return;
+            personalization = GetPersonalization(personalizationIndex, personalization);
+            personalization.Tos = personalization.Tos ?? new List<EmailAddress>();
+            personalization.Tos.AddRange(emails);
         }
 
         /// <summary>
@@ -266,9 +190,7 @@ namespace SendGrid.Helpers.Mail
         public void AddCc(string email, string name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
-            {
                 throw new ArgumentNullException("email");
-            }
 
             this.AddCc(new EmailAddress(email, name));
         }
@@ -283,55 +205,9 @@ namespace SendGrid.Helpers.Mail
         public void AddCc(EmailAddress email, int personalizationIndex = 0, Personalization personalization = null)
         {
             if (email == null)
-            {
                 throw new ArgumentNullException("email");
-            }
 
-            if (personalization != null)
-            {
-                personalization.Ccs = personalization.Ccs ?? new List<EmailAddress>();
-                personalization.Ccs.Add(email);
-                if (this.Personalizations == null)
-                {
-                    this.Personalizations = new List<Personalization>();
-                    this.Personalizations.Add(personalization);
-                }
-                else
-                {
-                    this.Personalizations.Add(personalization);
-                }
-
-                return;
-            }
-
-            if (this.Personalizations != null)
-            {
-                if (this.Personalizations[personalizationIndex] == null)
-                {
-                    var p = new Personalization();
-                    this.Personalizations.Insert(personalizationIndex, p);
-                }
-
-                if (this.Personalizations[personalizationIndex].Ccs == null)
-                {
-                    this.Personalizations[personalizationIndex].Ccs = new List<EmailAddress>();
-                }
-
-                this.Personalizations[personalizationIndex].Ccs.Add(email);
-                return;
-            }
-
-            this.Personalizations = new List<Personalization>()
-            {
-                new Personalization()
-                {
-                    Ccs = new List<EmailAddress>()
-                    {
-                        email,
-                    },
-                },
-            };
-            return;
+            AddCcs(new List<EmailAddress> { email }, personalizationIndex, personalization);
         }
 
         /// <summary>
@@ -345,56 +221,13 @@ namespace SendGrid.Helpers.Mail
         public void AddCcs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
         {
             if (emails == null)
-            {
                 throw new ArgumentNullException("emails");
-            }
-
             if (emails.Count == 0)
-            {
                 throw new InvalidOperationException("Sequence contains no elements");
-            }
 
-            if (personalization != null)
-            {
-                personalization.Ccs.AddRange(emails);
-                if (this.Personalizations == null)
-                {
-                    this.Personalizations = new List<Personalization>();
-                    this.Personalizations.Add(personalization);
-                }
-                else
-                {
-                    this.Personalizations.Add(personalization);
-                }
-
-                return;
-            }
-
-            if (this.Personalizations != null)
-            {
-                if (this.Personalizations[personalizationIndex] == null)
-                {
-                    var p = new Personalization();
-                    this.Personalizations.Insert(personalizationIndex, p);
-                }
-
-                if (this.Personalizations[personalizationIndex].Ccs == null)
-                {
-                    this.Personalizations[personalizationIndex].Ccs = new List<EmailAddress>();
-                }
-
-                this.Personalizations[personalizationIndex].Ccs.AddRange(emails);
-                return;
-            }
-
-            this.Personalizations = new List<Personalization>()
-            {
-                new Personalization()
-                {
-                    Ccs = emails,
-                },
-            };
-            return;
+            personalization = GetPersonalization(personalizationIndex, personalization);
+            personalization.Ccs = personalization.Ccs ?? new List<EmailAddress>();
+            personalization.Ccs.AddRange(emails);
         }
 
         /// <summary>
@@ -406,9 +239,7 @@ namespace SendGrid.Helpers.Mail
         public void AddBcc(string email, string name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
-            {
                 throw new ArgumentNullException("email");
-            }
 
             this.AddBcc(new EmailAddress(email, name));
         }
@@ -423,55 +254,9 @@ namespace SendGrid.Helpers.Mail
         public void AddBcc(EmailAddress email, int personalizationIndex = 0, Personalization personalization = null)
         {
             if (email == null)
-            {
                 throw new ArgumentNullException("email");
-            }
 
-            if (personalization != null)
-            {
-                personalization.Bccs = personalization.Bccs ?? new List<EmailAddress>();
-                personalization.Bccs.Add(email);
-                if (this.Personalizations == null)
-                {
-                    this.Personalizations = new List<Personalization>();
-                    this.Personalizations.Add(personalization);
-                }
-                else
-                {
-                    this.Personalizations.Add(personalization);
-                }
-
-                return;
-            }
-
-            if (this.Personalizations != null)
-            {
-                if (this.Personalizations[personalizationIndex] == null)
-                {
-                    var p = new Personalization();
-                    this.Personalizations.Insert(personalizationIndex, p);
-                }
-
-                if (this.Personalizations[personalizationIndex].Bccs == null)
-                {
-                    this.Personalizations[personalizationIndex].Bccs = new List<EmailAddress>();
-                }
-
-                this.Personalizations[personalizationIndex].Bccs.Add(email);
-                return;
-            }
-
-            this.Personalizations = new List<Personalization>()
-            {
-                new Personalization()
-                {
-                    Bccs = new List<EmailAddress>()
-                    {
-                        email,
-                    },
-                },
-            };
-            return;
+            AddBccs(new List<EmailAddress> { email }, personalizationIndex, personalization);
         }
 
         /// <summary>
@@ -485,56 +270,13 @@ namespace SendGrid.Helpers.Mail
         public void AddBccs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
         {
             if (emails == null)
-            {
                 throw new ArgumentNullException("emails");
-            }
-
             if (emails.Count == 0)
-            {
                 throw new InvalidOperationException("Sequence contains no elements");
-            }
 
-            if (personalization != null)
-            {
-                personalization.Bccs.AddRange(emails);
-                if (this.Personalizations == null)
-                {
-                    this.Personalizations = new List<Personalization>();
-                    this.Personalizations.Add(personalization);
-                }
-                else
-                {
-                    this.Personalizations.Add(personalization);
-                }
-
-                return;
-            }
-
-            if (this.Personalizations != null)
-            {
-                if (this.Personalizations[personalizationIndex] == null)
-                {
-                    var p = new Personalization();
-                    this.Personalizations.Insert(personalizationIndex, p);
-                }
-
-                if (this.Personalizations[personalizationIndex].Bccs == null)
-                {
-                    this.Personalizations[personalizationIndex].Bccs = new List<EmailAddress>();
-                }
-
-                this.Personalizations[personalizationIndex].Bccs.AddRange(emails);
-                return;
-            }
-
-            this.Personalizations = new List<Personalization>()
-            {
-                new Personalization()
-                {
-                    Bccs = emails,
-                },
-            };
-            return;
+            personalization = GetPersonalization(personalizationIndex, personalization);
+            personalization.Bccs = personalization.Bccs ?? new List<EmailAddress>();
+            personalization.Bccs.AddRange(emails);
         }
 
         /// <summary>
@@ -545,36 +287,8 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void SetSubject(string subject, int personalizationIndex = 0, Personalization personalization = null)
         {
-            if (personalization != null)
-            {
-                personalization.Subject = subject;
-                if (this.Personalizations == null)
-                {
-                    this.Personalizations = new List<Personalization>();
-                    this.Personalizations.Add(personalization);
-                }
-                else
-                {
-                    this.Personalizations.Add(personalization);
-                }
-
-                return;
-            }
-
-            if (this.Personalizations != null)
-            {
-                this.Personalizations[personalizationIndex].Subject = subject;
-                return;
-            }
-
-            this.Personalizations = new List<Personalization>()
-            {
-                new Personalization()
-                {
-                    Subject = subject,
-                },
-            };
-            return;
+            personalization = GetPersonalization(personalizationIndex, personalization);
+            personalization.Subject = subject;
         }
 
         /// <summary>
@@ -586,50 +300,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddHeader(string headerKey, string headerValue, int personalizationIndex = 0, Personalization personalization = null)
         {
-            if (personalization != null)
-            {
-                personalization.Headers.Add(headerKey, headerValue);
-                if (this.Personalizations == null)
-                {
-                    this.Personalizations = new List<Personalization>();
-                    this.Personalizations.Add(personalization);
-                }
-                else
-                {
-                    this.Personalizations.Add(personalization);
-                }
-
-                return;
-            }
-
-            if (this.Personalizations != null)
-            {
-                if (this.Personalizations[personalizationIndex] == null)
-                {
-                    var p = new Personalization();
-                    this.Personalizations.Insert(personalizationIndex, p);
-                }
-
-                if (this.Personalizations[personalizationIndex].Headers == null)
-                {
-                    this.Personalizations[personalizationIndex].Headers = new Dictionary<string, string>();
-                }
-
-                this.Personalizations[personalizationIndex].Headers.Add(headerKey, headerValue);
-                return;
-            }
-
-            this.Personalizations = new List<Personalization>()
-            {
-                new Personalization()
-                {
-                    Headers = new Dictionary<string, string>()
-                    {
-                        { headerKey, headerValue },
-                    },
-                },
-            };
-            return;
+            AddHeaders(new Dictionary<string, string> { { headerKey, headerValue } }, personalizationIndex, personalization);
         }
 
         /// <summary>
@@ -640,49 +311,9 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddHeaders(Dictionary<string, string> headers, int personalizationIndex = 0, Personalization personalization = null)
         {
-            if (personalization != null)
-            {
-                personalization.Headers = (personalization.Headers != null)
-                    ? personalization.Headers.Union(headers).ToDictionary(pair => pair.Key, pair => pair.Value) : headers;
-                if (this.Personalizations == null)
-                {
-                    this.Personalizations = new List<Personalization>();
-                    this.Personalizations.Add(personalization);
-                }
-                else
-                {
-                    this.Personalizations.Add(personalization);
-                }
-
-                return;
-            }
-
-            if (this.Personalizations != null)
-            {
-                if (this.Personalizations[personalizationIndex] == null)
-                {
-                    var p = new Personalization();
-                    this.Personalizations.Insert(personalizationIndex, p);
-                }
-
-                if (this.Personalizations[personalizationIndex].Headers == null)
-                {
-                    this.Personalizations[personalizationIndex].Headers = new Dictionary<string, string>();
-                }
-
-                this.Personalizations[personalizationIndex].Headers = (this.Personalizations[personalizationIndex].Headers != null)
-                    ? this.Personalizations[personalizationIndex].Headers.Union(headers).ToDictionary(pair => pair.Key, pair => pair.Value) : headers;
-                return;
-            }
-
-            this.Personalizations = new List<Personalization>()
-            {
-                new Personalization()
-                {
-                    Headers = headers,
-                },
-            };
-            return;
+            personalization = GetPersonalization(personalizationIndex, personalization);
+            personalization.Headers = personalization.Headers == null ? headers :
+                    personalization.Headers.Union(headers).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         /// <summary>
@@ -695,50 +326,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddSubstitution(string substitutionKey, string substitutionValue, int personalizationIndex = 0, Personalization personalization = null)
         {
-            if (personalization != null)
-            {
-                personalization.Substitutions.Add(substitutionKey, substitutionValue);
-                if (this.Personalizations == null)
-                {
-                    this.Personalizations = new List<Personalization>();
-                    this.Personalizations.Add(personalization);
-                }
-                else
-                {
-                    this.Personalizations.Add(personalization);
-                }
-
-                return;
-            }
-
-            if (this.Personalizations != null)
-            {
-                if (this.Personalizations[personalizationIndex] == null)
-                {
-                    var p = new Personalization();
-                    this.Personalizations.Insert(personalizationIndex, p);
-                }
-
-                if (this.Personalizations[personalizationIndex].Substitutions == null)
-                {
-                    this.Personalizations[personalizationIndex].Substitutions = new Dictionary<string, string>();
-                }
-
-                this.Personalizations[personalizationIndex].Substitutions.Add(substitutionKey, substitutionValue);
-                return;
-            }
-
-            this.Personalizations = new List<Personalization>()
-            {
-                new Personalization()
-                {
-                    Substitutions = new Dictionary<string, string>()
-                    {
-                        { substitutionKey, substitutionValue },
-                    },
-                },
-            };
-            return;
+            AddSubstitutions(new Dictionary<string, string> { { substitutionKey, substitutionValue } }, personalizationIndex, personalization);
         }
 
         /// <summary>
@@ -749,49 +337,9 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddSubstitutions(Dictionary<string, string> substitutions, int personalizationIndex = 0, Personalization personalization = null)
         {
-            if (personalization != null)
-            {
-                personalization.Substitutions = (personalization.Substitutions != null)
-                    ? personalization.Substitutions.Union(substitutions).ToDictionary(pair => pair.Key, pair => pair.Value) : substitutions;
-                if (this.Personalizations == null)
-                {
-                    this.Personalizations = new List<Personalization>();
-                    this.Personalizations.Add(personalization);
-                }
-                else
-                {
-                    this.Personalizations.Add(personalization);
-                }
-
-                return;
-            }
-
-            if (this.Personalizations != null)
-            {
-                if (this.Personalizations[personalizationIndex] == null)
-                {
-                    var p = new Personalization();
-                    this.Personalizations.Insert(personalizationIndex, p);
-                }
-
-                if (this.Personalizations[personalizationIndex].Substitutions == null)
-                {
-                    this.Personalizations[personalizationIndex].Substitutions = new Dictionary<string, string>();
-                }
-
-                this.Personalizations[personalizationIndex].Substitutions = (this.Personalizations[personalizationIndex].Substitutions != null)
-                    ? this.Personalizations[personalizationIndex].Substitutions.Union(substitutions).ToDictionary(pair => pair.Key, pair => pair.Value) : substitutions;
-                return;
-            }
-
-            this.Personalizations = new List<Personalization>()
-            {
-                new Personalization()
-                {
-                    Substitutions = substitutions,
-                },
-            };
-            return;
+            personalization = GetPersonalization(personalizationIndex, personalization);
+            personalization.Substitutions = personalization.Substitutions == null ? substitutions :
+                    personalization.Substitutions.Union(substitutions).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         /// <summary>
@@ -802,47 +350,8 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void SetTemplateData(object dynamicTemplateData, int personalizationIndex = 0, Personalization personalization = null)
         {
-            if (personalization != null)
-            {
-                personalization.TemplateData = dynamicTemplateData;
-                if (this.Personalizations == null)
-                {
-                    this.Personalizations = new List<Personalization>();
-                    this.Personalizations.Add(personalization);
-                }
-                else
-                {
-                    this.Personalizations.Add(personalization);
-                }
-
-                return;
-            }
-
-            if (this.Personalizations != null)
-            {
-                if (this.Personalizations[personalizationIndex] == null)
-                {
-                    var p = new Personalization();
-                    this.Personalizations.Insert(personalizationIndex, p);
-                }
-
-                if (this.Personalizations[personalizationIndex].TemplateData == null)
-                {
-                    this.Personalizations[personalizationIndex].TemplateData = new Dictionary<string, object>();
-                }
-
-                this.Personalizations[personalizationIndex].TemplateData = dynamicTemplateData;
-                return;
-            }
-
-            this.Personalizations = new List<Personalization>()
-            {
-                new Personalization()
-                {
-                    TemplateData = dynamicTemplateData,
-                },
-            };
-            return;
+            personalization = GetPersonalization(personalizationIndex, personalization);
+            personalization.TemplateData = dynamicTemplateData;
         }
 
         /// <summary>
@@ -854,50 +363,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddCustomArg(string customArgKey, string customArgValue, int personalizationIndex = 0, Personalization personalization = null)
         {
-            if (personalization != null)
-            {
-                personalization.CustomArgs.Add(customArgKey, customArgValue);
-                if (this.Personalizations == null)
-                {
-                    this.Personalizations = new List<Personalization>();
-                    this.Personalizations.Add(personalization);
-                }
-                else
-                {
-                    this.Personalizations.Add(personalization);
-                }
-
-                return;
-            }
-
-            if (this.Personalizations != null)
-            {
-                if (this.Personalizations[personalizationIndex] == null)
-                {
-                    var p = new Personalization();
-                    this.Personalizations.Insert(personalizationIndex, p);
-                }
-
-                if (this.Personalizations[personalizationIndex].CustomArgs == null)
-                {
-                    this.Personalizations[personalizationIndex].CustomArgs = new Dictionary<string, string>();
-                }
-
-                this.Personalizations[personalizationIndex].CustomArgs.Add(customArgKey, customArgValue);
-                return;
-            }
-
-            this.Personalizations = new List<Personalization>()
-            {
-                new Personalization()
-                {
-                    CustomArgs = new Dictionary<string, string>()
-                    {
-                        { customArgKey, customArgValue },
-                    },
-                },
-            };
-            return;
+            AddCustomArgs(new Dictionary<string, string> { { customArgKey, customArgValue } }, personalizationIndex, personalization);
         }
 
         /// <summary>
@@ -908,49 +374,9 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddCustomArgs(Dictionary<string, string> customArgs, int personalizationIndex = 0, Personalization personalization = null)
         {
-            if (personalization != null)
-            {
-                personalization.CustomArgs = (personalization.CustomArgs != null)
-                    ? personalization.CustomArgs.Union(customArgs).ToDictionary(pair => pair.Key, pair => pair.Value) : customArgs;
-                if (this.Personalizations == null)
-                {
-                    this.Personalizations = new List<Personalization>();
-                    this.Personalizations.Add(personalization);
-                }
-                else
-                {
-                    this.Personalizations.Add(personalization);
-                }
-
-                return;
-            }
-
-            if (this.Personalizations != null)
-            {
-                if (this.Personalizations[personalizationIndex] == null)
-                {
-                    var p = new Personalization();
-                    this.Personalizations.Insert(personalizationIndex, p);
-                }
-
-                if (this.Personalizations[personalizationIndex].CustomArgs == null)
-                {
-                    this.Personalizations[personalizationIndex].CustomArgs = new Dictionary<string, string>();
-                }
-
-                this.Personalizations[personalizationIndex].CustomArgs = (this.Personalizations[personalizationIndex].CustomArgs != null)
-                    ? this.Personalizations[personalizationIndex].CustomArgs.Union(customArgs).ToDictionary(pair => pair.Key, pair => pair.Value) : customArgs;
-                return;
-            }
-
-            this.Personalizations = new List<Personalization>()
-            {
-                new Personalization()
-                {
-                    CustomArgs = customArgs,
-                },
-            };
-            return;
+            personalization = GetPersonalization(personalizationIndex, personalization);
+            personalization.CustomArgs = personalization.CustomArgs == null ? customArgs :
+                    personalization.CustomArgs.Union(customArgs).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         /// <summary>
@@ -961,36 +387,41 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void SetSendAt(int sendAt, int personalizationIndex = 0, Personalization personalization = null)
         {
+            personalization = GetPersonalization(personalizationIndex, personalization);
+            personalization.SendAt = sendAt;
+        }
+
+        /// <summary>
+        /// Retrieves a Personalization object, adds a pre-created Personalization object, or creates and adds a Personalization object.
+        /// </summary>
+        /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the send at timestamp.</param>
+        /// <param name="personalization">A personalization object to append to the message.</param>
+        /// <returns>The Personalization.</returns>
+        private Personalization GetPersonalization(int personalizationIndex = 0, Personalization personalization = null)
+        {
             if (personalization != null)
             {
-                personalization.SendAt = sendAt;
                 if (this.Personalizations == null)
-                {
                     this.Personalizations = new List<Personalization>();
-                    this.Personalizations.Add(personalization);
-                }
-                else
-                {
-                    this.Personalizations.Add(personalization);
-                }
 
-                return;
+                this.Personalizations.Add(personalization);
+            }
+            else if (this.Personalizations != null)
+            {
+                if (personalizationIndex > this.Personalizations.Count)
+                    throw new ArgumentException("personalizationIndex " + personalizationIndex + " must not be greater than " + this.Personalizations.Count);
+                if (personalizationIndex == this.Personalizations.Count)
+                    this.Personalizations.Add(new Personalization());
+
+                personalization = this.Personalizations[personalizationIndex];
+            }
+            else
+            {
+                personalization = new Personalization();
+                this.Personalizations = new List<Personalization>() { personalization };
             }
 
-            if (this.Personalizations != null)
-            {
-                this.Personalizations[personalizationIndex].SendAt = sendAt;
-                return;
-            }
-
-            this.Personalizations = new List<Personalization>()
-            {
-                new Personalization()
-                {
-                    SendAt = sendAt,
-                },
-            };
-            return;
+            return personalization;
         }
 
         /// <summary>
