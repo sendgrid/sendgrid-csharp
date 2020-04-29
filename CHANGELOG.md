@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-04-29] Version 9.14.1
+---------------------------
+**Library - Fix**
+- [PR #993](https://github.com/sendgrid/sendgrid-csharp/pull/993): refactor and fix personalization inserts/updates. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+
 [2020-04-15] Version 9.14.0
 ---------------------------
 **Library - Feature**
