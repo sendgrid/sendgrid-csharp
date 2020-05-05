@@ -12,6 +12,9 @@ before_install:
   - mkdir -p .nuget
   - wget -O .nuget/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
 
+env:
+  - FrameworkPathOverride=/usr/lib/mono/4.5/
+
 script:
   - make test-docker
   - make release

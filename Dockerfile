@@ -1,10 +1,9 @@
-FROM ubuntu:19.10
+FROM mono:latest
 
-# Don't ask
-ENV DEBIAN_FRONTEND noninteractive
+ENV FrameworkPathOverride /usr/lib/mono/4.5/
 
 RUN apt-get update \
-    && apt-get install -y curl make
+    && apt-get install -y curl make apt-transport-https
 
 RUN curl -sSL https://packages.microsoft.com/config/ubuntu/19.10/packages-microsoft-prod.deb -o packages-microsoft-prod.deb \
     && dpkg --install packages-microsoft-prod.deb

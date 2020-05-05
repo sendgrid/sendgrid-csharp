@@ -8,8 +8,7 @@ install:
 	dotnet restore
 
 test:
-	dotnet build ./src/SendGrid -c Release -f netstandard1.3
-	dotnet build ./src/SendGrid -c Release -f netstandard2.0
+	dotnet build ./src/SendGrid -c Release
 	dotnet test ./tests/SendGrid.Tests/SendGrid.Tests.csproj -c Release -f netcoreapp2.1
 	curl -s https://codecov.io/bash > .codecov
 	chmod +x .codecov
