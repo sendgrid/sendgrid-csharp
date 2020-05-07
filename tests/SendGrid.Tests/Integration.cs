@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Net;
     using System.Net.Http;
     using System.Threading;
@@ -30,7 +29,7 @@
             this.output = output;
         }
 
-        private SendGridClient GetClient(String mockStatusCode)
+        private SendGridClient GetClient(string mockStatusCode)
         {
             var headers = new Dictionary<string, string> { { "X-Mock", mockStatusCode } };
             return new SendGridClient(fixture.apiKey, null, headers);
