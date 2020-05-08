@@ -7,7 +7,7 @@ namespace SendGrid
     /// <summary>
     /// An HTTP client wrapper for interacting with Twilio SendGrid's API.
     /// </summary>
-    public class SendGridClient : BaseInterface
+    public class SendGridClient : BaseClient
     {
         private static readonly SendGridClientOptions DefaultOptions = new SendGridClientOptions();
 

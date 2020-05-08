@@ -17,7 +17,7 @@ namespace SendGrid
     /// <summary>
     /// The base interface for interacting with Twilio SendGrid's API.
     /// </summary>
-    public abstract class BaseInterface : ISendGridClient
+    public abstract class BaseClient : ISendGridClient
     {
         private const string ContentType = "Content-Type";
         private const string DefaultMediaType = "application/json";
@@ -25,7 +25,7 @@ namespace SendGrid
         /// <summary>
         /// The client assembly version to send in request User-Agent header.
         /// </summary>
-        private static readonly string ClientVersion = typeof(BaseInterface).GetTypeInfo().Assembly.GetName().Version.ToString();
+        private static readonly string ClientVersion = typeof(BaseClient).GetTypeInfo().Assembly.GetName().Version.ToString();
 
         /// <summary>
         /// The configuration to use with current client instance.
@@ -38,33 +38,33 @@ namespace SendGrid
         private readonly HttpClient client;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseInterface"/> class.
+        /// Initializes a new instance of the <see cref="BaseClient"/> class.
         /// </summary>
         /// <param name="options">A <see cref="BaseClientOptions"/> instance that defines the configuration settings to use with the client.</param>
         /// <returns>Interface to the Twilio SendGrid REST API.</returns>
-        public BaseInterface(BaseClientOptions options)
+        public BaseClient(BaseClientOptions options)
             : this(httpClient: null, options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseInterface"/> class.
+        /// Initializes a new instance of the <see cref="BaseClient"/> class.
         /// </summary>
         /// <param name="webProxy">Web proxy.</param>
         /// <param name="options">A <see cref="BaseClientOptions"/> instance that defines the configuration settings to use with the client.</param>
         /// <returns>Interface to the Twilio SendGrid REST API.</returns>
-        public BaseInterface(IWebProxy webProxy, BaseClientOptions options)
+        public BaseClient(IWebProxy webProxy, BaseClientOptions options)
             : this(CreateHttpClientWithWebProxy(webProxy), options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseInterface"/> class.
+        /// Initializes a new instance of the <see cref="BaseClient"/> class.
         /// </summary>
         /// <param name="httpClient">An optional HTTP client which may me injected in order to facilitate testing.</param>
         /// <param name="options">A <see cref="BaseClientOptions"/> instance that defines the configuration settings to use with the client.</param>
         /// <returns>Interface to the Twilio SendGrid REST API.</returns>
-        public BaseInterface(HttpClient httpClient, BaseClientOptions options)
+        public BaseClient(HttpClient httpClient, BaseClientOptions options)
         {
             this.options = options ?? throw new ArgumentNullException(nameof(options));
 

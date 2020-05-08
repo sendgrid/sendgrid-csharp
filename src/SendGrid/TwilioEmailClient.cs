@@ -6,7 +6,7 @@ namespace SendGrid
     /// <summary>
     /// An HTTP client wrapper for interacting with the Twilio Email API.
     /// </summary>
-    public class TwilioEmailClient : BaseInterface
+    public class TwilioEmailClient : BaseClient
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TwilioEmailClient"/> class.
