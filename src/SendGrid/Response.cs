@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace SendGrid
 {
     /// <summary>
-    /// The response received from an API call to Twilio SendGrid
+    /// The response received from an API call to Twilio SendGrid.
     /// </summary>
     public class Response
     {
@@ -36,9 +36,9 @@ namespace SendGrid
         /// <summary>
         /// Initializes a new instance of the <see cref="Response"/> class.
         /// </summary>
-        /// <param name="statusCode">https://msdn.microsoft.com/en-us/library/system.net.httpstatuscode(v=vs.110).aspx</param>
-        /// <param name="responseBody">https://msdn.microsoft.com/en-us/library/system.net.http.httpcontent(v=vs.118).aspx</param>
-        /// <param name="responseHeaders">https://msdn.microsoft.com/en-us/library/system.net.http.headers.httpresponseheaders(v=vs.118).aspx</param>
+        /// <param name="statusCode">https://docs.microsoft.com/dotnet/api/system.net.httpstatuscode.</param>
+        /// <param name="responseBody">https://docs.microsoft.com/dotnet/api/system.net.http.httpcontent.</param>
+        /// <param name="responseHeaders">https://docs.microsoft.com/dotnet/api/system.net.http.headers.httpresponseheaders.</param>
         public Response(HttpStatusCode statusCode, HttpContent responseBody, HttpResponseHeaders responseHeaders)
         {
             this.StatusCode = statusCode;
@@ -97,8 +97,8 @@ namespace SendGrid
         /// <summary>
         /// Converts string formatted response body to a Dictionary.
         /// </summary>
-        /// <param name="content">https://msdn.microsoft.com/en-us/library/system.net.http.httpcontent(v=vs.118).aspx</param>
-        /// <returns>Dictionary object representation of HttpContent</returns>
+        /// <param name="content">https://docs.microsoft.com/dotnet/api/system.net.http.httpcontent.</param>
+        /// <returns>Dictionary object representation of HttpContent.</returns>
         public virtual async Task<Dictionary<string, dynamic>> DeserializeResponseBodyAsync(HttpContent content)
         {
             var stringContent = await content.ReadAsStringAsync().ConfigureAwait(false);
@@ -107,10 +107,10 @@ namespace SendGrid
         }
 
         /// <summary>
-        ///     Converts string formatted response headers to a Dictionary.
+        /// Converts string formatted response headers to a Dictionary.
         /// </summary>
-        /// <param name="content">https://msdn.microsoft.com/en-us/library/system.net.http.headers.httpresponseheaders(v=vs.118).aspx</param>
-        /// <returns>Dictionary object representation of  HttpResponseHeaders</returns>
+        /// <param name="content">https://docs.microsoft.com/dotnet/api/system.net.http.headers.httpresponseheaders.</param>
+        /// <returns>Dictionary object representation of HttpResponseHeaders.</returns>
         public virtual Dictionary<string, string> DeserializeResponseHeaders(HttpResponseHeaders content)
         {
             var dsContent = new Dictionary<string, string>();
