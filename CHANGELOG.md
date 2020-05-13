@@ -1,6 +1,16 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-05-13] Version 9.15.0
+---------------------------
+**Library - Fix**
+- [PR #938](https://github.com/sendgrid/sendgrid-csharp/pull/938): Ensures the serialization of the SendGridMessage is untainted by defaults set by applications on the JsonSerializer. Thanks to [@duncanchung](https://github.com/duncanchung)!
+- [PR #996](https://github.com/sendgrid/sendgrid-csharp/pull/996): migrate to common prism setup. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Library - Feature**
+- [PR #997](https://github.com/sendgrid/sendgrid-csharp/pull/997): add support for Twilio Email. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+
 [2020-04-29] Version 9.14.1
 ---------------------------
 **Library - Fix**
