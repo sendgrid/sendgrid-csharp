@@ -152,10 +152,10 @@ namespace Example
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-            From = new EmailAddress("test@example.com", "DX Team"),
-            Subject = "Sending with Twilio SendGrid is Fun",
-            PlainTextContent = "and easy to do anywhere, even with C#",
-            HtmlContent = "<strong>and easy to do anywhere, even with C#</strong>"
+                From = new EmailAddress("test@example.com", "DX Team"),
+                Subject = "Sending with Twilio SendGrid is Fun",
+                PlainTextContent = "and easy to do anywhere, even with C#",
+                HtmlContent = "<strong>and easy to do anywhere, even with C#</strong>"
             };
             msg.AddTo(new EmailAddress("test@example.com", "Test User"));
             var response = await client.SendEmailAsync(msg);
@@ -185,9 +185,9 @@ namespace Example
                 'limit': 100
             }";
             var response = await client.RequestAsync(method: SendGridClient.Method.GET,
-                                                        urlPath: "suppression/bounces",
-                                                        queryParams: queryParams);
-        }
+                                                     urlPath: "suppression/bounces",
+                                                     queryParams: queryParams);
+	    }
     }
 }
 ```
