@@ -116,12 +116,7 @@ namespace Example
 {
     internal class Example
     {
-        private static void Main()
-        {
-            Execute().Wait();
-        }
-
-        static async Task Execute()
+        internal static async Task Main(string[] args)
         {
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);
@@ -151,12 +146,7 @@ namespace Example
 {
     internal class Example
     {
-        private static void Main()
-        {
-            Execute().Wait();
-        }
-
-	    static async Task Execute()
+        internal static async Task Main(string[] args)
         {
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);
@@ -187,12 +177,7 @@ namespace Example
 {
     internal class Example
     {
-        private static void Main()
-        {
-            Execute().Wait();
-        }
-
-        static async Task Execute()
+        internal static async Task Main(string[] args)
         {
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);
