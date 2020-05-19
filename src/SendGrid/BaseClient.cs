@@ -42,7 +42,7 @@ namespace SendGrid
         /// </summary>
         /// <param name="options">A <see cref="BaseClientOptions"/> instance that defines the configuration settings to use with the client.</param>
         /// <returns>Interface to the Twilio SendGrid REST API.</returns>
-        public BaseClient(BaseClientOptions options)
+        protected BaseClient(BaseClientOptions options)
             : this(httpClient: null, options)
         {
         }
@@ -53,8 +53,8 @@ namespace SendGrid
         /// <param name="webProxy">Web proxy.</param>
         /// <param name="options">A <see cref="BaseClientOptions"/> instance that defines the configuration settings to use with the client.</param>
         /// <returns>Interface to the Twilio SendGrid REST API.</returns>
-        public BaseClient(IWebProxy webProxy, BaseClientOptions options)
-            : this(CreateHttpClientWithWebProxy(webProxy), options)
+        protected BaseClient(IWebProxy webProxy, BaseClientOptions options)
+            : this(CreateHttpClientWithWebProxy(webProxy, options), options)
         {
         }
 
@@ -64,11 +64,11 @@ namespace SendGrid
         /// <param name="httpClient">An optional HTTP client which may me injected in order to facilitate testing.</param>
         /// <param name="options">A <see cref="BaseClientOptions"/> instance that defines the configuration settings to use with the client.</param>
         /// <returns>Interface to the Twilio SendGrid REST API.</returns>
-        public BaseClient(HttpClient httpClient, BaseClientOptions options)
+        protected BaseClient(HttpClient httpClient, BaseClientOptions options)
         {
             this.options = options ?? throw new ArgumentNullException(nameof(options));
 
-            this.client = httpClient ?? CreateHttpClientWithRetryHandler();
+            this.client = httpClient ?? CreateHttpClientWithRetryHandler(options);
             if (this.options.RequestHeaders != null && this.options.RequestHeaders.TryGetValue(ContentType, out var contentType))
             {
                 this.MediaType = contentType;
@@ -221,17 +221,18 @@ namespace SendGrid
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        private static HttpClient CreateHttpClientWithRetryHandler()
+        private static HttpClient CreateHttpClientWithRetryHandler(BaseClientOptions options)
         {
-            return new HttpClient(new RetryDelegatingHandler(new ReliabilitySettings()));
+            return new HttpClient(new RetryDelegatingHandler(options.ReliabilitySettings));
         }
 
         /// <summary>
         /// Create client with WebProxy if set.
         /// </summary>
         /// <param name="webProxy">the WebProxy.</param>
+        /// <param name="options">A <see cref="BaseClientOptions"/> instance that defines the configuration settings to use with the client.</param>
         /// <returns>HttpClient with RetryDelegatingHandler and WebProxy if set.</returns>
-        private static HttpClient CreateHttpClientWithWebProxy(IWebProxy webProxy)
+        private static HttpClient CreateHttpClientWithWebProxy(IWebProxy webProxy, BaseClientOptions options)
         {
             if (webProxy != null)
             {
@@ -242,13 +243,13 @@ namespace SendGrid
                     UseDefaultCredentials = false,
                 };
 
-                var retryHandler = new RetryDelegatingHandler(httpClientHandler, new ReliabilitySettings());
+                var retryHandler = new RetryDelegatingHandler(httpClientHandler, options.ReliabilitySettings);
 
                 return new HttpClient(retryHandler);
             }
             else
             {
-                return CreateHttpClientWithRetryHandler();
+                return CreateHttpClientWithRetryHandler(options);
             }
         }
 

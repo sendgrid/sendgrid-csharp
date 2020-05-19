@@ -55,6 +55,27 @@ namespace SendGrid
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendGridClient"/> class.
+        /// </summary>
+        /// <param name="options">A <see cref="SendGridClientOptions"/> instance that defines the configuration settings to use with the client.</param>
+        /// <returns>Interface to the Twilio SendGrid REST API.</returns>
+        public SendGridClient(SendGridClientOptions options)
+            : base(options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendGridClient"/> class.
+        /// </summary>
+        /// <param name="httpClient">An optional HTTP client which may me injected in order to facilitate testing.</param>
+        /// <param name="options">A <see cref="SendGridClientOptions"/> instance that defines the configuration settings to use with the client.</param>
+        /// <returns>Interface to the Twilio SendGrid REST API.</returns>
+        public SendGridClient(HttpClient httpClient, SendGridClientOptions options)
+            : base(httpClient, options)
+        {
+        }
+
         private static SendGridClientOptions buildOptions(string apiKey, string host, Dictionary<string, string> requestHeaders, string version, string urlPath)
         {
             return new SendGridClientOptions
