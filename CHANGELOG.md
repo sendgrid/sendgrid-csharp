@@ -1,6 +1,15 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-05-20] Version 9.15.1
+---------------------------
+**Library - Fix**
+- [PR #1001](https://github.com/sendgrid/sendgrid-csharp/pull/1001): add back client constructors with client options and actually use its reliability settings. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Library - Docs**
+- [PR #906](https://github.com/sendgrid/sendgrid-csharp/pull/906): Update Readme to C# 7.x syntax. Thanks to [@aevitas](https://github.com/aevitas)!
+
+
 [2020-05-13] Version 9.15.0
 ---------------------------
 **Library - Fix**
