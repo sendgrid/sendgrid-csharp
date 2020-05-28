@@ -39,6 +39,10 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" Condition=" '$(OS)' != 'Windows_NT' " />
+  </ItemGroup>
+
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>

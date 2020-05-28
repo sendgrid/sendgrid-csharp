@@ -3,17 +3,10 @@ dotnet: 2.1.803
 solution: SendGrid.sln
 os: linux
 dist: bionic
-mono: latest
+mono: none
 
 services:
   - docker
-
-before_install:
-  - mkdir -p .nuget
-  - wget -O .nuget/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
-
-env:
-  - FrameworkPathOverride=/usr/lib/mono/4.5/
 
 script:
   - make test-docker
@@ -25,7 +18,7 @@ after_success:
 deploy:
   skip_cleanup: true
   provider: script
-  script: nuget push ./src/SendGrid/bin/Release/SendGrid.*.nupkg -ApiKey $NUGET_API_KEY -Source https://api.nuget.org/v3/index.json
+  script: dotnet nuget push **/*.nupkg -k $NUGET_API_KEY -s https://api.nuget.org/v3/index.json
   on:
     branch: master
     tags: true
