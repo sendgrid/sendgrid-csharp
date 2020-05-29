@@ -16,7 +16,8 @@ test:
 test-integ: test
 
 test-docker:
-	curl -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/prism/prism.sh | bash
+	curl -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/prism/prism.sh -o prism.sh
+	bash ./prism.sh
 
 release:
 	dotnet pack -c Release

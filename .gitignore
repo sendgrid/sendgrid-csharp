@@ -326,4 +326,4 @@ $RECYCLE.BIN/
 /.vscode
 
 .env
-prism
+prism*
