@@ -342,6 +342,14 @@
             try
             {
                 TestKitchenSink();
+
+                // Ensure default behavior is not broken
+                var testObject = new
+                {
+                    PropertyName = "PropertyValue",
+                    Dictionary = new Dictionary<string, string> { { "DictionaryKey", "DictionaryValue" } }
+                };
+                Assert.Equal("{\"propertyName\":\"PropertyValue\",\"dictionary\":{\"dictionaryKey\":\"DictionaryValue\"}}", JsonConvert.SerializeObject(testObject));
             }
             finally
             {
