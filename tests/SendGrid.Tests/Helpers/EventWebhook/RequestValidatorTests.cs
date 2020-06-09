@@ -1,5 +1,5 @@
 using Xunit;
-using SendGrid.Helpers.EventWebbook;
+using SendGrid.Helpers.EventWebhook;
 
 namespace SendGrid.Tests.Helpers.EventWebhook
 {

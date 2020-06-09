@@ -1,6 +1,6 @@
 ﻿using EllipticCurve;
 
-namespace SendGrid.Helpers.EventWebbook
+namespace SendGrid.Helpers.EventWebhook
 {
     /// <summary>
     /// This class allows you to use the Event Webhook feature. Read the docs for
@@ -14,18 +14,12 @@ namespace SendGrid.Helpers.EventWebbook
         public const string SIGNATURE_HEADER = "X-Twilio-Email-Event-Webhook-Signature";
 
         /// <summary>
-        /// Timestamp http header name for timestamp.
+        /// Timestamp HTTP header name for timestamp.
         /// </summary>
         public const string TIMESTAMP_HEADER = "X-Twilio-Email-Event-Webhook-Timestamp";
 
-        /**
-        * Convert the public key string to a ECPublicKey.
-        *
-        * @param string $publicKey verification key under Mail Settings
-        * @return PublicKey public key using the ECDSA algorithm
-        */
         /// <summary>
-        /// Convert the public key string to a <see cref="PublicKey"/>ECPublicKey.
+        /// Convert the public key string to a <see cref="PublicKey"/>.
         /// </summary>
         /// <param name="publicKey">verification key under Mail Settings</param>
         /// <returns>public key using the ECDSA algorithm</returns>

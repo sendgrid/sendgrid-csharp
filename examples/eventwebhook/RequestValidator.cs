@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Http;
-using SendGrid.Helpers.EventWebbook;
+using SendGrid.Helpers.EventWebhook;
 using System.IO;
 
 public bool IsValidSignature(HttpRequest request)
