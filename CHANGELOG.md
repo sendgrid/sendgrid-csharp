@@ -1,6 +1,15 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-06-10] Version 9.16.0
+---------------------------
+**Library - Test**
+- [PR #1008](https://github.com/sendgrid/sendgrid-csharp/pull/1008): Ensuring default serialization settings behave correctly. Thanks to [@duncanchung](https://github.com/duncanchung)!
+
+**Library - Feature**
+- [PR #922](https://github.com/sendgrid/sendgrid-csharp/pull/922): Integrate SendGrid with HttpClientFactory. Thanks to [@akunzai](https://github.com/akunzai)!
+
+
 [2020-05-20] Version 9.15.1
 ---------------------------
 **Library - Fix**
