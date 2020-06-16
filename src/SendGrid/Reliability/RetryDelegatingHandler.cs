@@ -83,7 +83,7 @@ namespace SendGrid.Helpers.Reliability
                     }
 
                     // ReSharper disable once MethodSupportsCancellation, cancel will be indicated on the token
-                    await Task.Delay(waitFor).ConfigureAwait(false);
+                    await TaskUtilities.Delay(waitFor).ConfigureAwait(false);
                 }
                 catch (HttpRequestException)
                 {
@@ -94,7 +94,7 @@ namespace SendGrid.Helpers.Reliability
                         throw;
                     }
 
-                    await Task.Delay(waitFor).ConfigureAwait(false);
+                    await TaskUtilities.Delay(waitFor).ConfigureAwait(false);
                 }
             }
 

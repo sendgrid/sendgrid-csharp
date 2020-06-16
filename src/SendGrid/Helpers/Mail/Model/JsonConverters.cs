@@ -7,7 +7,11 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+#if NET40
+using SendGrid.Helpers.Net40;
+#else
 using System.Reflection;
+#endif
 
 namespace SendGrid.Helpers.Mail
 {
