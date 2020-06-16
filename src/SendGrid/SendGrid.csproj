@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <VersionPrefix>9.16.0</VersionPrefix>
-    <TargetFrameworks>netstandard1.3;netstandard2.0;net452</TargetFrameworks>
+    <TargetFrameworks>netstandard1.3;netstandard2.0;net452;net40</TargetFrameworks>
     <PlatformTarget>anycpu</PlatformTarget>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <OutputType>Library</OutputType>
@@ -58,6 +58,12 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Bcl.Async" Version="1.0.168" />
+    <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
   </ItemGroup>
 
 </Project>
