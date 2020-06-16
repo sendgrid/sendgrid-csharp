@@ -55,7 +55,7 @@ namespace SendGrid.Tests.Helpers.EventWebhook
             var isValidSignature = Verify(
                 PUBLIC_KEY,
                 PAYLOAD,
-                "signature",
+                "MEQCIB3bJQOarffIdM7+MEee+kYAdoViz6RUoScOASwMcXQxAiAcrus/j853JUlVm5qIRfbKBJwJq89znqOTedy3RetXLQ==",
                 TIMESTAMP
             );
 
