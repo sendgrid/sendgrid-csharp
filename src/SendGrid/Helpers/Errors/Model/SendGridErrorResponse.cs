@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SendGrid.Helpers.Errors.Model
+﻿namespace SendGrid.Helpers.Errors.Model
 {
     /// <summary>
     /// Base class for the json error response

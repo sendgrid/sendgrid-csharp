@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SendGrid.Helpers.Errors;
 using SendGrid.Helpers.Mail;
 using SendGrid.Helpers.Reliability;
 using System;

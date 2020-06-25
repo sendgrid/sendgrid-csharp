@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using SendGrid.Helpers.Errors.Model;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SendGrid.Helpers.Errors
