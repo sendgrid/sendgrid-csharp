@@ -1,6 +1,17 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-06-24] Version 9.17.0
+---------------------------
+**Library - Fix**
+- [PR #916](https://github.com/sendgrid/sendgrid-csharp/pull/916): sendAt timestamp as 32bit integer. Thanks to [@matrix0123456789](https://github.com/matrix0123456789)!
+
+**Library - Feature**
+- [PR #1010](https://github.com/sendgrid/sendgrid-csharp/pull/1010): verify signature from event webhook. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #1014](https://github.com/sendgrid/sendgrid-csharp/pull/1014): add Elliptic Curve code and utilities. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #1011](https://github.com/sendgrid/sendgrid-csharp/pull/1011): Added net40 target framework. Thanks to [@HavenDV](https://github.com/HavenDV)!
+
+
 [2020-06-10] Version 9.16.0
 ---------------------------
 **Library - Test**
