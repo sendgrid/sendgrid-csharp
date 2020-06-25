@@ -70,7 +70,7 @@ If you want to thrown the exception when the API returns an error, when you init
 SendGridClient client = new SendGridClient(apiKey, httpErrorAsException: true);
 ```
 
-Thus if an error is thrown due to a failed request, a summary of that error along with a link to the appropriate place in the documentation will be sent back as a JSON object in the Exception Message. You can also, deserialize the JSON object as a SendGridErrorResponse. Every error status code returned by the API, has their own type of exception (BadRequestException, UnauthorizedException, PayloadTooLargeException, SendGridInternalException ...). To see all possibles status code and the errors documentation click [here](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html). 
+Thus if an error is thrown due to a failed request, a summary of that error along with a link to the appropriate place in the documentation will be sent back as a JSON object in the Exception Message. You can also, deserialize the JSON object as a SendGridErrorResponse. Every error status code returned by the API, has their own type of exception (BadRequestException, UnauthorizedException, PayloadTooLargeException, SendGridInternalException ...). To see all possibles status code and the errors documentation click [here](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html).
 
 <h3> EXAMPLES </h3>
 
@@ -95,9 +95,8 @@ catch(Exception ex)
   //  "SendGriErrorMessage":"Permission denied, wrong credentials",
   //  "FieldWithError":null,
   //  "HelpLink":null
-  //} 
+  //}
 }
-                                                 
 ```
 
 <h4> 400 - Bad Request - From Email Null </h4>
@@ -122,10 +121,9 @@ catch (Exception ex)
   //  "SendGriErrorMessage":"The from email does not contain a valid address.",
   //  "FieldWithError":"from.email",
   //  "HelpLink":"http://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html#message.from"
-  //} 
-}                                                 
+  //}
+}
 ```
-
 
 <a name="migrating"></a>
 ## Migrating from the v2 API to v3
@@ -197,7 +195,7 @@ In our example code, you would change:
 var response = await client.SendEmailAsync(msg);
 ```
 
-to 
+to
 
 ```csharp
 var response = await client.SendEmailAsync(msg).ConfigureAwait(false);

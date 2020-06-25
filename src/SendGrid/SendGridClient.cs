@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 
@@ -87,8 +87,8 @@ namespace SendGrid
                 Host = host ?? DefaultOptions.Host,
                 RequestHeaders = requestHeaders ?? DefaultOptions.RequestHeaders,
                 Version = version ?? DefaultOptions.Version,
-                UrlPath = urlPath ?? DefaultOptions.UrlPath
-                HttpErrorAsException = httpErrorAsException ?? DefaultOptions.HttpErrorAsException
+                UrlPath = urlPath ?? DefaultOptions.UrlPath,
+                HttpErrorAsException = httpErrorAsException // No default needed for bool.
             };
         }
     }

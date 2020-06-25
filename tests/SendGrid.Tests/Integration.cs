@@ -5911,8 +5911,6 @@
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
         }
 
-
-
         [Fact]
         public async void TestUnauthorizedRequestException()
         {
@@ -6110,7 +6108,6 @@
                 Assert.Equal(jsonErrorReponse, jsonErrorReponseExpected);
             }
         }
-    }
 
         [Theory]
         [InlineData("first last <username@example.com>", "first last", "username@example.com")]
