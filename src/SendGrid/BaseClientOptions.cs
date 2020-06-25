@@ -45,5 +45,10 @@ namespace SendGrid
         /// The Auth header value.
         /// </summary>
         public AuthenticationHeaderValue Auth { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether HTTP error responses should be raised as exceptions. Default is false.
+        /// </summary>
+        public bool HttpErrorAsException { get; set; } = false;
     }
 }

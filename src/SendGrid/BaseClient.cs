@@ -153,6 +153,12 @@ namespace SendGrid
         public virtual async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
         {
             HttpResponseMessage response = await this.client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode && this.options.HttpErrorAsException)
+            {
+                await ErrorHandler.ThrowException(response).ConfigureAwait(false);
+            }
+
             return new Response(response.StatusCode, response.Content, response.Headers);
         }
 
