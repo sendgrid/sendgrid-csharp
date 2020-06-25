@@ -5912,200 +5912,43 @@
         }
 
         [Fact]
-        public async void TestUnauthorizedRequestException()
+        public async void TestHttpErrorAsException()
         {
-            var client = new SendGridClient("", httpErrorAsException: true);
-
-            var from = new EmailAddress("test@example.com", "Example User");
-            var subject = "Hello World from the SendGrid CSharp Library Helper!";
-            var to = new EmailAddress("test@example.com", "Example User");
-            var plainTextContent = "Hello, Email from the helper [SendSingleEmailAsync]!";
-            var htmlContent = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-
-            try
+            var responseObject = new
             {
-                var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                Assert.NotNull(ex);
-                Assert.IsType<UnauthorizedException>(ex);
-
-                var jsonErrorReponse = ex.Message;
-
-                SendGridErrorResponse errorResponseExpected = new SendGridErrorResponse
-                {
-                    ErrorHttpStatusCode = 401,
-                    ErrorReasonPhrase = "Unauthorized",
-                    SendGridErrorMessage = "Permission denied, wrong credentials",
-                    FieldWithError = null,
-                    HelpLink = null
-                };
-
-                var jsonErrorReponseExpected = Newtonsoft.Json.JsonConvert.SerializeObject(errorResponseExpected);
-
-                Assert.Equal(jsonErrorReponse, jsonErrorReponseExpected);
-            }
-        }
-
-        [Fact]
-        public async void TestBadRequestExceptionFromEmailNull()
-        {
-            var client = new SendGridClient(fixture.apiKey, httpErrorAsException: true);
-
-            var from = new EmailAddress("", "Example User");
-            var subject = "Hello World from the SendGrid CSharp Library Helper!";
-            var to = new EmailAddress("test@example.com", "Example User");
-            var plainTextContent = "Hello, Email from the helper [SendSingleEmailAsync]!";
-            var htmlContent = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-
-            try
-            {
-                var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                Assert.NotNull(ex);
-                Assert.IsType<BadRequestException>(ex);
-
-                var jsonErrorReponse = ex.Message;
-
-                SendGridErrorResponse errorResponseExpected = new SendGridErrorResponse
-                {
-                    ErrorHttpStatusCode = 400,
-                    ErrorReasonPhrase = "Bad Request",
-                    SendGridErrorMessage = "The from email does not contain a valid address.",
-                    FieldWithError = "from.email",
-                    HelpLink = "http://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html#message.from"
-                };
-
-                var jsonErrorReponseExpected = Newtonsoft.Json.JsonConvert.SerializeObject(errorResponseExpected);
-
-                Assert.Equal(jsonErrorReponse, jsonErrorReponseExpected);
-            }
-        }
-
-        [Fact]
-        public async void TestBadRequestExceptionSubjectError()
-        {
-            var client = new SendGridClient(fixture.apiKey, httpErrorAsException: true);
-
-            var from = new EmailAddress("test@example.com", "Example User");
-            var subject = "";
-            var to = new EmailAddress("test@example.com", "Example User");
-            var plainTextContent = "Hello, Email from the helper [SendSingleEmailAsync]!";
-            var htmlContent = "<strong>Hello, Email from the helper! [SendSingleEmailAsync]</strong>";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-
-            try
-            {
-                var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                Assert.NotNull(ex);
-                Assert.IsType<BadRequestException>(ex);
-
-                var jsonErrorReponse = ex.Message;
-
-                SendGridErrorResponse errorResponseExpected = new SendGridErrorResponse
-                {
-                    ErrorHttpStatusCode = 400,
-                    ErrorReasonPhrase = "Bad Request",
-                    SendGridErrorMessage = "The subject is required. You can get around this requirement if you use a template with a subject defined or if every personalization has a subject defined.",
-                    FieldWithError = "subject",
-                    HelpLink = "http://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html#message.subject"
-                };
-
-                var jsonErrorReponseExpected = Newtonsoft.Json.JsonConvert.SerializeObject(errorResponseExpected);
-
-                Assert.Equal(jsonErrorReponse, jsonErrorReponseExpected);
-            }
-        }
-
-        [Fact]
-        public async void TestBadRequestAttachmentError()
-        {
-            var client = new SendGridClient(fixture.apiKey, httpErrorAsException: true);
-
-            var from = new EmailAddress("test@example.com");
-            var subject = "Subject";
-            var to = new EmailAddress("test@example.com");
-            var body = "Email Body";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, body, "");
-
-            var attachment = new Attachment
-            {
-                Filename = "file.txt",
-                Content = null,
-                Type = null,
-                Disposition = null,
-                ContentId = null
+                errors = new[] { new {
+                    message = "error message",
+                    field = "field value",
+                    help =  "help value"
+                } }
             };
 
-            msg.AddAttachment(attachment);
+            var responseMessage = Newtonsoft.Json.JsonConvert.SerializeObject(responseObject);
+            var mockHandler = new FixedStatusAndMessageHttpMessageHandler(HttpStatusCode.ServiceUnavailable, responseMessage);
+            var mockClient = new HttpClient(mockHandler);
+            var client = new SendGridClient(mockClient, fixture.apiKey, httpErrorAsException: true);
 
             try
             {
-                var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
+                var response = await client.MakeRequest(new HttpRequestMessage(HttpMethod.Get, "http://api.sendgrid.com/")).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
                 Assert.NotNull(ex);
-                Assert.IsType<BadRequestException>(ex);
+                Assert.IsType<ServiceNotAvailableException>(ex);
 
-                var jsonErrorReponse = ex.Message;
-
-                SendGridErrorResponse errorResponseExpected = new SendGridErrorResponse
+                var errorResponseExpected = new SendGridErrorResponse
                 {
-                    ErrorHttpStatusCode = 400,
-                    ErrorReasonPhrase = "Bad Request",
-                    SendGridErrorMessage = "The attachment content is required.",
-                    FieldWithError = "attachments.0.content",
-                    HelpLink = "http://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html#message.attachments.content"
+                    ErrorHttpStatusCode = 503,
+                    ErrorReasonPhrase = "Service Unavailable",
+                    SendGridErrorMessage = "error message",
+                    FieldWithError = "field value",
+                    HelpLink = "help value"
                 };
 
                 var jsonErrorReponseExpected = Newtonsoft.Json.JsonConvert.SerializeObject(errorResponseExpected);
 
-                Assert.Equal(jsonErrorReponse, jsonErrorReponseExpected);
-            }
-        }
-
-        [Fact]
-        public async void TestBadRequestTemplateError()
-        {
-            var client = new SendGridClient(fixture.apiKey, httpErrorAsException: true);
-
-            var msg = new SendGridMessage();
-            msg.SetFrom(new EmailAddress("test@example.com", "Example User"));
-            msg.AddTo(new EmailAddress("test@example.com", "Example User"));
-            msg.SetTemplateId("");
-
-            try
-            {
-                var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                Assert.NotNull(ex);
-                Assert.IsType<BadRequestException>(ex);
-
-                var jsonErrorReponse = ex.Message;
-
-                SendGridErrorResponse errorResponseExpected = new SendGridErrorResponse
-                {
-                    ErrorHttpStatusCode = 400,
-                    ErrorReasonPhrase = "Bad Request",
-                    SendGridErrorMessage = "The template_id must be a valid GUID, you provided ''.",
-                    FieldWithError = "template_id",
-                    HelpLink = "http://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html#message.template_id"
-                };
-
-                var jsonErrorReponseExpected = Newtonsoft.Json.JsonConvert.SerializeObject(errorResponseExpected);
-
-                Assert.Equal(jsonErrorReponse, jsonErrorReponseExpected);
+                Assert.Equal(jsonErrorReponseExpected, ex.Message);
             }
         }
 
