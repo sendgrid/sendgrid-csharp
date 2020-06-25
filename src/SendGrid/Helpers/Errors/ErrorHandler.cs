@@ -143,7 +143,7 @@ namespace SendGrid.Helpers.Errors
             {
                 ErrorHttpStatusCode = errorStatusCode,
                 ErrorReasonPhrase = errorReasonPhrase,
-                SendGriErrorMessage = errorValue,
+                SendGridErrorMessage = errorValue,
                 FieldWithError = fieldValue,
                 HelpLink = helpValue
             };

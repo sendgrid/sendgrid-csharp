@@ -16,9 +16,9 @@
         public string ErrorReasonPhrase { get; set; }
 
         /// <summary>
-        /// Gets or sets the send grid error message
+        /// Gets or sets the SendGrid error message
         /// </summary>
-        public string SendGriErrorMessage { get; set; }
+        public string SendGridErrorMessage { get; set; }
 
         /// <summary>
         /// Gets or sets the field that has the error
