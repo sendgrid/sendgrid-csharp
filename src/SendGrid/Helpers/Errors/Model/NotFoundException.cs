@@ -5,7 +5,7 @@ namespace SendGrid.Helpers.Errors.Model
     /// <summary>
     /// Represents errors with status code 404
     /// </summary>
-    public class NotFoundException : Exception
+    public class NotFoundException : RequestErrorException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NotFoundException"/> class.

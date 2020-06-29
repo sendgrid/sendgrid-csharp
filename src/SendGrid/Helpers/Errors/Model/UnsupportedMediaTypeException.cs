@@ -5,7 +5,7 @@ namespace SendGrid.Helpers.Errors.Model
     /// <summary>
     /// Represents errors with status code 415
     /// </summary>
-    public class UnsupportedMediaTypeException : Exception
+    public class UnsupportedMediaTypeException : RequestErrorException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UnsupportedMediaTypeException"/> class.

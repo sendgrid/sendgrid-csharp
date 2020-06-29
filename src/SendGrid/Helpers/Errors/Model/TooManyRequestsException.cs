@@ -5,7 +5,7 @@ namespace SendGrid.Helpers.Errors.Model
     /// <summary>
     /// Represents errors with status code 429
     /// </summary>
-    public class TooManyRequestsException : Exception
+    public class TooManyRequestsException : RequestErrorException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TooManyRequestsException"/> class.

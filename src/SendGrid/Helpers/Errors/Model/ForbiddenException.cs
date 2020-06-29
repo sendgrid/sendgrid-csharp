@@ -5,7 +5,7 @@ namespace SendGrid.Helpers.Errors.Model
     /// <summary>
     /// Represents errors with status code 403
     /// </summary>
-    public class ForbiddenException : Exception
+    public class ForbiddenException : RequestErrorException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ForbiddenException"/> class.

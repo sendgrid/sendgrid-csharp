@@ -5,7 +5,7 @@ namespace SendGrid.Helpers.Errors.Model
     /// <summary>
     /// Represents errors with status code 413
     /// </summary>
-    public class PayloadTooLargeException : Exception
+    public class PayloadTooLargeException : RequestErrorException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PayloadTooLargeException"/> class.

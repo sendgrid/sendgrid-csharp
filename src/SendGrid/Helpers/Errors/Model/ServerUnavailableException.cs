@@ -5,7 +5,7 @@ namespace SendGrid.Helpers.Errors.Model
     /// <summary>
     /// Represents errors with status code 500
     /// </summary>
-    public class ServerUnavailableException : Exception
+    public class ServerUnavailableException : SendGridInternalException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ServerUnavailableException"/> class.

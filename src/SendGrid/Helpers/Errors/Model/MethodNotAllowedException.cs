@@ -5,7 +5,7 @@ namespace SendGrid.Helpers.Errors.Model
     /// <summary>
     /// Represents errors with status code 405
     /// </summary>
-    public class MethodNotAllowedException : Exception
+    public class MethodNotAllowedException : RequestErrorException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MethodNotAllowedException"/> class.

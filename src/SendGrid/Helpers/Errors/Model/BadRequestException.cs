@@ -5,7 +5,7 @@ namespace SendGrid.Helpers.Errors.Model
     /// <summary>
     /// Represents errors with status code 400
     /// </summary>
-    public class BadRequestException : Exception
+    public class BadRequestException : RequestErrorException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BadRequestException"/> class.

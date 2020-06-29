@@ -5,7 +5,7 @@ namespace SendGrid.Helpers.Errors.Model
     /// <summary>
     /// Represents errors with status code 503
     /// </summary>
-    public class ServiceNotAvailableException : Exception
+    public class ServiceNotAvailableException : SendGridInternalException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceNotAvailableException"/> class.

@@ -5,7 +5,7 @@ namespace SendGrid.Helpers.Errors.Model
     /// <summary>
     /// Represents errors with status code 401
     /// </summary>
-    public class UnauthorizedException : Exception
+    public class UnauthorizedException : RequestErrorException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UnauthorizedException"/> class.
