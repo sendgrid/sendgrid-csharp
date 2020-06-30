@@ -1,5 +1,5 @@
-﻿// <copyright file="Ganalytics.cs" company="SendGrid">
-// Copyright (c) SendGrid. All rights reserved.
+﻿// <copyright file="Ganalytics.cs" company="Twilio SendGrid">
+// Copyright (c) Twilio SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
@@ -20,13 +20,13 @@ namespace SendGrid.Helpers.Mail
         public bool? Enable { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the referrer source. (e.g. Google, SomeDomain.com, or Marketing Email)
+        /// Gets or sets the name of the referrer source (e.g. Google, SomeDomain.com, or Marketing Email).
         /// </summary>
         [JsonProperty(PropertyName = "utm_source")]
         public string UtmSource { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the marketing medium. (e.g. Email)
+        /// Gets or sets the name of the marketing medium (e.g. Email).
         /// </summary>
         [JsonProperty(PropertyName = "utm_medium")]
         public string UtmMedium { get; set; }

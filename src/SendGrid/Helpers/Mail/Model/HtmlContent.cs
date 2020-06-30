@@ -1,5 +1,5 @@
-﻿// <copyright file="HtmlContent.cs" company="SendGrid">
-// Copyright (c) SendGrid. All rights reserved.
+﻿// <copyright file="HtmlContent.cs" company="Twilio SendGrid">
+// Copyright (c) Twilio SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace SendGrid.Helpers.Mail.Model
 {
     /// <summary>
-    /// Helper class for plain html mime types
+    /// Helper class for plain html mime types.
     /// </summary>
     [JsonObject(IsReference = false)]
     public class HtmlContent : Content
