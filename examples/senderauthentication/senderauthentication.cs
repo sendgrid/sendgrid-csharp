@@ -8,7 +8,7 @@ var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABL
 var client = new SendGridClient(apiKey);
 
 ////////////////////////////////////////////////////////
-// Create a domain whitelabel.
+// Create a domain authentication.
 // POST /whitelabel/domains
 
 string data = @"{
@@ -32,7 +32,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// List all domain whitelabels.
+// List all domain authentication.
 // GET /whitelabel/domains
 
 string queryParams = @"{
@@ -49,7 +49,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Get the default domain whitelabel.
+// Get the default domain authentication.
 // GET /whitelabel/domains/default
 
 var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/domains/_("default")");
@@ -59,7 +59,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// List the domain whitelabel associated with the given user.
+// List the domain authentication associated with the given user.
 // GET /whitelabel/domains/subuser
 
 var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/domains/subuser");
@@ -69,7 +69,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Disassociate a domain whitelabel from a given user.
+// Disassociate a domain authentication from a given user.
 // DELETE /whitelabel/domains/subuser
 
 var response = await client.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "whitelabel/domains/subuser");
@@ -79,7 +79,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Update a domain whitelabel.
+// Update a domain authentication.
 // PATCH /whitelabel/domains/{domain_id}
 
 string data = @"{
@@ -96,7 +96,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Retrieve a domain whitelabel.
+// Retrieve a domain authentication.
 // GET /whitelabel/domains/{domain_id}
 
 var domain_id = "test_url_param";
@@ -107,7 +107,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Delete a domain whitelabel.
+// Delete a domain authentication.
 // DELETE /whitelabel/domains/{domain_id}
 
 var domain_id = "test_url_param";
@@ -118,7 +118,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Associate a domain whitelabel with a given user.
+// Associate a domain authentication with a given user.
 // POST /whitelabel/domains/{domain_id}/subuser
 
 string data = @"{
@@ -134,7 +134,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Add an IP to a domain whitelabel.
+// Add an IP to a domain authentication.
 // POST /whitelabel/domains/{id}/ips
 
 string data = @"{
@@ -150,7 +150,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Remove an IP from a domain whitelabel.
+// Remove an IP from a domain authentication.
 // DELETE /whitelabel/domains/{id}/ips/{ip}
 
 var id = "test_url_param";
@@ -162,7 +162,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Validate a domain whitelabel.
+// Validate a domain authentication.
 // POST /whitelabel/domains/{id}/validate
 
 var id = "test_url_param";
@@ -173,7 +173,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Create an IP whitelabel
+// Create a reverse DNS record
 // POST /whitelabel/ips
 
 string data = @"{
@@ -190,7 +190,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Retrieve all IP whitelabels
+// Retrieve a reverse DNS record
 // GET /whitelabel/ips
 
 string queryParams = @"{
@@ -205,7 +205,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Retrieve an IP whitelabel
+// Retrieve a reverse DNS record
 // GET /whitelabel/ips/{id}
 
 var id = "test_url_param";
@@ -216,7 +216,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Delete an IP whitelabel
+// Delete a reverse DNS record
 // DELETE /whitelabel/ips/{id}
 
 var id = "test_url_param";
@@ -227,7 +227,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Validate an IP whitelabel
+// Validate a reverse DNS record
 // POST /whitelabel/ips/{id}/validate
 
 var id = "test_url_param";
@@ -238,7 +238,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Create a Link Whitelabel
+// Create a Link Branding
 // POST /whitelabel/links
 
 string data = @"{
@@ -259,7 +259,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Retrieve all link whitelabels
+// Retrieve all link brandingsBranding
 // GET /whitelabel/links
 
 string queryParams = @"{
@@ -272,7 +272,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Retrieve a Default Link Whitelabel
+// Retrieve a Default Link Branding
 // GET /whitelabel/links/default
 
 string queryParams = @"{
@@ -285,7 +285,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Retrieve Associated Link Whitelabel
+// Retrieve Associated Link Branding
 // GET /whitelabel/links/subuser
 
 string queryParams = @"{
@@ -298,7 +298,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Disassociate a Link Whitelabel
+// Disassociate a Link Branding
 // DELETE /whitelabel/links/subuser
 
 string queryParams = @"{
@@ -311,7 +311,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Update a Link Whitelabel
+// Update a Link Branding
 // PATCH /whitelabel/links/{id}
 
 string data = @"{
@@ -327,7 +327,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Retrieve a Link Whitelabel
+// Retrieve a Link Branding
 // GET /whitelabel/links/{id}
 
 var id = "test_url_param";
@@ -338,7 +338,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Delete a Link Whitelabel
+// Delete a Link Branding
 // DELETE /whitelabel/links/{id}
 
 var id = "test_url_param";
@@ -349,7 +349,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Validate a Link Whitelabel
+// Validate a Link Branding
 // POST /whitelabel/links/{id}/validate
 
 var id = "test_url_param";
@@ -360,7 +360,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Associate a Link Whitelabel
+// Associate a Link Branding
 // POST /whitelabel/links/{link_id}/subuser
 
 string data = @"{
