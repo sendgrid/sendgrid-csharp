@@ -8,7 +8,7 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/sendgrid/sendgrid-csharp.svg)](https://github.com/sendgrid/sendgrid-csharp/graphs/contributors)
 [![Open Source Helpers](https://www.codetriage.com/sendgrid/sendgrid-csharp/badges/users.svg)](https://www.codetriage.com/sendgrid/sendgrid-csharp)
 
-# <a name="announcements"></a>Announcements
+# Announcements
 
 * Subscribe to email [notifications](https://dx.sendgrid.com/newsletter/csharp) for releases and breaking changes.
 * Send SMS messages with [Twilio](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#sms). 
@@ -30,17 +30,25 @@ We appreciate your continued support, thank you!
 # Table of Contents
 
 * [Installation](#installation)
+  * [Prerequisites](#prerequisites)
+  * [Obtain an API Key](#obtain-api)
+  * [Setup Environment Variables to Manage Your API Key](#setup)
+  * [Install Package](#install-package)
+  * [Dependencies](#dependencies)
 * [Quick Start](#quick-start)
+  * [Hello Email](#hello)
+  * [General v3 Web API Usage](#v3)
+  * [Web Proxy](#proxy)
 * [Usage](#usage)
 * [Use Cases](#use-cases)
 * [Announcements](#announcements)
 * [Roadmap](#roadmap)
-* [How to Contribute](#contribute)
+* [How to Contribute](#how-to-contribute)
 * [Troubleshooting](#troubleshooting)
 * [About](#about)
 * [License](#license)
 
-# <a name="installation"></a>Installation
+# Installation
 
 ## Prerequisites
 
@@ -49,10 +57,12 @@ We appreciate your continued support, thank you!
 - .NET Standard 1.3 support
 - A Twilio SendGrid account, [sign up for free](https://sendgrid.com/free?source=sendgrid-csharp) to send up to 40,000 emails for the first 30 days, then send 100 emails/day free forever or check out [our pricing](https://sendgrid.com/pricing?source=sendgrid-csharp).
 
+<a name="obtain-api"></a>
 ## Obtain an API Key
 
 Grab your API Key from the [Twilio SendGrid UI](https://app.sendgrid.com/settings/api_keys).
 
+<a name="setup"></a>
 ## Setup Environment Variables to Manage Your API Key
 
 Manage your [Twilio SendGrid API Keys](https://app.sendgrid.com/settings/api_keys) by storing them in Environment Variables or in [Web.config](https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure). It is a good practice to keep your data and configuration settings separate. This way to you can change your Twilio SendGrid API key without changing your code. Also, we strongly advise against storing sensitive data directly in your code.
@@ -71,7 +81,7 @@ Setup Environment Variables using CMD:
 1. Run CMD as administrator
 2. setx SENDGRID_API_KEY "YOUR_API_KEY"
 
-Here are few example to get and set API Keys programmatically:
+Here are a few examples to get and set API Keys programmatically:
 
 ```csharp
 # Get Environment Variable
@@ -99,11 +109,12 @@ For sample implementations, see the [.NET Core Example](https://github.com/sendg
 
 Please see the [.csproj file](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/SendGrid.csproj).
 
-# <a name="quick-start"></a>Quick Start
+# Quick Start
 
+<a name="hello"></a>
 ## Hello Email
 
-The following is the minimum needed code to send an simple email. Use this example, and modify the `apiKey`, `from` and `to` variables:
+The following is the minimum needed code to send a simple email. Use this example, and modify the `apiKey`, `from` and `to` variables:
 
 ```csharp
 using System;
@@ -157,8 +168,9 @@ class Program
 }
 ```
 
-You can find an example of all of the email features [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs#L79).
+You can find an example of all the email features [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs#L79).
 
+<a name="v3"></a>
 ## General v3 Web API Usage
 
 ```csharp
@@ -179,6 +191,7 @@ class Program
 }
 ```
 
+<a name="proxy"></a>
 ## Web Proxy
 
 ```csharp
@@ -227,7 +240,7 @@ class Program
 }
 ```
 
-# <a name="usage"></a>Usage
+# Usage
 
 - [Twilio SendGrid Docs](https://sendgrid.com/docs/API_Reference/api_v3.html)
 - [Library Usage Docs](https://github.com/sendgrid/sendgrid-csharp/tree/master/USAGE.md)
@@ -236,15 +249,15 @@ class Program
 - [How-to: Migration from v2 to v3](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/how_to_migrate_from_v2_to_v3_mail_send.html)
 - [v3 Web API Mail Send Helper](https://github.com/sendgrid/sendgrid-csharp/tree/master/src/SendGrid/Helpers/Mail)
 
-# <a name="use-cases"></a>Use Cases
+# Use Cases
 
 Here are some [examples of common API use cases](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md), such as how to send an email with a transactional template.
 
-# <a name="roadmap"></a>Roadmap
+# Roadmap
 
 If you are interested in the future direction of this project, please take a look at our open [issues](https://github.com/sendgrid/sendgrid-csharp/issues) and [pull requests](https://github.com/sendgrid/sendgrid-csharp/pulls). We would love to hear your feedback!
 
-# <a name="contribute"></a>How to Contribute
+# How to Contribute
 
 We encourage contribution to our library (you might even score some nifty swag), please see our [CONTRIBUTING](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md) guide for details.
 
@@ -255,11 +268,11 @@ Quick links:
 - [Improvements to the Codebase](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#improvements-to-the-codebase)
 - [Review Pull Requests](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#code-reviews)
 
-# <a name="troubleshooting"></a>Troubleshooting
+# Troubleshooting
 
 Please see our [troubleshooting guide](https://github.com/sendgrid/sendgrid-csharp/blob/master/TROUBLESHOOTING.md) for common library issues.
 
-# <a name="about"></a>About
+# About
 
 sendgrid-csharp is maintained and funded by Twilio SendGrid, Inc. The names and logos for sendgrid-csharp are trademarks of Twilio SendGrid, Inc.
 
