@@ -329,7 +329,7 @@ A JSON request body containing a "name" property is required. If number of maxim
 
 There is a limit of 100 API Keys on your account.
 
-The API Keys feature allows customers to be able to generate an API Key credential which can be used for authentication with the SendGrid v3 Web API or the [Mail API Endpoint](https://sendgrid.com/docs/API_Reference/Web_API/mail.html).
+The API Keys feature allows customers to be able to generate an API Key credential which can be used for authentication with the Twilio SendGrid v3 Web API or the [Mail API Endpoint](https://sendgrid.com/docs/API_Reference/Web_API/mail.html).
 
 See the [API Key Permissions List](https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/api_key_permissions_list.html) for a list of all available scopes.
 
@@ -359,7 +359,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve all API Keys that belong to the authenticated user.**
 
-The API Keys feature allows customers to be able to generate an API Key credential which can be used for authentication with the SendGrid v3 Web API or the [Mail API Endpoint](https://sendgrid.com/docs/API_Reference/Web_API/mail.html).
+The API Keys feature allows customers to be able to generate an API Key credential which can be used for authentication with the Twilio SendGrid v3 Web API or the [Mail API Endpoint](https://sendgrid.com/docs/API_Reference/Web_API/mail.html).
 
 ### GET /api_keys
 
@@ -382,7 +382,7 @@ Console.ReadLine();
 A JSON request body with a "name" property is required.
 Most provide the list of all the scopes an api key should have.
 
-The API Keys feature allows customers to be able to generate an API Key credential which can be used for authentication with the SendGrid v3 Web API or the [Mail API Endpoint](https://sendgrid.com/docs/API_Reference/Web_API/mail.html).
+The API Keys feature allows customers to be able to generate an API Key credential which can be used for authentication with the Twilio SendGrid v3 Web API or the [Mail API Endpoint](https://sendgrid.com/docs/API_Reference/Web_API/mail.html).
 
 
 ### PUT /api_keys/{api_key_id}
@@ -412,7 +412,7 @@ Console.ReadLine();
 
 A JSON request body with a "name" property is required.
 
-The API Keys feature allows customers to be able to generate an API Key credential which can be used for authentication with the SendGrid v3 Web API or the [Mail API Endpoint](https://sendgrid.com/docs/API_Reference/Web_API/mail.html).
+The API Keys feature allows customers to be able to generate an API Key credential which can be used for authentication with the Twilio SendGrid v3 Web API or the [Mail API Endpoint](https://sendgrid.com/docs/API_Reference/Web_API/mail.html).
 
 ## URI Parameters
 
@@ -461,7 +461,7 @@ Console.ReadLine();
 
 Authentications using this API Key will fail after this request is made, with some small propagation delay.If the API Key ID does not exist an HTTP 404 will be returned.
 
-The API Keys feature allows customers to be able to generate an API Key credential which can be used for authentication with the SendGrid v3 Web API or the [Mail API Endpoint](https://sendgrid.com/docs/API_Reference/Web_API/mail.html).
+The API Keys feature allows customers to be able to generate an API Key credential which can be used for authentication with the Twilio SendGrid v3 Web API or the [Mail API Endpoint](https://sendgrid.com/docs/API_Reference/Web_API/mail.html).
 
 ## URI Parameters
 
@@ -1270,7 +1270,7 @@ Console.ReadLine();
 
 **This endpoint allows you to create a custom field.**
 
-The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
+The contactdb is a database of your contacts for [Twilio SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
 
 ### POST /contactdb/custom_fields
 
@@ -1293,7 +1293,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve all custom fields.** 
 
-The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
+The contactdb is a database of your contacts for [Twilio SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
 
 ### GET /contactdb/custom_fields
 
@@ -1310,7 +1310,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve a custom field by ID.**
 
-The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
+The contactdb is a database of your contacts for [Twilio SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
 
 ### GET /contactdb/custom_fields/{custom_field_id}
 
@@ -1328,7 +1328,7 @@ Console.ReadLine();
 
 **This endpoint allows you to delete a custom field by ID.**
 
-The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
+The contactdb is a database of your contacts for [Twilio SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
 
 ### DELETE /contactdb/custom_fields/{custom_field_id}
 
@@ -1571,9 +1571,9 @@ Console.ReadLine();
 
 The body of an API call to this endpoint must include an array of one or more recipient objects.
 
-It is of note that you can add custom field data as parameters on recipient objects. We have provided an example using some of the default custom fields SendGrid provides.
+It is of note that you can add custom field data as parameters on recipient objects. We have provided an example using some of the default custom fields Twilio SendGrid provides.
 
-The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
+The contactdb is a database of your contacts for [Twilio SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
 
 ### PATCH /contactdb/recipients
 
@@ -1599,7 +1599,7 @@ Console.ReadLine();
 
 **This endpoint allows you to add a Marketing Campaigns recipient.**
 
-It is of note that you can add custom field data as a parameter on this endpoint. We have provided an example using some of the default custom fields SendGrid provides.
+It is of note that you can add custom field data as a parameter on this endpoint. We have provided an example using some of the default custom fields Twilio SendGrid provides.
 
 The Contacts API helps you manage your [Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html) recipients.
 
@@ -1660,7 +1660,7 @@ Console.ReadLine();
 
 The body of an API call to this endpoint must include an array of recipient IDs of the recipients you want to delete.
 
-The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
+The contactdb is a database of your contacts for [Twilio SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
 
 ### DELETE /contactdb/recipients
 
@@ -1702,7 +1702,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve the total number of Marketing Campaigns recipients.**
 
-The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
+The contactdb is a database of your contacts for [Twilio SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
 
 ### GET /contactdb/recipients/count
 
@@ -1728,7 +1728,7 @@ your epoch time to a date range encompassing the entire day. For example, an epo
 Mon, 02 Feb 2015 00:06:40 GMT, but internally the system will search from Mon, 02 Feb 2015 00:00:00 GMT through
 Mon, 02 Feb 2015 23:59:59 GMT.
 
-The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
+The contactdb is a database of your contacts for [Twilio SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
 
 ### GET /contactdb/recipients/search
 
@@ -1804,7 +1804,7 @@ Console.ReadLine();
 
 **This endpoint allows you to list all fields that are reserved and can't be used for custom field names.**
 
-The contactdb is a database of your contacts for [SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
+The contactdb is a database of your contacts for [Twilio SendGrid Marketing Campaigns](https://sendgrid.com/docs/User_Guide/Marketing_Campaigns/index.html).
 
 ### GET /contactdb/reserved_fields
 
@@ -2128,7 +2128,7 @@ Console.ReadLine();
 
 **Each user can create up to 10 different IP pools.**
 
-IP Pools allow you to group your dedicated SendGrid IP addresses together. For example, you could create separate pools for your transactional and marketing email. When sending marketing emails, specify that you want to use the marketing IP pool. This allows you to maintain separate reputations for your different email traffic.
+IP Pools allow you to group your dedicated Twilio SendGrid IP addresses together. For example, you could create separate pools for your transactional and marketing email. When sending marketing emails, specify that you want to use the marketing IP pool. This allows you to maintain separate reputations for your different email traffic.
 
 IP pools can only be used with authenticated IP addresses.
 
@@ -2154,7 +2154,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve all of your IP pools.**
 
-IP Pools allow you to group your dedicated SendGrid IP addresses together. For example, you could create separate pools for your transactional and marketing email. When sending marketing emails, specify that you want to use the marketing IP pool. This allows you to maintain separate reputations for your different email traffic.
+IP Pools allow you to group your dedicated Twilio SendGrid IP addresses together. For example, you could create separate pools for your transactional and marketing email. When sending marketing emails, specify that you want to use the marketing IP pool. This allows you to maintain separate reputations for your different email traffic.
 
 IP pools can only be used with authenticated IP addresses.
 
@@ -2175,7 +2175,7 @@ Console.ReadLine();
 
 **This endpoint allows you to update the name of an IP pool.**
 
-IP Pools allow you to group your dedicated SendGrid IP addresses together. For example, you could create separate pools for your transactional and marketing email. When sending marketing emails, specify that you want to use the marketing IP pool. This allows you to maintain separate reputations for your different email traffic.
+IP Pools allow you to group your dedicated Twilio SendGrid IP addresses together. For example, you could create separate pools for your transactional and marketing email. When sending marketing emails, specify that you want to use the marketing IP pool. This allows you to maintain separate reputations for your different email traffic.
 
 IP pools can only be used with authenticated IP addresses.
 
@@ -2202,7 +2202,7 @@ Console.ReadLine();
 
 **This endpoint allows you to list all of the IP addresses that are in a specific IP pool.**
 
-IP Pools allow you to group your dedicated SendGrid IP addresses together. For example, you could create separate pools for your transactional and marketing email. When sending marketing emails, specify that you want to use the marketing IP pool. This allows you to maintain separate reputations for your different email traffic.
+IP Pools allow you to group your dedicated Twilio SendGrid IP addresses together. For example, you could create separate pools for your transactional and marketing email. When sending marketing emails, specify that you want to use the marketing IP pool. This allows you to maintain separate reputations for your different email traffic.
 
 IP pools can only be used with authenticated IP addresses.
 
@@ -2224,7 +2224,7 @@ Console.ReadLine();
 
 **This endpoint allows you to delete an IP pool.**
 
-IP Pools allow you to group your dedicated SendGrid IP addresses together. For example, you could create separate pools for your transactional and marketing email. When sending marketing emails, specify that you want to use the marketing IP pool. This allows you to maintain separate reputations for your different email traffic.
+IP Pools allow you to group your dedicated Twilio SendGrid IP addresses together. For example, you could create separate pools for your transactional and marketing email. When sending marketing emails, specify that you want to use the marketing IP pool. This allows you to maintain separate reputations for your different email traffic.
 
 IP pools can only be used with authenticated IP addresses.
 
@@ -2292,7 +2292,7 @@ Console.ReadLine();
 
 **This endpoint allows you to enter an IP address into warmup mode.**
 
-SendGrid can automatically warm up dedicated IP addresses by limiting the amount of mail that can be sent through them per hour, with the limit determined by how long the IP address has been in warmup. See the [warmup schedule](https://sendgrid.com/docs/API_Reference/Web_API_v3/IP_Management/ip_warmup_schedule.html) for more details on how SendGrid limits your email traffic for IPs in warmup.
+Twilio SendGrid can automatically warm up dedicated IP addresses by limiting the amount of mail that can be sent through them per hour, with the limit determined by how long the IP address has been in warmup. See the [warmup schedule](https://sendgrid.com/docs/API_Reference/Web_API_v3/IP_Management/ip_warmup_schedule.html) for more details on how Twilio SendGrid limits your email traffic for IPs in warmup.
 
 For more general information about warming up IPs, please see our [Classroom](https://sendgrid.com/docs/Classroom/Deliver/Delivery_Introduction/warming_up_ips.html).
 
@@ -2316,7 +2316,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve all of your IP addresses that are currently warming up.**
 
-SendGrid can automatically warm up dedicated IP addresses by limiting the amount of mail that can be sent through them per hour, with the limit determined by how long the IP address has been in warmup. See the [warmup schedule](https://sendgrid.com/docs/API_Reference/Web_API_v3/IP_Management/ip_warmup_schedule.html) for more details on how SendGrid limits your email traffic for IPs in warmup.
+Twilio SendGrid can automatically warm up dedicated IP addresses by limiting the amount of mail that can be sent through them per hour, with the limit determined by how long the IP address has been in warmup. See the [warmup schedule](https://sendgrid.com/docs/API_Reference/Web_API_v3/IP_Management/ip_warmup_schedule.html) for more details on how Twilio SendGrid limits your email traffic for IPs in warmup.
 
 For more general information about warming up IPs, please see our [Classroom](https://sendgrid.com/docs/Classroom/Deliver/Delivery_Introduction/warming_up_ips.html).
 
@@ -2335,7 +2335,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve the warmup status for a specific IP address.**
 
-SendGrid can automatically warm up dedicated IP addresses by limiting the amount of mail that can be sent through them per hour, with the limit determined by how long the IP address has been in warmup. See the [warmup schedule](https://sendgrid.com/docs/API_Reference/Web_API_v3/IP_Management/ip_warmup_schedule.html) for more details on how SendGrid limits your email traffic for IPs in warmup.
+Twilio SendGrid can automatically warm up dedicated IP addresses by limiting the amount of mail that can be sent through them per hour, with the limit determined by how long the IP address has been in warmup. See the [warmup schedule](https://sendgrid.com/docs/API_Reference/Web_API_v3/IP_Management/ip_warmup_schedule.html) for more details on how Twilio SendGrid limits your email traffic for IPs in warmup.
 
 For more general information about warming up IPs, please see our [Classroom](https://sendgrid.com/docs/Classroom/Deliver/Delivery_Introduction/warming_up_ips.html).
 
@@ -2355,7 +2355,7 @@ Console.ReadLine();
 
 **This endpoint allows you to remove an IP address from warmup mode.**
 
-SendGrid can automatically warm up dedicated IP addresses by limiting the amount of mail that can be sent through them per hour, with the limit determined by how long the IP address has been in warmup. See the [warmup schedule](https://sendgrid.com/docs/API_Reference/Web_API_v3/IP_Management/ip_warmup_schedule.html) for more details on how SendGrid limits your email traffic for IPs in warmup.
+Twilio SendGrid can automatically warm up dedicated IP addresses by limiting the amount of mail that can be sent through them per hour, with the limit determined by how long the IP address has been in warmup. See the [warmup schedule](https://sendgrid.com/docs/API_Reference/Web_API_v3/IP_Management/ip_warmup_schedule.html) for more details on how Twilio SendGrid limits your email traffic for IPs in warmup.
 
 For more general information about warming up IPs, please see our [Classroom](https://sendgrid.com/docs/Classroom/Deliver/Delivery_Introduction/warming_up_ips.html).
 
@@ -2439,7 +2439,7 @@ Console.ReadLine();
 
 ## v3 Mail Send
 
-This endpoint allows you to send email over SendGrids v3 Web API, the most recent version of our API. If you are looking for documentation about the v2 Mail Send endpoint, please see our [v2 API Reference](https://sendgrid.com/docs/API_Reference/Web_API/mail.html).
+This endpoint allows you to send email over Twilio SendGrid's v3 Web API, the most recent version of our API. If you are looking for documentation about the v2 Mail Send endpoint, please see our [v2 API Reference](https://sendgrid.com/docs/API_Reference/Web_API/mail.html).
 
 * Top level parameters are referred to as "global".
 * Individual fields within the personalizations array will override any other global, or message level, parameters that are defined outside of personalizations.
@@ -2504,8 +2504,8 @@ string data = @"{
     }, 
     'footer': {
       'enable': true, 
-      'html': '<p>Thanks</br>The SendGrid Team</p>', 
-      'text': 'Thanks,/n The SendGrid Team'
+      'html': '<p>Thanks</br>The Twilio SendGrid Team</p>', 
+      'text': 'Thanks,/n The Twilio SendGrid Team'
     }, 
     'sandbox_mode': {
       'enable': false
@@ -2607,7 +2607,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve a list of all mail settings.**
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### GET /mail_settings
 
@@ -2630,7 +2630,7 @@ Console.ReadLine();
 
 The address whitelist setting whitelists a specified email address or domain for which mail should never be suppressed. For example, you own the domain example.com, and one or more of your recipients use email@example.com addresses, by placing example.com in the address whitelist setting, all bounces, blocks, and unsubscribes logged for that domain will be ignored and sent as if under normal sending conditions.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/address_whitelist
 
@@ -2658,7 +2658,7 @@ Console.ReadLine();
 
 The address whitelist setting whitelists a specified email address or domain for which mail should never be suppressed. For example, you own the domain example.com, and one or more of your recipients use email@example.com addresses, by placing example.com in the address whitelist setting, all bounces, blocks, and unsubscribes logged for that domain will be ignored and sent as if under normal sending conditions.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### GET /mail_settings/address_whitelist
 
@@ -2675,9 +2675,9 @@ Console.ReadLine();
 
 **This endpoint allows you to update your current BCC mail settings.**
 
-When the BCC mail setting is enabled, SendGrid will automatically send a blind carbon copy (BCC) to an address for every email sent without adding that address to the header. Please note that only one email address may be entered in this field, if you wish to distribute BCCs to multiple addresses you will need to create a distribution group or use forwarding rules.
+When the BCC mail setting is enabled, Twilio SendGrid will automatically send a blind carbon copy (BCC) to an address for every email sent without adding that address to the header. Please note that only one email address may be entered in this field, if you wish to distribute BCCs to multiple addresses you will need to create a distribution group or use forwarding rules.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/bcc
 
@@ -2700,9 +2700,9 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve your current BCC mail settings.**
 
-When the BCC mail setting is enabled, SendGrid will automatically send a blind carbon copy (BCC) to an address for every email sent without adding that address to the header. Please note that only one email address may be entered in this field, if you wish to distribute BCCs to multiple addresses you will need to create a distribution group or use forwarding rules.
+When the BCC mail setting is enabled, Twilio SendGrid will automatically send a blind carbon copy (BCC) to an address for every email sent without adding that address to the header. Please note that only one email address may be entered in this field, if you wish to distribute BCCs to multiple addresses you will need to create a distribution group or use forwarding rules.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### GET /mail_settings/bcc
 
@@ -2719,9 +2719,9 @@ Console.ReadLine();
 
 **This endpoint allows you to update your current bounce purge settings.**
 
-This setting allows you to set a schedule for SendGrid to automatically delete contacts from your soft and hard bounce suppression lists.
+This setting allows you to set a schedule for Twilio SendGrid to automatically delete contacts from your soft and hard bounce suppression lists.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/bounce_purge
 
@@ -2745,9 +2745,9 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve your current bounce purge settings.**
 
-This setting allows you to set a schedule for SendGrid to automatically delete contacts from your soft and hard bounce suppression lists.
+This setting allows you to set a schedule for Twilio SendGrid to automatically delete contacts from your soft and hard bounce suppression lists.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### GET /mail_settings/bounce_purge
 
@@ -2766,7 +2766,7 @@ Console.ReadLine();
 
 The footer setting will insert a custom footer at the bottom of the text and HTML bodies. Use the embedded HTML editor and plain text entry fields to create the content of the footers to be inserted into your emails.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/footer
 
@@ -2792,7 +2792,7 @@ Console.ReadLine();
 
 The footer setting will insert a custom footer at the bottom of the text and HTML bodies. Use the embedded HTML editor and plain text entry fields to create the content of the footers to be inserted into your emails.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### GET /mail_settings/footer
 
@@ -2811,7 +2811,7 @@ Console.ReadLine();
 
 Activating this setting allows you to specify an email address to which bounce reports are forwarded.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/forward_bounce
 
@@ -2836,7 +2836,7 @@ Console.ReadLine();
 
 Activating this setting allows you to specify an email address to which bounce reports are forwarded.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### GET /mail_settings/forward_bounce
 
@@ -2855,7 +2855,7 @@ Console.ReadLine();
 
 Enabling the forward spam setting allows you to specify an email address to which spam reports will be forwarded.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/forward_spam
 
@@ -2880,7 +2880,7 @@ Console.ReadLine();
 
 Enabling the forward spam setting allows you to specify an email address to which spam reports will be forwarded.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### GET /mail_settings/forward_spam
 
@@ -2899,7 +2899,7 @@ Console.ReadLine();
 
 The plain content setting will automatically convert any plain text emails that you send to HTML before sending.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/plain_content
 
@@ -2923,7 +2923,7 @@ Console.ReadLine();
 
 The plain content setting will automatically convert any plain text emails that you send to HTML before sending.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### GET /mail_settings/plain_content
 
@@ -2942,7 +2942,7 @@ Console.ReadLine();
 
 The spam checker filter notifies you when emails are detected that exceed a predefined spam threshold.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/spam_check
 
@@ -2968,7 +2968,7 @@ Console.ReadLine();
 
 The spam checker filter notifies you when emails are detected that exceed a predefined spam threshold.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### GET /mail_settings/spam_check
 
@@ -2989,7 +2989,7 @@ This setting refers to our original email templates. We currently support more f
 
 The legacy email template setting wraps an HTML template around your email content. This can be useful for sending out marketing email and/or other HTML formatted messages.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### PATCH /mail_settings/template
 
@@ -3016,7 +3016,7 @@ This setting refers to our original email templates. We currently support more f
 
 The legacy email template setting wraps an HTML template around your email content. This can be useful for sending out marketing email and/or other HTML formatted messages.
 
-Mail settings allow you to tell SendGrid specific things to do to every email that you send to your recipients over SendGrids [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
+Mail settings allow you to tell Twilio SendGrid specific things to do to every email that you send to your recipients over Twilio SendGrid's [Web API](https://sendgrid.com/docs/API_Reference/Web_API/mail.html) or [SMTP Relay](https://sendgrid.com/docs/API_Reference/SMTP_API/index.html).
 
 ### GET /mail_settings/template
 
@@ -3066,7 +3066,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve a list of all partner settings that you can enable.**
 
-Our partner settings allow you to integrate your SendGrid account with our partners to increase your SendGrid experience and functionality. For more information about our partners, and how you can begin integrating with them, please visit our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/partners.html).
+Our partner settings allow you to integrate your Twilio SendGrid account with our partners to increase your Twilio SendGrid experience and functionality. For more information about our partners, and how you can begin integrating with them, please visit our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/partners.html).
 
 ### GET /partner_settings
 
@@ -3087,9 +3087,9 @@ Console.ReadLine();
 
 **This endpoint allows you to update or change your New Relic partner settings.**
 
-Our partner settings allow you to integrate your SendGrid account with our partners to increase your SendGrid experience and functionality. For more information about our partners, and how you can begin integrating with them, please visit our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/partners.html).
+Our partner settings allow you to integrate your Twilio SendGrid account with our partners to increase your Twilio SendGrid experience and functionality. For more information about our partners, and how you can begin integrating with them, please visit our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/partners.html).
 
-By integrating with New Relic, you can send your SendGrid email statistics to your New Relic Dashboard. If you enable this setting, your stats will be sent to New Relic every 5 minutes. You will need your New Relic License Key to enable this setting. For more information, please see our [Classroom](https://sendgrid.com/docs/Classroom/Track/Collecting_Data/new_relic.html).
+By integrating with New Relic, you can send your Twilio SendGrid email statistics to your New Relic Dashboard. If you enable this setting, your stats will be sent to New Relic every 5 minutes. You will need your New Relic License Key to enable this setting. For more information, please see our [Classroom](https://sendgrid.com/docs/Classroom/Track/Collecting_Data/new_relic.html).
 
 ### PATCH /partner_settings/new_relic
 
@@ -3113,9 +3113,9 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve your current New Relic partner settings.**
 
-Our partner settings allow you to integrate your SendGrid account with our partners to increase your SendGrid experience and functionality. For more information about our partners, and how you can begin integrating with them, please visit our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/partners.html).
+Our partner settings allow you to integrate your Twilio SendGrid account with our partners to increase your Twilio SendGrid experience and functionality. For more information about our partners, and how you can begin integrating with them, please visit our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/partners.html).
 
-By integrating with New Relic, you can send your SendGrid email statistics to your New Relic Dashboard. If you enable this setting, your stats will be sent to New Relic every 5 minutes. You will need your New Relic License Key to enable this setting. For more information, please see our [Classroom](https://sendgrid.com/docs/Classroom/Track/Collecting_Data/new_relic.html).
+By integrating with New Relic, you can send your Twilio SendGrid email statistics to your New Relic Dashboard. If you enable this setting, your stats will be sent to New Relic every 5 minutes. You will need your New Relic License Key to enable this setting. For more information, please see our [Classroom](https://sendgrid.com/docs/Classroom/Track/Collecting_Data/new_relic.html).
 
 ### GET /partner_settings/new_relic
 
@@ -3135,7 +3135,7 @@ Console.ReadLine();
 
 **This endpoint returns a list of all scopes that this user has access to.**
 
-API Keys can be used to authenticate the use of [SendGrids v3 Web API](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html), or the [Mail API Endpoint](https://sendgrid.com/docs/API_Reference/Web_API/mail.html). API Keys may be assigned certain permissions, or scopes, that limit which API endpoints they are able to access. For a more detailed explanation of how you can use API Key permissions, please visit our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/api_keys.html#-API-Key-Permissions) or [Classroom](https://sendgrid.com/docs/Classroom/Basics/API/api_key_permissions.html). 
+API Keys can be used to authenticate the use of [Twilio SendGrid's v3 Web API](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html), or the [Mail API Endpoint](https://sendgrid.com/docs/API_Reference/Web_API/mail.html). API Keys may be assigned certain permissions, or scopes, that limit which API endpoints they are able to access. For a more detailed explanation of how you can use API Key permissions, please visit our [User Guide](https://sendgrid.com/docs/User_Guide/Settings/api_keys.html#-API-Key-Permissions) or [Classroom](https://sendgrid.com/docs/Classroom/Basics/API/api_key_permissions.html). 
 
 ### GET /scopes
 
@@ -3310,7 +3310,7 @@ If you are creating a domain authentication that you would like a subuser to use
 1. Use the "username" parameter. This allows you to create am authenticated subuser. This means the subuser is able to see and modify the created authentication.
 2. Use the Association workflow (see Associate Domain section). This allows you to assign a domain authentication created by the parent to a subuser. This means the subuser will default to the assigned domain authentication, but will not be able to see or modify that authentication. However, if the subuser creates their own domain authentication it will overwrite the assigned domain authentication.
 
-A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
+A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that Twilio SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, Twilio SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
 
 For more information on domain authentication, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-domain-authentication/)
 
@@ -3343,7 +3343,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve a list of all domain authentications you have created.**
 
-A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
+A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that Twilio SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, Twilio SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
 
 For more information on domain authentication, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-domain-authentication/)
 
@@ -3369,7 +3369,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve the default authentication for a domain.**
 
-A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
+A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that Twilio SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, Twilio SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
 
 For more information on domain authentication, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-domain-authentication/)
 
@@ -3393,7 +3393,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve all of the domain authentications that have been assigned to a specific subuser.**
 
-A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
+A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that Twilio SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, Twilio SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
 
 Domain authentications can be associated with (i.e. assigned to) subusers from a parent account. This functionality allows subusers to send mail using their parent's authenticated domains. To associate a domain authentication with a subuser, the parent account must first create the domain authentication and validate it. The parent may then associate the domain authentication via the subuser management tools.
 
@@ -3419,7 +3419,7 @@ Console.ReadLine();
 
 **This endpoint allows you to disassociate a specific domain authentication from a subuser.**
 
-A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
+A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that Twilio SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, Twilio SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
 
 Domain authentications can be associated with (i.e. assigned to) subusers from a parent account. This functionality allows subusers to send mail using their parent's authenticated domains. To associate a domain authentication with a subuser, the parent account must first create the domain authentication and validate it. The parent may then associate the domain authentication via the subuser management tools.
 
@@ -3445,7 +3445,7 @@ Console.ReadLine();
 
 **This endpoint allows you to update the settings for a domain authentication.**
 
-A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
+A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that Twilio SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, Twilio SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
 
 For more information on domain authentication, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-domain-authentication/)
 
@@ -3471,7 +3471,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve a specific domain authentication.**
 
-A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
+A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that Twilio SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, Twilio SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
 
 For more information on domain authentication, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-domain-authentication/)
 
@@ -3492,7 +3492,7 @@ Console.ReadLine();
 
 **This endpoint allows you to delete a domain authentication.**
 
-A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
+A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that Twilio SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, Twilio SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
 
 For more information on domain authentication, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-domain-authentication/)
 
@@ -3512,7 +3512,7 @@ Console.ReadLine();
 
 **This endpoint allows you to associate a specific domain authentication with a subuser.**
 
-A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
+A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that Twilio SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, Twilio SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
 
 Domain authentications can be associated with (i.e. assigned to) subusers from a parent account. This functionality allows subusers to send mail using their parent's authenticated domains. To associate a domain authentication with a subuser, the parent account must first create the domain authentication and validate it. The parent may then associate the domain authentication via the subuser management tools.
 
@@ -3544,7 +3544,7 @@ Console.ReadLine();
 
 **This endpoint allows you to add an IP address to a domain authentication.**
 
-A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
+A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that Twilio SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, Twilio SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
 
 For more information on domain authentication, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-domain-authentication/)
 
@@ -3574,7 +3574,7 @@ Console.ReadLine();
 
 **This endpoint allows you to remove a domain's IP address from that domain's authentication.**
 
-A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
+A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that Twilio SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, Twilio SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
 
 For more information on domain authentication, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-domain-authentication/)
 
@@ -3601,7 +3601,7 @@ Console.ReadLine();
 
 **This endpoint allows you to validate a domain authentication. If it fails, it will return an error message describing why the domain could not be validated.**
 
-A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
+A domain authentication allows you to remove the via or sent on behalf of message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that Twilio SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, Twilio SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record.
 
 For more information on domain authentication, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-domain-authentication/)
 
@@ -3628,7 +3628,7 @@ Console.ReadLine();
 
 When creating a reverse DNS record, you should use the same subdomain that you used when you created a domain authentication.
 
-Reverse DNS consists of a subdomain and domain that will be used to generate a record for a given IP. Once SendGrid has verified that the appropriate A record for the IP has been created, the appropriate reverse DNS record for the IP is generated.
+Reverse DNS consists of a subdomain and domain that will be used to generate a record for a given IP. Once Twilio SendGrid has verified that the appropriate A record for the IP has been created, the appropriate reverse DNS record for the IP is generated.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-reverse-dns/).
 
@@ -3656,7 +3656,7 @@ Console.ReadLine();
 
 You may include a search key by using the "ip" parameter. This enables you to perform a prefix search for a given IP segment (e.g. "192.").
 
-Reverse DNS consists of a subdomain and domain that will be used to generate a record for a given IP. Once SendGrid has verified that the appropriate A record for the IP has been created, the appropriate reverse DNS record for the IP is generated.
+Reverse DNS consists of a subdomain and domain that will be used to generate a record for a given IP. Once Twilio SendGrid has verified that the appropriate A record for the IP has been created, the appropriate reverse DNS record for the IP is generated.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-reverse-dns/).
 
@@ -3680,7 +3680,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve a reverse DNS record.**
 
-Reverse DNS consists of a subdomain and domain that will be used to generate a record for a given IP. Once SendGrid has verified that the appropriate A record for the IP has been created, the appropriate reverse DNS record for the IP is generated.
+Reverse DNS consists of a subdomain and domain that will be used to generate a record for a given IP. Once Twilio SendGrid has verified that the appropriate A record for the IP has been created, the appropriate reverse DNS record for the IP is generated.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-reverse-dns/).
 
@@ -3700,7 +3700,7 @@ Console.ReadLine();
 
 **This endpoint allows you to delete a reverse DNS record.**
 
-Reverse DNS consists of a subdomain and domain that will be used to generate a record for a given IP. Once SendGrid has verified that the appropriate A record for the IP has been created, the appropriate reverse DNS record for the IP is generated.
+Reverse DNS consists of a subdomain and domain that will be used to generate a record for a given IP. Once Twilio SendGrid has verified that the appropriate A record for the IP has been created, the appropriate reverse DNS record for the IP is generated.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-reverse-dns/).
 
@@ -3720,7 +3720,7 @@ Console.ReadLine();
 
 **This endpoint allows you to validate a reverse DNS record.**
 
-Reverse DNS consists of a subdomain and domain that will be used to generate a record for a given IP. Once SendGrid has verified that the appropriate A record for the IP has been created, the appropriate reverse DNS record for the IP is generated.
+Reverse DNS consists of a subdomain and domain that will be used to generate a record for a given IP. Once Twilio SendGrid has verified that the appropriate A record for the IP has been created, the appropriate reverse DNS record for the IP is generated.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-reverse-dns/).
 
@@ -3796,7 +3796,7 @@ Default link branding is the actual link branding to be used when sending messag
 <ul>
   <li>Validated link branding marked as "default"</li>
   <li>Legacy link brands (migrated from the whitelabel wizard)</li>
-  <li>Default SendGrid link whitelabel (i.e. 100.ct.sendgrid.net)</li>
+  <li>Default Twilio SendGrid link whitelabel (i.e. 100.ct.sendgrid.net)</li>
 </ul>
 
 Email link branding allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
@@ -4695,7 +4695,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve a specific spam report.**
 
-[Spam reports](https://sendgrid.com/docs/Glossary/spam_reports.html) happen when a recipient indicates that they think your email is [spam](https://sendgrid.com/docs/Glossary/spam.html) and then their email provider reports this to SendGrid.
+[Spam reports](https://sendgrid.com/docs/Glossary/spam_reports.html) happen when a recipient indicates that they think your email is [spam](https://sendgrid.com/docs/Glossary/spam.html) and then their email provider reports this to Twilio SendGrid.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Suppressions/spam_reports.html).
 
@@ -4715,7 +4715,7 @@ Console.ReadLine();
 
 **This endpoint allows you to delete a specific spam report.**
 
-[Spam reports](https://sendgrid.com/docs/Glossary/spam_reports.html) happen when a recipient indicates that they think your email is [spam](https://sendgrid.com/docs/Glossary/spam.html) and then their email provider reports this to SendGrid.
+[Spam reports](https://sendgrid.com/docs/Glossary/spam_reports.html) happen when a recipient indicates that they think your email is [spam](https://sendgrid.com/docs/Glossary/spam.html) and then their email provider reports this to Twilio SendGrid.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Suppressions/spam_reports.html).
 
@@ -4735,7 +4735,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve all spam reports.**
 
-[Spam reports](https://sendgrid.com/docs/Glossary/spam_reports.html) happen when a recipient indicates that they think your email is [spam](https://sendgrid.com/docs/Glossary/spam.html) and then their email provider reports this to SendGrid.
+[Spam reports](https://sendgrid.com/docs/Glossary/spam_reports.html) happen when a recipient indicates that they think your email is [spam](https://sendgrid.com/docs/Glossary/spam.html) and then their email provider reports this to Twilio SendGrid.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Suppressions/spam_reports.html).
 
@@ -4765,7 +4765,7 @@ There are two options for deleting spam reports:
 1) You can delete all spam reports by setting "delete_all" to true in the request body. 
 2) You can delete some spam reports by specifying the email addresses in an array in the request body.
 
-[Spam reports](https://sendgrid.com/docs/Glossary/spam_reports.html) happen when a recipient indicates that they think your email is [spam](https://sendgrid.com/docs/Glossary/spam.html) and then their email provider reports this to SendGrid.
+[Spam reports](https://sendgrid.com/docs/Glossary/spam_reports.html) happen when a recipient indicates that they think your email is [spam](https://sendgrid.com/docs/Glossary/spam.html) and then their email provider reports this to Twilio SendGrid.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Suppressions/spam_reports.html).
 
@@ -4851,7 +4851,7 @@ Transactional templates are templates created specifically for transactional ema
 
 
 ```csharp
-var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "templates");
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "templates?generations=legacy,dynamic");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
@@ -5203,7 +5203,7 @@ Console.ReadLine();
 
 **This endpoint allows you to update your current settings for open tracking.**
 
-Open Tracking adds an invisible image at the end of the email which can track email opens. If the email recipient has images enabled on their email client, a request to SendGrids server for the invisible image is executed and an open event is logged. These events are logged in the Statistics portal, Email Activity interface, and are reported by the Event Webhook.
+Open Tracking adds an invisible image at the end of the email which can track email opens. If the email recipient has images enabled on their email client, a request to Twilio SendGrid's server for the invisible image is executed and an open event is logged. These events are logged in the Statistics portal, Email Activity interface, and are reported by the Event Webhook.
 
 You can track a variety of the actions your recipients may take when interacting with your emails including opening your emails, clicking on links in your emails, and subscribing to (or unsubscribing from) your emails.
 
@@ -5229,7 +5229,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve your current settings for open tracking.**
 
-Open Tracking adds an invisible image at the end of the email which can track email opens. If the email recipient has images enabled on their email client, a request to SendGrids server for the invisible image is executed and an open event is logged. These events are logged in the Statistics portal, Email Activity interface, and are reported by the Event Webhook.
+Open Tracking adds an invisible image at the end of the email which can track email opens. If the email recipient has images enabled on their email client, a request to Twilio SendGrid's server for the invisible image is executed and an open event is logged. These events are logged in the Statistics portal, Email Activity interface, and are reported by the Event Webhook.
 
 You can track a variety of the actions your recipients may take when interacting with your emails including opening your emails, clicking on links in your emails, and subscribing to (or unsubscribing from) your emails.
 
@@ -5307,11 +5307,11 @@ Console.ReadLine();
 
 Your user's account information includes the user's account type and reputation.
 
-Keeping your user profile up to date is important. This will help SendGrid to verify who you are as well as contact you should we need to.
+Keeping your user profile up to date is important. This will help Twilio SendGrid to verify who you are as well as contact you should we need to.
 
 For more information about your user profile:
 
-* [SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
+* [Twilio SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
 
 ### GET /user/account
 
@@ -5345,11 +5345,11 @@ Console.ReadLine();
 
 **This endpoint allows you to update the email address currently on file for your account.**
 
-Keeping your user profile up to date is important. This will help SendGrid to verify who you are as well as contact you should we need to.
+Keeping your user profile up to date is important. This will help Twilio SendGrid to verify who you are as well as contact you should we need to.
 
 For more information about your user profile:
 
-* [SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
+* [Twilio SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
 
 ### PUT /user/email
 
@@ -5371,11 +5371,11 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve the email address currently on file for your account.**
 
-Keeping your user profile up to date is important. This will help SendGrid to verify who you are as well as contact you should we need to.
+Keeping your user profile up to date is important. This will help Twilio SendGrid to verify who you are as well as contact you should we need to.
 
 For more information about your user profile:
 
-* [SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
+* [Twilio SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
 
 ### GET /user/email
 
@@ -5392,11 +5392,11 @@ Console.ReadLine();
 
 **This endpoint allows you to update your password.**
 
-Keeping your user profile up to date is important. This will help SendGrid to verify who you are as well as contact you should we need to.
+Keeping your user profile up to date is important. This will help Twilio SendGrid to verify who you are as well as contact you should we need to.
 
 For more information about your user profile:
 
-* [SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
+* [Twilio SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
 
 ### PUT /user/password
 
@@ -5419,11 +5419,11 @@ Console.ReadLine();
 
 **This endpoint allows you to update your current profile details.**
 
-Keeping your user profile up to date is important. This will help SendGrid to verify who you are as well as contact you should we need to.
+Keeping your user profile up to date is important. This will help Twilio SendGrid to verify who you are as well as contact you should we need to.
 
 For more information about your user profile:
 
-* [SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
+* [Twilio SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
 
 It should be noted that any one or more of the parameters can be updated via the PATCH /user/profile endpoint. The only requirement is that you include at least one when you PATCH.
 
@@ -5447,11 +5447,11 @@ Console.ReadLine();
 
 ## Get a user's profile
 
-Keeping your user profile up to date is important. This will help SendGrid to verify who you are as well as contact you should we need to.
+Keeping your user profile up to date is important. This will help Twilio SendGrid to verify who you are as well as contact you should we need to.
 
 For more information about your user profile:
 
-* [SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
+* [Twilio SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
 
 ### GET /user/profile
 
@@ -5614,11 +5614,11 @@ Console.ReadLine();
 
 **This endpoint allows you to update the username for your account.**
 
-Keeping your user profile up to date is important. This will help SendGrid to verify who you are as well as contact you should we need to.
+Keeping your user profile up to date is important. This will help Twilio SendGrid to verify who you are as well as contact you should we need to.
 
 For more information about your user profile:
 
-* [SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
+* [Twilio SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
 
 ### PUT /user/username
 
@@ -5640,11 +5640,11 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve your current account username.**
 
-Keeping your user profile up to date is important. This will help SendGrid to verify who you are as well as contact you should we need to.
+Keeping your user profile up to date is important. This will help Twilio SendGrid to verify who you are as well as contact you should we need to.
 
 For more information about your user profile:
 
-* [SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
+* [Twilio SendGrid Account Settings](https://sendgrid.com/docs/User_Guide/Settings/account.html)
 
 ### GET /user/username
 
@@ -5663,7 +5663,7 @@ Console.ReadLine();
 
 If an event type is marked as `true`, then the event webhook will include information about that event.
 
-SendGrids Event Webhook will notify a URL of your choice via HTTP POST with information about events that occur as SendGrid processes your email.
+Twilio SendGrid's Event Webhook will notify a URL of your choice via HTTP POST with information about events that occur as Twilio SendGrid processes your email.
 
 Common uses of this data are to remove unsubscribes, react to spam reports, determine unengaged recipients, identify bounced email addresses, or create advanced analytics of your email program.
 
@@ -5701,7 +5701,7 @@ Console.ReadLine();
 
 If an event type is marked as `true`, then the event webhook will include information about that event.
 
-SendGrids Event Webhook will notify a URL of your choice via HTTP POST with information about events that occur as SendGrid processes your email.
+Twilio SendGrid's Event Webhook will notify a URL of your choice via HTTP POST with information about events that occur as Twilio SendGrid processes your email.
 
 Common uses of this data are to remove unsubscribes, react to spam reports, determine unengaged recipients, identify bounced email addresses, or create advanced analytics of your email program.
 
@@ -5720,7 +5720,7 @@ Console.ReadLine();
 
 **This endpoint allows you to test your event webhook by sending a fake event notification post to the provided URL.**
 
-SendGrids Event Webhook will notify a URL of your choice via HTTP POST with information about events that occur as SendGrid processes your email.
+Twilio SendGrid's Event Webhook will notify a URL of your choice via HTTP POST with information about events that occur as Twilio SendGrid processes your email.
 
 Common uses of this data are to remove unsubscribes, react to spam reports, determine unengaged recipients, identify bounced email addresses, or create advanced analytics of your email program.
 
@@ -5744,7 +5744,7 @@ Console.ReadLine();
 
 **This endpoint allows you to create a new inbound parse setting.**
 
-The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the content, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
+The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the content, and then have that content POSTed by Twilio SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
 
 ### POST /user/webhooks/parse/settings
 
@@ -5769,7 +5769,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve all of your current inbound parse settings.**
 
-The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the content, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
+The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the content, and then have that content POSTed by Twilio SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
 
 ### GET /user/webhooks/parse/settings
 
@@ -5786,7 +5786,7 @@ Console.ReadLine();
 
 **This endpoint allows you to update a specific inbound parse setting.**
 
-The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the content, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
+The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the content, and then have that content POSTed by Twilio SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
 
 ### PATCH /user/webhooks/parse/settings/{hostname}
 
@@ -5811,7 +5811,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve a specific inbound parse setting.**
 
-The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the content, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
+The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the content, and then have that content POSTed by Twilio SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
 
 ### GET /user/webhooks/parse/settings/{hostname}
 
@@ -5829,7 +5829,7 @@ Console.ReadLine();
 
 **This endpoint allows you to delete a specific inbound parse setting.**
 
-The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the content, and then have that content POSTed by SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
+The inbound parse webhook allows you to have incoming emails parsed, extracting some or all of the content, and then have that content POSTed by Twilio SendGrid to a URL of your choosing. For more information, please see our [User Guide](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html).
 
 ### DELETE /user/webhooks/parse/settings/{hostname}
 
@@ -5847,9 +5847,9 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve the statistics for your Parse Webhook usage.**
 
-SendGrid's Inbound Parse Webhook allows you to parse the contents and attachments of incoming emails. The Parse API can then POST the parsed emails to a URL that you specify. The Inbound Parse Webhook cannot parse messages greater than 20MB in size, including all attachments.
+Twilio SendGrid's Inbound Parse Webhook allows you to parse the contents and attachments of incoming emails. The Parse API can then POST the parsed emails to a URL that you specify. The Inbound Parse Webhook cannot parse messages greater than 20MB in size, including all attachments.
 
-There are a number of pre-made integrations for the SendGrid Parse Webhook which make processing events easy. You can find these integrations in the [Library Index](https://sendgrid.com/docs/Integrate/libraries.html#-Webhook-Libraries).
+There are a number of pre-made integrations for the Twilio SendGrid Parse Webhook which make processing events easy. You can find these integrations in the [Library Index](https://sendgrid.com/docs/Integrate/libraries.html#-Webhook-Libraries).
 
 ### GET /user/webhooks/parse/stats
 
@@ -5868,4 +5868,3 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
-
