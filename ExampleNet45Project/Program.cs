@@ -26,7 +26,7 @@ namespace Example
             // Retrieve the API key.
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY") ?? configuration["SendGrid:ApiKey"];
 
-            var client = new SendGridClient(HttpClient, apiKey);
+            var client = new SendGridClient(HttpClient, apiKey, httpErrorAsException: true);
 
             // Send a Single Email using the Mail Helper
             var from = new EmailAddress(configuration.GetValue("SendGrid:From", "test@example.com"), "Example User");
@@ -118,8 +118,8 @@ namespace Example
 
             // POST
             var requestBody = @"{
-              'description': 'Suggestions for products our users might like.', 
-              'is_default': false, 
+              'description': 'Suggestions for products our users might like.',
+              'is_default': false,
               'name': 'Magic Products'
             }";
             json = JsonConvert.DeserializeObject<object>(requestBody);

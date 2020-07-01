@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
     using Newtonsoft.Json;
     using Reliability;
+    using SendGrid.Helpers.Errors.Model;
     using SendGrid.Helpers.Mail;
     using SendGrid.Helpers.Reliability;
     using Xunit;
@@ -5908,6 +5909,47 @@
             var result = await sg.SendEmailAsync(msg);
 
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+        }
+
+        [Fact]
+        public async void TestHttpErrorAsException()
+        {
+            var responseObject = new
+            {
+                errors = new[] { new {
+                    message = "error message",
+                    field = "field value",
+                    help =  "help value"
+                } }
+            };
+
+            var responseMessage = Newtonsoft.Json.JsonConvert.SerializeObject(responseObject);
+            var mockHandler = new FixedStatusAndMessageHttpMessageHandler(HttpStatusCode.ServiceUnavailable, responseMessage);
+            var mockClient = new HttpClient(mockHandler);
+            var client = new SendGridClient(mockClient, fixture.apiKey, httpErrorAsException: true);
+
+            try
+            {
+                var response = await client.MakeRequest(new HttpRequestMessage(HttpMethod.Get, "http://api.sendgrid.com/")).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Assert.NotNull(ex);
+                Assert.IsType<ServiceNotAvailableException>(ex);
+
+                var errorResponseExpected = new SendGridErrorResponse
+                {
+                    ErrorHttpStatusCode = 503,
+                    ErrorReasonPhrase = "Service Unavailable",
+                    SendGridErrorMessage = "error message",
+                    FieldWithError = "field value",
+                    HelpLink = "help value"
+                };
+
+                var jsonErrorReponseExpected = Newtonsoft.Json.JsonConvert.SerializeObject(errorResponseExpected);
+
+                Assert.Equal(jsonErrorReponseExpected, ex.Message);
+            }
         }
 
         [Theory]
