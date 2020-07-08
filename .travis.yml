@@ -18,7 +18,7 @@ after_success:
 deploy:
   skip_cleanup: true
   provider: script
-  script: dotnet nuget push **/*.nupkg -k $NUGET_API_KEY -s https://api.nuget.org/v3/index.json
+  script: dotnet nuget push **/*.nupkg -k $NUGET_API_KEY -s https://api.nuget.org/v3/index.json --skip-duplicate
   on:
     branch: master
     tags: true
