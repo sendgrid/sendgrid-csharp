@@ -1,6 +1,19 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-07-08] Version 9.18.0
+---------------------------
+**Library - Docs**
+- [PR #824](https://github.com/sendgrid/sendgrid-csharp/pull/824): Remove references to "Whitelabel". Thanks to [@crweiner](https://github.com/crweiner)!
+- [PR #826](https://github.com/sendgrid/sendgrid-csharp/pull/826): cleanup README.md anchors and ToC. Thanks to [@ajloria](https://github.com/ajloria)!
+
+**Library - Feature**
+- [PR #1019](https://github.com/sendgrid/sendgrid-csharp/pull/1019): add option for throwing exception on non-successful API request. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Library - Chore**
+- [PR #1017](https://github.com/sendgrid/sendgrid-csharp/pull/1017): drop Elliptic Curve code in favor of 'starkbank-ecdsa'. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+
 [2020-06-24] Version 9.17.0
 ---------------------------
 **Library - Fix**
