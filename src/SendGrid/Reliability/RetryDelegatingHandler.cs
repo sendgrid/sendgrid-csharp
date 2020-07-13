@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace SendGrid.Helpers.Reliability
 {
     /// <summary>
-    /// A delegating handler that provides retry functionality while executing a request
+    /// A delegating handler that provides retry functionality while executing a request.
     /// </summary>
     public class RetryDelegatingHandler : DelegatingHandler
     {
@@ -23,7 +23,7 @@ namespace SendGrid.Helpers.Reliability
                 HttpStatusCode.InternalServerError,
                 HttpStatusCode.BadGateway,
                 HttpStatusCode.ServiceUnavailable,
-                HttpStatusCode.GatewayTimeout
+                HttpStatusCode.GatewayTimeout,
             };
 
         private readonly ReliabilitySettings settings;
@@ -31,7 +31,7 @@ namespace SendGrid.Helpers.Reliability
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class.
         /// </summary>
-        /// <param name="settings">A ReliabilitySettings instance</param>
+        /// <param name="settings">A ReliabilitySettings instance.</param>
         public RetryDelegatingHandler(ReliabilitySettings settings)
             : this(new HttpClientHandler(), settings)
         {
@@ -40,8 +40,8 @@ namespace SendGrid.Helpers.Reliability
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class.
         /// </summary>
-        /// <param name="innerHandler">A HttpMessageHandler instance to set as the inner handler</param>
-        /// <param name="settings">A ReliabilitySettings instance</param>
+        /// <param name="innerHandler">A HttpMessageHandler instance to set as the inner handler.</param>
+        /// <param name="settings">A ReliabilitySettings instance.</param>
         public RetryDelegatingHandler(HttpMessageHandler innerHandler, ReliabilitySettings settings)
             : base(innerHandler)
         {
@@ -83,7 +83,7 @@ namespace SendGrid.Helpers.Reliability
                     }
 
                     // ReSharper disable once MethodSupportsCancellation, cancel will be indicated on the token
-                    await Task.Delay(waitFor).ConfigureAwait(false);
+                    await TaskUtilities.Delay(waitFor).ConfigureAwait(false);
                 }
                 catch (HttpRequestException)
                 {
@@ -94,7 +94,7 @@ namespace SendGrid.Helpers.Reliability
                         throw;
                     }
 
-                    await Task.Delay(waitFor).ConfigureAwait(false);
+                    await TaskUtilities.Delay(waitFor).ConfigureAwait(false);
                 }
             }
 

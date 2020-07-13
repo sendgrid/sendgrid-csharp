@@ -42,7 +42,7 @@ Before you decide to create a new issue, please try the following:
 
 ### Please use our Bug Report Template
 
-In order to make the process easier, we've included a [sample bug report template](https://github.com/sendgrid/sendgrid-csharp/.github/ISSUE_TEMPLATE) (borrowed from [Ghost](https://github.com/TryGhost/Ghost/)). The template uses [GitHub flavored markdown](https://help.github.com/articles/github-flavored-markdown/) for formatting.
+In order to make the process easier, we've included a [sample bug report template](ISSUE_TEMPLATE.md).
 
 <a name="improvements-to-the-codebase"></a>
 ## Improvements to the Codebase
@@ -58,7 +58,7 @@ Please note that we utilize the [Gitflow Workflow](https://www.atlassian.com/git
 ##### Prerequisites #####
 
 - .NET 4.5.2+
-- [Visual Studio Community 2017](https://www.visualstudio.com/downloads/)+
+- [Visual Studio Community 2017](https://www.visualstudio.com/downloads/)
 
 ##### Initial setup: #####
 
@@ -83,40 +83,25 @@ Next, update your Environment with your [SENDGRID_APIKEY](https://app.sendgrid.c
 <a name="understanding-the-codebase"></a>
 ## Understanding the Code Base
 
-**[/examples](https://github.com/sendgrid/sendgrid-csharp/blob/master/examples)**
-
-Examples that demonstrate usage.
-
-**[/ExampleCoreProject/Example.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/ExampleCoreProject/Example.cs)**
-
-A working .NET Core example project for testing.
-
-**[/ExampleNet45Project/Example.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/ExampleNet45Project/Example.cs)**
-
-A working .NET 4.5.2 example project for testing.
-
-**[/src/SendGrid/SendGridClient.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/SendGridClient.cs)**
-
-The main interface to the Twilio SendGrid API is the class `SendGridClient`.
-
-**[/tests/SendGrid.Tests/Integration.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs)**
-
-Integration tests
+- **[/examples](https://github.com/sendgrid/sendgrid-csharp/blob/master/examples)**
+  - Examples that demonstrate usage.
+- **[/ExampleCoreProject/Example.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/ExampleCoreProject/Example.cs)**
+  - A working .NET Core example project for testing.
+- **[/ExampleNet45Project/Example.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/ExampleNet45Project/Example.cs)**
+  - A working .NET 4.5.2 example project for testing.
+- **[/src/SendGrid/SendGridClient.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/SendGridClient.cs)**
+  - The main interface to the Twilio SendGrid API is the class `SendGridClient`.
+- **[/tests/SendGrid.Tests/Integration.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs)**
+  - Integration tests
 
 <a name="testing"></a>
 ## Testing
 
-All PRs require passing tests before the PR will be reviewed.
+All PRs require passing tests before the PR will be reviewed. All test files are in the [`SendGrid.Tests`](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests) directory. For the purposes of contributing to this repo, please update the [`Integration.cs`](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs) file with unit tests as you modify the code.
 
-All test files are in the [`SendGrid.Tests`](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests) directory.
+The integration tests require a Twilio SendGrid mock API in order to execute. We've simplified setting this up using Docker to run the tests. You will just need [Docker Desktop](https://docs.docker.com/get-docker/) and `make`.
 
-For the purposes of contributing to this repo, please update the [`Integration.cs`](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs) file with unit tests as you modify the code.
-
-Download [Prism](https://github.com/stoplightio/prism/releases) and rename the executable to be prism.exe and place the renamed executable in your PATH.
-
-When you run the tests for the first time, you will need to allow Prism.exe to run, but you don't need to allow outside connections.
-
-Note: Please download Prism stable version v0.6.xx as integration test are written against stable versions only. Latest alpha version has different commands to serve swagger file
+Once these are available, simply execute the Docker test target to run all tests: `make test-docker`. This command can also be used to open an interactive shell into the container where this library is installed. To start a *bash* shell for example, use this command: `command=bash make test-docker`.
 
 <a name="style-guidelines-and-naming-conventions"></a>
 ## Style Guidelines & Naming Conventions
@@ -178,8 +163,6 @@ Generally, we follow the style guidelines as suggested by the official language.
 
 7. [Open a Pull Request](https://help.github.com/articles/using-pull-requests/)
     with a clear title and description against the `development` branch. All tests must be passing before we will review the PR.
-
-If you have any additional questions, please feel free to [email](mailto:dx@sendgrid.com) us or create an issue in this repo.
 
 <a name="code-reviews"></a>
 ## Code Reviews

@@ -1,32 +1,33 @@
 language: csharp
-dotnet: 1.0.4
+dotnet: 2.1.803
+solution: SendGrid.sln
 os: linux
-dist: trusty
-mono: latest
-sudo: required
+dist: bionic
+mono: none
 
-before_install:
-  - mkdir -p .nuget
-  - wget -O .nuget/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
-
-before_script:
-  # https://github.com/dotnet/sdk/issues/335
-  - if test "$TRAVIS_OS_NAME" == "osx"; then export FrameworkPathOverride=/Library/Frameworks/Mono.framework/Versions/Current/lib/mono/4.5/; else export FrameworkPathOverride=/usr/lib/mono/4.5/; fi
-  - mkdir prism/bin
-  - export PATH=$PATH:$PWD/prism/bin/
-  - ./prism/prism.sh
-  - nohup prism run -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/master/oai_stoplight.json &
+services:
+  - docker
 
 script:
+  - make test-docker
   - make release
-  
+
 after_success:
-  - bash <(curl -s https://codecov.io/bash)  
+  - bash <(curl -s https://codecov.io/bash)
 
 deploy:
   skip_cleanup: true
   provider: script
-  script: dotnet nuget push ./src/Sendgrid/bin/Release/SendGrid.*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+  script: dotnet nuget push **/*.nupkg -k $NUGET_API_KEY -s https://api.nuget.org/v3/index.json --skip-duplicate
   on:
     branch: master
     tags: true
+
+notifications:
+  slack:
+    if: branch = master
+    on_pull_requests: false
+    on_success: never
+    on_failure: change
+    rooms:
+      - secure: RdE/BGwjr4B5GktjANWdZx2hRcY5GQNQGN9+NxeJ86K2wkTRsQUpPDSj7jXHHUcD9jz+OJHrwWR5Zbun48wE3nD1O/PDs6QNOvYo/isn6PWKGUq6g2XjACPxM34UDRbrma9hGOJTtuEnar64glZEh6xk31bWCpqg/vVxxg/XhWQ=

@@ -20,10 +20,11 @@ This documentation provides examples for specific use cases. Please [open an iss
         - [MaximumBackOff](#maximumbackoff)
         - [DeltaBackOff](#deltabackoff)
     - [Examples](#examples)
-- [How to Setup a Domain Whitelabel](#how-to-setup-a-domain-whitelabel)
+- [How to Setup a Domain Authentication](#how-to-setup-a-domain-authentication)
 - [How to View Email Statistics](#how-to-view-email-statistics)
 - [How to transform HTML to plain text](#how-to-transform-html-to-plain-text)
-- [Send a SMS Message](#sms)
+- [Send an Email With Twilio Email (Pilot)](#send-an-email-with-twilio-email-pilot)
+- [Send an SMS Message](#send-an-sms-message)
 
 <a name="attachments"></a>
 # Attachments
@@ -576,7 +577,7 @@ namespace Example
         {
             [JsonProperty("subject")]
             public string Subject { get; set; }
-            
+
             [JsonProperty("name")]
             public string Name { get; set; }
 
@@ -588,7 +589,7 @@ namespace Example
         {
             [JsonProperty("city")]
             public string City { get; set; }
-            
+
             [JsonProperty("country")]
             public string Country { get; set; }
         }
@@ -805,11 +806,11 @@ By default, retry behaviour is off, you must explicitly enable it by setting the
 
 ### RetryCount
 
-The amount of times to retry the operation before reporting an exception to the caller. This is in addition to the initial attempt so setting a value of 1 would result in 2 attempts, the initial attempt and the retry. Defaults to zero, retry behaviour is not enabled. The maximum amount of retries permitted is 5. 
+The amount of times to retry the operation before reporting an exception to the caller. This is in addition to the initial attempt so setting a value of 1 would result in 2 attempts, the initial attempt and the retry. Defaults to zero, retry behaviour is not enabled. The maximum amount of retries permitted is 5.
 
 ### MinimumBackOff
 
-The minimum amount of time to wait between retries. 
+The minimum amount of time to wait between retries.
 
 ### MaximumBackOff
 
@@ -854,61 +855,126 @@ var client = new SendGridClient(options);
 
 ```
 
-<a name="sms"></a>
-# Send a SMS Message
+<a name="domain-authentication"></a>
+# How to Setup a Domain Authentication
 
-Following are the steps to add Twilio SMS to your app:
+You can find documentation for how to setup a domain authentication via the UI [here](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-domain-authentication/) and via API [here](https://github.com/sendgrid/sendgrid-nodejs/blob/master/packages/client/USAGE.md#sender-authentication).
 
-## 1. Obtain a Free Twilio Account
+Find more information about all of SendGrid's authentication related documentation [here](https://sendgrid.com/docs/ui/account-and-settings/).
+
+<a name="email-stats"></a>
+# How to View Email Statistics
+
+You can find documentation for how to view your email statistics via the UI [here](https://app.sendgrid.com/statistics) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#stats).
+
+Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as Twilio SendGrid processes your email.
+
+<a name="html-to-plain-text"></a>
+# How to transform HTML to plain text
+
+Although the HTML tags could be removed using regular expressions, the best solution is parsing the HTML code with a specific library, such as [HTMLAgilityPack](http://html-agility-pack.net/).
+
+The following code shows how to parse an input string with HTML code and remove all tags:
+
+```csharp
+using HtmlAgilityPack;
+
+namespace Example {
+
+    internal class Example
+    {
+		/// <summary>
+		/// Convert the HTML content to plain text
+		/// </summary>
+		/// <param name="html">The html content which is going to be converted</param>
+		/// <returns>A string</returns>
+		public static string HtmlToPlainText(string html)
+		{
+			HtmlDocument document = new HtmlDocument();
+			document.LoadHtml(html);
+			return document.DocumentNode == null ? string.Empty : document.DocumentNode.InnerText;
+		}
+	}
+}
+
+```
+
+# Send an Email With Twilio Email (Pilot)
+
+### 1. Obtain a Free Twilio Account
 
 Sign up for a free Twilio account [here](https://www.twilio.com/try-twilio?source=sendgrid-csharp).
 
-## 2. Update Your Environment Variables
+### 2. Set Up Your Environment Variables
 
-You can obtain your Account Sid and Auth Token from [twilio.com/console](https://twilio.com/console).
+The Twilio API allows for authentication using with either an API key/secret or your Account SID/Auth Token. You can create an API key [here](https://twil.io/get-api-key) or obtain your Account SID and Auth Token [here](https://twil.io/console).
 
-### Mac
+Once you have those, follow the steps below based on your operating system.
+
+#### Linux/Mac
 
 ```bash
+echo "export TWILIO_API_KEY='YOUR_TWILIO_API_KEY'" > twilio.env
+echo "export TWILIO_API_SECRET='YOUR_TWILIO_API_SECRET'" >> twilio.env
+
+# or
+
 echo "export TWILIO_ACCOUNT_SID='YOUR_TWILIO_ACCOUNT_SID'" > twilio.env
 echo "export TWILIO_AUTH_TOKEN='YOUR_TWILIO_AUTH_TOKEN'" >> twilio.env
+```
+
+Then:
+
+```bash
 echo "twilio.env" >> .gitignore
 source ./twilio.env
 ```
 
-### Windows
+#### Windows
 
 Temporarily set the environment variable (accessible only during the current CLI session):
 
 ```bash
+set TWILIO_API_KEY=YOUR_TWILIO_API_KEY
+set TWILIO_API_SECRET=YOUR_TWILIO_API_SECRET
+
+: or
+
 set TWILIO_ACCOUNT_SID=YOUR_TWILIO_ACCOUNT_SID
 set TWILIO_AUTH_TOKEN=YOUR_TWILIO_AUTH_TOKEN
 ```
 
-Permanently set the environment variable (accessible in all subsequent CLI sessions):
+Or permanently set the environment variable (accessible in all subsequent CLI sessions):
 
 ```bash
+setx TWILIO_API_KEY "YOUR_TWILIO_API_KEY"
+setx TWILIO_API_SECRET "YOUR_TWILIO_API_SECRET"
+
+: or
+
 setx TWILIO_ACCOUNT_SID "YOUR_TWILIO_ACCOUNT_SID"
 setx TWILIO_AUTH_TOKEN "YOUR_TWILIO_AUTH_TOKEN"
 ```
 
-## 3. Install the Twilio Helper Library
+### 3. Initialize the Twilio Email Client
 
-The best and easiest way to add the Twilio libraries to your .NET project is to use the NuGet package manager.
+```csharp
+var mailClient = new TwilioEmailClient(Environment.GetEnvironmentVariable("TWILIO_API_KEY"), Environment.GetEnvironmentVariable("TWILIO_API_SECRET"));
 
-### With Visual Studio IDE
+// or
 
-From within Visual Studio, you can use the NuGet GUI to search for and install the Twilio NuGet package. Or, as a shortcut, simply type the following command into the Package Manager Console:
+var mailClient = new TwilioEmailClient(Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID"), Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN"));
+```
 
-`Install-Package Twilio`
+This client has the same interface as the `SendGrid` client.
 
-### With .NET Core Command Line Tools
+# Send an SMS Message
 
-If you are building with the .NET Core command line tools, then you can run the following command from within your project directory:
+First, follow the above steps for creating a Twilio account and setting up environment variables with the proper credentials.
 
-`dotnet add package Twilio`
+Then, install the Twilio Helper Library by following the [installation steps](https://github.com/twilio/twilio-csharp#installation).
 
-Then, you can execute the following code.
+Finally, send a message.
 
 ```csharp
 using System;
@@ -935,50 +1001,4 @@ namespace TwilioTest
         }
     }
 }
-```
-
-For more information, please visit the [Twilio SMS C# documentation](https://www.twilio.com/docs/sms/quickstart/csharp-dotnet-framework).
-
-<a name="domain-whitelabel"></a>
-# How to Setup a Domain Whitelabel
-
-You can find documentation for how to setup a domain whitelabel via the UI [here](https://sendgrid.com/docs/Classroom/Basics/Whitelabel/setup_domain_whitelabel.html) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#whitelabel).
-
-Find more information about all of SendGrid's whitelabeling related documentation [here](https://sendgrid.com/docs/Classroom/Basics/Whitelabel/index.html).
-
-<a name="email-stats"></a>
-# How to View Email Statistics
-
-You can find documentation for how to view your email statistics via the UI [here](https://app.sendgrid.com/statistics) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#stats).
-
-Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as Twilio SendGrid processes your email.
-
-<a name="html-to-plain-text"></a>
-# How to transform HTML to plain text
-
-Although the HTML tags could be removed using regular expressions, the best solution is parsing the HTML code with a specific library, such as [HTMLAgilityPack](http://html-agility-pack.net/). 
-
-The following code shows how to parse an input string with HTML code and remove all tags:
-
-```csharp
-using HtmlAgilityPack;
-
-namespace Example {
-
-    internal class Example
-    {
-		/// <summary>
-		/// Convert the HTML content to plain text
-		/// </summary>
-		/// <param name="html">The html content which is going to be converted</param>
-		/// <returns>A string</returns>
-		public static string HtmlToPlainText(string html)
-		{
-			HtmlDocument document = new HtmlDocument();
-			document.LoadHtml(html);
-			return document.DocumentNode == null ? string.Empty : document.DocumentNode.InnerText;
-		}	
-	}
-}
-
 ```

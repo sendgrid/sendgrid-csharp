@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace SendGrid.Helpers.Mail.Model
 {
     /// <summary>
-    /// Helper class for plain html mime types
+    /// Helper class for plain html mime types.
     /// </summary>
     [JsonObject(IsReference = false)]
     public class HtmlContent : Content

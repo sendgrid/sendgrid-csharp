@@ -1,6 +1,135 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-07-08] Version 9.18.0
+---------------------------
+**Library - Docs**
+- [PR #824](https://github.com/sendgrid/sendgrid-csharp/pull/824): Remove references to "Whitelabel". Thanks to [@crweiner](https://github.com/crweiner)!
+- [PR #826](https://github.com/sendgrid/sendgrid-csharp/pull/826): cleanup README.md anchors and ToC. Thanks to [@ajloria](https://github.com/ajloria)!
+
+**Library - Feature**
+- [PR #1019](https://github.com/sendgrid/sendgrid-csharp/pull/1019): add option for throwing exception on non-successful API request. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Library - Chore**
+- [PR #1017](https://github.com/sendgrid/sendgrid-csharp/pull/1017): drop Elliptic Curve code in favor of 'starkbank-ecdsa'. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+
+[2020-06-24] Version 9.17.0
+---------------------------
+**Library - Fix**
+- [PR #916](https://github.com/sendgrid/sendgrid-csharp/pull/916): sendAt timestamp as 32bit integer. Thanks to [@matrix0123456789](https://github.com/matrix0123456789)!
+
+**Library - Feature**
+- [PR #1010](https://github.com/sendgrid/sendgrid-csharp/pull/1010): verify signature from event webhook. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #1014](https://github.com/sendgrid/sendgrid-csharp/pull/1014): add Elliptic Curve code and utilities. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #1011](https://github.com/sendgrid/sendgrid-csharp/pull/1011): Added net40 target framework. Thanks to [@HavenDV](https://github.com/HavenDV)!
+
+
+[2020-06-10] Version 9.16.0
+---------------------------
+**Library - Test**
+- [PR #1008](https://github.com/sendgrid/sendgrid-csharp/pull/1008): Ensuring default serialization settings behave correctly. Thanks to [@duncanchung](https://github.com/duncanchung)!
+
+**Library - Feature**
+- [PR #922](https://github.com/sendgrid/sendgrid-csharp/pull/922): Integrate SendGrid with HttpClientFactory. Thanks to [@akunzai](https://github.com/akunzai)!
+
+
+[2020-05-20] Version 9.15.1
+---------------------------
+**Library - Fix**
+- [PR #1001](https://github.com/sendgrid/sendgrid-csharp/pull/1001): add back client constructors with client options and actually use its reliability settings. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Library - Docs**
+- [PR #906](https://github.com/sendgrid/sendgrid-csharp/pull/906): Update Readme to C# 7.x syntax. Thanks to [@aevitas](https://github.com/aevitas)!
+
+
+[2020-05-13] Version 9.15.0
+---------------------------
+**Library - Fix**
+- [PR #938](https://github.com/sendgrid/sendgrid-csharp/pull/938): Ensures the serialization of the SendGridMessage is untainted by defaults set by applications on the JsonSerializer. Thanks to [@duncanchung](https://github.com/duncanchung)!
+- [PR #996](https://github.com/sendgrid/sendgrid-csharp/pull/996): migrate to common prism setup. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Library - Feature**
+- [PR #997](https://github.com/sendgrid/sendgrid-csharp/pull/997): add support for Twilio Email. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+
+[2020-04-29] Version 9.14.1
+---------------------------
+**Library - Fix**
+- [PR #993](https://github.com/sendgrid/sendgrid-csharp/pull/993): refactor and fix personalization inserts/updates. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+
+[2020-04-15] Version 9.14.0
+---------------------------
+**Library - Feature**
+- [PR #991](https://github.com/sendgrid/sendgrid-csharp/pull/991): ignore duplicate email addresses when serializing the message. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #905](https://github.com/sendgrid/sendgrid-csharp/pull/905): Implement IEquatable in EmailAddress. Thanks to [@aevitas](https://github.com/aevitas)!
+
+**Library - Fix**
+- [PR #924](https://github.com/sendgrid/sendgrid-csharp/pull/924): validate API key is non-empty. Thanks to [@aevitas](https://github.com/aevitas)!
+- [PR #903](https://github.com/sendgrid/sendgrid-csharp/pull/903): handle @ in display name when using MailHelper.StringToEmailAddress. Thanks to [@Fieora](https://github.com/Fieora)!
+
+**Library - Docs**
+- [PR #990](https://github.com/sendgrid/sendgrid-csharp/pull/990): baseline all the templated markdown docs. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+
+[2020-04-01] Version 9.13.2
+---------------------------
+**Library - Docs**
+- [PR #989](https://github.com/sendgrid/sendgrid-csharp/pull/989): support verbiage for login issues. Thanks to [@adamchasetaylor](https://github.com/adamchasetaylor)!
+
+
+[2020-03-18] Version 9.13.1
+---------------------------
+**Library - Docs**
+- [PR #983](https://github.com/sendgrid/sendgrid-csharp/pull/983): Fix CC being added as BCC in csharp sample. Thanks to [@o-farooq](https://github.com/o-farooq)!
+
+**Library - Fix**
+- [PR #967](https://github.com/sendgrid/sendgrid-csharp/pull/967): Remove char set from content headers for JSON payloads. Thanks to [@marius-stanescu](https://github.com/marius-stanescu)!
+
+
+[2020-03-04] Version 9.13.0
+---------------------------
+**Library - Feature**
+- [PR #981](https://github.com/sendgrid/sendgrid-csharp/pull/981): sanity-check email address and address lists when adding to a message. Thanks to [@indy-singh](https://github.com/indy-singh)!
+
+
+[2020-02-19] Version 9.12.7
+---------------------------
+**Library - Chore**
+- [PR #936](https://github.com/sendgrid/sendgrid-csharp/pull/936): Fix StyleCop warnings. Thanks to [@akunzai](https://github.com/akunzai)!
+
+
+[2020-01-26] Version 9.12.6
+---------------------------
+**Library - Fix**
+- [PR #975](https://github.com/sendgrid/sendgrid-csharp/pull/975): update setup to allow strong naming on Travis. Thanks to [@jnyrup](https://github.com/jnyrup)!
+
+
+[2020-01-17] Version 9.12.5
+---------------------------
+**Library - Fix**
+- [PR #971](https://github.com/sendgrid/sendgrid-csharp/pull/971): nuget push flag. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+
+[2020-01-17] Version 9.12.4
+---------------------------
+**Library - Chore**
+- [PR #970](https://github.com/sendgrid/sendgrid-csharp/pull/970): update travis build command. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+
+[2020-01-17] Version 9.12.3
+---------------------------
+**Library - Chore**
+- [PR #969](https://github.com/sendgrid/sendgrid-csharp/pull/969): fix travis path for automated deploy. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+
+[2020-01-17] Version 9.12.2
+---------------------------
+**Library - Chore**
+- [PR #966](https://github.com/sendgrid/sendgrid-csharp/pull/966): deploy command needs a source URL. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+
 [2020-01-16] Version 9.12.1
 ---------------------------
 **Library - Chore**

@@ -6,7 +6,7 @@
 namespace SendGrid.Helpers.Mail.Model
 {
     /// <summary>
-    /// Helper class for plain text mime types
+    /// Helper class for plain text mime types.
     /// </summary>
     public class PlainTextContent : Content
     {
