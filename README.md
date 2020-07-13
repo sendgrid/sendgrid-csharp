@@ -65,7 +65,7 @@ Grab your API Key from the [Twilio SendGrid UI](https://app.sendgrid.com/setting
 <a name="setup"></a>
 ## Setup Environment Variables to Manage Your API Key
 
-Manage your [Twilio SendGrid API Keys](https://app.sendgrid.com/settings/api_keys) by storing them in Environment Variables or in [Web.config](https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure). It is a good practice to keep your data and configuration settings separate. This way to you can change your Twilio SendGrid API key without changing your code. Also, we strongly advise against storing sensitive data directly in your code.
+Manage your [Twilio SendGrid API Keys](https://app.sendgrid.com/settings/api_keys) by storing them in Environment Variables or in [Web.config](https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure). It is a good practice to keep your data and configuration settings separate. This way you can change your Twilio SendGrid API key without changing your code. Also, we strongly advise against storing sensitive data directly in your code.
 
 Setup Environment Variables using the UI:
 
@@ -102,7 +102,7 @@ dotnet add package SendGrid
 dotnet add package SendGrid.Extensions.DependencyInjection
 ```
 
-Once you have the Twilio SendGrid library installed, you can include calls to them in your code.
+Once you have the Twilio SendGrid library installed, you can include calls to it in your code.
 For sample implementations, see the [.NET Core Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleCoreProject) and the [.NET 4.5.2 Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleNet45Project) folders.
 
 ## Dependencies
@@ -139,7 +139,7 @@ class Program
 }
 ```
 
-After executing the above code, `response.StatusCode` should be `202` and you should have an email in the inbox of the to recipient. You can check the status of your email [in the UI](https://app.sendgrid.com/email_activity?). Alternatively, we can post events to a URL of your choice using our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html). This gives you data about the events that occur as Twilio SendGrid processes your email.
+After executing the above code, `response.StatusCode` should be `202` and you should have an email in the inbox of the `to` recipient. You can check the status of your email [in the UI](https://app.sendgrid.com/email_activity?). Alternatively, we can post events to a URL of your choice using our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html). This gives you data about the events that occur as Twilio SendGrid processes your email.
 
 For more advanced cases, you can build the SendGridMessage object yourself with these minimum required settings:
 
