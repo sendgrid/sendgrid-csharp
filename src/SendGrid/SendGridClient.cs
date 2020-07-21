@@ -20,10 +20,9 @@ namespace SendGrid
         /// <param name="requestHeaders">A dictionary of request headers.</param>
         /// <param name="version">API version, override AddVersion to customize.</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint).</param>
-        /// <param name="httpErrorAsException">Whether HTTP error responses should be raised as exceptions.</param>
         /// <returns>Interface to the Twilio SendGrid REST API.</returns>
         public SendGridClient(IWebProxy webProxy, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = null, string urlPath = null, bool httpErrorAsException = false)
-            : base(webProxy, buildOptions(apiKey, host, requestHeaders, version, urlPath, httpErrorAsException))
+            : base(webProxy, buildOptions(apiKey, host, requestHeaders, version, urlPath))
         {
         }
 
@@ -36,10 +35,9 @@ namespace SendGrid
         /// <param name="requestHeaders">A dictionary of request headers.</param>
         /// <param name="version">API version, override AddVersion to customize.</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint).</param>
-        /// <param name="httpErrorAsException">Whether HTTP error responses should be raised as exceptions.</param>
         /// <returns>Interface to the Twilio SendGrid REST API.</returns>
         public SendGridClient(HttpClient httpClient, string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = null, string urlPath = null, bool httpErrorAsException = false)
-            : base(httpClient, buildOptions(apiKey, host, requestHeaders, version, urlPath, httpErrorAsException))
+            : base(httpClient, buildOptions(apiKey, host, requestHeaders, version, urlPath))
         {
         }
 
@@ -51,10 +49,9 @@ namespace SendGrid
         /// <param name="requestHeaders">A dictionary of request headers.</param>
         /// <param name="version">API version, override AddVersion to customize.</param>
         /// <param name="urlPath">Path to endpoint (e.g. /path/to/endpoint).</param>
-        /// <param name="httpErrorAsException">Whether HTTP error responses should be raised as exceptions.</param>
         /// <returns>Interface to the Twilio SendGrid REST API.</returns>
-        public SendGridClient(string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = null, string urlPath = null, bool httpErrorAsException = false)
-            : base(buildOptions(apiKey, host, requestHeaders, version, urlPath, httpErrorAsException))
+        public SendGridClient(string apiKey, string host = null, Dictionary<string, string> requestHeaders = null, string version = null, string urlPath = null)
+            : base(buildOptions(apiKey, host, requestHeaders, version, urlPath))
         {
         }
 
@@ -79,7 +76,7 @@ namespace SendGrid
         {
         }
 
-        private static SendGridClientOptions buildOptions(string apiKey, string host, Dictionary<string, string> requestHeaders, string version, string urlPath, bool httpErrorAsException)
+        private static SendGridClientOptions buildOptions(string apiKey, string host, Dictionary<string, string> requestHeaders, string version, string urlPath)
         {
             return new SendGridClientOptions
             {
@@ -88,7 +85,6 @@ namespace SendGrid
                 RequestHeaders = requestHeaders ?? DefaultOptions.RequestHeaders,
                 Version = version ?? DefaultOptions.Version,
                 UrlPath = urlPath ?? DefaultOptions.UrlPath,
-                HttpErrorAsException = httpErrorAsException // No default needed for bool.
             };
         }
     }

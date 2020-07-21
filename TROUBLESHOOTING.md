@@ -64,10 +64,10 @@ Console.WriteLine(response.Body.ReadAsStringAsync().Result); // The message will
 Console.WriteLine(response.Headers.ToString());
 ```
 
-If you want to throw the exception when the API returns an error, init the SendGridClient with the parameter 'httpErrorAsException' as true:
+If you want to throw the exception when the API returns an error, init the SendGridClient with options including 'HttpErrorAsException' as true:
 
 ```csharp
-SendGridClient client = new SendGridClient(apiKey, httpErrorAsException: true);
+var client = new SendGridClient(new SendGridClientOptions{ ApiKey = apiKey, HttpErrorAsException = true });
 ```
 
 Then if an error is thrown due to a failed request, a summary of that error along with a link to the appropriate place in the documentation will be sent back as a JSON object in the Exception Message. You can also deserialize the JSON object as a SendGridErrorResponse. Every error status code returned by the API has its own type of exception (BadRequestException, UnauthorizedException, PayloadTooLargeException, SendGridInternalException, etc.). All the possibles status codes and errors are documented [here](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html).
@@ -77,7 +77,7 @@ Then if an error is thrown due to a failed request, a summary of that error alon
 #### 401 - Unauthorized
 
 ```csharp
-SendGridClient client = new SendGridClient("", httpErrorAsException: true);
+var client = new SendGridClient(new SendGridClientOptions{ ApiKey = "SG.12345678901234567890123456789012", HttpErrorAsException = true });
 
 try
 {
@@ -102,7 +102,7 @@ catch(Exception ex)
 #### 400 - Bad Request - From Email Null
 
 ```csharp
-var client = new SendGridClient(apiKey, httpErrorAsException: true);
+var client = new SendGridClient(new SendGridClientOptions{ ApiKey = apiKey, HttpErrorAsException = true });
 
 try
 {
