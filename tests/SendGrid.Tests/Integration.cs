@@ -5872,7 +5872,10 @@
                 ReliabilitySettings = new ReliabilitySettings(1, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(1))
             };
 
-            var retryHandler = new RetryDelegatingHandler(new HttpClientHandler(), options.ReliabilitySettings);
+            var retryHandler = new RetryDelegatingHandler(options.ReliabilitySettings);
+
+            // Verify we can set the inner handler after constrcution.
+            retryHandler.InnerHandler = new HttpClientHandler();
 
             HttpClient clientToInject = new HttpClient(retryHandler) { Timeout = TimeSpan.FromMilliseconds(1) };
             var sg = new SendGridClient(clientToInject, options.ApiKey);
