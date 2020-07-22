@@ -1,6 +1,18 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-07-22] Version 9.19.0
+---------------------------
+**Library - Feature**
+- [PR #1030](https://github.com/sendgrid/sendgrid-csharp/pull/1030): allow the `RetryDelegatingHandler` to be used with `HttpClientFactory`. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Library - Chore**
+- [PR #1028](https://github.com/sendgrid/sendgrid-csharp/pull/1028): migrate to new default sendgrid-oai branch. Thanks to [@eshanholtz](https://github.com/eshanholtz)!
+
+**Library - Docs**
+- [PR #785](https://github.com/sendgrid/sendgrid-csharp/pull/785): typos fixed. Thanks to [@RodgerLeblanc](https://github.com/RodgerLeblanc)!
+
+
 [2020-07-08] Version 9.18.0
 ---------------------------
 **Library - Docs**
