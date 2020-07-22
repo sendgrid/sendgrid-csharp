@@ -33,8 +33,8 @@ namespace SendGrid.Helpers.Reliability
         /// </summary>
         /// <param name="settings">A ReliabilitySettings instance.</param>
         public RetryDelegatingHandler(ReliabilitySettings settings)
-            : this(new HttpClientHandler(), settings)
         {
+            this.settings = settings;
         }
 
         /// <summary>
