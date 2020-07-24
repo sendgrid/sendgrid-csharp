@@ -234,7 +234,7 @@ namespace SendGrid
 
         private static HttpClient CreateHttpClientWithRetryHandler(BaseClientOptions options)
         {
-            return new HttpClient(new RetryDelegatingHandler(options.ReliabilitySettings));
+            return new HttpClient(new RetryDelegatingHandler(new HttpClientHandler(), options.ReliabilitySettings));
         }
 
         /// <summary>
