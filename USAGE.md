@@ -3402,7 +3402,7 @@ For more information on domain authentication, please see our [User Guide](https
 ## URI Parameters
 | URI Parameter   | Type  | Description  |
 |---|---|---|
-| username | string  | Username of the subuser to find associated whitelabels for. |
+| username | string  | Username of the subuser to find associated domain authentications for. |
 
 ### GET /whitelabel/domains/subuser
 
@@ -3428,7 +3428,7 @@ For more information on domain authentication, please see our [User Guide](https
 ## URI Parameters
 | URI Parameter   | Type  | Required?  | Description  |
 |---|---|---|---|
-| username | string  | required  | Username for the subuser to find associated whitelabels for. |
+| username | string  | required  | Username for the subuser to find associated domain authentications for. |
 
 ### DELETE /whitelabel/domains/subuser
 
@@ -3676,7 +3676,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
-## Retrieve an reverse DNS record
+## Retrieve a reverse DNS record
 
 **This endpoint allows you to retrieve a reverse DNS record.**
 
@@ -3740,7 +3740,7 @@ Console.ReadLine();
 
 **This endpoint allows you to create a new link branding.**
 
-Email link branding allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
+Email link brandings allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-link-branding/).
 
@@ -3770,7 +3770,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve all link brandings.**
 
-Email link branding allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
+Email link brandings allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-link-branding/).
 
@@ -3799,7 +3799,7 @@ Default link branding is the actual link branding to be used when sending messag
   <li>Default Twilio SendGrid link whitelabel (i.e. 100.ct.sendgrid.net)</li>
 </ul>
 
-Email link branding allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
+Email link brandings allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-link-branding/).
 
@@ -3825,7 +3825,7 @@ Link branding can be associated with subusers from the parent account. This func
 subusers to send mail using their parent's link brands. To associate a link branding, the parent account
 must first create a branded link and validate it. The parent may then associate that branded link with a subuser via the API or the Subuser Management page in the user interface.
 
-Email link branding allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
+Email link brandings allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-link-branding/).
 
@@ -3851,7 +3851,7 @@ Link branding can be associated with subusers from the parent account. This func
 subusers to send mail using their parent's link brands. To associate a link branding, the parent account
 must first create a branded link and validate it. The parent may then associate that branded link with a subuser via the API or the Subuser Management page in the user interface.
 
-Email link branding allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
+Email link brandings allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-link-branding/).
 
@@ -3873,7 +3873,7 @@ Console.ReadLine();
 
 **This endpoint allows you to update a specific link branding. You can use this endpoint to change a branded link's default status.**
 
-Email link branding allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
+Email link brandings allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-link-branding/).
 
@@ -3898,7 +3898,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve a specific link branding.**
 
-Email link branding allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
+Email link brandings allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-link-branding/).
 
@@ -3918,7 +3918,7 @@ Console.ReadLine();
 
 **This endpoint allows you to delete a link branding.**
 
-Email link branding allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
+Email link brandings allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-link-branding/).
 
@@ -3938,7 +3938,7 @@ Console.ReadLine();
 
 **This endpoint allows you to validate a link branding.**
 
-Email link branding allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
+Email link brandings allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-link-branding/).
 
@@ -3962,7 +3962,7 @@ Link branding can be associated with subusers from the parent account. This func
 subusers to send mail using their parent's link brands. To associate a link branding, the parent account
 must first create a branded link and validate it. The parent may then associate that branded link with a subuser via the API or the Subuser Management page in the user interface.
 
-Email link branding allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
+Email link brandings allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
 
 For more information, please see our [User Guide](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-link-branding/).
 

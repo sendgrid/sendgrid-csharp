@@ -12,15 +12,15 @@ var client = new SendGridClient(apiKey);
 // POST /whitelabel/domains
 
 string data = @"{
-  'automatic_security': false, 
-  'custom_spf': true, 
-  'default': true, 
-  'domain': 'example.com', 
+  'automatic_security': false,
+  'custom_spf': true,
+  'default': true,
+  'domain': 'example.com',
   'ips': [
-    '192.168.1.1', 
+    '192.168.1.1',
     '192.168.1.2'
-  ], 
-  'subdomain': 'news', 
+  ],
+  'subdomain': 'news',
   'username': 'john@example.com'
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
@@ -36,10 +36,10 @@ Console.ReadLine();
 // GET /whitelabel/domains
 
 string queryParams = @"{
-  'domain': 'test_string', 
-  'exclude_subusers': 'true', 
-  'limit': 1, 
-  'offset': 1, 
+  'domain': 'test_string',
+  'exclude_subusers': 'true',
+  'limit': 1,
+  'offset': 1,
   'username': 'test_string'
 }";
 var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/domains", queryParams: queryParams);
@@ -83,7 +83,7 @@ Console.ReadLine();
 // PATCH /whitelabel/domains/{domain_id}
 
 string data = @"{
-  'custom_spf': true, 
+  'custom_spf': true,
   'default': false
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
@@ -177,8 +177,8 @@ Console.ReadLine();
 // POST /whitelabel/ips
 
 string data = @"{
-  'domain': 'example.com', 
-  'ip': '192.168.1.1', 
+  'domain': 'example.com',
+  'ip': '192.168.1.1',
   'subdomain': 'email'
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
@@ -194,8 +194,8 @@ Console.ReadLine();
 // GET /whitelabel/ips
 
 string queryParams = @"{
-  'ip': 'test_string', 
-  'limit': 1, 
+  'ip': 'test_string',
+  'limit': 1,
   'offset': 1
 }";
 var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "whitelabel/ips", queryParams: queryParams);
@@ -242,14 +242,14 @@ Console.ReadLine();
 // POST /whitelabel/links
 
 string data = @"{
-  'default': true, 
-  'domain': 'example.com', 
+  'default': true,
+  'domain': 'example.com',
   'subdomain': 'mail'
 }";
 Object json = JsonConvert.DeserializeObject<Object>(data);
 data = json.ToString();
 string queryParams = @"{
-  'limit': 1, 
+  'limit': 1,
   'offset': 1
 }";
 var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "whitelabel/links", requestBody: data, queryParams: queryParams);
@@ -259,7 +259,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 
 ////////////////////////////////////////////////////////
-// Retrieve all link brandingsBranding
+// Retrieve all link brandings
 // GET /whitelabel/links
 
 string queryParams = @"{
