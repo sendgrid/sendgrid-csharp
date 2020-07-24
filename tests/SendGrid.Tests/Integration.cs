@@ -5929,7 +5929,7 @@
             var responseMessage = Newtonsoft.Json.JsonConvert.SerializeObject(responseObject);
             var mockHandler = new FixedStatusAndMessageHttpMessageHandler(HttpStatusCode.ServiceUnavailable, responseMessage);
             var mockClient = new HttpClient(mockHandler);
-            var client = new SendGridClient(mockClient, fixture.apiKey, httpErrorAsException: true);
+            var client = new SendGridClient(mockClient, new SendGridClientOptions { ApiKey = fixture.apiKey, HttpErrorAsException = true });
 
             try
             {

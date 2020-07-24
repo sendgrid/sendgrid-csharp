@@ -26,7 +26,7 @@ namespace Example
             // Retrieve the API key.
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY") ?? configuration["SendGrid:ApiKey"];
 
-            var client = new SendGridClient(HttpClient, apiKey, httpErrorAsException: true);
+            var client = new SendGridClient(HttpClient, new SendGridClientOptions { ApiKey = apiKey, HttpErrorAsException = true });
 
             // Send a Single Email using the Mail Helper
             var from = new EmailAddress(configuration.GetValue("SendGrid:From", "test@example.com"), "Example User");
