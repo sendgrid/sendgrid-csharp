@@ -17,12 +17,12 @@ This is docker-based solution which can be deployed on cloud services like Herok
 
 Clone the repository
 ```
-git clone https://github.com/KoditkarVedant/sendgrid-event-webhook-consumer.git
+git clone https://github.com/sendgrid/sendgrid-csharp.git
 ```
 
 Move into the clonned repository
 ```
-cd sendgrid-event-webhook-consumer
+cd sendgrid-csharp/examples/sendgrid-event-webhook-consumer
 ```
 
 Restore the Packages
@@ -36,9 +36,9 @@ Setup your MX records. Depending on your domain name host, you may need to wait 
 
 Run the Event Webhook Parse listener in your terminal:
 ```
-git clone https://github.com/KoditkarVedant/sendgrid-event-webhook-consumer.git
+git clone https://github.com/sendgrid/sendgrid-csharp.git
 
-cd sendgrid-event-webhook-consumer
+cd sendgrid-csharp/examples/sendgrid-event-webhook-consumer
 
 dotnet restore
 
