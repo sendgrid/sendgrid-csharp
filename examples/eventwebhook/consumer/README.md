@@ -22,7 +22,7 @@ git clone https://github.com/sendgrid/sendgrid-csharp.git
 
 Move into the clonned repository
 ```
-cd sendgrid-csharp/examples/sendgrid-event-webhook-consumer
+cd sendgrid-csharp/examples/eventwebhook/consumer
 ```
 
 Restore the Packages
@@ -38,7 +38,7 @@ Run the Event Webhook Parse listener in your terminal:
 ```
 git clone https://github.com/sendgrid/sendgrid-csharp.git
 
-cd sendgrid-csharp/examples/sendgrid-event-webhook-consumer
+cd sendgrid-csharp/examples/eventwebhook/consumer
 
 dotnet restore
 
