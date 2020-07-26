@@ -1,5 +1,5 @@
-﻿// <copyright file="MailHelper.cs" company="SendGrid">
-// Copyright (c) SendGrid. All rights reserved.
+﻿// <copyright file="MailHelper.cs" company="Twilio SendGrid">
+// Copyright (c) Twilio SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
@@ -10,18 +10,18 @@ using System.Text.RegularExpressions;
 namespace SendGrid.Helpers.Mail
 {
     /// <summary>
-    /// Simplified email sending for common use cases
+    /// Simplified email sending for common use cases.
     /// </summary>
     public class MailHelper
     {
         private const string NameGroup = "name";
         private const string EmailGroup = "email";
         private static readonly Regex Rfc2822Regex = new Regex(
-            $@"(?:(?<{NameGroup}>)(?<{EmailGroup}>[^\<]*@.*[^\>])|(?<{NameGroup}>[^\<]*)\<(?<{EmailGroup}>.*@.*)\>)",
+            $@"(?:(?<{NameGroup}>[^\<]*)\<(?<{EmailGroup}>.*@.*)\>|(?<{NameGroup}>)(?<{EmailGroup}>[^\<]*@.*[^\>]))",
             RegexOptions.ECMAScript);
 
         /// <summary>
-        /// Send a single simple email
+        /// Send a single simple email.
         /// </summary>
         /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
         /// <param name="to">An email object that may contain the recipient’s name, but must always contain the recipient’s email.</param>
@@ -54,7 +54,7 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
-        /// Send a single dynamic template email
+        /// Send a single dynamic template email.
         /// </summary>
         /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
         /// <param name="to">An email object that may contain the recipient’s name, but must always contain the recipient’s email.</param>
@@ -86,7 +86,7 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
-        /// Send a single simple email to multiple recipients
+        /// Send a single simple email to multiple recipients.
         /// </summary>
         /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
         /// <param name="tos">A list of email objects that may contain the recipient’s name, but must always contain the recipient’s email.</param>
@@ -123,7 +123,7 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
-        /// Send a single simple email to multiple recipients
+        /// Send a single simple email to multiple recipients.
         /// </summary>
         /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
         /// <param name="tos">A list of email objects that may contain the recipient’s name, but must always contain the recipient’s email.</param>
@@ -239,10 +239,10 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
-        /// Uncomplex conversion of a <![CDATA["Name <email@email.com>"]]> to EmailAddress
+        /// Uncomplex conversion of a <![CDATA["Name <email@email.com>"]]> to EmailAddress.
         /// </summary>
-        /// <param name="rfc2822Email">"email@email.com" or <![CDATA["Name <email@email.com>"]]> string</param>
-        /// <returns>EmailsAddress Object</returns>
+        /// <param name="rfc2822Email">"email@email.com" or <![CDATA["Name <email@email.com>"]]> string.</param>
+        /// <returns>EmailsAddress Object.</returns>
         public static EmailAddress StringToEmailAddress(string rfc2822Email)
         {
             var match = Rfc2822Regex.Match(rfc2822Email);
@@ -257,14 +257,14 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
-        /// Send a single simple email to multiple recipients with option for displaying all the recipients present in "To" section of email
+        /// Send a single simple email to multiple recipients with option for displaying all the recipients present in "To" section of email.
         /// </summary>
         /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
         /// <param name="tos">A list of email objects that may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="subject">The subject of your email. This may be overridden by SetGlobalSubject().</param>
         /// <param name="plainTextContent">The text/plain content of the email body.</param>
         /// <param name="htmlContent">The text/html content of the email body.</param>
-        /// <param name="showAllRecipients">Displays all the recipients present in the "To" section of email.The default value is false</param>
+        /// <param name="showAllRecipients">Displays all the recipients present in the "To" section of email.The default value is false.</param>
         /// <returns>A SendGridMessage object.</returns>
         public static SendGridMessage CreateSingleEmailToMultipleRecipients(
                                                                             EmailAddress from,

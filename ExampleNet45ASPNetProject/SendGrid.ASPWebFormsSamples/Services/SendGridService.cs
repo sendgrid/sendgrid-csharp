@@ -14,13 +14,13 @@ namespace SendGrid.ASPWebFormsSamples.Services
             // Retrieve the API key from an appSettings variable from the web.config
             var apiKey = ConfigurationManager.AppSettings["SendGrid_API_Key"];
 
-            // Initialize the SendGrid client
+            // Initialize the Twilio SendGrid client
             _client = new SendGridClient(apiKey);
         }
 
         public async Task<Response> Send(EmailMessageInfo messageInfo)
         {
-            // Prepare the SendGrid email message
+            // Prepare the Twilio SendGrid email message
             var sendgridMessage = new SendGridMessage
             {
                 From = new EmailAddress(messageInfo.FromEmailAddress),
@@ -45,10 +45,10 @@ namespace SendGrid.ASPWebFormsSamples.Services
                 sendgridMessage.AddBcc(new EmailAddress(messageInfo.BccEmailAddress));
             }
 
-            // Send the message to SendGrid, and save the API response
+            // Send the message to Twilio SendGrid, and save the API response
             var response = await _client.SendEmailAsync(sendgridMessage);
 
-            // Return the SendGrid response
+            // Return the Twilio SendGrid response
             return response;
         }
     }
