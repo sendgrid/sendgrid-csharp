@@ -1,12 +1,12 @@
-﻿// <copyright file="PlainTextContent.cs" company="SendGrid">
-// Copyright (c) SendGrid. All rights reserved.
+﻿// <copyright file="PlainTextContent.cs" company="Twilio SendGrid">
+// Copyright (c) Twilio SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
 namespace SendGrid.Helpers.Mail.Model
 {
     /// <summary>
-    /// Helper class for plain text mime types
+    /// Helper class for plain text mime types.
     /// </summary>
     public class PlainTextContent : Content
     {
