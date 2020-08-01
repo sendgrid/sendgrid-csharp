@@ -9,4 +9,4 @@ Click on the Example project, then click the `Start` button in the menu.
 ## Usage
 
 - See the [example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleCoreProject/Example.cs) for a complete working example.
-- [Documentation](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/overview.html)
+- [Documentation](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/index.html)
