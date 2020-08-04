@@ -141,7 +141,7 @@ namespace Example
             };
             msg.AddHeaders(headers);
 
-            // If you require complex substitutions this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transactional-templates).
+            // If you require complex substitutions this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/HEAD/USE_CASES.md#transactional-templates).
             var dynamicTemplateData = new ExampleTemplateData
             {
                 Subject = "Hi!",
@@ -201,7 +201,7 @@ namespace Example
             };
             msg.AddHeaders(headers1, 1);
 
-            // For a full transactional template example, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transactional-templates).
+            // For a full transactional template example, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/HEAD/USE_CASES.md#transactional-templates).
             var dynamicTemplateData2 = new ExampleTemplateData
             {
                 Subject = "Hi 2!",
@@ -244,7 +244,7 @@ namespace Example
             msg.AddContents(contents);
 
             // For base64 encoding, see [`Convert.ToBase64String`](https://msdn.microsoft.com/en-us/library/system.convert.tobase64string(v=vs.110).aspx)
-            // For an example using an attachment, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#attachments).
+            // For an example using an attachment, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/HEAD/USE_CASES.md#attachments).
             msg.AddAttachment("balance_001.pdf",
                               "base64 encoded string",
                               "application/pdf",
@@ -271,7 +271,7 @@ namespace Example
             };
             msg.AddAttachments(attachments);
 
-            // For a full transactional template example, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transactional-templates).
+            // For a full transactional template example, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/HEAD/USE_CASES.md#transactional-templates).
             msg.SetTemplateId("d-d42b0eea09964d1ab957c18986c01828");
 
             msg.AddGlobalHeader("X-Day", "Monday");
@@ -858,14 +858,14 @@ var client = new SendGridClient(options);
 <a name="domain-authentication"></a>
 # How to Setup a Domain Authentication
 
-You can find documentation for how to setup a domain authentication via the UI [here](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-domain-authentication/) and via API [here](https://github.com/sendgrid/sendgrid-nodejs/blob/master/packages/client/USAGE.md#sender-authentication).
+You can find documentation for how to setup a domain authentication via the UI [here](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-domain-authentication/) and via API [here](https://github.com/sendgrid/sendgrid-nodejs/blob/HEAD/packages/client/USAGE.md#sender-authentication).
 
 Find more information about all of SendGrid's authentication related documentation [here](https://sendgrid.com/docs/ui/account-and-settings/).
 
 <a name="email-stats"></a>
 # How to View Email Statistics
 
-You can find documentation for how to view your email statistics via the UI [here](https://app.sendgrid.com/statistics) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#stats).
+You can find documentation for how to view your email statistics via the UI [here](https://app.sendgrid.com/statistics) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/HEAD/USAGE.md#stats).
 
 Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as Twilio SendGrid processes your email.
 

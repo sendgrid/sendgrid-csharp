@@ -235,13 +235,13 @@ All notable changes to this project will be documented in this file.
 ## Added
 - #509 Transient Fault Handling (dependency free)
 - Implements retry behaviour for transient faults when using HttpClient to send the request.
-- Please see #509 and [USE_CASES.md](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transient_faults) for details.
+- Please see #509 and [USE_CASES.md](https://github.com/sendgrid/sendgrid-csharp/blob/HEAD/USE_CASES.md#transient_faults) for details.
 - Thanks to [Dylan Morley](https://github.com/dylan-asos) for the PR!
 
 ## [9.8.0] - 2017-08-15
 ## Added
 - Single email to multiple recipients - Toggle display of recipients #508
-- The method `CreateSingleEmailToMultipleRecipients` now has an additional optional parameter to control whether the email recipients can see each others email addresses. Please see [USE_CASES.md](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#singleemailmultiplerecipients) for details.
+- The method `CreateSingleEmailToMultipleRecipients` now has an additional optional parameter to control whether the email recipients can see each others email addresses. Please see [USE_CASES.md](https://github.com/sendgrid/sendgrid-csharp/blob/HEAD/USE_CASES.md#singleemailmultiplerecipients) for details.
 - Thanks to [Niladri Dutta](Niladri24dutta) for the PR!
 
 ## [9.7.0] - 2017-08-03
@@ -344,7 +344,7 @@ All notable changes to this project will be documented in this file.
 ## [8.0.4] - 2016-08-24 ##
 ### Added
 - Table of Contents in the README
-- Added a [USE_CASES.md](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md) section, with the first use case example for transactional templates
+- Added a [USE_CASES.md](https://github.com/sendgrid/sendgrid-csharp/blob/HEAD/USE_CASES.md) section, with the first use case example for transactional templates
 
 ## [8.0.3] - 2016-08-17 ##
 ## Fixed
@@ -359,7 +359,7 @@ All notable changes to this project will be documented in this file.
 
 ## [8.0.1] - 2016-07-25 ## 
 ### Added 
-- [Troubleshooting](https://github.com/sendgrid/sendgrid-csharp/blob/master/TROUBLESHOOTING.md) section 
+- [Troubleshooting](https://github.com/sendgrid/sendgrid-csharp/blob/HEAD/TROUBLESHOOTING.md) section 
 
 ## [8.0.0] - 2016-07-22 ## 
 ## BREAKING CHANGE 
