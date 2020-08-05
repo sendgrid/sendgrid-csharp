@@ -8,5 +8,5 @@ Click on the Example project, then click the `Start` button in the menu.
 
 ## Usage
 
-- See the [example](ExampleCoreProject/Example.cs) for a complete working example.
+- See the [example](ExampleCoreProject/Program.cs) for a complete working example.
 - [Documentation](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/index.html)

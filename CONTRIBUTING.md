@@ -78,7 +78,7 @@ Next, update your Environment with your [SENDGRID_APIKEY](https://app.sendgrid.c
 
 - Check out the documentation for [Web API v3 endpoints](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html).
 - Review the corresponding [examples](examples).
-- You can add your test code to our [Example Project](ExampleCoreProject/Example.cs).
+- You can add your test code to our [Example Project](ExampleCoreProject/Program.cs).
 
 <a name="understanding-the-codebase"></a>
 ## Understanding the Code Base
