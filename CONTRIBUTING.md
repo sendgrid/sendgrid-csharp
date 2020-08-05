@@ -85,9 +85,9 @@ Next, update your Environment with your [SENDGRID_APIKEY](https://app.sendgrid.c
 
 - **[/examples](examples)**
   - Examples that demonstrate usage.
-- **[/ExampleCoreProject/Example.cs](ExampleCoreProject/Example.cs)**
+- **[/ExampleCoreProject/Program.cs](ExampleCoreProject/Program.cs)**
   - A working .NET Core example project for testing.
-- **[/ExampleNet45Project/Example.cs](ExampleNet45Project/Example.cs)**
+- **[/ExampleNet45Project/Program.cs](ExampleNet45Project/Program.cs)**
   - A working .NET 4.5.2 example project for testing.
 - **[/src/SendGrid/SendGridClient.cs](src/SendGrid/SendGridClient.cs)**
   - The main interface to the Twilio SendGrid API is the class `SendGridClient`.
