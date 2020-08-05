@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-08-05] Version 9.20.0
+---------------------------
+**Library - Feature**
+- [PR #812](https://github.com/sendgrid/sendgrid-csharp/pull/812): Add dockerized event webhook consumer example. Thanks to [@KoditkarVedant](https://github.com/KoditkarVedant)!
+
+
 [2020-07-22] Version 9.19.0
 ---------------------------
 **Library - Feature**
