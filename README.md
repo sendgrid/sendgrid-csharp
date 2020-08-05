@@ -1,4 +1,4 @@
-![SendGrid Logo](https://github.com/sendgrid/sendgrid-python/raw/HEAD/twilio_sendgrid_logo.png)
+![SendGrid Logo](twilio_sendgrid_logo.png)
 
 [![BuildStatus](https://travis-ci.org/sendgrid/sendgrid-csharp.png?branch=main)](https://travis-ci.org/sendgrid/sendgrid-csharp)
 [![NuGet](https://img.shields.io/nuget/v/SendGrid.svg)](https://www.nuget.org/packages/SendGrid)
