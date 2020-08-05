@@ -2450,7 +2450,7 @@ For more detailed information about how to use the v3 Mail Send endpoint, please
 
 ### POST /mail/send
 
-This endpoint has a helper, check it out [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/Helpers/Mail).
+This endpoint has a helper, check it out [here](src/SendGrid/Helpers/Mail).
 
 ```csharp
 string data = @"{

@@ -77,27 +77,27 @@ Next, update your Environment with your [SENDGRID_APIKEY](https://app.sendgrid.c
 ##### Execute: #####
 
 - Check out the documentation for [Web API v3 endpoints](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html).
-- Review the corresponding [examples](https://github.com/sendgrid/sendgrid-csharp/blob/master/examples).
-- You can add your test code to our [Example Project](https://github.com/sendgrid/sendgrid-csharp/blob/master/ExampleCoreProject/Example.cs).
+- Review the corresponding [examples](examples).
+- You can add your test code to our [Example Project](ExampleCoreProject/Program.cs).
 
 <a name="understanding-the-codebase"></a>
 ## Understanding the Code Base
 
-- **[/examples](https://github.com/sendgrid/sendgrid-csharp/blob/master/examples)**
+- **[/examples](examples)**
   - Examples that demonstrate usage.
-- **[/ExampleCoreProject/Example.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/ExampleCoreProject/Example.cs)**
+- **[/ExampleCoreProject/Program.cs](ExampleCoreProject/Program.cs)**
   - A working .NET Core example project for testing.
-- **[/ExampleNet45Project/Example.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/ExampleNet45Project/Example.cs)**
+- **[/ExampleNet45Project/Program.cs](ExampleNet45Project/Program.cs)**
   - A working .NET 4.5.2 example project for testing.
-- **[/src/SendGrid/SendGridClient.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/SendGridClient.cs)**
+- **[/src/SendGrid/SendGridClient.cs](src/SendGrid/SendGridClient.cs)**
   - The main interface to the Twilio SendGrid API is the class `SendGridClient`.
-- **[/tests/SendGrid.Tests/Integration.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs)**
+- **[/tests/SendGrid.Tests/Integration.cs](tests/SendGrid.Tests/Integration.cs)**
   - Integration tests
 
 <a name="testing"></a>
 ## Testing
 
-All PRs require passing tests before the PR will be reviewed. All test files are in the [`SendGrid.Tests`](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests) directory. For the purposes of contributing to this repo, please update the [`Integration.cs`](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs) file with unit tests as you modify the code.
+All PRs require passing tests before the PR will be reviewed. All test files are in the [`SendGrid.Tests`](tests/SendGrid.Tests) directory. For the purposes of contributing to this repo, please update the [`Integration.cs`](tests/SendGrid.Tests/Integration.cs) file with unit tests as you modify the code.
 
 The integration tests require a Twilio SendGrid mock API in order to execute. We've simplified setting this up using Docker to run the tests. You will just need [Docker Desktop](https://docs.docker.com/get-docker/) and `make`.
 
@@ -106,7 +106,7 @@ Once these are available, simply execute the Docker test target to run all tests
 <a name="style-guidelines-and-naming-conventions"></a>
 ## Style Guidelines & Naming Conventions
 
-Generally, we follow the style guidelines as suggested by the official language. However, we ask that you conform to the styles that already exist in the library. If you wish to deviate, please explain your reasoning. In this case, we generally follow the [C# Naming Conventions](https://msdn.microsoft.com/library/ms229045(v=vs.100).aspx), the suggestions provided by the Visual Studio IDE and StyleCop (see the [stylecop.json](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/stylecop.json) and [SendGrid.ruleset](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/SendGrid.ruleset) configuration files.
+Generally, we follow the style guidelines as suggested by the official language. However, we ask that you conform to the styles that already exist in the library. If you wish to deviate, please explain your reasoning. In this case, we generally follow the [C# Naming Conventions](https://msdn.microsoft.com/library/ms229045(v=vs.100).aspx), the suggestions provided by the Visual Studio IDE and StyleCop (see the [stylecop.json](src/SendGrid/stylecop.json) and [SendGrid.ruleset](src/SendGrid/SendGrid.ruleset) configuration files.
 
 <a name="creating-a-pull-request"></a>
 ## Creating a Pull Request

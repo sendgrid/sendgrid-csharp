@@ -1,6 +1,6 @@
-![SendGrid Logo](https://github.com/sendgrid/sendgrid-python/raw/master/twilio_sendgrid_logo.png)
+![SendGrid Logo](twilio_sendgrid_logo.png)
 
-[![BuildStatus](https://travis-ci.org/sendgrid/sendgrid-csharp.png?branch=master)](https://travis-ci.org/sendgrid/sendgrid-csharp)
+[![BuildStatus](https://travis-ci.org/sendgrid/sendgrid-csharp.png?branch=main)](https://travis-ci.org/sendgrid/sendgrid-csharp)
 [![NuGet](https://img.shields.io/nuget/v/SendGrid.svg)](https://www.nuget.org/packages/SendGrid)
 [![Email Notifications Badge](https://dx.sendgrid.com/badge/csharp)](https://dx.sendgrid.com/newsletter/csharp)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE.md)
@@ -12,7 +12,7 @@
 **The default branch name for this repository has been changed to `main` as of 07/27/2020.**
 
 * Subscribe to email [notifications](https://dx.sendgrid.com/newsletter/csharp) for releases and breaking changes.
-* Send SMS messages with [Twilio](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#sms). 
+* Send SMS messages with [Twilio](USE_CASES.md#sms). 
 
 # Overview
 
@@ -20,9 +20,9 @@
 
 Version 9.X.X+ of this library provides full support for all Twilio SendGrid [Web API v3](https://sendgrid.com/docs/API_Reference/api_v3.html) endpoints, including the new [v3 /mail/send](https://sendgrid.com/blog/introducing-v3mailsend-sendgrids-new-mail-endpoint).
 
-We want this library to be community driven, and Twilio SendGrid led. We need your help to realize this goal. To help make sure we are building the right things in the right order, we ask that you create [issues](https://github.com/sendgrid/sendgrid-csharp/issues) and [pull requests](https://github.com/sendgrid/sendgrid-csharp/blob/master/CONTRIBUTING.md) or simply upvote or comment on existing issues or pull requests.
+We want this library to be community driven, and Twilio SendGrid led. We need your help to realize this goal. To help make sure we are building the right things in the right order, we ask that you create [issues](https://github.com/sendgrid/sendgrid-csharp/issues) and [pull requests](CONTRIBUTING.md) or simply upvote or comment on existing issues or pull requests.
 
-For updates to this library, see our [CHANGELOG](https://github.com/sendgrid/sendgrid-csharp/blob/master/CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-csharp/releases).
+For updates to this library, see our [CHANGELOG](CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-csharp/releases).
 
 Subscribe to email [release notifications](https://dx.sendgrid.com/newsletter/csharp) to receive emails about releases and breaking changes.
 
@@ -104,11 +104,11 @@ dotnet add package SendGrid.Extensions.DependencyInjection
 ```
 
 Once you have the Twilio SendGrid library installed, you can include calls to it in your code.
-For sample implementations, see the [.NET Core Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleCoreProject) and the [.NET 4.5.2 Example](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleNet45Project) folders.
+For sample implementations, see the [.NET Core Example](ExampleCoreProject) and the [.NET 4.5.2 Example](ExampleNet45Project) folders.
 
 ## Dependencies
 
-Please see the [.csproj file](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/SendGrid.csproj).
+Please see the [.csproj file](src/SendGrid/SendGrid.csproj).
 
 # Quick Start
 
@@ -169,7 +169,7 @@ class Program
 }
 ```
 
-You can find an example of all the email features [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs#L79).
+You can find an example of all the email features [here](tests/SendGrid.Tests/Integration.cs#L79).
 
 <a name="v3"></a>
 ## General v3 Web API Usage
@@ -244,15 +244,15 @@ class Program
 # Usage
 
 - [Twilio SendGrid Docs](https://sendgrid.com/docs/API_Reference/api_v3.html)
-- [Library Usage Docs](https://github.com/sendgrid/sendgrid-csharp/tree/master/USAGE.md)
-- [Example Code - .NET Core](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleCoreProject)
-- [Example Code - .NET 4.5.2+](https://github.com/sendgrid/sendgrid-csharp/tree/master/ExampleNet45Project)
+- [Library Usage Docs](USAGE.md)
+- [Example Code - .NET Core](ExampleCoreProject)
+- [Example Code - .NET 4.5.2+](ExampleNet45Project)
 - [How-to: Migration from v2 to v3](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/how_to_migrate_from_v2_to_v3_mail_send.html)
-- [v3 Web API Mail Send Helper](https://github.com/sendgrid/sendgrid-csharp/tree/master/src/SendGrid/Helpers/Mail)
+- [v3 Web API Mail Send Helper](src/SendGrid/Helpers/Mail)
 
 # Use Cases
 
-Here are some [examples of common API use cases](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md), such as how to send an email with a transactional template.
+Here are some [examples of common API use cases](USE_CASES.md), such as how to send an email with a transactional template.
 
 # Roadmap
 
@@ -260,18 +260,18 @@ If you are interested in the future direction of this project, please take a loo
 
 # How to Contribute
 
-We encourage contribution to our library (you might even score some nifty swag), please see our [CONTRIBUTING](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md) guide for details.
+We encourage contribution to our library (you might even score some nifty swag), please see our [CONTRIBUTING](CONTRIBUTING.md) guide for details.
 
 Quick links:
 
-- [Feature Request](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#feature-request)
-- [Bug Reports](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#submit-a-bug-report)
-- [Improvements to the Codebase](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#improvements-to-the-codebase)
-- [Review Pull Requests](https://github.com/sendgrid/sendgrid-csharp/tree/master/CONTRIBUTING.md#code-reviews)
+- [Feature Request](CONTRIBUTING.md#feature-request)
+- [Bug Reports](CONTRIBUTING.md#submit-a-bug-report)
+- [Improvements to the Codebase](CONTRIBUTING.md#improvements-to-the-codebase)
+- [Review Pull Requests](CONTRIBUTING.md#code-reviews)
 
 # Troubleshooting
 
-Please see our [troubleshooting guide](https://github.com/sendgrid/sendgrid-csharp/blob/master/TROUBLESHOOTING.md) for common library issues.
+Please see our [troubleshooting guide](TROUBLESHOOTING.md) for common library issues.
 
 # About
 
