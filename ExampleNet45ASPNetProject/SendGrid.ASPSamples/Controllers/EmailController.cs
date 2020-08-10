@@ -23,6 +23,11 @@ namespace SendGrid.ASPSamples.Controllers
         [HttpPost]
         public ActionResult Send(EmailContract emailContract)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            
             try
             {
                 var response= _sendGridEmailService.Send(emailContract);

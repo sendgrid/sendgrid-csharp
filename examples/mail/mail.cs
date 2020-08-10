@@ -31,7 +31,7 @@ Console.ReadLine();
 ////////////////////////////////////////////////////////
 // v3 Mail Send
 // POST /mail/send
-// This endpoint has a helper, check it out [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/Helpers/Mail/README.md).
+// This endpoint has a helper, check it out [here](https://github.com/sendgrid/sendgrid-csharp/blob/HEAD/src/SendGrid/Helpers/Mail/README.md).
 
 string data = @"{
   'asm': {
@@ -84,8 +84,8 @@ string data = @"{
     }, 
     'footer': {
       'enable': true, 
-      'html': '<p>Thanks</br>The SendGrid Team</p>', 
-      'text': 'Thanks,/n The SendGrid Team'
+      'html': '<p>Thanks</br>The Twilio SendGrid Team</p>', 
+      'text': 'Thanks,/n The Twilio SendGrid Team'
     }, 
     'sandbox_mode': {
       'enable': false
@@ -167,7 +167,7 @@ string data = @"{
       'enable': true, 
       'html': 'If you would like to unsubscribe and stop receiving these emails <% clickhere %>.', 
       'substitution_tag': '<%click here%>', 
-      'text': 'If you would like to unsubscribe and stop receiveing these emails <% click here %>.'
+      'text': 'If you would like to unsubscribe and stop receiving these emails <% click here %>.'
     }
   }
 }";

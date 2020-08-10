@@ -1,4 +1,4 @@
-**The SendGrid C# .NET library provide an easy way to send emails. This example application shows how to integrate with an ASP.NET application.**
+**The Twilio SendGrid C# .NET library provide an easy way to send emails. This example application shows how to integrate with an ASP.NET application.**
 
 # Installation
 

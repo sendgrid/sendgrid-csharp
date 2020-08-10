@@ -20,9 +20,11 @@ This documentation provides examples for specific use cases. Please [open an iss
         - [MaximumBackOff](#maximumbackoff)
         - [DeltaBackOff](#deltabackoff)
     - [Examples](#examples)
-- [How to Setup a Domain Whitelabel](#how-to-setup-a-domain-whitelabel)
+- [How to Setup a Domain Authentication](#how-to-setup-a-domain-authentication)
 - [How to View Email Statistics](#how-to-view-email-statistics)
 - [How to transform HTML to plain text](#how-to-transform-html-to-plain-text)
+- [Send an Email With Twilio Email (Pilot)](#send-an-email-with-twilio-email-pilot)
+- [Send an SMS Message](#send-an-sms-message)
 
 <a name="attachments"></a>
 # Attachments
@@ -139,7 +141,7 @@ namespace Example
             };
             msg.AddHeaders(headers);
 
-            // If you require complex substitutions this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transactional-templates).
+            // If you require complex substitutions this [use case](USE_CASES.md#transactional-templates).
             var dynamicTemplateData = new ExampleTemplateData
             {
                 Subject = "Hi!",
@@ -199,7 +201,7 @@ namespace Example
             };
             msg.AddHeaders(headers1, 1);
 
-            // For a full transactional template example, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transactional-templates).
+            // For a full transactional template example, please see this [use case](USE_CASES.md#transactional-templates).
             var dynamicTemplateData2 = new ExampleTemplateData
             {
                 Subject = "Hi 2!",
@@ -230,7 +232,7 @@ namespace Example
 
             msg.SetSubject("this subject overrides the Global Subject");
 
-            msg.SetGlobalSubject("Sending with SendGrid is Fun");
+            msg.SetGlobalSubject("Sending with Twilio SendGrid is Fun");
 
             msg.AddContent(MimeType.Text, "and easy to do anywhere, even with C#");
             msg.AddContent(MimeType.Html, "<strong>and easy to do anywhere, even with C#</strong>");
@@ -242,7 +244,7 @@ namespace Example
             msg.AddContents(contents);
 
             // For base64 encoding, see [`Convert.ToBase64String`](https://msdn.microsoft.com/en-us/library/system.convert.tobase64string(v=vs.110).aspx)
-            // For an example using an attachment, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#attachments).
+            // For an example using an attachment, please see this [use case](USE_CASES.md#attachments).
             msg.AddAttachment("balance_001.pdf",
                               "base64 encoded string",
                               "application/pdf",
@@ -269,7 +271,7 @@ namespace Example
             };
             msg.AddAttachments(attachments);
 
-            // For a full transactional template example, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transactional-templates).
+            // For a full transactional template example, please see this [use case](USE_CASES.md#transactional-templates).
             msg.SetTemplateId("d-d42b0eea09964d1ab957c18986c01828");
 
             msg.AddGlobalHeader("X-Day", "Monday");
@@ -383,7 +385,7 @@ namespace Example
                 new EmailAddress("test2@example.com", "Example User2"),
                 new EmailAddress("test3@example.com", "Example User3")
             };
-            var subject = "Sending with SendGrid is Fun";
+            var subject = "Sending with Twilio SendGrid is Fun";
             var plainTextContent = "and easy to do anywhere, even with C#";
             var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
             var showAllRecipients = false; // Set to true if you want the recipients to see each others email addresses
@@ -424,7 +426,7 @@ namespace Example
             var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("test@example.com", "Example User");
-            var subject = "Sending with SendGrid is Fun";
+            var subject = "Sending with Twilio SendGrid is Fun";
             var to = new EmailAddress("test@example.com", "Example User");
             var plainTextContent = "and easy to do anywhere, even with C#";
             var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
@@ -575,7 +577,7 @@ namespace Example
         {
             [JsonProperty("subject")]
             public string Subject { get; set; }
-            
+
             [JsonProperty("name")]
             public string Name { get; set; }
 
@@ -587,7 +589,7 @@ namespace Example
         {
             [JsonProperty("city")]
             public string City { get; set; }
-            
+
             [JsonProperty("country")]
             public string Country { get; set; }
         }
@@ -661,7 +663,7 @@ namespace Example
 <a name="legacy-transactional-templates"></a>
 # _Legacy_ Transactional Templates
 
-For this example, we assume you have created a [legacy transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html). Following is the template content we used for testing.
+For this example, we assume you have created a [legacy transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html) in the UI or via the API.. Following is the template content we used for testing.
 
 Template ID (replace with your own):
 
@@ -804,11 +806,11 @@ By default, retry behaviour is off, you must explicitly enable it by setting the
 
 ### RetryCount
 
-The amount of times to retry the operation before reporting an exception to the caller. This is in addition to the initial attempt so setting a value of 1 would result in 2 attempts, the initial attempt and the retry. Defaults to zero, retry behaviour is not enabled. The maximum amount of retries permitted is 5. 
+The amount of times to retry the operation before reporting an exception to the caller. This is in addition to the initial attempt so setting a value of 1 would result in 2 attempts, the initial attempt and the retry. Defaults to zero, retry behaviour is not enabled. The maximum amount of retries permitted is 5.
 
 ### MinimumBackOff
 
-The minimum amount of time to wait between retries. 
+The minimum amount of time to wait between retries.
 
 ### MaximumBackOff
 
@@ -853,24 +855,24 @@ var client = new SendGridClient(options);
 
 ```
 
-<a name="domain-whitelabel"></a>
-# How to Setup a Domain Whitelabel
+<a name="domain-authentication"></a>
+# How to Setup a Domain Authentication
 
-You can find documentation for how to setup a domain whitelabel via the UI [here](https://sendgrid.com/docs/Classroom/Basics/Whitelabel/setup_domain_whitelabel.html) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#whitelabel).
+You can find documentation for how to setup a domain authentication via the UI [here](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-domain-authentication/) and via API [here](USAGE.md#sender-authentication).
 
-Find more information about all of SendGrid's whitelabeling related documentation [here](https://sendgrid.com/docs/Classroom/Basics/Whitelabel/index.html).
+Find more information about all of SendGrid's authentication related documentation [here](https://sendgrid.com/docs/ui/account-and-settings/).
 
 <a name="email-stats"></a>
 # How to View Email Statistics
 
-You can find documentation for how to view your email statistics via the UI [here](https://app.sendgrid.com/statistics) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#stats).
+You can find documentation for how to view your email statistics via the UI [here](https://app.sendgrid.com/statistics) and via API [here](USAGE.md#stats).
 
-Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as SendGrid processes your email.
+Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as Twilio SendGrid processes your email.
 
 <a name="html-to-plain-text"></a>
 # How to transform HTML to plain text
 
-Although the HTML tags could be removed using regular expressions, the best solution is parsing the HTML code with a specific library, such as [HTMLAgilityPack](http://html-agility-pack.net/). 
+Although the HTML tags could be removed using regular expressions, the best solution is parsing the HTML code with a specific library, such as [HTMLAgilityPack](http://html-agility-pack.net/).
 
 The following code shows how to parse an input string with HTML code and remove all tags:
 
@@ -891,8 +893,112 @@ namespace Example {
 			HtmlDocument document = new HtmlDocument();
 			document.LoadHtml(html);
 			return document.DocumentNode == null ? string.Empty : document.DocumentNode.InnerText;
-		}	
+		}
 	}
 }
 
+```
+
+# Send an Email With Twilio Email (Pilot)
+
+### 1. Obtain a Free Twilio Account
+
+Sign up for a free Twilio account [here](https://www.twilio.com/try-twilio?source=sendgrid-csharp).
+
+### 2. Set Up Your Environment Variables
+
+The Twilio API allows for authentication using with either an API key/secret or your Account SID/Auth Token. You can create an API key [here](https://twil.io/get-api-key) or obtain your Account SID and Auth Token [here](https://twil.io/console).
+
+Once you have those, follow the steps below based on your operating system.
+
+#### Linux/Mac
+
+```bash
+echo "export TWILIO_API_KEY='YOUR_TWILIO_API_KEY'" > twilio.env
+echo "export TWILIO_API_SECRET='YOUR_TWILIO_API_SECRET'" >> twilio.env
+
+# or
+
+echo "export TWILIO_ACCOUNT_SID='YOUR_TWILIO_ACCOUNT_SID'" > twilio.env
+echo "export TWILIO_AUTH_TOKEN='YOUR_TWILIO_AUTH_TOKEN'" >> twilio.env
+```
+
+Then:
+
+```bash
+echo "twilio.env" >> .gitignore
+source ./twilio.env
+```
+
+#### Windows
+
+Temporarily set the environment variable (accessible only during the current CLI session):
+
+```bash
+set TWILIO_API_KEY=YOUR_TWILIO_API_KEY
+set TWILIO_API_SECRET=YOUR_TWILIO_API_SECRET
+
+: or
+
+set TWILIO_ACCOUNT_SID=YOUR_TWILIO_ACCOUNT_SID
+set TWILIO_AUTH_TOKEN=YOUR_TWILIO_AUTH_TOKEN
+```
+
+Or permanently set the environment variable (accessible in all subsequent CLI sessions):
+
+```bash
+setx TWILIO_API_KEY "YOUR_TWILIO_API_KEY"
+setx TWILIO_API_SECRET "YOUR_TWILIO_API_SECRET"
+
+: or
+
+setx TWILIO_ACCOUNT_SID "YOUR_TWILIO_ACCOUNT_SID"
+setx TWILIO_AUTH_TOKEN "YOUR_TWILIO_AUTH_TOKEN"
+```
+
+### 3. Initialize the Twilio Email Client
+
+```csharp
+var mailClient = new TwilioEmailClient(Environment.GetEnvironmentVariable("TWILIO_API_KEY"), Environment.GetEnvironmentVariable("TWILIO_API_SECRET"));
+
+// or
+
+var mailClient = new TwilioEmailClient(Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID"), Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN"));
+```
+
+This client has the same interface as the `SendGrid` client.
+
+# Send an SMS Message
+
+First, follow the above steps for creating a Twilio account and setting up environment variables with the proper credentials.
+
+Then, install the Twilio Helper Library by following the [installation steps](https://github.com/twilio/twilio-csharp#installation).
+
+Finally, send a message.
+
+```csharp
+using System;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
+
+namespace TwilioTest
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var twilioAccountSid = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
+            var twilioAuthToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
+            TwilioClient.Init(twilioAccountSid, twilioAuthToken);
+
+            var message = MessageResource.Create(
+                new PhoneNumber("+11234567890"),
+                from: new PhoneNumber("+10987654321"),
+                body: "Hello World!"
+            );
+            Console.WriteLine(message.Sid);
+        }
+    }
+}
 ```
