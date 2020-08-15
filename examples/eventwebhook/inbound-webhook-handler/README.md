@@ -9,17 +9,16 @@ This is docker-based solution which can be deployed on cloud services like Herok
 - [Deploy locally](#deploy_locally)
 - [Deploy Heroku](#deploy_heroku)
 - [Testing the Source Code](#testing_the_source_code)
-- [Contributing](#contribution)
 
 <a name="prerequisite"></a>
 ## Prerequisite
 Clone the repository
 ```
-git clone https://github.com/KoditkarVedant/sendgrid-inbound.git
+git clone https://github.com/sendgrid/sendgrid-csharp.git
 ```
 Move into the clonned repository
 ```
-cd sendgrid-inbound
+cd sendgrid-csharp/examples/eventwebhook/inbound-webhook-handler
 ```
 Restore the Packages
 ```
@@ -32,9 +31,9 @@ Setup your MX records. Depending on your domain name host, you may need to wait 
 
 Run the Inbound Parse listener in your terminal:
 ```
-git clone https://github.com/KoditkarVedant/sendgrid-inbound.git
+git clone https://github.com/sendgrid/sendgrid-csharp.git
 
-cd sendgrid-inbound
+cd sendgrid-csharp/examples/eventwebhook/inbound-webhook-handler
 
 dotnet restore
 
@@ -92,7 +91,3 @@ $ heroku container:release web --app UNIQUE_APP_NAME
 <a name="testing_the_source_code"></a>
 ## Testing the Source Code
 You can get all the test cases inside the `Tests` folder.
-
-<a name="contribution"></a>
-## Contribution
-If you would like to contribute to this project, please see our [contributing guide](https://github.com/sendgrid/sendgrid-python/blob/master/CONTRIBUTING.md). Thanks!
