@@ -18,7 +18,7 @@ git clone https://github.com/sendgrid/sendgrid-csharp.git
 ```
 Move into the clonned repository
 ```
-cd sendgrid-csharp/examples/eventwebhook/inbound-webhook-handler
+cd sendgrid-csharp/examples/inbound-webhook-handler
 ```
 Restore the Packages
 ```
@@ -33,7 +33,7 @@ Run the Inbound Parse listener in your terminal:
 ```
 git clone https://github.com/sendgrid/sendgrid-csharp.git
 
-cd sendgrid-csharp/examples/eventwebhook/inbound-webhook-handler
+cd sendgrid-csharp/examples/inbound-webhook-handler
 
 dotnet restore
 
