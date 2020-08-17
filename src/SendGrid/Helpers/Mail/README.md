@@ -4,7 +4,7 @@
 
 Run the [Example Project](../../../../ExampleCoreProject) (make sure you have set your Environment variable to include your SENDGRID_API_KEY).
 
-Click on the Example project, then click the `Start` button in the menu.
+Click on the Example project, then click the `Start` button on the menu.
 
 ## Usage
 
