@@ -1,4 +1,4 @@
-If you have an issue logging into your Twilio SendGrid account, please read this [document](https://sendgrid.com/docs/ui/account-and-settings/troubleshooting-login/). For any questions regarding login issues, please contact our [support team](https://support.sendgrid.com).
+﻿If you have an issue logging into your Twilio SendGrid account, please read this [document](https://sendgrid.com/docs/ui/account-and-settings/troubleshooting-login/). For any questions regarding login issues, please contact our [support team](https://support.sendgrid.com).
 
 If you have a non-library Twilio SendGrid issue, please contact our [support team](https://support.sendgrid.com).
 
@@ -48,7 +48,7 @@ becomes
 
 `string apiKey = "SENDGRID_API_KEY";`
 
-In the first case SENDGRID_API_KEY is in reference to the name of the environment variable, while the second case references the actual Twilio SendGrid API Key.
+In the first case, SENDGRID_API_KEY is in reference to the name of the environment variable, while the second case references the actual Twilio SendGrid API Key.
 
 <a name="error"></a>
 ## Error Messages
@@ -171,7 +171,7 @@ In most cases we recommend you download the latest version of the library, but i
 <a name="versioning"></a>
 ## Versioning Convention
 
-We follow the MAJOR.MINOR.PATCH versioning scheme as described by [SemVer.org](http://semver.org). Therefore, we recommend that you always pin (or vendor) the particular version you are working with to your code and never auto-update to the latest version. Especially when there is a MAJOR point release, since that is guaranteed to be a breaking change. Changes are documented in the [CHANGELOG](CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-csharp/releases) section.
+We follow the MAJOR.MINOR.PATCH versioning scheme as described by [SemVer.org](http://semver.org). Therefore, we recommend that you always pin (or vendor) the particular version you are working with your code and never auto-update to the latest version. Especially when there is a MAJOR point release since that is guaranteed to be a breaking change. Changes are documented in the [CHANGELOG](CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-csharp/releases) section.
 
 <a name="request-body"></a>
 ## Viewing the Request Body
@@ -187,7 +187,7 @@ Console.WriteLine(msg.Serialize());
 <a name="ui-requests"></a>
 ## UI Requests are Failing / Deadlocks
 
-If your UI based requests are failing, it may be due to a little known issue where the UI only has a single thread. The answer here is to use `ConfigureAwait(false)` on the end of your request call, so that the thread does not reset back to request context and stays in capture context. Normally, async the request thread would "let go" of the capture context and reset to request context. With the UI, there is only a single thread, so you have to force the thread to switch to capture context, using `ConfigureAwait(false)`. For more information, please see a better summary that is linked to a longer article [in StackOverflow](https://stackoverflow.com/a/13494570).
+If your UI based requests are failing, it may be due to a little known issue where the UI only has a single thread. The answer here is to use `ConfigureAwait(false)` on the end of your request call so that the thread does not reset back to request context and stays in capture context. Normally, async the request thread would "let go" of the capture context and reset to request context. With the UI, there is only a single thread, so you have to force the thread to switch to capture context, using `ConfigureAwait(false)`. For more information, please see a better summary that is linked to a longer article [in StackOverflow](https://stackoverflow.com/a/13494570).
 
 In our example code, you would change:
 
@@ -203,4 +203,4 @@ var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
 
 If you are running a newer versions of .NET you can turn on a couple different Roslyn based analyzers that will trigger build errors if you're not calling `.ConfigureAwait(false)` on your async methods.
 
-`Roslynator.Analyzers` can be installed through NuGet or as a VS plugin, but if you use the plugin then the analyzers won't run on build servers and trigger build errors like the NuGet package would. (thanks to [xt0rted](https://github.com/xt0rted) for this tip!)
+`Roslynator.Analyzers` can be installed through NuGet or as a VS plugin, but if you use the plugin then the analyzers won't run on build servers and trigger build errors as the NuGet package would. (thanks to [xt0rted](https://github.com/xt0rted) for this tip!)

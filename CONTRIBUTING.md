@@ -13,7 +13,7 @@ All third party contributors acknowledge that any contributions they provide wil
 - [Code Reviews](#code-reviews)
 
 <a name="roadmap"></a>
-We use [GitHub Projects](https://github.com/sendgrid/sendgrid-csharp/projects) to help define current roadmaps, please feel free to grab an issue from our [GitHub Issues](https://github.com/sendgrid/sendgrid-csharp/issues). Please indicate that you have begun work on it to avoid collisions. Once a PR is made, community review, comments, suggestions and additional PRs are welcomed and encouraged.
+We use [GitHub Projects](https://github.com/sendgrid/sendgrid-csharp/projects) to help define current roadmaps, please feel free to grab an issue from our [GitHub Issues](https://github.com/sendgrid/sendgrid-csharp/issues). Please indicate that you have begun work on it to avoid collisions. Once a PR is made, community review, comments, suggestions, and additional PRs are welcomed and encouraged.
 
 There are a few ways to contribute, which we'll enumerate below:
 
@@ -36,8 +36,8 @@ A software bug is a demonstrable issue in the code base. In order for us to diag
 
 Before you decide to create a new issue, please try the following:
 
-1. Check the Github issues tab if the identified issue has already been reported, if so, please add a +1 to the existing post.
-2. Update to the latest version of this code and check if issue has already been fixed
+1. Check the GitHub issues tab if the identified issue has already been reported, if so, please add a +1 to the existing post.
+2. Update to the latest version of this code and check if the issue has already been fixed
 3. Copy and fill in the Bug Report Template we have provided below
 
 ### Please use our Bug Report Template
@@ -132,7 +132,7 @@ Generally, we follow the style guidelines as suggested by the official language.
    git pull upstream <dev-branch>
    ```
 
-3. Create a new topic branch off the `development` branch to
+3. Create a new topic branch (off the main project development branch) to
    contain your feature, change, or fix:
 
    ```bash
@@ -167,4 +167,4 @@ Generally, we follow the style guidelines as suggested by the official language.
 <a name="code-reviews"></a>
 ## Code Reviews
 
-If you can, please look at open PRs and review them. Give feedback and help us merge these PRs much faster! If you don't know how, Github has some great information on how to review a Pull Request.
+If you can, please look at open PRs and review them. Give feedback and help us merge these PRs much faster! If you don't know how GitHub has some great information on how to review a Pull Request.
