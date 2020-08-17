@@ -4,9 +4,9 @@ using System.Text;
 namespace Inbound.Models
 {
     /// <summary>
-	/// The parsed information about an email sent by SendGrid via a webhook.
-	/// </summary>
-	public class InboundEmail
+    /// The parsed information about an email sent by SendGrid via a webhook.
+    /// </summary>
+    public class InboundEmail
     {
         /// <summary>
         /// Gets or sets the headers of the email.
@@ -141,5 +141,5 @@ namespace Inbound.Models
         public string RawEmail { get; set; }
     }
 
-    
+
 }

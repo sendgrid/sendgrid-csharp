@@ -16,9 +16,9 @@ namespace Inbound.Util
             const string SPLIT_EMAIL_ADDRESSES = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
 
             /*
-				When we stop supporting .NET 4.5.2 we will be able to use the following:
-				if (string.IsNullOrEmpty(rawEmailAddresses)) return Array.Empty<InboundEmailAddress>();
-			*/
+                When we stop supporting .NET 4.5.2 we will be able to use the following:
+                if (string.IsNullOrEmpty(rawEmailAddresses)) return Array.Empty<InboundEmailAddress>();
+            */
             if (string.IsNullOrEmpty(rawEmailAddresses)) return Enumerable.Empty<InboundEmailAddress>().ToArray();
 
             var rawEmails = Regex.Split(rawEmailAddresses, SPLIT_EMAIL_ADDRESSES);
@@ -48,7 +48,7 @@ namespace Inbound.Util
             return new InboundEmailAddress(email, name);
         }
 
-        public static string GetEncodedValue(string parameterName, IEnumerable<KeyValuePair<string, Encoding>> charsets, 
+        public static string GetEncodedValue(string parameterName, IEnumerable<KeyValuePair<string, Encoding>> charsets,
             IDictionary<Encoding, MultipartFormDataParser> encodedParsers, string defaultValue = null)
         {
             var parser = GetEncodedParser(parameterName, charsets, encodedParsers);
@@ -56,7 +56,7 @@ namespace Inbound.Util
             return value;
         }
 
-        private static MultipartFormDataParser GetEncodedParser(string parameterName, IEnumerable<KeyValuePair<string, Encoding>> charsets, 
+        private static MultipartFormDataParser GetEncodedParser(string parameterName, IEnumerable<KeyValuePair<string, Encoding>> charsets,
             IDictionary<Encoding, MultipartFormDataParser> encodedParsers)
         {
             var encoding = GetEncoding(parameterName, charsets);
@@ -67,7 +67,7 @@ namespace Inbound.Util
         private static Encoding GetEncoding(string parameterName, IEnumerable<KeyValuePair<string, Encoding>> charsets)
         {
             var encoding = charsets.Where(c => c.Key == parameterName);
-            return encoding.Any() ? encoding.First().Value : Encoding.UTF8;                
+            return encoding.Any() ? encoding.First().Value : Encoding.UTF8;
         }
     }
 }
