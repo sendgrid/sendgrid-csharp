@@ -4,6 +4,8 @@ SendGrid has an Email Inbound Parse Webhook which posts data from a specified in
 
 This is docker-based solution which can be deployed on cloud services like Heroku out of the box.
 
+**Special thanks to [@Jericho](https://github.com/Jericho) for the [StrongGrid](https://github.com/Jericho/StrongGrid) library which is the original source of this example.**
+
 # Table of Content
 - [Prerequisite](#prerequisite)
 - [Deploy locally](#deploy_locally)
