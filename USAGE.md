@@ -2083,7 +2083,7 @@ Console.ReadLine();
 
 **This endpoint allows you to retrieve a list of all assigned and unassigned IPs.**
 
-The Response includes warm-up status, pools, assigned subusers, and authentication info. The start_date field corresponds to when warmup started for that IP.
+The response includes warm-up status, pools, assigned subusers, and authentication info. The start_date field corresponds to when warmup started for that IP.
 
 A single IP address or a range of IP addresses may be dedicated to an account in order to send email for multiple domains. The reputation of this IP is based on the aggregate performance of all the senders who use it.
 
