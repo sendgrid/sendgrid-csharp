@@ -215,11 +215,11 @@ All notable changes to this project will be documented in this file.
 - [PR #518](https://github.com/sendgrid/sendgrid-csharp/pull/518) README improvements. Big thanks to [Matt Bernier](https://github.com/mbernier) for the PR!
 
 ## Fixed
-- [PR #735](https://github.com/sendgrid/sendgrid-csharp/pull/735) Fix #418 groupsToDisplay shold be optional.
-- [PR #719](https://github.com/sendgrid/sendgrid-csharp/pull/719) Update travis config to use relative path. Big thanks to [Maxim Rubis](https://github.com/siburny) for the PR!
+- [PR #735](https://github.com/sendgrid/sendgrid-csharp/pull/735) Fix #418 groupsToDisplay should be optional.
+- [PR #719](https://github.com/sendgrid/sendgrid-csharp/pull/719) Update travis config to use a relative path. Big thanks to [Maxim Rubis](https://github.com/siburny) for the PR!
 - [PR #702](https://github.com/sendgrid/sendgrid-csharp/pull/702) Fixed virtual bug. Big thanks to [Phil](https://github.com/psboies) for the PR!
 - [PR #700](https://github.com/sendgrid/sendgrid-csharp/pull/700) Add default value for SubstitutionTag parameter. Big thanks to [Vedant Koditkar](https://github.com/KoditkarVedant) for the PR!
-- [PR #688](https://github.com/sendgrid/sendgrid-csharp/pull/688) Fix mixup of Response.Body and Response.Header summarie. Big thanks to [Ryan David Sheasb](https://github.com/ryan27968) for the PR!
+- [PR #688](https://github.com/sendgrid/sendgrid-csharp/pull/688) Fix mixup of Response.Body and Response.Header summary. Big thanks to [Ryan David Sheasb](https://github.com/ryan27968) for the PR!
 - [PR #635](https://github.com/sendgrid/sendgrid-csharp/pull/635) Fixed "Variable assigned but never used" issue. Big thanks to [Unlocked](https://github.com/TheUnlocked) for the PR!
 - [PR #615](https://github.com/sendgrid/sendgrid-csharp/pull/615) Update USAGE.md - fix typo. Big thanks to [Anvesh Chaturvedi](https://github.com/anveshc05) for the PR!
 - [PR #613](https://github.com/sendgrid/sendgrid-csharp/pull/613) Update CONTRIBUTING.md - fix typo. Big thanks to [thepriefy](https://github.com/thepriefy) for the PR!

@@ -1,4 +1,4 @@
-This documentation provides examples for specific use cases. Please [open an issue](https://github.com/sendgrid/sendgrid-sharp/issues) or make a pull request for any use cases you would like us to document here. Thank you!
+This document provides examples for specific use cases. Please [open an issue](https://github.com/sendgrid/sendgrid-sharp/issues) or make a pull request for any use cases you would like us to document here. Thank you!
 
 # Table of Contents
 
@@ -22,7 +22,7 @@ This documentation provides examples for specific use cases. Please [open an iss
     - [Examples](#examples)
 - [How to Setup a Domain Authentication](#how-to-setup-a-domain-authentication)
 - [How to View Email Statistics](#how-to-view-email-statistics)
-- [How to transform HTML to plain text](#how-to-transform-html-to-plain-text)
+- [How to transform HTML into plain text](#how-to-transform-html-into-plain-text)
 - [Send an Email With Twilio Email (Pilot)](#send-an-email-with-twilio-email-pilot)
 - [Send an SMS Message](#send-an-sms-message)
 
@@ -226,7 +226,7 @@ namespace Example
 
             msg.SetSendAt(1461775052, 1);
 
-            // The values below this comment are global to entire message
+            // The values below this comment are global to an entire message
 
             msg.SetFrom("test@example.com", "Example User 0");
 
@@ -800,13 +800,13 @@ namespace Example
 <a name="transient-faults"></a>
 # Transient Fault Handling
 
-The SendGridClient provides functionality for handling transient errors that might occur when sending an HttpRequest. This includes client side timeouts while sending the mail, or certain errors returned within the 500 range. Errors within the 500 range are limited to 500 Internal Server Error, 502 Bad Gateway, 503 Service unavailable and 504 Gateway timeout.
+The SendGridClient provides functionality for handling transient errors that might occur when sending an HttpRequest. This includes client-side timeouts while sending the mail, or certain errors returned within the 500 range. Errors within the 500 range are limited to 500 Internal Server Error, 502 Bad Gateway, 503 Service unavailable and 504 Gateway timeout.
 
-By default, retry behaviour is off, you must explicitly enable it by setting the retry count to a value greater than zero. To set the retry count, you must use the SendGridClient construct that takes a **SendGridClientOptions** object, allowing you to configure the **ReliabilitySettings**
+By default, retry behavior is off, you must explicitly enable it by setting the retry count to a value greater than zero. To set the retry count, you must use the SendGridClient construct that takes a **SendGridClientOptions** object, allowing you to configure the **ReliabilitySettings**
 
 ### RetryCount
 
-The amount of times to retry the operation before reporting an exception to the caller. This is in addition to the initial attempt so setting a value of 1 would result in 2 attempts, the initial attempt and the retry. Defaults to zero, retry behaviour is not enabled. The maximum amount of retries permitted is 5.
+The number of times to retry the operation before reporting an exception to the caller. This is in addition to the initial attempt so setting a value of 1 would result in 2 attempts, the initial attempt, and the retry. Defaults to zero, retry behavior is not enabled. The maximum amount of retries permitted is 5.
 
 ### MinimumBackOff
 
@@ -820,10 +820,9 @@ The maximum possible amount of time to wait between retries. The maximum value a
 
 The value that will be used to calculate a random delta in the exponential delay between retries.  A random element of time is factored into the delta calculation as this helps avoid many clients retrying at regular intervals.
 
-
 ## Examples
 
-In this example we are setting RetryCount to 2, with a minimum wait time of 1 seconds, a maximum of 10 seconds and a delta of 3 seconds
+In this example, we are setting RetryCount to 2, with a minimum wait time of 1 second, a maximum of 10 seconds and a delta of 3 seconds
 
 ```csharp
 
@@ -869,8 +868,8 @@ You can find documentation for how to view your email statistics via the UI [her
 
 Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as Twilio SendGrid processes your email.
 
-<a name="html-to-plain-text"></a>
-# How to transform HTML to plain text
+<a name="html-into-plain-text"></a>
+# How to transform HTML into plain text
 
 Although the HTML tags could be removed using regular expressions, the best solution is parsing the HTML code with a specific library, such as [HTMLAgilityPack](http://html-agility-pack.net/).
 

@@ -73,14 +73,14 @@ Setup Environment Variables using the UI:
 1. Press Win+R and run SystemPropertiesAdvanced
 2. Click on Environment Variables
 3. Click New in user variables section
-4. Type SENDGRID_API_KEY in the name. (Make sure this name matches the name of key in your code)
+4. Type SENDGRID_API_KEY in the name. (Make sure this name matches the name of the key in your code)
 5. Type actual API Key in the value
 6. Restart the IDE and you're done!
 
 Setup Environment Variables using CMD:
 
 1. Run CMD as administrator
-2. setx SENDGRID_API_KEY "YOUR_API_KEY"
+2. set SENDGRID_API_KEY "YOUR_API_KEY"
 
 Here are a few examples to get and set API Keys programmatically:
 
