@@ -1,6 +1,19 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-08-19] Version 9.21.0
+---------------------------
+**Library - Chore**
+- [PR #1036](https://github.com/sendgrid/sendgrid-csharp/pull/1036): simplify framework dependencies. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #1032](https://github.com/sendgrid/sendgrid-csharp/pull/1032): update GitHub branch references to use HEAD. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+**Library - Feature**
+- [PR #789](https://github.com/sendgrid/sendgrid-csharp/pull/789): Add dockerized email inbound webhook consumer example. Thanks to [@KoditkarVedant](https://github.com/KoditkarVedant)!
+
+**Library - Docs**
+- [PR #757](https://github.com/sendgrid/sendgrid-csharp/pull/757): Run *.md documents through Grammer.ly. Thanks to [@danimart1991](https://github.com/danimart1991)!
+
+
 [2020-08-05] Version 9.20.0
 ---------------------------
 **Library - Feature**
