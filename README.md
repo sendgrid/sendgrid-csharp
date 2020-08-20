@@ -53,9 +53,9 @@ We appreciate your continued support, thank you!
 
 ## Prerequisites
 
-- .NET version 4.5.2 and higher
-- .NET Core 1.0 and higher
-- .NET Standard 1.3 support
+- .NET Framework 4.0+
+- .NET Core 1.0+
+- .NET Standard 1.3+
 - A Twilio SendGrid account, [sign up for free](https://sendgrid.com/free?source=sendgrid-csharp) to send up to 40,000 emails for the first 30 days, then send 100 emails/day free forever or check out [our pricing](https://sendgrid.com/pricing?source=sendgrid-csharp).
 
 <a name="obtain-api"></a>
