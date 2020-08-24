@@ -43,7 +43,6 @@ We appreciate your continued support, thank you!
 * [Usage](#usage)
 * [Use Cases](#use-cases)
 * [Announcements](#announcements)
-* [Roadmap](#roadmap)
 * [How to Contribute](#how-to-contribute)
 * [Troubleshooting](#troubleshooting)
 * [About](#about)
@@ -253,10 +252,6 @@ class Program
 # Use Cases
 
 Here are some [examples of common API use cases](USE_CASES.md), such as how to send an email with a transactional template.
-
-# Roadmap
-
-If you are interested in the future direction of this project, please take a look at our open [issues](https://github.com/sendgrid/sendgrid-csharp/issues) and [pull requests](https://github.com/sendgrid/sendgrid-csharp/pulls). We would love to hear your feedback!
 
 # How to Contribute
 
