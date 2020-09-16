@@ -404,6 +404,86 @@ namespace Example
 ```
 
 <a name="singleemailsinglerecipient"></a>
+# Send a Email With Multiple Template to Multiple Recipients
+```csharp
+using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using Newtonsoft.Json;
+
+
+namespace Example
+{
+    internal class Example
+    {
+        static void Main(string[] args)
+        {
+            Execute().Wait();
+        }
+        static async Task Execute()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY"); 
+            var client = new SendGridClient(apiKey);
+
+            var from = new EmailAddress("test@example.com", "Example User");
+            var tos = new List<EmailAddress>
+            {
+                new EmailAddress("test@example.com", "Example User 1"),
+                new EmailAddress("test@example.com", "Example User 2"),
+                new EmailAddress("test@example.com", "Example User 3")
+            };
+            
+            var templateId = "d-9d2b006a4d354f2ab7438ee69a61782f";
+            var dynamicTemplateData = new List<Object>
+            {
+                new ExampleTemplateData  {
+                        Subject = "Email subject 1",
+                        Name = "Example Name 1",
+                        Valor = "Example value 1"
+                    },
+                new ExampleTemplateData  {
+                    Subject = "Email subject 1",
+                        Name = "Example Name 1",
+                        Valor = "Example value 1"
+                    
+                },
+                new ExampleTemplateData  {
+                   	Subject = "Email subject 1",
+			Name = "Example Name 1",
+                        Valor = "Example value 1"
+                }
+            };
+
+            var msg = MailHelper.CreateMultipleTemplateEmailsToMultipleRecipients(
+                                                                            from,
+                                                                            tos,
+                                                                            templateId,
+                                                                            dynamicTemplateData                                                                            
+                                                                            );
+
+
+            var response = await client.SendEmailAsync(msg);
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Headers.ToString());
+
+        }
+	
+        private class ExampleTemplateData
+        {
+            [JsonProperty("subject")]
+            public string Subject { get; set; }
+
+            [JsonProperty("name")]
+            public string Name { get; set; }
+
+            [JsonProperty("valor")]
+            public string Valor { get; set; }
+
+       }
+}
+```
 # Send a Single Email to a Single Recipient
 
 ```csharp
