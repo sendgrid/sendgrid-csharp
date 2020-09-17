@@ -11,7 +11,7 @@ This document provides examples for specific use cases. Please [open an issue](h
 - [Transactional Templates](#transactional-templates)
     - [With Mail Helper Class](#with-mail-helper-class)
     - [Without Mail Helper Class](#without-mail-helper-class)
-- [_Legacy_ Transactional Templates](#legacy-transactional-templates)
+- [Legacy_ Transactional Templates](#legacy-transactional-templates)
     - [Legacy Template With Mail Helper Class](#legacy-template-with-mail-helper-class)
     - [Legacy Template Without Mail Helper Class](#legacy-template-without-mail-helper-class)
 - [Transient Fault Handling](#transient-fault-handling)
@@ -403,87 +403,6 @@ namespace Example
 }
 ```
 
-<a name="singleemailsinglerecipient"></a>
-# Send a Email With Multiple Template to Multiple Recipients
-```csharp
-using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using SendGrid;
-using SendGrid.Helpers.Mail;
-using Newtonsoft.Json;
-
-
-namespace Example
-{
-    internal class Example
-    {
-        static void Main(string[] args)
-        {
-            Execute().Wait();
-        }
-        static async Task Execute()
-        {
-            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY"); 
-            var client = new SendGridClient(apiKey);
-
-            var from = new EmailAddress("test@example.com", "Example User");
-            var tos = new List<EmailAddress>
-            {
-                new EmailAddress("test@example.com", "Example User 1"),
-                new EmailAddress("test@example.com", "Example User 2"),
-                new EmailAddress("test@example.com", "Example User 3")
-            };
-            
-            var templateId = "d-9d2b006a4d354f2ab7438ee69a61782f";
-            var dynamicTemplateData = new List<Object>
-            {
-                new ExampleTemplateData  {
-                        Subject = "Email subject 1",
-                        Name = "Example Name 1",
-                        Valor = "Example value 1"
-                    },
-                new ExampleTemplateData  {
-                    Subject = "Email subject 1",
-                        Name = "Example Name 1",
-                        Valor = "Example value 1"
-                    
-                },
-                new ExampleTemplateData  {
-                   	Subject = "Email subject 1",
-			Name = "Example Name 1",
-                        Valor = "Example value 1"
-                }
-            };
-
-            var msg = MailHelper.CreateMultipleTemplateEmailsToMultipleRecipients(
-                                                                            from,
-                                                                            tos,
-                                                                            templateId,
-                                                                            dynamicTemplateData                                                                            
-                                                                            );
-
-
-            var response = await client.SendEmailAsync(msg);
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Headers.ToString());
-
-        }
-	
-        private class ExampleTemplateData
-        {
-            [JsonProperty("subject")]
-            public string Subject { get; set; }
-
-            [JsonProperty("name")]
-            public string Name { get; set; }
-
-            [JsonProperty("valor")]
-            public string Valor { get; set; }
-
-       }
-}
-```
 # Send a Single Email to a Single Recipient
 
 ```csharp
@@ -520,6 +439,79 @@ namespace Example
 <a name="multipleemailsmultiplerecipients"></a>
 # Send Multiple Emails to Multiple Recipients
 
+Using Transactional Templates:
+```csharp
+using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using Newtonsoft.Json;
+
+namespace Example
+{
+    internal class Example
+    {
+        static void Main(string[] args)
+        {
+            Execute().Wait();
+        }
+        static async Task Execute()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("test@example.com", "Example User");
+            var tos = new List<EmailAddress>
+            {
+                new EmailAddress("test@example.com", "Example User 1"),
+                new EmailAddress("test@example.com", "Example User 2"),
+                new EmailAddress("test@example.com", "Example User 3")
+            };
+
+            var templateId = "d-9d2b006a4d354f2ab7438ee69a61782f";
+            var dynamicTemplateData = new List<Object>
+            {
+                new ExampleTemplateData {
+                    Subject = "Email Subject 1",
+                    Name = "Example Name 1",
+                    Valor = "Example value 1"
+                },
+                new ExampleTemplateData {
+                    Subject = "Email Subject 1",
+                    Name = "Example Name 1",
+                    Valor = "Example value 1"
+
+                },
+                new ExampleTemplateData {
+                    Subject = "Email Subject 1",
+                    Name = "Example Name 1",
+                    Valor = "Example value 1"
+                }
+            };
+            var msg = MailHelper.CreateMultipleTemplateEmailsToMultipleRecipients(from,
+                                                                                  tos,
+                                                                                  templateId,
+                                                                                  dynamicTemplateData
+                                                                                  );
+            var response = await client.SendEmailAsync(msg);
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Headers.ToString());
+        }
+
+        private class ExampleTemplateData
+        {
+            [JsonProperty("subject")]
+            public string Subject { get; set; }
+            [JsonProperty("name")]
+            public string Name { get; set; }
+            [JsonProperty("valor")]
+            public string Valor { get; set; }
+        }
+    }
+}
+```
+
+Using Legacy Subsitutions:
 ```csharp
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -743,7 +735,7 @@ namespace Example
 <a name="legacy-transactional-templates"></a>
 # _Legacy_ Transactional Templates
 
-For this example, we assume you have created a [legacy transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html) in the UI or via the API.. Following is the template content we used for testing.
+For this example, we assume you have created a [legacy transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html) in the UI or via the API. Following is the template content we used for testing.
 
 Template ID (replace with your own):
 
