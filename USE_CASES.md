@@ -11,7 +11,7 @@ This document provides examples for specific use cases. Please [open an issue](h
 - [Transactional Templates](#transactional-templates)
     - [With Mail Helper Class](#with-mail-helper-class)
     - [Without Mail Helper Class](#without-mail-helper-class)
-- [Legacy_ Transactional Templates](#legacy-transactional-templates)
+- [_Legacy_ Transactional Templates](#legacy-transactional-templates)
     - [Legacy Template With Mail Helper Class](#legacy-template-with-mail-helper-class)
     - [Legacy Template Without Mail Helper Class](#legacy-template-without-mail-helper-class)
 - [Transient Fault Handling](#transient-fault-handling)
