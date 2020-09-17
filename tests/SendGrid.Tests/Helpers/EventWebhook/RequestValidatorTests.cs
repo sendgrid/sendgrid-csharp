@@ -1,14 +1,49 @@
 using Xunit;
+using Newtonsoft.Json;
 using SendGrid.Helpers.EventWebhook;
 
 namespace SendGrid.Tests.Helpers.EventWebhook
 {
     public class RequestValidatorTests
     {
-        private const string PUBLIC_KEY = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEEDr2LjtURuePQzplybdC+u4CwrqDqBaWjcMMsTbhdbcwHBcepxo7yAQGhHPTnlvFYPAZFceEu/1FwCM/QmGUhA==";
-        private const string PAYLOAD = "{\"category\":\"example_payload\",\"event\":\"test_event\",\"message_id\":\"message_id\"}";
-        private const string SIGNATURE = "MEUCIQCtIHJeH93Y+qpYeWrySphQgpNGNr/U+UyUlBkU6n7RAwIgJTz2C+8a8xonZGi6BpSzoQsbVRamr2nlxFDWYNH2j/0=";
-        private const string TIMESTAMP = "1588788367";
+        public class EventClass
+        {
+            [JsonProperty("email")]
+            public string Email;
+
+            [JsonProperty("event")]
+            public string Event;
+
+            [JsonProperty("reason")]
+            public string Reason;
+
+            [JsonProperty("sg_event_id")]
+            public string SgEventId;
+
+            [JsonProperty("sg_message_id")]
+            public string SgMessageId;
+
+            [JsonProperty("smtp-id")]
+            public string SmtpId;
+
+            [JsonProperty("timestamp")]
+            public long Timestamp;
+        }
+
+        private const string PUBLIC_KEY = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE83T4O/n84iotIvIW4mdBgQ/7dAfSmpqIM8kF9mN1flpVKS3GRqe62gw+2fNNRaINXvVpiglSI8eNEc6wEA3F+g==";
+        private const string SIGNATURE = "MEUCIGHQVtGj+Y3LkG9fLcxf3qfI10QysgDWmMOVmxG0u6ZUAiEAyBiXDWzM+uOe5W0JuG+luQAbPIqHh89M15TluLtEZtM=";
+        private const string TIMESTAMP = "1600112502";
+        private string PAYLOAD = JsonConvert.SerializeObject(new[]{
+                new EventClass {
+                    Email = "hello@world.com",
+                    Event = "dropped",
+                    Reason = "Bounced Address",
+                    SgEventId = "ZHJvcC0xMDk5NDkxOS1MUnpYbF9OSFN0T0doUTRrb2ZTbV9BLTA",
+                    SgMessageId = "LRzXl_NHStOGhQ4kofSm_A.filterdrecv-p3mdw1-756b745b58-kmzbl-18-5F5FC76C-9.0",
+                    SmtpId = "<LRzXl_NHStOGhQ4kofSm_A@ismtpd0039p1iad1.sendgrid.net>",
+                    Timestamp = 1600112492,
+                }
+        }) + "\r\n"; // Be sure to include the trailing carriage return and newline!
 
         [Fact]
         public void TestVerifySignature()
