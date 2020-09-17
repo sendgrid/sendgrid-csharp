@@ -403,6 +403,7 @@ namespace Example
 }
 ```
 
+<a name="singleemailsinglerecipient"></a>
 # Send a Single Email to a Single Recipient
 
 ```csharp
