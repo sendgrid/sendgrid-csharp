@@ -228,7 +228,7 @@ Console.ReadLine();
 
 ## Retrieve all alerts
 
-**This endpoint allows you to retieve all of your alerts.**
+**This endpoint allows you to retrieve all of your alerts.**
 
 Alerts allow you to specify an email address to receive notifications regarding your email usage or statistics. 
 * Usage alerts allow you to set the threshold at which an alert will be sent.
@@ -3570,7 +3570,7 @@ Console.WriteLine(response.Headers.ToString());
 Console.ReadLine();
 ```
 
-## Remove an IP from a domain authenticaiton.
+## Remove an IP from a domain authentication.
 
 **This endpoint allows you to remove a domain's IP address from that domain's authentication.**
 
