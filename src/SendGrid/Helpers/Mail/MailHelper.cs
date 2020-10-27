@@ -23,7 +23,7 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Send a single simple email.
         /// </summary>
-        /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
+        /// <param name="from">An email object that may contain the sender’s name, but must always contain the sender’s email.</param>
         /// <param name="to">An email object that may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="subject">The subject of your email. This may be overridden by SetGlobalSubject().</param>
         /// <param name="plainTextContent">The text/plain content of the email body.</param>
@@ -56,7 +56,7 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Send a single dynamic template email.
         /// </summary>
-        /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
+        /// <param name="from">An email object that may contain the sender’s name, but must always contain the sender’s email.</param>
         /// <param name="to">An email object that may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="templateId">The ID of the template.</param>
         /// <param name="dynamicTemplateData">The data with which to populate the dynamic template.</param>
@@ -88,7 +88,7 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Send a single simple email to multiple recipients.
         /// </summary>
-        /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
+        /// <param name="from">An email object that may contain the sender’s name, but must always contain the sender’s email.</param>
         /// <param name="tos">A list of email objects that may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="subject">The subject of your email. This may be overridden by SetGlobalSubject().</param>
         /// <param name="plainTextContent">The text/plain content of the email body.</param>
@@ -125,7 +125,7 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Send a single simple email to multiple recipients.
         /// </summary>
-        /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
+        /// <param name="from">An email object that may contain the sender’s name, but must always contain the sender’s email.</param>
         /// <param name="tos">A list of email objects that may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="templateId">The ID of the template.</param>
         /// <param name="dynamicTemplateData">The data with which to populate the dynamic template.</param>
@@ -163,7 +163,7 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Send multiple emails to multiple recipients.
         /// </summary>
-        /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
+        /// <param name="from">An email object that may contain the sender’s name, but must always contain the sender’s email.</param>
         /// <param name="tos">A list of email objects that may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="subjects">The subject of your email. This may be overridden by SetGlobalSubject().</param>
         /// <param name="plainTextContent">The text/plain content of the email body.</param>
@@ -203,7 +203,7 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Send multiple emails to multiple recipients.
         /// </summary>
-        /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
+        /// <param name="from">An email object that may contain the sender’s name, but must always contain the sender’s email.</param>
         /// <param name="tos">A list of email objects that may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="templateId">The ID of the template.</param>
         /// <param name="dynamicTemplateData">The data with which to populate the dynamic template.</param>
@@ -259,7 +259,7 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Send a single simple email to multiple recipients with option for displaying all the recipients present in "To" section of email.
         /// </summary>
-        /// <param name="from">An email object that may contain the recipient’s name, but must always contain the sender’s email.</param>
+        /// <param name="from">An email object that may contain the sender’s name, but must always contain the sender’s email.</param>
         /// <param name="tos">A list of email objects that may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="subject">The subject of your email. This may be overridden by SetGlobalSubject().</param>
         /// <param name="plainTextContent">The text/plain content of the email body.</param>
