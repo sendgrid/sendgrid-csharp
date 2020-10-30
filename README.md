@@ -1,6 +1,6 @@
 ![SendGrid Logo](twilio_sendgrid_logo.png)
 
-[![BuildStatus](https://travis-ci.org/sendgrid/sendgrid-csharp.png?branch=main)](https://travis-ci.org/sendgrid/sendgrid-csharp)
+[![BuildStatus](https://travis-ci.com/sendgrid/sendgrid-csharp.png?branch=main)](https://travis-ci.com/sendgrid/sendgrid-csharp)
 [![NuGet](https://img.shields.io/nuget/v/SendGrid.svg)](https://www.nuget.org/packages/SendGrid)
 [![Email Notifications Badge](https://dx.sendgrid.com/badge/csharp)](https://dx.sendgrid.com/newsletter/csharp)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
