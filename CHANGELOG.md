@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-11-05] Version 9.21.1
+---------------------------
+**Library - Docs**
+- [PR #1059](https://github.com/sendgrid/sendgrid-csharp/pull/1059): fix sender email object description in MailHelper.cs. Thanks to [@makma](https://github.com/makma)!
+
+
 [2020-08-19] Version 9.21.0
 ---------------------------
 **Library - Chore**
