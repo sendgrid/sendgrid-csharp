@@ -1024,8 +1024,9 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Creates the JSON object required to make a request to Twilio SendGrid.
         /// </summary>
+        /// <param name="useDefaultSerialization">Whether or not to use JsonConvert.DefaultSettings for serialization.</param>
         /// <returns>The JSON object required to make a request to Twilio SendGrid.</returns>
-        public string Serialize()
+        public string Serialize(bool useDefaultSerialization = true)
         {
             if (this.PlainTextContent != null || this.HtmlContent != null)
             {
@@ -1084,6 +1085,14 @@ namespace SendGrid.Helpers.Mail
                 StringEscapeHandling = StringEscapeHandling.EscapeHtml,
                 Formatting = Formatting.None
             };
+
+            if (useDefaultSerialization)
+            {
+                return JsonConvert.SerializeObject(
+                                                   this,
+                                                   Formatting.None,
+                                                   jsonSerializerSettings);
+            }
 
             var jsonSerializer = JsonSerializer.Create(jsonSerializerSettings);
 
