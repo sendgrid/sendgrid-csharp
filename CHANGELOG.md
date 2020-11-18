@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-11-18] Version 9.21.2
+---------------------------
+**Library - Fix**
+- [PR #1064](https://github.com/sendgrid/sendgrid-csharp/pull/1064): Allow SendGridMessage serialization to optionally bypass defaults. Thanks to [@duncanchung](https://github.com/duncanchung)!
+
+
 [2020-11-05] Version 9.21.1
 ---------------------------
 **Library - Docs**
