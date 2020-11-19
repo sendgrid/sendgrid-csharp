@@ -1,14 +1,19 @@
-﻿namespace SendGrid.Helpers.Reliability
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
+﻿// <copyright file="RetryDelegatingHandler.cs" company="Twilio SendGrid">
+// Copyright (c) Twilio SendGrid. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
 
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace SendGrid.Helpers.Reliability
+{
     /// <summary>
-    /// A delegating handler that provides retry functionality while executing a request
+    /// A delegating handler that provides retry functionality while executing a request.
     /// </summary>
     public class RetryDelegatingHandler : DelegatingHandler
     {
@@ -18,7 +23,7 @@
                 HttpStatusCode.InternalServerError,
                 HttpStatusCode.BadGateway,
                 HttpStatusCode.ServiceUnavailable,
-                HttpStatusCode.GatewayTimeout
+                HttpStatusCode.GatewayTimeout,
             };
 
         private readonly ReliabilitySettings settings;
@@ -26,23 +31,24 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class.
         /// </summary>
-        /// <param name="settings">A ReliabilitySettings instance</param>
+        /// <param name="settings">A ReliabilitySettings instance.</param>
         public RetryDelegatingHandler(ReliabilitySettings settings)
-            : this(new HttpClientHandler(), settings)
         {
+            this.settings = settings;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class.
         /// </summary>
-        /// <param name="innerHandler">A HttpMessageHandler instance to set as the inner handler</param>
-        /// <param name="settings">A ReliabilitySettings instance</param>
+        /// <param name="innerHandler">A HttpMessageHandler instance to set as the inner handler.</param>
+        /// <param name="settings">A ReliabilitySettings instance.</param>
         public RetryDelegatingHandler(HttpMessageHandler innerHandler, ReliabilitySettings settings)
             : base(innerHandler)
         {
             this.settings = settings;
         }
 
+        /// <inheritdoc />
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (this.settings.MaximumNumberOfRetries == 0)
@@ -77,7 +83,7 @@
                     }
 
                     // ReSharper disable once MethodSupportsCancellation, cancel will be indicated on the token
-                    await Task.Delay(waitFor).ConfigureAwait(false);
+                    await TaskUtilities.Delay(waitFor).ConfigureAwait(false);
                 }
                 catch (HttpRequestException)
                 {
@@ -88,7 +94,7 @@
                         throw;
                     }
 
-                    await Task.Delay(waitFor).ConfigureAwait(false);
+                    await TaskUtilities.Delay(waitFor).ConfigureAwait(false);
                 }
             }
 

@@ -1,16 +1,16 @@
-﻿// <copyright file="Personalization.cs" company="SendGrid">
-// Copyright (c) SendGrid. All rights reserved.
+﻿// <copyright file="Personalization.cs" company="Twilio SendGrid">
+// Copyright (c) Twilio SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Newtonsoft.Json;
+using System.Collections.Generic;
+
 namespace SendGrid.Helpers.Mail
 {
-    using Newtonsoft.Json;
-    using System.Collections.Generic;
-
     /// <summary>
     /// An array of messages and their metadata. Each object within personalizations can be thought of as an envelope - it defines who should receive an individual message and how that message should be handled. For more information, please see our documentation on Personalizations. Parameters in personalizations will override the parameters of the same name from the message level.
-    /// https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html
+    /// https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html.
     /// </summary>
     [JsonObject(IsReference = false)]
     public class Personalization
@@ -19,18 +19,21 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets an array of recipients. Each email object within this array may contain the recipient’s name, but must always contain the recipient’s email.
         /// </summary>
         [JsonProperty(PropertyName = "to", IsReference = false)]
+        [JsonConverter(typeof(RemoveDuplicatesConverter<EmailAddress>))]
         public List<EmailAddress> Tos { get; set; }
 
         /// <summary>
         /// Gets or sets an array of recipients who will receive a copy of your email. Each email object within this array may contain the recipient’s name, but must always contain the recipient’s email.
         /// </summary>
         [JsonProperty(PropertyName = "cc", IsReference = false)]
+        [JsonConverter(typeof(RemoveDuplicatesConverter<EmailAddress>))]
         public List<EmailAddress> Ccs { get; set; }
 
         /// <summary>
         /// Gets or sets an array of recipients who will receive a blind carbon copy of your email. Each email object within this array may contain the recipient’s name, but must always contain the recipient’s email.
         /// </summary>
         [JsonProperty(PropertyName = "bcc", IsReference = false)]
+        [JsonConverter(typeof(RemoveDuplicatesConverter<EmailAddress>))]
         public List<EmailAddress> Bccs { get; set; }
 
         /// <summary>
@@ -59,9 +62,15 @@ namespace SendGrid.Helpers.Mail
         public Dictionary<string, string> CustomArgs { get; set; }
 
         /// <summary>
-        /// Gets or sets a unix timestamp allowing you to specify when you want your email to be sent from SendGrid. This is not necessary if you want the email to be sent at the time of your API request.
+        /// Gets or sets a unix timestamp allowing you to specify when you want your email to be sent from Twilio SendGrid. This is not necessary if you want the email to be sent at the time of your API request.
         /// </summary>
         [JsonProperty(PropertyName = "send_at")]
         public long? SendAt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the template data object following the pattern "template data key":"template data value". All are assumed to be strings. These key value pairs will apply to the content of your template email, in addition to the subject and reply-to parameters.
+        /// </summary>
+        [JsonProperty(PropertyName = "dynamic_template_data", IsReference = false)]
+        public object TemplateData { get; set; }
     }
 }

@@ -1,12 +1,12 @@
-﻿// <copyright file="MailSettings.cs" company="SendGrid">
-// Copyright (c) SendGrid. All rights reserved.
+﻿// <copyright file="MailSettings.cs" company="Twilio SendGrid">
+// Copyright (c) Twilio SendGrid. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Newtonsoft.Json;
+
 namespace SendGrid.Helpers.Mail
 {
-    using Newtonsoft.Json;
-
     /// <summary>
     /// A collection of different mail settings that you can use to specify how you would like this email to be handled.
     /// </summary>
@@ -33,7 +33,7 @@ namespace SendGrid.Helpers.Mail
 
         /// <summary>
         /// Gets or sets the ability to send a test email to ensure that your request body is valid and formatted correctly. For more information, please see our Classroom.
-        /// https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/sandbox_mode.html
+        /// https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/sandbox_mode.html.
         /// </summary>
         [JsonProperty(PropertyName = "sandbox_mode")]
         public SandboxMode SandboxMode { get; set; }

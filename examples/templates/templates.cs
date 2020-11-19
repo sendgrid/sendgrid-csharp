@@ -26,7 +26,7 @@ Console.ReadLine();
 // Retrieve all transactional templates.
 // GET /templates
 
-var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "templates");
+var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "templates?generations=legacy,dynamic");
 Console.WriteLine(response.StatusCode);
 Console.WriteLine(response.Body.ReadAsStringAsync().Result);
 Console.WriteLine(response.Headers.ToString());

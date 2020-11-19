@@ -32,7 +32,7 @@
 
             var result = await client.SendAsync(new HttpRequestMessage());
 
-            Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
             Assert.Equal(1, innerHandler.InvocationCount);
         }
 
@@ -43,7 +43,7 @@
 
             var result = await client.SendAsync(new HttpRequestMessage());
 
-            Assert.Equal(result.StatusCode, HttpStatusCode.Unauthorized);
+            Assert.Equal(HttpStatusCode.Unauthorized, result.StatusCode);
             Assert.Equal(1, innerHandler.InvocationCount);
         }
 
@@ -87,7 +87,7 @@
 
             var result = await client.SendAsync(new HttpRequestMessage());
 
-            Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
             Assert.Equal(2, innerHandler.InvocationCount);
         }
 
