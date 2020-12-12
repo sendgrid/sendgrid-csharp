@@ -10,6 +10,7 @@
     using Moq;
     using System.Linq;
     using Xunit;
+    using Newtonsoft.Json;
 
     public class PermissionsBuilderTests
     {
@@ -20,13 +21,13 @@
             var client = new Mock<ISendGridClient>();
             client.Setup(x => x.RequestAsync(SendGridClient.Method.GET, null, null, "scopes", CancellationToken.None))
                 .ReturnsAsync(new Response(HttpStatusCode.OK, new StringContent(content), null));
-                
+
             var sb = new SendGridPermissionsBuilder();
             sb.AddPermissionsFor<Alerts>();
             await sb.FilterByCurrentApiKeyAsync(client.Object);
             var scopes = sb.Build().ToArray();
 
-            Assert.Equal(1, scopes.Length);
+            Assert.Single(scopes);
             Assert.Contains(scopes, x => x == "alerts.read");
         }
 

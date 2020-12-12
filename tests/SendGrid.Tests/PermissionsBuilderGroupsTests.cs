@@ -324,9 +324,7 @@ namespace SendGrid.Tests
             var sb = new SendGridPermissionsBuilder();
             sb.CreateAdminPermissions();
 
-            var scopes = sb.Build().ToArray();
-
-            System.IO.File.WriteAllText(@"E:\scratch\sg.scopes.txt", string.Join(Environment.NewLine, scopes));
+            var scopes = sb.Build().ToArray();            
 
             Assert.Equal(110, scopes.Length);
 
