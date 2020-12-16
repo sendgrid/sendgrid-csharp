@@ -10,14 +10,16 @@
         /// Initializes a new instance of the <see cref="Categories"/> class.
         /// </summary>
         public Categories()
-            : base("categories")
+            : base("Categories")
         {
-            this.SubScopes = new[]
+            this.Scopes = new[]
             {
-                new SendGridPermissionScope("stats", ScopeOptions.ReadOnly)
-                {
-                    SubScopes = new[] { new SendGridPermissionScope("sums", ScopeOptions.ReadOnly) }
-                }
+                "categories.create",
+                "categories.delete",
+                "categories.read",
+                "categories.update",
+                "categories.stats.read",
+                "categories.stats.sums.read"
             };
         }
     }

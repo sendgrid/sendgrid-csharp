@@ -8,8 +8,7 @@
     public interface ISendGridPermissionScope
     {
         /// <summary>
-        /// Gets the name.
-        /// </summary>
+        /// Gets the name of this permission
         /// <value>
         /// The name.
         /// </value>
@@ -24,27 +23,20 @@
         bool IsMutuallyExclusive { get; }
 
         /// <summary>
-        /// Gets the sub scopes.
+        /// Gets the scopes asscociated with this permission.
         /// </summary>
         /// <value>
-        /// The sub scopes.
+        /// The scopes.
         /// </value>
-        IEnumerable<ISendGridPermissionScope> SubScopes { get; }
-
-        /// <summary>
-        /// Gets the allowed options.
-        /// </summary>
-        /// <value>
-        /// The allowed options.
-        /// </value>
-        ScopeOptions AllowedOptions { get; }
+        IEnumerable<string> Scopes { get; }
 
         /// <summary>
         /// Builds the specified options.
         /// </summary>
-        /// <param name="requestedOptions">The options.</param>
-        /// <param name="prefix">The prefix.</param>
-        /// <returns>The list of scopes for this permission based on the <paramref name="requestedOptions"/> with an optional <paramref name="prefix"/></returns>
-        IEnumerable<string> Build(ScopeOptions requestedOptions, string prefix = null);
+        /// <param name="requestedOptions">The options.</param>        
+        /// <returns>
+        /// A final list of scopes to use for this permission filtered by the requested options
+        /// </returns>
+        IEnumerable<string> Build(ScopeOptions requestedOptions);
     }
 }

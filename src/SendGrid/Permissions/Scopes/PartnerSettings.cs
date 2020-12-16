@@ -10,12 +10,15 @@
         /// Initializes a new instance of the <see cref="PartnerSettings"/> class.
         /// </summary>
         public PartnerSettings()
-            : base("partner_settings", "read")
+            : base("Partner Setings")
         {
-            this.SubScopes = new[]
+            this.Scopes = new[]
             {
-                new SendGridPermissionScope("new_relic", "read", "update"),
-                new SendGridPermissionScope("sendwithus", "read", "update")
+                "partner_settings.new_relic.read",
+                "partner_settings.new_relic.update",
+                "partner_settings.read",
+                "partner_settings.sendwithus.read",
+                "partner_settings.sendwithus.update"
             };
         }
     }

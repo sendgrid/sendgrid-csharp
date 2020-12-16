@@ -17,7 +17,14 @@
         /// </summary>
         private readonly IList<Func<string, bool>> excludeFilters;
 
-        private string[] includedScopes;
+        /// <summary>
+        /// Gets the scopes that have been added to this builder instance
+        /// </summary>
+        /// <value>
+        /// The added scopes.
+        /// </value>
+        private IDictionary<ISendGridPermissionScope, ScopeOptions> addedPermissions;
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridPermissionsBuilder"/> class.
@@ -25,17 +32,9 @@
         public SendGridPermissionsBuilder()
         {
             this.excludeFilters = new List<Func<string, bool>>();
-            this.includedScopes = null;
-            this.AddedScopes = new Dictionary<ISendGridPermissionScope, ScopeOptions>();
+            this.addedPermissions = new Dictionary<ISendGridPermissionScope, ScopeOptions>();
         }
 
-        /// <summary>
-        /// Gets the scopes that have been added to this builder instance
-        /// </summary>
-        /// <value>
-        /// The added scopes.
-        /// </value>
-        internal IDictionary<ISendGridPermissionScope, ScopeOptions> AddedScopes { get; }
 
         /// <summary>
         /// Builds the list of API Key scopes based on the permissions that have been added to this instance.
@@ -43,7 +42,7 @@
         /// <returns>A list of strings representing the scope names.</returns>
         public IEnumerable<string> Build()
         {
-            var scopes = this.AddedScopes
+            var scopes = this.addedPermissions
                 .SelectMany(x => x.Key.Build(x.Value))
                 .ToList();
 
@@ -52,31 +51,26 @@
                 scopes.RemoveAll(x => f(x));
             }
 
-            if (this.includedScopes != null)
-            {
-                scopes = scopes.Join(this.includedScopes, s => s, i => i, (s, i) => s).ToList();
-            }
-
-            return scopes;
+            return scopes.Distinct().ToArray();
         }
 
         /// <summary>
         /// Adds the permissions for the specified <typeparamref name="TScope"/>
         /// </summary>
         /// <typeparam name="TScope">The type of the scope.</typeparam>
-        /// <param name="options">The options.</param>
+        /// <param name="options">The o.</param>
         /// <returns>The builder instance with the permissions added.</returns>
         public SendGridPermissionsBuilder AddPermissionsFor<TScope>(ScopeOptions options)
             where TScope : ISendGridPermissionScope, new()
         {
             var scope = new TScope();
 
-            if ((scope.IsMutuallyExclusive && this.AddedScopes.Any()) || this.AddedScopes.Any(x => x.Key.IsMutuallyExclusive))
+            if ((scope.IsMutuallyExclusive && this.addedPermissions.Any()) || this.addedPermissions.Any(x => x.Key.IsMutuallyExclusive))
             {
                 throw new InvalidOperationException($"{scope.Name} permissions are mutually exclusive from all others. An API Key can either have {scope.Name} Permissions, or any other set of Permissions.");
             }
 
-            this.AddedScopes[scope] = options;
+            this.addedPermissions[scope] = options;
             return this;
         }
 
@@ -88,7 +82,7 @@
         public SendGridPermissionsBuilder AddPermissionsFor<TScope>()
             where TScope : ISendGridPermissionScope, new()
         {
-            return this.AddPermissionsFor<TScope>(ScopeOptions.All);
+            return this.AddPermissionsFor<TScope>(ScopeOptions.FullAccess);
         }
 
         /// <summary>
@@ -102,7 +96,8 @@
             var response = await client.RequestAsync(SendGridClient.Method.GET, null, null, "scopes", cancellationToken);
             var body = await response.DeserializeResponseBodyAsync(response.Body);
             var userScopesJArray = (body["scopes"] as JArray);
-            this.includedScopes = userScopesJArray.Values<string>().ToArray();
+            var includedScopes = userScopesJArray.Values<string>().ToArray();
+            this.Exclude(scope => !includedScopes.Contains(scope));
             return this;
         }
 
@@ -111,7 +106,7 @@
         /// </summary>
         /// <param name="filter">The filter.</param>
         /// <returns>The builder instance with the exclusion filter applied.</returns>
-        internal SendGridPermissionsBuilder Exclude(Func<string, bool> filter)
+        public SendGridPermissionsBuilder Exclude(Func<string, bool> filter)
         {
             this.excludeFilters.Add(filter);
             return this;

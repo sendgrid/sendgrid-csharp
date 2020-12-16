@@ -10,17 +10,22 @@
         /// Initializes a new instance of the <see cref="Templates"/> class.
         /// </summary>
         public Templates()
-            : base("templates")
+            : base("Templates")
         {
-            this.SubScopes = new[]
+            this.Scopes = new[]
             {
-                new SendGridPermissionScope("versions")
-                {
-                    SubScopes = new[]
-                    {
-                        new SendGridPermissionScope("activate")
-                    }
-                }
+                "templates.create",
+                "templates.delete",
+                "templates.read",
+                "templates.update",
+                "templates.versions.activate.create",
+                "templates.versions.activate.delete",
+                "templates.versions.activate.read",
+                "templates.versions.activate.update",
+                "templates.versions.create",
+                "templates.versions.delete",
+                "templates.versions.read",
+                "templates.versions.update"
             };
         }
     }

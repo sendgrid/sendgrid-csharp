@@ -53,25 +53,7 @@
         public static SendGridPermissionsBuilder CreateFullAccessAlerts(this SendGridPermissionsBuilder builder)
         {
             return builder.AddPermissionsFor<Alerts>();
-        }
-
-        /// <summary>
-        /// Creates the read-only stats permission list.
-        /// </summary>
-        /// <param name="builder">The builder.</param>
-        /// <returns>
-        /// The builder instance with the permissions added.
-        /// </returns>
-        public static SendGridPermissionsBuilder CreateReadOnlyStats(this SendGridPermissionsBuilder builder)
-        {
-            builder.AddPermissionsFor<EmailActivity>(ScopeOptions.ReadOnly);
-            builder.AddPermissionsFor<Stats>(ScopeOptions.ReadOnly);
-            builder.AddPermissionsFor<Devices>(ScopeOptions.ReadOnly);
-            builder.AddPermissionsFor<Geo>(ScopeOptions.ReadOnly);
-            builder.AddPermissionsFor<Browsers>(ScopeOptions.ReadOnly);
-            builder.AddPermissionsFor<MailboxProviders>(ScopeOptions.ReadOnly);
-            return builder;
-        }
+        }       
 
         /// <summary>
         /// Creates the read-only suppressions permission list.
@@ -100,28 +82,28 @@
         }
 
         /// <summary>
-        /// Creates the read-only whitelabel permission list.
+        /// Creates the read-only Domain Authentication (formerly Whitelabel) permission list.
         /// </summary>
         /// <param name="builder">The builder.</param>
         /// <returns>
         /// The builder instance with the permissions added.
         /// </returns>
-        public static SendGridPermissionsBuilder CreateReadOnlyWhitelabels(this SendGridPermissionsBuilder builder)
+        public static SendGridPermissionsBuilder CreateReadOnlyDomainAuthentication(this SendGridPermissionsBuilder builder)
         {
-            builder.AddPermissionsFor<Whitelabel>(ScopeOptions.ReadOnly);
+            builder.AddPermissionsFor<DomainAuthentication>(ScopeOptions.ReadOnly);
             return builder;
         }
 
         /// <summary>
-        /// Creates the full access whitelabel permission list.
+        /// Creates the full access Domain Authentication (formerly Whitelabel) permission list.
         /// </summary>
         /// <param name="builder">The builder.</param>
         /// <returns>
         /// The builder instance with the permissions added.
         /// </returns>
-        public static SendGridPermissionsBuilder CreateFullAccessWhitelabels(this SendGridPermissionsBuilder builder)
+        public static SendGridPermissionsBuilder CreateFullAccessDomainAuthentication(this SendGridPermissionsBuilder builder)
         {
-            builder.AddPermissionsFor<Whitelabel>();
+            builder.AddPermissionsFor<DomainAuthentication>();
             return builder;
         }
 
@@ -189,7 +171,7 @@
         /// </returns>
         public static SendGridPermissionsBuilder CreateReadOnlyInboundParse(this SendGridPermissionsBuilder builder)
         {
-            builder.AddPermissionsFor<Webhooks>(ScopeOptions.ReadOnly);
+            builder.AddPermissionsFor<Webhook>(ScopeOptions.ReadOnly);
             builder.Exclude(x => !x.StartsWith("user.webhooks.parse"));
             return builder;
         }
@@ -203,7 +185,7 @@
         /// </returns>
         public static SendGridPermissionsBuilder CreateFullAccessInboundParse(this SendGridPermissionsBuilder builder)
         {
-            builder.AddPermissionsFor<Webhooks>();
+            builder.AddPermissionsFor<Webhook>();
             builder.Exclude(x => !x.StartsWith("user.webhooks.parse"));
             return builder;
         }
@@ -272,47 +254,28 @@
         public static SendGridPermissionsBuilder CreateAdminPermissions(this SendGridPermissionsBuilder builder)
         {
             builder
+                .AddPermissionsFor<ReverseDNS>()
+                .AddPermissionsFor<ApiKeys>()
                 .AddPermissionsFor<Alerts>()
                 .AddPermissionsFor<AsmGroups>()
-                .AddPermissionsFor<IpManagement>(ScopeOptions.ReadOnly)
-                .Exclude(s => s.StartsWith("ips") && s != "ips.pools.ips.read")
-                .AddPermissionsFor<Mail>()
-                .AddPermissionsFor<EmailActivity>()
-                .AddPermissionsFor<MailSettings>().Exclude(x => x == "mail_settings.read")
-                .AddPermissionsFor<PartnerSettings>().Exclude(x => x == "partner_settings.read")
-                .AddPermissionsFor<MarketingCampaigns>()
-                .AddPermissionsFor<Tracking>().Exclude(x => x == "tracking_settings.read")
-                .AddPermissionsFor<Webhooks>().Exclude(x =>
-                    x == "user.webhooks.create" || x == "user.webhooks.delete" || x == "user.webhooks.read" ||
-                    x == "user.webhooks.update")
-                .AddPermissionsFor<Stats>()
                 .AddPermissionsFor<Categories>()
-                .AddPermissionsFor<Devices>()
                 .AddPermissionsFor<Clients>()
-                .AddPermissionsFor<Geo>()
-                .AddPermissionsFor<MailboxProviders>()
-                .AddPermissionsFor<Browsers>()
+                .AddPermissionsFor<Credentials>()
+                .AddPermissionsFor<IpManagement>()
+                .AddPermissionsFor<Mail>()                
+                .AddPermissionsFor<MailSettings>()
+                .AddPermissionsFor<MarketingCampaigns>()
+                .AddPermissionsFor<Newsletter>()
+                .AddPermissionsFor<PartnerSettings>()
+                .AddPermissionsFor<Stats>()
+                .AddPermissionsFor<Subusers>()
+                .AddPermissionsFor<Suppressions>()
                 .AddPermissionsFor<Templates>()
-                .Exclude(x => x.StartsWith("templates.versions.activate") && !x.EndsWith("create"))
-                .AddPermissionsFor<UserSettings>().Exclude(
-                    x => x.StartsWith("user.account")
-                         || x.StartsWith("user.credits")
-                         || x.StartsWith("user.email")
-                         || x.StartsWith("user.multifactor_authentication")
-                         || x.StartsWith("user.password")
-                         || x.StartsWith("user.profile")
-                         || x.StartsWith("user.username"))
-                .AddPermissionsFor<ApiKeys>()
+                .AddPermissionsFor<Tracking>()                
+                .AddPermissionsFor<UserSettings>()
                 .AddPermissionsFor<ScheduledSends>()
-                .AddPermissionsFor<AccessSettings>()
-                .AddPermissionsFor<Whitelabel>()
-                .AddPermissionsFor<Suppression>().Exclude(
-                    x => x.StartsWith("suppression") && (
-                             x.Contains("bounces")
-                             || x.Contains("invalid_emails")
-                             || x.Contains("spam_reports")
-                             || x.Contains("unsubscribes")
-                             || x.Contains("blocks")));
+                .AddPermissionsFor<Webhook>()                    
+                .AddPermissionsFor<DomainAuthentication>();               
 
             return builder;
         }

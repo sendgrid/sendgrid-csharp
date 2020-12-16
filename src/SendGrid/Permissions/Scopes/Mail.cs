@@ -1,6 +1,5 @@
 ﻿namespace SendGrid.Permissions.Scopes
 {
-
     /// <summary>
     /// Scopes for mail
     /// </summary>
@@ -11,12 +10,15 @@
         /// Initializes a new instance of the <see cref="Mail"/> class.
         /// </summary>
         public Mail()
-            : base("mail")
+            : base("Mail")
         {
-            this.AllowedOptions = new ScopeOptions("send");
-            this.SubScopes = new[]
+            this.Scopes = new[]
             {
-                new SendGridPermissionScope("batch")
+                "mail.batch.create",
+                "mail.batch.delete",
+                "mail.batch.read",
+                "mail.batch.update",
+                "mail.send"
             };
         }
     }

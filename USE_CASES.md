@@ -1005,9 +1005,9 @@ namespace TwilioTest
 <a name="working-with-permissions" ></a>
 # Working with permissions
 
-The permissions builder is a convenient way to manipulate API key permissions when creating new API keys or managing existing API keys.
-You can use the types named according to the various [permissions](https://sendgrid.api-docs.io/v3.0/api-key-permissions) to add the scopes required for those permissions.
-For example, to create an API key for Alerts and Stats:
+The permissions builder is a convenient way to manipulate API key permissions when creating new API keys or managing existing API keys. You can use the types named according to the various [permissions](https://sendgrid.api-docs.io/v3.0/api-key-permissions) to add the scopes required for those permissions. By default, all scopes for a given permission are added; however, You can filter out certain scopes by passing a ScopeOptions parameter.
+
+For example, to create an API key for all *Alerts* scopes and *Stats*:
 
 ```
 var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
@@ -1026,7 +1026,8 @@ var json = JsonConvert.SerializeObject(data);
 await client.RequestAsync(SendGridClient.Method.POST, urlPath: "api_keys", requestBody: json);
 ```
 
-There are also some extension methods to easily create API keys for various common use cases. 
+There are also some extension methods to easily create API keys for various common use cases.
+
 For example, to create a read-only mail send API key that can be used only to send emails:
 
 ```

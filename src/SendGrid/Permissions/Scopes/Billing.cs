@@ -13,9 +13,16 @@
         /// Initializes a new instance of the <see cref="Billing"/> class.
         /// </summary>
         public Billing()
-            : base("billing")
+            : base("Billing")
         {
             this.IsMutuallyExclusive = true;
+            this.Scopes = new[]
+            {
+                "billing.create",
+                "billing.delete",
+                "billing.read",
+                "billing.update"
+            };
         }
     }
 }

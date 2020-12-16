@@ -1,19 +1,26 @@
 ﻿namespace SendGrid.Tests
 {
-    using Permissions;
-    using Permissions.Scopes;
     using System;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
     using Moq;
-    using System.Linq;
+    using Permissions;
+    using Permissions.Scopes;
     using Xunit;
-    using Newtonsoft.Json;
+    using Xunit.Abstractions;
 
     public class PermissionsBuilderTests
     {
+        private readonly ITestOutputHelper _output;
+
+        public PermissionsBuilderTests(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public async Task CanFilterFinalScopeList()
         {
@@ -39,6 +46,7 @@
 
             var scopes = sb.Build();
 
+            Assert.Single(scopes);
             Assert.Contains(scopes, x => x == "alerts.read");
         }
 
@@ -46,7 +54,7 @@
         public void BuildFullAccessScopeContainsAllCrudScopes()
         {
             var sb = new SendGridPermissionsBuilder();
-            sb.AddPermissionsFor<Alerts>(ScopeOptions.All);
+            sb.AddPermissionsFor<Alerts>(ScopeOptions.FullAccess);
 
             var scopes = sb.Build().ToArray();
 
@@ -60,27 +68,11 @@
         public void BuildFullAccessScopeContainsExtraScopes()
         {
             var sb = new SendGridPermissionsBuilder();
-            sb.AddPermissionsFor<Mail>(ScopeOptions.All);
+            sb.AddPermissionsFor<Mail>(ScopeOptions.FullAccess);
 
             var scopes = sb.Build().ToArray();
 
             Assert.Contains(scopes, x => x == "mail.send");
-        }
-
-        [Fact]
-        public void BuildScopeWithSubScopesContainsSubScopesWithPrefixOfParentScope()
-        {
-            var sb = new SendGridPermissionsBuilder();
-            sb.AddPermissionsFor<Categories>(ScopeOptions.All);
-
-            var scopes = sb.Build().ToArray();
-
-            Assert.Contains(scopes, x => x == "categories.create");
-            Assert.Contains(scopes, x => x == "categories.delete");
-            Assert.Contains(scopes, x => x == "categories.read");
-            Assert.Contains(scopes, x => x == "categories.update");
-            Assert.Contains(scopes, x => x == "categories.stats.read");
-            Assert.Contains(scopes, x => x == "categories.stats.sums.read");
         }
 
         [Fact]
@@ -97,6 +89,27 @@
             var sb = new SendGridPermissionsBuilder();
             sb.AddPermissionsFor<Billing>();
             Assert.Throws<InvalidOperationException>(() => sb.AddPermissionsFor<Alerts>());
+        }
+
+        [Fact]
+        public void FiltersOutDuplicateScopes()
+        {
+            var sb = new SendGridPermissionsBuilder();
+            sb.CreateFullAccessMailSend()
+                .AddPermissionsFor<Mail>();
+
+            var scopes = sb.Build().ToArray();
+            Assert.Equal(new Mail().Scopes.Count(), scopes.Length);
+        }
+
+        [Fact]
+        public void CanFilterByFunc()
+        {
+            var sb = new SendGridPermissionsBuilder();
+            sb.AddPermissionsFor<MailSettings>();
+            sb.Exclude(scope => scope.Contains("spam"));
+            var scopes = sb.Build().ToArray();
+            Assert.DoesNotContain(scopes, x => x.Contains("spam"));
         }
     }
 }

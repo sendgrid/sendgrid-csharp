@@ -10,14 +10,19 @@
         /// Initializes a new instance of the <see cref="Tracking"/> class.
         /// </summary>
         public Tracking()
-            : base("tracking_settings", "read")
+            : base("Tracking")
         {
-            this.SubScopes = new[]
+            this.Scopes = new[]
             {
-                new SendGridPermissionScope("click", "read", "update"),
-                new SendGridPermissionScope("google_analytics", "read", "update"),
-                new SendGridPermissionScope("open", "read", "update"),
-                new SendGridPermissionScope("subscription", "read", "update"),
+                "tracking_settings.click.read",
+                "tracking_settings.click.update",
+                "tracking_settings.google_analytics.read",
+                "tracking_settings.google_analytics.update",
+                "tracking_settings.open.read",
+                "tracking_settings.open.update",
+                "tracking_settings.read",
+                "tracking_settings.subscription.read",
+                "tracking_settings.subscription.update"
             };
         }
     }

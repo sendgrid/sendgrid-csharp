@@ -11,20 +11,29 @@
         /// Initializes a new instance of the <see cref="UserSettings"/> class.
         /// </summary>
         public UserSettings()
-            : base("user")
+            : base("User Settings")
         {
-            this.AllowedOptions = ScopeOptions.None;
-            this.SubScopes = new[]
-            {
-                new SendGridPermissionScope("account", ScopeOptions.ReadOnly),
-                new SendGridPermissionScope("credits", ScopeOptions.ReadOnly),
-                new SendGridPermissionScope("email"),
-                new SendGridPermissionScope("multifactor_authentication"),
-                new SendGridPermissionScope("password", "read", "update"),
-                new SendGridPermissionScope("profile", "read", "update"),
-                new SendGridPermissionScope("settings.enforced_tls", "read", "update"),
-                new SendGridPermissionScope("timezone", "read", "update"),
-                new SendGridPermissionScope("username", "read", "update"),
+            this.Scopes = new [] {
+                "user.account.read",
+                "user.credits.read",
+                "user.email.create",
+                "user.email.delete",
+                "user.email.read",
+                "user.email.update",
+                "user.multifactor_authentication.create",
+                "user.multifactor_authentication.delete",
+                "user.multifactor_authentication.read",
+                "user.multifactor_authentication.update",
+                "user.password.read",
+                "user.password.update",
+                "user.profile.read",
+                "user.profile.update",
+                "user.settings.enforced_tls.read",
+                "user.settings.enforced_tls.update",
+                "user.timezone.read",
+                "user.timezone.update",
+                "user.username.read",
+                "user.username.update"
             };
         }
     }

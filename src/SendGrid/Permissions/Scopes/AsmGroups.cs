@@ -10,8 +10,15 @@
         /// Initializes a new instance of the <see cref="AsmGroups"/> class.
         /// </summary>
         public AsmGroups()
-            : base("asm.groups")
+            : base("Asm Groups")
         {
+            this.Scopes = new[]
+            {
+                "asm.groups.create",
+                "asm.groups.delete",
+                "asm.groups.read",
+                "asm.groups.update"
+            };
         }
     }
 }

@@ -10,16 +10,15 @@
         /// Initializes a new instance of the <see cref="Clients"/> class.
         /// </summary>
         public Clients()
-            : base("clients", "read")
+            : base("Clients")
         {
-            this.AllowedOptions = ScopeOptions.None;
-            this.SubScopes = new[]
+            this.Scopes = new[]
             {
-                new SendGridPermissionScope("desktop.stats", "read"),
-                new SendGridPermissionScope("phone.stats", "read"),
-                new SendGridPermissionScope("stats", "read"),
-                new SendGridPermissionScope("tablet.stats", "read"),
-                new SendGridPermissionScope("webmail.stats", "read")
+                "clients.desktop.stats.read",
+                "clients.phone.stats.read",
+                "clients.stats.read",
+                "clients.tablet.stats.read",
+                "clients.webmail.stats.read"
             };
         }
     }

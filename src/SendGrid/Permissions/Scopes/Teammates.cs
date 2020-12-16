@@ -10,8 +10,15 @@
         /// Initializes a new instance of the <see cref="Teammates"/> class.
         /// </summary>
         public Teammates()
-            : base("teammates")
+            : base("Teammates")
         {
+            this.Scopes = new []
+            {
+                "teammates.create",
+                "teammates.read",
+                "teammates.update",
+                "teammates.delete"
+            };
         }
     }
 }

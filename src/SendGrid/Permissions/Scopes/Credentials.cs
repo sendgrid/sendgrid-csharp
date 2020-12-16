@@ -10,8 +10,15 @@
         /// Initializes a new instance of the <see cref="Credentials"/> class.
         /// </summary>
         public Credentials()
-            : base("credentials")
+            : base("Credentials")
         {
+            this.Scopes = new[]
+            {
+                "credentials.create",
+                "credentials.delete",
+                "credentials.read",
+                "credentials.update"
+            };
         }
     }
 }

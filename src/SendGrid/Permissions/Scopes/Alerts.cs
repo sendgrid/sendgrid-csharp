@@ -10,8 +10,15 @@
         /// Initializes a new instance of the <see cref="Alerts"/> class.
         /// </summary>
         public Alerts()
-            : base("alerts")
+            : base("Alerts")
         {
+            this.Scopes = new[]
+            {
+                "alerts.create",
+                "alerts.delete",
+                "alerts.read",
+                "alerts.update"
+            };
         }
     }
 }

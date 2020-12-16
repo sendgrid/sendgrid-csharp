@@ -12,6 +12,13 @@
         public Newsletter()
             : base("newsletter")
         {
+            this.Scopes = new[]
+            {
+                "newsletter.create",
+                "newsletter.delete",
+                "newsletter.read",
+                "newsletter.update"
+            };
         }
     }
 }

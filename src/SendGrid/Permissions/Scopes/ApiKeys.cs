@@ -10,8 +10,15 @@
         /// Initializes a new instance of the <see cref="ApiKeys"/> class.
         /// </summary>
         public ApiKeys()
-            : base("api_keys")
+            : base("Api Keys")
         {
+            this.Scopes = new[]
+            {
+                "api_keys.create",
+                "api_keys.delete",
+                "api_keys.read",
+                "api_keys.update"
+            };
         }
     }
 }

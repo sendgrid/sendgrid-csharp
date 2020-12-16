@@ -10,11 +10,21 @@
         /// Initializes a new instance of the <see cref="Stats"/> class.
         /// </summary>
         public Stats()
-            : base("stats", "read")
+            : base("Stats")
         {
-            this.SubScopes = new[]
-            {
-                new SendGridPermissionScope("global", ScopeOptions.ReadOnly)
+            this.Scopes = new [] {
+                "email_activity.read",
+                "stats.read",
+                "stats.global.read",
+                "browsers.stats.read",
+                "devices.stats.read",
+                "geo.stats.read",
+                "mailbox_providers.stats.read",
+                "clients.desktop.stats.read",
+                "clients.phone.stats.read",
+                "clients.stats.read",
+                "clients.tablet.stats.read",
+                "clients.webmail.stats.read"
             };
         }
     }
