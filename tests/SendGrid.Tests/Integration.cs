@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
@@ -2725,6 +2726,7 @@
             msg.SetGoogleAnalytics(true, "campaign3", "content3", "medium3", "source3", "term3");
             Assert.Equal("{\"tracking_settings\":{\"ganalytics\":{\"enable\":true,\"utm_source\":\"source3\",\"utm_medium\":\"medium3\",\"utm_term\":\"term3\",\"utm_content\":\"content3\",\"utm_campaign\":\"campaign3\"}}}", msg.Serialize());
         }
+
         [Fact]
         public async Task TestAccessSettingsActivityGet()
         {
@@ -6003,6 +6005,33 @@
             var clientToInject = new HttpClient(httpMessageHandler);
             var sg1 = new SendGridClient(clientToInject, fixture.apiKey);
             var sg2 = new SendGridClient(clientToInject, fixture.apiKey);
+        }
+
+        [Fact]
+        public void TestBadRequestIsSuccessStatusCodeReturnsFalse()
+        {
+            var message = new HttpResponseMessage();
+            var response = new Response(HttpStatusCode.BadRequest, message.Content, message.Headers);
+            Assert.False(response.IsSuccessStatusCode);
+        }
+
+        [Fact]
+        public void TestOkRequestIsSuccessStatusCodeReturnsTrue()
+        {
+            var message = new HttpResponseMessage();
+            var response = new Response(HttpStatusCode.OK, message.Content, message.Headers);
+            Assert.True(response.IsSuccessStatusCode);
+        }
+
+        [Fact]
+        public void TestIsSuccessStatusCodeEvery2xxCodeReturnsTrue()
+        {
+            for (int i = 200; i <= 299; ++i)
+            {
+                var message = new HttpResponseMessage();
+                var response = new Response((HttpStatusCode)i, message.Content, message.Headers);
+                Assert.True(response.IsSuccessStatusCode);
+            }
         }
     }
 

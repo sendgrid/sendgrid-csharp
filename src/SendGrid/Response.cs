@@ -63,6 +63,14 @@ namespace SendGrid
         }
 
         /// <summary>
+        /// Gets a value indicating whether Status Code of this response indicates success.
+        /// </summary>
+        public bool IsSuccessStatusCode
+        {
+            get { return ((int)StatusCode >= 200) && ((int)StatusCode <= 299); }
+        }
+
+        /// <summary>
         /// Gets or sets the response body returned from Twilio SendGrid.
         /// </summary>
         public HttpContent Body
