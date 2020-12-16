@@ -4,17 +4,9 @@
     using Permissions;
     using SendGrid.Permissions.Scopes;
     using Xunit;
-    using Xunit.Abstractions;
 
     public class PermissionsBuilderGroupsTests
     {
-        private readonly ITestOutputHelper _output;
-
-        public PermissionsBuilderGroupsTests(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-
         [Fact]
         public void CreateReadOnlyMailSend()
         {
@@ -363,8 +355,7 @@
 
             var scopes = sb.Build().ToArray();
 
-            _output.WriteLine($"TOTAL SCOPES {scopes.Length}");
-            //Assert.Equal(197, scopes.Length);
+            Assert.Equal(197, scopes.Length);
 
             Assert.Contains("access_settings.activity.read", scopes);
             Assert.Contains("access_settings.whitelist.create", scopes);
@@ -382,7 +373,7 @@
             Assert.Contains("asm.groups.create", scopes);
             Assert.Contains("asm.groups.delete", scopes);
             Assert.Contains("asm.groups.read", scopes);
-            Assert.Contains("asm.groups.update", scopes);            
+            Assert.Contains("asm.groups.update", scopes);
             Assert.Contains("browsers.stats.read", scopes);
             Assert.Contains("categories.create", scopes);
             Assert.Contains("categories.delete", scopes);

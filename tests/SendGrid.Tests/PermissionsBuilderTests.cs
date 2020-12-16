@@ -111,5 +111,18 @@
             var scopes = sb.Build().ToArray();
             Assert.DoesNotContain(scopes, x => x.Contains("spam"));
         }
+
+        [Fact]
+        public void foo()
+        {
+            var builder = new SendGridPermissionsBuilder();
+            builder.CreateReadOnlyMailSend();            
+
+            var scopes = builder.Build();
+            foreach (var scope in scopes)
+            {
+                _output.WriteLine(scope);
+            }
+        }
     }
 }

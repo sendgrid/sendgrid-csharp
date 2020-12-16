@@ -1007,18 +1007,28 @@ namespace TwilioTest
 
 The permissions builder is a convenient way to manipulate API key permissions when creating new API keys or managing existing API keys. You can use the types named according to the various [permissions](https://sendgrid.api-docs.io/v3.0/api-key-permissions) to add the scopes required for those permissions. By default, all scopes for a given permission are added; however, You can filter out certain scopes by passing a ScopeOptions parameter.
 
-For example, to create an API key for all *Alerts* scopes and *Stats*:
+For example, to create an API key for all *Alerts* scopes and read only *Marketing Campaigns*:
 
 ```
 var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
 var client = new SendGridClient(apiKey);
 var builder = new SendGridPermissionsBuilder();
 builder.AddPermissionsFor<Alerts>();
-builder.AddPermissionsFor<Stats>();
+builder.AddPermissionsFor<MarketingCampaigns>(ScopeOptions.ReadOnly);
+
+/*
+The above builder will emit the following scopes:
+
+alerts.create
+alerts.delete
+alerts.read
+alerts.update
+marketing_campaigns.read
+*/
 
 var data = new
 {
-    name = "Alerts & Stats API Key",
+    name = "Alerts & Read-Only Marketing Campaigns API Key",
     scopes = builder.Build()
 };
 
@@ -1036,6 +1046,12 @@ var client = new SendGridClient(apiKey);
 var builder = new SendGridPermissionsBuilder();
 builder.CreateReadOnlyMailSend();
 
+/*
+The above builder will emit the following scope:
+
+mail.batch.read
+*/
+
 var data = new
 {
     name = "Mail Send API Key",
@@ -1047,6 +1063,7 @@ await client.RequestAsync(SendGridClient.Method.POST, urlPath: "api_keys", reque
 ```
 
 The builder filters out duplicate scopes by default but you can also add filters to the builder so that your application will never create keys with certain scopes.
+
 For example, you may want to allow an API key to do just about anything EXCEPT create more API keys.
 
 ```
