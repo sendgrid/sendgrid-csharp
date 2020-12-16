@@ -104,6 +104,8 @@ namespace SendGrid.Helpers.Mail
             var msg = new SendGridMessage();
             msg.SetFrom(from);
             msg.SetGlobalSubject(subject);
+            msg.AddTos(tos);
+
             if (!string.IsNullOrEmpty(plainTextContent))
             {
                 msg.AddContent(MimeType.Text, plainTextContent);
@@ -112,11 +114,6 @@ namespace SendGrid.Helpers.Mail
             if (!string.IsNullOrEmpty(htmlContent))
             {
                 msg.AddContent(MimeType.Html, htmlContent);
-            }
-
-            for (var i = 0; i < tos.Count; i++)
-            {
-                msg.AddTo(tos[i], i);
             }
 
             return msg;

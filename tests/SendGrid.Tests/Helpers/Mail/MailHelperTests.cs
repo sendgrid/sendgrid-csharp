@@ -101,5 +101,34 @@ namespace SendGrid.Tests.Helpers.Mail
             Assert.Equal(dynamicTemplateData[0], sendGridMessage.Personalizations.ElementAt(0).TemplateData);
             Assert.Equal(dynamicTemplateData[1], sendGridMessage.Personalizations.ElementAt(1).TemplateData);
         }
+
+        [Theory]
+        [InlineData("plain text", null)]
+        [InlineData(null, "<p>html content</p>")]
+        public void TestCreateSingleEmailToMultipleRecipients(string plainTextContent, string htmlContent)
+        {
+            var from = new EmailAddress("from@email.com", "FromName");
+            var tos = new List<EmailAddress>
+            {
+                new EmailAddress("to1@email.com"),
+                new EmailAddress("to2@email.com")
+            };
+            var subject = "message subject";
+
+            var sendGridMessage = MailHelper.CreateSingleEmailToMultipleRecipients(
+                from,
+                tos,
+                subject,
+                plainTextContent,
+                htmlContent);
+
+            Assert.Equal(from, sendGridMessage.From);
+            Assert.Single(sendGridMessage.Personalizations);
+            Assert.Equal(subject, sendGridMessage.Personalizations[0].Subject);
+            Assert.Equal(tos[0], sendGridMessage.Personalizations[0].Tos[0]);
+            Assert.Equal(tos[1], sendGridMessage.Personalizations[0].Tos[1]);
+            Assert.Equal(htmlContent, sendGridMessage.HtmlContent);
+            Assert.Equal(plainTextContent, sendGridMessage.PlainTextContent);
+        }
     }
 }
