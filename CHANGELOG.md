@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2020-12-16] Version 9.22.0
+---------------------------
+**Library - Feature**
+- [PR #1077](https://github.com/sendgrid/sendgrid-csharp/pull/1077): add IsSuccessStatusCode. Thanks to [@shoter](https://github.com/shoter)!
+
+
 [2020-11-18] Version 9.21.2
 ---------------------------
 **Library - Fix**
