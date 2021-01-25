@@ -38,7 +38,7 @@
                 "suppression.unsubscribes.create",
                 "suppression.unsubscribes.read",
                 "suppression.unsubscribes.update",
-                "suppression.unsubscribes.delete"
+                "suppression.unsubscribes.delete"                
             };
         }
     }

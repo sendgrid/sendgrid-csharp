@@ -54,7 +54,7 @@
         public void BuildFullAccessScopeContainsAllCrudScopes()
         {
             var sb = new SendGridPermissionsBuilder();
-            sb.AddPermissionsFor<Alerts>(ScopeOptions.FullAccess);
+            sb.AddPermissionsFor<Alerts>(ScopeOptions.All);
 
             var scopes = sb.Build().ToArray();
 
@@ -68,7 +68,7 @@
         public void BuildFullAccessScopeContainsExtraScopes()
         {
             var sb = new SendGridPermissionsBuilder();
-            sb.AddPermissionsFor<Mail>(ScopeOptions.FullAccess);
+            sb.AddPermissionsFor<Mail>(ScopeOptions.All);
 
             var scopes = sb.Build().ToArray();
 
@@ -89,18 +89,7 @@
             var sb = new SendGridPermissionsBuilder();
             sb.AddPermissionsFor<Billing>();
             Assert.Throws<InvalidOperationException>(() => sb.AddPermissionsFor<Alerts>());
-        }
-
-        [Fact]
-        public void FiltersOutDuplicateScopes()
-        {
-            var sb = new SendGridPermissionsBuilder();
-            sb.CreateFullAccessMailSend()
-                .AddPermissionsFor<Mail>();
-
-            var scopes = sb.Build().ToArray();
-            Assert.Equal(new Mail().Scopes.Count(), scopes.Length);
-        }
+        }    
 
         [Fact]
         public void CanFilterByFunc()
@@ -110,19 +99,6 @@
             sb.Exclude(scope => scope.Contains("spam"));
             var scopes = sb.Build().ToArray();
             Assert.DoesNotContain(scopes, x => x.Contains("spam"));
-        }
-
-        [Fact]
-        public void foo()
-        {
-            var builder = new SendGridPermissionsBuilder();
-            builder.CreateReadOnlyMailSend();            
-
-            var scopes = builder.Build();
-            foreach (var scope in scopes)
-            {
-                _output.WriteLine(scope);
-            }
         }
     }
 }

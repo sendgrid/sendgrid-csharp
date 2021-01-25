@@ -4,7 +4,7 @@
     /// Scopes for user.webhooks
     /// </summary>
     /// <seealso cref="SendGridPermissionScope" />
-    internal class Webhook : SendGridPermissionScope
+    public class Webhook : SendGridPermissionScope
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Webhook"/> class.

@@ -82,7 +82,7 @@
         public SendGridPermissionsBuilder AddPermissionsFor<TScope>()
             where TScope : ISendGridPermissionScope, new()
         {
-            return this.AddPermissionsFor<TScope>(ScopeOptions.FullAccess);
+            return this.AddPermissionsFor<TScope>(ScopeOptions.All);
         }
 
         /// <summary>

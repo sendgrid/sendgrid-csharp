@@ -16,9 +16,7 @@
             {
                 "partner_settings.new_relic.read",
                 "partner_settings.new_relic.update",
-                "partner_settings.read",
-                "partner_settings.sendwithus.read",
-                "partner_settings.sendwithus.update"
+                "partner_settings.read"                
             };
         }
     }

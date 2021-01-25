@@ -13,7 +13,8 @@
         public UserSettings()
             : base("User Settings")
         {
-            this.Scopes = new [] {
+            this.Scopes = new[]
+            {
                 "user.account.read",
                 "user.credits.read",
                 "user.email.create",

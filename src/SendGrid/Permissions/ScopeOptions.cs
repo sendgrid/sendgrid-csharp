@@ -9,7 +9,7 @@
         /// <summary>
         /// All scopes. When filtering scopes no scopes will be exluded
         /// </summary>
-        FullAccess,
+        All,
 
         /// <summary>
         /// Read-only scopes. When fitlering scopes this will include only those that end with ".read"

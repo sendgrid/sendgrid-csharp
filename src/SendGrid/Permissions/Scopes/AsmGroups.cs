@@ -10,7 +10,7 @@
         /// Initializes a new instance of the <see cref="AsmGroups"/> class.
         /// </summary>
         public AsmGroups()
-            : base("Asm Groups")
+            : base("ASM Groups")
         {
             this.Scopes = new[]
             {
