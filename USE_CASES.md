@@ -1038,13 +1038,13 @@ await client.RequestAsync(SendGridClient.Method.POST, urlPath: "api_keys", reque
 
 There are also some extension methods to easily create API keys for various common use cases.
 
-For example, to create a read-only mail send API key that can be used only to send emails:
+For example, to create a Mail API key that can be used to send emails:
 
 ```
 var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
 var client = new SendGridClient(apiKey);
 var builder = new SendGridPermissionsBuilder();
-builder.CreateReadOnlyMailSend();
+builder.AddPermissionsFor<Mail>();();
 
 /*
 The above builder will emit the following scope:
@@ -1071,7 +1071,7 @@ var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABL
 var client = new SendGridClient(apiKey);
 var builder = new SendGridPermissionsBuilder();
 builder.Exclude(scope => scope.StartsWith("api_keys"));
-builder.CreateAdminPermissions();
+builder.AddPermissionsFor<Admin>();
 
 var data = new
 {
