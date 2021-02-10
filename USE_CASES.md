@@ -1,4 +1,4 @@
-This documentation provides examples for specific use cases. Please [open an issue](https://github.com/sendgrid/sendgrid-sharp/issues) or make a pull request for any use cases you would like us to document here. Thank you!
+This document provides examples for specific use cases. Please [open an issue](https://github.com/sendgrid/sendgrid-sharp/issues) or make a pull request for any use cases you would like us to document here. Thank you!
 
 # Table of Contents
 
@@ -20,10 +20,11 @@ This documentation provides examples for specific use cases. Please [open an iss
         - [MaximumBackOff](#maximumbackoff)
         - [DeltaBackOff](#deltabackoff)
     - [Examples](#examples)
-- [How to Setup a Domain Whitelabel](#how-to-setup-a-domain-whitelabel)
+- [How to Setup a Domain Authentication](#how-to-setup-a-domain-authentication)
 - [How to View Email Statistics](#how-to-view-email-statistics)
-- [How to transform HTML to plain text](#how-to-transform-html-to-plain-text)
-- [Send a SMS Message](#sms)
+- [How to transform HTML into plain text](#how-to-transform-html-into-plain-text)
+- [Send an Email With Twilio Email (Pilot)](#send-an-email-with-twilio-email-pilot)
+- [Send an SMS Message](#send-an-sms-message)
 
 <a name="attachments"></a>
 # Attachments
@@ -140,7 +141,7 @@ namespace Example
             };
             msg.AddHeaders(headers);
 
-            // If you require complex substitutions this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transactional-templates).
+            // If you require complex substitutions this [use case](USE_CASES.md#transactional-templates).
             var dynamicTemplateData = new ExampleTemplateData
             {
                 Subject = "Hi!",
@@ -200,7 +201,7 @@ namespace Example
             };
             msg.AddHeaders(headers1, 1);
 
-            // For a full transactional template example, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transactional-templates).
+            // For a full transactional template example, please see this [use case](USE_CASES.md#transactional-templates).
             var dynamicTemplateData2 = new ExampleTemplateData
             {
                 Subject = "Hi 2!",
@@ -225,7 +226,7 @@ namespace Example
 
             msg.SetSendAt(1461775052, 1);
 
-            // The values below this comment are global to entire message
+            // The values below this comment are global to an entire message
 
             msg.SetFrom("test@example.com", "Example User 0");
 
@@ -243,7 +244,7 @@ namespace Example
             msg.AddContents(contents);
 
             // For base64 encoding, see [`Convert.ToBase64String`](https://msdn.microsoft.com/en-us/library/system.convert.tobase64string(v=vs.110).aspx)
-            // For an example using an attachment, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#attachments).
+            // For an example using an attachment, please see this [use case](USE_CASES.md#attachments).
             msg.AddAttachment("balance_001.pdf",
                               "base64 encoded string",
                               "application/pdf",
@@ -270,7 +271,7 @@ namespace Example
             };
             msg.AddAttachments(attachments);
 
-            // For a full transactional template example, please see this [use case](https://github.com/sendgrid/sendgrid-csharp/blob/master/USE_CASES.md#transactional-templates).
+            // For a full transactional template example, please see this [use case](USE_CASES.md#transactional-templates).
             msg.SetTemplateId("d-d42b0eea09964d1ab957c18986c01828");
 
             msg.AddGlobalHeader("X-Day", "Monday");
@@ -493,8 +494,7 @@ namespace Example
 <a name="transactional-templates"></a>
 # Transactional Templates
 
-For this example, we assume you have created a [transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/Create_and_edit_dynamic_transactional_templates.html).
-Following is the template content we used for testing.
+For this example, we assume you have created a [dynamic transactional template](https://sendgrid.com/docs/ui/sending-email/how-to-send-an-email-with-dynamic-transactional-templates/) in the UI or via the API. Following is the template content we used for testing.
 
 Template ID (replace with your own):
 
@@ -576,7 +576,7 @@ namespace Example
         {
             [JsonProperty("subject")]
             public string Subject { get; set; }
-            
+
             [JsonProperty("name")]
             public string Name { get; set; }
 
@@ -588,7 +588,7 @@ namespace Example
         {
             [JsonProperty("city")]
             public string City { get; set; }
-            
+
             [JsonProperty("country")]
             public string Country { get; set; }
         }
@@ -662,7 +662,7 @@ namespace Example
 <a name="legacy-transactional-templates"></a>
 # _Legacy_ Transactional Templates
 
-For this example, we assume you have created a [legacy transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html) in the UI or via the API.. Following is the template content we used for testing.
+For this example, we assume you have created a [legacy transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html) in the UI or via the API. Following is the template content we used for testing.
 
 Template ID (replace with your own):
 
@@ -799,17 +799,17 @@ namespace Example
 <a name="transient-faults"></a>
 # Transient Fault Handling
 
-The SendGridClient provides functionality for handling transient errors that might occur when sending an HttpRequest. This includes client side timeouts while sending the mail, or certain errors returned within the 500 range. Errors within the 500 range are limited to 500 Internal Server Error, 502 Bad Gateway, 503 Service unavailable and 504 Gateway timeout.
+The SendGridClient provides functionality for handling transient errors that might occur when sending an HttpRequest. This includes client-side timeouts while sending the mail, or certain errors returned within the 500 range. Errors within the 500 range are limited to 500 Internal Server Error, 502 Bad Gateway, 503 Service unavailable and 504 Gateway timeout.
 
-By default, retry behaviour is off, you must explicitly enable it by setting the retry count to a value greater than zero. To set the retry count, you must use the SendGridClient construct that takes a **SendGridClientOptions** object, allowing you to configure the **ReliabilitySettings**
+By default, retry behavior is off, you must explicitly enable it by setting the retry count to a value greater than zero. To set the retry count, you must use the SendGridClient construct that takes a **SendGridClientOptions** object, allowing you to configure the **ReliabilitySettings**
 
 ### RetryCount
 
-The amount of times to retry the operation before reporting an exception to the caller. This is in addition to the initial attempt so setting a value of 1 would result in 2 attempts, the initial attempt and the retry. Defaults to zero, retry behaviour is not enabled. The maximum amount of retries permitted is 5. 
+The number of times to retry the operation before reporting an exception to the caller. This is in addition to the initial attempt so setting a value of 1 would result in 2 attempts, the initial attempt, and the retry. Defaults to zero, retry behavior is not enabled. The maximum amount of retries permitted is 5.
 
 ### MinimumBackOff
 
-The minimum amount of time to wait between retries. 
+The minimum amount of time to wait between retries.
 
 ### MaximumBackOff
 
@@ -819,10 +819,9 @@ The maximum possible amount of time to wait between retries. The maximum value a
 
 The value that will be used to calculate a random delta in the exponential delay between retries.  A random element of time is factored into the delta calculation as this helps avoid many clients retrying at regular intervals.
 
-
 ## Examples
 
-In this example we are setting RetryCount to 2, with a minimum wait time of 1 seconds, a maximum of 10 seconds and a delta of 3 seconds
+In this example, we are setting RetryCount to 2, with a minimum wait time of 1 second, a maximum of 10 seconds and a delta of 3 seconds
 
 ```csharp
 
@@ -854,61 +853,126 @@ var client = new SendGridClient(options);
 
 ```
 
-<a name="sms"></a>
-# Send a SMS Message
+<a name="domain-authentication"></a>
+# How to Setup a Domain Authentication
 
-Following are the steps to add Twilio SMS to your app:
+You can find documentation for how to setup a domain authentication via the UI [here](https://sendgrid.com/docs/ui/account-and-settings/how-to-set-up-domain-authentication/) and via API [here](USAGE.md#sender-authentication).
 
-## 1. Obtain a Free Twilio Account
+Find more information about all of SendGrid's authentication related documentation [here](https://sendgrid.com/docs/ui/account-and-settings/).
+
+<a name="email-stats"></a>
+# How to View Email Statistics
+
+You can find documentation for how to view your email statistics via the UI [here](https://app.sendgrid.com/statistics) and via API [here](USAGE.md#stats).
+
+Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as Twilio SendGrid processes your email.
+
+<a name="html-into-plain-text"></a>
+# How to transform HTML into plain text
+
+Although the HTML tags could be removed using regular expressions, the best solution is parsing the HTML code with a specific library, such as [HTMLAgilityPack](http://html-agility-pack.net/).
+
+The following code shows how to parse an input string with HTML code and remove all tags:
+
+```csharp
+using HtmlAgilityPack;
+
+namespace Example {
+
+    internal class Example
+    {
+		/// <summary>
+		/// Convert the HTML content to plain text
+		/// </summary>
+		/// <param name="html">The html content which is going to be converted</param>
+		/// <returns>A string</returns>
+		public static string HtmlToPlainText(string html)
+		{
+			HtmlDocument document = new HtmlDocument();
+			document.LoadHtml(html);
+			return document.DocumentNode == null ? string.Empty : document.DocumentNode.InnerText;
+		}
+	}
+}
+
+```
+
+# Send an Email With Twilio Email (Pilot)
+
+### 1. Obtain a Free Twilio Account
 
 Sign up for a free Twilio account [here](https://www.twilio.com/try-twilio?source=sendgrid-csharp).
 
-## 2. Update Your Environment Variables
+### 2. Set Up Your Environment Variables
 
-You can obtain your Account Sid and Auth Token from [twilio.com/console](https://twilio.com/console).
+The Twilio API allows for authentication using with either an API key/secret or your Account SID/Auth Token. You can create an API key [here](https://twil.io/get-api-key) or obtain your Account SID and Auth Token [here](https://twil.io/console).
 
-### Mac
+Once you have those, follow the steps below based on your operating system.
+
+#### Linux/Mac
 
 ```bash
+echo "export TWILIO_API_KEY='YOUR_TWILIO_API_KEY'" > twilio.env
+echo "export TWILIO_API_SECRET='YOUR_TWILIO_API_SECRET'" >> twilio.env
+
+# or
+
 echo "export TWILIO_ACCOUNT_SID='YOUR_TWILIO_ACCOUNT_SID'" > twilio.env
 echo "export TWILIO_AUTH_TOKEN='YOUR_TWILIO_AUTH_TOKEN'" >> twilio.env
+```
+
+Then:
+
+```bash
 echo "twilio.env" >> .gitignore
 source ./twilio.env
 ```
 
-### Windows
+#### Windows
 
 Temporarily set the environment variable (accessible only during the current CLI session):
 
 ```bash
+set TWILIO_API_KEY=YOUR_TWILIO_API_KEY
+set TWILIO_API_SECRET=YOUR_TWILIO_API_SECRET
+
+: or
+
 set TWILIO_ACCOUNT_SID=YOUR_TWILIO_ACCOUNT_SID
 set TWILIO_AUTH_TOKEN=YOUR_TWILIO_AUTH_TOKEN
 ```
 
-Permanently set the environment variable (accessible in all subsequent CLI sessions):
+Or permanently set the environment variable (accessible in all subsequent CLI sessions):
 
 ```bash
+setx TWILIO_API_KEY "YOUR_TWILIO_API_KEY"
+setx TWILIO_API_SECRET "YOUR_TWILIO_API_SECRET"
+
+: or
+
 setx TWILIO_ACCOUNT_SID "YOUR_TWILIO_ACCOUNT_SID"
 setx TWILIO_AUTH_TOKEN "YOUR_TWILIO_AUTH_TOKEN"
 ```
 
-## 3. Install the Twilio Helper Library
+### 3. Initialize the Twilio Email Client
 
-The best and easiest way to add the Twilio libraries to your .NET project is to use the NuGet package manager.
+```csharp
+var mailClient = new TwilioEmailClient(Environment.GetEnvironmentVariable("TWILIO_API_KEY"), Environment.GetEnvironmentVariable("TWILIO_API_SECRET"));
 
-### With Visual Studio IDE
+// or
 
-From within Visual Studio, you can use the NuGet GUI to search for and install the Twilio NuGet package. Or, as a shortcut, simply type the following command into the Package Manager Console:
+var mailClient = new TwilioEmailClient(Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID"), Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN"));
+```
 
-`Install-Package Twilio`
+This client has the same interface as the `SendGrid` client.
 
-### With .NET Core Command Line Tools
+# Send an SMS Message
 
-If you are building with the .NET Core command line tools, then you can run the following command from within your project directory:
+First, follow the above steps for creating a Twilio account and setting up environment variables with the proper credentials.
 
-`dotnet add package Twilio`
+Then, install the Twilio Helper Library by following the [installation steps](https://github.com/twilio/twilio-csharp#installation).
 
-Then, you can execute the following code.
+Finally, send a message.
 
 ```csharp
 using System;
@@ -935,50 +999,4 @@ namespace TwilioTest
         }
     }
 }
-```
-
-For more information, please visit the [Twilio SMS C# documentation](https://www.twilio.com/docs/sms/quickstart/csharp-dotnet-framework).
-
-<a name="domain-whitelabel"></a>
-# How to Setup a Domain Whitelabel
-
-You can find documentation for how to setup a domain whitelabel via the UI [here](https://sendgrid.com/docs/Classroom/Basics/Whitelabel/setup_domain_whitelabel.html) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#whitelabel).
-
-Find more information about all of SendGrid's whitelabeling related documentation [here](https://sendgrid.com/docs/Classroom/Basics/Whitelabel/index.html).
-
-<a name="email-stats"></a>
-# How to View Email Statistics
-
-You can find documentation for how to view your email statistics via the UI [here](https://app.sendgrid.com/statistics) and via API [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/USAGE.md#stats).
-
-Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html) about events that occur as Twilio SendGrid processes your email.
-
-<a name="html-to-plain-text"></a>
-# How to transform HTML to plain text
-
-Although the HTML tags could be removed using regular expressions, the best solution is parsing the HTML code with a specific library, such as [HTMLAgilityPack](http://html-agility-pack.net/). 
-
-The following code shows how to parse an input string with HTML code and remove all tags:
-
-```csharp
-using HtmlAgilityPack;
-
-namespace Example {
-
-    internal class Example
-    {
-		/// <summary>
-		/// Convert the HTML content to plain text
-		/// </summary>
-		/// <param name="html">The html content which is going to be converted</param>
-		/// <returns>A string</returns>
-		public static string HtmlToPlainText(string html)
-		{
-			HtmlDocument document = new HtmlDocument();
-			document.LoadHtml(html);
-			return document.DocumentNode == null ? string.Empty : document.DocumentNode.InnerText;
-		}	
-	}
-}
-
 ```

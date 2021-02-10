@@ -2,7 +2,6 @@ Hello! Thank you for choosing to help contribute to one of the Twilio SendGrid o
 
 All third party contributors acknowledge that any contributions they provide will be made under the same open source license that the open source project is provided under.
 
-- [Roadmap & Milestones](#roadmap)
 - [Feature Request](#feature-request)
 - [Submit a Bug Report](#submit-a-bug-report)
 - [Improvements to the Codebase](#improvements-to-the-codebase)
@@ -11,9 +10,6 @@ All third party contributors acknowledge that any contributions they provide wil
 - [Style Guidelines & Naming Conventions](#style-guidelines-and-naming-conventions)
 - [Creating a Pull Request](#creating-a-pull-request)
 - [Code Reviews](#code-reviews)
-
-<a name="roadmap"></a>
-We use [GitHub Projects](https://github.com/sendgrid/sendgrid-csharp/projects) to help define current roadmaps, please feel free to grab an issue from our [GitHub Issues](https://github.com/sendgrid/sendgrid-csharp/issues). Please indicate that you have begun work on it to avoid collisions. Once a PR is made, community review, comments, suggestions and additional PRs are welcomed and encouraged.
 
 There are a few ways to contribute, which we'll enumerate below:
 
@@ -36,13 +32,13 @@ A software bug is a demonstrable issue in the code base. In order for us to diag
 
 Before you decide to create a new issue, please try the following:
 
-1. Check the Github issues tab if the identified issue has already been reported, if so, please add a +1 to the existing post.
-2. Update to the latest version of this code and check if issue has already been fixed
+1. Check the GitHub issues tab if the identified issue has already been reported, if so, please add a +1 to the existing post.
+2. Update to the latest version of this code and check if the issue has already been fixed
 3. Copy and fill in the Bug Report Template we have provided below
 
 ### Please use our Bug Report Template
 
-In order to make the process easier, we've included a [sample bug report template](https://github.com/sendgrid/sendgrid-csharp/.github/ISSUE_TEMPLATE) (borrowed from [Ghost](https://github.com/TryGhost/Ghost/)). The template uses [GitHub flavored markdown](https://help.github.com/articles/github-flavored-markdown/) for formatting.
+In order to make the process easier, we've included a [sample bug report template](ISSUE_TEMPLATE.md).
 
 <a name="improvements-to-the-codebase"></a>
 ## Improvements to the Codebase
@@ -58,7 +54,7 @@ Please note that we utilize the [Gitflow Workflow](https://www.atlassian.com/git
 ##### Prerequisites #####
 
 - .NET 4.5.2+
-- [Visual Studio Community 2017](https://www.visualstudio.com/downloads/)+
+- [Visual Studio Community 2017](https://www.visualstudio.com/downloads/)
 
 ##### Initial setup: #####
 
@@ -77,51 +73,36 @@ Next, update your Environment with your [SENDGRID_APIKEY](https://app.sendgrid.c
 ##### Execute: #####
 
 - Check out the documentation for [Web API v3 endpoints](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html).
-- Review the corresponding [examples](https://github.com/sendgrid/sendgrid-csharp/blob/master/examples).
-- You can add your test code to our [Example Project](https://github.com/sendgrid/sendgrid-csharp/blob/master/ExampleCoreProject/Example.cs).
+- Review the corresponding [examples](examples).
+- You can add your test code to our [Example Project](ExampleCoreProject/Program.cs).
 
 <a name="understanding-the-codebase"></a>
 ## Understanding the Code Base
 
-**[/examples](https://github.com/sendgrid/sendgrid-csharp/blob/master/examples)**
-
-Examples that demonstrate usage.
-
-**[/ExampleCoreProject/Example.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/ExampleCoreProject/Example.cs)**
-
-A working .NET Core example project for testing.
-
-**[/ExampleNet45Project/Example.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/ExampleNet45Project/Example.cs)**
-
-A working .NET 4.5.2 example project for testing.
-
-**[/src/SendGrid/SendGridClient.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/SendGridClient.cs)**
-
-The main interface to the Twilio SendGrid API is the class `SendGridClient`.
-
-**[/tests/SendGrid.Tests/Integration.cs](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs)**
-
-Integration tests
+- **[/examples](examples)**
+  - Examples that demonstrate usage.
+- **[/ExampleCoreProject/Program.cs](ExampleCoreProject/Program.cs)**
+  - A working .NET Core example project for testing.
+- **[/ExampleNet45Project/Program.cs](ExampleNet45Project/Program.cs)**
+  - A working .NET 4.5.2 example project for testing.
+- **[/src/SendGrid/SendGridClient.cs](src/SendGrid/SendGridClient.cs)**
+  - The main interface to the Twilio SendGrid API is the class `SendGridClient`.
+- **[/tests/SendGrid.Tests/Integration.cs](tests/SendGrid.Tests/Integration.cs)**
+  - Integration tests
 
 <a name="testing"></a>
 ## Testing
 
-All PRs require passing tests before the PR will be reviewed.
+All PRs require passing tests before the PR will be reviewed. All test files are in the [`SendGrid.Tests`](tests/SendGrid.Tests) directory. For the purposes of contributing to this repo, please update the [`Integration.cs`](tests/SendGrid.Tests/Integration.cs) file with unit tests as you modify the code.
 
-All test files are in the [`SendGrid.Tests`](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests) directory.
+The integration tests require a Twilio SendGrid mock API in order to execute. We've simplified setting this up using Docker to run the tests. You will just need [Docker Desktop](https://docs.docker.com/get-docker/) and `make`.
 
-For the purposes of contributing to this repo, please update the [`Integration.cs`](https://github.com/sendgrid/sendgrid-csharp/blob/master/tests/SendGrid.Tests/Integration.cs) file with unit tests as you modify the code.
-
-Downloaded [Prism](https://github.com/stoplightio/prism/releases) and rename the executable to be prism.exe and place the renamed executable in your PATH.
-
-When you run the tests for the first time, you will need to allow Prism.exe to run, but you don't need to allow outside connections.
-
-Note: Please download Prism stable version v0.6.xx as integration test are written against stable versions only. Latest alpha version has different commands to serve swagger file
+Once these are available, simply execute the Docker test target to run all tests: `make test-docker`. This command can also be used to open an interactive shell into the container where this library is installed. To start a *bash* shell for example, use this command: `command=bash make test-docker`.
 
 <a name="style-guidelines-and-naming-conventions"></a>
 ## Style Guidelines & Naming Conventions
 
-Generally, we follow the style guidelines as suggested by the official language. However, we ask that you conform to the styles that already exist in the library. If you wish to deviate, please explain your reasoning. In this case, we generally follow the [C# Naming Conventions](https://msdn.microsoft.com/library/ms229045(v=vs.100).aspx), the suggestions provided by the Visual Studio IDE and StyleCop (see the [stylecop.json](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/stylecop.json) and [SendGrid.ruleset](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/SendGrid.ruleset) configuration files.
+Generally, we follow the style guidelines as suggested by the official language. However, we ask that you conform to the styles that already exist in the library. If you wish to deviate, please explain your reasoning. In this case, we generally follow the [C# Naming Conventions](https://msdn.microsoft.com/library/ms229045(v=vs.100).aspx), the suggestions provided by the Visual Studio IDE and StyleCop (see the [stylecop.json](src/SendGrid/stylecop.json) and [SendGrid.ruleset](src/SendGrid/SendGrid.ruleset) configuration files.
 
 <a name="creating-a-pull-request"></a>
 ## Creating a Pull Request
@@ -147,7 +128,7 @@ Generally, we follow the style guidelines as suggested by the official language.
    git pull upstream <dev-branch>
    ```
 
-3. Create a new topic branch off the `development` branch to
+3. Create a new topic branch (off the main project development branch) to
    contain your feature, change, or fix:
 
    ```bash
@@ -156,7 +137,7 @@ Generally, we follow the style guidelines as suggested by the official language.
 
 4. Commit your changes in logical chunks. Please adhere to these [git commit
    message guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
-   or your code is unlikely be merged into the main project. Use Git's
+   or your code is unlikely to be merged into the main project. Use Git's
    [interactive rebase](https://help.github.com/articles/interactive-rebase)
    feature to tidy up your commits before making them public.
 
@@ -179,9 +160,7 @@ Generally, we follow the style guidelines as suggested by the official language.
 7. [Open a Pull Request](https://help.github.com/articles/using-pull-requests/)
     with a clear title and description against the `development` branch. All tests must be passing before we will review the PR.
 
-If you have any additional questions, please feel free to [email](mailto:dx@sendgrid.com) us or create an issue in this repo.
-
 <a name="code-reviews"></a>
 ## Code Reviews
 
-If you can, please look at open PRs and review them. Give feedback and help us merge these PRs much faster! If you don't know how, Github has some great information on how to review a Pull Request.
+If you can, please look at open PRs and review them. Give feedback and help us merge these PRs much faster! If you don't know how GitHub has some great information on how to review a Pull Request.

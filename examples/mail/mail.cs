@@ -31,7 +31,7 @@ Console.ReadLine();
 ////////////////////////////////////////////////////////
 // v3 Mail Send
 // POST /mail/send
-// This endpoint has a helper, check it out [here](https://github.com/sendgrid/sendgrid-csharp/blob/master/src/SendGrid/Helpers/Mail/README.md).
+// This endpoint has a helper, check it out [here](https://github.com/sendgrid/sendgrid-csharp/blob/HEAD/src/SendGrid/Helpers/Mail/README.md).
 
 string data = @"{
   'asm': {
