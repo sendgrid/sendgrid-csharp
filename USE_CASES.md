@@ -1026,40 +1026,32 @@ alerts.update
 marketing_campaigns.read
 */
 
-var data = new
-{
-    name = "Alerts & Read-Only Marketing Campaigns API Key",
-    scopes = builder.Build()
-};
+// now use the provided extension method to create an API key
 
-var json = JsonConvert.SerializeObject(data);
-await client.RequestAsync(SendGridClient.Method.POST, urlPath: "api_keys", requestBody: json);
+await client.CreateApiKey(builder, "Alerts & Read-Only Marketing Campaigns API Key");
 ```
 
-There are also some extension methods to easily create API keys for various common use cases.
+There are also some methods to easily create API keys for various common use cases.
 
-For example, to create a Mail API key that can be used to send emails:
+For example, to create a Mail API:
 
 ```
 var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
 var client = new SendGridClient(apiKey);
 var builder = new SendGridPermissionsBuilder();
-builder.AddPermissionsFor<Mail>();();
+builder.AddPermissionsFor<Mail>();
 
 /*
 The above builder will emit the following scope:
 
+mail.batch.create
+mail.batch.delete
 mail.batch.read
+mail.batch.update
+mail.send
 */
 
-var data = new
-{
-    name = "Mail Send API Key",
-    scopes = builder.Build()
-};
-
-var json = JsonConvert.SerializeObject(data);
-await client.RequestAsync(SendGridClient.Method.POST, urlPath: "api_keys", requestBody: json);
+await client.CreateApiKey(builder, "Mail Send API Key");
 ```
 
 The builder filters out duplicate scopes by default but you can also add filters to the builder so that your application will never create keys with certain scopes.
@@ -1073,12 +1065,22 @@ var builder = new SendGridPermissionsBuilder();
 builder.Exclude(scope => scope.StartsWith("api_keys"));
 builder.AddPermissionsFor<Admin>();
 
-var data = new
-{
-    name = "Admin API Key that cannot manage other API keys",
-    scopes = builder.Build()
-};
+await client.CreateApiKey(builder, "Admin API Key that cannot manage other API keys");
+```
 
-var json = JsonConvert.SerializeObject(data);
-await client.RequestAsync(SendGridClient.Method.POST, urlPath: "api_keys", requestBody: json);
+The builder can also include individual scopes without having to use the AddPermissionsFor method.
+```
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
+var builder = new SendGridPermissionsBuilder();
+/// use the method overload that accepts an IEnumerable<string>
+var myScopes = new []{
+    "mail.send", "alerts.read"
+}
+builder.Include(myScopes);
+
+/// or use the method overload that accepts a params string[]
+builder.Include("newsletter.read");
+
+await client.CreateApiKey(builder, "Mail send, Alerts & Newletter read");
 ```

@@ -213,7 +213,6 @@
             Assert.Contains("user.scheduled_sends.delete", scopes);
             Assert.Contains("user.scheduled_sends.read", scopes);
             Assert.Contains("user.scheduled_sends.update", scopes);
-
         }
 
         [Fact]

@@ -26,16 +26,5 @@
 
         /// <inheritdoc/>
         public bool IsMutuallyExclusive { get; protected internal set; }
-
-        /// <inheritdoc/>
-        public IEnumerable<string> Build(ScopeOptions requestedOptions)
-        {
-            if (requestedOptions == ScopeOptions.ReadOnly)
-            {
-                return this.Scopes.Where(x => x.EndsWith(".read"));
-            }
-
-            return this.Scopes.ToArray();
-        }
     }
 }

@@ -9,6 +9,7 @@
     {
         /// <summary>
         /// Gets the name of this permission
+        /// </summary>
         /// <value>
         /// The name.
         /// </value>
@@ -29,14 +30,5 @@
         /// The scopes.
         /// </value>
         IEnumerable<string> Scopes { get; }
-
-        /// <summary>
-        /// Builds the specified options.
-        /// </summary>
-        /// <param name="requestedOptions">The options.</param>        
-        /// <returns>
-        /// A final list of scopes to use for this permission filtered by the requested options
-        /// </returns>
-        IEnumerable<string> Build(ScopeOptions requestedOptions);
     }
 }
