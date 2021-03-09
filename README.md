@@ -253,6 +253,10 @@ class Program
 
 Here are some [examples of common API use cases](USE_CASES.md), such as how to send an email with a transactional template.
 
+# Announcements
+
+Our Developer Experience team is conducting planned maintenance from 03/09/2021 until 03/11/2021. Our next release is scheduled for 03/15/2021.
+
 # How to Contribute
 
 We encourage contribution to our library (you might even score some nifty swag), please see our [CONTRIBUTING](CONTRIBUTING.md) guide for details.
