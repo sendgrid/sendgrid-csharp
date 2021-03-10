@@ -23,6 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SendGrid.Extensions.Depende
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CADBDC30-FD3E-4FBA-B8F0-D3B6A1874FB9}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.env_sample = .env_sample
 		.gitignore = .gitignore
 		.travis.yml = .travis.yml

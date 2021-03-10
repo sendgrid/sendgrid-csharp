@@ -7,15 +7,13 @@
     /// <summary>
     /// A builder for constructing a list of API Key permissions scopes
     /// </summary>
-    public class SendGridPermissionsBuilder
+    public sealed partial class SendGridPermissionsBuilder
     {
+        private readonly List<Func<string, bool>> excludeFilters;
 
-        private readonly IList<Func<string, bool>> excludeFilters;
+        private readonly List<string> addedScopes;
 
-        private readonly List<string> includedScopes;
-
-        private readonly IDictionary<ISendGridPermissionScope, ScopeOptions> addedPermissions;
-
+        private readonly HashSet<string> allScopes;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridPermissionsBuilder"/> class.
@@ -23,8 +21,8 @@
         public SendGridPermissionsBuilder()
         {
             this.excludeFilters = new List<Func<string, bool>>();
-            this.includedScopes = new List<string>();
-            this.addedPermissions = new Dictionary<ISendGridPermissionScope, ScopeOptions>();
+            this.addedScopes = new List<string>();
+            this.allScopes = new HashSet<string>(this.allPermissions.SelectMany(x => x.Value));
         }
 
 
@@ -34,11 +32,7 @@
         /// <returns>A list of strings representing the scope names.</returns>
         public IEnumerable<string> Build()
         {
-            var scopes = this.addedPermissions
-                .SelectMany(x => BuildScopes(x.Key, x.Value))
-                .Concat(this.includedScopes)
-                .ToList();
-
+            var scopes = this.addedScopes.ToList();
 
             foreach (var f in this.excludeFilters)
             {
@@ -49,22 +43,16 @@
         }
 
         /// <summary>
-        /// Adds the permissions for the specified <typeparamref name="TPermissionGroup"/>
+        /// Adds the permissions for the specified <paramref name="permission"/>
         /// </summary>
-        /// <typeparam name="TPermissionGroup">The permission group to add permissions for of the scope.</typeparam>
+        /// <param name="permission">The permission group to add scopes for.</param>
         /// <param name="options">The <see cref="ScopeOptions"/> indicating read-only or all scopes for a given permission group.</param>
         /// <returns>The builder instance with the permissions added.</returns>
-        public SendGridPermissionsBuilder AddPermissionsFor<TPermissionGroup>(ScopeOptions options = ScopeOptions.All)
-            where TPermissionGroup : ISendGridPermissionScope, new()
+        public SendGridPermissionsBuilder AddPermissionsFor(SendGridPermission permission, ScopeOptions options = ScopeOptions.All)
         {
-            var permission = new TPermissionGroup();
-
-            if ((permission.IsMutuallyExclusive && this.addedPermissions.Any()) || this.addedPermissions.Any(x => x.Key.IsMutuallyExclusive))
-            {
-                throw new InvalidOperationException($"{permission.Name} permissions are mutually exclusive from all others. An API Key can either have {permission.Name} Permissions, or any other set of Permissions.");
-            }
-
-            this.addedPermissions[permission] = options;
+            var scopesToAdd = BuildScopes(permission, options);
+            ThrowIfViolatesMutualExclusivity(scopesToAdd);
+            this.addedScopes.AddRange(scopesToAdd);
             return this;
         }
 
@@ -86,13 +74,7 @@
         /// <returns>The builder instance with the scopes included.</returns>
         public SendGridPermissionsBuilder Include(IEnumerable<string> scopes)
         {
-            if (scopes is null || !scopes.Any())
-            {
-                return this;
-            }
-
-            this.includedScopes.AddRange(scopes);
-            return this;
+            return Include(scopes.ToArray());
         }
 
         /// <summary>
@@ -107,7 +89,21 @@
                 return this;
             }
 
-            this.includedScopes.AddRange(scopes);
+            ThrowIfViolatesMutualExclusivity(scopes);
+
+            foreach (var scope in scopes)
+            {
+                if (!IsValidScope(scope))
+                {
+                    var ex = new InvalidOperationException($"The provided scope '{scope}' is not valid. See the API permissions docs for a list of valid scopes.")
+                    {
+                        HelpLink = "https://sendgrid.api-docs.io/v3.0/api-key-permissions/api-key-permissions"
+                    };
+                    throw ex;
+                }
+            }
+
+            this.addedScopes.AddRange(scopes);
             return this;
         }
 
@@ -119,14 +115,31 @@
         /// <returns>
         /// A final list of scopes to use for this permission filtered by the requested options
         /// </returns>
-        private string[] BuildScopes(ISendGridPermissionScope permission, ScopeOptions requestedOptions)
+        private string[] BuildScopes(SendGridPermission permission, ScopeOptions requestedOptions)
         {
             if (requestedOptions == ScopeOptions.ReadOnly)
             {
-                return permission.Scopes.Where(x => x.EndsWith(".read")).ToArray();
+                return allPermissions[permission].Where(x => x.EndsWith(".read")).ToArray();
             }
 
-            return permission.Scopes.ToArray();
+            return allPermissions[permission].ToArray();
         }
+
+        private void ThrowIfViolatesMutualExclusivity(IEnumerable<string> scopes)
+        {
+            if ((scopes.Any(x => IsMutualyExclusive(x)) && this.addedScopes.Any(x => !IsMutualyExclusive(x)))
+                ||
+                (this.addedScopes.Any(x => IsMutualyExclusive(x)) && scopes.Any(x => !IsMutualyExclusive(x))))
+            {
+                throw new InvalidOperationException($"An API Key can either have billing permissions or any other set of permissions but not both.")
+                {
+                    HelpLink = "https://sendgrid.api-docs.io/v3.0/api-key-permissions/api-key-permissions#Billing"
+                };
+            }
+        }
+
+        private bool IsValidScope(string scope) => this.allScopes.Contains(scope);
+
+        private bool IsMutualyExclusive(string scope) => scope?.StartsWith("billing") ?? false;
     }
 }

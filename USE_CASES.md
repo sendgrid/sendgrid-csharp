@@ -1005,7 +1005,11 @@ namespace TwilioTest
 <a name="working-with-permissions" ></a>
 # Working with permissions
 
-The permissions builder is a convenient way to manipulate API key permissions when creating new API keys or managing existing API keys. You can use the types named according to the various [permissions](https://sendgrid.api-docs.io/v3.0/api-key-permissions) to add the scopes required for those permissions. By default, all scopes for a given permission are added; however, You can filter out certain scopes by passing a ScopeOptions parameter.
+The permissions builder is a convenient way to manipulate API key permissions when creating new API keys or managing existing API keys. 
+
+You can enums named according to the various [permissions](https://sendgrid.api-docs.io/v3.0/api-key-permissions) to add the scopes required for those permissions. 
+
+By default, all scopes for a given permission are added; however, You can filter out certain scopes by passing a ScopeOptions parameter or adding some filtering functions.
 
 For example, to create an API key for all *Alerts* scopes and read only *Marketing Campaigns*:
 
@@ -1013,8 +1017,8 @@ For example, to create an API key for all *Alerts* scopes and read only *Marketi
 var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
 var client = new SendGridClient(apiKey);
 var builder = new SendGridPermissionsBuilder();
-builder.AddPermissionsFor<Alerts>();
-builder.AddPermissionsFor<MarketingCampaigns>(ScopeOptions.ReadOnly);
+builder.AddPermissionsFor(SendGridPermission.Alerts);
+builder.AddPermissionsFor(SendGridPermission.MarketingCampaigns, ScopeOptions.ReadOnly);
 
 /*
 The above builder will emit the following scopes:
@@ -1039,7 +1043,7 @@ For example, to create a Mail API:
 var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
 var client = new SendGridClient(apiKey);
 var builder = new SendGridPermissionsBuilder();
-builder.AddPermissionsFor<Mail>();
+builder.AddPermissionsFor(SendGridPermission.Mail);
 
 /*
 The above builder will emit the following scope:
@@ -1063,7 +1067,7 @@ var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABL
 var client = new SendGridClient(apiKey);
 var builder = new SendGridPermissionsBuilder();
 builder.Exclude(scope => scope.StartsWith("api_keys"));
-builder.AddPermissionsFor<Admin>();
+builder.AddPermissionsFor(SendGridPermission.Admin);
 
 await client.CreateApiKey(builder, "Admin API Key that cannot manage other API keys");
 ```
