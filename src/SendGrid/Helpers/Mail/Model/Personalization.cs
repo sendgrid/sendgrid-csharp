@@ -37,6 +37,12 @@ namespace SendGrid.Helpers.Mail
         public List<EmailAddress> Bccs { get; set; }
 
         /// <summary>
+        /// Gets or sets the from email address. The domain must match the domain of the from email property specified at root level of the request body.
+        /// </summary>
+        [JsonProperty(PropertyName = "from")]
+        public EmailAddress From { get; set; }
+
+        /// <summary>
         /// Gets or sets the subject line of your email.
         /// </summary>
         [JsonProperty(PropertyName = "subject")]
