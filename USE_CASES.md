@@ -1007,7 +1007,7 @@ namespace TwilioTest
 
 The permissions builder is a convenient way to manipulate API key permissions when creating new API keys or managing existing API keys. 
 
-You can enums named according to the various [permissions](https://sendgrid.api-docs.io/v3.0/api-key-permissions) to add the scopes required for those permissions. 
+You can use the enums named according to the various [permissions](https://sendgrid.api-docs.io/v3.0/api-key-permissions) to add the scopes required for those permissions. 
 
 By default, all scopes for a given permission are added; however, You can filter out certain scopes by passing a ScopeOptions parameter or adding some filtering functions.
 
@@ -1037,7 +1037,7 @@ await client.CreateApiKey(builder, "Alerts & Read-Only Marketing Campaigns API K
 
 There are also some methods to easily create API keys for various common use cases.
 
-For example, to create a Mail API:
+For example, to create a Mail Send API key scoped for sending email:
 
 ```
 var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
