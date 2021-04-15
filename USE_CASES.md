@@ -25,6 +25,7 @@ This document provides examples for specific use cases. Please [open an issue](h
 - [How to transform HTML into plain text](#how-to-transform-html-into-plain-text)
 - [Send an Email With Twilio Email (Pilot)](#send-an-email-with-twilio-email-pilot)
 - [Send an SMS Message](#send-an-sms-message)
+- [Working With Permissions](#working-with-permissions)
 
 <a name="attachments"></a>
 # Attachments
@@ -999,4 +1000,91 @@ namespace TwilioTest
         }
     }
 }
+```
+
+<a name="working-with-permissions" ></a>
+# Working with permissions
+
+The permissions builder is a convenient way to manipulate API key permissions when creating new API keys or managing existing API keys. 
+
+You can use the enums named according to the various [permissions](https://sendgrid.api-docs.io/v3.0/api-key-permissions) to add the scopes required for those permissions. 
+
+By default, all scopes for a given permission are added; however, You can filter out certain scopes by passing a ScopeOptions parameter or adding some filtering functions.
+
+For example, to create an API key for all *Alerts* scopes and read only *Marketing Campaigns*:
+
+```
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
+var builder = new SendGridPermissionsBuilder();
+builder.AddPermissionsFor(SendGridPermission.Alerts);
+builder.AddPermissionsFor(SendGridPermission.MarketingCampaigns, ScopeOptions.ReadOnly);
+
+/*
+The above builder will emit the following scopes:
+
+alerts.create
+alerts.delete
+alerts.read
+alerts.update
+marketing_campaigns.read
+*/
+
+// now use the provided extension method to create an API key
+
+await client.CreateApiKey(builder, "Alerts & Read-Only Marketing Campaigns API Key");
+```
+
+There are also some methods to easily create API keys for various common use cases.
+
+For example, to create a Mail Send API key scoped for sending email:
+
+```
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
+var builder = new SendGridPermissionsBuilder();
+builder.AddPermissionsFor(SendGridPermission.Mail);
+
+/*
+The above builder will emit the following scope:
+
+mail.batch.create
+mail.batch.delete
+mail.batch.read
+mail.batch.update
+mail.send
+*/
+
+await client.CreateApiKey(builder, "Mail Send API Key");
+```
+
+The builder filters out duplicate scopes by default but you can also add filters to the builder so that your application will never create keys with certain scopes.
+
+For example, you may want to allow an API key to do just about anything EXCEPT create more API keys.
+
+```
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
+var builder = new SendGridPermissionsBuilder();
+builder.Exclude(scope => scope.StartsWith("api_keys"));
+builder.AddPermissionsFor(SendGridPermission.Admin);
+
+await client.CreateApiKey(builder, "Admin API Key that cannot manage other API keys");
+```
+
+The builder can also include individual scopes without having to use the AddPermissionsFor method.
+```
+var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+var client = new SendGridClient(apiKey);
+var builder = new SendGridPermissionsBuilder();
+/// use the method overload that accepts an IEnumerable<string>
+var myScopes = new []{
+    "mail.send", "alerts.read"
+}
+builder.Include(myScopes);
+
+/// or use the method overload that accepts a params string[]
+builder.Include("newsletter.read");
+
+await client.CreateApiKey(builder, "Mail send, Alerts & Newletter read");
 ```
