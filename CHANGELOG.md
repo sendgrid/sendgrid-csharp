@@ -1,6 +1,16 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2021-04-21] Version 9.23.0
+---------------------------
+**Library - Feature**
+- [PR #578](https://github.com/sendgrid/sendgrid-csharp/pull/578): Add Permissions API support. Thanks to [@teabaggs](https://github.com/teabaggs)!
+- [PR #1102](https://github.com/sendgrid/sendgrid-csharp/pull/1102): Add From Email to Personalization. Thanks to [@Stonebkfly](https://github.com/Stonebkfly)!
+
+**Library - Chore**
+- [PR #1100](https://github.com/sendgrid/sendgrid-csharp/pull/1100): bump ecdsa-dotnet version. Thanks to [@JenniferMah](https://github.com/JenniferMah)!
+
+
 [2020-12-16] Version 9.22.0
 ---------------------------
 **Library - Feature**
