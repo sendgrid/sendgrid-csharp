@@ -4,25 +4,21 @@ solution: SendGrid.sln
 os: linux
 dist: bionic
 mono: none
-
 services:
-  - docker
-
+- docker
 script:
-  - make test-docker
-  - make release
-
+- make test-docker
+- make release
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
-
+- bash <(curl -s https://codecov.io/bash)
 deploy:
   skip_cleanup: true
   provider: script
-  script: dotnet nuget push **/*.nupkg -k $NUGET_API_KEY -s https://api.nuget.org/v3/index.json --skip-duplicate
+  script: dotnet nuget push **/*.nupkg -k $NUGET_API_KEY -s https://api.nuget.org/v3/index.json
+    --skip-duplicate
   on:
     branch: main
     tags: true
-
 notifications:
   slack:
     if: branch = main
@@ -30,4 +26,4 @@ notifications:
     on_success: never
     on_failure: change
     rooms:
-      - secure: RdE/BGwjr4B5GktjANWdZx2hRcY5GQNQGN9+NxeJ86K2wkTRsQUpPDSj7jXHHUcD9jz+OJHrwWR5Zbun48wE3nD1O/PDs6QNOvYo/isn6PWKGUq6g2XjACPxM34UDRbrma9hGOJTtuEnar64glZEh6xk31bWCpqg/vVxxg/XhWQ=
+      secure: gAocxB0AUjYq7Kd5v5W2dWbvKPiMTXNQWL5WE9tSxIZPtWF4jrjtWZGNvKhQgGz4pkzqHd0h+O24eg6PoVRx1f1AiQ4sVUZGyRzDQJV5EhvSqPbJoh4NPnTDSxZTA35GaUE2xuN4iyoUdAHM+I5JX4QzW6/OCPyetor1T4X0x50=
