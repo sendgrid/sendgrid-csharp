@@ -1,6 +1,13 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2021-05-05] Version 9.23.1
+---------------------------
+**Library - Chore**
+- [PR #1105](https://github.com/sendgrid/sendgrid-csharp/pull/1105): bump System.Net.Http from 4.0.0 to 4.3.4 in /ExampleNet45ASPNetProject/SendGrid.ASPSamples. Thanks to [@dependabot](https://github.com/dependabot)!
+- [PR #1106](https://github.com/sendgrid/sendgrid-csharp/pull/1106): bump System.Net.Http from 4.3.3 to 4.3.4 in /ExampleNet45ASPNetProject/SendGrid.ASPWebFormsSamples. Thanks to [@dependabot](https://github.com/dependabot)!
+
+
 [2021-04-21] Version 9.23.0
 ---------------------------
 **Library - Feature**
