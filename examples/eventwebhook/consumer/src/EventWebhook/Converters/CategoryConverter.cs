@@ -1,49 +1,34 @@
-﻿using EventWebhook.Models;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using EventWebhook.Models;
 
 namespace EventWebhook.Converters
 {
-    public class CategoryConverter : JsonConverter
+    public class CategoryConverter : JsonConverter<Category>
     {
-        private readonly Type[] _types;
-
-        public CategoryConverter()
+        public override Category Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            _types = new Type[] { typeof(string), typeof(string[]) };
+            return reader.TokenType == JsonTokenType.StartArray
+                ? new Category(JsonSerializer.Deserialize<string[]>(ref reader), true)
+                : new Category(new []{reader.GetString()},false);
         }
 
-        public override bool CanConvert(Type objectType)
+        public override void Write(Utf8JsonWriter writer, Category value, JsonSerializerOptions options)
         {
-            return _types.Any(t => t == objectType);
-        }
-
-        public override bool CanWrite => true;
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.StartArray)
+            if (value.IsArray)
             {
-                return new Category(serializer.Deserialize<string[]>(reader), JsonToken.StartArray);
+                writer.WriteStartArray();
+                foreach (var item in value.Value)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             else
             {
-                return new Category(new[] { serializer.Deserialize<string>(reader) }, reader.TokenType);
-            }
-        }
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            if (value is Category category)
-            {
-                if (category.IsArray)
-                {
-                    serializer.Serialize(writer, category);
-                } else
-                {
-                    serializer.Serialize(writer, category.Value[0]);
-                }
+                writer.WriteStringValue(value.Value.FirstOrDefault());
             }
         }
     }

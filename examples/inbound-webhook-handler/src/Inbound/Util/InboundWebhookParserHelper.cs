@@ -1,10 +1,10 @@
-﻿using HttpMultipartParser;
-using Inbound.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using HttpMultipartParser;
+using Inbound.Models;
 
 namespace Inbound.Util
 {
@@ -13,7 +13,7 @@ namespace Inbound.Util
         public static InboundEmailAddress[] ParseEmailAddresses(string rawEmailAddresses)
         {
             // Split on commas that have an even number of double-quotes following them
-            const string SPLIT_EMAIL_ADDRESSES = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
+            const string splitEmailAddresses = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
 
             /*
                 When we stop supporting .NET 4.5.2 we will be able to use the following:
@@ -21,9 +21,9 @@ namespace Inbound.Util
             */
             if (string.IsNullOrEmpty(rawEmailAddresses)) return Enumerable.Empty<InboundEmailAddress>().ToArray();
 
-            var rawEmails = Regex.Split(rawEmailAddresses, SPLIT_EMAIL_ADDRESSES);
+            var rawEmails = Regex.Split(rawEmailAddresses, splitEmailAddresses);
             var addresses = rawEmails
-                .Select(rawEmail => ParseEmailAddress(rawEmail))
+                .Select(ParseEmailAddress)
                 .Where(address => address != null)
                 .ToArray();
             return addresses;
@@ -66,7 +66,7 @@ namespace Inbound.Util
 
         private static Encoding GetEncoding(string parameterName, IEnumerable<KeyValuePair<string, Encoding>> charsets)
         {
-            var encoding = charsets.Where(c => c.Key == parameterName);
+            var encoding = charsets.Where(c => c.Key == parameterName).ToList();
             return encoding.Any() ? encoding.First().Value : Encoding.UTF8;
         }
     }

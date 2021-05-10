@@ -1,19 +1,19 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using Microsoft.Extensions.Primitives;
 
 namespace EventWebhook.Models
 {
     public class Category
     {
-        public string[] Value { get; }
-        private JsonToken _jsonToken;
+        public StringValues Value { get; }
 
-        public Category(string[] value, JsonToken jsonToken)
+        public Category(StringValues value, bool isArray)
         {
             Value = value;
-            _jsonToken = jsonToken;
+            IsArray = isArray;
         }
 
         [JsonIgnore]
-        public bool IsArray => _jsonToken == JsonToken.StartArray;
+        public bool IsArray { get; }
     }
 }

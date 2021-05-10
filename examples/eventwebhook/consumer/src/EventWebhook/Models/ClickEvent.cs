@@ -1,6 +1,6 @@
-﻿using EventWebhook.Converters;
-using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Text.Json.Serialization;
+using EventWebhook.Converters;
 
 namespace EventWebhook.Models
 {
@@ -8,5 +8,10 @@ namespace EventWebhook.Models
     {
         [JsonConverter(typeof(UriConverter))]
         public Uri Url { get; set; }
+
+        public ClickEvent()
+        {
+            EventType = EventType.Click;
+        }
     }
 }

@@ -1,11 +1,10 @@
-using EventWebhook.Models;
-using EventWebhook.Parser;
-using Shouldly;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using EventWebhook.Models;
+using EventWebhook.Parser;
+using Shouldly;
 using Xunit;
 
 namespace EventWebhook.Tests
@@ -15,31 +14,29 @@ namespace EventWebhook.Tests
         [Fact]
         public async Task AllEvents()
         {
-            var jsonStream = new MemoryStream(File.ReadAllBytes("TestData/events.json"));
-            
-            IEnumerable<Event> events = await EventParser.ParseAsync(jsonStream);
+            var events = await EventParser.ParseAsync(File.OpenRead("TestData/events.json"));
 
             events.Count().ShouldBeGreaterThanOrEqualTo(1);
         }
 
         [Fact]
-        public async Task ProcessedEventTest()
+        public void ProcessedEventTest()
         {
             var json = @"
                 [
                     {
-                        'email': 'example@test.com',
-                        'timestamp': 1513299569,
-                        'smtp-id': '<14c5d75ce93.dfd.64b469@ismtpd-555>',
-                        'event': 'processed',
-                        'category': 'cat facts',
-                        'sg_event_id': 'sg_event_id',
-                        'sg_message_id': 'sg_message_id'
+                        ""email"": ""example@test.com"",
+                        ""timestamp"": 1513299569,
+                        ""smtp-id"": ""<14c5d75ce93.dfd.64b469@ismtpd-555>"",
+                        ""event"": ""processed"",
+                        ""category"": ""cat facts"",
+                        ""sg_event_id"": ""sg_event_id"",
+                        ""sg_message_id"": ""sg_message_id""
                       }
                 ]
             ";
-            IEnumerable<Event> events = await EventParser.ParseAsync(json);
-            events.Count().ShouldBe(1);
+            var events = EventParser.Parse(json).ToList();
+            events.Count.ShouldBe(1);
             var processedEvent = events.Single();
             processedEvent.Email.ShouldBe("example@test.com");
             processedEvent.Timestamp.ShouldBe(DateTime.UnixEpoch.AddSeconds(1513299569));
@@ -51,87 +48,87 @@ namespace EventWebhook.Tests
         }
 
         [Fact]
-        public async Task DefferedEventTest()
+        public void DeferredEventTest()
         {
             var json = @"
                 [
                     {
-                        'email': 'example@test.com',
-                        'timestamp': 1513299569,
-                        'smtp-id': '<14c5d75ce93.dfd.64b469@ismtpd-555>',
-                        'event': 'deferred',
-                        'category': 'cat facts',
-                        'sg_event_id': 'sg_event_id',
-                        'sg_message_id': 'sg_message_id',
-                        'response': '400 try again later',
-                        'attempt': '5'
+                        ""email"": ""example@test.com"",
+                        ""timestamp"": 1513299569,
+                        ""smtp-id"": ""<14c5d75ce93.dfd.64b469@ismtpd-555>"",
+                        ""event"": ""deferred"",
+                        ""category"": ""cat facts"",
+                        ""sg_event_id"": ""sg_event_id"",
+                        ""sg_message_id"": ""sg_message_id"",
+                        ""response"": ""400 try again later"",
+                        ""attempt"": ""5""
                     }
                 ]
             ";
-            IEnumerable<Event> events = await EventParser.ParseAsync(json);
-            events.Count().ShouldBe(1);
-            var defferedEvent = (DeferredEvent)events.Single();
-            defferedEvent.Email.ShouldBe("example@test.com");
-            defferedEvent.Timestamp.ShouldBe(DateTime.UnixEpoch.AddSeconds(1513299569));
-            defferedEvent.SmtpId.ShouldBe("<14c5d75ce93.dfd.64b469@ismtpd-555>");
-            defferedEvent.EventType.ShouldBe(EventType.Deferred);
-            defferedEvent.Category.Value[0].ShouldBe("cat facts");
-            defferedEvent.SendGridEventId.ShouldBe("sg_event_id");
-            defferedEvent.SendGridMessageId.ShouldBe("sg_message_id");
-            defferedEvent.Response.ShouldBe("400 try again later");
-            defferedEvent.Attempt.ShouldBe(5);
+            var events = EventParser.Parse(json).ToList();
+            events.Count.ShouldBe(1);
+            var deferredEvent = (DeferredEvent)events.Single();
+            deferredEvent.Email.ShouldBe("example@test.com");
+            deferredEvent.Timestamp.ShouldBe(DateTime.UnixEpoch.AddSeconds(1513299569));
+            deferredEvent.SmtpId.ShouldBe("<14c5d75ce93.dfd.64b469@ismtpd-555>");
+            deferredEvent.EventType.ShouldBe(EventType.Deferred);
+            deferredEvent.Category.Value[0].ShouldBe("cat facts");
+            deferredEvent.SendGridEventId.ShouldBe("sg_event_id");
+            deferredEvent.SendGridMessageId.ShouldBe("sg_message_id");
+            deferredEvent.Response.ShouldBe("400 try again later");
+            deferredEvent.Attempt.ShouldBe(5);
         }
 
         [Fact]
-        public async Task DeleveredEventTest()
+        public void DeleveredEventTest()
         {
             var json = @"
                 [
                     {
-                        'email': 'example@test.com',
-                        'timestamp': 1513299569,
-                        'smtp-id': '<14c5d75ce93.dfd.64b469@ismtpd-555>',
-                        'event': 'delivered',
-                        'category': 'cat facts',
-                        'sg_event_id': 'sg_event_id',
-                        'sg_message_id': 'sg_message_id',
-                        'response': '200 OK'
+                        ""email"": ""example@test.com"",
+                        ""timestamp"": 1513299569,
+                        ""smtp-id"": ""<14c5d75ce93.dfd.64b469@ismtpd-555>"",
+                        ""event"": ""delivered"",
+                        ""category"": ""cat facts"",
+                        ""sg_event_id"": ""sg_event_id"",
+                        ""sg_message_id"": ""sg_message_id"",
+                        ""response"": ""200 OK""
                     }
                 ]
             ";
-            IEnumerable<Event> events = await EventParser.ParseAsync(json);
-            events.Count().ShouldBe(1);
-            var defferedEvent = (DeliveredEvent)events.Single();
-            defferedEvent.Email.ShouldBe("example@test.com");
-            defferedEvent.Timestamp.ShouldBe(DateTime.UnixEpoch.AddSeconds(1513299569));
-            defferedEvent.SmtpId.ShouldBe("<14c5d75ce93.dfd.64b469@ismtpd-555>");
-            defferedEvent.EventType.ShouldBe(EventType.Delivered);
-            defferedEvent.Category.Value[0].ShouldBe("cat facts");
-            defferedEvent.SendGridEventId.ShouldBe("sg_event_id");
-            defferedEvent.SendGridMessageId.ShouldBe("sg_message_id");
-            defferedEvent.Response.ShouldBe("200 OK");
+            var events = EventParser.Parse(json).ToList();
+            events.Count.ShouldBe(1);
+            var deferredEvent = (DeliveredEvent)events.Single();
+            deferredEvent.Email.ShouldBe("example@test.com");
+            deferredEvent.Timestamp.ShouldBe(DateTime.UnixEpoch.AddSeconds(1513299569));
+            deferredEvent.SmtpId.ShouldBe("<14c5d75ce93.dfd.64b469@ismtpd-555>");
+            deferredEvent.EventType.ShouldBe(EventType.Delivered);
+            deferredEvent.Category.Value[0].ShouldBe("cat facts");
+            deferredEvent.SendGridEventId.ShouldBe("sg_event_id");
+            deferredEvent.SendGridMessageId.ShouldBe("sg_message_id");
+            deferredEvent.Response.ShouldBe("200 OK");
         }
 
         [Fact]
-        public async Task OpenEventTest()
+        public void OpenEventTest()
         {
             var json = @"
                 [
                     {
-                        'email': 'example@test.com',
-                        'timestamp': 1513299569,
-                        'smtp-id': '<14c5d75ce93.dfd.64b469@ismtpd-555>',
-                        'event': 'open',
-                        'category': 'cat facts',
-                        'sg_event_id': 'sg_event_id',
-                        'sg_message_id': 'sg_message_id',
-                        'useragent': 'Mozilla/4.0 (compatible; MSIE 6.1; Windows XP; .NET CLR 1.1.4322; .NET CLR 2.0.50727)',
-                        'ip': '255.255.255.255'
+                        ""email"": ""example@test.com"",
+                        ""timestamp"": 1513299569,
+                        ""smtp-id"": ""<14c5d75ce93.dfd.64b469@ismtpd-555>"",
+                        ""event"": ""open"",
+                        ""category"": ""cat facts"",
+                        ""sg_event_id"": ""sg_event_id"",
+                        ""sg_message_id"": ""sg_message_id"",
+                        ""useragent"": ""Mozilla/4.0 (compatible; MSIE 6.1; Windows XP; .NET CLR 1.1.4322; .NET CLR 2.0.50727)"",
+                        ""ip"": ""255.255.255.255""
                     }
                 ]
             ";
-            IEnumerable<Event> events = await EventParser.ParseAsync(json);
-            events.Count().ShouldBe(1);
+            var events = EventParser.Parse(json).ToList();
+            events.Count.ShouldBe(1);
             var openEvent = (OpenEvent)events.Single();
             openEvent.Email.ShouldBe("example@test.com");
             openEvent.Timestamp.ShouldBe(DateTime.UnixEpoch.AddSeconds(1513299569));
@@ -146,26 +143,26 @@ namespace EventWebhook.Tests
         }
 
         [Fact]
-        public async Task ClickEventTest()
+        public void ClickEventTest()
         {
             var json = @"
                 [
                     {
-                        'email': 'example@test.com',
-                        'timestamp': 1513299569,
-                        'smtp-id': '<14c5d75ce93.dfd.64b469@ismtpd-555>',
-                        'event': 'click',
-                        'category': 'cat facts',
-                        'sg_event_id': 'sg_event_id',
-                        'sg_message_id': 'sg_message_id',
-                        'useragent': 'Mozilla/4.0 (compatible; MSIE 6.1; Windows XP; .NET CLR 1.1.4322; .NET CLR 2.0.50727)',
-                        'ip': '255.255.255.255',
-                        'url': 'http://www.sendgrid.com/'
+                        ""email"": ""example@test.com"",
+                        ""timestamp"": 1513299569,
+                        ""smtp-id"": ""<14c5d75ce93.dfd.64b469@ismtpd-555>"",
+                        ""event"": ""click"",
+                        ""category"": ""cat facts"",
+                        ""sg_event_id"": ""sg_event_id"",
+                        ""sg_message_id"": ""sg_message_id"",
+                        ""useragent"": ""Mozilla/4.0 (compatible; MSIE 6.1; Windows XP; .NET CLR 1.1.4322; .NET CLR 2.0.50727)"",
+                        ""ip"": ""255.255.255.255"",
+                        ""url"": ""http://www.sendgrid.com/""
                     }
                 ]
             ";
-            IEnumerable<Event> events = await EventParser.ParseAsync(json);
-            events.Count().ShouldBe(1);
+            var events = EventParser.Parse(json).ToList();
+            events.Count.ShouldBe(1);
             var clickEvent = (ClickEvent)events.Single();
             clickEvent.Email.ShouldBe("example@test.com");
             clickEvent.Timestamp.ShouldBe(DateTime.UnixEpoch.AddSeconds(1513299569));
@@ -177,30 +174,28 @@ namespace EventWebhook.Tests
             clickEvent.UserAgent.ShouldBe("Mozilla/4.0 (compatible; MSIE 6.1; Windows XP; .NET CLR 1.1.4322; .NET CLR 2.0.50727)");
             clickEvent.IP.ShouldBe("255.255.255.255");
             clickEvent.Url.ToString().ShouldBe("http://www.sendgrid.com/");
-            
-
         }
 
         [Fact]
-        public async Task BounceEventTest()
+        public void BounceEventTest()
         {
             var json = @"
                 [
                     {
-                        'email': 'example@test.com',
-                        'timestamp': 1513299569,
-                        'smtp-id': '<14c5d75ce93.dfd.64b469@ismtpd-555>',
-                        'event': 'bounce',
-                        'category': 'cat facts',
-                        'sg_event_id': 'sg_event_id',
-                        'sg_message_id': 'sg_message_id',
-                        'reason': '500 unknown recipient',
-                        'status': '5.0.0'
+                        ""email"": ""example@test.com"",
+                        ""timestamp"": 1513299569,
+                        ""smtp-id"": ""<14c5d75ce93.dfd.64b469@ismtpd-555>"",
+                        ""event"": ""bounce"",
+                        ""category"": ""cat facts"",
+                        ""sg_event_id"": ""sg_event_id"",
+                        ""sg_message_id"": ""sg_message_id"",
+                        ""reason"": ""500 unknown recipient"",
+                        ""status"": ""5.0.0""
                       }
                 ]
             ";
-            IEnumerable<Event> events = await EventParser.ParseAsync(json);
-            events.Count().ShouldBe(1);
+            var events = EventParser.Parse(json).ToList();
+            events.Count.ShouldBe(1);
             var bounceEvent = (BounceEvent)events.Single();
             bounceEvent.Email.ShouldBe("example@test.com");
             bounceEvent.Timestamp.ShouldBe(DateTime.UnixEpoch.AddSeconds(1513299569));
@@ -214,25 +209,25 @@ namespace EventWebhook.Tests
         }
 
         [Fact]
-        public async Task DroppedEventTest()
+        public void DroppedEventTest()
         {
             var json = @"
                 [
                     {
-                        'email': 'example@test.com',
-                        'timestamp': 1513299569,
-                        'smtp-id': '<14c5d75ce93.dfd.64b469@ismtpd-555>',
-                        'event': 'dropped',
-                        'category': 'cat facts',
-                        'sg_event_id': 'sg_event_id',
-                        'sg_message_id': 'sg_message_id',
-                        'reason': 'Bounced Address',
-                        'status': '5.0.0'
+                        ""email"": ""example@test.com"",
+                        ""timestamp"": 1513299569,
+                        ""smtp-id"": ""<14c5d75ce93.dfd.64b469@ismtpd-555>"",
+                        ""event"": ""dropped"",
+                        ""category"": ""cat facts"",
+                        ""sg_event_id"": ""sg_event_id"",
+                        ""sg_message_id"": ""sg_message_id"",
+                        ""reason"": ""Bounced Address"",
+                        ""status"": ""5.0.0""
                       }
                 ]
             ";
-            IEnumerable<Event> events = await EventParser.ParseAsync(json);
-            events.Count().ShouldBe(1);
+            var events = EventParser.Parse(json).ToList();
+            events.Count.ShouldBe(1);
             var droppedEvent = (DroppedEvent)events.Single();
             droppedEvent.Email.ShouldBe("example@test.com");
             droppedEvent.Timestamp.ShouldBe(DateTime.UnixEpoch.AddSeconds(1513299569));
@@ -246,23 +241,23 @@ namespace EventWebhook.Tests
         }
 
         [Fact]
-        public async Task SpamReportEventTest()
+        public void SpamReportEventTest()
         {
             var json = @"
                 [
                     {
-                        'email': 'example@test.com',
-                        'timestamp': 1513299569,
-                        'smtp-id': '<14c5d75ce93.dfd.64b469@ismtpd-555>',
-                        'event': 'spamreport',
-                        'category': 'cat facts',
-                        'sg_event_id': 'sg_event_id',
-                        'sg_message_id': 'sg_message_id'
+                        ""email"": ""example@test.com"",
+                        ""timestamp"": 1513299569,
+                        ""smtp-id"": ""<14c5d75ce93.dfd.64b469@ismtpd-555>"",
+                        ""event"": ""spamreport"",
+                        ""category"": ""cat facts"",
+                        ""sg_event_id"": ""sg_event_id"",
+                        ""sg_message_id"": ""sg_message_id""
                       }
                 ]
             ";
-            IEnumerable<Event> events = await EventParser.ParseAsync(json);
-            events.Count().ShouldBe(1);
+            var events = EventParser.Parse(json).ToList();
+            events.Count.ShouldBe(1);
             var spamReportEvent = (SpamReportEvent)events.Single();
             spamReportEvent.Email.ShouldBe("example@test.com");
             spamReportEvent.Timestamp.ShouldBe(DateTime.UnixEpoch.AddSeconds(1513299569));
@@ -274,23 +269,23 @@ namespace EventWebhook.Tests
         }
 
         [Fact]
-        public async Task UnsubscribeEventTest()
+        public void UnsubscribeEventTest()
         {
             var json = @"
                 [
                     {
-                        'email': 'example@test.com',
-                        'timestamp': 1513299569,
-                        'smtp-id': '<14c5d75ce93.dfd.64b469@ismtpd-555>',
-                        'event': 'unsubscribe',
-                        'category': 'cat facts',
-                        'sg_event_id': 'sg_event_id',
-                        'sg_message_id': 'sg_message_id'
+                        ""email"": ""example@test.com"",
+                        ""timestamp"": 1513299569,
+                        ""smtp-id"": ""<14c5d75ce93.dfd.64b469@ismtpd-555>"",
+                        ""event"": ""unsubscribe"",
+                        ""category"": ""cat facts"",
+                        ""sg_event_id"": ""sg_event_id"",
+                        ""sg_message_id"": ""sg_message_id""
                       }
                 ]
             ";
-            IEnumerable<Event> events = await EventParser.ParseAsync(json);
-            events.Count().ShouldBe(1);
+            var events = EventParser.Parse(json).ToList();
+            events.Count.ShouldBe(1);
             var spamReportEvent = (UnsubscribeEvent)events.Single();
             spamReportEvent.Email.ShouldBe("example@test.com");
             spamReportEvent.Timestamp.ShouldBe(DateTime.UnixEpoch.AddSeconds(1513299569));
@@ -302,27 +297,27 @@ namespace EventWebhook.Tests
         }
 
         [Fact]
-        public async Task GroupUnsubscribeEventTest()
+        public void GroupUnsubscribeEventTest()
         {
             var json = @"
                 [
                     {
-                        'email': 'example@test.com',
-                        'timestamp': 1513299569,
-                        'smtp-id': '<14c5d75ce93.dfd.64b469@ismtpd-555>',
-                        'event': 'group_unsubscribe',
-                        'category': 'cat facts',
-                        'sg_event_id': 'sg_event_id',
-                        'sg_message_id': 'sg_message_id',
-                        'useragent': 'Mozilla/4.0 (compatible; MSIE 6.1; Windows XP; .NET CLR 1.1.4322; .NET CLR 2.0.50727)',
-                        'ip': '255.255.255.255',
-                        'url': 'http://www.sendgrid.com/',
-                        'asm_group_id': 10
+                        ""email"": ""example@test.com"",
+                        ""timestamp"": 1513299569,
+                        ""smtp-id"": ""<14c5d75ce93.dfd.64b469@ismtpd-555>"",
+                        ""event"": ""group_unsubscribe"",
+                        ""category"": ""cat facts"",
+                        ""sg_event_id"": ""sg_event_id"",
+                        ""sg_message_id"": ""sg_message_id"",
+                        ""useragent"": ""Mozilla/4.0 (compatible; MSIE 6.1; Windows XP; .NET CLR 1.1.4322; .NET CLR 2.0.50727)"",
+                        ""ip"": ""255.255.255.255"",
+                        ""url"": ""http://www.sendgrid.com/"",
+                        ""asm_group_id"": 10
                       }
                 ]
             ";
-            IEnumerable<Event> events = await EventParser.ParseAsync(json);
-            events.Count().ShouldBe(1);
+            var events = EventParser.Parse(json).ToList();
+            events.Count.ShouldBe(1);
             var groupUnSubscribeEvent = (GroupUnsubscribeEvent)events.Single();
             groupUnSubscribeEvent.Email.ShouldBe("example@test.com");
             groupUnSubscribeEvent.Timestamp.ShouldBe(DateTime.UnixEpoch.AddSeconds(1513299569));
@@ -338,27 +333,27 @@ namespace EventWebhook.Tests
         }
 
         [Fact]
-        public async Task GroupResubscribeEventTest()
+        public void GroupResubscribeEventTest()
         {
             var json = @"
                 [
                     {
-                        'email': 'example@test.com',
-                        'timestamp': 1513299569,
-                        'smtp-id': '<14c5d75ce93.dfd.64b469@ismtpd-555>',
-                        'event': 'group_resubscribe',
-                        'category': 'cat facts',
-                        'sg_event_id': 'sg_event_id',
-                        'sg_message_id': 'sg_message_id',
-                        'useragent': 'Mozilla/4.0 (compatible; MSIE 6.1; Windows XP; .NET CLR 1.1.4322; .NET CLR 2.0.50727)',
-                        'ip': '255.255.255.255',
-                        'url': 'http://www.sendgrid.com/',
-                        'asm_group_id': 10
+                        ""email"": ""example@test.com"",
+                        ""timestamp"": 1513299569,
+                        ""smtp-id"": ""<14c5d75ce93.dfd.64b469@ismtpd-555>"",
+                        ""event"": ""group_resubscribe"",
+                        ""category"": ""cat facts"",
+                        ""sg_event_id"": ""sg_event_id"",
+                        ""sg_message_id"": ""sg_message_id"",
+                        ""useragent"": ""Mozilla/4.0 (compatible; MSIE 6.1; Windows XP; .NET CLR 1.1.4322; .NET CLR 2.0.50727)"",
+                        ""ip"": ""255.255.255.255"",
+                        ""url"": ""http://www.sendgrid.com/"",
+                        ""asm_group_id"": 10
                       }
                 ]
             ";
-            IEnumerable<Event> events = await EventParser.ParseAsync(json);
-            events.Count().ShouldBe(1);
+            var events = EventParser.Parse(json).ToList();
+            events.Count.ShouldBe(1);
             var groupUnSubscribeEvent = (GroupResubscribeEvent)events.Single();
             groupUnSubscribeEvent.Email.ShouldBe("example@test.com");
             groupUnSubscribeEvent.Timestamp.ShouldBe(DateTime.UnixEpoch.AddSeconds(1513299569));

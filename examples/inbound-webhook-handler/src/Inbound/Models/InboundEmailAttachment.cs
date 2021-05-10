@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.IO;
+﻿using System.IO;
+using System.Text.Json.Serialization;
 
 namespace Inbound.Models
 {
@@ -22,7 +22,7 @@ namespace Inbound.Models
         /// <value>
         /// The content-type.
         /// </value>
-        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("type")]
         public string ContentType { get; set; }
 
         /// <summary>
@@ -31,6 +31,7 @@ namespace Inbound.Models
         /// <value>
         /// The data.
         /// </value>
+        [JsonIgnore]
         public Stream Data { get; set; }
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace Inbound.Models
         /// <value>
         /// The name of the file.
         /// </value>
-        [JsonProperty("filename", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("filename")]
         public string FileName { get; set; }
 
         /// <summary>
@@ -48,7 +49,7 @@ namespace Inbound.Models
         /// <value>
         /// The name.
         /// </value>
-        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
         /// <summary>
@@ -57,9 +58,7 @@ namespace Inbound.Models
         /// <value>
         /// The content identifier.
         /// </value>
-        [JsonProperty("content-id", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("content-id")]
         public string ContentId { get; set; }
     }
-
-    
 }

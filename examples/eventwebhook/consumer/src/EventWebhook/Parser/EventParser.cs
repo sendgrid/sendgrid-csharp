@@ -1,46 +1,39 @@
-﻿using EventWebhook.Models;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using EventWebhook.Converters;
+using EventWebhook.Models;
 
 namespace EventWebhook.Parser
 {
     public class EventParser
     {
-        public static async Task<IEnumerable<Event>> ParseAsync(string json)
+        private static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
         {
-            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            Converters =
             {
-                return await ParseAsync(stream);
+                new EventConverter()
             }
+        };
+
+        public static async Task<IEnumerable<Event>> ParseAsync(Stream stream, JsonSerializerOptions options = null)
+        {
+            return await JsonSerializer.DeserializeAsync<IEnumerable<Event>>(stream, options ?? SerializerOptions);
         }
 
-        public static async Task<IEnumerable<Event>> ParseAsync(Stream stream)
+        public static IEnumerable<Event> Parse(string json, JsonSerializerOptions options = null)
         {
-            var reader = new StreamReader(stream);
-
-            var json = await reader.ReadToEndAsync();
-
-            return JsonConvert.DeserializeObject<IEnumerable<Event>>(json, new EventConverter());
+            return JsonSerializer.Deserialize<IEnumerable<Event>>(json, options ?? SerializerOptions);
         }
 
-        public static IEnumerable<Event> Parse(string json)
+        public static IEnumerable<Event> Parse(Stream stream, JsonSerializerOptions options = null)
         {
-            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
-            {
-                return Parse(stream);
-            }
-        }
-
-        public static IEnumerable<Event> Parse(Stream stream)
-        {
-            var reader = new StreamReader(stream);
-
-            var json = reader.ReadToEnd();
-
-            return JsonConvert.DeserializeObject<IEnumerable<Event>>(json, new EventConverter());
+            using var buffer = new MemoryStream();
+            stream.CopyTo(buffer);
+            return JsonSerializer.Deserialize<IEnumerable<Event>>(buffer.ToArray(), options ?? SerializerOptions);
         }
     }
 }

@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/inbound/bin/Debug/netcoreapp2.1/inbound.dll",
+            "program": "${workspaceFolder}/src/Inbound/bin/Debug/netcoreapp3.1/Inbound.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/Inbound",
             "stopAtEntry": false,

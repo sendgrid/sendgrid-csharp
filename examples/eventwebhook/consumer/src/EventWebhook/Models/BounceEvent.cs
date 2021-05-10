@@ -1,11 +1,15 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using System.Text.Json.Serialization;
 
 namespace EventWebhook.Models
 {
     public class BounceEvent : DroppedEvent
     {
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public BounceEventType BounceType { get; set; }
+
+        public BounceEvent()
+        {
+            EventType = EventType.Bounce;
+        }
     }
 }

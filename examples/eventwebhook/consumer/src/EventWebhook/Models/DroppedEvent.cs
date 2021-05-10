@@ -4,5 +4,10 @@
     {
         public string Reason { get; set; }
         public string Status { get; set; }
+
+        public DroppedEvent()
+        {
+            EventType = EventType.Dropped;
+        }
     }
 }
