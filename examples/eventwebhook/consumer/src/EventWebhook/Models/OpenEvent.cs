@@ -5,5 +5,10 @@
         public string UserAgent { get; set; }
 
         public string IP { get; set; }
+
+        public OpenEvent()
+        {
+            EventType = EventType.Open;
+        }
     }
 }

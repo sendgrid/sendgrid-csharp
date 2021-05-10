@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Inbound.Models
 {
@@ -13,7 +13,7 @@ namespace Inbound.Models
         /// <value>
         /// The email.
         /// </value>
-        [JsonProperty("email", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("email")]
         public string Email { get; set; }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Inbound.Models
         /// <value>
         /// The name.
         /// </value>
-        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
         /// <summary>
@@ -36,6 +36,4 @@ namespace Inbound.Models
             Name = name;
         }
     }
-
-    
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Inbound.Models
 {
@@ -14,6 +15,7 @@ namespace Inbound.Models
         /// <value>
         /// The headers.
         /// </value>
+        [JsonIgnore]
         public KeyValuePair<string, string>[] Headers { get; set; }
 
         /// <summary>
@@ -121,6 +123,7 @@ namespace Inbound.Models
         /// <value>
         /// The charsets.
         /// </value>
+        [JsonIgnore]
         public KeyValuePair<string, Encoding>[] Charsets { get; set; }
 
         /// <summary>
@@ -140,6 +143,4 @@ namespace Inbound.Models
         /// </value>
         public string RawEmail { get; set; }
     }
-
-
 }

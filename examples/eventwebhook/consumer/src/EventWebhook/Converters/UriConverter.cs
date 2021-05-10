@@ -1,40 +1,19 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace EventWebhook.Converters
 {
-    public class UriConverter : JsonConverter
+    public class UriConverter : JsonConverter<Uri>
     {
-        public override bool CanConvert(Type objectType) => objectType == typeof(string);
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override Uri Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.TokenType == JsonToken.Null)
-            {
-                return null;
-            }
-
-            if (reader.TokenType == JsonToken.String)
-            {
-                return new Uri((string)reader.Value);
-            }
-
-            throw new InvalidOperationException("Invalid Url");
+            return new Uri(reader.GetString());
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, Uri value, JsonSerializerOptions options)
         {
-            if (null == value)
-            {
-                writer.WriteNull();
-                return;
-            }
-
-            if (value is Uri)
-            {
-                writer.WriteValue(((Uri)value).OriginalString);
-                return;
-            }
+            writer.WriteStringValue(value.OriginalString);
         }
     }
 }

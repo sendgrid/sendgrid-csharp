@@ -1,10 +1,10 @@
-﻿using Inbound.Models;
-using Inbound.Parsers;
+﻿using Inbound.Parsers;
 using Shouldly;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Inbound.Tests.Parsers
@@ -12,15 +12,11 @@ namespace Inbound.Tests.Parsers
     public class InboundWebhookParserTests
     {
         [Fact]
-        public async void DefaultPayloadWithoutAttachments()
+        public async Task DefaultPayloadWithoutAttachments()
         {
-            Stream stream = new MemoryStream();
-            await File.OpenRead("sample_data/default_data.txt").CopyToAsync(stream);
-            stream.Position = 0;
-
-            var parser = new InboundWebhookParser(stream);
-
-            InboundEmail inboundEmail = parser.Parse();
+            var stream = File.OpenRead("sample_data/default_data.txt");
+            
+            var inboundEmail = await InboundWebhookParser.ParseAsync(stream);
 
             inboundEmail.ShouldNotBeNull();
 
@@ -72,15 +68,11 @@ namespace Inbound.Tests.Parsers
         }
 
         [Fact]
-        public async void RawPayloadWithAttachments()
+        public async Task RawPayloadWithAttachments()
         {
-            Stream stream = new MemoryStream();
-            await File.OpenRead("sample_data/raw_data_with_attachments.txt").CopyToAsync(stream);
-            stream.Position = 0;
-
-            var parser = new InboundWebhookParser(stream);
-
-            InboundEmail inboundEmail = parser.Parse();
+            var stream = File.OpenRead("sample_data/raw_data_with_attachments.txt");
+            
+            var inboundEmail = await InboundWebhookParser.ParseAsync(stream);
 
             inboundEmail.ShouldNotBeNull();
 

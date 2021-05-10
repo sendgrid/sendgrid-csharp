@@ -1,40 +1,20 @@
+using System.Threading.Tasks;
 using Inbound.Parsers;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 
 namespace Inbound.Controllers
 {
-    [Route("/")]
+    [Route("/inbound")]
     [ApiController]
-    public class InboundController : Controller
+    public class InboundController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         // Process POST from Inbound Parse and print received data.
         [HttpPost]
-        [Route("inbound")]
-        public IActionResult InboundParse()
+        public async Task<IActionResult> InboundParse()
         {
-            InboundWebhookParser _inboundParser = new InboundWebhookParser(Request.Body);
+            var inboundEmail = await InboundWebhookParser.ParseAsync(Request.Body);
 
-            var inboundEmail = _inboundParser.Parse();
-
-            return Ok();
-        }
-
-        private void Log(IDictionary<string, string> keyValues)
-        {
-            if(keyValues == null)
-            {
-                return;
-            }
-            Console.WriteLine(JsonConvert.SerializeObject(keyValues));
+            return Ok(inboundEmail);
         }
     }
 }
