@@ -11,7 +11,7 @@
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/src/inbound/bin/Debug/netcoreapp2.1/inbound.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/inbound",
+            "cwd": "${workspaceFolder}/src/Inbound",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {

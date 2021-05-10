@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{B08185CF-3F2E-4638-877B-587F5F60CA74}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B08185CF-3F2E-4638-877B-587F5F60CA74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventWebhook", "Src\EventWebhook\EventWebhook.csproj", "{3897C29A-AE26-4FE5-8421-71896EC935C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventWebhook", "src\EventWebhook\EventWebhook.csproj", "{3897C29A-AE26-4FE5-8421-71896EC935C5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{81CAC535-9854-47AD-9D3E-385AC2668C35}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{81CAC535-9854-47AD-9D3E-385AC2668C35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventWebhook.Tests", "Tests\EventWebhook.Tests\EventWebhook.Tests.csproj", "{5C6AA0EB-57B7-4E76-804A-70F7A7DF4FC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventWebhook.Tests", "tests\EventWebhook.Tests\EventWebhook.Tests.csproj", "{5C6AA0EB-57B7-4E76-804A-70F7A7DF4FC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

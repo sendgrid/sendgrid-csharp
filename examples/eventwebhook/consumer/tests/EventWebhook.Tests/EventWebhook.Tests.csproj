@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Src\EventWebhook\EventWebhook.csproj" />
+    <ProjectReference Include="..\..\src\EventWebhook\EventWebhook.csproj" />
   </ItemGroup>
 
   <ItemGroup>
