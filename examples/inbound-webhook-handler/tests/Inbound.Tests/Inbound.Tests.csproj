@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\inbound\Inbound.csproj" />
+    <ProjectReference Include="..\..\src\Inbound\Inbound.csproj" />
   </ItemGroup>
 
   <ItemGroup>

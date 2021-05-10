@@ -1,21 +1,21 @@
 FROM microsoft/dotnet:2.1-sdk AS build
-WORKDIR /App
+WORKDIR /app
 
 # copy csproj and restore as distinct layers
 COPY *.sln .
-COPY Src/Inbound/*.csproj ./Src/Inbound/
-COPY Tests/Inbound.Tests/*.csproj ./Tests/Inbound.Tests/
+COPY src/Inbound/*.csproj ./src/Inbound/
+COPY tests/Inbound.Tests/*.csproj ./tests/Inbound.Tests/
 RUN dotnet restore
 
 # copy everything else and build app
-COPY Src/Inbound/. ./Src/Inbound/
-WORKDIR /App/Src/Inbound
-RUN dotnet publish -c Release -o Out
+COPY src/Inbound/. ./src/Inbound/
+WORKDIR /app/src/Inbound
+RUN dotnet publish -c Release -o out
 
 FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
-WORKDIR /App
-COPY --from=build /App/Src/Inbound/Out ./
+WORKDIR /app
+COPY --from=build /app/src/Inbound/out ./
 
-RUN echo "ASPNETCORE_URLS=http://0.0.0.0:\$PORT\nDOTNET_RUNNING_IN_CONTAINER=true" > /App/SetupHerokuEnv.sh && chmod +x /App/SetupHerokuEnv.sh
+RUN echo "ASPNETCORE_URLS=http://0.0.0.0:\$PORT\nDOTNET_RUNNING_IN_CONTAINER=true" > /app/SetupHerokuEnv.sh && chmod +x /app/SetupHerokuEnv.sh
 
-CMD /bin/bash -c "source /App/SetupHerokuEnv.sh && dotnet Inbound.dll"
+CMD /bin/bash -c "source /app/SetupHerokuEnv.sh && dotnet Inbound.dll"
