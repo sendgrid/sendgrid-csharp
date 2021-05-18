@@ -5,7 +5,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyOriginatorKeyFile>../../tools/sendgrid-csharp.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
-    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <CodeAnalysisRuleset>..\SendGrid\SendGrid.ruleset</CodeAnalysisRuleset>
   </PropertyGroup>
