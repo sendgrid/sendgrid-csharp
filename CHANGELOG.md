@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2021-05-19] Version 9.23.2
+---------------------------
+**Library - Fix**
+- [PR #1109](https://github.com/sendgrid/sendgrid-csharp/pull/1109): Strong name signature could not be verified. Thanks to [@akunzai](https://github.com/akunzai)!
+
+
 [2021-05-05] Version 9.23.1
 ---------------------------
 **Library - Chore**
