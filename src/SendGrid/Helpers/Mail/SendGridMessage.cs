@@ -1106,5 +1106,28 @@ namespace SendGrid.Helpers.Mail
 
             return textWriter.ToString();
         }
+
+        /// <summary>
+        /// Creates a SendGrid.Helpers.Mail.SendGridMessage instance from a JSON object.
+        /// </summary>
+        /// <param name="json">The JSON object to deserialize.</param>
+        /// <returns>The SendGrid.Helpers.Mail.SendGridMessage instance created from the JSON object.</returns>
+        public static SendGridMessage Deserialize(string json)
+        {
+            var jsonSerializerSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                DefaultValueHandling = DefaultValueHandling.Include,
+                StringEscapeHandling = StringEscapeHandling.EscapeHtml,
+                Formatting = Formatting.None
+            };
+
+            var jsonSerializer = JsonSerializer.Create(jsonSerializerSettings);
+
+            JsonTextReader reader = new JsonTextReader(new StringReader(json));
+            SendGridMessage message = jsonSerializer.Deserialize<SendGridMessage>(reader);
+
+            return message;
+        }
     }
 }
