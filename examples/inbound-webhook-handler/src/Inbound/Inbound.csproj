@@ -15,7 +15,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="HttpMultipartParser" Version="5.0.0" />
+    <PackageReference Include="HttpMultipartParser" Version="7.0.0" />
   </ItemGroup>
 
 </Project>
