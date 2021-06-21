@@ -1,6 +1,15 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2021-06-21] Version 9.24.0
+---------------------------
+**Library - Chore**
+- [PR #1116](https://github.com/sendgrid/sendgrid-csharp/pull/1116): bump SendGrid.Extensions.DependencyInjection from 1.0.0 to 1.0.1. Thanks to [@akunzai](https://github.com/akunzai)!
+
+**Library - Feature**
+- [PR #1115](https://github.com/sendgrid/sendgrid-csharp/pull/1115): add `SendGridMessage` deserialization. Thanks to [@jlawcordova](https://github.com/jlawcordova)!
+
+
 [2021-05-19] Version 9.23.2
 ---------------------------
 **Library - Fix**
