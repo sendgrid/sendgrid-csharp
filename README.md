@@ -79,7 +79,7 @@ Setup Environment Variables using the UI:
 Setup Environment Variables using CMD:
 
 1. Run CMD as administrator
-2. set SENDGRID_API_KEY "YOUR_API_KEY"
+2. set SENDGRID_API_KEY="YOUR_API_KEY"
 
 Here are a few examples to get and set API Keys programmatically:
 
