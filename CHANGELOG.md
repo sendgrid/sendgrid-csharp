@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2021-07-14] Version 9.24.1
+---------------------------
+**Library - Docs**
+- [PR #1123](https://github.com/sendgrid/sendgrid-csharp/pull/1123): fix mistake in README.md. Thanks to [@hakuna-matata-in](https://github.com/hakuna-matata-in)!
+
+
 [2021-06-21] Version 9.24.0
 ---------------------------
 **Library - Chore**
