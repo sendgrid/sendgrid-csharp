@@ -42,7 +42,7 @@ cd sendgrid-csharp/examples/eventwebhook/consumer
 
 dotnet restore
 
-dotnet run --project .\Src\EventWebhook\EventWebhook.csproj
+dotnet run --project .\src\EventWebhook\EventWebhook.csproj
 ```
 Above will start server listening on a random port like below
 

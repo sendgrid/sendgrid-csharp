@@ -73,7 +73,7 @@ namespace SendGrid.Helpers.Reliability
 
                     sent = true;
                 }
-                catch (TaskCanceledException)
+                catch (OperationCanceledException)
                 {
                     numberOfAttempts++;
 

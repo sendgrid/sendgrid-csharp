@@ -39,7 +39,7 @@ cd sendgrid-csharp/examples/inbound-webhook-handler
 
 dotnet restore
 
-dotnet run --project .\Src\Inbound\Inbound.csproj
+dotnet run --project .\src\Inbound\Inbound.csproj
 ```
 Above will start server listening on a random port like below
 

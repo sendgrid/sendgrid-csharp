@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{5E71A0CA-F2E2-4762-B020-29F1D8682F75}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5E71A0CA-F2E2-4762-B020-29F1D8682F75}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inbound", "Src\Inbound\Inbound.csproj", "{9449C214-54EF-40A9-AAB3-4FE212BECA23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inbound", "src\Inbound\Inbound.csproj", "{9449C214-54EF-40A9-AAB3-4FE212BECA23}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1446F41E-1766-4B3E-B7AC-C8766A3E1751}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1446F41E-1766-4B3E-B7AC-C8766A3E1751}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inbound.Tests", "Tests\Inbound.Tests\Inbound.Tests.csproj", "{0AF26ED1-3F2D-40F5-9A01-FE5955A8F927}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inbound.Tests", "tests\Inbound.Tests\Inbound.Tests.csproj", "{0AF26ED1-3F2D-40F5-9A01-FE5955A8F927}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
