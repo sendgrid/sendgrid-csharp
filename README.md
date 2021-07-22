@@ -241,7 +241,7 @@ class Program
 
 # Usage
 
-- [Twilio SendGrid Docs](https://docs.sendgrid.com/api-reference/how-to-use-the-sendgrid-v3-api/authentication)
+- [Twilio SendGrid Docs](https://docs.sendgrid.com/api-reference/)
 - [Library Usage Docs](USAGE.md)
 - [Example Code - .NET Core](ExampleCoreProject)
 - [Example Code - .NET 4.5.2+](ExampleNet45Project)
