@@ -138,7 +138,7 @@ class Program
 }
 ```
 
-After executing the above code, `response.StatusCode` should be `202` and you should have an email in the inbox of the `to` recipient. You can check the status of your email [in the UI](https://app.sendgrid.com/email_activity?). Alternatively, we can post events to a URL of your choice using our [Event Webhook](https://sendgrid.com/docs/API_Reference/Webhooks/event.html). This gives you data about the events that occur as Twilio SendGrid processes your email.
+After executing the above code, `response.StatusCode` should be `202` and you should have an email in the inbox of the `to` recipient. You can check the status of your email [in the UI](https://app.sendgrid.com/email_activity?). Alternatively, we can post events to a URL of your choice using our [Event Webhook](https://docs.sendgrid.com/for-developers/tracking-events/getting-started-event-webhook). This gives you data about the events that occur as Twilio SendGrid processes your email.
 
 For more advanced cases, you can build the SendGridMessage object yourself with these minimum required settings:
 
@@ -241,7 +241,7 @@ class Program
 
 # Usage
 
-- [Twilio SendGrid Docs](https://sendgrid.com/docs/API_Reference/api_v3.html)
+- [Twilio SendGrid Docs](https://docs.sendgrid.com/api-reference/)
 - [Library Usage Docs](USAGE.md)
 - [Example Code - .NET Core](ExampleCoreProject)
 - [Example Code - .NET 4.5.2+](ExampleNet45Project)
