@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2021-09-22] Version 9.24.3
+---------------------------
+**Library - Docs**
+- [PR #1133](https://github.com/sendgrid/sendgrid-csharp/pull/1133): enhancing intellisense to provide parameter limits in the description…. Thanks to [@jmounts234](https://github.com/jmounts234)!
+
+
 [2021-08-11] Version 9.24.2
 ---------------------------
 **Library - Docs**
