@@ -23,10 +23,10 @@ namespace SendGrid.Helpers.Reliability
         /// <summary>
         /// Initializes a new instance of the <see cref="ReliabilitySettings"/> class.
         /// </summary>
-        /// <param name="maximumNumberOfRetries">The maximum number of retries to execute against when sending an HTTP Request before throwing an exception.</param>
-        /// <param name="minimumBackoff">The minimum amount of time to wait between between HTTP retries.</param>
-        /// <param name="maximumBackOff">the maximum amount of time to wait between between HTTP retries.</param>
-        /// <param name="deltaBackOff">the value that will be used to calculate a random delta in the exponential delay between retries.</param>
+        /// <param name="maximumNumberOfRetries">The maximum number of retries to execute against when sending an HTTP Request before throwing an exception. Max value of 5. Default value of 0.</param>
+        /// <param name="minimumBackoff">The minimum amount of time to wait between between HTTP retries. Default value of 0 seconds.</param>
+        /// <param name="maximumBackOff" max="30 seconds">the maximum amount of time to wait between between HTTP retries. Max value of 30 seconds. Default value of 0 seconds.</param>
+        /// <param name="deltaBackOff">the value that will be used to calculate a random delta in the exponential delay between retries. Default value of 0 seconds.</param>
         public ReliabilitySettings(int maximumNumberOfRetries, TimeSpan minimumBackoff, TimeSpan maximumBackOff, TimeSpan deltaBackOff)
         {
             if (maximumNumberOfRetries < 0)
