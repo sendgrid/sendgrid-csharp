@@ -19,6 +19,7 @@ If you can't find a solution below, please open an [issue](https://github.com/se
 * [Versioning Convention](#versioning)
 * [Viewing the Request Body](#request-body)
 * [UI requests are failing](#ui-requests)
+* [Verifying Event Webhooks](#signed-webhooks)
 
 <a name="v2"></a>
 ## Continue Using the v2 API
@@ -204,3 +205,14 @@ var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
 If you are running a newer versions of .NET you can turn on a couple different Roslyn based analyzers that will trigger build errors if you're not calling `.ConfigureAwait(false)` on your async methods.
 
 `Roslynator.Analyzers` can be installed through NuGet or as a VS plugin, but if you use the plugin then the analyzers won't run on build servers and trigger build errors as the NuGet package would. (thanks to [xt0rted](https://github.com/xt0rted) for this tip!)
+
+<a name="signed-webhooks"></a>
+## Signed Webhook Verification
+
+Twilio SendGrid's Event Webhook will notify a URL via HTTP POST with information about events that occur as your mail is processed. [This](https://docs.sendgrid.com/for-developers/tracking-events/getting-started-event-webhook-security-features) article covers all you need to know to secure the Event Webhook, allowing you to verify that incoming requests originate from Twilio SendGrid. The sendgrid-csharp library can help you verify these Signed Event Webhooks.
+
+You can find the end-to-end usage example and the tests [here](examples/eventwebhook). 
+If you are still having trouble getting the validation to work, follow the following instructions:
+- Be sure to use the *raw* payload for validation
+- Be sure to include a trailing carriage return and newline in your payload
+- In case of multi-event webhooks, make sure you include the trailing newline and carriage return after *each* event
