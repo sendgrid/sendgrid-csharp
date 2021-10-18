@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2021-10-18] Version 9.24.4
+---------------------------
+**Library - Docs**
+- [PR #1134](https://github.com/sendgrid/sendgrid-csharp/pull/1134): improve signed webhook event validation docs. Thanks to [@shwetha-manvinkurke](https://github.com/shwetha-manvinkurke)!
+
+
 [2021-09-22] Version 9.24.3
 ---------------------------
 **Library - Docs**
