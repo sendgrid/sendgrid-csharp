@@ -8,6 +8,7 @@ This document provides examples for specific use cases. Please [open an issue](h
 - [Send a Single Email to Multiple Recipients](#send-a-single-email-to-multiple-recipients)
 - [Send a Single Email to a Single Recipient](#send-a-single-email-to-a-single-recipient)
 - [Send Multiple Emails to Multiple Recipients](#send-multiple-emails-to-multiple-recipients)
+- [Send Multiple Emails with Personalizations](#send-multiple-emails-with-personalizations)
 - [Transactional Templates](#transactional-templates)
     - [With Mail Helper Class](#with-mail-helper-class)
     - [Without Mail Helper Class](#without-mail-helper-class)
@@ -487,6 +488,63 @@ namespace Example
                                                                           substitutions
                                                                           );
             var response = await client.SendEmailAsync(msg);
+        }
+    }
+}
+```
+
+<a name="multipleemailspersonalization"></a>
+# Send Multiple Emails with Personalizations
+
+```csharp
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+
+namespace Example
+{
+    internal class Example
+    {
+        private static void Main()
+        {
+            Execute().Wait();
+        }
+
+        static async Task Execute()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("test@example.com");
+            var subject = "Hello from Twilio SendGrid!";
+
+            //Note that the domain for all from addresses must match
+            var msg = new SendGridMessage();
+            msg.Subject = subject;
+            msg.AddContent(MimeType.Text, "Easy to use, even with C#!");
+            msg.SetFrom(from);
+
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Tos = new List<EmailAddress>() {
+                        new EmailAddress("test1@example.com")
+                    }
+                },
+                new Personalization() {
+                    Tos = new List<EmailAddress>() {
+                        new EmailAddress("test2@example.com")
+                    },
+                    From = new EmailAddress("test3@example.com")
+                },
+            };
+            var response = await client.SendEmailAsync(msg);
+
+            Console.WriteLine(msg.Serialize());
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Headers.ToString());
+            Console.WriteLine("\n\nPress any key to exit.");
+            Console.ReadLine();
         }
     }
 }
