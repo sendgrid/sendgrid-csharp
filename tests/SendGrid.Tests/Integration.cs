@@ -593,6 +593,91 @@
         }
 
         [Fact]
+        public void TestAddFrom()
+        {
+            // Personalization not passed in, Personalization does not exist
+            var msg = new SendGridMessage();
+            msg.AddTo(new EmailAddress("test001@example.com", "Example User"));
+            msg.SetFrom(new EmailAddress("test002@example.com", "Example User"));
+            Assert.Equal("{\"from\":{\"name\":\"Example User\",\"email\":\"test002@example.com\"},\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test001@example.com\"}]}]}", msg.Serialize());
+
+            // Personalization passed in, no Personalizations
+            msg = new SendGridMessage();
+            var toEmail = new EmailAddress("test002@example.com", "Example User");
+            var fromEmail = new EmailAddress("test001@example.com", "Example User");
+            var personalization = new Personalization()
+            {
+                Tos = new List<EmailAddress>()
+                {
+                    toEmail
+                },
+                From = fromEmail
+            };
+            msg.AddTo(new EmailAddress("test003@example.com", "Example User"), 0, personalization);
+            Assert.Equal("{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test002@example.com\"}," +
+                         "{\"name\":\"Example User\",\"email\":\"test003@example.com\"}]," +
+                         "\"from\":{\"name\":\"Example User\",\"email\":\"test001@example.com\"}}]}", msg.Serialize());
+
+            // Personalization passed in, Personalization exists
+            msg = new SendGridMessage();
+            toEmail = new EmailAddress("test004@example.com", "Example User");
+            fromEmail = new EmailAddress("test005@example.com", "Example User");
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Tos = new List<EmailAddress>()
+                    {
+                        toEmail
+                    },
+                    From = fromEmail
+                }
+            };
+            toEmail = new EmailAddress("test006@example.com", "Example User");
+            fromEmail = new EmailAddress("test007@example.com", "Example User");
+            personalization = new Personalization()
+            {
+                Tos = new List<EmailAddress>()
+                {
+                    toEmail
+                },
+                From = fromEmail
+            };
+            msg.AddTo(toEmail, 1, personalization);
+            Assert.Equal("{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test004@example.com\"}]," +
+                         "\"from\":{\"name\":\"Example User\",\"email\":\"test005@example.com\"}}," +
+                         "{\"to\":[{\"name\":\"Example User\",\"email\":\"test006@example.com\"}]," +
+                         "\"from\":{\"name\":\"Example User\",\"email\":\"test007@example.com\"}}]}", msg.Serialize());
+
+
+            // Personalization not passed in Personalizations exists
+            msg = new SendGridMessage();
+            toEmail = new EmailAddress("test009@example.com", "Example User");
+            fromEmail = new EmailAddress("test010@example.com", "Example User");
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Tos = new List<EmailAddress>()
+                    {
+                        toEmail
+                    },
+                    From = fromEmail
+                }
+            };
+            toEmail = new EmailAddress("test011@example.com", "Example User");
+            fromEmail = new EmailAddress("test012@example.com", "Example User");
+            personalization = new Personalization()
+            {
+                Tos = new List<EmailAddress>()
+                {
+                    toEmail
+                },
+                From = fromEmail
+            };
+            msg.Personalizations.Add(personalization);
+            msg.AddTo(new EmailAddress("test013@example.com", "Example User"));
+            Assert.Equal("{\"personalizations\":[{\"to\":[{\"name\":\"Example User\",\"email\":\"test009@example.com\"},{\"name\":\"Example User\",\"email\":\"test013@example.com\"}]," +
+                         "\"from\":{\"name\":\"Example User\",\"email\":\"test010@example.com\"}},{\"to\":[{\"name\":\"Example User\",\"email\":\"test011@example.com\"}]," +
+                         "\"from\":{\"name\":\"Example User\",\"email\":\"test012@example.com\"}}]}", msg.Serialize());
+        }
+        [Fact]
         public void TestAddTo()
         {
             // Personalization not passed in, Personalization does not exist
