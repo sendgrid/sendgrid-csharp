@@ -1,57 +1,50 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using SendGrid;
-using SendGrid.Extensions.DependencyInjection;
 using SendGrid.Helpers.Mail;
 
 namespace Example
 {
-    internal class Program
+    internal class ExampleEmail
     {
-        private static IConfiguration Configuration { get; set; }
-
-        private static async Task Main()
+        private static void Main()
         {
-            var env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Production";
-            Configuration = new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json", optional: true)
-                    .AddJsonFile($"appsettings.{env}.json", optional: true)
-                    .Build();
-            var services = ConfigureServices(new ServiceCollection()).BuildServiceProvider();
-            var client = services.GetRequiredService<ISendGridClient>();
-            var from = new EmailAddress(Configuration.GetValue("SendGrid:From", "test@example.com"), "Example User");
-            var to = new EmailAddress(Configuration.GetValue("SendGrid:To", "test@example.com"), "Example User");
-            var msg = new SendGridMessage
-            {
-                From = from,
-                Subject = "Sending with Twilio SendGrid is Fun"
-            };
-            msg.AddContent(MimeType.Text, "and easy to do anywhere, even with C#");
-            msg.AddTo(to);
-            if (Configuration.GetValue("SendGrid:SandboxMode", false))
-            {
-                msg.MailSettings = new MailSettings
-                {
-                    SandboxMode = new SandboxMode
-                    {
-                        Enable = true
-                    }
-                };
-            }
-            Console.WriteLine($"Sending email with payload: \n{msg.Serialize()}");
-            var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
-
-            Console.WriteLine($"Response: {response.StatusCode}");
-            Console.WriteLine(response.Headers);
+            Execute().Wait();
         }
 
-        private static IServiceCollection ConfigureServices(IServiceCollection services)
+        static async Task Execute()
         {
-            services.AddSendGrid(options => { options.ApiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY") ?? Configuration["SendGrid:ApiKey"]; });
+            var apiKey = "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";
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("team_intrapersonalfaces@devinterfaces.com");
+            var subject = "Hello from Twilio SendGrid";
 
-            return services;
+            var msg = new SendGridMessage();
+            msg.Subject = subject;
+            msg.AddContent(MimeType.Text, "Hello from fakegrid, please work");
+            msg.SetFrom(from);
+
+            msg.Personalizations = new List<Personalization>() {
+                new Personalization() {
+                    Tos = new List<EmailAddress>() {
+                        new EmailAddress("bboussayoud@colgate.edu")
+                    },
+                },
+                new Personalization() {
+                    Tos = new List<EmailAddress>() {
+                        new EmailAddress("bilal.boussayoud@gmail.com")
+                    },
+                    From = new EmailAddress("team_nofaces@devinterfaces.com")
+                },
+            };
+            var response = await client.SendEmailAsync(msg);
+
+            Console.WriteLine(msg.Serialize());
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Headers.ToString());
+            Console.WriteLine("\n\nPress any key to exit.");
+            Console.ReadLine();
         }
     }
 }
