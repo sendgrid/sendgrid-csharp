@@ -519,7 +519,7 @@ namespace Example
             var from = new EmailAddress("test@example.com");
             var subject = "Hello from Twilio SendGrid!";
 
-            //Note that the domain for all from addresses must match
+            // Note that the domain for all from addresses must match
             var msg = new SendGridMessage();
             msg.Subject = subject;
             msg.AddContent(MimeType.Text, "Easy to use, even with C#!");
