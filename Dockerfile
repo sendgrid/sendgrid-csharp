@@ -14,7 +14,6 @@ RUN apt-get update \
 COPY prism/prism/nginx/cert.crt /usr/local/share/ca-certificates/cert.crt
 RUN update-ca-certificates
 
-WORKDIR /app
 COPY . .
 
 RUN make install
