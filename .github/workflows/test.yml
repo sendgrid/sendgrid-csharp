@@ -23,6 +23,7 @@ jobs:
         with:
           dotnet-version: '3.1.x'
 
+      - run: dotnet build -c Release
       - name: Build & Test
         run: make test-docker release
 
