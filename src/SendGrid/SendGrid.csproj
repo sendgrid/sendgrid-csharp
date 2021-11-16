@@ -46,7 +46,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" Condition=" '$(OS)' != 'Windows_NT' " />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-    <PackageReference Include="starkbank-ecdsa" Version="[1.3.2, 2.0.0)" />
+    <PackageReference Include="starkbank-ecdsa" Version="[1.3.3, 2.0.0)" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
