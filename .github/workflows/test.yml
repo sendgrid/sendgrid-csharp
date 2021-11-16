@@ -32,6 +32,7 @@ jobs:
       - run: dotnet build -c Release
       - name: Build & Test
         run: make test-docker release
+      - run: docker ps -a
 
   notify-on-failure:
     name: Slack notify on failure
