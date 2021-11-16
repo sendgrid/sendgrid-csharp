@@ -33,6 +33,7 @@ jobs:
       - name: Build & Test
         run: make test-docker release
       - run: docker ps -a
+        if: ${{ always() }}
 
   notify-on-failure:
     name: Slack notify on failure
