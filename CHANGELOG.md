@@ -1,6 +1,15 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2021-11-17] Version 9.25.0
+---------------------------
+**Library - Chore**
+- [PR #1140](https://github.com/sendgrid/sendgrid-csharp/pull/1140): bump ecdsa-dotnet version. Thanks to [@JenniferMah](https://github.com/JenniferMah)!
+
+**Library - Feature**
+- [PR #1137](https://github.com/sendgrid/sendgrid-csharp/pull/1137): add tests & use case for From personalization. Thanks to [@beebzz](https://github.com/beebzz)!
+
+
 [2021-10-18] Version 9.24.4
 ---------------------------
 **Library - Docs**
