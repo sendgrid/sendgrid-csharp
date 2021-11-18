@@ -4838,7 +4838,7 @@
         {
             var sg = GetClient("200");
             var email = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/spam_report/" + email);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.GET, urlPath: "suppression/spam_reports/" + email);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
@@ -4847,7 +4847,7 @@
         {
             var sg = GetClient("204");
             var email = "test_url_param";
-            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/spam_report/" + email);
+            var response = await sg.RequestAsync(method: SendGridClient.Method.DELETE, urlPath: "suppression/spam_reports/" + email);
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
         }
 
