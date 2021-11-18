@@ -26,8 +26,7 @@ jobs:
       - run: dotnet build -c Release
       - name: Build & Test
         run: make test-docker release
-      - run: docker ps -a
-        if: ${{ always() }}
+      - run: bash <(curl -s https://codecov.io/bash)
 
   notify-on-failure:
     name: Slack notify on failure
