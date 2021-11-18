@@ -1,6 +1,61 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2021-11-17] Version 9.25.0
+---------------------------
+**Library - Chore**
+- [PR #1140](https://github.com/sendgrid/sendgrid-csharp/pull/1140): bump ecdsa-dotnet version. Thanks to [@JenniferMah](https://github.com/JenniferMah)!
+
+**Library - Feature**
+- [PR #1137](https://github.com/sendgrid/sendgrid-csharp/pull/1137): add tests & use case for From personalization. Thanks to [@beebzz](https://github.com/beebzz)!
+
+
+[2021-10-18] Version 9.24.4
+---------------------------
+**Library - Docs**
+- [PR #1134](https://github.com/sendgrid/sendgrid-csharp/pull/1134): improve signed webhook event validation docs. Thanks to [@shwetha-manvinkurke](https://github.com/shwetha-manvinkurke)!
+
+
+[2021-09-22] Version 9.24.3
+---------------------------
+**Library - Docs**
+- [PR #1133](https://github.com/sendgrid/sendgrid-csharp/pull/1133): enhancing intellisense to provide parameter limits in the description…. Thanks to [@jmounts234](https://github.com/jmounts234)!
+
+
+[2021-08-11] Version 9.24.2
+---------------------------
+**Library - Docs**
+- [PR #1126](https://github.com/sendgrid/sendgrid-csharp/pull/1126): Updated broken Readme.md links. Thanks to [@DanielHolland](https://github.com/DanielHolland)!
+
+
+[2021-07-14] Version 9.24.1
+---------------------------
+**Library - Docs**
+- [PR #1123](https://github.com/sendgrid/sendgrid-csharp/pull/1123): fix mistake in README.md. Thanks to [@hakuna-matata-in](https://github.com/hakuna-matata-in)!
+
+
+[2021-06-21] Version 9.24.0
+---------------------------
+**Library - Chore**
+- [PR #1116](https://github.com/sendgrid/sendgrid-csharp/pull/1116): bump SendGrid.Extensions.DependencyInjection from 1.0.0 to 1.0.1. Thanks to [@akunzai](https://github.com/akunzai)!
+
+**Library - Feature**
+- [PR #1115](https://github.com/sendgrid/sendgrid-csharp/pull/1115): add `SendGridMessage` deserialization. Thanks to [@jlawcordova](https://github.com/jlawcordova)!
+
+
+[2021-05-19] Version 9.23.2
+---------------------------
+**Library - Fix**
+- [PR #1109](https://github.com/sendgrid/sendgrid-csharp/pull/1109): Strong name signature could not be verified. Thanks to [@akunzai](https://github.com/akunzai)!
+
+
+[2021-05-05] Version 9.23.1
+---------------------------
+**Library - Chore**
+- [PR #1105](https://github.com/sendgrid/sendgrid-csharp/pull/1105): bump System.Net.Http from 4.0.0 to 4.3.4 in /ExampleNet45ASPNetProject/SendGrid.ASPSamples. Thanks to [@dependabot](https://github.com/dependabot)!
+- [PR #1106](https://github.com/sendgrid/sendgrid-csharp/pull/1106): bump System.Net.Http from 4.3.3 to 4.3.4 in /ExampleNet45ASPNetProject/SendGrid.ASPWebFormsSamples. Thanks to [@dependabot](https://github.com/dependabot)!
+
+
 [2021-04-21] Version 9.23.0
 ---------------------------
 **Library - Feature**
