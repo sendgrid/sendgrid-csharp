@@ -33,17 +33,6 @@ namespace SendGrid.Tests
             Assert.True(File.Exists("./.gitignore"));
         }
 
-        // ./.travis.yml
-        public void checkTravisExists()
-        {
-            Assert.True(File.Exists("./.travis.yml"));
-        }
-
-        // ./.codeclimate.yml
-        public void checkCodeClimateExists()
-        {
-            Assert.True(File.Exists("./.codeclimate.yml"));
-        }
 
         // ./CHANGELOG.md
         public void checkChangelogExists()
