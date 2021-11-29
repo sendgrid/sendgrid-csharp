@@ -17,7 +17,7 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets the Base64 encoded content of the attachment.
         /// </summary>
         [JsonProperty(PropertyName = "content")]
-        public string Content { get; set; }
+        public string Content { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the mime type of the content you are attaching. For example, application/pdf or image/jpeg.
@@ -29,7 +29,7 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets the filename of the attachment.
         /// </summary>
         [JsonProperty(PropertyName = "filename")]
-        public string Filename { get; set; }
+        public string Filename { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the content-disposition of the attachment specifying how you would like the attachment to be displayed. For example, "inline" results in the attached file being displayed automatically within the message while "attachment" results in the attached file requiring some action to be taken before it is displayed (e.g. opening or downloading the file). Defaults to "attachment". Can be either "attachment" or "inline".

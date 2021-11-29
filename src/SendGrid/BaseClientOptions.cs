@@ -29,7 +29,7 @@ namespace SendGrid
         /// <summary>
         /// The base URL.
         /// </summary>
-        public string Host { get; set; }
+        public string Host { get; set; } = string.Empty;
 
         /// <summary>
         /// The API version (defaults to "v3").
@@ -39,7 +39,7 @@ namespace SendGrid
         /// <summary>
         /// The path to the API endpoint.
         /// </summary>
-        public string UrlPath { get; set; }
+        public string UrlPath { get; set; } = string.Empty;
 
         /// <summary>
         /// The Auth header value.
