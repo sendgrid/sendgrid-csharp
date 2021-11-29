@@ -25,7 +25,7 @@ namespace SendGrid
         /// <summary>
         /// Gets or sets the API version.
         /// </summary>
-        string Version { get; set; }
+        string? Version { get; set; }
 
         /// <summary>
         /// Gets or sets the request media type.

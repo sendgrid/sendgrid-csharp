@@ -123,7 +123,7 @@ namespace SendGrid
         /// <summary>
         /// The API version.
         /// </summary>
-        public string Version
+        public string? Version
         {
             get => this.options.Version;
             set => this.options.Version = value;

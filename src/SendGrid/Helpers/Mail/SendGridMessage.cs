@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using SendGrid.Helpers.Mail.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -26,7 +27,8 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets an email object containing the email address and name of the sender. Unicode encoding is not supported for the from field.
         /// </summary>
         [JsonProperty(PropertyName = "from")]
-        public EmailAddress From { get; set; }
+        [DisallowNull]
+        public EmailAddress? From { get; set; }
 
         /// <summary>
         /// Gets or sets the subject of your email. This may be overridden by personalizations[x].subject.
@@ -69,7 +71,7 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets the id of a template that you would like to use. If you use a template that contains content and a subject (either text or html), you do not need to specify those in the respective personalizations or message level parameters.
         /// </summary>
         [JsonProperty(PropertyName = "template_id")]
-        public string TemplateId { get; set; }
+        public string? TemplateId { get; set; }
 
         /// <summary>
         /// Gets or sets an object containing key/value pairs of header names and the value to substitute for them. You must ensure these are properly encoded if they contain unicode characters. Must not be any of the following reserved headers: x-sg-id, x-sg-eid, received, dkim-signature, Content-Type, Content-Transfer-Encoding, To, From, Subject, Reply-To, CC, BCC.
@@ -105,26 +107,26 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets an object allowing you to specify how to handle unsubscribes.
         /// </summary>
         [JsonProperty(PropertyName = "asm")]
-        public ASM Asm { get; set; }
+        public ASM? Asm { get; set; }
 
         /// <summary>
         /// Gets or sets an ID that represents a batch of emails (AKA multiple sends of the same email) to be associated to each other for scheduling. Including a batch_id in your request allows you to include this email in that batch, and also enables you to cancel or pause the delivery of that entire batch. For more information, please read about Cancel Scheduled Sends.
         /// https://sendgrid.com/docs/API_Reference/Web_API_v3/cancel_schedule_send.html.
         /// </summary>
         [JsonProperty(PropertyName = "batch_id")]
-        public string BatchId { get; set; }
+        public string? BatchId { get; set; }
 
         /// <summary>
         /// Gets or sets the IP Pool that you would like to send this email from.
         /// </summary>
         [JsonProperty(PropertyName = "ip_pool_name")]
-        public string IpPoolName { get; set; }
+        public string? IpPoolName { get; set; }
 
         /// <summary>
         /// Gets or sets a collection of different mail settings that you can use to specify how you would like this email to be handled.
         /// </summary>
         [JsonProperty(PropertyName = "mail_settings")]
-        public MailSettings MailSettings { get; set; }
+        public MailSettings? MailSettings { get; set; }
 
         /// <summary>
         /// Gets or sets settings to determine how you would like to track the metrics of how your recipients interact with your email.

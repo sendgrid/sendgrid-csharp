@@ -26,7 +26,7 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         /// <param name="email">The email address of the sender or recipient.</param>
         /// <param name="name">The name of the sender or recipient.</param>
-        public EmailAddress(string email, string? name = null)
+        public EmailAddress(string? email, string? name = null)
         {
             this.Email = email;
             this.Name = name;
@@ -42,7 +42,7 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets the email address of the sender or recipient.
         /// </summary>
         [JsonProperty(PropertyName = "email")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         /// <summary>
         /// Determines whether the two specified operands are equal.

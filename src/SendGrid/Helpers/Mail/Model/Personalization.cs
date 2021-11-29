@@ -5,6 +5,7 @@
 
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SendGrid.Helpers.Mail
 {
@@ -40,13 +41,14 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets the from email address. The domain must match the domain of the from email property specified at root level of the request body.
         /// </summary>
         [JsonProperty(PropertyName = "from")]
-        public EmailAddress From { get; set; }
+        [DisallowNull]
+        public EmailAddress? From { get; set; }
 
         /// <summary>
         /// Gets or sets the subject line of your email.
         /// </summary>
         [JsonProperty(PropertyName = "subject")]
-        public string Subject { get; set; }
+        public string? Subject { get; set; }
 
         /// <summary>
         /// Gets or sets the object allowing you to specify specific handling instructions for your email.
@@ -77,6 +79,6 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets the template data object following the pattern "template data key":"template data value". All are assumed to be strings. These key value pairs will apply to the content of your template email, in addition to the subject and reply-to parameters.
         /// </summary>
         [JsonProperty(PropertyName = "dynamic_template_data", IsReference = false)]
-        public object TemplateData { get; set; }
+        public object? TemplateData { get; set; }
     }
 }
