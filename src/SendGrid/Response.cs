@@ -19,27 +19,12 @@ namespace SendGrid
     public class Response
     {
         /// <summary>
-        /// The status code returned from Twilio SendGrid.
-        /// </summary>
-        private HttpStatusCode statusCode;
-
-        /// <summary>
-        /// The response body returned from Twilio SendGrid.
-        /// </summary>
-        private HttpContent body;
-
-        /// <summary>
-        /// The response headers returned from Twilio SendGrid.
-        /// </summary>
-        private HttpResponseHeaders headers;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Response"/> class.
         /// </summary>
         /// <param name="statusCode">https://docs.microsoft.com/dotnet/api/system.net.httpstatuscode.</param>
         /// <param name="responseBody">https://docs.microsoft.com/dotnet/api/system.net.http.httpcontent.</param>
         /// <param name="responseHeaders">https://docs.microsoft.com/dotnet/api/system.net.http.headers.httpresponseheaders.</param>
-        public Response(HttpStatusCode statusCode, HttpContent responseBody, HttpResponseHeaders responseHeaders)
+        public Response(HttpStatusCode statusCode, HttpContent? responseBody, HttpResponseHeaders responseHeaders)
         {
             this.StatusCode = statusCode;
             this.Body = responseBody;
@@ -49,58 +34,22 @@ namespace SendGrid
         /// <summary>
         /// Gets or sets the status code returned from Twilio SendGrid.
         /// </summary>
-        public HttpStatusCode StatusCode
-        {
-            get
-            {
-                return this.statusCode;
-            }
-
-            set
-            {
-                this.statusCode = value;
-            }
-        }
+        public HttpStatusCode StatusCode { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether Status Code of this response indicates success.
         /// </summary>
-        public bool IsSuccessStatusCode
-        {
-            get { return ((int)StatusCode >= 200) && ((int)StatusCode <= 299); }
-        }
+        public bool IsSuccessStatusCode => ((int)StatusCode >= 200) && ((int)StatusCode <= 299);
 
         /// <summary>
         /// Gets or sets the response body returned from Twilio SendGrid.
         /// </summary>
-        public HttpContent Body
-        {
-            get
-            {
-                return this.body;
-            }
-
-            set
-            {
-                this.body = value;
-            }
-        }
+        public HttpContent? Body { get; set; }
 
         /// <summary>
         /// Gets or sets the response headers returned from Twilio SendGrid.
         /// </summary>
-        public HttpResponseHeaders Headers
-        {
-            get
-            {
-                return this.headers;
-            }
-
-            set
-            {
-                this.headers = value;
-            }
-        }
+        public HttpResponseHeaders Headers { get; set; }
 
         /// <summary>
         /// Converts string formatted response body to a Dictionary.

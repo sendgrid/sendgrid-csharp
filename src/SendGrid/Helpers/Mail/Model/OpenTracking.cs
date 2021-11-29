@@ -23,6 +23,6 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets the ability to specify a substitution tag that you can insert in the body of your email at a location that you desire. This tag will be replaced by the open tracking pixel.
         /// </summary>
         [JsonProperty(PropertyName = "substitution_tag")]
-        public string SubstitutionTag { get; set; }
+        public string? SubstitutionTag { get; set; }
     }
 }

@@ -13,21 +13,21 @@
         /// <summary>
         /// Gets or sets the error Reason Phrase
         /// </summary>
-        public string ErrorReasonPhrase { get; set; }
+        public string? ErrorReasonPhrase { get; set; }
 
         /// <summary>
         /// Gets or sets the SendGrid error message
         /// </summary>
-        public string SendGridErrorMessage { get; set; }
+        public string? SendGridErrorMessage { get; set; }
 
         /// <summary>
         /// Gets or sets the field that has the error
         /// </summary>
-        public string FieldWithError { get; set; }
+        public string? FieldWithError { get; set; }
 
         /// <summary>
         /// Gets or sets the error default help
         /// </summary>
-        public string HelpLink { get; set; }
+        public string? HelpLink { get; set; }
     }
 }

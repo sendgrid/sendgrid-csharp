@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
 
 namespace SendGrid
@@ -16,12 +17,13 @@ namespace SendGrid
             Host = "https://api.sendgrid.com";
         }
 
-        private string apiKey;
+        private string? apiKey;
 
         /// <summary>
         /// The Twilio SendGrid API key.
         /// </summary>
-        public string ApiKey
+        [DisallowNull]
+        public string? ApiKey
         {
             get => apiKey;
 

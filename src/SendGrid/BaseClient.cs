@@ -30,7 +30,7 @@ namespace SendGrid
         /// <summary>
         /// The client assembly version to send in request User-Agent header.
         /// </summary>
-        private static readonly string ClientVersion = typeof(BaseClient).GetTypeInfo().Assembly.GetName().Version.ToString();
+        private static readonly string ClientVersion = typeof(BaseClient).GetTypeInfo().Assembly.GetName().Version!.ToString();
 
         /// <summary>
         /// The configuration to use with current client instance.
@@ -47,7 +47,7 @@ namespace SendGrid
         /// </summary>
         /// <param name="options">A <see cref="BaseClientOptions"/> instance that defines the configuration settings to use with the client.</param>
         /// <returns>Interface to the Twilio SendGrid REST API.</returns>
-        protected BaseClient(BaseClientOptions options)
+        protected BaseClient(BaseClientOptions? options)
             : this(httpClient: null, options)
         {
         }
@@ -58,7 +58,7 @@ namespace SendGrid
         /// <param name="webProxy">Web proxy.</param>
         /// <param name="options">A <see cref="BaseClientOptions"/> instance that defines the configuration settings to use with the client.</param>
         /// <returns>Interface to the Twilio SendGrid REST API.</returns>
-        protected BaseClient(IWebProxy webProxy, BaseClientOptions options)
+        protected BaseClient(IWebProxy? webProxy, BaseClientOptions options)
             : this(CreateHttpClientWithWebProxy(webProxy, options), options)
         {
         }
@@ -69,7 +69,7 @@ namespace SendGrid
         /// <param name="httpClient">An optional HTTP client which may me injected in order to facilitate testing.</param>
         /// <param name="options">A <see cref="BaseClientOptions"/> instance that defines the configuration settings to use with the client.</param>
         /// <returns>Interface to the Twilio SendGrid REST API.</returns>
-        protected BaseClient(HttpClient httpClient, BaseClientOptions options)
+        protected BaseClient(HttpClient? httpClient, BaseClientOptions? options)
         {
             this.options = options ?? throw new ArgumentNullException(nameof(options));
 
@@ -182,10 +182,10 @@ namespace SendGrid
         /// In particular, this means that you may expect a TimeoutException if you are not connected to the Internet.</exception>
         public async Task<Response> RequestAsync(
             SendGridClient.Method method,
-            string requestBody = null,
-            string queryParams = null,
-            string urlPath = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            string? requestBody = null,
+            string? queryParams = null,
+            string? urlPath = null,
+            CancellationToken cancellationToken = default)
         {
             var baseAddress = new Uri(this.options.Host);
             if (!baseAddress.OriginalString.EndsWith("/"))
@@ -204,7 +204,7 @@ namespace SendGrid
             // Drop the default UTF-8 content type charset for JSON payloads since some APIs may not accept it.
             if (request.Content != null && this.MediaType == DefaultMediaType)
             {
-                request.Content.Headers.ContentType.CharSet = null;
+                request.Content.Headers.ContentType!.CharSet = null;
             }
 
             // set header overrides
@@ -249,7 +249,7 @@ namespace SendGrid
         /// <param name="webProxy">the WebProxy.</param>
         /// <param name="options">A <see cref="BaseClientOptions"/> instance that defines the configuration settings to use with the client.</param>
         /// <returns>HttpClient with RetryDelegatingHandler and WebProxy if set.</returns>
-        private static HttpClient CreateHttpClientWithWebProxy(IWebProxy webProxy, BaseClientOptions options)
+        private static HttpClient CreateHttpClientWithWebProxy(IWebProxy? webProxy, BaseClientOptions options)
         {
             if (webProxy != null)
             {
@@ -276,13 +276,12 @@ namespace SendGrid
         /// <param name="urlPath">The URL path.</param>
         /// <param name="queryParams">A string of JSON formatted query parameters (e.g. {'param': 'param_value'}).</param>
         /// <returns>Final URL.</returns>
-        private string BuildUrl(string urlPath, string queryParams = null)
+        private string BuildUrl(string? urlPath, string? queryParams = null)
         {
-            string url = null;
-
             // create urlPAth - from parameter if overridden on call or from constructor parameter
             var urlpath = urlPath ?? this.options.UrlPath;
 
+            string url;
             if (this.options.Version != null)
             {
                 url = this.options.Version + "/" + urlpath;
@@ -338,7 +337,7 @@ namespace SendGrid
                     {
                         case JsonToken.PropertyName:
                             {
-                                propertyName = reader.Value.ToString();
+                                propertyName = reader.Value.ToString()!;
                                 if (!dict.ContainsKey(propertyName))
                                 {
                                     dict.Add(propertyName, new List<object>());

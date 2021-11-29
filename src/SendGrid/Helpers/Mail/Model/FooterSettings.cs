@@ -23,12 +23,12 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets the plain text content of your footer.
         /// </summary>
         [JsonProperty(PropertyName = "text")]
-        public string Text { get; set; }
+        public string? Text { get; set; }
 
         /// <summary>
         /// Gets or sets the HTML content of your footer.
         /// </summary>
         [JsonProperty(PropertyName = "html")]
-        public string Html { get; set; }
+        public string? Html { get; set; }
     }
 }

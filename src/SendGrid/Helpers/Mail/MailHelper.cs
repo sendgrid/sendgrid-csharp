@@ -30,23 +30,23 @@ namespace SendGrid.Helpers.Mail
         /// <param name="htmlContent">The text/html content of the email body.</param>
         /// <returns>A SendGridMessage object.</returns>
         public static SendGridMessage CreateSingleEmail(
-                                                        EmailAddress from,
-                                                        EmailAddress to,
-                                                        string subject,
-                                                        string plainTextContent,
-                                                        string htmlContent)
+            EmailAddress from,
+            EmailAddress to,
+            string subject,
+            string? plainTextContent,
+            string? htmlContent)
         {
             var msg = new SendGridMessage();
             msg.SetFrom(from);
             msg.SetSubject(subject);
             if (!string.IsNullOrEmpty(plainTextContent))
             {
-                msg.AddContent(MimeType.Text, plainTextContent);
+                msg.AddContent(MimeType.Text, plainTextContent!);
             }
 
             if (!string.IsNullOrEmpty(htmlContent))
             {
-                msg.AddContent(MimeType.Html, htmlContent);
+                msg.AddContent(MimeType.Html, htmlContent!);
             }
 
             msg.AddTo(to);
@@ -62,10 +62,10 @@ namespace SendGrid.Helpers.Mail
         /// <param name="dynamicTemplateData">The data with which to populate the dynamic template.</param>
         /// <returns>A SendGridMessage object.</returns>
         public static SendGridMessage CreateSingleTemplateEmail(
-                                                        EmailAddress from,
-                                                        EmailAddress to,
-                                                        string templateId,
-                                                        object dynamicTemplateData)
+            EmailAddress from,
+            EmailAddress to,
+            string templateId,
+            object? dynamicTemplateData)
         {
             if (string.IsNullOrWhiteSpace(templateId))
             {
@@ -95,23 +95,23 @@ namespace SendGrid.Helpers.Mail
         /// <param name="htmlContent">The text/html content of the email body.</param>
         /// <returns>A SendGridMessage object.</returns>
         public static SendGridMessage CreateSingleEmailToMultipleRecipients(
-                                                                            EmailAddress from,
-                                                                            List<EmailAddress> tos,
-                                                                            string subject,
-                                                                            string plainTextContent,
-                                                                            string htmlContent)
+            EmailAddress from,
+            List<EmailAddress> tos,
+            string subject,
+            string? plainTextContent,
+            string? htmlContent)
         {
             var msg = new SendGridMessage();
             msg.SetFrom(from);
             msg.SetGlobalSubject(subject);
             if (!string.IsNullOrEmpty(plainTextContent))
             {
-                msg.AddContent(MimeType.Text, plainTextContent);
+                msg.AddContent(MimeType.Text, plainTextContent!);
             }
 
             if (!string.IsNullOrEmpty(htmlContent))
             {
-                msg.AddContent(MimeType.Html, htmlContent);
+                msg.AddContent(MimeType.Html, htmlContent!);
             }
 
             for (var i = 0; i < tos.Count; i++)
@@ -131,10 +131,10 @@ namespace SendGrid.Helpers.Mail
         /// <param name="dynamicTemplateData">The data with which to populate the dynamic template.</param>
         /// <returns>A SendGridMessage object.</returns>
         public static SendGridMessage CreateSingleTemplateEmailToMultipleRecipients(
-                                                                            EmailAddress from,
-                                                                            List<EmailAddress> tos,
-                                                                            string templateId,
-                                                                            object dynamicTemplateData)
+            EmailAddress from,
+            List<EmailAddress> tos,
+            string templateId,
+            object? dynamicTemplateData)
         {
             if (string.IsNullOrWhiteSpace(templateId))
             {
@@ -153,7 +153,7 @@ namespace SendGrid.Helpers.Mail
 
                 if (setDynamicTemplateDataValues)
                 {
-                    msg.SetTemplateData(dynamicTemplateData, i);
+                    msg.SetTemplateData(dynamicTemplateData!, i);
                 }
             }
 
@@ -171,12 +171,12 @@ namespace SendGrid.Helpers.Mail
         /// <param name="substitutions">Substitution key/values to customize the content for each email.</param>
         /// <returns>A SendGridMessage object.</returns>
         public static SendGridMessage CreateMultipleEmailsToMultipleRecipients(
-                                                                               EmailAddress from,
-                                                                               List<EmailAddress> tos,
-                                                                               List<string> subjects,
-                                                                               string plainTextContent,
-                                                                               string htmlContent,
-                                                                               List<Dictionary<string, string>> substitutions)
+            EmailAddress from,
+            List<EmailAddress> tos,
+            List<string> subjects,
+            string plainTextContent,
+            string htmlContent,
+            List<Dictionary<string, string>> substitutions)
         {
             var msg = new SendGridMessage();
             msg.SetFrom(from);
@@ -209,10 +209,10 @@ namespace SendGrid.Helpers.Mail
         /// <param name="dynamicTemplateData">The data with which to populate the dynamic template.</param>
         /// <returns>A SendGridMessage object.</returns>
         public static SendGridMessage CreateMultipleTemplateEmailsToMultipleRecipients(
-                                                                               EmailAddress from,
-                                                                               List<EmailAddress> tos,
-                                                                               string templateId,
-                                                                               List<object> dynamicTemplateData)
+            EmailAddress from,
+            List<EmailAddress> tos,
+            string templateId,
+            List<object>? dynamicTemplateData)
         {
             if (string.IsNullOrWhiteSpace(templateId))
             {
@@ -231,7 +231,7 @@ namespace SendGrid.Helpers.Mail
 
                 if (setDynamicTemplateDataValues)
                 {
-                    msg.SetTemplateData(dynamicTemplateData[i], i);
+                    msg.SetTemplateData(dynamicTemplateData![i], i);
                 }
             }
 
@@ -267,12 +267,12 @@ namespace SendGrid.Helpers.Mail
         /// <param name="showAllRecipients">Displays all the recipients present in the "To" section of email.The default value is false.</param>
         /// <returns>A SendGridMessage object.</returns>
         public static SendGridMessage CreateSingleEmailToMultipleRecipients(
-                                                                            EmailAddress from,
-                                                                            List<EmailAddress> tos,
-                                                                            string subject,
-                                                                            string plainTextContent,
-                                                                            string htmlContent,
-                                                                            bool showAllRecipients = false)
+            EmailAddress from,
+            List<EmailAddress> tos,
+            string subject,
+            string? plainTextContent,
+            string? htmlContent,
+            bool showAllRecipients = false)
         {
             var msg = new SendGridMessage();
             if (showAllRecipients)
@@ -281,12 +281,12 @@ namespace SendGrid.Helpers.Mail
                 msg.SetGlobalSubject(subject);
                 if (!string.IsNullOrEmpty(plainTextContent))
                 {
-                    msg.AddContent(MimeType.Text, plainTextContent);
+                    msg.AddContent(MimeType.Text, plainTextContent!);
                 }
 
                 if (!string.IsNullOrEmpty(htmlContent))
                 {
-                    msg.AddContent(MimeType.Html, htmlContent);
+                    msg.AddContent(MimeType.Html, htmlContent!);
                 }
 
                 msg.AddTos(tos);

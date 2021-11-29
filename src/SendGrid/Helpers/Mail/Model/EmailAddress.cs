@@ -26,7 +26,7 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         /// <param name="email">The email address of the sender or recipient.</param>
         /// <param name="name">The name of the sender or recipient.</param>
-        public EmailAddress(string email, string name = null)
+        public EmailAddress(string email, string? name = null)
         {
             this.Email = email;
             this.Name = name;
@@ -36,7 +36,7 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets the name of the sender or recipient.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Gets or sets the email address of the sender or recipient.
@@ -76,7 +76,7 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         /// <param name="other">The comparand email address.</param>
         /// <returns>true if the objects are equal, false if they're not.</returns>
-        public bool Equals(EmailAddress other)
+        public bool Equals(EmailAddress? other)
         {
             if (other is null)
             {
@@ -96,7 +96,7 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         /// <param name="obj">The comparand object.</param>
         /// <returns>true if the objects are equal, false if they're not.</returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is null)
             {

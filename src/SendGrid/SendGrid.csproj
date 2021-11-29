@@ -11,6 +11,9 @@
     <DebugSymbols Condition=" '$(TargetFramework)' == 'net452' ">true</DebugSymbols>
     <DebugType Condition=" '$(TargetFramework)' == 'net452' ">full</DebugType>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb;.xml</AllowedOutputExtensionsInPackageBuildOutputFolder>
+	<Nullable>enable</Nullable>
+	<WarningsAsErrors>nullable</WarningsAsErrors>
+	<LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -45,6 +48,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" Condition=" '$(OS)' != 'Windows_NT' " />
+    <PackageReference Include="Nullable" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     <PackageReference Include="starkbank-ecdsa" Version="[1.3.3, 2.0.0)" />
   </ItemGroup>

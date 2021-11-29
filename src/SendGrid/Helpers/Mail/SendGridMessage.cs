@@ -51,13 +51,13 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets a Content object with a Mime Type of text/plain.
         /// </summary>
         [JsonIgnore]
-        public string PlainTextContent { get; set; }
+        public string? PlainTextContent { get; set; }
 
         /// <summary>
         /// Gets or sets a Content object with a Mime Type of text/html.
         /// </summary>
         [JsonIgnore]
-        public string HtmlContent { get; set; }
+        public string? HtmlContent { get; set; }
 
         /// <summary>
         /// Gets or sets a list of objects in which you can specify any attachments you want to include.
@@ -130,20 +130,20 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets settings to determine how you would like to track the metrics of how your recipients interact with your email.
         /// </summary>
         [JsonProperty(PropertyName = "tracking_settings")]
-        public TrackingSettings TrackingSettings { get; set; }
+        public TrackingSettings? TrackingSettings { get; set; }
 
         /// <summary>
         /// Gets or sets an email object containing the email address and name of the individual who should receive responses to your email.
         /// </summary>
         [JsonProperty(PropertyName = "reply_to")]
-        public EmailAddress ReplyTo { get; set; }
+        public EmailAddress? ReplyTo { get; set; }
 
         /// <summary>
         /// Add a recipient email.
         /// </summary>
         /// <param name="email">Specify the recipient's email.</param>
         /// <param name="name">Specify the recipient's name.</param>
-        public void AddTo(string email, string name = null)
+        public void AddTo(string email, string? name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
                 throw new ArgumentNullException("email");
@@ -157,9 +157,9 @@ namespace SendGrid.Helpers.Mail
         /// <param name="email">An email recipient that may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the recipient email.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
-        public void AddTo(EmailAddress email, int personalizationIndex = 0, Personalization personalization = null)
+        public void AddTo(EmailAddress email, int personalizationIndex = 0, Personalization? personalization = null)
         {
-            if (email == null)
+            if (email is null)
                 throw new ArgumentNullException("email");
 
             AddTos(new List<EmailAddress> { email }, personalizationIndex, personalization);
@@ -171,7 +171,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="emails">A list of recipients. Each email object within this array may contain the recipient’s name, but must always contain the recipient’s email.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the recipient emails.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
-        public void AddTos(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
+        public void AddTos(List<EmailAddress> emails, int personalizationIndex = 0, Personalization? personalization = null)
         {
             if (emails == null)
                 throw new ArgumentNullException("emails");
@@ -179,7 +179,7 @@ namespace SendGrid.Helpers.Mail
                 throw new InvalidOperationException("Sequence contains no elements");
 
             personalization = GetPersonalization(personalizationIndex, personalization);
-            personalization.Tos = personalization.Tos ?? new List<EmailAddress>();
+            personalization.Tos ??= new List<EmailAddress>();
             personalization.Tos.AddRange(emails);
         }
 
@@ -189,7 +189,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="email">Specify the recipient's email.</param>
         /// <param name="name">Specify the recipient's name.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when the email parameter is null or whitespace</exception>
-        public void AddCc(string email, string name = null)
+        public void AddCc(string email, string? name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
                 throw new ArgumentNullException("email");
@@ -204,9 +204,9 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the cc email.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when the email parameter is null</exception>
-        public void AddCc(EmailAddress email, int personalizationIndex = 0, Personalization personalization = null)
+        public void AddCc(EmailAddress email, int personalizationIndex = 0, Personalization? personalization = null)
         {
-            if (email == null)
+            if (email is null)
                 throw new ArgumentNullException("email");
 
             AddCcs(new List<EmailAddress> { email }, personalizationIndex, personalization);
@@ -220,7 +220,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when the emails parameter is null</exception>
         /// <exception cref="System.InvalidOperationException">Thrown when the emails parameter is empty</exception>
-        public void AddCcs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
+        public void AddCcs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization? personalization = null)
         {
             if (emails == null)
                 throw new ArgumentNullException("emails");
@@ -228,7 +228,7 @@ namespace SendGrid.Helpers.Mail
                 throw new InvalidOperationException("Sequence contains no elements");
 
             personalization = GetPersonalization(personalizationIndex, personalization);
-            personalization.Ccs = personalization.Ccs ?? new List<EmailAddress>();
+            personalization.Ccs ??= new List<EmailAddress>();
             personalization.Ccs.AddRange(emails);
         }
 
@@ -238,7 +238,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="email">Specify the recipient's email.</param>
         /// <param name="name">Specify the recipient's name.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when the email parameter is null or whitespace</exception>
-        public void AddBcc(string email, string name = null)
+        public void AddBcc(string email, string? name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
                 throw new ArgumentNullException("email");
@@ -253,9 +253,9 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the bcc email.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when the email parameter is null</exception>
-        public void AddBcc(EmailAddress email, int personalizationIndex = 0, Personalization personalization = null)
+        public void AddBcc(EmailAddress email, int personalizationIndex = 0, Personalization? personalization = null)
         {
-            if (email == null)
+            if (email is null)
                 throw new ArgumentNullException("email");
 
             AddBccs(new List<EmailAddress> { email }, personalizationIndex, personalization);
@@ -269,7 +269,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when the emails parameter is null</exception>
         /// <exception cref="System.InvalidOperationException">Thrown when the emails parameter is empty</exception>
-        public void AddBccs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization personalization = null)
+        public void AddBccs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization? personalization = null)
         {
             if (emails == null)
                 throw new ArgumentNullException("emails");
@@ -277,7 +277,7 @@ namespace SendGrid.Helpers.Mail
                 throw new InvalidOperationException("Sequence contains no elements");
 
             personalization = GetPersonalization(personalizationIndex, personalization);
-            personalization.Bccs = personalization.Bccs ?? new List<EmailAddress>();
+            personalization.Bccs ??= new List<EmailAddress>();
             personalization.Bccs.AddRange(emails);
         }
 
@@ -287,7 +287,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="subject">The subject line of your email.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the subject.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
-        public void SetSubject(string subject, int personalizationIndex = 0, Personalization personalization = null)
+        public void SetSubject(string subject, int personalizationIndex = 0, Personalization? personalization = null)
         {
             personalization = GetPersonalization(personalizationIndex, personalization);
             personalization.Subject = subject;
@@ -300,7 +300,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="headerValue">Header value.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the header.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
-        public void AddHeader(string headerKey, string headerValue, int personalizationIndex = 0, Personalization personalization = null)
+        public void AddHeader(string headerKey, string headerValue, int personalizationIndex = 0, Personalization? personalization = null)
         {
             AddHeaders(new Dictionary<string, string> { { headerKey, headerValue } }, personalizationIndex, personalization);
         }
@@ -311,7 +311,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="headers">A list of Headers.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the headers.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
-        public void AddHeaders(Dictionary<string, string> headers, int personalizationIndex = 0, Personalization personalization = null)
+        public void AddHeaders(Dictionary<string, string> headers, int personalizationIndex = 0, Personalization? personalization = null)
         {
             personalization = GetPersonalization(personalizationIndex, personalization);
             personalization.Headers = personalization.Headers == null ? headers :
@@ -326,7 +326,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="substitutionValue">The substitution value.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the substitution.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
-        public void AddSubstitution(string substitutionKey, string substitutionValue, int personalizationIndex = 0, Personalization personalization = null)
+        public void AddSubstitution(string substitutionKey, string substitutionValue, int personalizationIndex = 0, Personalization? personalization = null)
         {
             AddSubstitutions(new Dictionary<string, string> { { substitutionKey, substitutionValue } }, personalizationIndex, personalization);
         }
@@ -337,7 +337,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="substitutions">A list of Substitutions.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the substitutions.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
-        public void AddSubstitutions(Dictionary<string, string> substitutions, int personalizationIndex = 0, Personalization personalization = null)
+        public void AddSubstitutions(Dictionary<string, string> substitutions, int personalizationIndex = 0, Personalization? personalization = null)
         {
             personalization = GetPersonalization(personalizationIndex, personalization);
             personalization.Substitutions = personalization.Substitutions == null ? substitutions :
@@ -350,7 +350,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="dynamicTemplateData">A Template Data object.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the substitutions.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
-        public void SetTemplateData(object dynamicTemplateData, int personalizationIndex = 0, Personalization personalization = null)
+        public void SetTemplateData(object dynamicTemplateData, int personalizationIndex = 0, Personalization? personalization = null)
         {
             personalization = GetPersonalization(personalizationIndex, personalization);
             personalization.TemplateData = dynamicTemplateData;
@@ -363,7 +363,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="customArgValue">The custom argument value.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the custom arg.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
-        public void AddCustomArg(string customArgKey, string customArgValue, int personalizationIndex = 0, Personalization personalization = null)
+        public void AddCustomArg(string customArgKey, string customArgValue, int personalizationIndex = 0, Personalization? personalization = null)
         {
             AddCustomArgs(new Dictionary<string, string> { { customArgKey, customArgValue } }, personalizationIndex, personalization);
         }
@@ -374,7 +374,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="customArgs">A list of CustomArgs.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the custom args.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
-        public void AddCustomArgs(Dictionary<string, string> customArgs, int personalizationIndex = 0, Personalization personalization = null)
+        public void AddCustomArgs(Dictionary<string, string> customArgs, int personalizationIndex = 0, Personalization? personalization = null)
         {
             personalization = GetPersonalization(personalizationIndex, personalization);
             personalization.CustomArgs = personalization.CustomArgs == null ? customArgs :
@@ -387,7 +387,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="sendAt">Specify the unix timestamp for when you want the email to be sent from Twilio SendGrid.</param>
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the send at timestamp.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
-        public void SetSendAt(long sendAt, int personalizationIndex = 0, Personalization personalization = null)
+        public void SetSendAt(long sendAt, int personalizationIndex = 0, Personalization? personalization = null)
         {
             personalization = GetPersonalization(personalizationIndex, personalization);
             personalization.SendAt = sendAt;
@@ -399,7 +399,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalizationIndex">Specify the index of the Personalization object where you want to add the send at timestamp.</param>
         /// <param name="personalization">A personalization object to append to the message.</param>
         /// <returns>The Personalization.</returns>
-        private Personalization GetPersonalization(int personalizationIndex = 0, Personalization personalization = null)
+        private Personalization GetPersonalization(int personalizationIndex = 0, Personalization? personalization = null)
         {
             if (personalization != null)
             {
@@ -431,7 +431,7 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         /// <param name="email">Specify the recipient's email.</param>
         /// <param name="name">Specify the recipient's name.</param>
-        public void SetFrom(string email, string name = null)
+        public void SetFrom(string email, string? name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
             {
@@ -525,7 +525,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="content_id">A unique id that you specify for the attachment. This is used when the disposition is set to "inline" and the attachment is an image, allowing the file to be displayed within the body of your email. Ex: <![CDATA[ <img src="cid:ii_139db99fdb5c3704"></img> ]]>.</param>
         /// <param name="cancellationToken">A cancellation token which can notify if the task should be canceled.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public async Task AddAttachmentAsync(string filename, Stream contentStream, string type = null, string disposition = null, string content_id = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task AddAttachmentAsync(string filename, Stream contentStream, string? type = null, string? disposition = null, string? content_id = null, CancellationToken cancellationToken = default)
         {
             // Stream doesn't want us to read it, can't do anything else here
             if (contentStream == null || !contentStream.CanRead)
@@ -551,10 +551,11 @@ namespace SendGrid.Helpers.Mail
         /// <param name="type">The mime type of the content you are attaching. For example, application/pdf or image/jpeg.</param>
         /// <param name="disposition">The content-disposition of the attachment specifying how you would like the attachment to be displayed. For example, "inline" results in the attached file being displayed automatically within the message while "attachment" results in the attached file requiring some action to be taken before it is displayed (e.g. opening or downloading the file). Defaults to "attachment". Can be either "attachment" or "inline".</param>
         /// <param name="content_id">A unique id that you specify for the attachment. This is used when the disposition is set to "inline" and the attachment is an image, allowing the file to be displayed within the body of your email. Ex: <![CDATA[ <img src="cid:ii_139db99fdb5c3704"></img> ]]>.</param>
-        public void AddAttachment(string filename, string base64Content, string type = null, string disposition = null, string content_id = null)
+        public void AddAttachment(string filename, string base64Content, string? type = null, string? disposition = null, string? content_id = null)
         {
             if (string.IsNullOrWhiteSpace(filename) || string.IsNullOrWhiteSpace(base64Content))
             {
+                // Shouldn't this throw?
                 return;
             }
 
@@ -576,11 +577,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="attachment">An Attachment.</param>
         public void AddAttachment(Attachment attachment)
         {
-            if (this.Attachments == null)
-            {
-                this.Attachments = new List<Attachment>();
-            }
-
+            this.Attachments ??= new();
             this.Attachments.Add(attachment);
         }
 
@@ -590,11 +587,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="attachments">A list of Attachments.</param>
         public void AddAttachments(IEnumerable<Attachment> attachments)
         {
-            if (this.Attachments == null)
-            {
-                this.Attachments = new List<Attachment>();
-            }
-
+            this.Attachments ??= new();
             this.Attachments.AddRange(attachments);
         }
 
@@ -799,7 +792,7 @@ namespace SendGrid.Helpers.Mail
         /// An array containing the unsubscribe groups that you would like to be displayed on the unsubscribe preferences page.
         /// https://sendgrid.com/docs/User_Guide/Suppressions/recipient_subscription_preferences.html.
         /// </param>
-        public void SetAsm(int groupID, List<int> groupsToDisplay = null)
+        public void SetAsm(int groupID, List<int>? groupsToDisplay = null)
         {
             this.Asm = new ASM();
             this.Asm.GroupId = groupID;
@@ -828,12 +821,8 @@ namespace SendGrid.Helpers.Mail
         /// <param name="email">The email address that you would like to receive the BCC.</param>
         public void SetBccSetting(bool enable, string email)
         {
-            if (this.MailSettings == null)
-            {
-                this.MailSettings = new MailSettings();
-            }
-
-            this.MailSettings.BccSettings = new BCCSettings()
+            this.MailSettings ??= new MailSettings();
+            this.MailSettings.BccSettings = new BCCSettings
             {
                 Enable = enable,
                 Email = email,
@@ -848,12 +837,8 @@ namespace SendGrid.Helpers.Mail
         /// <param name="enable">Gets or sets a value indicating whether this setting is enabled.</param>
         public void SetBypassListManagement(bool enable)
         {
-            if (this.MailSettings == null)
-            {
-                this.MailSettings = new MailSettings();
-            }
-
-            this.MailSettings.BypassListManagement = new BypassListManagement()
+            this.MailSettings ??= new MailSettings();
+            this.MailSettings.BypassListManagement = new BypassListManagement
             {
                 Enable = enable,
             };
@@ -867,14 +852,10 @@ namespace SendGrid.Helpers.Mail
         /// <param name="enable">Gets or sets a value indicating whether this setting is enabled.</param>
         /// <param name="html">The HTML content of your footer.</param>
         /// <param name="text">The plain text content of your footer.</param>
-        public void SetFooterSetting(bool enable, string html = null, string text = null)
+        public void SetFooterSetting(bool enable, string? html = null, string? text = null)
         {
-            if (this.MailSettings == null)
-            {
-                this.MailSettings = new MailSettings();
-            }
-
-            this.MailSettings.FooterSettings = new FooterSettings()
+            this.MailSettings ??= new MailSettings();
+            this.MailSettings.FooterSettings = new FooterSettings
             {
                 Enable = enable,
                 Html = html,
@@ -890,12 +871,8 @@ namespace SendGrid.Helpers.Mail
         /// <param name="enable">Gets or sets a value indicating whether this setting is enabled.</param>
         public void SetSandBoxMode(bool enable)
         {
-            if (this.MailSettings == null)
-            {
-                this.MailSettings = new MailSettings();
-            }
-
-            this.MailSettings.SandboxMode = new SandboxMode()
+            this.MailSettings ??= new MailSettings();
+            this.MailSettings.SandboxMode = new SandboxMode
             {
                 Enable = enable,
             };
@@ -909,14 +886,10 @@ namespace SendGrid.Helpers.Mail
         /// <param name="enable">Gets or sets a value indicating whether this setting is enabled.</param>
         /// <param name="threshold">The threshold used to determine if your content qualifies as spam on a scale from 1 to 10, with 10 being most strict, or most likely to be considered as spam.</param>
         /// <param name="postToUrl">An Inbound Parse URL that you would like a copy of your email along with the spam report to be sent to. The post_to_url parameter must start with http:// or https://.</param>
-        public void SetSpamCheck(bool enable, int threshold = 1, string postToUrl = null)
+        public void SetSpamCheck(bool enable, int threshold = 1, string? postToUrl = null)
         {
-            if (this.MailSettings == null)
-            {
-                this.MailSettings = new MailSettings();
-            }
-
-            this.MailSettings.SpamCheck = new SpamCheck()
+            this.MailSettings ??= new MailSettings();
+            this.MailSettings.SpamCheck = new SpamCheck
             {
                 Enable = enable,
                 Threshold = threshold,
@@ -933,12 +906,8 @@ namespace SendGrid.Helpers.Mail
         /// <param name="enableText">Indicates if this setting should be included in the text/plain portion of your email.</param>
         public void SetClickTracking(bool enable, bool enableText)
         {
-            if (this.TrackingSettings == null)
-            {
-                this.TrackingSettings = new TrackingSettings();
-            }
-
-            this.TrackingSettings.ClickTracking = new ClickTracking()
+            this.TrackingSettings ??= new TrackingSettings();
+            this.TrackingSettings.ClickTracking = new ClickTracking
             {
                 Enable = enable,
                 EnableText = enableText,
@@ -952,14 +921,10 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         /// <param name="enable">Gets or sets a value indicating whether this setting is enabled.</param>
         /// <param name="substitutionTag">Allows you to specify a substitution tag that you can insert in the body of your email at a location that you desire. This tag will be replaced by the open tracking pixel.</param>
-        public void SetOpenTracking(bool enable, string substitutionTag = null)
+        public void SetOpenTracking(bool enable, string? substitutionTag = null)
         {
-            if (this.TrackingSettings == null)
-            {
-                this.TrackingSettings = new TrackingSettings();
-            }
-
-            this.TrackingSettings.OpenTracking = new OpenTracking()
+            this.TrackingSettings ??= new TrackingSettings();
+            this.TrackingSettings.OpenTracking = new OpenTracking
             {
                 Enable = enable,
                 SubstitutionTag = substitutionTag,
@@ -975,14 +940,10 @@ namespace SendGrid.Helpers.Mail
         /// <param name="html">HTML to be appended to the email, with the subscription tracking link. You may control where the link is by using the tag <![CDATA[ <% %> ]]>.</param>
         /// <param name="text">Text to be appended to the email, with the subscription tracking link. You may control where the link is by using the tag <![CDATA[ <% %> ]]>.</param>
         /// <param name="substitutionTag">A tag that will be replaced with the unsubscribe URL. for example: [unsubscribe_url]. If this parameter is used, it will override both the textand html parameters. The URL of the link will be placed at the substitution tag’s location, with no additional formatting.</param>
-        public void SetSubscriptionTracking(bool enable, string html = null, string text = null, string substitutionTag = null)
+        public void SetSubscriptionTracking(bool enable, string? html = null, string? text = null, string? substitutionTag = null)
         {
-            if (this.TrackingSettings == null)
-            {
-                this.TrackingSettings = new TrackingSettings();
-            }
-
-            this.TrackingSettings.SubscriptionTracking = new SubscriptionTracking()
+            this.TrackingSettings ??= new TrackingSettings();
+            this.TrackingSettings.SubscriptionTracking = new SubscriptionTracking
             {
                 Enable = enable,
                 SubstitutionTag = substitutionTag,
@@ -1002,14 +963,10 @@ namespace SendGrid.Helpers.Mail
         /// <param name="utmMedium">Name of the marketing medium (e.g. Email).</param>
         /// <param name="utmSource">Name of the referrer source (e.g. Google, SomeDomain.com, or Marketing Email).</param>
         /// <param name="utmTerm">Used to identify any paid keywords.</param>
-        public void SetGoogleAnalytics(bool enable, string utmCampaign = null, string utmContent = null, string utmMedium = null, string utmSource = null, string utmTerm = null)
+        public void SetGoogleAnalytics(bool enable, string? utmCampaign = null, string? utmContent = null, string? utmMedium = null, string? utmSource = null, string? utmTerm = null)
         {
-            if (this.TrackingSettings == null)
-            {
-                this.TrackingSettings = new TrackingSettings();
-            }
-
-            this.TrackingSettings.Ganalytics = new Ganalytics()
+            this.TrackingSettings ??= new TrackingSettings();
+            this.TrackingSettings.Ganalytics = new Ganalytics
             {
                 Enable = enable,
                 UtmCampaign = utmCampaign,

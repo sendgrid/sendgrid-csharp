@@ -90,9 +90,9 @@ namespace SendGrid.Helpers.Errors
             var errorStatusCode = (int)message.StatusCode;
             var errorReasonPhrase = message.ReasonPhrase;
 
-            string errorValue = null;
-            string fieldValue = null;
-            string helpValue = null;
+            string? errorValue = null;
+            string? fieldValue = null;
+            string? helpValue = null;
 
             if (message.Content != null)
             {
@@ -139,7 +139,7 @@ namespace SendGrid.Helpers.Errors
                 }
             }
 
-            SendGridErrorResponse errorResponse = new SendGridErrorResponse
+            SendGridErrorResponse errorResponse = new()
             {
                 ErrorHttpStatusCode = errorStatusCode,
                 ErrorReasonPhrase = errorReasonPhrase,

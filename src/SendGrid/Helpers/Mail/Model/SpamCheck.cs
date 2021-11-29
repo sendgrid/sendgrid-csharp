@@ -29,6 +29,6 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets an Inbound Parse URL that you would like a copy of your email along with the spam report to be sent to. The post_to_url parameter must start with http:// or https://.
         /// </summary>
         [JsonProperty(PropertyName = "post_to_url")]
-        public string PostToUrl { get; set; }
+        public string? PostToUrl { get; set; }
     }
 }
