@@ -45,7 +45,7 @@ namespace SendGrid
         /// <param name="request">The parameters for the API call.</param>
         /// <param name="cancellationToken">Cancel the asynchronous call.</param>
         /// <returns>Response object.</returns>
-        Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Prepare for async call to the API server.
@@ -66,6 +66,6 @@ namespace SendGrid
         /// <param name="msg">A SendGridMessage object with the details for the request.</param>
         /// <param name="cancellationToken">Cancel the asynchronous call.</param>
         /// <returns>A Response object.</returns>
-        Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default);
     }
 }

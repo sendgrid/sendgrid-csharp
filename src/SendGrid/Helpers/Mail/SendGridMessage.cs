@@ -146,7 +146,7 @@ namespace SendGrid.Helpers.Mail
         public void AddTo(string email, string? name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
-                throw new ArgumentNullException("email");
+                throw new ArgumentNullException(nameof(email));
 
             this.AddTo(new EmailAddress(email, name));
         }
@@ -160,7 +160,7 @@ namespace SendGrid.Helpers.Mail
         public void AddTo(EmailAddress email, int personalizationIndex = 0, Personalization? personalization = null)
         {
             if (email is null)
-                throw new ArgumentNullException("email");
+                throw new ArgumentNullException(nameof(email));
 
             AddTos(new List<EmailAddress> { email }, personalizationIndex, personalization);
         }
@@ -174,7 +174,7 @@ namespace SendGrid.Helpers.Mail
         public void AddTos(List<EmailAddress> emails, int personalizationIndex = 0, Personalization? personalization = null)
         {
             if (emails == null)
-                throw new ArgumentNullException("emails");
+                throw new ArgumentNullException(nameof(emails));
             if (emails.Count == 0)
                 throw new InvalidOperationException("Sequence contains no elements");
 
@@ -192,7 +192,7 @@ namespace SendGrid.Helpers.Mail
         public void AddCc(string email, string? name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
-                throw new ArgumentNullException("email");
+                throw new ArgumentNullException(nameof(email));
 
             this.AddCc(new EmailAddress(email, name));
         }
@@ -207,7 +207,7 @@ namespace SendGrid.Helpers.Mail
         public void AddCc(EmailAddress email, int personalizationIndex = 0, Personalization? personalization = null)
         {
             if (email is null)
-                throw new ArgumentNullException("email");
+                throw new ArgumentNullException(nameof(email));
 
             AddCcs(new List<EmailAddress> { email }, personalizationIndex, personalization);
         }
@@ -223,7 +223,7 @@ namespace SendGrid.Helpers.Mail
         public void AddCcs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization? personalization = null)
         {
             if (emails == null)
-                throw new ArgumentNullException("emails");
+                throw new ArgumentNullException(nameof(emails));
             if (emails.Count == 0)
                 throw new InvalidOperationException("Sequence contains no elements");
 
@@ -241,7 +241,7 @@ namespace SendGrid.Helpers.Mail
         public void AddBcc(string email, string? name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
-                throw new ArgumentNullException("email");
+                throw new ArgumentNullException(nameof(email));
 
             this.AddBcc(new EmailAddress(email, name));
         }
@@ -256,7 +256,7 @@ namespace SendGrid.Helpers.Mail
         public void AddBcc(EmailAddress email, int personalizationIndex = 0, Personalization? personalization = null)
         {
             if (email is null)
-                throw new ArgumentNullException("email");
+                throw new ArgumentNullException(nameof(email));
 
             AddBccs(new List<EmailAddress> { email }, personalizationIndex, personalization);
         }
@@ -272,7 +272,7 @@ namespace SendGrid.Helpers.Mail
         public void AddBccs(List<EmailAddress> emails, int personalizationIndex = 0, Personalization? personalization = null)
         {
             if (emails == null)
-                throw new ArgumentNullException("emails");
+                throw new ArgumentNullException(nameof(emails));
             if (emails.Count == 0)
                 throw new InvalidOperationException("Sequence contains no elements");
 
@@ -435,7 +435,7 @@ namespace SendGrid.Helpers.Mail
         {
             if (string.IsNullOrWhiteSpace(email))
             {
-                throw new ArgumentNullException("email");
+                throw new ArgumentNullException(nameof(email));
             }
 
             this.SetFrom(new EmailAddress(email, name));
@@ -1018,16 +1018,14 @@ namespace SendGrid.Helpers.Mail
 
                         if (this.Contents[i].Type == MimeType.Html)
                         {
-                            var tempContent = new Content();
-                            tempContent = this.Contents[i];
+                            var tempContent = this.Contents[i];
                             this.Contents.RemoveAt(i);
                             this.Contents.Insert(0, tempContent);
                         }
 
                         if (this.Contents[i].Type == MimeType.Text)
                         {
-                            var tempContent = new Content();
-                            tempContent = this.Contents[i];
+                            var tempContent = this.Contents[i];
                             this.Contents.RemoveAt(i);
                             this.Contents.Insert(0, tempContent);
                         }

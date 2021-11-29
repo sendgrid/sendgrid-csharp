@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace SendGrid.Permissions
 {
     partial class SendGridPermissionsBuilder
     {
-        private readonly Dictionary<SendGridPermission, string[]> allPermissions = new Dictionary<SendGridPermission, string[]>
+        private readonly Dictionary<SendGridPermission, string[]> allPermissions = new()
         {
             #region Admin
             { SendGridPermission.Admin, new []

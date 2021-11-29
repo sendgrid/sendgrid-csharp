@@ -16,7 +16,7 @@ namespace SendGrid.Helpers.Mail
     {
         private const string NameGroup = "name";
         private const string EmailGroup = "email";
-        private static readonly Regex Rfc2822Regex = new Regex(
+        private static readonly Regex Rfc2822Regex = new(
             $@"(?:(?<{NameGroup}>[^\<]*)\<(?<{EmailGroup}>.*@.*)\>|(?<{NameGroup}>)(?<{EmailGroup}>[^\<]*@.*[^\>]))",
             RegexOptions.ECMAScript);
 

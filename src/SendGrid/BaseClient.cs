@@ -151,7 +151,7 @@ namespace SendGrid
         /// <param name="request">The parameters for the API call.</param>
         /// <param name="cancellationToken">Cancel the asynchronous call.</param>
         /// <returns>Response object.</returns>
-        public virtual async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default)
         {
             HttpResponseMessage response = await this.client.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
@@ -229,7 +229,7 @@ namespace SendGrid
         /// <param name="msg">A SendGridMessage object with the details for the request.</param>
         /// <param name="cancellationToken">Cancel the asynchronous call.</param>
         /// <returns>A Response object.</returns>
-        public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Response> SendEmailAsync(SendGridMessage msg, CancellationToken cancellationToken = default)
         {
             return await this.RequestAsync(
                 Method.POST,
