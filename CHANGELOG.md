@@ -1,6 +1,13 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2021-12-01] Version 9.25.1
+---------------------------
+**Library - Chore**
+- [PR #1141](https://github.com/sendgrid/sendgrid-csharp/pull/1141): [Snyk] Fix for 6 vulnerabilities. Thanks to [@svcprodsec-sendgrid](https://github.com/svcprodsec-sendgrid)!
+- [PR #1142](https://github.com/sendgrid/sendgrid-csharp/pull/1142): migrate to GitHub Actions. Thanks to [@eshanholtz](https://github.com/eshanholtz)!
+
+
 [2021-11-17] Version 9.25.0
 ---------------------------
 **Library - Chore**
