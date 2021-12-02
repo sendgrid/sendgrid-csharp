@@ -21,8 +21,7 @@ namespace SendGrid
         /// <param name="username">Your Twilio Email API key SID or Account SID.</param>
         /// <param name="password">Your Twilio Email API key secret or Account Auth Token.</param>
         /// </summary>
-        public TwilioEmailClientOptions(string username, string password)
-        : this()
+        public TwilioEmailClientOptions(string username, string password) : this()
         {
             if (string.IsNullOrWhiteSpace(username))
             {

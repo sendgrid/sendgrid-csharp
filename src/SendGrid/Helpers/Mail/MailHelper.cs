@@ -174,20 +174,20 @@ namespace SendGrid.Helpers.Mail
             EmailAddress from,
             List<EmailAddress> tos,
             List<string> subjects,
-            string plainTextContent,
-            string htmlContent,
+            string? plainTextContent,
+            string? htmlContent,
             List<Dictionary<string, string>> substitutions)
         {
             var msg = new SendGridMessage();
             msg.SetFrom(from);
             if (!string.IsNullOrEmpty(plainTextContent))
             {
-                msg.AddContent(MimeType.Text, plainTextContent);
+                msg.AddContent(MimeType.Text, plainTextContent!);
             }
 
             if (!string.IsNullOrEmpty(htmlContent))
             {
-                msg.AddContent(MimeType.Html, htmlContent);
+                msg.AddContent(MimeType.Html, htmlContent!);
             }
 
             for (var i = 0; i < tos.Count; i++)

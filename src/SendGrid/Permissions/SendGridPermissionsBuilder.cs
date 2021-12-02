@@ -9,9 +9,9 @@
     /// </summary>
     public sealed partial class SendGridPermissionsBuilder
     {
-        private readonly List<Func<string, bool>> excludeFilters;
+        private readonly List<Func<string, bool>> excludeFilters = new();
 
-        private readonly List<string> addedScopes;
+        private readonly List<string> addedScopes = new();
 
         private readonly HashSet<string> allScopes;
 
@@ -20,8 +20,6 @@
         /// </summary>
         public SendGridPermissionsBuilder()
         {
-            this.excludeFilters = new List<Func<string, bool>>();
-            this.addedScopes = new List<string>();
             this.allScopes = new HashSet<string>(this.allPermissions.SelectMany(x => x.Value));
         }
 
@@ -82,7 +80,7 @@
         /// </summary>
         /// <param name="scopes">The list of scopes to include.</param>
         /// <returns>The builder instance with the scopes included.</returns>
-        public SendGridPermissionsBuilder Include(params string[] scopes)
+        public SendGridPermissionsBuilder Include(params string[]? scopes)
         {
             if (scopes is null || !scopes.Any())
             {
@@ -140,6 +138,6 @@
 
         private bool IsValidScope(string scope) => this.allScopes.Contains(scope);
 
-        private bool IsMutualyExclusive(string scope) => scope?.StartsWith("billing") ?? false;
+        private bool IsMutualyExclusive(string? scope) => scope?.StartsWith("billing") ?? false;
     }
 }
