@@ -319,6 +319,9 @@
             msg.SetBatchId("some_batch_id");
             msg.SetBccSetting(true, "test@example.com");
             msg.SetBypassListManagement(true);
+            msg.SetBypassSpamManagement(true);
+            msg.SetBypassBounceManagement(true);
+            msg.SetBypassUnsubscribeManagement(true);
             msg.SetFooterSetting(true, "Some Footer HTML", "Some Footer Text");
             msg.SetSandBoxMode(true);
             msg.SetSpamCheck(true, 1, "https://gotchya.example.com");
@@ -335,7 +338,7 @@
                                    "some source",
                                    "some term");
             msg.SetReplyTo(new EmailAddress("test+reply@example.com", "Reply To Me"));
-            Assert.Equal("{\"from\":{\"name\":\"Example User1\",\"email\":\"test1@example.com\"},\"subject\":\"Hello World from the Twilio SendGrid CSharp Library\",\"personalizations\":[{\"to\":[{\"name\":\"Example User2\",\"email\":\"test2@example.com\"},{\"name\":\"Example User-2\",\"email\":\"test-2@example.com\"},{\"name\":\"Example User3\",\"email\":\"test3@example.com\"},{\"name\":\"Example User4\",\"email\":\"test4@example.com\"},{\"name\":\"Example User5\",\"email\":\"test5@example.com\"}],\"cc\":[{\"name\":\"Example User6\",\"email\":\"test6@example.com\"},{\"name\":\"Example User7\",\"email\":\"test7@example.com\"},{\"name\":\"Example User8\",\"email\":\"test8@example.com\"},{\"name\":\"Example User9\",\"email\":\"test9@example.com\"},{\"name\":\"Example User-9\",\"email\":\"test-9@example.com\"}],\"bcc\":[{\"name\":\"Example User10\",\"email\":\"test10example.com\"},{\"name\":\"Example User11\",\"email\":\"test11@example.com\"},{\"name\":\"Example User12\",\"email\":\"test12@example.com\"},{\"name\":\"Example User13\",\"email\":\"test13@example.com\"},{\"name\":\"Example User-13\",\"email\":\"test-13@example.com\"}],\"subject\":\"Thank you for signing up, % name %\",\"headers\":{\"X-Test1\":\"True1\",\"X-Test2\":\"Test2\",\"X-Test3\":\"True3\",\"X-Test4\":\"True4\"},\"substitutions\":{\"%name1%\":\"Example User1\",\"%city2%\":\"Denver1\",\"%name3%\":\"Example User2\",\"%city4%\":\"Orange1\"},\"custom_args\":{\"marketing1\":\"false\",\"transactional1\":\"true\",\"marketing2\":\"true\",\"transactional2\":\"false\"},\"send_at\":1461775051},{\"to\":[{\"name\":\"Example User14\",\"email\":\"test14@example.com\"},{\"name\":\"Example User15\",\"email\":\"test15@example.com\"},{\"name\":\"Example User16\",\"email\":\"test16@example.com\"},{\"name\":\"Example User17\",\"email\":\"test17@example.com\"}],\"cc\":[{\"name\":\"Example User18\",\"email\":\"test18@example.com\"},{\"name\":\"Example User19\",\"email\":\"test19@example.com\"},{\"name\":\"Example User20\",\"email\":\"test20@example.com\"},{\"name\":\"Example User21\",\"email\":\"test21@example.com\"}],\"bcc\":[{\"name\":\"Example User22\",\"email\":\"test22example.com\"},{\"name\":\"Example User23\",\"email\":\"test23@example.com\"},{\"name\":\"Example User24\",\"email\":\"test24@example.com\"},{\"name\":\"Example User25\",\"email\":\"test25@example.com\"}],\"subject\":\"Thank you for signing up, % name % 2\",\"headers\":{\"X-Test5\":\"True5\",\"X-Test6\":\"Test6\",\"X-Test7\":\"True7\",\"X-Test8\":\"True8\"},\"substitutions\":{\"%name5%\":\"Example User5\",\"%city6%\":\"Denver6\",\"%name7%\":\"Example User7\",\"%city8%\":\"Orange8\"},\"custom_args\":{\"marketing3\":\"false\",\"transactional3\":\"true\",\"marketing4\":\"true\",\"transactional4\":\"false\"},\"send_at\":1461775052},{\"to\":[{\"name\":\"Example User26\",\"email\":\"test26@example.com\"},{\"name\":\"Example User27\",\"email\":\"test27@example.com\"},{\"name\":\"Example User28\",\"email\":\"test28@example.com\"},{\"name\":\"Example User29\",\"email\":\"test29@example.com\"}],\"cc\":[{\"name\":\"Example User30\",\"email\":\"test30@example.com\"},{\"name\":\"Example User31\",\"email\":\"test31@example.com\"},{\"name\":\"Example User32\",\"email\":\"test32@example.com\"},{\"name\":\"Example User33\",\"email\":\"test33@example.com\"}],\"bcc\":[{\"name\":\"Example User34\",\"email\":\"test34example.com\"},{\"name\":\"Example User35\",\"email\":\"test35@example.com\"},{\"name\":\"Example User36\",\"email\":\"test36@example.com\"},{\"name\":\"Example User37\",\"email\":\"test37@example.com\"}],\"subject\":\"Thank you for signing up, % name % 3\",\"headers\":{\"X-Test7\":\"True7\",\"X-Test8\":\"Test8\",\"X-Test9\":\"True9\",\"X-Test10\":\"True10\"},\"substitutions\":{\"%name9%\":\"Example User9\",\"%city10%\":\"Denver10\",\"%name11%\":\"Example User11\",\"%city12%\":\"Orange12\"},\"custom_args\":{\"marketing5\":\"false\",\"transactional5\":\"true\",\"marketing6\":\"true\",\"transactional6\":\"false\"},\"send_at\":1461775053}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Textual content\"},{\"type\":\"text/html\",\"value\":\"HTML content\"},{\"type\":\"text/calendar\",\"value\":\"Party Time!!\"},{\"type\":\"text/calendar2\",\"value\":\"Party Time2!!\"}],\"attachments\":[{\"content\":\"TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gQ3JhcyBwdW12\",\"type\":\"application/pdf\",\"filename\":\"balance_001.pdf\",\"disposition\":\"attachment\",\"content_id\":\"Balance Sheet\"},{\"content\":\"BwdW\",\"type\":\"image/png\",\"filename\":\"banner.png\",\"disposition\":\"inline\",\"content_id\":\"Banner\"},{\"content\":\"BwdW2\",\"type\":\"image/png\",\"filename\":\"banner2.png\",\"disposition\":\"inline\",\"content_id\":\"Banner 2\"}],\"template_id\":\"13b8f94f-bcae-4ec6-b752-70d6cb59f932\",\"headers\":{\"X-Day\":\"Monday\",\"X-Month\":\"January\",\"X-Year\":\"2017\"},\"sections\":{\"%section1\":\"Substitution for Section 1 Tag\",\"%section2%\":\"Substitution for Section 2 Tag\",\"%section3%\":\"Substitution for Section 3 Tag\"},\"categories\":[\"customer\",\"vip\",\"new_account\"],\"custom_args\":{\"campaign\":\"welcome\",\"sequence2\":\"2\",\"sequence3\":\"3\"},\"send_at\":1461775051,\"asm\":{\"group_id\":3,\"groups_to_display\":[1,4,5]},\"batch_id\":\"some_batch_id\",\"ip_pool_name\":\"23\",\"mail_settings\":{\"bcc\":{\"enable\":true,\"email\":\"test@example.com\"},\"bypass_list_management\":{\"enable\":true},\"footer\":{\"enable\":true,\"text\":\"Some Footer Text\",\"html\":\"Some Footer HTML\"},\"sandbox_mode\":{\"enable\":true},\"spam_check\":{\"enable\":true,\"threshold\":1,\"post_to_url\":\"https://gotchya.example.com\"}},\"tracking_settings\":{\"click_tracking\":{\"enable\":true,\"enable_text\":false},\"open_tracking\":{\"enable\":true,\"substitution_tag\":\"Optional tag to replace with the open image in the body of the message\"},\"subscription_tracking\":{\"enable\":true,\"text\":\"text to insert into the text/plain portion of the message\",\"html\":\"HTML to insert into the text / html portion of the message\",\"substitution_tag\":\"substitution tag\"},\"ganalytics\":{\"enable\":true,\"utm_source\":\"some source\",\"utm_medium\":\"some medium\",\"utm_term\":\"some term\",\"utm_content\":\"some content\",\"utm_campaign\":\"some campaign\"}},\"reply_to\":{\"name\":\"Reply To Me\",\"email\":\"test+reply@example.com\"}}", msg.Serialize(useDefaultSerialization));
+            Assert.Equal("{\"from\":{\"name\":\"Example User1\",\"email\":\"test1@example.com\"},\"subject\":\"Hello World from the Twilio SendGrid CSharp Library\",\"personalizations\":[{\"to\":[{\"name\":\"Example User2\",\"email\":\"test2@example.com\"},{\"name\":\"Example User-2\",\"email\":\"test-2@example.com\"},{\"name\":\"Example User3\",\"email\":\"test3@example.com\"},{\"name\":\"Example User4\",\"email\":\"test4@example.com\"},{\"name\":\"Example User5\",\"email\":\"test5@example.com\"}],\"cc\":[{\"name\":\"Example User6\",\"email\":\"test6@example.com\"},{\"name\":\"Example User7\",\"email\":\"test7@example.com\"},{\"name\":\"Example User8\",\"email\":\"test8@example.com\"},{\"name\":\"Example User9\",\"email\":\"test9@example.com\"},{\"name\":\"Example User-9\",\"email\":\"test-9@example.com\"}],\"bcc\":[{\"name\":\"Example User10\",\"email\":\"test10example.com\"},{\"name\":\"Example User11\",\"email\":\"test11@example.com\"},{\"name\":\"Example User12\",\"email\":\"test12@example.com\"},{\"name\":\"Example User13\",\"email\":\"test13@example.com\"},{\"name\":\"Example User-13\",\"email\":\"test-13@example.com\"}],\"subject\":\"Thank you for signing up, % name %\",\"headers\":{\"X-Test1\":\"True1\",\"X-Test2\":\"Test2\",\"X-Test3\":\"True3\",\"X-Test4\":\"True4\"},\"substitutions\":{\"%name1%\":\"Example User1\",\"%city2%\":\"Denver1\",\"%name3%\":\"Example User2\",\"%city4%\":\"Orange1\"},\"custom_args\":{\"marketing1\":\"false\",\"transactional1\":\"true\",\"marketing2\":\"true\",\"transactional2\":\"false\"},\"send_at\":1461775051},{\"to\":[{\"name\":\"Example User14\",\"email\":\"test14@example.com\"},{\"name\":\"Example User15\",\"email\":\"test15@example.com\"},{\"name\":\"Example User16\",\"email\":\"test16@example.com\"},{\"name\":\"Example User17\",\"email\":\"test17@example.com\"}],\"cc\":[{\"name\":\"Example User18\",\"email\":\"test18@example.com\"},{\"name\":\"Example User19\",\"email\":\"test19@example.com\"},{\"name\":\"Example User20\",\"email\":\"test20@example.com\"},{\"name\":\"Example User21\",\"email\":\"test21@example.com\"}],\"bcc\":[{\"name\":\"Example User22\",\"email\":\"test22example.com\"},{\"name\":\"Example User23\",\"email\":\"test23@example.com\"},{\"name\":\"Example User24\",\"email\":\"test24@example.com\"},{\"name\":\"Example User25\",\"email\":\"test25@example.com\"}],\"subject\":\"Thank you for signing up, % name % 2\",\"headers\":{\"X-Test5\":\"True5\",\"X-Test6\":\"Test6\",\"X-Test7\":\"True7\",\"X-Test8\":\"True8\"},\"substitutions\":{\"%name5%\":\"Example User5\",\"%city6%\":\"Denver6\",\"%name7%\":\"Example User7\",\"%city8%\":\"Orange8\"},\"custom_args\":{\"marketing3\":\"false\",\"transactional3\":\"true\",\"marketing4\":\"true\",\"transactional4\":\"false\"},\"send_at\":1461775052},{\"to\":[{\"name\":\"Example User26\",\"email\":\"test26@example.com\"},{\"name\":\"Example User27\",\"email\":\"test27@example.com\"},{\"name\":\"Example User28\",\"email\":\"test28@example.com\"},{\"name\":\"Example User29\",\"email\":\"test29@example.com\"}],\"cc\":[{\"name\":\"Example User30\",\"email\":\"test30@example.com\"},{\"name\":\"Example User31\",\"email\":\"test31@example.com\"},{\"name\":\"Example User32\",\"email\":\"test32@example.com\"},{\"name\":\"Example User33\",\"email\":\"test33@example.com\"}],\"bcc\":[{\"name\":\"Example User34\",\"email\":\"test34example.com\"},{\"name\":\"Example User35\",\"email\":\"test35@example.com\"},{\"name\":\"Example User36\",\"email\":\"test36@example.com\"},{\"name\":\"Example User37\",\"email\":\"test37@example.com\"}],\"subject\":\"Thank you for signing up, % name % 3\",\"headers\":{\"X-Test7\":\"True7\",\"X-Test8\":\"Test8\",\"X-Test9\":\"True9\",\"X-Test10\":\"True10\"},\"substitutions\":{\"%name9%\":\"Example User9\",\"%city10%\":\"Denver10\",\"%name11%\":\"Example User11\",\"%city12%\":\"Orange12\"},\"custom_args\":{\"marketing5\":\"false\",\"transactional5\":\"true\",\"marketing6\":\"true\",\"transactional6\":\"false\"},\"send_at\":1461775053}],\"content\":[{\"type\":\"text/plain\",\"value\":\"Textual content\"},{\"type\":\"text/html\",\"value\":\"HTML content\"},{\"type\":\"text/calendar\",\"value\":\"Party Time!!\"},{\"type\":\"text/calendar2\",\"value\":\"Party Time2!!\"}],\"attachments\":[{\"content\":\"TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gQ3JhcyBwdW12\",\"type\":\"application/pdf\",\"filename\":\"balance_001.pdf\",\"disposition\":\"attachment\",\"content_id\":\"Balance Sheet\"},{\"content\":\"BwdW\",\"type\":\"image/png\",\"filename\":\"banner.png\",\"disposition\":\"inline\",\"content_id\":\"Banner\"},{\"content\":\"BwdW2\",\"type\":\"image/png\",\"filename\":\"banner2.png\",\"disposition\":\"inline\",\"content_id\":\"Banner 2\"}],\"template_id\":\"13b8f94f-bcae-4ec6-b752-70d6cb59f932\",\"headers\":{\"X-Day\":\"Monday\",\"X-Month\":\"January\",\"X-Year\":\"2017\"},\"sections\":{\"%section1\":\"Substitution for Section 1 Tag\",\"%section2%\":\"Substitution for Section 2 Tag\",\"%section3%\":\"Substitution for Section 3 Tag\"},\"categories\":[\"customer\",\"vip\",\"new_account\"],\"custom_args\":{\"campaign\":\"welcome\",\"sequence2\":\"2\",\"sequence3\":\"3\"},\"send_at\":1461775051,\"asm\":{\"group_id\":3,\"groups_to_display\":[1,4,5]},\"batch_id\":\"some_batch_id\",\"ip_pool_name\":\"23\",\"mail_settings\":{\"bcc\":{\"enable\":true,\"email\":\"test@example.com\"},\"bypass_list_management\":{\"enable\":true},\"bypass_spam_management\":{\"enable\":true},\"bypass_bounce_management\":{\"enable\":true},\"bypass_unsubscribe_management\":{\"enable\":true},\"footer\":{\"enable\":true,\"text\":\"Some Footer Text\",\"html\":\"Some Footer HTML\"},\"sandbox_mode\":{\"enable\":true},\"spam_check\":{\"enable\":true,\"threshold\":1,\"post_to_url\":\"https://gotchya.example.com\"}},\"tracking_settings\":{\"click_tracking\":{\"enable\":true,\"enable_text\":false},\"open_tracking\":{\"enable\":true,\"substitution_tag\":\"Optional tag to replace with the open image in the body of the message\"},\"subscription_tracking\":{\"enable\":true,\"text\":\"text to insert into the text/plain portion of the message\",\"html\":\"HTML to insert into the text / html portion of the message\",\"substitution_tag\":\"substitution tag\"},\"ganalytics\":{\"enable\":true,\"utm_source\":\"some source\",\"utm_medium\":\"some medium\",\"utm_term\":\"some term\",\"utm_content\":\"some content\",\"utm_campaign\":\"some campaign\"}},\"reply_to\":{\"name\":\"Reply To Me\",\"email\":\"test+reply@example.com\"}}", msg.Serialize(useDefaultSerialization));
 
             // Ensure serializing a SendGridMessage from deserialization generates the same JSON object to send to Twilio SendGrid.
             var json = msg.Serialize(useDefaultSerialization);
@@ -2647,6 +2650,72 @@
             };
             msg.SetBypassListManagement(true);
             Assert.Equal("{\"mail_settings\":{\"bypass_list_management\":{\"enable\":true}}}", msg.Serialize());
+        }
+
+        [Fact]
+        public void TestSetBypassSpamManagement()
+        {
+            //MailSettings object does not exist
+            var msg = new SendGridMessage();
+            msg.SetBypassSpamManagement(false);
+            Assert.Equal("{\"mail_settings\":{\"bypass_spam_management\":{\"enable\":false}}}", msg.Serialize());
+
+            //MailSettings object exists
+            msg = new SendGridMessage();
+            var bypassSpamManagement = new BypassSpamManagement()
+            {
+                Enable = true
+            };
+            msg.MailSettings = new MailSettings()
+            {
+                BypassSpamManagement = bypassSpamManagement
+            };
+            msg.SetBypassSpamManagement(true);
+            Assert.Equal("{\"mail_settings\":{\"bypass_spam_management\":{\"enable\":true}}}", msg.Serialize());
+        }
+
+        [Fact]
+        public void TestSetBypassBounceManagement()
+        {
+            //MailSettings object does not exist
+            var msg = new SendGridMessage();
+            msg.SetBypassBounceManagement(false);
+            Assert.Equal("{\"mail_settings\":{\"bypass_bounce_management\":{\"enable\":false}}}", msg.Serialize());
+
+            //MailSettings object exists
+            msg = new SendGridMessage();
+            var bypassBounceManagement = new BypassBounceManagement()
+            {
+                Enable = true
+            };
+            msg.MailSettings = new MailSettings()
+            {
+                BypassBounceManagement = bypassBounceManagement
+            };
+            msg.SetBypassBounceManagement(true);
+            Assert.Equal("{\"mail_settings\":{\"bypass_bounce_management\":{\"enable\":true}}}", msg.Serialize());
+        }
+
+        [Fact]
+        public void TestSetBypassUnsubscribeManagement()
+        {
+            //MailSettings object does not exist
+            var msg = new SendGridMessage();
+            msg.SetBypassUnsubscribeManagement(false);
+            Assert.Equal("{\"mail_settings\":{\"bypass_unsubscribe_management\":{\"enable\":false}}}", msg.Serialize());
+
+            //MailSettings object exists
+            msg = new SendGridMessage();
+            var bypassUnsubscribeManagement = new BypassUnsubscribeManagement()
+            {
+                Enable = true
+            };
+            msg.MailSettings = new MailSettings()
+            {
+                BypassUnsubscribeManagement = bypassUnsubscribeManagement
+            };
+            msg.SetBypassUnsubscribeManagement(true);
+            Assert.Equal("{\"mail_settings\":{\"bypass_unsubscribe_management\":{\"enable\":true}}}", msg.Serialize());
         }
 
         [Fact]
@@ -5933,6 +6002,9 @@
 
             msg.SetBccSetting(true, "test@example.com");
             msg.SetBypassListManagement(false);
+            msg.SetBypassSpamManagement(false);
+            msg.SetBypassBounceManagement(false);
+            msg.SetBypassUnsubscribeManagement(false);
             msg.SetClickTracking(true, true);
             msg.SetFooterSetting(true, "<strong>footer</strong>", "footer");
             msg.SetFrom(new EmailAddress("test@example.com"));
