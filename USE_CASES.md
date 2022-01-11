@@ -319,6 +319,14 @@ namespace Example
 
             msg.SetBccSetting(true, "test@example.com");
 
+            // Note: Bypass Spam, Bounce, and Unsubscribe management cannot be combined with Bypass List Management
+            msg.BypassSpamManagement(true);
+
+            msg.BypassBounceManagement(true);
+
+            msg.BypassUnsubscribeManagement(true);
+            
+            // OR
             msg.SetBypassListManagement(true);
 
             msg.SetFooterSetting(true, "Some Footer HTML", "Some Footer Text");
