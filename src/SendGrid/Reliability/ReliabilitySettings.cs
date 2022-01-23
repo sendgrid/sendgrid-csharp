@@ -95,7 +95,7 @@ namespace SendGrid.Helpers.Reliability
         /// <summary>
         /// Gets status codes for which request would be retied.
         /// </summary>
-        public static readonly IReadOnlyList<HttpStatusCode> RetriableServerErrorStatusCodes = new List<HttpStatusCode>()
+        public static List<HttpStatusCode> RetriableServerErrorStatusCodes { get; } = new List<HttpStatusCode>()
         {
             HttpStatusCode.InternalServerError,
             HttpStatusCode.BadGateway,
