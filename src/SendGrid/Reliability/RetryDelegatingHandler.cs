@@ -91,9 +91,9 @@ namespace SendGrid.Helpers.Reliability
             return responseMessage;
         }
 
-        private static void ThrowHttpRequestExceptionIfResponseCodeCanBeRetried(HttpResponseMessage responseMessage)
+        private void ThrowHttpRequestExceptionIfResponseCodeCanBeRetried(HttpResponseMessage responseMessage)
         {
-            if (ReliabilitySettings.RetriableServerErrorStatusCodes.Contains(responseMessage.StatusCode))
+            if (settings.RetriableServerErrorStatusCodes.Contains(responseMessage.StatusCode))
             {
                 throw new HttpRequestException(string.Format("Http status code '{0}' indicates server error", responseMessage.StatusCode));
             }
