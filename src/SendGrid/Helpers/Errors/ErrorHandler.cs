@@ -87,7 +87,7 @@ namespace SendGrid.Helpers.Errors
         /// <returns>Return string with the error Status Code and the Message</returns>
         private static async Task<string> GetErrorMessage(HttpResponseMessage message)
         {
-            var errorStatusCode = (int)message.StatusCode;
+            var errorStatusCode = (SendGridStatusCode)message.StatusCode;
             var errorReasonPhrase = message.ReasonPhrase;
 
             string errorValue = null;
