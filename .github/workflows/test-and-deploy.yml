@@ -1,7 +1,8 @@
-name: Tests
+name: Test and Deploy
 on:
   push:
     branches: [ '*' ]
+    tags: [ '*' ]
   pull_request:
     branches: [ main ]
   schedule:
@@ -10,8 +11,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  tests:
-    name: Run Tests
+  test:
+    name: Test
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -30,18 +31,37 @@ jobs:
         run: make test-docker release
       - run: bash <(curl -s https://codecov.io/bash)
 
+  deploy:
+    name: Deploy
+    if: success() && github.ref_type == 'tag'
+    needs: [ test ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sendgrid-csharp
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1.8.2
+        with:
+          dotnet-version: '3.1.x'
+
+      - name: Publish package to NuGet
+        run: |
+          make release
+          dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
+
   notify-on-failure:
     name: Slack notify on failure
-    if: ${{ failure() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
-    needs: [ tests ]
+    if: failure() && github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref_type == 'tag')
+    needs: [ test, deploy ]
     runs-on: ubuntu-latest
     steps:
       - uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_COLOR: 'danger'
+          SLACK_COLOR: failure
           SLACK_ICON_EMOJI: ':github:'
-          SLACK_MESSAGE: ${{ format('Failed running build on {1}{3} {0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id, ':') }}
-          SLACK_TITLE: Build Failure
+          SLACK_MESSAGE: ${{ format('Tests *{0}*, Deploy *{1}*, {2}/{3}/actions/runs/{4}', needs.test.result, needs.deploy.result, github.server_url, github.repository, github.run_id) }}
+          SLACK_TITLE: Action Failure - ${{ github.repository }}
           SLACK_USERNAME: GitHub Actions
           SLACK_MSG_AUTHOR: twilio-dx
           SLACK_FOOTER: Posted automatically using GitHub Actions
