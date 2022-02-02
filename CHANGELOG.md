@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2022-01-12] Version 9.25.2
+---------------------------
+**Library - Chore**
+- [PR #1152](https://github.com/sendgrid/sendgrid-csharp/pull/1152): update license year. Thanks to [@JenniferMah](https://github.com/JenniferMah)!
+
+
 [2021-12-01] Version 9.25.1
 ---------------------------
 **Library - Chore**
