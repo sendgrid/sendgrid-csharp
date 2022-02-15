@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace SendGrid.Helpers.Mail
 {
     /// <summary>
-    /// Allows you to bypass all unsubscribe groups and suppressions to ensure that the email is delivered to every single recipient. This should only be used in emergencies when it is absolutely necessary that every recipient receives your email. Ex: outage emails, or forgot password emails.
+    /// Allows you to bypass the bounce list to ensure that the email is delivered to recipients. Spam report and unsubscribe lists will still be checked; addresses on these other lists will not receive the message.
     /// </summary>
     [JsonObject(IsReference = false)]
     public class BypassBounceManagement
