@@ -19,7 +19,7 @@ namespace SendGrid.Permissions
         public static async Task<SendGridPermissionsBuilder> CreateMaskedPermissionsBuilderForClient(this ISendGridClient client)
         {
             var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "scopes");
-            var body = await response.DeserializeResponseBodyAsync(response.Body);
+            var body = await response.DeserializeResponseBodyAsync();
             var userScopesJArray = (body["scopes"] as JArray);
             var includedScopes = userScopesJArray.Values<string>().ToArray();
             var builder = new SendGridPermissionsBuilder();
