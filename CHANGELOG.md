@@ -1,6 +1,19 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2022-02-09] Version 9.25.3
+---------------------------
+**Library - Chore**
+- [PR #1161](https://github.com/sendgrid/sendgrid-csharp/pull/1161): add gh release to workflow. Thanks to [@shwetha-manvinkurke](https://github.com/shwetha-manvinkurke)!
+- [PR #1158](https://github.com/sendgrid/sendgrid-csharp/pull/1158): merge test and deploy workflows. Thanks to [@shwetha-manvinkurke](https://github.com/shwetha-manvinkurke)!
+
+
+[2022-01-12] Version 9.25.2
+---------------------------
+**Library - Chore**
+- [PR #1152](https://github.com/sendgrid/sendgrid-csharp/pull/1152): update license year. Thanks to [@JenniferMah](https://github.com/JenniferMah)!
+
+
 [2021-12-01] Version 9.25.1
 ---------------------------
 **Library - Chore**
