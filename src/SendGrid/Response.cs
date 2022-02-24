@@ -21,17 +21,17 @@ namespace SendGrid
         /// <summary>
         /// The status code returned from Twilio SendGrid.
         /// </summary>
-        private HttpStatusCode statusCode;
+        private HttpStatusCode _statusCode;
 
         /// <summary>
         /// The response body returned from Twilio SendGrid.
         /// </summary>
-        private HttpContent body;
+        private HttpContent _body;
 
         /// <summary>
         /// The response headers returned from Twilio SendGrid.
         /// </summary>
-        private HttpResponseHeaders headers;
+        private HttpResponseHeaders _headers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Response"/> class.
@@ -53,12 +53,12 @@ namespace SendGrid
         {
             get
             {
-                return this.statusCode;
+                return this._statusCode;
             }
 
             set
             {
-                this.statusCode = value;
+                this._statusCode = value;
             }
         }
 
@@ -72,44 +72,50 @@ namespace SendGrid
 
         /// <summary>
         /// Gets or sets the response body returned from Twilio SendGrid.
+        /// <see href="https://docs.microsoft.com/dotnet/api/system.net.http.httpcontent"></see>
         /// </summary>
         public HttpContent Body
         {
             get
             {
-                return this.body;
+                return this._body;
             }
 
             set
             {
-                this.body = value;
+                this._body = value;
             }
         }
 
         /// <summary>
         /// Gets or sets the response headers returned from Twilio SendGrid.
+        /// <see href="https://docs.microsoft.com/dotnet/api/system.net.http.headers.httpresponseheaders"></see>
         /// </summary>
         public HttpResponseHeaders Headers
         {
             get
             {
-                return this.headers;
+                return this._headers;
             }
 
             set
             {
-                this.headers = value;
+                this._headers = value;
             }
         }
 
         /// <summary>
         /// Converts string formatted response body to a Dictionary.
         /// </summary>
-        /// <param name="content">https://docs.microsoft.com/dotnet/api/system.net.http.httpcontent.</param>
         /// <returns>Dictionary object representation of HttpContent.</returns>
-        public virtual async Task<Dictionary<string, dynamic>> DeserializeResponseBodyAsync(HttpContent content)
+        public virtual async Task<Dictionary<string, dynamic>> DeserializeResponseBodyAsync()
         {
-            var stringContent = await content.ReadAsStringAsync().ConfigureAwait(false);
+            if (this._body is null)
+            {
+                return new Dictionary<string, dynamic>();
+            }
+
+            var stringContent = await this._body.ReadAsStringAsync().ConfigureAwait(false);
             var dsContent = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(stringContent);
             return dsContent;
         }
@@ -117,12 +123,16 @@ namespace SendGrid
         /// <summary>
         /// Converts string formatted response headers to a Dictionary.
         /// </summary>
-        /// <param name="content">https://docs.microsoft.com/dotnet/api/system.net.http.headers.httpresponseheaders.</param>
         /// <returns>Dictionary object representation of HttpResponseHeaders.</returns>
-        public virtual Dictionary<string, string> DeserializeResponseHeaders(HttpResponseHeaders content)
+        public virtual Dictionary<string, string> DeserializeResponseHeaders()
         {
             var dsContent = new Dictionary<string, string>();
-            foreach (var pair in content)
+            if (this._headers == null)
+            {
+                return dsContent;
+            }
+
+            foreach (var pair in this._headers)
             {
                 dsContent.Add(pair.Key, pair.Value.First());
             }
