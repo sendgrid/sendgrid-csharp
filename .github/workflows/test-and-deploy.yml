@@ -15,11 +15,20 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      DOCKER_LOGIN: ${{ secrets.DOCKER_USERNAME && secrets.DOCKER_AUTH_TOKEN }}
     steps:
       - name: Checkout sendgrid-csharp
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
+      - name: Login to Docker Hub
+        if: env.DOCKER_LOGIN
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_AUTH_TOKEN }}
 
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v1.8.2
@@ -45,10 +54,22 @@ jobs:
         with:
           dotnet-version: '3.1.x'
 
+      - name: Create GitHub Release
+        uses: sendgrid/dx-automator/actions/release@main
+        with:
+          footer: '**[NuGet](https://www.nuget.org/packages/Sendgrid/${version})**'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Publish package to NuGet
         run: |
           make release
           dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
+
+      - name: Submit metric to Datadog
+        uses: sendgrid/dx-automator/actions/datadog-release-metric@main
+        env:
+          DD_API_KEY: ${{ secrets.DATADOG_API_KEY }}
 
   notify-on-failure:
     name: Slack notify on failure
@@ -60,7 +81,7 @@ jobs:
         env:
           SLACK_COLOR: failure
           SLACK_ICON_EMOJI: ':github:'
-          SLACK_MESSAGE: ${{ format('Tests *{0}*, Deploy *{1}*, {2}/{3}/actions/runs/{4}', needs.test.result, needs.deploy.result, github.server_url, github.repository, github.run_id) }}
+          SLACK_MESSAGE: ${{ format('Test *{0}*, Deploy *{1}*, {2}/{3}/actions/runs/{4}', needs.test.result, needs.deploy.result, github.server_url, github.repository, github.run_id) }}
           SLACK_TITLE: Action Failure - ${{ github.repository }}
           SLACK_USERNAME: GitHub Actions
           SLACK_MSG_AUTHOR: twilio-dx
