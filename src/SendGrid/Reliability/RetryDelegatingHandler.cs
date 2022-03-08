@@ -59,7 +59,7 @@ namespace SendGrid.Helpers.Reliability
                 {
                     responseMessage = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
-                    ThrowHttpRequestExceptionIfResponseCodeCanBeRetried(responseMessage);
+                    this.ThrowHttpRequestExceptionIfResponseCodeCanBeRetried(responseMessage);
 
                     sent = true;
                 }
@@ -93,7 +93,7 @@ namespace SendGrid.Helpers.Reliability
 
         private void ThrowHttpRequestExceptionIfResponseCodeCanBeRetried(HttpResponseMessage responseMessage)
         {
-            if (settings.RetriableServerErrorStatusCodes.Contains(responseMessage.StatusCode))
+            if (this.settings.RetriableServerErrorStatusCodes.Contains(responseMessage.StatusCode))
             {
                 throw new HttpRequestException(string.Format("Http status code '{0}' indicates server error", responseMessage.StatusCode));
             }
