@@ -861,6 +861,63 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
+        /// Set the bypass spam management setting.
+        /// Allows you to bypass the spam report list to ensure that the email is delivered to recipients. Bounce and unsubscribe lists will still be checked; addresses on these other lists will not receive the message. 
+        /// </summary>
+        /// <param name="enable">Gets or sets a value indicating whether this setting is enabled.</param>
+        public void SetBypassSpamManagement(bool enable)
+        {
+            if (this.MailSettings == null)
+            {
+                this.MailSettings = new MailSettings();
+            }
+
+            this.MailSettings.BypassSpamManagement = new BypassSpamManagement
+            {
+                Enable = enable,
+            };
+            return;
+        }
+
+        /// <summary>
+        /// Set the bypass bounce management setting.
+        /// Allows you to bypass the bounce list to ensure that the email is delivered to recipients. Spam report and unsubscribe lists will still be checked; addresses on these other lists will not receive the message. 
+        /// </summary>
+        /// <param name="enable">Gets or sets a value indicating whether this setting is enabled.</param>
+        public void SetBypassBounceManagement(bool enable)
+        {
+            if (this.MailSettings == null)
+            {
+                this.MailSettings = new MailSettings();
+            }
+
+            this.MailSettings.BypassBounceManagement = new BypassBounceManagement
+            {
+                Enable = enable,
+            };
+            return;
+        }
+
+        /// <summary>
+        /// Set the bypass unsubscribe management setting.
+        /// Allows you to bypass the global unsubscribe list to ensure that the email is delivered to recipients. Bounce and spam report lists will still be checked; addresses on these other lists will not receive the message. This filter applies only to global unsubscribes and will not bypass group unsubscribes.
+        /// </summary>
+        /// <param name="enable">Gets or sets a value indicating whether this setting is enabled.</param>
+        public void SetBypassUnsubscribeManagement(bool enable)
+        {
+            if (this.MailSettings == null)
+            {
+                this.MailSettings = new MailSettings();
+            }
+
+            this.MailSettings.BypassUnsubscribeManagement = new BypassUnsubscribeManagement
+            {
+                Enable = enable,
+            };
+            return;
+        }
+
+        /// <summary>
         /// Set the footer setting.
         /// The default footer that you would like appended to the bottom of every email.
         /// </summary>

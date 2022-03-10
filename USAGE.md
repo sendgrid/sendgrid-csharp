@@ -2444,6 +2444,9 @@ This endpoint allows you to send email over Twilio SendGrid's v3 Web API, the mo
 * Top level parameters are referred to as "global".
 * Individual fields within the personalizations array will override any other global, or message level, parameters that are defined outside of personalizations.
 
+* Note: bypass_bounce_management, bypass_spam_management, and bypass_unsubscribe_management cannot
+* be combined with bypass_list_management
+
 For an overview of the v3 Mail Send endpoint, please visit our [v3 API Reference](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/index.html)
 
 For more detailed information about how to use the v3 Mail Send endpoint, please visit our [Classroom](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/index.html).
@@ -2501,7 +2504,16 @@ string data = @"{
     }, 
     'bypass_list_management': {
       'enable': true
-    }, 
+    },
+    'bypass_spam_management': {
+      'enable': true
+    },
+    'bypass_bounce_management': {
+      'enable': true
+    },
+    'bypass_unsubscribe_management': {
+      'enable': true
+    },
     'footer': {
       'enable': true, 
       'html': '<p>Thanks</br>The Twilio SendGrid Team</p>', 
