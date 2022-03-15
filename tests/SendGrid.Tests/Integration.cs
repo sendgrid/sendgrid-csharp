@@ -2218,6 +2218,23 @@
         }
 
         [Fact]
+        public void TestAddReplyTos()
+        {
+            var msg = new SendGridMessage();
+            msg.AddReplyTo("test2@example.com", "Test User2");
+            Assert.Equal("{\"reply_to_list\":[{\"name\":\"Test User2\",\"email\":\"test2@example.com\"}]}", msg.Serialize());
+
+            msg = new SendGridMessage();
+            msg.AddReplyTo("test1@example.com", "Test User1");
+            msg.AddReplyTo("test2@example.com", "Test User2");
+            Assert.Equal("{\"reply_to_list\":[{\"name\":\"Test User1\",\"email\":\"test1@example.com\"},{\"name\":\"Test User2\",\"email\":\"test2@example.com\"}]}", msg.Serialize());
+
+            msg = new SendGridMessage();
+            msg.AddReplyTos(new List<EmailAddress> { new EmailAddress() { Email = "test1@example.com" }, new EmailAddress() { Email = "test2@example.com", Name = "Test User2" } });
+            Assert.Equal("{\"reply_to_list\":[{\"email\":\"test1@example.com\"},{\"name\":\"Test User2\",\"email\":\"test2@example.com\"}]}", msg.Serialize());
+        }
+
+        [Fact]
         public void TestSetGlobalSubject()
         {
             var msg = new SendGridMessage();
