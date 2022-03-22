@@ -107,15 +107,17 @@ namespace SendGrid
         /// <summary>
         /// Converts string formatted response body to a Dictionary.
         /// </summary>
+        /// <param name="content">https://docs.microsoft.com/dotnet/api/system.net.http.httpcontent.</param>
         /// <returns>Dictionary object representation of HttpContent.</returns>
-        public virtual async Task<Dictionary<string, dynamic>> DeserializeResponseBodyAsync()
+        public virtual async Task<Dictionary<string, dynamic>> DeserializeResponseBodyAsync(HttpContent content = null)
         {
-            if (this._body is null)
+            content = content ?? this._body;
+            if (content is null)
             {
                 return new Dictionary<string, dynamic>();
             }
 
-            var stringContent = await this._body.ReadAsStringAsync().ConfigureAwait(false);
+            var stringContent = await content.ReadAsStringAsync().ConfigureAwait(false);
             var dsContent = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(stringContent);
             return dsContent;
         }
@@ -123,16 +125,19 @@ namespace SendGrid
         /// <summary>
         /// Converts string formatted response headers to a Dictionary.
         /// </summary>
+        /// <param name="headers">https://docs.microsoft.com/dotnet/api/system.net.http.headers.httpresponseheaders.</param>
         /// <returns>Dictionary object representation of HttpResponseHeaders.</returns>
-        public virtual Dictionary<string, string> DeserializeResponseHeaders()
+        public virtual Dictionary<string, string> DeserializeResponseHeaders(HttpResponseHeaders headers = null)
         {
             var dsContent = new Dictionary<string, string>();
-            if (this._headers == null)
+
+            headers = headers ?? this._headers;
+            if (headers == null)
             {
                 return dsContent;
             }
 
-            foreach (var pair in this._headers)
+            foreach (var pair in headers)
             {
                 dsContent.Add(pair.Key, pair.Value.First());
             }
