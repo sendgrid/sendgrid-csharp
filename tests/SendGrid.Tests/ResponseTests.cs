@@ -29,6 +29,15 @@ namespace SendGrid.Tests
         }
 
         [Fact]
+        public async Task DeserializeResponseBodyAsync_OverrideHttpContent_ReturnsBodyAsDictionary()
+        {
+            var content = "{\"scopes\": [\"alerts.read\"]}";
+            var response = new Response(HttpStatusCode.OK, null, null);
+            Dictionary<string, dynamic> responseBody = await response.DeserializeResponseBodyAsync(new StringContent(content));
+            Assert.Equal(new JArray() { "alerts.read" }, responseBody["scopes"]);
+        }
+
+        [Fact]
         public void DeserializeResponseHeaders_NullHttpResponseHeaders_ReturnsEmptyDictionary()
         {
             var response = new Response(HttpStatusCode.OK, null, null);
@@ -37,12 +46,22 @@ namespace SendGrid.Tests
         }
 
         [Fact]
-        public void DeserializeResponseHeaders_NullHttpResponseHeaders_ReturnsHeadersAsDictionary()
+        public void DeserializeResponseHeaders_HttpResponseHeaders_ReturnsHeadersAsDictionary()
         {
             var message = new HttpResponseMessage();
             message.Headers.Add("HeaderKey", "HeaderValue");
             var response = new Response(HttpStatusCode.OK, null, message.Headers);
             Dictionary<string, string> responseHeadersDeserialized = response.DeserializeResponseHeaders();
+            Assert.Equal("HeaderValue", responseHeadersDeserialized["HeaderKey"]);
+        }
+
+        [Fact]
+        public void DeserializeResponseHeaders_OverrideHttpResponseHeaders_ReturnsHeadersAsDictionary()
+        {
+            var message = new HttpResponseMessage();
+            message.Headers.Add("HeaderKey", "HeaderValue");
+            var response = new Response(HttpStatusCode.OK, null, null);
+            Dictionary<string, string> responseHeadersDeserialized = response.DeserializeResponseHeaders(message.Headers);
             Assert.Equal("HeaderValue", responseHeadersDeserialized["HeaderKey"]);
         }
     }
