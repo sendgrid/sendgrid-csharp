@@ -796,8 +796,10 @@ namespace SendGrid.Helpers.Mail
         /// </param>
         public void SetAsm(int groupID, List<int>? groupsToDisplay = null)
         {
-            this.Asm = new ASM();
-            this.Asm.GroupId = groupID;
+            this.Asm = new ASM
+            {
+                GroupId = groupID
+            };
             if (groupsToDisplay != null)
             {
                 this.Asm.GroupsToDisplay = groupsToDisplay;
