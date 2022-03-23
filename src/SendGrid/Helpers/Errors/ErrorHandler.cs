@@ -139,7 +139,7 @@ namespace SendGrid.Helpers.Errors
                 }
             }
 
-            SendGridErrorResponse errorResponse = new()
+            SendGridErrorResponse errorResponse = new SendGridErrorResponse()
             {
                 ErrorHttpStatusCode = errorStatusCode,
                 ErrorReasonPhrase = errorReasonPhrase,

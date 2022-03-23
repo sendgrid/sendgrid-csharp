@@ -9,7 +9,7 @@ namespace SendGrid
     /// </summary>
     public class SendGridClient : BaseClient
     {
-        private static readonly SendGridClientOptions DefaultOptions = new();
+        private static readonly SendGridClientOptions DefaultOptions = new SendGridClientOptions();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendGridClient"/> class.

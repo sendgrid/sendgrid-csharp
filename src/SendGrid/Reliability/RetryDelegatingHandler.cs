@@ -17,7 +17,7 @@ namespace SendGrid.Helpers.Reliability
     /// </summary>
     public class RetryDelegatingHandler : DelegatingHandler
     {
-        private static readonly List<HttpStatusCode> RetriableServerErrorStatusCodes = new()
+        private static readonly List<HttpStatusCode> RetriableServerErrorStatusCodes = new List<HttpStatusCode>()
         {
             HttpStatusCode.InternalServerError,
             HttpStatusCode.BadGateway,

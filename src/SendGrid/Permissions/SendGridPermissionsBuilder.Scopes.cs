@@ -4,7 +4,7 @@ namespace SendGrid.Permissions
 {
     partial class SendGridPermissionsBuilder
     {
-        private readonly Dictionary<SendGridPermission, string[]> allPermissions = new()
+        private readonly Dictionary<SendGridPermission, string[]> allPermissions = new Dictionary<SendGridPermission, string[]>()
         {
             #region Admin
             { SendGridPermission.Admin, new []

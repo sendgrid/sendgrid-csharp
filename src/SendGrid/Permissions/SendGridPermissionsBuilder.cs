@@ -9,9 +9,9 @@
     /// </summary>
     public sealed partial class SendGridPermissionsBuilder
     {
-        private readonly List<Func<string, bool>> excludeFilters = new();
+        private readonly List<Func<string, bool>> excludeFilters = new List<Func<string, bool>>();
 
-        private readonly List<string> addedScopes = new();
+        private readonly List<string> addedScopes = new List<string>();
 
         private readonly HashSet<string> allScopes;
 

@@ -10,7 +10,7 @@ namespace SendGrid
     /// </summary>
     public class BaseClientOptions
     {
-        private ReliabilitySettings reliabilitySettings = new();
+        private ReliabilitySettings reliabilitySettings = new ReliabilitySettings();
 
         /// <summary>
         /// The reliability settings to use on HTTP Requests.
@@ -24,7 +24,7 @@ namespace SendGrid
         /// <summary>
         /// The request headers to use on HTTP Requests.
         /// </summary>
-        public Dictionary<string, string> RequestHeaders { get; set; } = new();
+        public Dictionary<string, string> RequestHeaders { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// The base URL.

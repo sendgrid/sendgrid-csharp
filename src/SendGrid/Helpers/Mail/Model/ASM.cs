@@ -25,6 +25,6 @@ namespace SendGrid.Helpers.Mail
         /// https://sendgrid.com/docs/User_Guide/Suppressions/recipient_subscription_preferences.html.
         /// </summary>
         [JsonProperty(PropertyName = "groups_to_display", IsReference = false)]
-        public List<int> GroupsToDisplay { get; set; } = new();
+        public List<int> GroupsToDisplay { get; set; } = new List<int>();
     }
 }
