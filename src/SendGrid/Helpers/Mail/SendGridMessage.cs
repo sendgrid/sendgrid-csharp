@@ -141,7 +141,7 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Gets or sets a list of objects of email objects containing the email address and name of the individuals who should receive responses to your email.
         /// </summary>
-        [JsonProperty(PropertyName = "reply_to_list")]
+        [JsonProperty(PropertyName = "reply_to_list", IsReference = false)]
         public List<EmailAddress> ReplyTos { get; set; }
 
         /// <summary>
