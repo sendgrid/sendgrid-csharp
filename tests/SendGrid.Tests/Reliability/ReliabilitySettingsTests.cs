@@ -99,6 +99,7 @@
             Assert.Equal(TimeSpan.Zero, defaultSettings.MinimumBackOff);
             Assert.Equal(TimeSpan.Zero, defaultSettings.DeltaBackOff);
             Assert.Equal(0, defaultSettings.MaximumNumberOfRetries);
+            Assert.Equal(ReliabilitySettings.DefaultRetriableServerErrorStatusCodes, defaultSettings.RetriableServerErrorStatusCodes);
         }
 
         [Fact]

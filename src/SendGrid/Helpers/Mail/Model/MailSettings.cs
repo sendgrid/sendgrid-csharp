@@ -26,6 +26,24 @@ namespace SendGrid.Helpers.Mail
         public BypassListManagement? BypassListManagement { get; set; }
 
         /// <summary>
+        /// Gets or sets the bypass of spam report list to ensure that the email is delivered to recipients. Bounce and unsubscribe lists will still be checked; addresses on these other lists will not receive the message.
+        /// </summary>
+        [JsonProperty(PropertyName = "bypass_spam_management")]
+        public BypassSpamManagement BypassSpamManagement { get; set; }
+
+        /// <summary>
+        /// Gets or sets the bypass the bounce list to ensure that the email is delivered to recipients. Spam report and unsubscribe lists will still be checked; addresses on these other lists will not receive the message.
+        /// </summary>
+        [JsonProperty(PropertyName = "bypass_bounce_management")]
+        public BypassBounceManagement BypassBounceManagement { get; set; }
+
+        /// <summary>
+        /// Gets or sets the bypass the global unsubscribe list to ensure that the email is delivered to recipients. Bounce and spam report lists will still be checked; addresses on these other lists will not receive the message. This filter applies only to global unsubscribes and will not bypass group unsubscribes.
+        /// </summary>
+        [JsonProperty(PropertyName = "bypass_unsubscribe_management")]
+        public BypassUnsubscribeManagement BypassUnsubscribeManagement { get; set; }
+
+        /// <summary>
         /// Gets or sets the default footer that you would like appended to the bottom of every email.
         /// </summary>
         [JsonProperty(PropertyName = "footer")]
