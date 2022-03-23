@@ -1,6 +1,15 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2022-03-23] Version 9.27.0
+---------------------------
+**Library - Fix**
+- [PR #1168](https://github.com/sendgrid/sendgrid-csharp/pull/1168): fallback to private body and headers for response deserialization. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Library - Feature**
+- [PR #1153](https://github.com/sendgrid/sendgrid-csharp/pull/1153): Added mail settings attributes for bypass_spam_management, bypass_bou…. Thanks to [@asos-vinodpatil](https://github.com/asos-vinodpatil)!
+
+
 [2022-03-09] Version 9.26.0
 ---------------------------
 **Library - Feature**
