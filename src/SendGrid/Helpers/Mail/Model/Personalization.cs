@@ -21,21 +21,21 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         [JsonProperty(PropertyName = "to", IsReference = false)]
         [JsonConverter(typeof(RemoveDuplicatesConverter<EmailAddress>))]
-        public List<EmailAddress> Tos { get; set; } = new List<EmailAddress>();
+        public List<EmailAddress>? Tos { get; set; }
 
         /// <summary>
         /// Gets or sets an array of recipients who will receive a copy of your email. Each email object within this array may contain the recipient’s name, but must always contain the recipient’s email.
         /// </summary>
         [JsonProperty(PropertyName = "cc", IsReference = false)]
         [JsonConverter(typeof(RemoveDuplicatesConverter<EmailAddress>))]
-        public List<EmailAddress> Ccs { get; set; } = new List<EmailAddress>();
+        public List<EmailAddress>? Ccs { get; set; }
 
         /// <summary>
         /// Gets or sets an array of recipients who will receive a blind carbon copy of your email. Each email object within this array may contain the recipient’s name, but must always contain the recipient’s email.
         /// </summary>
         [JsonProperty(PropertyName = "bcc", IsReference = false)]
         [JsonConverter(typeof(RemoveDuplicatesConverter<EmailAddress>))]
-        public List<EmailAddress> Bccs { get; set; } = new List<EmailAddress>();
+        public List<EmailAddress>? Bccs { get; set; }
 
         /// <summary>
         /// Gets or sets the from email address. The domain must match the domain of the from email property specified at root level of the request body.
@@ -54,20 +54,20 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets the object allowing you to specify specific handling instructions for your email.
         /// </summary>
         [JsonProperty(PropertyName = "headers", IsReference = false)]
-        public Dictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string>? Headers { get; set; }
 
         /// <summary>
         /// Gets or sets an object following the pattern "substitution_tag":"value to substitute". All are assumed to be strings. These substitutions will apply to the content of your email, in addition to the subject and reply-to parameters.
         /// You may not include more than 100 substitutions per personalization object, and the total collective size of your substitutions may not exceed 10,000 bytes per personalization object.
         /// </summary>
         [JsonProperty(PropertyName = "substitutions", IsReference = false)]
-        public Dictionary<string, string> Substitutions { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string>? Substitutions { get; set; }
 
         /// <summary>
         /// Gets or sets the values that are specific to this personalization that will be carried along with the email, activity data, and links. Substitutions will not be made on custom arguments. personalizations[x].custom_args will be merged with message level custom_args, overriding any conflicting keys. The combined total size of the resulting custom arguments, after merging, for each personalization may not exceed 10,000 bytes.
         /// </summary>
         [JsonProperty(PropertyName = "custom_args", IsReference = false)]
-        public Dictionary<string, string> CustomArgs { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string>? CustomArgs { get; set; }
 
         /// <summary>
         /// Gets or sets a unix timestamp allowing you to specify when you want your email to be sent from Twilio SendGrid. This is not necessary if you want the email to be sent at the time of your API request.
