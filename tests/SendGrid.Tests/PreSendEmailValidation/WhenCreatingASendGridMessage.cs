@@ -48,5 +48,19 @@ namespace SendGrid.Tests.PreSendEmailValidation
             var sendGridMessage = MailHelper.CreateSingleEmail(new EmailAddress(), new EmailAddress(), string.Empty, string.Empty, string.Empty);
             Assert.Throws<ArgumentNullException>(() => { sendGridMessage.AddCc(null, 0); });
         }
+
+        [Fact]
+        public void WithAnEmptyListOfReplyTosThenAnExceptionIsThrown()
+        {
+            var sendGridMessage = MailHelper.CreateSingleEmail(new EmailAddress(), new EmailAddress(), string.Empty, string.Empty, string.Empty);
+            Assert.Throws<InvalidOperationException>(() => { sendGridMessage.AddReplyTos(new List<EmailAddress>()); });
+        }
+
+        [Fact]
+        public void WithANullListOfReplyTosThenAnExceptionIsThrown()
+        {
+            var sendGridMessage = MailHelper.CreateSingleEmail(new EmailAddress(), new EmailAddress(), string.Empty, string.Empty, string.Empty);
+            Assert.Throws<ArgumentNullException>(() => { sendGridMessage.AddReplyTos(null); });
+        }
     }
 }

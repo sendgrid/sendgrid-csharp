@@ -8,9 +8,7 @@
 [![Open Source Helpers](https://www.codetriage.com/sendgrid/sendgrid-csharp/badges/users.svg)](https://www.codetriage.com/sendgrid/sendgrid-csharp)
 
 # Announcements
-**The default branch name for this repository has been changed to `main` as of 07/27/2020.**
 
-* Subscribe to email [notifications](https://dx.sendgrid.com/newsletter/csharp) for releases and breaking changes.
 * Send SMS messages with [Twilio](USE_CASES.md#sms). 
 
 # Overview
@@ -22,8 +20,6 @@ Version 9.X.X+ of this library provides full support for all Twilio SendGrid [We
 We want this library to be community driven, and Twilio SendGrid led. We need your help to realize this goal. To help make sure we are building the right things in the right order, we ask that you create [issues](https://github.com/sendgrid/sendgrid-csharp/issues) and [pull requests](CONTRIBUTING.md) or simply upvote or comment on existing issues or pull requests.
 
 For updates to this library, see our [CHANGELOG](CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-csharp/releases).
-
-Subscribe to email [release notifications](https://dx.sendgrid.com/newsletter/csharp) to receive emails about releases and breaking changes.
 
 We appreciate your continued support, thank you!
 
