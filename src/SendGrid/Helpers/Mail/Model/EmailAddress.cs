@@ -50,7 +50,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="left">The left hand operand in the equation.</param>
         /// <param name="right">The right hand operand in the equation.</param>
         /// <returns>True if equal, false if not.</returns>
-        public static bool operator ==(EmailAddress left, EmailAddress right)
+        public static bool operator ==(EmailAddress? left, EmailAddress? right)
         {
             if (left is null && right is null)
             {
@@ -66,7 +66,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="left">The left hand operand in the equation.</param>
         /// <param name="right">The right hand operand in the equation.</param>
         /// <returns>True if the two operands are not equal, and false if they are.</returns>
-        public static bool operator !=(EmailAddress left, EmailAddress right)
+        public static bool operator !=(EmailAddress? left, EmailAddress? right)
         {
             return !(left == right);
         }

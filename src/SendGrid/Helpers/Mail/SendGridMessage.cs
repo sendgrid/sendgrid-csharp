@@ -144,7 +144,7 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets a list of objects of email objects containing the email address and name of the individuals who should receive responses to your email.
         /// </summary>
         [JsonProperty(PropertyName = "reply_to_list", IsReference = false)]
-        public List<EmailAddress> ReplyTos { get; set; }
+        public List<EmailAddress>? ReplyTos { get; set; }
 
         /// <summary>
         /// Add a recipient email.
@@ -332,7 +332,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="email">Specify the recipient's email.</param>
         /// <param name="name">Specify the recipient's name.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when the email parameter is null or whitespace</exception>
-        public void AddReplyTo(string email, string name = null)
+        public void AddReplyTo(string email, string? name = null)
         {
             if (string.IsNullOrWhiteSpace(email))
                 throw new ArgumentNullException("email");
