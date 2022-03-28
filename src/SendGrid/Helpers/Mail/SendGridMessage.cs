@@ -167,7 +167,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="personalization">A personalization object to append to the message.</param>
         public void AddTo(EmailAddress email, int personalizationIndex = 0, Personalization? personalization = null)
         {
-            if (email is null)
+            if (email == null)
                 throw new ArgumentNullException(nameof(email));
 
             AddTos(new List<EmailAddress> { email }, personalizationIndex, personalization);
@@ -214,7 +214,7 @@ namespace SendGrid.Helpers.Mail
         /// <exception cref="System.ArgumentNullException">Thrown when the email parameter is null</exception>
         public void AddCc(EmailAddress email, int personalizationIndex = 0, Personalization? personalization = null)
         {
-            if (email is null)
+            if (email == null)
                 throw new ArgumentNullException(nameof(email));
 
             AddCcs(new List<EmailAddress> { email }, personalizationIndex, personalization);
@@ -263,7 +263,7 @@ namespace SendGrid.Helpers.Mail
         /// <exception cref="System.ArgumentNullException">Thrown when the email parameter is null</exception>
         public void AddBcc(EmailAddress email, int personalizationIndex = 0, Personalization? personalization = null)
         {
-            if (email is null)
+            if (email == null)
                 throw new ArgumentNullException(nameof(email));
 
             AddBccs(new List<EmailAddress> { email }, personalizationIndex, personalization);
@@ -607,7 +607,6 @@ namespace SendGrid.Helpers.Mail
         {
             if (string.IsNullOrWhiteSpace(filename) || string.IsNullOrWhiteSpace(base64Content))
             {
-                // Shouldn't this throw?
                 return;
             }
 
