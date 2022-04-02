@@ -1006,7 +1006,7 @@
             };
             msg.Personalizations.Add(personalization);
             msg.AddCc(new EmailAddress("test011@example.com", "Example User"));
-            Assert.Equal("{\"personalizations\":[{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test009@example.com\"},{\"name\":\"Example User\",\"email\":\"test011@example.com\"}]},{\"cc\":[{\"name\":\"Example User\",\"email\":\"test010@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test009@example.com\"},{\"name\":\"Example User\",\"email\":\"test011@example.com\"}]},{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test010@example.com\"}]}]}", msg.Serialize());
         }
 
         [Fact]
