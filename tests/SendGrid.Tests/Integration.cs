@@ -1338,7 +1338,7 @@
                 new EmailAddress("test033@example.com", "Example User")
             };
             msg.AddBccs(emails);
-            Assert.Equal("{\"personalizations\":[{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test028@example.com\"},{\"name\":\"Example User\",\"email\":\"test029@example.com\"},{\"name\":\"Example User\",\"email\":\"test032@example.com\"},{\"name\":\"Example User\",\"email\":\"test033@example.com\"}]},{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test030@example.com\"},{\"name\":\"Example User\",\"email\":\"test031@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test028@example.com\"},{\"name\":\"Example User\",\"email\":\"test029@example.com\"},{\"name\":\"Example User\",\"email\":\"test032@example.com\"},{\"name\":\"Example User\",\"email\":\"test033@example.com\"}]},{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test030@example.com\"},{\"name\":\"Example User\",\"email\":\"test031@example.com\"}]}]}", msg.Serialize());
         }
 
         [Fact]
@@ -1658,7 +1658,7 @@
             };
             msg.Personalizations.Add(personalization);
             msg.AddSubstitution("-sub11-", "Substituted Value 11");
-            Assert.Equal("{\"personalizations\":[{\"to\":[],\"substitutions\":{\"-sub9-\":\"Substituted Value 9\",\"-sub11-\":\"Substituted Value 11\"}},{\"substitutions\":{\"-sub10-\":\"Substituted Value 10\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"substitutions\":{\"-sub9-\":\"Substituted Value 9\",\"-sub11-\":\"Substituted Value 11\"}},{\"to\":[],\"substitutions\":{\"-sub10-\":\"Substituted Value 10\"}}]}", msg.Serialize());
         }
 
         [Fact]
