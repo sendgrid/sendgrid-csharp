@@ -21,7 +21,7 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         [JsonProperty(PropertyName = "to", IsReference = false)]
         [JsonConverter(typeof(RemoveDuplicatesConverter<EmailAddress>))]
-        public List<EmailAddress>? Tos { get; set; }
+        public List<EmailAddress> Tos { get; set; } = new List<EmailAddress>();
 
         /// <summary>
         /// Gets or sets an array of recipients who will receive a copy of your email. Each email object within this array may contain the recipient’s name, but must always contain the recipient’s email.

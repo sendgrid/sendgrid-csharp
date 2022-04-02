@@ -187,7 +187,6 @@ namespace SendGrid.Helpers.Mail
                 throw new InvalidOperationException("Sequence contains no elements");
 
             personalization = GetPersonalization(personalizationIndex, personalization);
-            personalization.Tos ??= new List<EmailAddress>();
             personalization.Tos.AddRange(emails);
         }
 
