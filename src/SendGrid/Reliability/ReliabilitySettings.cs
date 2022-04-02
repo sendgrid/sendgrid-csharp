@@ -4,6 +4,8 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
+using System.Net;
 
 namespace SendGrid.Helpers.Reliability
 {
@@ -89,5 +91,21 @@ namespace SendGrid.Helpers.Reliability
         /// Gets the value that will be used to calculate a random delta in the exponential delay between retries. Defaults to 1 second.
         /// </summary>
         public TimeSpan DeltaBackOff { get; }
+
+        /// <summary>
+        /// Gets status codes for which request would be retied.
+        /// </summary>
+        public List<HttpStatusCode> RetriableServerErrorStatusCodes { get; } = new List<HttpStatusCode>(DefaultRetriableServerErrorStatusCodes);
+
+        /// <summary>
+        /// Gets default status codes for which request would be retied.
+        /// </summary>
+        public static List<HttpStatusCode> DefaultRetriableServerErrorStatusCodes { get; } = new List<HttpStatusCode>()
+        {
+            HttpStatusCode.InternalServerError,
+            HttpStatusCode.BadGateway,
+            HttpStatusCode.ServiceUnavailable,
+            HttpStatusCode.GatewayTimeout,
+        };
     }
 }

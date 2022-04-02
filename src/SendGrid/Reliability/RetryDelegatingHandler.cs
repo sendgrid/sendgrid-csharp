@@ -4,8 +4,7 @@
 // </copyright>
 
 using System;
-using System.Collections.Generic;
-using System.Net;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,15 +16,6 @@ namespace SendGrid.Helpers.Reliability
     /// </summary>
     public class RetryDelegatingHandler : DelegatingHandler
     {
-        private static readonly List<HttpStatusCode> RetriableServerErrorStatusCodes =
-            new List<HttpStatusCode>()
-            {
-                HttpStatusCode.InternalServerError,
-                HttpStatusCode.BadGateway,
-                HttpStatusCode.ServiceUnavailable,
-                HttpStatusCode.GatewayTimeout,
-            };
-
         private readonly ReliabilitySettings settings;
 
         /// <summary>
@@ -69,7 +59,7 @@ namespace SendGrid.Helpers.Reliability
                 {
                     responseMessage = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
-                    ThrowHttpRequestExceptionIfResponseCodeCanBeRetried(responseMessage);
+                    this.ThrowHttpRequestExceptionIfResponseCodeCanBeRetried(responseMessage);
 
                     sent = true;
                 }
@@ -101,9 +91,9 @@ namespace SendGrid.Helpers.Reliability
             return responseMessage;
         }
 
-        private static void ThrowHttpRequestExceptionIfResponseCodeCanBeRetried(HttpResponseMessage responseMessage)
+        private void ThrowHttpRequestExceptionIfResponseCodeCanBeRetried(HttpResponseMessage responseMessage)
         {
-            if (RetriableServerErrorStatusCodes.Contains(responseMessage.StatusCode))
+            if (this.settings.RetriableServerErrorStatusCodes.Contains(responseMessage.StatusCode))
             {
                 throw new HttpRequestException(string.Format("Http status code '{0}' indicates server error", responseMessage.StatusCode));
             }

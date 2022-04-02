@@ -1,6 +1,27 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2022-03-23] Version 9.27.0
+---------------------------
+**Library - Fix**
+- [PR #1168](https://github.com/sendgrid/sendgrid-csharp/pull/1168): fallback to private body and headers for response deserialization. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Library - Feature**
+- [PR #1153](https://github.com/sendgrid/sendgrid-csharp/pull/1153): Added mail settings attributes for bypass_spam_management, bypass_bou…. Thanks to [@asos-vinodpatil](https://github.com/asos-vinodpatil)!
+
+
+[2022-03-09] Version 9.26.0
+---------------------------
+**Library - Feature**
+- [PR #1156](https://github.com/sendgrid/sendgrid-csharp/pull/1156): make RetriableServerErrorStatusCodes public. Thanks to [@maxkoshevoi](https://github.com/maxkoshevoi)!
+
+**Library - Chore**
+- [PR #1166](https://github.com/sendgrid/sendgrid-csharp/pull/1166): push Datadog Release Metric upon deploy success. Thanks to [@eshanholtz](https://github.com/eshanholtz)!
+
+**Library - Fix**
+- [PR #1151](https://github.com/sendgrid/sendgrid-csharp/pull/1151): Use the private body and header datamembers for DeserializeResponseBodyAsync and DeserializeResponseHeaders. Thanks to [@Wind010](https://github.com/Wind010)!
+
+
 [2022-02-09] Version 9.25.3
 ---------------------------
 **Library - Chore**

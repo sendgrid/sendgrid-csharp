@@ -139,6 +139,12 @@ namespace SendGrid.Helpers.Mail
         public EmailAddress ReplyTo { get; set; }
 
         /// <summary>
+        /// Gets or sets a list of objects of email objects containing the email address and name of the individuals who should receive responses to your email.
+        /// </summary>
+        [JsonProperty(PropertyName = "reply_to_list", IsReference = false)]
+        public List<EmailAddress> ReplyTos { get; set; }
+
+        /// <summary>
         /// Add a recipient email.
         /// </summary>
         /// <param name="email">Specify the recipient's email.</param>
@@ -316,6 +322,50 @@ namespace SendGrid.Helpers.Mail
             personalization = GetPersonalization(personalizationIndex, personalization);
             personalization.Headers = personalization.Headers == null ? headers :
                     personalization.Headers.Union(headers).ToDictionary(pair => pair.Key, pair => pair.Value);
+        }
+
+        /// <summary>
+        /// Add a reply-to email.
+        /// </summary>
+        /// <param name="email">Specify the recipient's email.</param>
+        /// <param name="name">Specify the recipient's name.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the email parameter is null or whitespace</exception>
+        public void AddReplyTo(string email, string name = null)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                throw new ArgumentNullException("email");
+
+            this.AddReplyTo(new EmailAddress(email, name));
+        }
+
+        /// <summary>
+        /// Add a reply-to email.
+        /// </summary>
+        /// <param name="email">An email recipient that may contain the recipient’s name, but must always contain the recipient’s email.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the email parameter is null</exception>
+        public void AddReplyTo(EmailAddress email)
+        {
+            if (email == null)
+                throw new ArgumentNullException("email");
+
+            AddReplyTos(new List<EmailAddress> { email });
+        }
+
+        /// <summary>
+        /// Add reply-to recipients.
+        /// </summary>
+        /// <param name="emails">A list of reply-to recipients. Each email object within this array may contain the recipient’s name, but must always contain the recipient’s email.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the emails parameter is null</exception>
+        /// <exception cref="System.InvalidOperationException">Thrown when the emails parameter is empty</exception>
+        public void AddReplyTos(List<EmailAddress> emails)
+        {
+            if (emails == null)
+                throw new ArgumentNullException("emails");
+            if (emails.Count == 0)
+                throw new InvalidOperationException("Sequence contains no elements");
+
+            if (ReplyTos == null) ReplyTos = new List<EmailAddress>();
+            ReplyTos.AddRange(emails);
         }
 
         /// <summary>
@@ -854,6 +904,63 @@ namespace SendGrid.Helpers.Mail
             }
 
             this.MailSettings.BypassListManagement = new BypassListManagement()
+            {
+                Enable = enable,
+            };
+            return;
+        }
+
+        /// <summary>
+        /// Set the bypass spam management setting.
+        /// Allows you to bypass the spam report list to ensure that the email is delivered to recipients. Bounce and unsubscribe lists will still be checked; addresses on these other lists will not receive the message. 
+        /// </summary>
+        /// <param name="enable">Gets or sets a value indicating whether this setting is enabled.</param>
+        public void SetBypassSpamManagement(bool enable)
+        {
+            if (this.MailSettings == null)
+            {
+                this.MailSettings = new MailSettings();
+            }
+
+            this.MailSettings.BypassSpamManagement = new BypassSpamManagement
+            {
+                Enable = enable,
+            };
+            return;
+        }
+
+        /// <summary>
+        /// Set the bypass bounce management setting.
+        /// Allows you to bypass the bounce list to ensure that the email is delivered to recipients. Spam report and unsubscribe lists will still be checked; addresses on these other lists will not receive the message. 
+        /// </summary>
+        /// <param name="enable">Gets or sets a value indicating whether this setting is enabled.</param>
+        public void SetBypassBounceManagement(bool enable)
+        {
+            if (this.MailSettings == null)
+            {
+                this.MailSettings = new MailSettings();
+            }
+
+            this.MailSettings.BypassBounceManagement = new BypassBounceManagement
+            {
+                Enable = enable,
+            };
+            return;
+        }
+
+        /// <summary>
+        /// Set the bypass unsubscribe management setting.
+        /// Allows you to bypass the global unsubscribe list to ensure that the email is delivered to recipients. Bounce and spam report lists will still be checked; addresses on these other lists will not receive the message. This filter applies only to global unsubscribes and will not bypass group unsubscribes.
+        /// </summary>
+        /// <param name="enable">Gets or sets a value indicating whether this setting is enabled.</param>
+        public void SetBypassUnsubscribeManagement(bool enable)
+        {
+            if (this.MailSettings == null)
+            {
+                this.MailSettings = new MailSettings();
+            }
+
+            this.MailSettings.BypassUnsubscribeManagement = new BypassUnsubscribeManagement
             {
                 Enable = enable,
             };
