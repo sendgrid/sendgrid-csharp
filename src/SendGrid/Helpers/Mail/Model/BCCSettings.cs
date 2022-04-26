@@ -23,6 +23,6 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets the email address that you would like to receive the BCC.
         /// </summary>
         [JsonProperty(PropertyName = "email")]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
     }
 }

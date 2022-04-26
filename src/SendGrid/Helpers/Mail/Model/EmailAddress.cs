@@ -26,7 +26,7 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         /// <param name="email">The email address of the sender or recipient.</param>
         /// <param name="name">The name of the sender or recipient.</param>
-        public EmailAddress(string email, string name = null)
+        public EmailAddress(string? email, string? name = null)
         {
             this.Email = email;
             this.Name = name;
@@ -36,13 +36,13 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets the name of the sender or recipient.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Gets or sets the email address of the sender or recipient.
         /// </summary>
         [JsonProperty(PropertyName = "email")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         /// <summary>
         /// Determines whether the two specified operands are equal.
@@ -50,7 +50,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="left">The left hand operand in the equation.</param>
         /// <param name="right">The right hand operand in the equation.</param>
         /// <returns>True if equal, false if not.</returns>
-        public static bool operator ==(EmailAddress left, EmailAddress right)
+        public static bool operator ==(EmailAddress? left, EmailAddress? right)
         {
             if (left is null && right is null)
             {
@@ -66,7 +66,7 @@ namespace SendGrid.Helpers.Mail
         /// <param name="left">The left hand operand in the equation.</param>
         /// <param name="right">The right hand operand in the equation.</param>
         /// <returns>True if the two operands are not equal, and false if they are.</returns>
-        public static bool operator !=(EmailAddress left, EmailAddress right)
+        public static bool operator !=(EmailAddress? left, EmailAddress? right)
         {
             return !(left == right);
         }
@@ -76,7 +76,7 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         /// <param name="other">The comparand email address.</param>
         /// <returns>true if the objects are equal, false if they're not.</returns>
-        public bool Equals(EmailAddress other)
+        public bool Equals(EmailAddress? other)
         {
             if (other is null)
             {
@@ -96,7 +96,7 @@ namespace SendGrid.Helpers.Mail
         /// </summary>
         /// <param name="obj">The comparand object.</param>
         /// <returns>true if the objects are equal, false if they're not.</returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is null)
             {

@@ -46,12 +46,12 @@ namespace SendGrid.Helpers.Reliability
                 return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
             }
 
-            HttpResponseMessage responseMessage = null;
+            HttpResponseMessage? responseMessage = null;
 
             var numberOfAttempts = 0;
             var sent = false;
 
-            while (!sent)
+            do
             {
                 var waitFor = this.GetNextWaitInterval(numberOfAttempts);
 
@@ -86,9 +86,9 @@ namespace SendGrid.Helpers.Reliability
 
                     await TaskUtilities.Delay(waitFor).ConfigureAwait(false);
                 }
-            }
+            } while (!sent);
 
-            return responseMessage;
+            return responseMessage!;
         }
 
         private void ThrowHttpRequestExceptionIfResponseCodeCanBeRetried(HttpResponseMessage responseMessage)

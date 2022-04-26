@@ -4,6 +4,7 @@
 // </copyright>
 
 using Newtonsoft.Json;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SendGrid.Helpers.Mail
 {
@@ -35,12 +36,14 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets the mime type of the content you are including in your email. For example, text/plain or text/html.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        [DisallowNull]
+        public string? Type { get; set; }
 
         /// <summary>
         /// Gets or sets the actual content of the specified mime type that you are including in your email.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        [DisallowNull]
+        public string? Value { get; set; }
     }
 }

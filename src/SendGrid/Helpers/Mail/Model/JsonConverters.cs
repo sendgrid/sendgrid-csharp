@@ -44,10 +44,7 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Determines whether this instance can convert the specified object type.
         /// </summary>
-        public override bool CanRead
-        {
-            get { return false; }
-        }
+        public override bool CanRead => false;
 
         /// <summary>
         /// Reads the JSON representation of the object.

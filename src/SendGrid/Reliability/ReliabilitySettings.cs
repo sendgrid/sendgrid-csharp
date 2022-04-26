@@ -26,8 +26,8 @@ namespace SendGrid.Helpers.Reliability
         /// Initializes a new instance of the <see cref="ReliabilitySettings"/> class.
         /// </summary>
         /// <param name="maximumNumberOfRetries">The maximum number of retries to execute against when sending an HTTP Request before throwing an exception. Max value of 5. Default value of 0.</param>
-        /// <param name="minimumBackoff">The minimum amount of time to wait between between HTTP retries. Default value of 0 seconds.</param>
-        /// <param name="maximumBackOff" max="30 seconds">the maximum amount of time to wait between between HTTP retries. Max value of 30 seconds. Default value of 0 seconds.</param>
+        /// <param name="minimumBackoff">The minimum amount of time to wait between HTTP retries. Default value of 0 seconds.</param>
+        /// <param name="maximumBackOff" max="30 seconds">the maximum amount of time to wait between HTTP retries. Max value of 30 seconds. Default value of 0 seconds.</param>
         /// <param name="deltaBackOff">the value that will be used to calculate a random delta in the exponential delay between retries. Default value of 0 seconds.</param>
         public ReliabilitySettings(int maximumNumberOfRetries, TimeSpan minimumBackoff, TimeSpan maximumBackOff, TimeSpan deltaBackOff)
         {
@@ -78,12 +78,12 @@ namespace SendGrid.Helpers.Reliability
         public int MaximumNumberOfRetries { get; }
 
         /// <summary>
-        /// Gets the minimum amount of time to wait between between HTTP retries. Defaults to 1 second.
+        /// Gets the minimum amount of time to wait between HTTP retries. Defaults to 1 second.
         /// </summary>
         public TimeSpan MinimumBackOff { get; }
 
         /// <summary>
-        /// Gets the maximum amount of time to wait between between HTTP retries. Defaults to 10 seconds.
+        /// Gets the maximum amount of time to wait between HTTP retries. Defaults to 10 seconds.
         /// </summary>
         public TimeSpan MaximumBackOff { get; }
 

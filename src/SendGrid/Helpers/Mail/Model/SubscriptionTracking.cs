@@ -23,18 +23,18 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets the text to be appended to the email, with the subscription tracking link. You may control where the link is by using the tag (percent symbol) (percent symbol).
         /// </summary>
         [JsonProperty(PropertyName = "text")]
-        public string Text { get; set; }
+        public string? Text { get; set; }
 
         /// <summary>
         /// Gets or sets the HTML to be appended to the email, with the subscription tracking link. You may control where the link is by using the tag (percent symbol) (percent symbol).
         /// </summary>
         [JsonProperty(PropertyName = "html")]
-        public string Html { get; set; }
+        public string? Html { get; set; }
 
         /// <summary>
         /// Gets or sets a tag that will be replaced with the unsubscribe URL. for example: [unsubscribe_url]. If this parameter is used, it will override both the textand html parameters. The URL of the link will be placed at the substitution tag’s location, with no additional formatting.
         /// </summary>
         [JsonProperty(PropertyName = "substitution_tag")]
-        public string SubstitutionTag { get; set; }
+        public string? SubstitutionTag { get; set; }
     }
 }

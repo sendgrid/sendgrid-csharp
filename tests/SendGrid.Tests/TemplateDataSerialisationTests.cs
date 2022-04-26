@@ -20,7 +20,7 @@ namespace SendGrid.Tests
             };
 
             msg.SetTemplateData(dynamicTemplateData);
-            Assert.Equal("{\"personalizations\":[{\"dynamic_template_data\":{\"myCamelCaseProperty\":\"camelCase\",\"my-kebab-case-property\":\"kebab-case\",\"MyPascalCaseProperty\":\"PascalCase\",\"my_snake_case_property\":\"snake_case\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"dynamic_template_data\":{\"myCamelCaseProperty\":\"camelCase\",\"my-kebab-case-property\":\"kebab-case\",\"MyPascalCaseProperty\":\"PascalCase\",\"my_snake_case_property\":\"snake_case\"}}]}", msg.Serialize());
         }
 
         private class TestTemplateData

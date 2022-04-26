@@ -906,11 +906,11 @@
         {
             var msg = new SendGridMessage();
             msg.AddCc("test001@example.com", "Example User");
-            Assert.Equal("{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test001@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test001@example.com\"}]}]}", msg.Serialize());
 
             msg = new SendGridMessage();
             msg.AddCc("test001@example.com");
-            Assert.Equal("{\"personalizations\":[{\"cc\":[{\"email\":\"test001@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"cc\":[{\"email\":\"test001@example.com\"}]}]}", msg.Serialize());
         }
 
         [Fact]
@@ -933,7 +933,7 @@
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
             msg.AddCc(new EmailAddress("test001@example.com", "Example User"));
-            Assert.Equal("{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test001@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test001@example.com\"}]}]}", msg.Serialize());
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
@@ -946,7 +946,7 @@
                 }
             };
             msg.AddCc(new EmailAddress("test003@example.com", "Example User"), 0, personalization);
-            Assert.Equal("{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test002@example.com\"},{\"name\":\"Example User\",\"email\":\"test003@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test002@example.com\"},{\"name\":\"Example User\",\"email\":\"test003@example.com\"}]}]}", msg.Serialize());
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
@@ -968,7 +968,7 @@
                 }
             };
             msg.AddCc(new EmailAddress("test006@example.com", "Example User"), 1, personalization);
-            Assert.Equal("{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test004@example.com\"}]},{\"cc\":[{\"name\":\"Example User\",\"email\":\"test005@example.com\"},{\"name\":\"Example User\",\"email\":\"test006@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test004@example.com\"}]},{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test005@example.com\"},{\"name\":\"Example User\",\"email\":\"test006@example.com\"}]}]}", msg.Serialize());
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
@@ -982,7 +982,7 @@
                 }
             };
             msg.AddCc(new EmailAddress("test008@example.com", "Example User"));
-            Assert.Equal("{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test007@example.com\"},{\"name\":\"Example User\",\"email\":\"test008@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test007@example.com\"},{\"name\":\"Example User\",\"email\":\"test008@example.com\"}]}]}", msg.Serialize());
 
 
             // Personalization not passed in Personalizations exists
@@ -1006,7 +1006,7 @@
             };
             msg.Personalizations.Add(personalization);
             msg.AddCc(new EmailAddress("test011@example.com", "Example User"));
-            Assert.Equal("{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test009@example.com\"},{\"name\":\"Example User\",\"email\":\"test011@example.com\"}]},{\"cc\":[{\"name\":\"Example User\",\"email\":\"test010@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test009@example.com\"},{\"name\":\"Example User\",\"email\":\"test011@example.com\"}]},{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test010@example.com\"}]}]}", msg.Serialize());
         }
 
         [Fact]
@@ -1020,7 +1020,7 @@
                 new EmailAddress("test013@example.com", "Example User")
             };
             msg.AddCcs(emails);
-            Assert.Equal("{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test012@example.com\"},{\"name\":\"Example User\",\"email\":\"test013@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test012@example.com\"},{\"name\":\"Example User\",\"email\":\"test013@example.com\"}]}]}", msg.Serialize());
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
@@ -1039,7 +1039,7 @@
                 new EmailAddress("test017@example.com", "Example User")
             };
             msg.AddCcs(emails, 0, personalization);
-            Assert.Equal("{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test014@example.com\"},{\"name\":\"Example User\",\"email\":\"test015@example.com\"},{\"name\":\"Example User\",\"email\":\"test016@example.com\"},{\"name\":\"Example User\",\"email\":\"test017@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test014@example.com\"},{\"name\":\"Example User\",\"email\":\"test015@example.com\"},{\"name\":\"Example User\",\"email\":\"test016@example.com\"},{\"name\":\"Example User\",\"email\":\"test017@example.com\"}]}]}", msg.Serialize());
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
@@ -1068,7 +1068,7 @@
                 new EmailAddress("test023@example.com", "Example User")
             };
             msg.AddCcs(emails, 1, personalization);
-            Assert.Equal("{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test018@example.com\"},{\"name\":\"Example User\",\"email\":\"test019@example.com\"}]},{\"cc\":[{\"name\":\"Example User\",\"email\":\"test020@example.com\"},{\"name\":\"Example User\",\"email\":\"test021@example.com\"},{\"name\":\"Example User\",\"email\":\"test022@example.com\"},{\"name\":\"Example User\",\"email\":\"test023@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test018@example.com\"},{\"name\":\"Example User\",\"email\":\"test019@example.com\"}]},{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test020@example.com\"},{\"name\":\"Example User\",\"email\":\"test021@example.com\"},{\"name\":\"Example User\",\"email\":\"test022@example.com\"},{\"name\":\"Example User\",\"email\":\"test023@example.com\"}]}]}", msg.Serialize());
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
@@ -1088,7 +1088,7 @@
                 new EmailAddress("test027@example.com", "Example User")
             };
             msg.AddCcs(emails);
-            Assert.Equal("{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test024@example.com\"},{\"name\":\"Example User\",\"email\":\"test025@example.com\"},{\"name\":\"Example User\",\"email\":\"test026@example.com\"},{\"name\":\"Example User\",\"email\":\"test027@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test024@example.com\"},{\"name\":\"Example User\",\"email\":\"test025@example.com\"},{\"name\":\"Example User\",\"email\":\"test026@example.com\"},{\"name\":\"Example User\",\"email\":\"test027@example.com\"}]}]}", msg.Serialize());
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
@@ -1118,7 +1118,7 @@
                 new EmailAddress("test033@example.com", "Example User")
             };
             msg.AddCcs(emails);
-            Assert.Equal("{\"personalizations\":[{\"cc\":[{\"name\":\"Example User\",\"email\":\"test028@example.com\"},{\"name\":\"Example User\",\"email\":\"test029@example.com\"},{\"name\":\"Example User\",\"email\":\"test032@example.com\"},{\"name\":\"Example User\",\"email\":\"test033@example.com\"}]},{\"cc\":[{\"name\":\"Example User\",\"email\":\"test030@example.com\"},{\"name\":\"Example User\",\"email\":\"test031@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test028@example.com\"},{\"name\":\"Example User\",\"email\":\"test029@example.com\"},{\"name\":\"Example User\",\"email\":\"test032@example.com\"},{\"name\":\"Example User\",\"email\":\"test033@example.com\"}]},{\"to\":[],\"cc\":[{\"name\":\"Example User\",\"email\":\"test030@example.com\"},{\"name\":\"Example User\",\"email\":\"test031@example.com\"}]}]}", msg.Serialize());
         }
 
         [Fact]
@@ -1127,7 +1127,7 @@
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
             msg.AddBcc(new EmailAddress("test001@example.com", "Example User"));
-            Assert.Equal("{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test001@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test001@example.com\"}]}]}", msg.Serialize());
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
@@ -1140,7 +1140,7 @@
                 }
             };
             msg.AddBcc(new EmailAddress("test003@example.com", "Example User"), 0, personalization);
-            Assert.Equal("{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test002@example.com\"},{\"name\":\"Example User\",\"email\":\"test003@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test002@example.com\"},{\"name\":\"Example User\",\"email\":\"test003@example.com\"}]}]}", msg.Serialize());
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
@@ -1162,7 +1162,7 @@
                 }
             };
             msg.AddBcc(new EmailAddress("test006@example.com", "Example User"), 1, personalization);
-            Assert.Equal("{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test004@example.com\"}]},{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test005@example.com\"},{\"name\":\"Example User\",\"email\":\"test006@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test004@example.com\"}]},{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test005@example.com\"},{\"name\":\"Example User\",\"email\":\"test006@example.com\"}]}]}", msg.Serialize());
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
@@ -1176,7 +1176,7 @@
                 }
             };
             msg.AddBcc(new EmailAddress("test008@example.com", "Example User"));
-            Assert.Equal("{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test007@example.com\"},{\"name\":\"Example User\",\"email\":\"test008@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test007@example.com\"},{\"name\":\"Example User\",\"email\":\"test008@example.com\"}]}]}", msg.Serialize());
 
 
             // Personalization not passed in Personalizations exists
@@ -1200,7 +1200,7 @@
             };
             msg.Personalizations.Add(personalization);
             msg.AddBcc(new EmailAddress("test011@example.com", "Example User"));
-            Assert.Equal("{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test009@example.com\"},{\"name\":\"Example User\",\"email\":\"test011@example.com\"}]},{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test010@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test009@example.com\"},{\"name\":\"Example User\",\"email\":\"test011@example.com\"}]},{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test010@example.com\"}]}]}", msg.Serialize());
         }
 
         [Fact]
@@ -1208,11 +1208,11 @@
         {
             var msg = new SendGridMessage();
             msg.AddBcc("test001@example.com", "Example User");
-            Assert.Equal("{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test001@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test001@example.com\"}]}]}", msg.Serialize());
 
             msg = new SendGridMessage();
             msg.AddBcc("test001@example.com");
-            Assert.Equal("{\"personalizations\":[{\"bcc\":[{\"email\":\"test001@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"bcc\":[{\"email\":\"test001@example.com\"}]}]}", msg.Serialize());
         }
 
         [Fact]
@@ -1240,7 +1240,7 @@
                 new EmailAddress("test013@example.com", "Example User")
             };
             msg.AddBccs(emails);
-            Assert.Equal("{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test012@example.com\"},{\"name\":\"Example User\",\"email\":\"test013@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test012@example.com\"},{\"name\":\"Example User\",\"email\":\"test013@example.com\"}]}]}", msg.Serialize());
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
@@ -1259,7 +1259,7 @@
                 new EmailAddress("test017@example.com", "Example User")
             };
             msg.AddBccs(emails, 0, personalization);
-            Assert.Equal("{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test014@example.com\"},{\"name\":\"Example User\",\"email\":\"test015@example.com\"},{\"name\":\"Example User\",\"email\":\"test016@example.com\"},{\"name\":\"Example User\",\"email\":\"test017@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test014@example.com\"},{\"name\":\"Example User\",\"email\":\"test015@example.com\"},{\"name\":\"Example User\",\"email\":\"test016@example.com\"},{\"name\":\"Example User\",\"email\":\"test017@example.com\"}]}]}", msg.Serialize());
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
@@ -1288,7 +1288,7 @@
                 new EmailAddress("test023@example.com", "Example User")
             };
             msg.AddBccs(emails, 1, personalization);
-            Assert.Equal("{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test018@example.com\"},{\"name\":\"Example User\",\"email\":\"test019@example.com\"}]},{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test020@example.com\"},{\"name\":\"Example User\",\"email\":\"test021@example.com\"},{\"name\":\"Example User\",\"email\":\"test022@example.com\"},{\"name\":\"Example User\",\"email\":\"test023@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test018@example.com\"},{\"name\":\"Example User\",\"email\":\"test019@example.com\"}]},{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test020@example.com\"},{\"name\":\"Example User\",\"email\":\"test021@example.com\"},{\"name\":\"Example User\",\"email\":\"test022@example.com\"},{\"name\":\"Example User\",\"email\":\"test023@example.com\"}]}]}", msg.Serialize());
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
@@ -1308,7 +1308,7 @@
                 new EmailAddress("test027@example.com", "Example User")
             };
             msg.AddBccs(emails);
-            Assert.Equal("{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test024@example.com\"},{\"name\":\"Example User\",\"email\":\"test025@example.com\"},{\"name\":\"Example User\",\"email\":\"test026@example.com\"},{\"name\":\"Example User\",\"email\":\"test027@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test024@example.com\"},{\"name\":\"Example User\",\"email\":\"test025@example.com\"},{\"name\":\"Example User\",\"email\":\"test026@example.com\"},{\"name\":\"Example User\",\"email\":\"test027@example.com\"}]}]}", msg.Serialize());
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
@@ -1338,7 +1338,7 @@
                 new EmailAddress("test033@example.com", "Example User")
             };
             msg.AddBccs(emails);
-            Assert.Equal("{\"personalizations\":[{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test028@example.com\"},{\"name\":\"Example User\",\"email\":\"test029@example.com\"},{\"name\":\"Example User\",\"email\":\"test032@example.com\"},{\"name\":\"Example User\",\"email\":\"test033@example.com\"}]},{\"bcc\":[{\"name\":\"Example User\",\"email\":\"test030@example.com\"},{\"name\":\"Example User\",\"email\":\"test031@example.com\"}]}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test028@example.com\"},{\"name\":\"Example User\",\"email\":\"test029@example.com\"},{\"name\":\"Example User\",\"email\":\"test032@example.com\"},{\"name\":\"Example User\",\"email\":\"test033@example.com\"}]},{\"to\":[],\"bcc\":[{\"name\":\"Example User\",\"email\":\"test030@example.com\"},{\"name\":\"Example User\",\"email\":\"test031@example.com\"}]}]}", msg.Serialize());
         }
 
         [Fact]
@@ -1362,7 +1362,7 @@
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
             msg.SetSubject("subject1");
-            Assert.Equal("{\"personalizations\":[{\"subject\":\"subject1\"}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"subject\":\"subject1\"}]}", msg.Serialize());
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
@@ -1372,7 +1372,7 @@
                 Subject = subject
             };
             msg.SetSubject("subject3", 0, personalization);
-            Assert.Equal("{\"personalizations\":[{\"subject\":\"subject3\"}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"subject\":\"subject3\"}]}", msg.Serialize());
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
@@ -1388,7 +1388,7 @@
                 Subject = subject
             };
             msg.SetSubject("subject6", 1, personalization);
-            Assert.Equal("{\"personalizations\":[{\"subject\":\"subject4\"},{\"subject\":\"subject6\"}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"subject\":\"subject4\"},{\"to\":[],\"subject\":\"subject6\"}]}", msg.Serialize());
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
@@ -1399,7 +1399,7 @@
                 }
             };
             msg.SetSubject("subject8");
-            Assert.Equal("{\"personalizations\":[{\"subject\":\"subject8\"}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"subject\":\"subject8\"}]}", msg.Serialize());
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
@@ -1416,7 +1416,7 @@
             };
             msg.Personalizations.Add(personalization);
             msg.SetSubject("subject11");
-            Assert.Equal("{\"personalizations\":[{\"subject\":\"subject11\"},{\"subject\":\"subject10\"}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"subject\":\"subject11\"},{\"to\":[],\"subject\":\"subject10\"}]}", msg.Serialize());
         }
 
         [Fact]
@@ -1425,7 +1425,7 @@
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
             msg.AddHeader("X-Test", "Test Value");
-            Assert.Equal("{\"personalizations\":[{\"headers\":{\"X-Test\":\"Test Value\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"headers\":{\"X-Test\":\"Test Value\"}}]}", msg.Serialize());
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
@@ -1437,7 +1437,7 @@
                 }
             };
             msg.AddHeader("X-Test2", "Test Value 2", 0, personalization);
-            Assert.Equal("{\"personalizations\":[{\"headers\":{\"X-Test\":\"Test Value\",\"X-Test2\":\"Test Value 2\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"headers\":{\"X-Test\":\"Test Value\",\"X-Test2\":\"Test Value 2\"}}]}", msg.Serialize());
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage
@@ -1461,7 +1461,7 @@
                 }
             };
             msg.AddHeader("X-Test5", "Test Value 5", 1, personalization);
-            Assert.Equal("{\"personalizations\":[{\"headers\":{\"X-Test3\":\"Test Value 3\"}},{\"headers\":{\"X-Test4\":\"Test Value 4\",\"X-Test5\":\"Test Value 5\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"headers\":{\"X-Test3\":\"Test Value 3\"}},{\"to\":[],\"headers\":{\"X-Test4\":\"Test Value 4\",\"X-Test5\":\"Test Value 5\"}}]}", msg.Serialize());
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage
@@ -1478,7 +1478,7 @@
                 }
             };
             msg.AddHeader("X-Test7", "Test Value 7");
-            Assert.Equal("{\"personalizations\":[{\"headers\":{\"X-Test6\":\"Test Value 6\",\"X-Test7\":\"Test Value 7\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"headers\":{\"X-Test6\":\"Test Value 6\",\"X-Test7\":\"Test Value 7\"}}]}", msg.Serialize());
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage
@@ -1503,7 +1503,7 @@
             };
             msg.Personalizations.Add(personalization);
             msg.AddHeader("X-Test10", "Test Value 10");
-            Assert.Equal("{\"personalizations\":[{\"headers\":{\"X-Test8\":\"Test Value 8\",\"X-Test10\":\"Test Value 10\"}},{\"headers\":{\"X-Test9\":\"Test Value 9\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"headers\":{\"X-Test8\":\"Test Value 8\",\"X-Test10\":\"Test Value 10\"}},{\"to\":[],\"headers\":{\"X-Test9\":\"Test Value 9\"}}]}", msg.Serialize());
         }
 
         [Fact]
@@ -1513,7 +1513,7 @@
             var msg = new SendGridMessage();
             var headers = new Dictionary<string, string> { { "X-Test1", "Test Value 1" }, { "X-Test2", "Test Value 2" } };
             msg.AddHeaders(headers);
-            Assert.Equal("{\"personalizations\":[{\"headers\":{\"X-Test1\":\"Test Value 1\",\"X-Test2\":\"Test Value 2\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"headers\":{\"X-Test1\":\"Test Value 1\",\"X-Test2\":\"Test Value 2\"}}]}", msg.Serialize());
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
@@ -1524,7 +1524,7 @@
             };
             headers = new Dictionary<string, string> { { "X-Test5", "Test Value 5" }, { "X-Test6", "Test Value 6" } };
             msg.AddHeaders(headers, 0, personalization);
-            Assert.Equal("{\"personalizations\":[{\"headers\":{\"X-Test3\":\"Test Value 3\",\"X-Test4\":\"Test Value 4\",\"X-Test5\":\"Test Value 5\",\"X-Test6\":\"Test Value 6\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"headers\":{\"X-Test3\":\"Test Value 3\",\"X-Test4\":\"Test Value 4\",\"X-Test5\":\"Test Value 5\",\"X-Test6\":\"Test Value 6\"}}]}", msg.Serialize());
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
@@ -1541,7 +1541,7 @@
             };
             headers = new Dictionary<string, string> { { "X-Test11", "Test Value 11" }, { "X-Test12", "Test Value 12" } };
             msg.AddHeaders(headers, 1, personalization);
-            Assert.Equal("{\"personalizations\":[{\"headers\":{\"X-Test7\":\"Test Value 7\",\"X-Test8\":\"Test Value 8\"}},{\"headers\":{\"X-Test9\":\"Test Value 9\",\"X-Test10\":\"Test Value 10\",\"X-Test11\":\"Test Value 11\",\"X-Test12\":\"Test Value 12\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"headers\":{\"X-Test7\":\"Test Value 7\",\"X-Test8\":\"Test Value 8\"}},{\"to\":[],\"headers\":{\"X-Test9\":\"Test Value 9\",\"X-Test10\":\"Test Value 10\",\"X-Test11\":\"Test Value 11\",\"X-Test12\":\"Test Value 12\"}}]}", msg.Serialize());
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
@@ -1553,7 +1553,7 @@
             };
             headers = new Dictionary<string, string> { { "X-Test15", "Test Value 15" }, { "X-Test16", "Test Value 16" } };
             msg.AddHeaders(headers);
-            Assert.Equal("{\"personalizations\":[{\"headers\":{\"X-Test13\":\"Test Value 13\",\"X-Test14\":\"Test Value 14\",\"X-Test15\":\"Test Value 15\",\"X-Test16\":\"Test Value 16\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"headers\":{\"X-Test13\":\"Test Value 13\",\"X-Test14\":\"Test Value 14\",\"X-Test15\":\"Test Value 15\",\"X-Test16\":\"Test Value 16\"}}]}", msg.Serialize());
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
@@ -1571,7 +1571,7 @@
             msg.Personalizations.Add(personalization);
             headers = new Dictionary<string, string> { { "X-Test21", "Test Value 21" }, { "X-Test22", "Test Value 22" } };
             msg.AddHeaders(headers);
-            Assert.Equal("{\"personalizations\":[{\"headers\":{\"X-Test17\":\"Test Value 17\",\"X-Test18\":\"Test Value 18\",\"X-Test21\":\"Test Value 21\",\"X-Test22\":\"Test Value 22\"}},{\"headers\":{\"X-Test19\":\"Test Value 19\",\"X-Test20\":\"Test Value 20\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"headers\":{\"X-Test17\":\"Test Value 17\",\"X-Test18\":\"Test Value 18\",\"X-Test21\":\"Test Value 21\",\"X-Test22\":\"Test Value 22\"}},{\"to\":[],\"headers\":{\"X-Test19\":\"Test Value 19\",\"X-Test20\":\"Test Value 20\"}}]}", msg.Serialize());
         }
 
         [Fact]
@@ -1580,7 +1580,7 @@
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
             msg.AddSubstitution("-sub1-", "Substituted Value 1");
-            Assert.Equal("{\"personalizations\":[{\"substitutions\":{\"-sub1-\":\"Substituted Value 1\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"substitutions\":{\"-sub1-\":\"Substituted Value 1\"}}]}", msg.Serialize());
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
@@ -1592,7 +1592,7 @@
                 }
             };
             msg.AddSubstitution("-sub3-", "Substituted Value 3", 0, personalization);
-            Assert.Equal("{\"personalizations\":[{\"substitutions\":{\"-sub2-\":\"Substituted Value 2\",\"-sub3-\":\"Substituted Value 3\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"substitutions\":{\"-sub2-\":\"Substituted Value 2\",\"-sub3-\":\"Substituted Value 3\"}}]}", msg.Serialize());
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage
@@ -1616,7 +1616,7 @@
                 }
             };
             msg.AddSubstitution("-sub6-", "Substituted Value 6", 1, personalization);
-            Assert.Equal("{\"personalizations\":[{\"substitutions\":{\"-sub4-\":\"Substituted Value 4\"}},{\"substitutions\":{\"-sub5-\":\"Substituted Value 5\",\"-sub6-\":\"Substituted Value 6\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"substitutions\":{\"-sub4-\":\"Substituted Value 4\"}},{\"to\":[],\"substitutions\":{\"-sub5-\":\"Substituted Value 5\",\"-sub6-\":\"Substituted Value 6\"}}]}", msg.Serialize());
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage
@@ -1633,7 +1633,7 @@
                 }
             };
             msg.AddSubstitution("-sub8-", "Substituted Value 8");
-            Assert.Equal("{\"personalizations\":[{\"substitutions\":{\"-sub7-\":\"Substituted Value 7\",\"-sub8-\":\"Substituted Value 8\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"substitutions\":{\"-sub7-\":\"Substituted Value 7\",\"-sub8-\":\"Substituted Value 8\"}}]}", msg.Serialize());
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage
@@ -1658,7 +1658,7 @@
             };
             msg.Personalizations.Add(personalization);
             msg.AddSubstitution("-sub11-", "Substituted Value 11");
-            Assert.Equal("{\"personalizations\":[{\"substitutions\":{\"-sub9-\":\"Substituted Value 9\",\"-sub11-\":\"Substituted Value 11\"}},{\"substitutions\":{\"-sub10-\":\"Substituted Value 10\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"substitutions\":{\"-sub9-\":\"Substituted Value 9\",\"-sub11-\":\"Substituted Value 11\"}},{\"to\":[],\"substitutions\":{\"-sub10-\":\"Substituted Value 10\"}}]}", msg.Serialize());
         }
 
         [Fact]
@@ -1672,7 +1672,7 @@
                 {"-sub13-", "Substituted Value 13"}
             };
             msg.AddSubstitutions(substitutions);
-            Assert.Equal("{\"personalizations\":[{\"substitutions\":{\"-sub12-\":\"Substituted Value 12\",\"-sub13-\":\"Substituted Value 13\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"substitutions\":{\"-sub12-\":\"Substituted Value 12\",\"-sub13-\":\"Substituted Value 13\"}}]}", msg.Serialize());
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
@@ -1691,7 +1691,7 @@
                 {"-sub17-", "Substituted Value 17"}
             };
             msg.AddSubstitutions(substitutions, 0, personalization);
-            Assert.Equal("{\"personalizations\":[{\"substitutions\":{\"-sub14-\":\"Substituted Value 14\",\"-sub15-\":\"Substituted Value 15\",\"-sub16-\":\"Substituted Value 16\",\"-sub17-\":\"Substituted Value 17\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"substitutions\":{\"-sub14-\":\"Substituted Value 14\",\"-sub15-\":\"Substituted Value 15\",\"-sub16-\":\"Substituted Value 16\",\"-sub17-\":\"Substituted Value 17\"}}]}", msg.Serialize());
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
@@ -1720,7 +1720,7 @@
                 {"-sub23-", "Substituted Value 23"}
             };
             msg.AddSubstitutions(substitutions, 1, personalization);
-            Assert.Equal("{\"personalizations\":[{\"substitutions\":{\"-sub18-\":\"Substituted Value 18\",\"-sub19-\":\"Substituted Value 19\"}},{\"substitutions\":{\"-sub20-\":\"Substituted Value 20\",\"-sub21-\":\"Substituted Value 21\",\"-sub22-\":\"Substituted Value 22\",\"-sub23-\":\"Substituted Value 23\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"substitutions\":{\"-sub18-\":\"Substituted Value 18\",\"-sub19-\":\"Substituted Value 19\"}},{\"to\":[],\"substitutions\":{\"-sub20-\":\"Substituted Value 20\",\"-sub21-\":\"Substituted Value 21\",\"-sub22-\":\"Substituted Value 22\",\"-sub23-\":\"Substituted Value 23\"}}]}", msg.Serialize());
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
@@ -1740,7 +1740,7 @@
                 {"-sub27-", "Substituted Value 27"}
             };
             msg.AddSubstitutions(substitutions);
-            Assert.Equal("{\"personalizations\":[{\"substitutions\":{\"-sub24-\":\"Substituted Value 24\",\"-sub25-\":\"Substituted Value 25\",\"-sub26-\":\"Substituted Value 26\",\"-sub27-\":\"Substituted Value 27\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"substitutions\":{\"-sub24-\":\"Substituted Value 24\",\"-sub25-\":\"Substituted Value 25\",\"-sub26-\":\"Substituted Value 26\",\"-sub27-\":\"Substituted Value 27\"}}]}", msg.Serialize());
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
@@ -1770,7 +1770,7 @@
                 {"-sub33-", "Substituted Value 33"}
             };
             msg.AddSubstitutions(substitutions);
-            Assert.Equal("{\"personalizations\":[{\"substitutions\":{\"-sub28-\":\"Substituted Value 28\",\"-sub29-\":\"Substituted Value 29\",\"-sub32-\":\"Substituted Value 32\",\"-sub33-\":\"Substituted Value 33\"}},{\"substitutions\":{\"-sub30-\":\"Substituted Value 30\",\"-sub31-\":\"Substituted Value 31\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"substitutions\":{\"-sub28-\":\"Substituted Value 28\",\"-sub29-\":\"Substituted Value 29\",\"-sub32-\":\"Substituted Value 32\",\"-sub33-\":\"Substituted Value 33\"}},{\"to\":[],\"substitutions\":{\"-sub30-\":\"Substituted Value 30\",\"-sub31-\":\"Substituted Value 31\"}}]}", msg.Serialize());
         }
 
         [Fact]
@@ -1784,7 +1784,7 @@
                 key13 = "Dynamic Template Data Value 13"
             };
             msg.SetTemplateData(dynamicTemplateData1);
-            Assert.Equal("{\"personalizations\":[{\"dynamic_template_data\":{\"key12\":\"Dynamic Template Data Value 12\",\"key13\":\"Dynamic Template Data Value 13\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"dynamic_template_data\":{\"key12\":\"Dynamic Template Data Value 12\",\"key13\":\"Dynamic Template Data Value 13\"}}]}", msg.Serialize());
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
@@ -1803,7 +1803,7 @@
                 key17 = "Dynamic Template Data Value 17"
             };
             msg.SetTemplateData(dynamicTemplateData3, 0, personalization);
-            Assert.Equal("{\"personalizations\":[{\"dynamic_template_data\":{\"key16\":\"Dynamic Template Data Value 16\",\"key17\":\"Dynamic Template Data Value 17\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"dynamic_template_data\":{\"key16\":\"Dynamic Template Data Value 16\",\"key17\":\"Dynamic Template Data Value 17\"}}]}", msg.Serialize());
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
@@ -1832,7 +1832,7 @@
                 key23 = "Dynamic Template Data Value 23"
             };
             msg.SetTemplateData(dynamicTemplateData6, 1, personalization);
-            Assert.Equal("{\"personalizations\":[{\"dynamic_template_data\":{\"key18\":\"Dynamic Template Data Value 18\",\"key19\":\"Dynamic Template Data Value 19\"}},{\"dynamic_template_data\":{\"key22\":\"Dynamic Template Data Value 22\",\"key23\":\"Dynamic Template Data Value 23\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"dynamic_template_data\":{\"key18\":\"Dynamic Template Data Value 18\",\"key19\":\"Dynamic Template Data Value 19\"}},{\"to\":[],\"dynamic_template_data\":{\"key22\":\"Dynamic Template Data Value 22\",\"key23\":\"Dynamic Template Data Value 23\"}}]}", msg.Serialize());
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
@@ -1852,7 +1852,7 @@
                 key27 = "Dynamic Template Data Value 27"
             };
             msg.SetTemplateData(dynamicTemplateData8);
-            Assert.Equal("{\"personalizations\":[{\"dynamic_template_data\":{\"key26\":\"Dynamic Template Data Value 26\",\"key27\":\"Dynamic Template Data Value 27\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"dynamic_template_data\":{\"key26\":\"Dynamic Template Data Value 26\",\"key27\":\"Dynamic Template Data Value 27\"}}]}", msg.Serialize());
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
@@ -1882,7 +1882,7 @@
                 key33 = "Dynamic Template Data Value 33"
             };
             msg.SetTemplateData(dynamicTemplateData11);
-            Assert.Equal("{\"personalizations\":[{\"dynamic_template_data\":{\"key32\":\"Dynamic Template Data Value 32\",\"key33\":\"Dynamic Template Data Value 33\"}},{\"dynamic_template_data\":{\"key30\":\"Dynamic Template Data Value 30\",\"key31\":\"Dynamic Template Data Value 31\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"dynamic_template_data\":{\"key32\":\"Dynamic Template Data Value 32\",\"key33\":\"Dynamic Template Data Value 33\"}},{\"to\":[],\"dynamic_template_data\":{\"key30\":\"Dynamic Template Data Value 30\",\"key31\":\"Dynamic Template Data Value 31\"}}]}", msg.Serialize());
 
             // Complex dynamic template data
             msg = new SendGridMessage();
@@ -1899,7 +1899,7 @@
                 }
             };
             msg.SetTemplateData(dynamicTemplateData12);
-            Assert.Equal("{\"personalizations\":[{\"dynamic_template_data\":{\"array\":[\"Dynamic Template Data Array Value 1\",\"Dynamic Template Data Array Value 2\"],\"innerObject\":{\"innerObjectKey1\":\"Dynamic Template Data Deep Object Value 1\"}}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"dynamic_template_data\":{\"array\":[\"Dynamic Template Data Array Value 1\",\"Dynamic Template Data Array Value 2\"],\"innerObject\":{\"innerObjectKey1\":\"Dynamic Template Data Deep Object Value 1\"}}}]}", msg.Serialize());
         }
 
         [Fact]
@@ -1908,7 +1908,7 @@
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
             msg.AddCustomArg("arg1", "Arguement Value 1");
-            Assert.Equal("{\"personalizations\":[{\"custom_args\":{\"arg1\":\"Arguement Value 1\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"custom_args\":{\"arg1\":\"Arguement Value 1\"}}]}", msg.Serialize());
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
@@ -1920,7 +1920,7 @@
                 }
             };
             msg.AddCustomArg("arg3", "Arguement Value 3", 0, personalization);
-            Assert.Equal("{\"personalizations\":[{\"custom_args\":{\"arg2\":\"Arguement Value 2\",\"arg3\":\"Arguement Value 3\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"custom_args\":{\"arg2\":\"Arguement Value 2\",\"arg3\":\"Arguement Value 3\"}}]}", msg.Serialize());
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage
@@ -1944,7 +1944,7 @@
                 }
             };
             msg.AddCustomArg("arg6", "Arguement Value 6", 1, personalization);
-            Assert.Equal("{\"personalizations\":[{\"custom_args\":{\"arg4\":\"Arguement Value 4\"}},{\"custom_args\":{\"arg5\":\"Arguement Value 5\",\"arg6\":\"Arguement Value 6\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"custom_args\":{\"arg4\":\"Arguement Value 4\"}},{\"to\":[],\"custom_args\":{\"arg5\":\"Arguement Value 5\",\"arg6\":\"Arguement Value 6\"}}]}", msg.Serialize());
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage
@@ -1961,7 +1961,7 @@
                 }
             };
             msg.AddCustomArg("arg8", "Arguement Value 8");
-            Assert.Equal("{\"personalizations\":[{\"custom_args\":{\"arg7\":\"Arguement Value 7\",\"arg8\":\"Arguement Value 8\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"custom_args\":{\"arg7\":\"Arguement Value 7\",\"arg8\":\"Arguement Value 8\"}}]}", msg.Serialize());
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage
@@ -1986,7 +1986,7 @@
             };
             msg.Personalizations.Add(personalization);
             msg.AddCustomArg("arg11", "Arguement Value 11");
-            Assert.Equal("{\"personalizations\":[{\"custom_args\":{\"arg9\":\"Arguement Value 9\",\"arg11\":\"Arguement Value 11\"}},{\"custom_args\":{\"arg10\":\"Arguement Value 10\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"custom_args\":{\"arg9\":\"Arguement Value 9\",\"arg11\":\"Arguement Value 11\"}},{\"to\":[],\"custom_args\":{\"arg10\":\"Arguement Value 10\"}}]}", msg.Serialize());
         }
 
         [Fact]
@@ -2000,7 +2000,7 @@
                 {"arg13", "Arguement Value 13"}
             };
             msg.AddCustomArgs(customArgs);
-            Assert.Equal("{\"personalizations\":[{\"custom_args\":{\"arg12\":\"Arguement Value 12\",\"arg13\":\"Arguement Value 13\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"custom_args\":{\"arg12\":\"Arguement Value 12\",\"arg13\":\"Arguement Value 13\"}}]}", msg.Serialize());
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
@@ -2019,7 +2019,7 @@
                 {"arg17", "Arguement Value 17"}
             };
             msg.AddCustomArgs(customArgs, 0, personalization);
-            Assert.Equal("{\"personalizations\":[{\"custom_args\":{\"arg14\":\"Arguement Value 14\",\"arg15\":\"Arguement Value 15\",\"arg16\":\"Arguement Value 16\",\"arg17\":\"Arguement Value 17\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"custom_args\":{\"arg14\":\"Arguement Value 14\",\"arg15\":\"Arguement Value 15\",\"arg16\":\"Arguement Value 16\",\"arg17\":\"Arguement Value 17\"}}]}", msg.Serialize());
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
@@ -2048,7 +2048,7 @@
                 {"arg23", "Arguement Value 23"}
             };
             msg.AddCustomArgs(customArgs, 1, personalization);
-            Assert.Equal("{\"personalizations\":[{\"custom_args\":{\"arg18\":\"Arguement Value 18\",\"arg19\":\"Arguement Value 19\"}},{\"custom_args\":{\"arg20\":\"Arguement Value 20\",\"arg21\":\"Arguement Value 21\",\"arg22\":\"Arguement Value 22\",\"arg23\":\"Arguement Value 23\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"custom_args\":{\"arg18\":\"Arguement Value 18\",\"arg19\":\"Arguement Value 19\"}},{\"to\":[],\"custom_args\":{\"arg20\":\"Arguement Value 20\",\"arg21\":\"Arguement Value 21\",\"arg22\":\"Arguement Value 22\",\"arg23\":\"Arguement Value 23\"}}]}", msg.Serialize());
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
@@ -2068,7 +2068,7 @@
                 {"arg27", "Arguement Value 27"}
             };
             msg.AddCustomArgs(customArgs);
-            Assert.Equal("{\"personalizations\":[{\"custom_args\":{\"arg24\":\"Arguement Value 24\",\"arg25\":\"Arguement Value 25\",\"arg26\":\"Arguement Value 26\",\"arg27\":\"Arguement Value 27\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"custom_args\":{\"arg24\":\"Arguement Value 24\",\"arg25\":\"Arguement Value 25\",\"arg26\":\"Arguement Value 26\",\"arg27\":\"Arguement Value 27\"}}]}", msg.Serialize());
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
@@ -2098,7 +2098,7 @@
                 {"arg33", "Arguement Value 33"}
             };
             msg.AddCustomArgs(customArgs);
-            Assert.Equal("{\"personalizations\":[{\"custom_args\":{\"arg28\":\"Arguement Value 28\",\"arg29\":\"Arguement Value 29\",\"arg32\":\"Arguement Value 32\",\"arg33\":\"Arguement Value 33\"}},{\"custom_args\":{\"arg30\":\"Arguement Value 30\",\"arg31\":\"Arguement Value 31\"}}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"custom_args\":{\"arg28\":\"Arguement Value 28\",\"arg29\":\"Arguement Value 29\",\"arg32\":\"Arguement Value 32\",\"arg33\":\"Arguement Value 33\"}},{\"to\":[],\"custom_args\":{\"arg30\":\"Arguement Value 30\",\"arg31\":\"Arguement Value 31\"}}]}", msg.Serialize());
         }
 
         [Fact]
@@ -2107,7 +2107,7 @@
             // Personalization not passed in, Personalization does not exist
             var msg = new SendGridMessage();
             msg.SetSendAt(1409348513);
-            Assert.Equal("{\"personalizations\":[{\"send_at\":1409348513}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"send_at\":1409348513}]}", msg.Serialize());
 
             // Personalization passed in, no Personalizations
             msg = new SendGridMessage();
@@ -2117,7 +2117,7 @@
                 SendAt = sendAt
             };
             msg.SetSendAt(1409348513, 0, personalization);
-            Assert.Equal("{\"personalizations\":[{\"send_at\":1409348513}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"send_at\":1409348513}]}", msg.Serialize());
 
             // Personalization passed in, Personalization exists
             msg = new SendGridMessage();
@@ -2133,7 +2133,7 @@
                 SendAt = sendAt
             };
             msg.SetSendAt(1409348513, 1, personalization);
-            Assert.Equal("{\"personalizations\":[{\"send_at\":1409348513},{\"send_at\":1409348513}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"send_at\":1409348513},{\"to\":[],\"send_at\":1409348513}]}", msg.Serialize());
 
             // Personalization not passed in Personalization exists
             msg = new SendGridMessage();
@@ -2144,7 +2144,7 @@
                 }
             };
             msg.SetSendAt(1409348513);
-            Assert.Equal("{\"personalizations\":[{\"send_at\":1409348513}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"send_at\":1409348513}]}", msg.Serialize());
 
             // Personalization not passed in Personalizations exists
             msg = new SendGridMessage();
@@ -2161,7 +2161,7 @@
             };
             msg.Personalizations.Add(personalization);
             msg.SetSendAt(1409348513);
-            Assert.Equal("{\"personalizations\":[{\"send_at\":1409348513},{\"send_at\":1409348513}]}", msg.Serialize());
+            Assert.Equal("{\"personalizations\":[{\"to\":[],\"send_at\":1409348513},{\"to\":[],\"send_at\":1409348513}]}", msg.Serialize());
         }
 
         [Fact]

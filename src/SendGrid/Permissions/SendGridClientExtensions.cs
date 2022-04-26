@@ -21,7 +21,7 @@ namespace SendGrid.Permissions
             var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "scopes");
             var body = await response.DeserializeResponseBodyAsync();
             var userScopesJArray = (body["scopes"] as JArray);
-            var includedScopes = userScopesJArray.Values<string>().ToArray();
+            var includedScopes = userScopesJArray!.Values<string>().ToArray();
             var builder = new SendGridPermissionsBuilder();
             builder.Exclude(scope => !includedScopes.Contains(scope));
             return builder;

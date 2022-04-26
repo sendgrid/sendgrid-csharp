@@ -23,30 +23,30 @@ namespace SendGrid.Helpers.Mail
         /// Gets or sets the name of the referrer source (e.g. Google, SomeDomain.com, or Marketing Email).
         /// </summary>
         [JsonProperty(PropertyName = "utm_source")]
-        public string UtmSource { get; set; }
+        public string? UtmSource { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the marketing medium (e.g. Email).
         /// </summary>
         [JsonProperty(PropertyName = "utm_medium")]
-        public string UtmMedium { get; set; }
+        public string? UtmMedium { get; set; }
 
         /// <summary>
         /// Gets or sets the identification of any paid keywords.
         /// </summary>
         [JsonProperty(PropertyName = "utm_term")]
-        public string UtmTerm { get; set; }
+        public string? UtmTerm { get; set; }
 
         /// <summary>
         /// Gets or sets the differentiation of your campaign from advertisements.
         /// </summary>
         [JsonProperty(PropertyName = "utm_content")]
-        public string UtmContent { get; set; }
+        public string? UtmContent { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the campaign.
         /// </summary>
         [JsonProperty(PropertyName = "utm_campaign")]
-        public string UtmCampaign { get; set; }
+        public string? UtmCampaign { get; set; }
     }
 }
