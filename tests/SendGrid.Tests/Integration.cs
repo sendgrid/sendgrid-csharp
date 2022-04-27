@@ -6132,7 +6132,10 @@
                 } }
             };
 
-            var responseMessage = Newtonsoft.Json.JsonConvert.SerializeObject(responseObject);
+            var responseMessage = Newtonsoft.Json.JsonConvert.SerializeObject(responseObject, new JsonSerializerSettings
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.None
+            });
             var mockHandler = new FixedStatusAndMessageHttpMessageHandler(HttpStatusCode.ServiceUnavailable, responseMessage);
             var mockClient = new HttpClient(mockHandler);
             var client = new SendGridClient(mockClient, new SendGridClientOptions { ApiKey = fixture.apiKey, HttpErrorAsException = true });
