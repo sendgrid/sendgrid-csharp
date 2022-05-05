@@ -17,8 +17,6 @@
 
 Version 9.X.X+ of this library provides full support for all Twilio SendGrid [Web API v3](https://sendgrid.com/docs/API_Reference/api_v3.html) endpoints, including the new [v3 /mail/send](https://sendgrid.com/blog/introducing-v3mailsend-sendgrids-new-mail-endpoint).
 
-We want this library to be community driven, and Twilio SendGrid led. We need your help to realize this goal. To help make sure we are building the right things in the right order, we ask that you create [issues](https://github.com/sendgrid/sendgrid-csharp/issues) and [pull requests](CONTRIBUTING.md) or simply upvote or comment on existing issues or pull requests.
-
 For updates to this library, see our [CHANGELOG](CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-csharp/releases).
 
 We appreciate your continued support, thank you!
@@ -41,6 +39,7 @@ We appreciate your continued support, thank you!
 * [How to Contribute](#how-to-contribute)
 * [Troubleshooting](#troubleshooting)
 * [About](#about)
+* [Support](#support)
 * [License](#license)
 
 # Installation
@@ -267,9 +266,9 @@ Please see our [troubleshooting guide](TROUBLESHOOTING.md) for common library is
 
 sendgrid-csharp is maintained and funded by Twilio SendGrid, Inc. The names and logos for sendgrid-csharp are trademarks of Twilio SendGrid, Inc.
 
-If you need help installing or using the library, please check the [Twilio SendGrid Support Help Center](https://support.sendgrid.com).
+# Support
 
-If you've instead found a bug in the library or would like new features added, go ahead and open issues or pull requests against this repo!
+If you need help using SendGrid, please check the [Twilio SendGrid Support Help Center](https://support.sendgrid.com).
 
 # License
 [The MIT License (MIT)](LICENSE)

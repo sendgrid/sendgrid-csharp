@@ -2,8 +2,6 @@
 
 If you have a non-library Twilio SendGrid issue, please contact our [support team](https://support.sendgrid.com).
 
-If you can't find a solution below, please open an [issue](https://github.com/sendgrid/sendgrid-csharp/issues).
-
 
 ## Table of Contents
 
@@ -136,7 +134,7 @@ Please review [our guide](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/
 
 v9 of this SDK is a complete rewrite that includes the removal of dynamic dependencies, a new Mail Helper and support for .NET Standard 1.3.
 
-Please begin at the [README](https://github.com/sendgrid/sendgrid-csharp) and if you need further assistance, please [create an issue on GitHub](https://github.com/sendgrid/sendgrid-csharp/issues).
+Please begin at the [README](https://github.com/sendgrid/sendgrid-csharp).
 
 <a name="missing"></a>
 ## Missing Classes

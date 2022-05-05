@@ -1,4 +1,4 @@
-This document provides examples for specific use cases. Please [open an issue](https://github.com/sendgrid/sendgrid-sharp/issues) or make a pull request for any use cases you would like us to document here. Thank you!
+This document provides examples for specific use cases.
 
 # Table of Contents
 
