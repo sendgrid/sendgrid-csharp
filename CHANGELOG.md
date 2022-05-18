@@ -1,6 +1,20 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2022-05-18] Version 9.28.0
+---------------------------
+**Library - Docs**
+- [PR #1176](https://github.com/sendgrid/sendgrid-csharp/pull/1176): Update to align with SendGrid Support. Thanks to [@garethpaul](https://github.com/garethpaul)!
+
+**Library - Chore**
+- [PR #1174](https://github.com/sendgrid/sendgrid-csharp/pull/1174): Security upgrade Newtonsoft.Json from 9.0.1 to 13.0.1. Thanks to [@svcprodsec-sendgrid](https://github.com/svcprodsec-sendgrid)!
+- [PR #1173](https://github.com/sendgrid/sendgrid-csharp/pull/1173): Security upgrade Newtonsoft.Json from 9.0.1 to 13.0.1. Thanks to [@svcprodsec-sendgrid](https://github.com/svcprodsec-sendgrid)!
+- [PR #1175](https://github.com/sendgrid/sendgrid-csharp/pull/1175): Security upgrade Newtonsoft.Json from 10.0.3 to 13.0.1. Thanks to [@svcprodsec-sendgrid](https://github.com/svcprodsec-sendgrid)!
+
+**Library - Feature**
+- [PR #1169](https://github.com/sendgrid/sendgrid-csharp/pull/1169): Add support for multiple Reply-Tos. Thanks to [@RyanFlemingOlo](https://github.com/RyanFlemingOlo)!
+
+
 [2022-03-23] Version 9.27.0
 ---------------------------
 **Library - Fix**
