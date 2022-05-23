@@ -11,10 +11,6 @@ All third party contributors acknowledge that any contributions they provide wil
 
 There are a few ways to contribute, which we'll enumerate below:
 
-### Please use our Bug Report Template
-
-In order to make the process easier, we've included a [sample bug report template](ISSUE_TEMPLATE.md).
-
 <a name="improvements-to-the-codebase"></a>
 ## Improvements to the Codebase
 
