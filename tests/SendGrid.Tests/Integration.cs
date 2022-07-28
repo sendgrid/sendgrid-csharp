@@ -6121,7 +6121,18 @@
         }
 
         [Fact]
-        public async void TestHttpErrorAsException()
+        public async void TestHttpErrorAsExceptionWhenSetInOptions()
+        {
+            await TestHttpErrorAsException((client, apiKey) => new SendGridClient(client, new SendGridClientOptions {ApiKey = apiKey, HttpErrorAsException = true}));
+        }
+
+        [Fact]
+        public async void TestHttpErrorAsExceptionWhenSetAsParameter()
+        {
+            await TestHttpErrorAsException((client, apiKey) => new SendGridClient(client, apiKey, httpErrorAsException: true));
+        }
+
+        public async Task TestHttpErrorAsException(Func<HttpClient, string, SendGridClient> createClientFunc)
         {
             var responseObject = new
             {
@@ -6138,7 +6149,7 @@
             });
             var mockHandler = new FixedStatusAndMessageHttpMessageHandler(HttpStatusCode.ServiceUnavailable, responseMessage);
             var mockClient = new HttpClient(mockHandler);
-            var client = new SendGridClient(mockClient, new SendGridClientOptions { ApiKey = fixture.apiKey, HttpErrorAsException = true });
+            var client = createClientFunc(mockClient, fixture.apiKey);
 
             try
             {
