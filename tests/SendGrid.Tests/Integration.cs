@@ -6132,7 +6132,7 @@
             await TestHttpErrorAsException((client, apiKey) => new SendGridClient(client, apiKey, httpErrorAsException: true));
         }
 
-        public async Task TestHttpErrorAsException(Func<HttpClient, string, SendGridClient> createClientFunc)
+        private async Task TestHttpErrorAsException(Func<HttpClient, string, SendGridClient> createClientFunc)
         {
             var responseObject = new
             {
