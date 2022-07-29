@@ -185,15 +185,6 @@ class Program
 }
 ```
 
-<a name="proxy"></a>
-## Web Proxy
-
-```csharp
-var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
-var proxy = new WebProxy("http://proxy:1337");
-var client = new SendGridClient(proxy, apiKey);
-```
-
 ## HttpClientFactory + Microsoft.Extensions.DependencyInjection
 
 > [SendGrid.Extensions.DependencyInjection](https://www.nuget.org/packages/SendGrid.Extensions.DependencyInjection) is required
@@ -233,6 +224,30 @@ class Program
     }
 }
 ```
+
+<a name="proxy"></a>
+## Web Proxy
+
+```csharp
+var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+var proxy = new WebProxy("http://proxy:1337");
+var client = new SendGridClient(proxy, apiKey);
+```
+
+Or when using DependencyInjection
+
+```csharp
+services.AddSendGrid(options =>
+{
+    options.ApiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+})
+.ConfigurePrimaryHttpMessageHandler(_ => new HttpClientHandler()
+{
+    Proxy = new WebProxy(new Uri("http://proxy:1337")),
+    UseProxy = true
+});
+```
+
 
 # Usage
 
