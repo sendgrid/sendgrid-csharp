@@ -1,6 +1,21 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2022-08-10] Version 9.28.1
+---------------------------
+**Library - Docs**
+- [PR #1181](https://github.com/sendgrid/sendgrid-csharp/pull/1181): Example of adding a WebProxy using DI. Thanks to [@mortenbock](https://github.com/mortenbock)!
+
+**Library - Fix**
+- [PR #1180](https://github.com/sendgrid/sendgrid-csharp/pull/1180): Use httpErrorAsException when passed as parameter to SendGridClient constructor. Thanks to [@mortenbock](https://github.com/mortenbock)!
+
+**Library - Miscellaneous**
+- [PR #1178](https://github.com/sendgrid/sendgrid-csharp/pull/1178): bump Newtonsoft.Json from 11.0.2 to 13.0.1 in /examples/inbound-webhook-handler/Tests/Inbound.Tests. Thanks to [@dependabot](https://github.com/dependabot)!
+
+**Library - Test**
+- [PR #1179](https://github.com/sendgrid/sendgrid-csharp/pull/1179): Adding misc as PR type. Thanks to [@rakatyal](https://github.com/rakatyal)!
+
+
 [2022-05-18] Version 9.28.0
 ---------------------------
 **Library - Docs**
