@@ -180,6 +180,29 @@
 
         #region AddAttachmentAsync tests
 
+
+        [Theory]
+        [InlineData(1024, 1)]
+        [InlineData(1024, 2)]
+        [InlineData(1024, 4)]
+        [InlineData(4096, 1)]
+        [InlineData(4096, 8)]
+        [InlineData(4096, 16)]
+        public async Task SendGridMessage_AddAttachmentAsync_Read_Chunked_Readable_Streams(int contentLength, int steps)
+        {
+            // Arrange
+            var sut = new SendGridMessage();
+            var stream = new ChunkedReadableStream(contentLength, steps);
+
+            // Act
+            await sut.AddAttachmentAsync("test", stream);
+
+            // Assert
+            Assert.NotNull(sut.Attachments);
+            Assert.Single(sut.Attachments);
+            Assert.Equal(steps, stream.CurrentStep);
+        }
+
         [Fact]
         public async Task SendGridMessage_AddAttachmentAsync_Doesnt_Read_Non_Readable_Streams()
         {

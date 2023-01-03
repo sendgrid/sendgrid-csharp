@@ -566,7 +566,7 @@ namespace SendGrid.Helpers.Mail
         }
 
         /// <summary>
-        /// Add an attachment from a stream to the email. No attachment will be added in the case that the stream cannot be read. Streams of length greater than int.MaxValue are truncated.
+        /// Add an attachment from a stream to the email. No attachment will be added in the case that the stream cannot be read or is partially read. Streams of length greater than int.MaxValue are truncated.
         /// </summary>
         /// <param name="filename">The filename the attachment will display in the email.</param>
         /// <param name="contentStream">The stream to use as content of the attachment.</param>
@@ -585,12 +585,32 @@ namespace SendGrid.Helpers.Mail
 
             var contentLength = Convert.ToInt32(contentStream.Length);
             var streamBytes = new byte[contentLength];
+            var offset = 0;
 
-            await contentStream.ReadAsync(streamBytes, 0, contentLength, cancellationToken);
+            // while the stream is readable and we need to retrieve content
+            while (contentStream.CanRead && offset < contentLength)
+            {
+                // read the stream based on the current offset & content length needed
+                var lengthRead = await contentStream.ReadAsync(streamBytes, offset, contentLength - offset, cancellationToken);
 
-            var base64Content = Convert.ToBase64String(streamBytes);
+                // if the length read is 0 bytes it means we reached the end of the stream
+                // therefore break out of the while loop
+                if (lengthRead == 0)
+                {
+                    break;
+                }
 
-            this.AddAttachment(filename, base64Content, type, disposition, content_id);
+                // increment the offset by the amount read from the stream
+                offset += lengthRead;
+            }
+
+            // if the stream is fully read, add the attachement
+            if (offset == contentLength)
+            {
+                var base64Content = Convert.ToBase64String(streamBytes);
+
+                this.AddAttachment(filename, base64Content, type, disposition, content_id);
+            }
         }
 
         /// <summary>
