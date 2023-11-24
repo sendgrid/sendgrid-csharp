@@ -296,17 +296,17 @@ namespace SendGrid.Permissions
             #endregion
             #region Mail
             ,{ SendGridPermission.Mail, new[]
-			 {
+             {
                 "mail.batch.create",
                 "mail.batch.delete",
                 "mail.batch.read",
                 "mail.batch.update",
                 "mail.send"
-			}}
+            }}
             #endregion
             #region Mail Settings
             ,{ SendGridPermission.MailSettings, new[]
-			 {
+             {
                 "mail_settings.address_whitelist.read",
                 "mail_settings.address_whitelist.update",
                 "mail_settings.bounce_purge.read",
@@ -319,56 +319,56 @@ namespace SendGrid.Permissions
                 "mail_settings.forward_spam.update",
                 "mail_settings.template.read",
                 "mail_settings.template.update"
-			}}
+            }}
             #endregion
             #region Marketing Campaigns
             ,{ SendGridPermission.MarketingCampaigns, new[]
-			 {
+             {
                 "marketing_campaigns.create",
                 "marketing_campaigns.delete",
                 "marketing_campaigns.read",
                 "marketing_campaigns.update"
-			}}
+            }}
             #endregion
             #region Newsletter
             ,{ SendGridPermission.Newsletter, new[]
-			 {
+             {
                 "newsletter.create",
                 "newsletter.delete",
                 "newsletter.read",
                 "newsletter.update"
-			}}
+            }}
             #endregion
             #region PartnerSettings
             ,{ SendGridPermission.PartnerSettings, new[]
-			 {
+             {
                 "partner_settings.new_relic.read",
                 "partner_settings.new_relic.update",
                 "partner_settings.read"
-			}}
+            }}
             #endregion
             #region Reverse DNS
             ,{ SendGridPermission.ReverseDNS, new[]
-			 {
+             {
                 "access_settings.activity.read",
                 "access_settings.whitelist.create",
                 "access_settings.whitelist.delete",
                 "access_settings.whitelist.read",
                 "access_settings.whitelist.update"
-			}}
+            }}
             #endregion
             #region Scheduled Sends
             ,{ SendGridPermission.ScheduledSends, new[]
-			 {
+             {
                 "user.scheduled_sends.create",
                 "user.scheduled_sends.delete",
                 "user.scheduled_sends.read",
                 "user.scheduled_sends.update"
-			}}
+            }}
             #endregion
             #region Stats
             ,{ SendGridPermission.Stats, new[]
-			 {
+             {
                 "email_activity.read",
                 "stats.read",
                 "stats.global.read",
@@ -381,11 +381,11 @@ namespace SendGrid.Permissions
                 "clients.stats.read",
                 "clients.tablet.stats.read",
                 "clients.webmail.stats.read"
-			}}
+            }}
             #endregion
             #region Subusers
             ,{ SendGridPermission.Subusers, new[]
-			 {
+             {
                 "subusers.create",
                 "subusers.delete",
                 "subusers.read",
@@ -407,11 +407,11 @@ namespace SendGrid.Permissions
                 "subusers.stats.monthly.read",
                 "subusers.stats.sums.read",
                 "subusers.summary.read"
-			}}
+            }}
             #endregion
             #region Suppressions
             ,{ SendGridPermission.Suppressions, new[]
-			 {
+             {
                 "suppression.create",
                 "suppression.delete",
                 "suppression.read",
@@ -436,20 +436,20 @@ namespace SendGrid.Permissions
                 "suppression.unsubscribes.read",
                 "suppression.unsubscribes.update",
                 "suppression.unsubscribes.delete"
-			}}
+            }}
             #endregion
             #region Teammates
             ,{ SendGridPermission.Teammates, new[]
-			 {
+             {
                 "teammates.create",
                 "teammates.read",
                 "teammates.update",
                 "teammates.delete"
-			}}
+            }}
             #endregion
             #region Templates
             ,{ SendGridPermission.Templates, new[]
-			 {
+             {
                 "templates.create",
                 "templates.delete",
                 "templates.read",
@@ -462,11 +462,11 @@ namespace SendGrid.Permissions
                 "templates.versions.delete",
                 "templates.versions.read",
                 "templates.versions.update"
-			}}
+            }}
             #endregion
             #region Tracking
             ,{ SendGridPermission.Tracking, new[]
-			 {
+             {
                 "tracking_settings.click.read",
                 "tracking_settings.click.update",
                 "tracking_settings.google_analytics.read",
@@ -476,11 +476,11 @@ namespace SendGrid.Permissions
                 "tracking_settings.read",
                 "tracking_settings.subscription.read",
                 "tracking_settings.subscription.update"
-			}}
+            }}
             #endregion
             #region User Settings
             ,{ SendGridPermission.UserSettings, new[]
-			 {
+             {
                 "user.account.read",
                 "user.credits.read",
                 "user.email.create",
@@ -501,11 +501,11 @@ namespace SendGrid.Permissions
                 "user.timezone.update",
                 "user.username.read",
                 "user.username.update"
-			}}
+            }}
             #endregion
             #region Webhooks
             ,{ SendGridPermission.Webhook, new[]
-			 {
+             {
                 "user.webhooks.event.settings.read",
                 "user.webhooks.event.settings.update",
                 "user.webhooks.event.test.create",
@@ -516,7 +516,7 @@ namespace SendGrid.Permissions
                 "user.webhooks.parse.settings.read",
                 "user.webhooks.parse.settings.update",
                 "user.webhooks.parse.stats.read"
-			}}
+            }}
             #endregion
         };
     }

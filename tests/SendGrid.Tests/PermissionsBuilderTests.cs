@@ -78,7 +78,7 @@
         public void IncludeThrowsIfAnyScopeIsInvalid()
         {
             var sb = new SendGridPermissionsBuilder();
-            Assert.Throws<InvalidOperationException>(() => sb.Include(new [] {"alert.create", "bad.scope" }));
+            Assert.Throws<InvalidOperationException>(() => sb.Include(new[] { "alert.create", "bad.scope" }));
         }
 
         [Fact]

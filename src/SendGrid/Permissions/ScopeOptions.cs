@@ -14,6 +14,6 @@
         /// <summary>
         /// Read-only scopes. When fitlering scopes this will include only those that end with ".read"
         /// </summary>
-        ReadOnly       
+        ReadOnly
     }
 }

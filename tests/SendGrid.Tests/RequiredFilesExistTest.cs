@@ -7,7 +7,8 @@ namespace SendGrid.Tests
     {
 
         // ./Docker or docker/Docker
-        public void checkDockerExists() {
+        public void checkDockerExists()
+        {
             bool dockerExists = File.Exists("./Dockerfile") ||
             File.Exists("./docker/Dockerfile");
             Assert.True(dockerExists);
