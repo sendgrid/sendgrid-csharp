@@ -920,6 +920,30 @@ var client = new SendGridClient(options);
 
 ```
 
+The SendGridClientOptions object can also be used to set the region to "eu", which will send the 
+request to https://api.eu.sendgrid.com/. By default it is set to https://api.sendgrid.com/, e.g.
+
+```csharp
+
+var options = new SendGridClientOptions
+{
+    ApiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY"),
+    ReliabilitySettings = new ReliabilitySettings(2, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(3)),
+    Host = "Your-Host",
+    UrlPath = "Url-Path",
+    Version = "3",
+    RequestHeaders = new Dictionary<string, string>() {{"header-key", "header-value"}}
+};
+options.SetDataResidency("eu");
+var client = new SendGridClient(options);
+
+OR
+
+options.SetDataResidency("global");
+var client = new SendGridClient(options);
+
+```
+
 <a name="domain-authentication"></a>
 # How to Setup a Domain Authentication
 

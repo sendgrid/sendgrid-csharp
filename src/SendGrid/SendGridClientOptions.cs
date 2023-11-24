@@ -48,6 +48,9 @@ namespace SendGrid
         /// Sets the data residency for the SendGrid client.
         /// </summary>
         /// <param name="region">The desired data residency region ("global" or "eu").</param>
+        /// Global is the default residency (or region)
+        /// Global region means the message will be sent through https://api.sendgrid.com
+        /// EU region means the message will be sent through https://api.eu.sendgrid.com
         /// <returns>The updated SendGridClientOptions instance.</returns>
         public SendGridClientOptions SetDataResidency(string region)
         {
