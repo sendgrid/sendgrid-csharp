@@ -38,11 +38,18 @@ namespace SendGrid.Tests
         }
 
         [Fact]
-        public void TestErrorClientOptions()
+        public void TestErrorClientOptionsNUllEmpty()
         {
             var options = new SendGridClientOptions();
             Assert.Throws<ArgumentNullException>(() => options.SetDataResidency(""));
             Assert.Throws<ArgumentNullException>(() => options.SetDataResidency(null));
+        }
+
+        [Fact]
+        public void TestErrorClientOptions()
+        {
+            var options = new SendGridClientOptions();
+            Assert.Throws<InvalidOperationException>(() => options.SetDataResidency("foo"));
         }
     }
 }

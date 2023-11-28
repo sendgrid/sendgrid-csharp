@@ -61,7 +61,7 @@ namespace SendGrid
 
             if (!REGION_HOST_MAP.ContainsKey(region))
             {
-                Console.WriteLine("Region can only be 'global' or 'eu'.");
+                throw new InvalidOperationException("Region can only be 'global' or 'eu'.");
             }
             string result = REGION_HOST_MAP.ContainsKey(region) ? REGION_HOST_MAP[region] : "https://api.sendgrid.com";
             Host = result;
