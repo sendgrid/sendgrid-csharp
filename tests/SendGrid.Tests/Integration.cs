@@ -6123,7 +6123,7 @@
         [Fact]
         public async void TestHttpErrorAsExceptionWhenSetInOptions()
         {
-            await TestHttpErrorAsException((client, apiKey) => new SendGridClient(client, new SendGridClientOptions {ApiKey = apiKey, HttpErrorAsException = true}));
+            await TestHttpErrorAsException((client, apiKey) => new SendGridClient(client, new SendGridClientOptions { ApiKey = apiKey, HttpErrorAsException = true }));
         }
 
         [Fact]

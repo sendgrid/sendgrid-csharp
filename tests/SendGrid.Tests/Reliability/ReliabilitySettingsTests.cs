@@ -9,8 +9,8 @@
         [Fact]
         public void ShouldNotAllowNegativeRetryCount()
         {
-            var exception = Assert.Throws<ArgumentOutOfRangeException>(() => 
-                new ReliabilitySettings(-1, 
+            var exception = Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new ReliabilitySettings(-1,
                     TimeSpan.FromSeconds(1),
                     TimeSpan.FromSeconds(1),
                     TimeSpan.FromSeconds(1)));

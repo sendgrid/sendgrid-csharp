@@ -1,10 +1,10 @@
 namespace SendGrid.Tests
 {
-	using System;
-	using System.IO;
-	using System.Linq;
-	using System.Reflection;
-	using Xunit;
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using Xunit;
 
     public class LicenseTests
     {
