@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2023-12-01] Version 9.29.0
+---------------------------
+**Library - Feature**
+- [PR #1190](https://github.com/sendgrid/sendgrid-csharp/pull/1190): Add data residency for eu and global regions. Thanks to [@shrutiburman](https://github.com/shrutiburman)!
+
+
 [2022-08-10] Version 9.28.1
 ---------------------------
 **Library - Docs**
