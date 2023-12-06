@@ -47,13 +47,8 @@ jobs:
      - run: make install
      - name: import-certificate
        run: |
-        $certificatePath = "certificate"
-        if (-not (Test-Path $certificatePath -PathType Container)) {
-          New-Item -ItemType directory -Path $certificatePath
-        }
+        New-Item -ItemType directory -Path $certificatePath
         Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
-        Get-Content -Path certificate\certificate.txt
-
         certutil -decode certificate\certificate.txt certificate\certificate.pfx
         
      - name: Upload Artifact
