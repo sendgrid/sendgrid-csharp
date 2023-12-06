@@ -64,6 +64,7 @@ jobs:
       - name: Publish package to NuGet
         run: |
           make release
+          dotnet nuget sign **/*.nupkg --certificate-path certificate.pfx --certificate-password ${{ secrets.CERTIFICATE_PASSWORD }} --timestamper http://timestamp.digicert.com
           dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
 
       - name: Submit metric to Datadog
