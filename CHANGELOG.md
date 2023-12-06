@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2023-12-06] Version 9.29.1
+---------------------------
+**Library - Fix**
+- [PR #1191](https://github.com/sendgrid/sendgrid-csharp/pull/1191): update deployment pipeline to add signing step. Thanks to [@shrutiburman](https://github.com/shrutiburman)!
+
+
 [2023-12-01] Version 9.29.0
 ---------------------------
 **Library - Feature**
