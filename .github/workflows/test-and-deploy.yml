@@ -57,6 +57,7 @@ jobs:
          name: certificate.pfx
          path: certificate\certificate.pfx
          retention-days: 1
+         
   deploy:
     name: Deploy
     if: success() && github.ref_type == 'tag'
