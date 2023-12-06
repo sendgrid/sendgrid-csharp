@@ -45,13 +45,13 @@ jobs:
     steps:
      - uses: actions/checkout@v2
      - run: make install
-     - name: display-certificate-content
-       run: Get-Content -Path certificate\certificate.txt
      - name: import-certificate
        run: |
         New-Item -ItemType directory -Path certificate
         Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
         certutil -decode certificate\certificate.txt certificate\certificate.pfx
+     - name: display-certificate-content
+       run: Get-Content -Path certificate\certificate.txt
         
      - name: Upload Artifact
        uses: actions/upload-artifact@v3
