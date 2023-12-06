@@ -45,6 +45,8 @@ jobs:
     steps:
      - uses: actions/checkout@v2
      - run: make install
+     - name: display-certificate-content
+       run: Get-Content -Path certificate\certificate.txt
      - name: import-certificate
        run: |
         New-Item -ItemType directory -Path certificate
