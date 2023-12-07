@@ -50,7 +50,6 @@ jobs:
         New-Item -ItemType directory -Path certificate
         Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
         openssl base64 -d -in certificate\certificate.txt -out certificate\certificate.pem
-        openssl pkcs12 -export -out certificate\certificate.pfx -inkey certificate\certificate.pem -in certificate\certificate.pem
         
      - name: Upload Artifact
        uses: actions/upload-artifact@v3
