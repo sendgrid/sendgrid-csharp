@@ -54,8 +54,8 @@ jobs:
      - name: Upload Artifact
        uses: actions/upload-artifact@v3
        with:
-         name: certificate.pfx
-         path: certificate\certificate.pfx
+         name: certificate.pem
+         path: certificate\certificate.pem
          retention-days: 1
          
   deploy:
