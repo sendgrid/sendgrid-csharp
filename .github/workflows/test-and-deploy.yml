@@ -45,7 +45,8 @@ jobs:
     steps:
      - uses: actions/checkout@v2
      - run: make install
-     - name: import-certificate
+     - name: import certificate
+       if: ${{ github.repository_owner == 'twilio' }}
        run: |
         New-Item -ItemType directory -Path certificate
         Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
