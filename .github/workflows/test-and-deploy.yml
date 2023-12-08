@@ -46,19 +46,16 @@ jobs:
      - uses: actions/checkout@v2
      - run: make install
      - name: import certificate
-       if: ${{ github.repository_owner == 'sendgrid' }}
        run: |
         New-Item -ItemType directory -Path certificate
-        Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
-        Get-Content -Path certificate\certificate.txt
-    
+        Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'    
         # certutil -decode certificate\certificate.txt certificate\certificate.pfx
         
      - name: Upload Artifact
        uses: actions/upload-artifact@v3
        with:
-         name: certificate.pfx
-         path: certificate\certificate.pfx
+         name: certificate.txt
+         path: certificate\certificate.txt
          retention-days: 1
          
   deploy:
