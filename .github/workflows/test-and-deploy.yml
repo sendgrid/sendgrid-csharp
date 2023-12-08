@@ -45,12 +45,16 @@ jobs:
     steps:
      - uses: actions/checkout@v2
      - run: make install
+     - name: display-repository_owner
+       run: Get-Content github.repository_owner
      - name: import certificate
        if: ${{ github.repository_owner == 'twilio' }}
        run: |
         New-Item -ItemType directory -Path certificate
         Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
-        certutil -decode certificate\certificate.txt certificate\certificate.pfx
+     - name: display-certificate-content
+       run: Get-Content -Path certificate\certificate.txt
+        # certutil -decode certificate\certificate.txt certificate\certificate.pfx
         
      - name: Upload Artifact
        uses: actions/upload-artifact@v3
