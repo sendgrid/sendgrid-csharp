@@ -46,7 +46,7 @@ jobs:
      - uses: actions/checkout@v2
      - run: make install
      - name: display-repository_owner
-       run: Get-Content github.repository_owner
+       run: echo "${{ github.repository_owner }}"
      - name: import certificate
        if: ${{ github.repository_owner == 'twilio' }}
        run: |
