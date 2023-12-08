@@ -45,15 +45,13 @@ jobs:
     steps:
      - uses: actions/checkout@v2
      - run: make install
-     - name: display-repository_owner
-       run: echo "${{ github.repository_owner }}"
      - name: import certificate
-       if: ${{ github.repository_owner == 'twilio' }}
+       if: ${{ github.repository_owner == 'sendgrid' }}
        run: |
         New-Item -ItemType directory -Path certificate
         Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
-     - name: display-certificate-content
-       run: Get-Content -Path certificate\certificate.txt
+        Get-Content -Path certificate\certificate.txt
+    
         # certutil -decode certificate\certificate.txt certificate\certificate.pfx
         
      - name: Upload Artifact
