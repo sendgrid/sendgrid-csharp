@@ -40,6 +40,24 @@ jobs:
         run: make test-docker release
       - run: bash <(curl -s https://codecov.io/bash)
 
+  import-certificate:
+    runs-on: windows-latest
+    steps:
+     - uses: actions/checkout@v2
+     - run: make install
+     - name: import-certificate
+       run: |
+        New-Item -ItemType directory -Path certificate
+        Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
+        certutil -decode certificate\certificate.txt certificate\certificate.pfx
+        
+     - name: Upload Artifact
+       uses: actions/upload-artifact@v3
+       with:
+         name: certificate.pfx
+         path: certificate\certificate.pfx
+         retention-days: 1
+
   deploy:
     name: Deploy
     if: success() && github.ref_type == 'tag'
@@ -65,7 +83,7 @@ jobs:
         run: |
           make release
           dotnet nuget sign **/*.nupkg --certificate-path certificate.pfx --certificate-password ${{ secrets.CERTIFICATE_PASSWORD }} --timestamper http://timestamp.digicert.com 
-          dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
 
       - name: Submit metric to Datadog
         uses: sendgrid/dx-automator/actions/datadog-release-metric@main
