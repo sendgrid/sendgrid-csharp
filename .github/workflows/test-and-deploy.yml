@@ -73,7 +73,7 @@ jobs:
           name: certificate.pfx
 
       - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v1.8.2
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '3.1.x'
 
