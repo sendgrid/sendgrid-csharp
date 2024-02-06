@@ -98,7 +98,7 @@ jobs:
   deploy:
     name: Deploy
     if: success() && github.ref_type == 'tag'
-    needs: [ test, import-certificate ]
+    needs: [ test, code-signing ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sendgrid-csharp
