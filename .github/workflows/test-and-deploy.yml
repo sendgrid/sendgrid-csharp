@@ -97,11 +97,6 @@ jobs:
           smctl windows certsync
         shell: cmd
 
-      - name: Create Signed Directory
-        run: |
-          mkdir D:\a\stm-github-action-demo\stm-github-action-demo\dist\
-        shell: cmd
-
       - name: Signing using Nuget
         run: |
           dotnet pack -c Release
