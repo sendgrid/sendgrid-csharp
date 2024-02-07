@@ -115,12 +115,8 @@ jobs:
       - name: Signing using Nuget
         run: |
           dotnet pack -c Release
-          copy **/*.nupkg D:\a\stm-github-action-demo\stm-github-action-demo\dist\UNSIGNED.nupkg
-          dir D:\a\stm-github-action-demo\stm-github-action-demo\dist
-          nuget sign "D:\a\stm-github-action-demo\stm-github-action-demo\dist\UNSIGNED.nupkg" -Timestamper http://timestamp.digicert.com -outputdirectory "D:\a\stm-github-action-demo\stm-github-action-demo\dist\NugetSigned" -CertificateFingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} -HashAlgorithm SHA256 -Verbosity detailed -Overwrite
-          D:\a\stm-github-action-demo\stm-github-action-demo\dist
-          nuget verify -All "D:\a\stm-github-action-demo\stm-github-action-demo\dist\NugetSigned\*"
-          D:\a\stm-github-action-demo\stm-github-action-demo\dist
+          nuget sign **/*.nupkg -Timestamper http://timestamp.digicert.com -outputdirectory .\NugetSigned -CertificateFingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} -HashAlgorithm SHA256 -Verbosity detailed -Overwrite
+          nuget verify -All .\NugetSigned
 #          nuget push **/*.nupkg -ApiKey ${{ secrets.NUGET_API_KEY }} -Source https://api.nuget.org/v3/index.json
 
   deploy:
