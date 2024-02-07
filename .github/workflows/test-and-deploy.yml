@@ -116,18 +116,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: NuGet Install
-        uses: NuGet/setup-nuget@v1.0.5
-        with:
-          nuget-version: latest
-
       - name: Publish package to NuGet
         run: |
           make release
-          copy D:\a\stm-github-action-demo\stm-github-action-demo\UNSIGNED.nupkg D:\a\stm-github-action-demo\stm-github-action-demo\dist\UNSIGNED.nupkg
-          nuget sign "D:\a\stm-github-action-demo\stm-github-action-demo\dist\UNSIGNED.nupkg" -Timestamper http://timestamp.digicert.com -outputdirectory "D:\a\stm-github-action-demo\stm-github-action-demo\dist\NugetSigned" -CertificateFingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} -HashAlgorithm SHA256 -Verbosity detailed -Overwrite
-          nuget verify -All "D:\a\stm-github-action-demo\stm-github-action-demo\dist\NugetSigned\*"
-          nuget push "D:\a\stm-github-action-demo\stm-github-action-demo\dist\UNSIGNED.nupkg" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+          dotnet nuget sign **/*.nupkg -Timestamper http://timestamp.digicert.com -outputdirectory ./NugetSigned -CertificateFingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} -HashAlgorithm SHA256 -Verbosity detailed -Overwrite
+          dotnet nuget verify -All ./NugetSigned/*
+          dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
 
       - name: Submit metric to Datadog
         uses: sendgrid/dx-automator/actions/datadog-release-metric@main
