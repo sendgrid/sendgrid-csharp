@@ -39,11 +39,10 @@ jobs:
       - name: Build & Test
         run: make test-docker release
       - run: bash <(curl -s https://codecov.io/bash)
-
-  deploy:
-    name: Deploy
-    needs: [ test ]
-    runs-on: ubuntu-latest
+  
+  code-signing:
+    runs-on: windows-latest
+    needs: [test]
     steps:
       - name: Checkout sendgrid-csharp
         uses: actions/checkout@v2
@@ -52,38 +51,6 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '3.1.x'
-
-      - name: Create GitHub Release
-        uses: sendgrid/dx-automator/actions/release@main
-        with:
-          footer: '**[NuGet](https://www.nuget.org/packages/Sendgrid/${version})**'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create Nuget package
-        run: |
-          make release
-      
-      - name: Upload nuget package to artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: unsigned.nupkg
-          path: "**/*.nupkg"
-          retention-days: 1
-
-      - name: Submit metric to Datadog
-        uses: sendgrid/dx-automator/actions/datadog-release-metric@main
-        env:
-          DD_API_KEY: ${{ secrets.DATADOG_API_KEY }}
-  
-  code-signing:
-    needs: [ deploy ]
-    runs-on: windows-latest
-    steps:
-      - name: Download code signing certificate
-        uses: actions/download-artifact@v2
-        with:
-          name: unsigned.nupkg
 
       - name: List files in directory
         run: |
@@ -147,11 +114,36 @@ jobs:
 
       - name: Signing using Nuget
         run: |
+          dotnet pack -c Release
           copy unsigned.nupkg D:\a\stm-github-action-demo\stm-github-action-demo\dist\UNSIGNED.nupkg
           nuget sign "D:\a\stm-github-action-demo\stm-github-action-demo\dist\UNSIGNED.nupkg" -Timestamper http://timestamp.digicert.com -outputdirectory "D:\a\stm-github-action-demo\stm-github-action-demo\dist\NugetSigned" -CertificateFingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} -HashAlgorithm SHA256 -Verbosity detailed -Overwrite
           nuget verify -All "D:\a\stm-github-action-demo\stm-github-action-demo\dist\NugetSigned\*"
-          nuget push **/*.nupkg -ApiKey ${{ secrets.NUGET_API_KEY }} -Source https://api.nuget.org/v3/index.json
+#          nuget push **/*.nupkg -ApiKey ${{ secrets.NUGET_API_KEY }} -Source https://api.nuget.org/v3/index.json
 
+  deploy:
+    name: Deploy
+    needs: [ test ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sendgrid-csharp
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '3.1.x'
+
+      - name: Create GitHub Release
+        uses: sendgrid/dx-automator/actions/release@main
+        with:
+          footer: '**[NuGet](https://www.nuget.org/packages/Sendgrid/${version})**'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Submit metric to Datadog
+        uses: sendgrid/dx-automator/actions/datadog-release-metric@main
+        env:
+          DD_API_KEY: ${{ secrets.DATADOG_API_KEY }}
 
   notify-on-failure:
     name: Slack notify on failure
