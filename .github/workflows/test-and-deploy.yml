@@ -40,9 +40,52 @@ jobs:
         run: make test-docker release
       - run: bash <(curl -s https://codecov.io/bash)
 
+  deploy:
+    name: Deploy
+    if: success() && github.ref_type == 'tag'
+    needs: [ test ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sendgrid-csharp
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '3.1.x'
+
+      - name: Create GitHub Release
+        uses: sendgrid/dx-automator/actions/release@main
+        with:
+          footer: '**[NuGet](https://www.nuget.org/packages/Sendgrid/${version})**'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Nuget package
+        run: |
+          make release
+      
+      - name: Upload nuget package to artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: unsigned.nupkg
+          path: "**/*.nupkg"
+          retention-days: 1
+
+      - name: Submit metric to Datadog
+        uses: sendgrid/dx-automator/actions/datadog-release-metric@main
+        env:
+          DD_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+  
   code-signing:
+    needs: [ deploy ]
     runs-on: windows-latest
     steps:
+      - name: Download code signing certificate
+        uses: actions/download-artifact@v2
+        with:
+          name: unsigned.nupkg
+          
       - name: Set up certificate
         run: |
           echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /d/Certificate_pkcs12.p12
@@ -95,38 +138,13 @@ jobs:
           mkdir D:\a\stm-github-action-demo\stm-github-action-demo\dist\
         shell: cmd
 
-  deploy:
-    name: Deploy
-    if: success() && github.ref_type == 'tag'
-    needs: [ test, code-signing ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sendgrid-csharp
-        uses: actions/checkout@v2
-
-      - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '3.1.x'
-
-      - name: Create GitHub Release
-        uses: sendgrid/dx-automator/actions/release@main
-        with:
-          footer: '**[NuGet](https://www.nuget.org/packages/Sendgrid/${version})**'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish package to NuGet
+      - name: Signing using Nuget
         run: |
-          make release
-          dotnet nuget sign **/*.nupkg --timestamper http://timestamp.digicert.com --output ./NugetSigned --certificate-fingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} --hash-algorithm SHA256 --verbosity detailed --overwrite
-          dotnet nuget verify --all ./NugetSigned/*
-          dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+          copy unsigned.nupkg D:\a\stm-github-action-demo\stm-github-action-demo\dist\UNSIGNED.nupkg
+          nuget sign "D:\a\stm-github-action-demo\stm-github-action-demo\dist\UNSIGNED.nupkg" -Timestamper http://timestamp.digicert.com -outputdirectory "D:\a\stm-github-action-demo\stm-github-action-demo\dist\NugetSigned" -CertificateFingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} -HashAlgorithm SHA256 -Verbosity detailed -Overwrite
+          nuget verify -All "D:\a\stm-github-action-demo\stm-github-action-demo\dist\NugetSigned\*"
+          nuget push **/*.nupkg -ApiKey ${{ secrets.NUGET_API_KEY }} -Source https://api.nuget.org/v3/index.json
 
-      - name: Submit metric to Datadog
-        uses: sendgrid/dx-automator/actions/datadog-release-metric@main
-        env:
-          DD_API_KEY: ${{ secrets.DATADOG_API_KEY }}
 
   notify-on-failure:
     name: Slack notify on failure
