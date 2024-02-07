@@ -42,7 +42,6 @@ jobs:
   
   code-signing:
     runs-on: windows-latest
-    needs: [test]
     steps:
       - name: Checkout sendgrid-csharp
         uses: actions/checkout@v2
@@ -51,10 +50,6 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '3.1.x'
-
-      - name: List files in directory
-        run: |
-          dir D:\a\sendgrid-csharp\sendgrid-csharp
           
       - name: Set up certificate
         run: |
@@ -107,10 +102,6 @@ jobs:
         run: |
           mkdir D:\a\stm-github-action-demo\stm-github-action-demo\dist\
         shell: cmd
-
-      - name: List files in directory
-        run: |
-          dir D:\a\sendgrid-csharp\sendgrid-csharp
 
       - name: Signing using Nuget
         run: |
