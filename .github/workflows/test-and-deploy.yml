@@ -119,8 +119,8 @@ jobs:
       - name: Publish package to NuGet
         run: |
           make release
-          dotnet nuget sign **/*.nupkg -Timestamper http://timestamp.digicert.com -outputdirectory ./NugetSigned -CertificateFingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} -HashAlgorithm SHA256 -Verbosity detailed -Overwrite
-          dotnet nuget verify -All ./NugetSigned/*
+          dotnet nuget sign **/*.nupkg --timestamper http://timestamp.digicert.com --output ./NugetSigned --certificate-fingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} --hash-algorithm SHA256 --verbosity detailed --overwrite
+          dotnet nuget verify --all ./NugetSigned/*
           dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
 
       - name: Submit metric to Datadog
