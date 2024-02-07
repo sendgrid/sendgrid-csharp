@@ -42,7 +42,6 @@ jobs:
 
   deploy:
     name: Deploy
-    if: success() && github.ref_type == 'tag'
     needs: [ test ]
     runs-on: ubuntu-latest
     steps:
@@ -85,6 +84,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: unsigned.nupkg
+
+      - name: List files in directory
+        run: |
+          dir D:\a\sendgrid-csharp\sendgrid-csharp
           
       - name: Set up certificate
         run: |
@@ -137,6 +140,10 @@ jobs:
         run: |
           mkdir D:\a\stm-github-action-demo\stm-github-action-demo\dist\
         shell: cmd
+
+      - name: List files in directory
+        run: |
+          dir D:\a\sendgrid-csharp\sendgrid-csharp
 
       - name: Signing using Nuget
         run: |
