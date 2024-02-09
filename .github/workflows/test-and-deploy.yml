@@ -40,37 +40,14 @@ jobs:
         run: make test-docker release
       - run: bash <(curl -s https://codecov.io/bash)
 
-  import-certificate:
-    runs-on: windows-latest
-    steps:
-     - uses: actions/checkout@v2
-     - run: make install
-     - name: import-certificate
-       run: |
-        New-Item -ItemType directory -Path certificate
-        Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
-        certutil -decode certificate\certificate.txt certificate\certificate.pfx
-        
-     - name: Upload Artifact
-       uses: actions/upload-artifact@v3
-       with:
-         name: certificate.pfx
-         path: certificate\certificate.pfx
-         retention-days: 1
-
   deploy:
     name: Deploy
     if: success() && github.ref_type == 'tag'
-    needs: [ test, import-certificate ]
+    needs: [ test ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sendgrid-csharp
         uses: actions/checkout@v2
-
-      - name: Download code signing certificate
-        uses: actions/download-artifact@v3
-        with:
-          name: certificate.pfx
 
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3
@@ -84,16 +61,74 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish package to NuGet
-        run: |
-          make release
-          dotnet nuget sign **/*.nupkg --certificate-path certificate.pfx --certificate-password ${{ secrets.CERTIFICATE_PASSWORD }} --timestamper http://timestamp.digicert.com 
-          dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
-
       - name: Submit metric to Datadog
         uses: sendgrid/dx-automator/actions/datadog-release-metric@main
         env:
           DD_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+  
+  code-signing:
+    runs-on: windows-latest
+    needs: [ deploy ]
+    steps:
+      - name: Checkout sendgrid-csharp
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '3.1.x'
+
+      - name: Set up certificate
+        run: |
+          echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /d/Certificate_pkcs12.p12
+        shell: bash
+
+      - name: Set variables
+        id: variables
+        run: |
+          dir
+          echo "::set-output name=version::${GITHUB_REF#refs/tags/v}"
+          echo "::set-output name=KEYPAIR_NAME::gt-standard-keypair"
+          echo "::set-output name=CERTIFICATE_NAME::gt-certificate"
+          echo "SM_HOST=${{ secrets.SM_HOST }}" >> "$GITHUB_ENV"
+          echo "SM_API_KEY=${{ secrets.SM_API_KEY }}" >> "$GITHUB_ENV"
+          echo "SM_CLIENT_CERT_FILE=D:\\Certificate_pkcs12.p12" >> "$GITHUB_ENV"
+          echo "SM_CLIENT_CERT_PASSWORD=${{ secrets.SM_CLIENT_CERT_PASSWORD }}" >> "$GITHUB_ENV"
+          echo "BUILD_TOOLS_VERSION=31.0.0" >> "$GITHUB_ENV"
+          echo "C:\Program Files (x86)\Windows Kits\10\App Certification Kit" >> $GITHUB_PATH
+          echo "C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools" >> $GITHUB_PATH
+          echo "C:\Program Files\DigiCert\DigiCert Keylocker Tools" >> $GITHUB_PATH
+        shell: bash
+
+      - name: Code signing with Software Trust Manager
+        id: SSMClientToolSetup
+        uses: digicert/ssm-code-signing@v0.0.2
+        env:
+          SM_API_KEY: ${{ env.SM_API_KEY }}
+          SM_CLIENT_CERT_PASSWORD: ${{ env.SM_CLIENT_CERT_PASSWORD }}
+          SM_CLIENT_CERT_FILE: ${{ env.SM_CLIENT_CERT_FILE }}
+
+      - run: echo “The config file path ${{ steps.SSMClientToolSetup.outputs.PKCS11_CONFIG }}”
+
+      - name: Setup Keylocker KSP on windows
+        run: |
+          curl -X GET  https://one.digicert.com/signingmanager/api-ui/v1/releases/Keylockertools-windows-x64.msi/download -H "x-api-key:%SM_API_KEY%" -o Keylockertools-windows-x64.msi 
+          msiexec /i Keylockertools-windows-x64.msi /quiet /qn
+          smksp_registrar.exe list 
+          smctl.exe keypair ls 
+          C:\Windows\System32\certutil.exe -csp "DigiCert Signing Manager KSP" -key -user
+        shell: cmd
+
+      - name: Certificates Sync
+        run: |
+          smctl windows certsync
+        shell: cmd
+
+      - name: Signing using Nuget
+        run: |
+          dotnet pack -c Release
+          nuget sign **/*.nupkg -Timestamper http://timestamp.digicert.com -outputdirectory .\NugetSigned -CertificateFingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} -HashAlgorithm SHA256 -Verbosity detailed -Overwrite
+          nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
 
   notify-on-failure:
     name: Slack notify on failure
