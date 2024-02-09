@@ -128,7 +128,7 @@ jobs:
         run: |
           dotnet pack -c Release
           nuget sign **/*.nupkg -Timestamper http://timestamp.digicert.com -outputdirectory .\NugetSigned -CertificateFingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} -HashAlgorithm SHA256 -Verbosity detailed -Overwrite
-          nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
+          nuget push **/*.nupkg -ApiKey ${{ secrets.NUGET_API_KEY }} -Source https://api.nuget.org/v3/index.json --skip-duplicate
 
   notify-on-failure:
     name: Slack notify on failure
