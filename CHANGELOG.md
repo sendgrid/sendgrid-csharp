@@ -1,6 +1,18 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2024-02-14] Version 9.29.2
+---------------------------
+**Library - Chore**
+- [PR #1202](https://github.com/sendgrid/sendgrid-csharp/pull/1202): corrected nuget push. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+- [PR #1201](https://github.com/sendgrid/sendgrid-csharp/pull/1201): added code-signing workflow. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+- [PR #1199](https://github.com/sendgrid/sendgrid-csharp/pull/1199): adding skip-duplicate flag. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+- [PR #1198](https://github.com/sendgrid/sendgrid-csharp/pull/1198): Update test-and-deploy.yml. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+- [PR #1197](https://github.com/sendgrid/sendgrid-csharp/pull/1197): import-certificate added as prerequisite for deploy. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+- [PR #1196](https://github.com/sendgrid/sendgrid-csharp/pull/1196): added import-certificate workflow. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+- [PR #1193](https://github.com/sendgrid/sendgrid-csharp/pull/1193): Update LICENSE. Thanks to [@shrutiburman](https://github.com/shrutiburman)!
+
+
 [2023-12-06] Version 9.29.1
 ---------------------------
 **Library - Fix**
