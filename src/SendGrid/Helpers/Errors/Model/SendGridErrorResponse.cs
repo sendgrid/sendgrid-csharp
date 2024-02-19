@@ -6,9 +6,10 @@
     public class SendGridErrorResponse
     {
         /// <summary>
-        /// Gets or sets the error Status Code
+        /// Gets or sets the error Status Code.<br/>
+        /// Might be any <see cref="System.Net.HttpStatusCode"/>, not just ones in <see cref="SendGridStatusCode"/>.
         /// </summary>
-        public int ErrorHttpStatusCode { get; set; }
+        public SendGridStatusCode ErrorHttpStatusCode { get; set; }
 
         /// <summary>
         /// Gets or sets the error Reason Phrase

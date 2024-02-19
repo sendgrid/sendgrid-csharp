@@ -6162,7 +6162,7 @@
 
                 var errorResponseExpected = new SendGridErrorResponse
                 {
-                    ErrorHttpStatusCode = 503,
+                    ErrorHttpStatusCode = (SendGridStatusCode)503,
                     ErrorReasonPhrase = "Service Unavailable",
                     SendGridErrorMessage = "error message",
                     FieldWithError = "field value",
