@@ -1,6 +1,12 @@
 ﻿# Change Log
 All notable changes to this project will be documented in this file.
 
+[2024-04-02] Version 9.29.3
+---------------------------
+**Library - Chore**
+- [PR #1203](https://github.com/sendgrid/sendgrid-csharp/pull/1203): correct code signing command. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+
+
 [2024-02-14] Version 9.29.2
 ---------------------------
 **Library - Chore**
