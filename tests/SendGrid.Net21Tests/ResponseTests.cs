@@ -1,11 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 using Xunit;
@@ -28,11 +25,8 @@ namespace SendGrid.Tests
             var content = "{\"scopes\": [\"alerts.read\"]}";
             var response = new Response(HttpStatusCode.OK, new StringContent(content), null);
             Dictionary<string, dynamic> responseBody = await response.DeserializeResponseBodyAsync();
-            var actual = responseBody["scopes"];
-            var success = actual is JsonElement { ValueKind: JsonValueKind.Array } m &&
-                          m.EnumerateArray().Single() is { ValueKind: JsonValueKind.String } m2 &&
-                          m2.GetString() == "alerts.read";
-            Assert.True(success, "Result is not [\"alerts.read\"]");
+            var enumerable = responseBody["scopes"];
+            Assert.Equal(new JArray() { "alerts.read" }, enumerable);
         }
 
         [Fact]
@@ -41,11 +35,7 @@ namespace SendGrid.Tests
             var content = "{\"scopes\": [\"alerts.read\"]}";
             var response = new Response(HttpStatusCode.OK, null, null);
             Dictionary<string, dynamic> responseBody = await response.DeserializeResponseBodyAsync(new StringContent(content));
-            var actual = responseBody["scopes"];
-            var success = actual is JsonElement { ValueKind: JsonValueKind.Array } m &&
-                          m.EnumerateArray().Single() is { ValueKind: JsonValueKind.String } m2 &&
-                          m2.GetString() == "alerts.read";
-            Assert.True(success, "Result is not [\"alerts.read\"]");
+            Assert.Equal(new JArray() { "alerts.read" }, responseBody["scopes"]);
         }
 
         [Fact]

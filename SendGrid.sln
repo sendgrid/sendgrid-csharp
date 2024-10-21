@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29519.87
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{71C09624-020B-410E-A8FE-1FD216A1FE31}"
 EndProject
@@ -38,6 +38,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		USE_CASES.md = USE_CASES.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SendGrid.Extensions.DependencyInjection.Net21Tests", "tests\SendGrid.Extensions.DependencyInjection.Net21Tests\SendGrid.Extensions.DependencyInjection.Net21Tests.csproj", "{24BE2F5A-2B03-4493-B518-6722556C6995}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SendGrid.Net21Tests", "tests\SendGrid.Net21Tests\SendGrid.Net21Tests.csproj", "{2F9B46FF-923A-47C4-AC52-6A621A8E0850}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +72,14 @@ Global
 		{C65468A6-BDE2-4FD4-9400-B668B1395B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C65468A6-BDE2-4FD4-9400-B668B1395B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C65468A6-BDE2-4FD4-9400-B668B1395B26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24BE2F5A-2B03-4493-B518-6722556C6995}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24BE2F5A-2B03-4493-B518-6722556C6995}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24BE2F5A-2B03-4493-B518-6722556C6995}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24BE2F5A-2B03-4493-B518-6722556C6995}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F9B46FF-923A-47C4-AC52-6A621A8E0850}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F9B46FF-923A-47C4-AC52-6A621A8E0850}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F9B46FF-923A-47C4-AC52-6A621A8E0850}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F9B46FF-923A-47C4-AC52-6A621A8E0850}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +91,8 @@ Global
 		{3B3F2699-F720-4498-8044-262EFE110A22} = {D3201F71-A289-4136-AC7E-E5204ACB9183}
 		{AF9D60DF-EF22-40FD-9C56-7E7F2BCB9683} = {71C09624-020B-410E-A8FE-1FD216A1FE31}
 		{C65468A6-BDE2-4FD4-9400-B668B1395B26} = {D06BDAE9-BE83-448F-8AD4-3044BB187C11}
+		{24BE2F5A-2B03-4493-B518-6722556C6995} = {D06BDAE9-BE83-448F-8AD4-3044BB187C11}
+		{2F9B46FF-923A-47C4-AC52-6A621A8E0850} = {D06BDAE9-BE83-448F-8AD4-3044BB187C11}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CB90618B-6B7B-4D09-9D35-467325708BAA}

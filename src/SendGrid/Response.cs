@@ -3,7 +3,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#if NETSTANDARD2_0
+using System.Text.Json;
+#else
 using Newtonsoft.Json;
+#endif
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -118,7 +122,11 @@ namespace SendGrid
             }
 
             var stringContent = await content.ReadAsStringAsync().ConfigureAwait(false);
+#if NETSTANDARD2_0
+            var dsContent = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(stringContent);
+#else
             var dsContent = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(stringContent);
+#endif
             return dsContent;
         }
 

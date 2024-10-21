@@ -1,7 +1,14 @@
-﻿using Newtonsoft.Json.Linq;
+﻿#if NETSTANDARD2_0
+using System.Text.Json;
+using System.Text.Json.Nodes;
+#else
+using Newtonsoft.Json.Linq;
+#endif
 using SendGrid.Helpers.Errors.Model;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System;
+using System.Linq;
 
 namespace SendGrid.Helpers.Errors
 {
@@ -103,6 +110,31 @@ namespace SendGrid.Helpers.Errors
                     try
                     {
                         // Check for the presence of property called 'errors'
+#if NETSTANDARD2_0
+                        var jObject = JsonNode.Parse(responseContent);
+                        var errorsArray = (JsonArray)jObject["errors"];
+                        if (errorsArray != null && errorsArray.Count > 0) {
+                            // Get the first error message
+                            errorValue = (string)errorsArray[0]["message"];
+
+                            // Check for the presence of property called 'field'
+                            if (errorsArray[0]["field"] != null) {
+                                fieldValue = (string)errorsArray[0]["field"];
+                            }
+
+                            // Check for the presence of property called 'help'
+                            if (errorsArray[0]["help"] != null) {
+                                helpValue = (string)errorsArray[0]["help"];
+                            }
+                        }
+                        else {
+                            // Check for the presence of property called 'error'
+                            var errorProperty = jObject["error"];
+                            if (errorProperty != null) {
+                                errorValue = (string)errorProperty;
+                            }
+                        }
+#else
                         var jObject = JObject.Parse(responseContent);
                         var errorsArray = (JArray)jObject["errors"];
                         if (errorsArray != null && errorsArray.Count > 0)
@@ -131,6 +163,7 @@ namespace SendGrid.Helpers.Errors
                                 errorValue = errorProperty.Value<string>();
                             }
                         }
+#endif
                     }
                     catch
                     {
@@ -148,7 +181,11 @@ namespace SendGrid.Helpers.Errors
                 HelpLink = helpValue
             };
 
+#if NETSTANDARD2_0
+            return JsonSerializer.Serialize(errorResponse);
+#else
             return Newtonsoft.Json.JsonConvert.SerializeObject(errorResponse);
+#endif
         }
     }
 }

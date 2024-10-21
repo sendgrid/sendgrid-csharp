@@ -3,7 +3,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#if NETSTANDARD2_0
+using System.Text.Json.Serialization;
+#else
 using Newtonsoft.Json;
+#endif
 using System;
 
 namespace SendGrid.Helpers.Mail
@@ -11,7 +15,11 @@ namespace SendGrid.Helpers.Mail
     /// <summary>
     /// An email object containing the email address and name of the sender or recipient.
     /// </summary>
+#if NETSTANDARD2_0
+    // Globally defined by setting ReferenceHandler on the JsonSerializerOptions object
+#else
     [JsonObject(IsReference = false)]
+#endif
     public class EmailAddress : IEquatable<EmailAddress>
     {
         /// <summary>
@@ -35,13 +43,21 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Gets or sets the name of the sender or recipient.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("name")]
+#else
         [JsonProperty(PropertyName = "name")]
+#endif
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the email address of the sender or recipient.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("email")]
+#else
         [JsonProperty(PropertyName = "email")]
+#endif
         public string Email { get; set; }
 
         /// <summary>

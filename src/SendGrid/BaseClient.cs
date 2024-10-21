@@ -1,4 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿#if NETSTANDARD2_0
+using System.Text.Json;
+#else
+using Newtonsoft.Json;
+#endif
 using SendGrid.Helpers.Errors;
 using SendGrid.Helpers.Mail;
 using SendGrid.Helpers.Reliability;
@@ -328,6 +332,42 @@ namespace SendGrid
         {
             var dict = new Dictionary<string, List<object>>();
 
+#if NETSTANDARD2_0
+            var reader = System.Text.Json.Nodes.JsonNode.Parse(json).AsObject();
+            foreach (var v in reader)
+            {
+                var propertyName = v.Key;
+                switch (v.Value.GetValueKind())
+                {
+                    case JsonValueKind.Undefined:
+                    case JsonValueKind.Object:
+                    case JsonValueKind.Array:
+                    case JsonValueKind.Null:
+                        break;
+                    case JsonValueKind.String:
+                        dict[propertyName].Add((string)v.Value);
+                        break;
+                    case JsonValueKind.Number:
+                        if (v.Value.ToString().Contains("."))
+                        {
+                            dict[propertyName].Add((double)v.Value);
+                        }
+                        else
+                        {
+                            dict[propertyName].Add((int)v.Value);
+                        }
+                        break;
+                    case JsonValueKind.True:
+                        dict[propertyName].Add(true);
+                        break;
+                    case JsonValueKind.False:
+                        dict[propertyName].Add(false);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+#else
             using (var sr = new StringReader(json))
             using (var reader = new JsonTextReader(sr))
             {
@@ -360,6 +400,7 @@ namespace SendGrid
                     }
                 }
             }
+#endif
 
             return dict;
         }

@@ -3,14 +3,19 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#if NETSTANDARD2_0
+using System.Text.Json;
+using System.Text.Json.Serialization;
+#else
+using System.Text;
 using Newtonsoft.Json;
+#endif
 using SendGrid.Helpers.Mail.Model;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,32 +24,52 @@ namespace SendGrid.Helpers.Mail
     /// <summary>
     /// Class SendGridMessage builds an object that sends an email through Twilio SendGrid.
     /// </summary>
+#if NETSTANDARD2_0
+    // Globally defined by setting ReferenceHandler on the JsonSerializerOptions object
+#else
     [JsonObject(IsReference = false)]
+#endif
     public class SendGridMessage
     {
         /// <summary>
         /// Gets or sets an email object containing the email address and name of the sender. Unicode encoding is not supported for the from field.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("from")]
+#else
         [JsonProperty(PropertyName = "from")]
+#endif
         public EmailAddress From { get; set; }
 
         /// <summary>
         /// Gets or sets the subject of your email. This may be overridden by personalizations[x].subject.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("subject")]
+#else
         [JsonProperty(PropertyName = "subject")]
+#endif
         public string Subject { get; set; }
 
         /// <summary>
         /// Gets or sets a list of messages and their metadata. Each object within personalizations can be thought of as an envelope - it defines who should receive an individual message and how that message should be handled. For more information, please see our documentation on Personalizations. Parameters in personalizations will override the parameters of the same name from the message level.
         /// https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("personalizations")]
+#else
         [JsonProperty(PropertyName = "personalizations", IsReference = false)]
+#endif
         public List<Personalization> Personalizations { get; set; }
 
         /// <summary>
         /// Gets or sets a list in which you may specify the content of your email. You can include multiple mime types of content, but you must specify at least one. To include more than one mime type, simply add another object to the array containing the type and value parameters. If included, text/plain and text/html must be the first indices of the array in this order. If you choose to include the text/plain or text/html mime types, they must be the first indices of the content array in the order text/plain, text/html.*Content is NOT mandatory if you using a transactional template and have defined the template_id in the Request.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("content")]
+#else
         [JsonProperty(PropertyName = "content", IsReference = false)]
+#endif
         public List<Content> Contents { get; set; }
 
         /// <summary>
@@ -62,86 +87,142 @@ namespace SendGrid.Helpers.Mail
         /// <summary>
         /// Gets or sets a list of objects in which you can specify any attachments you want to include.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("attachments")]
+#else
         [JsonProperty(PropertyName = "attachments", IsReference = false)]
+#endif
         public List<Attachment> Attachments { get; set; }
 
         /// <summary>
         /// Gets or sets the id of a template that you would like to use. If you use a template that contains content and a subject (either text or html), you do not need to specify those in the respective personalizations or message level parameters.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("template_id")]
+#else
         [JsonProperty(PropertyName = "template_id")]
+#endif
         public string TemplateId { get; set; }
 
         /// <summary>
         /// Gets or sets an object containing key/value pairs of header names and the value to substitute for them. You must ensure these are properly encoded if they contain unicode characters. Must not be any of the following reserved headers: x-sg-id, x-sg-eid, received, dkim-signature, Content-Type, Content-Transfer-Encoding, To, From, Subject, Reply-To, CC, BCC.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("headers")]
+#else
         [JsonProperty(PropertyName = "headers", IsReference = false)]
+#endif
         public Dictionary<string, string> Headers { get; set; }
 
         /// <summary>
         /// Gets or sets an object of key/value pairs that define large blocks of content that can be inserted into your emails using substitution tags.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("sections")]
+#else
         [JsonProperty(PropertyName = "sections", IsReference = false)]
+#endif
         public Dictionary<string, string> Sections { get; set; }
 
         /// <summary>
         /// Gets or sets a list of category names for this message. Each category name may not exceed 255 characters. You cannot have more than 10 categories per request.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("categories")]
+#else
         [JsonProperty(PropertyName = "categories", IsReference = false)]
+#endif
         public List<string> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets values that are specific to the entire send that will be carried along with the email and its activity data. Substitutions will not be made on custom arguments, so any string that is entered into this parameter will be assumed to be the custom argument that you would like to be used. This parameter is overridden by any conflicting personalizations[x].custom_args if that parameter has been defined. If personalizations[x].custom_args has been defined but does not conflict with the values defined within this parameter, the two will be merged. The combined total size of these custom arguments may not exceed 10,000 bytes.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("custom_args")]
+#else
         [JsonProperty(PropertyName = "custom_args", IsReference = false)]
+#endif
         public Dictionary<string, string> CustomArgs { get; set; }
 
         /// <summary>
         /// Gets or sets a unix timestamp allowing you to specify when you want your email to be sent from SendGrid. This is not necessary if you want the email to be sent at the time of your API request.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("send_at")]
+#else
         [JsonProperty(PropertyName = "send_at")]
+#endif
         public long? SendAt { get; set; }
 
         /// <summary>
         /// Gets or sets an object allowing you to specify how to handle unsubscribes.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("asm")]
+#else
         [JsonProperty(PropertyName = "asm")]
+#endif
         public ASM Asm { get; set; }
 
         /// <summary>
         /// Gets or sets an ID that represents a batch of emails (AKA multiple sends of the same email) to be associated to each other for scheduling. Including a batch_id in your request allows you to include this email in that batch, and also enables you to cancel or pause the delivery of that entire batch. For more information, please read about Cancel Scheduled Sends.
         /// https://sendgrid.com/docs/API_Reference/Web_API_v3/cancel_schedule_send.html.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("batch_id")]
+#else
         [JsonProperty(PropertyName = "batch_id")]
+#endif
         public string BatchId { get; set; }
 
         /// <summary>
         /// Gets or sets the IP Pool that you would like to send this email from.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("ip_pool_name")]
+#else
         [JsonProperty(PropertyName = "ip_pool_name")]
+#endif
         public string IpPoolName { get; set; }
 
         /// <summary>
         /// Gets or sets a collection of different mail settings that you can use to specify how you would like this email to be handled.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("mail_settings")]
+#else
         [JsonProperty(PropertyName = "mail_settings")]
+#endif
         public MailSettings MailSettings { get; set; }
 
         /// <summary>
         /// Gets or sets settings to determine how you would like to track the metrics of how your recipients interact with your email.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("tracking_settings")]
+#else
         [JsonProperty(PropertyName = "tracking_settings")]
+#endif
         public TrackingSettings TrackingSettings { get; set; }
 
         /// <summary>
         /// Gets or sets an email object containing the email address and name of the individual who should receive responses to your email.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("reply_to")]
+#else
         [JsonProperty(PropertyName = "reply_to")]
+#endif
         public EmailAddress ReplyTo { get; set; }
 
         /// <summary>
         /// Gets or sets a list of objects of email objects containing the email address and name of the individuals who should receive responses to your email.
         /// </summary>
+#if NETSTANDARD2_0
+        [JsonPropertyName("reply_to_list")]
+#else
         [JsonProperty(PropertyName = "reply_to_list", IsReference = false)]
+#endif
         public List<EmailAddress> ReplyTos { get; set; }
 
         /// <summary>
@@ -1185,6 +1266,14 @@ namespace SendGrid.Helpers.Mail
                 }
             }
 
+#if NETSTANDARD2_0
+            var jsonSerializerOptions = new JsonSerializerOptions
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            };
+
+            return JsonSerializer.Serialize(this, jsonSerializerOptions);
+#else
             var jsonSerializerSettings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
@@ -1212,6 +1301,7 @@ namespace SendGrid.Helpers.Mail
             }
 
             return textWriter.ToString();
+#endif
         }
 
         /// <summary>
@@ -1221,6 +1311,14 @@ namespace SendGrid.Helpers.Mail
         /// <returns>The SendGrid.Helpers.Mail.SendGridMessage instance created from the JSON object.</returns>
         public static SendGridMessage Deserialize(string json)
         {
+#if NETSTANDARD2_0
+            var jsonSerializerOptions = new JsonSerializerOptions
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            };
+
+            return JsonSerializer.Deserialize<SendGridMessage>(json, jsonSerializerOptions);
+#else
             var jsonSerializerSettings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
@@ -1235,6 +1333,7 @@ namespace SendGrid.Helpers.Mail
             SendGridMessage message = jsonSerializer.Deserialize<SendGridMessage>(reader);
 
             return message;
+#endif
         }
     }
 }

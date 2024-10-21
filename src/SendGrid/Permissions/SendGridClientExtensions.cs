@@ -1,7 +1,13 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+#if NETSTANDARD2_0
+using System.Text.Json;
+using System.Text.Json.Nodes;
+
+#else
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+#endif
 
 namespace SendGrid.Permissions
 {
@@ -20,8 +26,13 @@ namespace SendGrid.Permissions
         {
             var response = await client.RequestAsync(method: SendGridClient.Method.GET, urlPath: "scopes");
             var body = await response.DeserializeResponseBodyAsync();
+#if NETSTANDARD2_0
+            var userScopesJArray = ((JsonElement)body["scopes"]).EnumerateArray();
+            var includedScopes = userScopesJArray.Select(z => z.GetString()).ToArray();
+#else
             var userScopesJArray = (body["scopes"] as JArray);
             var includedScopes = userScopesJArray.Values<string>().ToArray();
+#endif
             var builder = new SendGridPermissionsBuilder();
             builder.Exclude(scope => !includedScopes.Contains(scope));
             return builder;
@@ -42,7 +53,11 @@ namespace SendGrid.Permissions
                 name,
                 scopes
             };
+#if NETSTANDARD2_0
+            var data = JsonSerializer.Serialize(payload);
+#else
             var data = JsonConvert.SerializeObject(payload);
+#endif
             var response = await client.RequestAsync(method: SendGridClient.Method.POST, urlPath: "api_keys", requestBody: data);
             return response;
         }
