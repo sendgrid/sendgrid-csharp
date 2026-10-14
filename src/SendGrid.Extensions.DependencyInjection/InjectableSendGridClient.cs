@@ -13,8 +13,8 @@ namespace SendGrid.Extensions.DependencyInjection
     /// </summary>
     internal class InjectableSendGridClient : BaseClient
     {
-        public InjectableSendGridClient(HttpClient httpClient, IOptions<SendGridClientOptions> options)
-            : base(httpClient, options.Value)
+        public InjectableSendGridClient(HttpClient httpClient, IOptionsMonitor<SendGridClientOptions> options)
+            : base(httpClient, options.CurrentValue)
         {
         }
     }
