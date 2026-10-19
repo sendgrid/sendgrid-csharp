@@ -46,9 +46,9 @@ We appreciate your continued support, thank you!
 
 ## Prerequisites
 
-- .NET Framework 4.0+
-- .NET Core 1.0+
-- .NET Standard 1.3+
+- .NET Framework 4.6.2+
+- .NET 8+
+- .NET Standard 2.0+
 - A Twilio SendGrid account, [sign up for free](https://sendgrid.com/free?source=sendgrid-csharp) to send up to 40,000 emails for the first 30 days, then send 100 emails/day free forever or check out [our pricing](https://sendgrid.com/pricing?source=sendgrid-csharp).
 
 <a name="obtain-api"></a>
@@ -97,7 +97,7 @@ dotnet add package SendGrid.Extensions.DependencyInjection
 ```
 
 Once you have the Twilio SendGrid library installed, you can include calls to it in your code.
-For sample implementations, see the [.NET Core Example](ExampleCoreProject) and the [.NET 4.5.2 Example](ExampleNet45Project) folders.
+For sample implementations, see the [.NET Core Example](ExampleCoreProject) and the [.NET Framework 4.6.2 Example](ExampleNet45Project) folders.
 
 ## Dependencies
 
@@ -254,7 +254,7 @@ services.AddSendGrid(options =>
 - [Twilio SendGrid Docs](https://docs.sendgrid.com/api-reference/)
 - [Library Usage Docs](USAGE.md)
 - [Example Code - .NET Core](ExampleCoreProject)
-- [Example Code - .NET 4.5.2+](ExampleNet45Project)
+- [Example Code - .NET Framework 4.6.2+](ExampleNet45Project)
 - [How-to: Migration from v2 to v3](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/how_to_migrate_from_v2_to_v3_mail_send.html)
 - [v3 Web API Mail Send Helper](src/SendGrid/Helpers/Mail)
 
