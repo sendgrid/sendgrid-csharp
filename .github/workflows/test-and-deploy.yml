@@ -29,7 +29,7 @@ jobs:
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
         with:
-          dotnet-version: '3.1.x'
+          global-json-file: global.json
 
       - name: Artifactory OIDC Auth
         uses: twilio/sdk-actions/artifactory-oidc@e22fa7d16d9cfd4f046cb00f471301f5e0a9c546 # v1
@@ -62,7 +62,7 @@ jobs:
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
         with:
-          dotnet-version: '3.1.x'
+          global-json-file: global.json
 
       - name: Artifactory OIDC Auth
         uses: twilio/sdk-actions/artifactory-oidc@e22fa7d16d9cfd4f046cb00f471301f5e0a9c546 # v1
@@ -94,7 +94,7 @@ jobs:
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
         with:
-          dotnet-version: '3.1.x'
+          global-json-file: global.json
 
       - name: Set up certificate
         run: |
