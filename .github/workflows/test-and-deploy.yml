@@ -10,89 +10,105 @@ on:
     - cron: '0 15 * * 1-5'
   workflow_dispatch:
 
+env:
+  ARTIFACTORY_URL: ${{ vars.ARTIFACTORY_URL }}
+
 jobs:
   test:
     name: Test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-x64
+    if: github.repository_owner == 'sendgrid'
     timeout-minutes: 20
-    env:
-      DOCKER_LOGIN: ${{ secrets.DOCKER_USERNAME && secrets.DOCKER_AUTH_TOKEN }}
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Checkout sendgrid-csharp
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: Login to Docker Hub
-        if: env.DOCKER_LOGIN
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_AUTH_TOKEN }}
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v1.8.2
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
         with:
-          dotnet-version: '3.1.x'
+          global-json-file: global.json
+
+      - name: Artifactory OIDC Auth
+        uses: twilio/sdk-actions/artifactory-oidc@e22fa7d16d9cfd4f046cb00f471301f5e0a9c546 # v1
+        with:
+          ecosystem: dotnet
 
       - run: dotnet build -c Release
+
       - name: Build & Test
         run: make test-docker release
-      - run: bash <(curl -s https://codecov.io/bash)
 
   deploy:
     name: Deploy
-    if: success() && github.ref_type == 'tag'
+    if: success() && github.ref_type == 'tag' && github.repository_owner == 'sendgrid'
     needs: [ test ]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-x64
+    environment:
+      name: production
+      url: https://www.nuget.org/packages/Sendgrid/${{ github.ref_name }}
+    permissions:
+      contents: write
+      id-token: write
     steps:
       - name: Checkout sendgrid-csharp
-        uses: actions/checkout@v2
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          # The release action verifies refs/tags/<tag> in the local clone.
+          fetch-depth: 0
 
       - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
         with:
-          dotnet-version: '3.1.x'
+          global-json-file: global.json
+
+      - name: Artifactory OIDC Auth
+        uses: twilio/sdk-actions/artifactory-oidc@e22fa7d16d9cfd4f046cb00f471301f5e0a9c546 # v1
+        with:
+          ecosystem: dotnet
 
       - name: Create GitHub Release
-        uses: sendgrid/dx-automator/actions/release@main
+        uses: twilio/sdk-actions/github-release@9b1c3222c9ffe38aadedb11c5b9f5a172b5e9951 # v1
         with:
-          footer: '**[NuGet](https://www.nuget.org/packages/Sendgrid/${version})**'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          changelog-file: CHANGELOG.md
+          footer: '**[NuGet](https://www.nuget.org/packages/Sendgrid/${{ github.ref_name }})**'
 
-      - name: Submit metric to Datadog
-        uses: sendgrid/dx-automator/actions/datadog-release-metric@main
-        env:
-          DD_API_KEY: ${{ secrets.DATADOG_API_KEY }}
-  
+#      - name: Submit metric to Datadog
+#        uses: sendgrid/dx-automator/actions/datadog-release-metric@08b601b726671445abc798ed59881766ec8fefc6 # main
+#        env:
+#          DD_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+
   code-signing:
-    runs-on: windows-latest
+    name: Code signing
+    if: github.repository_owner == 'sendgrid'
     needs: [ deploy ]
+    runs-on: windows-latest-large
+    environment:
+      name: production
     steps:
       - name: Checkout sendgrid-csharp
-        uses: actions/checkout@v2
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
         with:
-          dotnet-version: '3.1.x'
+          global-json-file: global.json
 
       - name: Set up certificate
         run: |
-          echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /d/Certificate_pkcs12.p12
+          echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > "${RUNNER_TEMP}/Certificate_pkcs12.p12"
         shell: bash
 
       - name: Set variables
         id: variables
         run: |
           dir
-          echo "::set-output name=version::${GITHUB_REF#refs/tags/v}"
-          echo "::set-output name=KEYPAIR_NAME::gt-standard-keypair"
-          echo "::set-output name=CERTIFICATE_NAME::gt-certificate"
+          echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
           echo "SM_HOST=${{ secrets.SM_HOST }}" >> "$GITHUB_ENV"
           echo "SM_API_KEY=${{ secrets.SM_API_KEY }}" >> "$GITHUB_ENV"
-          echo "SM_CLIENT_CERT_FILE=D:\\Certificate_pkcs12.p12" >> "$GITHUB_ENV"
+          echo "SM_CLIENT_CERT_FILE=${{ runner.temp }}\\Certificate_pkcs12.p12" >> "$GITHUB_ENV"
           echo "SM_CLIENT_CERT_PASSWORD=${{ secrets.SM_CLIENT_CERT_PASSWORD }}" >> "$GITHUB_ENV"
           echo "BUILD_TOOLS_VERSION=31.0.0" >> "$GITHUB_ENV"
           echo "C:\Program Files (x86)\Windows Kits\10\App Certification Kit" >> $GITHUB_PATH
@@ -102,48 +118,49 @@ jobs:
 
       - name: Code signing with Software Trust Manager
         id: SSMClientToolSetup
-        uses: digicert/ssm-code-signing@v0.0.2
+        uses: digicert/code-signing-software-trust-action@fae23a455ba4bde62b64fd7cb2f81ade788f5a95 # v1.2.1
         env:
           SM_API_KEY: ${{ env.SM_API_KEY }}
           SM_CLIENT_CERT_PASSWORD: ${{ env.SM_CLIENT_CERT_PASSWORD }}
           SM_CLIENT_CERT_FILE: ${{ env.SM_CLIENT_CERT_FILE }}
 
-      - run: echo “The config file path ${{ steps.SSMClientToolSetup.outputs.PKCS11_CONFIG }}”
+      - run: echo "The config file path ${{ steps.SSMClientToolSetup.outputs.PKCS11_CONFIG }}"
 
       - name: Setup Keylocker KSP on windows
         run: |
-          curl -X GET  https://one.digicert.com/signingmanager/api-ui/v1/releases/Keylockertools-windows-x64.msi/download -H "x-api-key:%SM_API_KEY%" -o Keylockertools-windows-x64.msi 
+          curl -X GET  https://one.digicert.com/signingmanager/api-ui/v1/releases/Keylockertools-windows-x64.msi/download -H "x-api-key:%SM_API_KEY%" -o Keylockertools-windows-x64.msi
           msiexec /i Keylockertools-windows-x64.msi /quiet /qn
-          smksp_registrar.exe list 
-          smctl.exe keypair ls 
+          smksp_registrar.exe list
+          smctl.exe keypair ls
           C:\Windows\System32\certutil.exe -csp "DigiCert Signing Manager KSP" -key -user
         shell: cmd
 
       - name: Certificates Sync
-        run: |
-          smctl windows certsync
+        run: smctl windows certsync
         shell: cmd
 
-      - name: Signing using Nuget
+      - name: Sign and Push to NuGet
         run: |
           dotnet pack -c Release
           nuget sign **/*.nupkg -Timestamper http://timestamp.digicert.com -outputdirectory .\NugetSigned -CertificateFingerprint ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }} -HashAlgorithm SHA256 -Verbosity detailed -Overwrite
-          nuget push **/*.nupkg -ApiKey ${{ secrets.NUGET_API_KEY }} -Source https://api.nuget.org/v3/index.json -SkipDuplicate
-
-  notify-on-failure:
-    name: Slack notify on failure
-    if: failure() && github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref_type == 'tag')
-    needs: [ test, deploy ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: rtCamp/action-slack-notify@v2
+          nuget push .\NugetSigned\*.nupkg -ApiKey ${{ secrets.NUGET_API_KEY }} -Source https://api.nuget.org/v3/index.json -SkipDuplicate
         env:
-          SLACK_COLOR: failure
-          SLACK_ICON_EMOJI: ':github:'
-          SLACK_MESSAGE: ${{ format('Test *{0}*, Deploy *{1}*, {2}/{3}/actions/runs/{4}', needs.test.result, needs.deploy.result, github.server_url, github.repository, github.run_id) }}
-          SLACK_TITLE: Action Failure - ${{ github.repository }}
-          SLACK_USERNAME: GitHub Actions
-          SLACK_MSG_AUTHOR: twilio-dx
-          SLACK_FOOTER: Posted automatically using GitHub Actions
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          MSG_MINIMAL: true
+          RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
+
+#  notify-on-failure:
+#    name: Slack notify on failure
+#    if: failure() && github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref_type == 'tag')
+#    needs: [ test, deploy ]
+#    runs-on: ubuntu-x64
+#    steps:
+#      - uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2.3.3
+#        env:
+#          SLACK_COLOR: failure
+#          SLACK_ICON_EMOJI: ':github:'
+#          SLACK_MESSAGE: ${{ format('Test *{0}*, Deploy *{1}*, {2}/{3}/actions/runs/{4}', needs.test.result, needs.deploy.result, github.server_url, github.repository, github.run_id) }}
+#          SLACK_TITLE: Action Failure - ${{ github.repository }}
+#          SLACK_USERNAME: GitHub Actions
+#          SLACK_MSG_AUTHOR: twilio-dx
+#          SLACK_FOOTER: Posted automatically using GitHub Actions
+#          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+#          MSG_MINIMAL: true
